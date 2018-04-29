@@ -1,0 +1,160 @@
+C51 COMPILER V9.57.0.0   SOFTPLC                                                           04/29/2018 00:02:32 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE SOFTPLC
+OBJECT MODULE PLACED IN .\Objects\softPlc.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\softPlc.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Lib;.\uCOSII;.\Mod
+                    -bus;.\App) DEBUG OBJECTEXTEND PRINT(.\Listings\softPlc.lst) OBJECT(.\Objects\softPlc.obj)
+
+line level    source
+
+   1          #include "softPlc.h"
+   2          /*****************************************************************************/
+   3          softPlc_t softPlc;
+   4          
+   5          static void Timer0_Init(void);
+   6          /*****************************************************************************/
+   7          void SoftPlc_Init(void)
+   8          {
+   9   1              memset(softPlc.X_Input0, 0x0, (CONFIG_PLC_X_NUM / 16 + 1));
+  10   1              memset(softPlc.X_Input1, 0x0, (CONFIG_PLC_X_NUM / 16 + 1));
+  11   1              memset(softPlc.M_Coil, 0x0, (CONFIG_PLC_M_NUM / 16 + 1));
+  12   1              memset(softPlc.X_Coil, 0x0, (CONFIG_PLC_X_NUM / 16 + 1));
+  13   1              memset(softPlc.Y_Coil, 0x0, (CONFIG_PLC_Y_NUM / 16 + 1));
+  14   1              memset(softPlc.D_Reg, 0x0, (CONFIG_PLC_D_NUM));
+  15   1              softPlc.TimerCounter_10mS = 0;//软件计时器分频 10mS
+  16   1              softPlc.TimerCounter_100mS = 0;//软件计时器分频 100mS
+  17   1              memset(softPlc.Timer_1mS, 0x0, (CONFIG_PLC_TIMER_1MS_NUM));
+  18   1              memset(softPlc.Timer_10mS, 0x0, (CONFIG_PLC_TIMER_10MS_NUM));
+  19   1              memset(softPlc.Timer_100mS, 0x0, (CONFIG_PLC_TIMER_100MS_NUM));
+  20   1              Timer0_Init();
+  21   1      }
+  22          static void Timer0_Init(void)
+  23          {//硬件sTimer计时器初始化
+  24   1              softPlc.TimerCounter_10mS = 0;
+  25   1              softPlc.TimerCounter_100mS = 0;
+  26   1              TH0 = 0;// Init Timer0 High register
+  27   1              TL0 = 255;// Init Timer0 Low register
+  28   1              TMOD &= 0xFC;
+  29   1              TMOD |= 0x01;// Timer0 in 16-bit mode
+  30   1              ET0 = 1;// Timer1 interrupt enabled
+  31   1              TR0 = 1;// Timer1 ON
+  32   1      }
+  33          void Timer0_ISR(void) interrupt INTERRUPT_TIMER0
+  34          {//硬件sTimer计时器中断 1mS
+  35   1              uint8_t i;
+  36   1              for(i = 0;i < CONFIG_PLC_TIMER_1MS_NUM;i ++)
+  37   1              {
+  38   2                      if(softPlc.Timer_1mS[i] < SHRT_MAX)
+  39   2                      {
+  40   3                              softPlc.Timer_1mS[i] ++;
+  41   3                      }
+  42   2              }
+  43   1              if(softPlc.TimerCounter_10mS < 10)
+  44   1              {
+  45   2                      for(i = 0;i < CONFIG_PLC_TIMER_10MS_NUM;i ++)
+  46   2                      {
+  47   3                              if(softPlc.Timer_10mS[i] < SHRT_MAX)
+  48   3                              {
+  49   4                                      softPlc.Timer_10mS[i] ++;
+  50   4                              }
+  51   3                      }
+  52   2                      softPlc.TimerCounter_10mS = 0;
+  53   2              }
+  54   1              if(softPlc.TimerCounter_100mS < 100)
+C51 COMPILER V9.57.0.0   SOFTPLC                                                           04/29/2018 00:02:32 PAGE 2   
+
+  55   1              {
+  56   2                      for(i = 0;i < CONFIG_PLC_TIMER_100MS_NUM;i ++)
+  57   2                      {
+  58   3                              
+  59   3                              if(softPlc.Timer_100mS[i] < SHRT_MAX)
+  60   3                              {
+  61   4                                      softPlc.Timer_100mS[i] ++;
+  62   4                              }
+  63   3                      }
+  64   2                      softPlc.TimerCounter_100mS = 0;
+  65   2              }
+  66   1              TH0 = (uint8_t)((CONFIG_TIME0_1MS >> 8) & 0xff);
+  67   1              TL0 = (uint8_t)(CONFIG_TIME0_1MS & 0xff);
+  68   1              TF0 = 0;
+  69   1      }
+  70          
+  71          void set_Coil(uint16_t addr, uint16_t *coil)
+  72          {//置位线圈
+  73   1              uint16_t dat, mask;
+  74   1              dat = coil[(addr / 16)];
+  75   1              mask = addr % 16;
+  76   1              dat |= (1 << mask);
+  77   1      }
+  78          void reset_Coil(uint16_t addr, uint16_t *coil)
+  79          {//复位线圈
+  80   1              uint16_t dat, mask;
+  81   1              dat = coil[(addr / 16)];
+  82   1              mask = addr % 16;
+  83   1              dat &= ~(1 << mask);
+  84   1      }
+  85          void flip_Coil(uint16_t addr, uint16_t *coil)
+  86          {//翻转线圈
+  87   1              uint16_t dat, mask;
+  88   1              dat = coil[addr / 16];
+  89   1              mask = addr % 16;
+  90   1              if((dat >> mask) & 0x01)
+  91   1              {
+  92   2                      dat &= ~(1 << mask);
+  93   2              }
+  94   1              else
+  95   1              {
+  96   2                      dat |= (1 << mask);
+  97   2              }
+  98   1      }
+  99          
+ 100          void inputFilter(softPlc_t *plc)
+ 101          {//对P0-P3进行数字滤波滤波
+ 102   1              uint8_t i, j;
+ 103   1              uint8_t s1, s2;
+ 104   1              plc->X_Input0[0] = 0x0000;
+ 105   1              plc->X_Input0[1] = 0x0000;
+ 106   1              plc->X_Input0[0] = (P0 | (P1 << 8));
+ 107   1              plc->X_Input0[1] = (P2 | (P3 << 8));
+ 108   1              
+ 109   1              plc->X_Input1[0] = plc->X_Input0[0];
+ 110   1              plc->X_Input1[1] = plc->X_Input0[1];
+ 111   1              for(i = 0;i < CONFIG_PLC_X_NUM;i ++)
+ 112   1              {//遍历所有X寄存器
+ 113   2                      for(j = 0; j < 16;j ++)
+ 114   2                      {
+ 115   3                              s1 = (plc->X_Input0[i] >> j) & 0x01;
+ 116   3                              s2 = (plc->X_Input1[i] >> j) & 0x01;
+C51 COMPILER V9.57.0.0   SOFTPLC                                                           04/29/2018 00:02:32 PAGE 3   
+
+ 117   3                              if(s1 == s2)
+ 118   3                              {
+ 119   4                                      plc->X_Coil[i] &= ~(1 << j);
+ 120   4                              }
+ 121   3                      }
+ 122   2              }
+ 123   1      }
+ 124          void outputRefush(softPlc_t *plc)
+ 125          {//输出端口刷新
+ 126   1              uint8_t outbit;
+ 127   1              outbit = (plc->Y_Coil[0] >> (8 + 3)) & 0x01;
+ 128   1              if(outbit)
+ 129   1                      P1 |= 1 << 3;
+ 130   1              else
+ 131   1                      P1 &= ~(1 << 3);
+ 132   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    952    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =    128       7
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

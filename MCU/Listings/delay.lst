@@ -1,0 +1,45 @@
+C51 COMPILER V9.57.0.0   DELAY                                                             03/28/2018 21:09:56 PAGE 1   
+
+
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE DELAY
+OBJECT MODULE PLACED IN .\Objects\delay.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\delay.c LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\c805f540.ORC) BROW
+                    -SE INCDIR(.\App;.\Lib;.\Modbus) DEBUG OBJECTEXTEND PRINT(.\Listings\delay.lst) OBJECT(.\Objects\delay.obj)
+
+line level    source
+
+   1          #include "delay.h"
+   2          /*****************************************************************************/
+   3          void delayUs(uint32_t us)
+   4          {//Œ¢√Î—” ±
+   5   1              while(us--)
+   6   1              {
+   7   2                      _nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();
+   8   2                      _nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();
+   9   2                      _nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();
+  10   2                      _nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();_nop_();
+  11   2              }
+  12   1      }
+  13          void delayMs(uint32_t ms)
+  14          {//∫¡√Î—” ±
+  15   1              while(ms--)
+  16   1              {
+  17   2                      delayUs(1000);
+  18   2              }
+  19   1      }
+  20          
+  21          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     97    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----       8
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
