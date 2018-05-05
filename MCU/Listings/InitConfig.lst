@@ -1,11 +1,10 @@
-C51 COMPILER V9.57.0.0   INITCONFIG                                                        04/29/2018 00:16:06 PAGE 1   
+C51 COMPILER V9.57.0.0   INITCONFIG                                                        05/05/2018 23:50:23 PAGE 1   
 
 
 C51 COMPILER V9.57.0.0, COMPILATION OF MODULE INITCONFIG
 OBJECT MODULE PLACED IN .\Objects\InitConfig.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\InitConfig.c LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.
-                    -ORC) BROWSE INCDIR(.\Lib;.\uCOSII;.\App) DEBUG OBJECTEXTEND PRINT(.\Listings\InitConfig.lst) OBJECT(.\Objects\InitConfig
-                    -.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Source\InitConfig.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Source) DEBU
+                    -G OBJECTEXTEND PRINT(.\Listings\InitConfig.lst) OBJECT(.\Objects\InitConfig.obj)
 
 line level    source
 
@@ -18,116 +17,112 @@ line level    source
    7          {
    8   1          WDTCN     = 0xDE;
    9   1          WDTCN     = 0xAD;
-  10   1          RSTSRC    = 0x06;
+  10   1      //    RSTSRC    = 0x06;
   11   1      }
   12          
   13          void Timer_Init()
   14          {
-  15   1          CKCON     = 0x30;
-  16   1          TMOD      = 0x20;
-  17   1          TH1       = 0xFA;
-  18   1          RCAP2L    = 0xB8;
-  19   1          RCAP2H    = 0xFF;
-  20   1      }
-  21          
-  22          void UART_Init()
-  23          {
-  24   1          SCON0     = 0x50;
-  25   1          SCON1     = 0x50;
-  26   1      }
-  27          
-  28          void DAC_Init()
-  29          {
-  30   1          DAC0CN    = 0x80;
-  31   1          DAC1CN    = 0x80;
-  32   1      }
-  33          
-  34          void Voltage_Reference_Init()
-  35          {
-  36   1          REF0CN    = 0x07;
-  37   1      }
-  38          
-  39          void Port_IO_Init()
-  40          {
-  41   1          // P0.0  -  TX0 (UART0), Push-Pull,  Digital
-  42   1          // P0.1  -  RX0 (UART0), Open-Drain, Digital
-  43   1          // P0.2  -  SDA (SMBus), Open-Drain, Digital
-  44   1          // P0.3  -  SCL (SMBus), Open-Drain, Digital
-  45   1          // P0.4  -  TX1 (UART1), Push-Pull,  Digital
-  46   1          // P0.5  -  RX1 (UART1), Open-Drain, Digital
-  47   1          // P0.6  -  CEX0 (PCA),  Push-Pull,  Digital
-  48   1          // P0.7  -  CEX1 (PCA),  Push-Pull,  Digital
-  49   1      
-  50   1          // P1.0  -  CEX2 (PCA),  Push-Pull,  Digital
-  51   1          // P1.1  -  CEX3 (PCA),  Push-Pull,  Digital
-  52   1          // P1.2  -  Unassigned,  Open-Drain, Digital
-  53   1          // P1.3  -  Unassigned,  Open-Drain, Digital
-C51 COMPILER V9.57.0.0   INITCONFIG                                                        04/29/2018 00:16:06 PAGE 2   
+  15   1      //    CKCON     = 0x30;
+  16   1      //    TMOD      = 0x20;
+  17   1      //    TH1       = 0xFA;
+  18   1      }
+  19          
+  20          void UART_Init()
+  21          {
+  22   1          SCON0     = 0x50;
+  23   1          SCON1     = 0x50;
+  24   1      }
+  25          
+  26          void DAC_Init()
+  27          {
+  28   1          DAC0CN    = 0x80;
+  29   1          DAC1CN    = 0x80;
+  30   1      }
+  31          
+  32          void Voltage_Reference_Init()
+  33          {
+  34   1          REF0CN    = 0x07;
+  35   1      }
+  36          
+  37          void Port_IO_Init()
+  38          {
+  39   1          // P0.0  -  TX0 (UART0), Push-Pull,  Digital
+  40   1          // P0.1  -  RX0 (UART0), Open-Drain, Digital
+  41   1          // P0.2  -  SDA (SMBus), Open-Drain, Digital
+  42   1          // P0.3  -  SCL (SMBus), Open-Drain, Digital
+  43   1          // P0.4  -  TX1 (UART1), Push-Pull,  Digital
+  44   1          // P0.5  -  RX1 (UART1), Open-Drain, Digital
+  45   1          // P0.6  -  CEX0 (PCA),  Push-Pull,  Digital
+  46   1          // P0.7  -  CEX1 (PCA),  Push-Pull,  Digital
+  47   1      
+  48   1          // P1.0  -  CEX2 (PCA),  Push-Pull,  Digital
+  49   1          // P1.1  -  CEX3 (PCA),  Push-Pull,  Digital
+  50   1          // P1.2  -  Unassigned,  Open-Drain, Digital
+  51   1          // P1.3  -  Unassigned,  Open-Drain, Digital
+  52   1          // P1.4  -  Unassigned,  Open-Drain, Digital
+  53   1          // P1.5  -  Unassigned,  Open-Drain, Digital
+  54   1          // P1.6  -  Unassigned,  Push-Pull,  Digital
+C51 COMPILER V9.57.0.0   INITCONFIG                                                        05/05/2018 23:50:23 PAGE 2   
 
-  54   1          // P1.4  -  Unassigned,  Open-Drain, Digital
-  55   1          // P1.5  -  Unassigned,  Open-Drain, Digital
-  56   1          // P1.6  -  Unassigned,  Push-Pull,  Digital
-  57   1          // P1.7  -  Unassigned,  Push-Pull,  Digital
-  58   1      
-  59   1          // P2.0  -  Unassigned,  Open-Drain, Digital
-  60   1          // P2.1  -  Unassigned,  Open-Drain, Digital
-  61   1          // P2.2  -  Unassigned,  Open-Drain, Digital
-  62   1          // P2.3  -  Unassigned,  Push-Pull,  Digital
-  63   1          // P2.4  -  Unassigned,  Open-Drain, Digital
-  64   1          // P2.5  -  Unassigned,  Open-Drain, Digital
-  65   1          // P2.6  -  Unassigned,  Open-Drain, Digital
-  66   1          // P2.7  -  Unassigned,  Open-Drain, Digital
-  67   1      
-  68   1          // P3.0  -  Unassigned,  Open-Drain, Digital
-  69   1          // P3.1  -  Unassigned,  Open-Drain, Digital
-  70   1          // P3.2  -  Unassigned,  Open-Drain, Digital
-  71   1          // P3.3  -  Unassigned,  Open-Drain, Digital
-  72   1          // P3.4  -  Unassigned,  Open-Drain, Digital
-  73   1          // P3.5  -  Unassigned,  Open-Drain, Digital
-  74   1          // P3.6  -  Unassigned,  Open-Drain, Digital
-  75   1          // P3.7  -  Unassigned,  Open-Drain, Digital
-  76   1      
-  77   1          P0MDOUT   = 0xD1;
-  78   1          P1MDOUT   = 0xC3;
-  79   1          P2MDOUT   = 0x08;
-  80   1          P74OUT    = 0x33;
-  81   1          XBR0      = 0x25;
-  82   1          XBR2      = 0x44;
-  83   1      }
-  84          
-  85          void Oscillator_Init()
-  86          {
-  87   1          int i = 0;
-  88   1          OSCXCN    = 0x67;
-  89   1          for (i = 0; i < 3000; i++);  // Wait 1ms for initialization
-  90   1          while ((OSCXCN & 0x80) == 0);
-  91   1          OSCICN    = 0x0C;
-  92   1      }
-  93          
-  94          // Initialization function for device,
-  95          // Call Init_Device() from your main program
-  96          void Init_Device(void)
-  97          {
-  98   1          Reset_Sources_Init();
-  99   1          Timer_Init();
- 100   1          UART_Init();
- 101   1          DAC_Init();
- 102   1          Voltage_Reference_Init();
- 103   1          Port_IO_Init();
- 104   1          Oscillator_Init();
- 105   1      }
+  55   1          // P1.7  -  Unassigned,  Push-Pull,  Digital
+  56   1      
+  57   1          // P2.0  -  Unassigned,  Open-Drain, Digital
+  58   1          // P2.1  -  Unassigned,  Open-Drain, Digital
+  59   1          // P2.2  -  Unassigned,  Open-Drain, Digital
+  60   1          // P2.3  -  Unassigned,  Push-Pull,  Digital
+  61   1          // P2.4  -  Unassigned,  Open-Drain, Digital
+  62   1          // P2.5  -  Unassigned,  Open-Drain, Digital
+  63   1          // P2.6  -  Unassigned,  Open-Drain, Digital
+  64   1          // P2.7  -  Unassigned,  Open-Drain, Digital
+  65   1      
+  66   1          // P3.0  -  Unassigned,  Open-Drain, Digital
+  67   1          // P3.1  -  Unassigned,  Open-Drain, Digital
+  68   1          // P3.2  -  Unassigned,  Open-Drain, Digital
+  69   1          // P3.3  -  Unassigned,  Open-Drain, Digital
+  70   1          // P3.4  -  Unassigned,  Open-Drain, Digital
+  71   1          // P3.5  -  Unassigned,  Open-Drain, Digital
+  72   1          // P3.6  -  Unassigned,  Open-Drain, Digital
+  73   1          // P3.7  -  Unassigned,  Open-Drain, Digital
+  74   1      
+  75   1          P0MDOUT   = 0xD1;
+  76   1          P1MDOUT   = 0xC3;
+  77   1          P2MDOUT   = 0x08;
+  78   1          P74OUT    = 0x33;
+  79   1          XBR0      = 0x25;
+  80   1          XBR2      = 0x44;
+  81   1      }
+  82          
+  83          void Oscillator_Init()
+  84          {
+  85   1          int i = 0;
+  86   1          OSCXCN    = 0x67;
+  87   1          for (i = 0; i < 3000; i++);  // Wait 1ms for initialization
+  88   1          while ((OSCXCN & 0x80) == 0);
+  89   1          OSCICN    = 0x0C;
+  90   1      }
+  91          
+  92          // Initialization function for device,
+  93          // Call Init_Device() from your main program
+  94          void Init_Device(void)
+  95          {
+  96   1          Reset_Sources_Init();
+  97   1          Timer_Init();
+  98   1          UART_Init();
+  99   1          DAC_Init();
+ 100   1          Voltage_Reference_Init();
+ 101   1          Port_IO_Init();
+ 102   1          Oscillator_Init();
+ 103   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    110    ----
+   CODE SIZE        =     92    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
-C51 COMPILER V9.57.0.0   INITCONFIG                                                        04/29/2018 00:16:06 PAGE 3   
-
 END OF MODULE INFORMATION.
 
 

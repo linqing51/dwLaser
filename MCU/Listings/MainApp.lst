@@ -1,56 +1,50 @@
-C51 COMPILER V9.57.0.0   MAINAPP                                                           04/29/2018 00:16:07 PAGE 1   
+C51 COMPILER V9.57.0.0   MAINAPP                                                           05/05/2018 23:56:37 PAGE 1   
 
 
 C51 COMPILER V9.57.0.0, COMPILATION OF MODULE MAINAPP
 OBJECT MODULE PLACED IN .\Objects\MainApp.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE App\MainApp.c LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.ORC
-                    -) BROWSE INCDIR(.\Lib;.\uCOSII;.\App) DEBUG OBJECTEXTEND PRINT(.\Listings\MainApp.lst) OBJECT(.\Objects\MainApp.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Source\MainApp.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Source) DEBUG O
+                    -BJECTEXTEND PRINT(.\Listings\MainApp.lst) OBJECT(.\Objects\MainApp.obj)
 
 line level    source
 
    1          #include "MainApp.h"
    2          /*****************************************************************************/
-   3          //TIMER0 ->uCos Tick
+   3          //TIMER0 ->Laser Pulse
    4          //TIMER1 ->UART0/1 Buadrate
    5          //TIMER2 ->Modbus Slave TIMER
    6          //TIMER3 ->HW I2C
-   7          //TIMER4 ->Laser Pulse
+   7          //TIMER4 ->SoftPLC HWTIMER
    8          /*****************************************************************************/
-   9          OS_STK softPlcTaskStk[CONFIG_TASK_STACK_SIZE];
+   9          
   10          /*****************************************************************************/
-  11          void softPlcTask(void *yydata);
-  12          /*****************************************************************************/
-  13          /*****************************************************************************/
-  14          void softPlcTask(void *yydata)
-  15          {//软PLC线程
-  16   1              yydata = yydata;
-  17   1              while(1)
-  18   1              {
-  19   2                       OSTimeDly(100);
-  20   2              }
-  21   1      }
-  22          void main(void)
-  23          {
-  24   1              Init_Device();//初始化MCU
-  25   1              InitOsTimer();//UCOS 计时器T0 初始化
-  26   1              //SoftPlc_Init();
-  27   1              //setModbusSlaveAddr(CONFIG_LOCAL_ADDRESS);//设置从机地址
-  28   1              //InitModbusHardware(CONFIG_UART0_BAUDRATE);//初始化MODBUS从机串口
-  29   1              OSTaskCreate(softPlcTask, (void *)0, (void *)&softPlcTaskStk[0], 5);/* 建立任务0 */
-  30   1              OSStart();                        /* 开始多任务调度 */
-  31   1              /**********************************************************************/
-  32   1              while(1)
-  33   1              {
-  34   2              }               
-  35   1      }
-  36          
-  37          
+  11          void main(void)
+  12          {
+  13   1              uint8_t st;
+  14   1              Init_Device();//初始化MCU
+  15   1              SoftPlc_Init(&softPlc);
+  16   1              //setModbusSlaveAddr(CONFIG_LOCAL_ADDRESS);//设置从机地址
+  17   1              //InitModbusHardware(CONFIG_UART0_BAUDRATE);//初始化MODBUS从机串口
+  18   1              /**********************************************************************/
+  19   1              EA = 1;
+  20   1              st = 0;
+  21   1              while(1)
+  22   1              {
+  23   2                      startTimer(&softPlc.T_1000ms[4], 10);
+  24   2                      if(softPlc.T_1000ms[4].output)
+  25   2                      {
+  26   3                              st = 1;
+  27   3                      }
+  28   2              }               
+  29   1      }
+  30          
+  31          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     53    ----
+   CODE SIZE        =     46    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =    256    ----
+   XDATA SIZE       =   ----       1
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

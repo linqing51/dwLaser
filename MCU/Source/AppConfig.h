@@ -53,11 +53,13 @@
 #define CONFIG_USE_IPID_UPDATE				1//使能IPID参数更新功能
 #define CONFIG_USE_IPID_OUTSHOW				1//使能IPID输出显示
 /*****************************************************************************/
-#define CONFIG_INPUT_FILTER					10//输入数字滤波时间
-#define CONFIG_TIME0_1MS					(65536 - (uint16_t)(CONFIG_SYSCLK / 48 / 1000))//计时1ms
-#define CONFIG_PLC_TIMER_1MS_NUM			8//1ms计时器个数
-#define CONFIG_PLC_TIMER_10MS_NUM			8//10ms计时器个数
-#define CONFIG_PLC_TIMER_100MS_NUM			8//100计时器个数
+//SOFTPLC设置
+#define CONFIG_SOFTPLC_HWTIME				(65536 - (uint16_t)(CONFIG_SYSCLK * 1000 /12 / 10))//计时10ms
+#define CONFIG_INPUT_FILTER					1//输入数字滤波周期
+#define CONFIG_PLC_TIMER_1MS_NUM			16//1ms计时器个数
+#define CONFIG_PLC_TIMER_10MS_NUM			16//10ms计时器个数
+#define CONFIG_PLC_TIMER_100MS_NUM			16//100mS计时器个数
+#define CONFIG_PLC_TIMER_1000MS_NUM			16//1S计时器个数
 #define CONFIG_PLC_M_NUM					32//辅助寄存器个数
 #define CONFIG_PLC_X_NUM					8//输入寄存器个数
 #define CONFIG_PLC_Y_NUM					8//输出寄存器个数
@@ -77,9 +79,6 @@
 #define FBS2_IN_PORT						2
 #define COOLON_OUT_PORT						(1 * 8 + 3)
 /*****************************************************************************/
-//UCOS2 堆栈配置                               
-#define CONFIG_TASK_STACK_SIZE    			256//设置堆栈大小
-/*****************************************************************************/
 #include "stdint.h"
 #include "stdbool.h"
 #include "endian.h"
@@ -93,15 +92,7 @@
 #include <ctype.h>
 #include "LIMITS.H"
 /*****************************************************************************/
-#include "os_cpu.h"
-#include "os_cfg.h"
-#include "ucos_ii.h"
-/*****************************************************************************/
-//#include "modbusApp.h"
-//#include "modbusPort.h"
-//#include "slaveModbus.h"
-
-//#include "SoftPlcPort.h"
+#include "softPlc.h"
 //#include "delay.h"
 /*****************************************************************************/
 #include "InitConfig.h"
@@ -109,5 +100,9 @@
 //#include "chipAdc.h"
 //#include "ad5621.h"
 //#include "chipBeem.h"
+
+//#include "modbusApp.h"
+//#include "modbusPort.h"
+//#include "slaveModbus.h"
 /*****************************************************************************/
 #endif

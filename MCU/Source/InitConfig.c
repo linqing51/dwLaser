@@ -7,16 +7,14 @@ void Reset_Sources_Init()
 {
     WDTCN     = 0xDE;
     WDTCN     = 0xAD;
-    RSTSRC    = 0x06;
+//    RSTSRC    = 0x06;
 }
 
 void Timer_Init()
 {
-    CKCON     = 0x30;
-    TMOD      = 0x20;
-    TH1       = 0xFA;
-    RCAP2L    = 0xB8;
-    RCAP2H    = 0xFF;
+//    CKCON     = 0x30;
+//    TMOD      = 0x20;
+//    TH1       = 0xFA;
 }
 
 void UART_Init()
