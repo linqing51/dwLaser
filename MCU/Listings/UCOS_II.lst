@@ -1,13 +1,56 @@
-C51 COMPILER V9.57.0.0   UCOS_II                                                           04/30/2018 00:06:07 PAGE 1   
+C51 COMPILER V9.57.0.0   UCOS_II                                                           05/06/2018 22:40:03 PAGE 1   
 
 
 C51 COMPILER V9.57.0.0, COMPILATION OF MODULE UCOS_II
 OBJECT MODULE PLACED IN .\Objects\UCOS_II.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE uCOSII\UCOS_II.C LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.
-                    -ORC) BROWSE INCDIR(.\Lib;.\uCOSII;.\App) DEBUG OBJECTEXTEND PRINT(.\Listings\UCOS_II.lst) OBJECT(.\Objects\UCOS_II.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Source\uCOSIIV2.76\UCOS_II.C LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Sou
+                    -rce\Lib;.\Source\uCOSIIV2.76;.\Source\Driver;.\Source\Modbus;.\Source\MainApp) DEBUG OBJECTEXTEND PRINT(.\Listings\UCOS_
+                    -II.lst) OBJECT(.\Objects\UCOS_II.obj)
 
 line level    source
 
-*** ERROR C318 OF uCOSII\UCOS_II.C: can't open file 'uCOSII\UCOS_II.C'
+   1          /*
+   2          *********************************************************************************************************
+   3          *                                                uC/OS-II
+   4          *                                          The Real-Time Kernel
+   5          *
+   6          *                        (c) Copyright 1992-1998, Jean J. Labrosse, Plantation, FL
+   7          *                                           All Rights Reserved
+   8          *
+   9          *                                                  V2.00
+  10          *
+  11          * File : uCOS_II.C
+  12          * By   : Jean J. Labrosse
+  13          *********************************************************************************************************
+  14          */
+  15          
+  16          #define  OS_GLOBALS                           /* Declare GLOBAL variables                              */
+  17          #include "AppConfig.h"
+  18          
+  19          
+  20          #define  OS_MASTER_FILE                       /* Prevent the following files from including includes.h */
+  21          #include "os_core.c"
+  22          #include "os_mbox.c"
+  23          #include "os_mem.c"
+  24          #include "os_q.c"
+  25          #include "os_sem.c"
+  26          #include "os_task.c"
+  27          #include "os_time.c"
+  28          
+  29          //为系统扩充显示管理
+  30          //#include <serial.c>
+  31          
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =  11899    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   2124     335
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =      9    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

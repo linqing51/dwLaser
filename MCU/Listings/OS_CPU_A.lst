@@ -1,10 +1,10 @@
-A51 MACRO ASSEMBLER  OS_CPU_A                                                             04/29/2018 00:16:07 PAGE     1
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             05/06/2018 22:37:28 PAGE     1
 
 
 MACRO ASSEMBLER A51 V8.2.7.0
 OBJECT MODULE PLACED IN .\Objects\OS_CPU_A.obj
-ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE uCOSII\OS_CPU_A.ASM SET(LARGE) DEBUG PRINT(.\Listings\OS_CPU_A.lst) OBJ
-                      ECT(.\Objects\OS_CPU_A.obj) EP
+ASSEMBLER INVOKED BY: C:\Keil_v5\C51\BIN\A51.EXE Source\uCOSIIV2.76\OS_CPU_A.ASM SET(LARGE) DEBUG PRINT(.\Listings\OS_CP
+                      U_A.lst) OBJECT(.\Objects\OS_CPU_A.obj) EP
 
 LOC  OBJ            LINE     SOURCE
 
@@ -65,7 +65,7 @@ LOC  OBJ            LINE     SOURCE
                       53         
                       54             EXTRN CODE  (OSTaskSwHook)
                       55             ;EXTRN CODE  (serial)
-A51 MACRO ASSEMBLER  OS_CPU_A                                                             04/29/2018 00:16:07 PAGE     2
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             05/06/2018 22:37:28 PAGE     2
 
                       56             EXTRN CODE  (OSIntEnter)
                       57             EXTRN CODE  (OSIntExit)
@@ -133,7 +133,7 @@ LOC  OBJ            LINE     SOURCE
                      119             POP  DPH
                      120             POP  DPL
                      121             POP  B
-A51 MACRO ASSEMBLER  OS_CPU_A                                                             04/29/2018 00:16:07 PAGE     3
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             05/06/2018 22:37:28 PAGE     3
 
                      122             POP  ACC
                      123             POP  PSW
@@ -201,7 +201,7 @@ LOC  OBJ            LINE     SOURCE
                      182             POPALL
 0047 D2AF            205             SETB EA    ;开中断
 0049 32              206             RETI
-A51 MACRO ASSEMBLER  OS_CPU_A                                                             04/29/2018 00:16:07 PAGE     4
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             05/06/2018 22:37:28 PAGE     4
 
                      207     ;-------------------------------------------------------------------------
 ----                 208             RSEG ?PR?OSCtxSw?OS_CPU_A
@@ -269,7 +269,7 @@ LOC  OBJ            LINE     SOURCE
 0050 F6              291             MOV  @R0,A
 0051 08              292             INC  R0
 0052 09              293             INC  R1
-A51 MACRO ASSEMBLER  OS_CPU_A                                                             04/29/2018 00:16:07 PAGE     5
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             05/06/2018 22:37:28 PAGE     5
 
 0053 E7              294             MOV  A,@R1
 0054 F6              295             MOV  @R0,A
@@ -316,24 +316,10 @@ LOC  OBJ            LINE     SOURCE
 0032 120000   F      357             LCALL OSIntExit
                      358             POPALL        
 0057 32              381             RETI
-                     382     ;-------------------------------------------------------------------------
-                     383     ;        CSEG AT 0023H    ;串口中断
-                     384     ;        LJMP SerialISR   ;工作于系统态，无任务切换。
-                     385     ;        RSEG ?PR?_?serial?OS_CPU_A
-                     386             
-                     387     ;SerialISR:
-                     388             
-                     389     ;        USING 0        
-                     390     ;        PUSHALL
-                     391     ;        CLR  EA
-                     392     ;        LCALL serial        
-                     393     ;        SETB EA
-                     394     ;        POPALL        
-                     395     ;        RETI
-                     396     ;-------------------------------------------------------------------------
-                     397              END
+                     382     
+                     383              END
                              ;-------------------------------------------------------------------------
-A51 MACRO ASSEMBLER  OS_CPU_A                                                             04/29/2018 00:16:07 PAGE     6
+A51 MACRO ASSEMBLER  OS_CPU_A                                                             05/06/2018 22:37:28 PAGE     6
 
 SYMBOL TABLE LISTING
 ------ ----- -------

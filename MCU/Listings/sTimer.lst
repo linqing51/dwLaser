@@ -1,15 +1,15 @@
-C51 COMPILER V9.57.0.0   SOFTPLC                                                           05/07/2018 22:16:17 PAGE 1   
+C51 COMPILER V9.57.0.0   STIMER                                                            05/06/2018 22:53:29 PAGE 1   
 
 
-C51 COMPILER V9.57.0.0, COMPILATION OF MODULE SOFTPLC
-OBJECT MODULE PLACED IN .\Objects\softPlc.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Source\Lib\softPlc.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Source\Lib;
-                    -.\Source\Driver;.\Source\Modbus;.\Source\MainApp) DEBUG OBJECTEXTEND PRINT(.\Listings\softPlc.lst) OBJECT(.\Objects\soft
-                    -Plc.obj)
+C51 COMPILER V9.57.0.0, COMPILATION OF MODULE STIMER
+OBJECT MODULE PLACED IN .\Objects\sTimer.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Source\Lib\sTimer.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Source\Lib;.
+                    -\Source\uCOSIIV2.76;.\Source\Driver;.\Source\Modbus;.\Source\MainApp) DEBUG OBJECTEXTEND PRINT(.\Listings\sTimer.lst) OB
+                    -JECT(.\Objects\sTimer.obj)
 
 line level    source
 
-   1          #include "softPlc.h"
+   1          #include "sTimer.h"
    2          /*****************************************************************************/
    3          SI_SEG_DATA uint8_t inputFilterCounter;//输入滤波常熟
    4          SI_SEG_DATA uint16_t inputFilter[CONFIG_PLC_X_NUM / 16 + 2];//已滤波输入
@@ -62,7 +62,7 @@ line level    source
   51   2                      pt->T_100ms[i].value = 0;
   52   2                      pt->T_100ms[i].mate = 0;
   53   2                      pt->T_100ms[i].enable = 0;
-C51 COMPILER V9.57.0.0   SOFTPLC                                                           05/07/2018 22:16:17 PAGE 2   
+C51 COMPILER V9.57.0.0   STIMER                                                            05/06/2018 22:53:29 PAGE 2   
 
   54   2                      pt->T_100ms[i].output = 0;
   55   2              }
@@ -126,7 +126,7 @@ line level    source
  113   2                      softPlc.counter_1ms = 0;
  114   2              }
  115   1              
-C51 COMPILER V9.57.0.0   SOFTPLC                                                           05/07/2018 22:16:17 PAGE 3   
+C51 COMPILER V9.57.0.0   STIMER                                                            05/06/2018 22:53:29 PAGE 3   
 
  116   1              if(softPlc.counter_10ms >= 100)
  117   1              {//100mS T
@@ -190,7 +190,7 @@ line level    source
  175   5                                              inputFilter[i] |= (uint16_t)(temp0 << j);
  176   5                                      }
  177   4                              }
-C51 COMPILER V9.57.0.0   SOFTPLC                                                           05/07/2018 22:16:17 PAGE 4   
+C51 COMPILER V9.57.0.0   STIMER                                                            05/06/2018 22:53:29 PAGE 4   
 
  178   3                              inputLast[i] = inputCurrent[i];
  179   3                      }
@@ -254,7 +254,7 @@ line level    source
  237   2                      pt->value = 0;//复位计时值
  238   2                      pt->enable = 1;
  239   2                      pt->output = 0;
-C51 COMPILER V9.57.0.0   SOFTPLC                                                           05/07/2018 22:16:17 PAGE 5   
+C51 COMPILER V9.57.0.0   STIMER                                                            05/06/2018 22:53:29 PAGE 5   
 
  240   2              }
  241   1      }

@@ -18,7 +18,8 @@ typedef signed char int8_t;
 typedef short int16_t;
 typedef long int32_t;
 typedef int32_t int64_t[2];
-
+typedef float fp32_t;
+typedef double fp64_t;
 
 #elif defined __ICC8051__
 

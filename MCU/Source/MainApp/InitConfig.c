@@ -94,10 +94,11 @@ void Oscillator_Init()
 void Init_Device(void)
 {
     Reset_Sources_Init();
+	Oscillator_Init();
     Timer_Init();
     UART_Init();
     DAC_Init();
     Voltage_Reference_Init();
     Port_IO_Init();
-    Oscillator_Init();
+   
 }

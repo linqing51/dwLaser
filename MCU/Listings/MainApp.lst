@@ -1,10 +1,11 @@
-C51 COMPILER V9.57.0.0   MAINAPP                                                           05/05/2018 23:56:37 PAGE 1   
+C51 COMPILER V9.57.0.0   MAINAPP                                                           05/07/2018 22:44:20 PAGE 1   
 
 
 C51 COMPILER V9.57.0.0, COMPILATION OF MODULE MAINAPP
 OBJECT MODULE PLACED IN .\Objects\MainApp.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Source\MainApp.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Source) DEBUG O
-                    -BJECTEXTEND PRINT(.\Listings\MainApp.lst) OBJECT(.\Objects\MainApp.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Source\MainApp\MainApp.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Source\
+                    -Lib;.\Source\Driver;.\Source\Modbus;.\Source\MainApp) DEBUG OBJECTEXTEND PRINT(.\Listings\MainApp.lst) OBJECT(.\Objects\
+                    -MainApp.obj)
 
 line level    source
 
@@ -16,35 +17,83 @@ line level    source
    6          //TIMER3 ->HW I2C
    7          //TIMER4 ->SoftPLC HWTIMER
    8          /*****************************************************************************/
-   9          
-  10          /*****************************************************************************/
-  11          void main(void)
-  12          {
-  13   1              uint8_t st;
-  14   1              Init_Device();//初始化MCU
-  15   1              SoftPlc_Init(&softPlc);
-  16   1              //setModbusSlaveAddr(CONFIG_LOCAL_ADDRESS);//设置从机地址
-  17   1              //InitModbusHardware(CONFIG_UART0_BAUDRATE);//初始化MODBUS从机串口
-  18   1              /**********************************************************************/
-  19   1              EA = 1;
-  20   1              st = 0;
-  21   1              while(1)
-  22   1              {
-  23   2                      startTimer(&softPlc.T_1000ms[4], 10);
-  24   2                      if(softPlc.T_1000ms[4].output)
-  25   2                      {
-  26   3                              st = 1;
-  27   3                      }
-  28   2              }               
-  29   1      }
-  30          
-  31          
+   9          sbit LED3 = P1^7;
+  10          sbit LED4 = P1^6;
+  11          /*****************************************************************************/
+  12          void main(void)
+  13          {
+  14   1              uint8_t st;
+  15   1              pidFuzzy_t pidFuzzy;
+  16   1              Init_Device();//初始化MCU
+  17   1              
+  18   1              SoftPlc_Init(&softPlc);
+  19   1              pidFuzzyInit(&pidFuzzy);
+  20   1              setModbusSlaveAddr(CONFIG_LOCAL_ADDRESS);//设置从机地址
+  21   1              InitModbusHardware(CONFIG_UART0_BAUDRATE);//初始化MODBUS从机串口
+  22   1              /**********************************************************************/
+  23   1              EA = 1;
+  24   1              LED3 = 0;
+  25   1              LED3 = 1;
+  26   1              LED4 = 0;
+  27   1              LED4 = 1;
+  28   1              //setCoil(&softPlc.M, 1000);//M1000
+  29   1              while(1)
+  30   1              {//开始循环扫描周期
+  31   2                      if(LED3)
+  32   2                      {
+  33   3                              if(softPlc.T_10ms[0].output)//等待时间A
+  34   3                              {
+  35   4                                      LED3 = 0;
+  36   4                                      stopTimer(&softPlc.T_10ms[0]);
+  37   4                              }
+  38   3                              else
+  39   3                                      startTimer(&softPlc.T_10ms[0], 50);
+  40   3                      }
+  41   2                      if(!LED3)
+  42   2                      {
+  43   3                              if(softPlc.T_10ms[1].output)//等待时间B
+  44   3                              {
+  45   4                                      LED3 = 1;
+  46   4                                      stopTimer(&softPlc.T_10ms[1]);
+  47   4                              }
+  48   3                              else
+  49   3                                      startTimer(&softPlc.T_10ms[1], 20);
+  50   3                                      
+  51   3                      }
+  52   2                      //PID指令
+  53   2                      //if(getCoil(&softPlc.M, 100))
+C51 COMPILER V9.57.0.0   MAINAPP                                                           05/07/2018 22:44:20 PAGE 2   
+
+  54   2                      //{//执行PID 温控指令
+  55   2                              //执行PID
+  56   2                      if(softPlc.T_10ms[2].output)//等待A时间
+  57   2                      {
+  58   3                              pidFuzzyRealize(&pidFuzzy, 25.0, 30.0);
+  59   3                              stopTimer(&softPlc.T_10ms[2]);//停止计时器
+  60   3                      }
+  61   2                      else
+  62   2                      {
+  63   3                              startTimer(&softPlc.T_10ms[2], 100);//开始计数器        
+  64   3                      }
+  65   2                      //}
+  66   2                      modbusPoll();//执行MODBUS POLL
+  67   2                      
+  68   2                      setOutput(&softPlc);//更新输出IO
+  69   2                      
+  70   2                      //看门狗喂狗
+  71   2                      
+  72   2              }               
+  73   1      }
+*** WARNING C280 IN LINE 14 OF Source\MainApp\MainApp.c: 'st': unreferenced local variable
+  74          
+  75          
+  76          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     46    ----
+   CODE SIZE        =    194    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----       1
+   XDATA SIZE       =   ----      43
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
@@ -52,4 +101,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

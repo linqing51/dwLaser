@@ -54,16 +54,19 @@
 #define CONFIG_USE_IPID_OUTSHOW				1//使能IPID输出显示
 /*****************************************************************************/
 //SOFTPLC设置
-#define CONFIG_SOFTPLC_HWTIME				(65536 - (uint16_t)(CONFIG_SYSCLK * 1000 /12 / 10))//计时10ms
-#define CONFIG_INPUT_FILTER					1//输入数字滤波周期
-#define CONFIG_PLC_TIMER_1MS_NUM			16//1ms计时器个数
-#define CONFIG_PLC_TIMER_10MS_NUM			16//10ms计时器个数
-#define CONFIG_PLC_TIMER_100MS_NUM			16//100mS计时器个数
-#define CONFIG_PLC_TIMER_1000MS_NUM			16//1S计时器个数
-#define CONFIG_PLC_M_NUM					32//辅助寄存器个数
+#define CONFIG_SOFTPLC_HWTIME				(65536 - (uint16_t)(CONFIG_SYSCLK * 1000 /12 / 10))//SoftPLC 硬件计时器基准10ms
+#define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波周期
+#define CONFIG_PLC_T_1MS_NUM			16//1ms计时器
+#define CONFIG_PLC_T_10MS_NUM			16//10ms计时器
+#define CONFIG_PLC_T_100MS_NUM			16//100mS计时器
+#define CONFIG_PLC_T_1000MS_NUM			16//1S计时器
+#define CONFIG_PLC_N_NUM					128//保持辅助寄存器
+#define CONFIG_PLC_M_NUM					1024//非保持辅助寄存器
 #define CONFIG_PLC_X_NUM					8//输入寄存器个数
 #define CONFIG_PLC_Y_NUM					8//输出寄存器个数
-#define CONFIG_PLC_D_NUM					32//D寄存器
+#define CONFIG_PLC_D_NUM					32//保持寄存器
+#define CONFIG_PLC_R_NUM					32//非保持
+#define CONFIG_PLC_C_NUM					32//计数器
 #define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
 #define CONFIG_IPID_PWM_CYCLE				20//IPID输出周期 默认 20 * 100mS
 /*****************************************************************************/
@@ -79,6 +82,21 @@
 #define FBS2_IN_PORT						2
 #define COOLON_OUT_PORT						(1 * 8 + 3)
 /*****************************************************************************/
+//PID FUZZY 模糊PID配置
+#define CONFIG_PID_FUZZY_EMIN				0.0
+#define CONFIG_PID_FUZZY_EMID 				0.08
+#define CONFIG_PID_FUZZY_EMAX				0.6
+//调整值限幅，防止积分饱和
+#define CONFIG_PID_FUZZY_UMAX				5
+#define CONFIG_PID_FUZZY_UMIN 				-5
+//输出值限幅
+#define CONFIG_PID_FUZZY_PMAX 				7200
+#define CONFIG_PID_FUZZY_PMIN 				0
+/*****************************************************************************/
+//MODBUS SALVE配置
+#define CONFIG_MODBUS_SLAVE_RX_BUFF_SIZE	128
+#define CONFIG_MODBUS_SLAVE_TX_BUFF_SIZE	128
+/*****************************************************************************/
 #include "stdint.h"
 #include "stdbool.h"
 #include "endian.h"
@@ -91,9 +109,10 @@
 #include "INTRINS.H"
 #include <ctype.h>
 #include "LIMITS.H"
+#include "math.h"
 /*****************************************************************************/
 #include "softPlc.h"
-//#include "delay.h"
+#include "pidFuzzy.h"
 /*****************************************************************************/
 #include "InitConfig.h"
 //#include "AppMath.h"
@@ -101,8 +120,8 @@
 //#include "ad5621.h"
 //#include "chipBeem.h"
 
-//#include "modbusApp.h"
-//#include "modbusPort.h"
-//#include "slaveModbus.h"
+#include "modbusApp.h"
+#include "modbusPort.h"
+#include "slaveModbus.h"
 /*****************************************************************************/
 #endif

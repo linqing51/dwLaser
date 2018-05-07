@@ -1,22 +1,14 @@
 /*****************************************************************************/
 #include "modbusPort.h"
 /*****************************************************************************/
-static data uint8_t ModbusTL, ModbusTH;
-
-void ModbusTimer(void *yydata)
-{
-}
-
-static void Timer1Handle() interrupt INTERRUPT_TIMER4
+static void ModbusHandle() interrupt INTERRUPT_TIMER2
 {//硬件计时器TIMER1中断函数 1mS
-	//TL4       = ModbusTL;
-    //TH4       = ModbusTH;
+	TF2 = 0;
 	modbusTimerHandle();
 } 
 
 static void SerialHandle() interrupt INTERRUPT_UART0
 {//UART0 串口中断程序
-	OS_ENTER_CRITICAL(); //关闭Ucos 中断
 	if(RI0)
 	{
 		RI0 = 0;  
@@ -27,7 +19,6 @@ static void SerialHandle() interrupt INTERRUPT_UART0
 		TI0 = 0;
 		modbusSerialTxHandle();
 	}
-	OS_EXIT_CRITICAL();
 }  
 static void modbusSerialSendbyte(uint8_t *dt)
 {//串口发送一个字节
@@ -49,33 +40,31 @@ void modbusSerialSendBuffer(uint8_t *buf, uint8_t size)
 void InitModbusSerial(int32_t baudrate)
 {//初始化MODBUS串口
 	uint32_t temp;
-	CKCON |= 1 << 5;//TIMER2 SYSCLK
-	T2CON |= 1 << 4;//Timer 2 overflows used for transmit clock
-	T2CON |= 1 << 5;//Timer 2 overflows used for receive clock
+	CKCON |= ~(1 << 4);//TIMER1 SYSCLK / 12
 	temp = (uint32_t)(CONFIG_SYSCLK / 32 / baudrate);
 	temp = 65536 - temp;	
-    RCAP2L    =	(uint8_t)(temp & 0xff);
-    RCAP2H    = (uint8_t)((temp >> 8) & 0xff);
-	T2CON |= 1 << 2;//Timer 2 enabled
+	TMOD &= 0x0F;
+	TMOD |= 1 << 5;//Mode 2: 8-bit counter/timer with auto-reload
+	
+	TH1 = (uint8_t)(temp & 0xff);
+	TR1 = 1;
+	//T2CON |= 1 << 2;//Timer 2 enabled
 	RS485_DIRECTION_RXD;//接收状态
 	ES0 = 1;
 	TI0 = 0;//清除发送完成   		
 	RI0 = 0;//清除接收完成			
 }
 void InitModbusTimer(void)
-{//初始化MODBUS计时器 1mS TIMER1
+{//初始化MODBUS计时器 1mS TIMER2
 	uint16_t temp;
-	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / 1000));
-	CKCON &= ~(1 << 4);//TIMER1 CLK = SYSCLK / 12
-	TMOD &= 0x0F;
-	TMOD |= (1 << 4);//Mode 1, 16-bit Counter/Timer
-    ModbusTL = (uint8_t)(temp & 0xFF);
-	ModbusTH = (uint8_t)((temp >> 8) & 0xFF);
-	TL1       = ModbusTL;
-    TH1       = ModbusTH;
-	TF1 = 0;
-	TR1 = 1;        
-	ET1 = 1; //开中断T0
+	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / 1000 * 10));
+	CKCON &= ~(1 << 5);//TIMER1 CLK = SYSCLK / 12
+	T2CON = 0x0;//RCLK0=0,TCLK0=0
+    RCAP2L = (uint8_t)(temp & 0xFF);
+	RCAP2H = (uint8_t)((temp >> 8) & 0xFF);
+	TF2 = 0;
+	TR2 = 1;        
+	ET2 = 1; //开中断T0
 }
 
 

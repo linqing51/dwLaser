@@ -4,14 +4,14 @@ static data uint8_t localAddr; //单片机控制板的地址
 static data uint8_t receTimeOut;//接收超时
 static data uint8_t sendCount;//发送字节个数
 static data uint8_t receCount;//接收到的字节个数
-static idata uint8_t receBuf[64];
-static idata uint8_t sendBuf[64];
-static data uint8_t bt1ms;//定时标志位
+static uint8_t receBuf[CONFIG_MODBUS_SLAVE_RX_BUFF_SIZE];
+static uint8_t sendBuf[CONFIG_MODBUS_SLAVE_TX_BUFF_SIZE];
+static uint8_t bt1ms;//定时标志位
 static void timeProc(void);
 static void checkComm0Modbus(void);
-/* CRC 高位字节值表 */ 
+ 
 uint8_t code auchCRCHi[] = 
-{ 
+{//CRC 高位字节值表 
 	0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0, 
 	0x80, 0x41, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 
 	0x00, 0xC1, 0x81, 0x40, 0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 
@@ -39,9 +39,9 @@ uint8_t code auchCRCHi[] =
 	0x00, 0xC1, 0x81, 0x40, 0x01, 0xC0, 0x80, 0x41, 0x01, 0xC0, 
 	0x80, 0x41, 0x00, 0xC1, 0x81, 0x40 
 } ; 
-/* CRC低位字节值表*/ 
+
 uint8_t code auchCRCLo[] = 
-{	
+{//CRC低位字节值表
 	0x00, 0xC0, 0xC1, 0x01, 0xC3, 0x03, 0x02, 0xC2, 0xC6, 0x06, 
 	0x07, 0xC7, 0x05, 0xC5, 0xC4, 0x04, 0xCC, 0x0C, 0x0D, 0xCD, 
 	0x0F, 0xCF, 0xCE, 0x0E, 0x0A, 0xCA, 0xCB, 0x0B, 0xC9, 0x09, 		  
@@ -68,7 +68,8 @@ uint8_t code auchCRCLo[] =
 	0x8A, 0x4A, 0x4E, 0x8E, 0x8F, 0x4F, 0x8D, 0x4D, 0x4C, 0x8C, 
 	0x44, 0x84, 0x85, 0x45, 0x87, 0x47, 0x46, 0x86, 0x82, 0x42, 
 	0x43, 0x83, 0x41, 0x81, 0x80, 0x40 
-} ;
+};
+
 void presetSingleRegister(void);
 uint16_t setCoilVal(uint16_t addr,uint16_t tempData);
 uint16_t getCoilVal(uint16_t addr,uint16_t *tempData);
@@ -78,7 +79,6 @@ uint16_t setRegisterVal(uint16_t addr,uint16_t tempData);
 /*****************************************************************************/
 void InitModbusHardware(uint32_t baudrate)
 {//初始化MODBUS硬件
-	
 	memset(receBuf, 0x00, sizeof(receBuf)); 
 	memset(sendBuf, 0x00, sizeof(receBuf)); 
 	InitModbusTimer();//初始化计时器
@@ -128,9 +128,9 @@ static void timeProc(void)
 }
 static uint16_t crc16(uint8_t *puchMsg, uint16_t usDataLen) 
 {//CRC16生成器 
-	 data uint8_t uchCRCHi = 0xFF ; /* 高CRC字节初始化 */ 
-	 data uint8_t uchCRCLo = 0xFF ; /* 低CRC 字节初始化 */ 
-	 data uint16_t uIndex ; /* CRC循环中的索引 */ 
+	data uint8_t uchCRCHi = 0xFF ; /* 高CRC字节初始化 */ 
+	data uint8_t uchCRCLo = 0xFF ; /* 低CRC 字节初始化 */ 
+	data uint16_t uIndex ; /* CRC循环中的索引 */ 
 	while (usDataLen--) /* 传输消息缓冲区 */ 
 	{ 
 		uIndex = uchCRCHi ^ *puchMsg++ ; /* 计算CRC */ 

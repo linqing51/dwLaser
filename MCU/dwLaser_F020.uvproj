@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>Target 1</TargetName>
+      <TargetName>Debug</TargetName>
       <ToolsetNumber>0x0</ToolsetNumber>
       <ToolsetName>MCS-51</ToolsetName>
       <uAC6>0</uAC6>
@@ -133,7 +133,7 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
+            <LimitSpeedToRealTime>1</LimitSpeedToRealTime>
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
@@ -312,7 +312,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\Source</IncludePath>
+              <IncludePath>.\Source\Lib;.\Source\Driver;.\Source\Modbus;.\Source\MainApp</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -362,27 +362,60 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Source Group 1</GroupName>
+          <GroupName>Lib</GroupName>
           <Files>
             <File>
               <FileName>STARTUP.A51</FileName>
               <FileType>2</FileType>
-              <FilePath>.\Source\STARTUP.A51</FilePath>
-            </File>
-            <File>
-              <FileName>InitConfig.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Source\InitConfig.c</FilePath>
-            </File>
-            <File>
-              <FileName>MainApp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Source\MainApp.c</FilePath>
+              <FilePath>.\Source\Lib\STARTUP.A51</FilePath>
             </File>
             <File>
               <FileName>softPlc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Source\softPlc.c</FilePath>
+              <FilePath>.\Source\Lib\softPlc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Driver</GroupName>
+        </Group>
+        <Group>
+          <GroupName>Modbus</GroupName>
+          <Files>
+            <File>
+              <FileName>modbusApp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\Modbus\modbusApp.c</FilePath>
+            </File>
+            <File>
+              <FileName>modbusPort.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\Modbus\modbusPort.c</FilePath>
+            </File>
+            <File>
+              <FileName>slaveModbus.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\Modbus\slaveModbus.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>MainApp</GroupName>
+          <Files>
+            <File>
+              <FileName>InitConfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\MainApp\InitConfig.c</FilePath>
+            </File>
+            <File>
+              <FileName>MainApp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\MainApp\MainApp.c</FilePath>
+            </File>
+            <File>
+              <FileName>pidFuzzy.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Source\MainApp\pidFuzzy.c</FilePath>
             </File>
           </Files>
         </Group>
