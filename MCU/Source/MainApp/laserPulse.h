@@ -45,9 +45,10 @@ typedef struct
 	int8_t	BeemEnabled;//蜂鸣器使能
 	int8_t	AimEnable;//指示激光使能
 	int8_t	CoolEnable;//制冷输出使能
+	softTimer_t softTimer;
+	
+	int8_t 	FlagHeart;//心跳
+	int8_t  FlagConnectErr;//通信错误
 }myDevice_t;
 
 #endif
-
-
-

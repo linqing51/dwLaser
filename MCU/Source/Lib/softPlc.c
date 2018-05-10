@@ -25,8 +25,7 @@ void SoftPlc_Init(softPlc_t *pt)
 	memset(softPlc.T_1000ms, 0x0, (CONFIG_PLC_T_1000MS_NUM / 16 + 1));
 	memset(softPlc.D, 0x0, CONFIG_PLC_D_NUM);
 	memset(softPlc.R, 0x0, CONFIG_PLC_R_NUM);
-	
-	pt->counter_1ms = 0;
+	pt->counter_1ms =0;
 	pt->counter_10ms = 0;
 	pt->counter_100ms = 0;
 	
@@ -37,7 +36,7 @@ void SoftPlc_Init(softPlc_t *pt)
 		pt->T_1ms[i].enable = 0;
 		pt->T_1ms[i].output = 0;
 	}
-
+	
 	for(i = 0; i<= CONFIG_PLC_T_10MS_NUM; i++)
 	{
 		pt->T_10ms[i].value = 0;
@@ -67,9 +66,8 @@ void SoftPlc_Init(softPlc_t *pt)
 }
 static void plcHwTimer_Init(void)
 {//硬件sTimer计时器初始化
-	CKCON &= ~(1 << 6);//Timer 4 uses the system clock divided by 12
 	RCAP4H = 0xFF & (CONFIG_SOFTPLC_HWTIME >> 8);// Init Timer4 High register
-	RCAP4L = (CONFIG_SOFTPLC_HWTIME & 0xFF);// Init Timer4 Low register
+	RCAP4L = CONFIG_SOFTPLC_HWTIME & 0xFF;// Init Timer4 Low register
 	T4CON = 0x0;	
 	EIE2 |= (1 << 2);//ET4: Enable Timer 4 Interrupt
 	T4CON |= (1 << 2);//TR4: Timer 4 Run Control.
@@ -77,10 +75,10 @@ static void plcHwTimer_Init(void)
 void plcHwTimer_ISR(void) interrupt INTERRUPT_TIMER4
 {//硬件sTimer计时器中断 1mS
 	SI_SEG_DATA uint8_t i, j, temp0, temp1;
-
 	T4CON &= ~(1 << 7);//TF4: Timer 4 output Flag Clear	
+	
 	for(i = 0;i < CONFIG_PLC_T_1MS_NUM;i ++)
-	{//1mS计数器增加
+	{//10mS计数器增加
 		if(softPlc.T_1ms[i].enable)
 		{
 			if(softPlc.T_1ms[i].value >= softPlc.T_1ms[i].mate)
@@ -93,9 +91,10 @@ void plcHwTimer_ISR(void) interrupt INTERRUPT_TIMER4
 				softPlc.T_1ms[1].output = 0;
 		}
 	}
+	softPlc.counter_1ms ++;
 	
 	if(softPlc.counter_1ms >= 10)
-	{//10mS T
+	{
 		for(i = 0;i < CONFIG_PLC_T_10MS_NUM;i ++)
 		{//10mS计数器增加
 			if(softPlc.T_10ms[i].enable)
@@ -111,9 +110,10 @@ void plcHwTimer_ISR(void) interrupt INTERRUPT_TIMER4
 			}
 		}
 		softPlc.counter_1ms = 0;
+		softPlc.counter_10ms ++;
 	}
 	
-	if(softPlc.counter_10ms >= 100)
+	if(softPlc.counter_10ms >= 10)
 	{//100mS T
 		for(i = 0;i < CONFIG_PLC_T_100MS_NUM;i ++)
 		{//100mS计数器增加
@@ -131,9 +131,10 @@ void plcHwTimer_ISR(void) interrupt INTERRUPT_TIMER4
 			}
 		}
 		softPlc.counter_10ms = 0;
+		softPlc.counter_100ms ++;
 	}
 	
-	if(softPlc.counter_100ms >= 1000)
+	if(softPlc.counter_100ms >= 10)
 	{//1000mS T
 		for(i = 0;i < CONFIG_PLC_T_1000MS_NUM;i ++)
 		{//1000mS计数器增加
@@ -152,10 +153,6 @@ void plcHwTimer_ISR(void) interrupt INTERRUPT_TIMER4
 		}
 		softPlc.counter_100ms = 0;
 	}
-	
-	softPlc.counter_1ms ++;
-	softPlc.counter_10ms ++;
-	softPlc.counter_100ms ++;
 	
 	//输入滤波
 	inputCurrent[0] = 0x0;
@@ -182,21 +179,21 @@ void plcHwTimer_ISR(void) interrupt INTERRUPT_TIMER4
 	else
 		inputFilterCounter ++;
 }
-void getInput(softPlc_t *pt)
+void getInput(void)
 {//扫描周期读取已滤波输入口状态
 	SI_SEG_DATA uint8_t i;
 	EIE2 &= ~(1 << 2);//ET4: Disable Timer 4 Interrupt//关闭PLC硬件计时器中断
 	for(i = 0;i <= CONFIG_PLC_X_NUM;i ++)
 	{
-		pt->X[i] = inputFilter[i];
+		softPlc.X[i] = inputFilter[i];
 	}
 	EIE2 |= (1 << 2);//ET4: Enable Timer 4 Interrupt//打开PLC硬件计时器中断
 }
 
 
-void setOutput(softPlc_t *pt)
+void setOutput(void)
 {//输出端口刷新
-	P6 = pt->Y[0] & 0x00FF;
+	P6 = softPlc.Y[0] & 0x00FF;
 	//P1^6 = (pt->Y[0] >> 8) & 0x01;
 	//P1^7 = (pt->Y[0] >> 9) & 0x01;
 }

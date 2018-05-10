@@ -18,7 +18,7 @@
 #define CONFIG_SYSCLK                       (48000000L)
 #endif
 #if	CONFIG_USE_EXTOSC_22184000 == 1
-#define CONFIG_SYSCLK                       (22184000L)
+#define CONFIG_SYSCLK                       (22118400L)
 #endif
 #if	CONFIG_USE_EXTOSC_44236800 == 1
 #define CONFIG_SYSCLK                       (44236800L)
@@ -37,6 +37,12 @@
 #define CONFIG_UART0_STOPBIT				1
 #define CONFIG_UART0_DATABIT				8
 /*****************************************************************************/
+//HARDWARE I2C
+#define CONFIG_SMB_FREQUENCY  				10000L// Target SCL clock rate This example supports between 10kHz and 100kHz
+#define CONFIG_EEPROM_ADDR    				0xA0// Device address for slave target
+#define CONFIG_MY_ADDR        				0x02// Address of this SMBus device
+#define CONFIG_SMB_BUFFER_SIZE				16//SMB读写缓冲最大长度                  
+/*****************************************************************************/
 #define CONFIG_USE_PLC_RESET				1//使能PLC复位MCU功能
 #define CONFIG_USE_WDT						1//使能看门狗
 #define CONFIG_RESET_WDT_TIME				5000//看门狗复位时间10mS
@@ -54,12 +60,12 @@
 #define CONFIG_USE_IPID_OUTSHOW				1//使能IPID输出显示
 /*****************************************************************************/
 //SOFTPLC设置
-#define CONFIG_SOFTPLC_HWTIME				(65536 - (uint16_t)(CONFIG_SYSCLK * 1000 /12 / 10))//SoftPLC 硬件计时器基准10ms
+#define CONFIG_SOFTPLC_HWTIME				(uint16_t)(65536 - (CONFIG_SYSCLK / 1000 / 12 ))//SoftPLC 硬件计时器基准10ms
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波周期
-#define CONFIG_PLC_T_1MS_NUM			16//1ms计时器
-#define CONFIG_PLC_T_10MS_NUM			16//10ms计时器
-#define CONFIG_PLC_T_100MS_NUM			16//100mS计时器
-#define CONFIG_PLC_T_1000MS_NUM			16//1S计时器
+#define CONFIG_PLC_T_1MS_NUM				16//1ms计时器
+#define CONFIG_PLC_T_10MS_NUM				16//10ms计时器
+#define CONFIG_PLC_T_100MS_NUM				16//100mS计时器
+#define CONFIG_PLC_T_1000MS_NUM				16//1S计时器
 #define CONFIG_PLC_N_NUM					128//保持辅助寄存器
 #define CONFIG_PLC_M_NUM					1024//非保持辅助寄存器
 #define CONFIG_PLC_X_NUM					8//输入寄存器个数

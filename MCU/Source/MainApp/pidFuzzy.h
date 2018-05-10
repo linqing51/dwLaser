@@ -3,7 +3,7 @@
 /*****************************************************************************/
 #include "appConfig.h"
 /*****************************************************************************/
-typedef struct pidFuzzy_t 
+typedef struct 
 {
 	fp32_t Kp; // 增量式积分系数
 	fp32_t Ki; 
@@ -21,8 +21,8 @@ typedef struct pidFuzzy_t
 }pidFuzzy_t;
 
 /*****************************************************************************/
-void pidFuzzySet(pidFuzzy_t *structpid, fp32_t Kp, fp32_t Ki, fp32_t Kd, fp32_t T);
-int16_t pidFuzzyRealize(pidFuzzy_t *structpid,uint16_t s,uint16_t in);
+void PID_Set(pidFuzzy_t *structpid, fp32_t Kp, fp32_t Ki, fp32_t Kd, fp32_t T);
+int16_t PID_realize(pidFuzzy_t *structpid, uint16_t s, uint16_t in);
 void pidFuzzyInit(pidFuzzy_t *structpid);
 /*****************************************************************************/
 #endif

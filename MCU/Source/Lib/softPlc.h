@@ -23,12 +23,10 @@ typedef struct
 	uint16_t D[CONFIG_PLC_D_NUM];//保持寄存器
 	uint16_t R[CONFIG_PLC_R_NUM];//非保持寄存器
 	uint16_t C[CONFIG_PLC_C_NUM];//计数器
-	
 	softPlcTimer_t T_1ms[CONFIG_PLC_T_1MS_NUM];
 	softPlcTimer_t T_10ms[CONFIG_PLC_T_10MS_NUM];
 	softPlcTimer_t T_100ms[CONFIG_PLC_T_100MS_NUM];
 	softPlcTimer_t T_1000ms[CONFIG_PLC_T_1000MS_NUM];
-	
 	int16_t counter_1ms;
 	int16_t counter_10ms;//软件计时器分频 10mS
 	int16_t counter_100ms;//软件计时器分频 100mS
@@ -40,8 +38,8 @@ extern softPlc_t softPlc;
 void SoftPlc_Init(softPlc_t *pt);//初始化
 void startTimer(softPlcTimer_t *pt, int16_t value);//开始计数器
 void stopTimer(softPlcTimer_t *pt);//停止计时器
-void getInput(softPlc_t *pt);//刷新输入
-void setOutput(softPlc_t *pt);//刷新输出
+void getInput(void);//刷新输入
+void setOutput(void);//刷新输出
 //位寄存器操作
 uint8_t getCoil(uint16_t *coil, uint16_t addr);
 void setCoil(uint16_t *coil, uint16_t addr);

@@ -1,8 +1,8 @@
 #include "appConfig.h"
-
-
-// Peripheral specific initialization functions,
-// Called from the Init_Device() function
+/*****************************************************************************/
+sbit HWI2C_SCL = P0^3;
+sbit HWI2C_SDA = P0^2;
+/*****************************************************************************/
 void Reset_Sources_Init()
 {
     WDTCN     = 0xDE;
@@ -11,10 +11,8 @@ void Reset_Sources_Init()
 }
 
 void Timer_Init()
-{
-//    CKCON     = 0x30;
-//    TMOD      = 0x20;
-//    TH1       = 0xFA;
+{	
+	CKCON &= 0x00;//T0/T1 CLK = SYSCLK /12;T2 CLK = SYSCLK;T4 CLK = SYSCLK
 }
 
 void UART_Init()
@@ -79,8 +77,23 @@ void Port_IO_Init()
     XBR0      = 0x25;
     XBR2      = 0x44;
 }
-
-void Oscillator_Init()
+void resetSMBUS(void)
+{
+	uint8_t i;
+	while(!HWI2C_SDA)
+	{
+		// Provide clock pulses to allow the slave to advance out
+		// of its current state. This will allow it to release SDA.
+		XBR1 = 0x40;                     // Enable Crossbar
+		HWI2C_SCL = 0;                         // Drive the clock low
+		for(i = 0; i < 255; i++);        // Hold the clock low
+		HWI2C_SCL = 1;                         // Release the clock
+		while(!HWI2C_SCL);                     // Wait for open-drain clock output to rise
+		for(i = 0; i < 10; i++);         // Hold the clock high
+		XBR1 = 0x00;                     // Disable Crossbar
+	}
+}
+void Oscillator_Init(void)
 {
     int i = 0;
     OSCXCN    = 0x67;
@@ -99,6 +112,7 @@ void Init_Device(void)
     UART_Init();
     DAC_Init();
     Voltage_Reference_Init();
+	resetSMBUS();
     Port_IO_Init();
    
 }

@@ -7,8 +7,17 @@
 
 //误差的阀值，小于这个数值的时候，不做PID调整，避免误差较小时频繁调节引起震荡
 /*****************************************************************************/
+#define CONFIG_PID_FUZZY_EMIN				0.0
+#define CONFIG_PID_FUZZY_EMID 				0.08
+#define CONFIG_PID_FUZZY_EMAX				0.6
+//调整值限幅，防止积分饱和
+#define CONFIG_PID_FUZZY_UMAX				5
+#define CONFIG_PID_FUZZY_UMIN 				-5
+//输出值限幅
+#define CONFIG_PID_FUZZY_PMAX 				7200
+#define CONFIG_PID_FUZZY_PMIN 				0
 
-#define NB 0
+#define NB 									0
 #define NM 1
 #define NS 2
 #define ZO 3
@@ -107,169 +116,166 @@ fp32_t forr(fp32_t a,fp32_t b)
 	return (a<b)?b:a;
 }
 fp32_t ec;
- 
-int16_t pidFuzzyRealize(pidFuzzy_t *structpid,uint16_t s,uint16_t in)
-{//PID计算部分
+
+fp32_t PID_realize(PID *structpid, uint16_t s, uint16_t in)
+{//PID计算部分   
 	fp32_t pwm_var;//pwm调整量
 	fp32_t iError;//当前误差
-	fp32_t set, input;
+	fp32_t set,input;
 	
 	//计算隶属度表
-	fp32_t es[7], ecs[7],e;
+	fp32_t es[7],ecs[7],e;
 	fp32_t form[7][7];
 	int i=0,j=0;
-	int MaxX=0, MaxY=0;
+	int MaxX=0,MaxY=0;
 	
 	//记录隶属度最大项及相应推理表的p、i、d值
 	fp32_t lsd;
-	int temp_p, temp_d, temp_i;
-	fp32_t detkp, detkd, detki;//推理后的结果
+	int temp_p,temp_d,temp_i;
+	fp32_t detkp,detkd,detki;//推理后的结果
 	
 	//输入格式的转化及偏差计算
 	set=(fp32_t)s/100.0;
 	input=(fp32_t)in/100.0;
 	iError = set - input; // 偏差
 	
-	e = iError;
-	ec = iError - structpid->LastError;
+	e=iError;
+	ec=iError-structpid->LastError;
 	
 	//当温度差的绝对值小于Emax时，对pid的参数进行调整
-	if(fabs(iError)<=CONFIG_PID_FUZZY_EMAX)
+	if(fabs(iError)<=Emax)
 	{
-		//计算iError在es与ecs中各项的隶属度
-		es[NB]=FTraL(e*5,-3,-1);  //e 
-		es[NM]=FTri(e*5,-3,-2,0);
-		es[NS]=FTri(e*5,-3,-1,1);
-		es[ZO]=FTri(e*5,-2,0,2);
-		es[PS]=FTri(e*5,-1,1,3);
-		es[PM]=FTri(e*5,0,2,3);
-		es[PB]=FTraR(e*5,1,3);
+	//计算iError在es与ecs中各项的隶属度
+	es[NB]=FTraL(e*5,-3,-1);  //e 
+	es[NM]=FTri(e*5,-3,-2,0);
+	es[NS]=FTri(e*5,-3,-1,1);
+	es[ZO]=FTri(e*5,-2,0,2);
+	es[PS]=FTri(e*5,-1,1,3);
+	es[PM]=FTri(e*5,0,2,3);
+	es[PB]=FTraR(e*5,1,3);
 
-		ecs[NB]=FTraL(ec*30,-3,-1);//ec
-		ecs[NM]=FTri(ec*30,-3,-2,0);
-		ecs[NS]=FTri(ec*30,-3,-1,1);
-		ecs[ZO]=FTri(ec*30,-2,0,2);
-		ecs[PS]=FTri(ec*30,-1,1,3);
-		ecs[PM]=FTri(ec*30,0,2,3);
-		ecs[PB]=FTraR(ec*30,1,3);
+	ecs[NB]=FTraL(ec*30,-3,-1);//ec
+	ecs[NM]=FTri(ec*30,-3,-2,0);
+	ecs[NS]=FTri(ec*30,-3,-1,1);
+	ecs[ZO]=FTri(ec*30,-2,0,2);
+	ecs[PS]=FTri(ec*30,-1,1,3);
+	ecs[PM]=FTri(ec*30,0,2,3);
+	ecs[PB]=FTraR(ec*30,1,3);
 	
-		//计算隶属度表，确定e和ec相关联后表格各项隶属度的值
-		for(i=0;i<7;i++)
+	//计算隶属度表，确定e和ec相关联后表格各项隶属度的值
+	for(i=0;i<7;i++)
+	{
+		for(j=0;j<7;j++)
 		{
-			for(j=0;j<7;j++)
-			{
-				form[i][j]=fand(es[i],ecs[j]);
-			}
+			form[i][j]=fand(es[i],ecs[j]);
 		}
-	
-		//取出具有最大隶属度的那一项
-		for(i=0;i<7;i++)
-		{
-			for(j=0;j<7;j++)
-			{
-				if(form[MaxX][MaxY]<form[i][j]) 
-				{
-					MaxX=i;
-					MaxY=j;
-				}
-			}
-		}
-		//进行模糊推理，并去模糊
-		lsd=form[MaxX][MaxY];
-		temp_p=kp[MaxX][MaxY];
-		temp_d=kd[MaxX][MaxY];   
-		temp_i=ki[MaxX][MaxY];
-	
-		if(temp_p==NB)
-			detkp=uFTraL(lsd,-0.3,-0.1);
-		else if(temp_p==NM)
-			detkp=uFTri(lsd,-0.3,-0.2,0);
-		else if(temp_p==NS)
-			detkp=uFTri(lsd,-0.3,-0.1,0.1);
-		else if(temp_p==ZO)
-			detkp=uFTri(lsd,-0.2,0,0.2);
-		else if(temp_p==PS)
-			detkp=uFTri(lsd,-0.1,0.1,0.3);
-		else if(temp_p==PM)
-			detkp=uFTri(lsd,0,0.2,0.3);
-		else if(temp_p==PB)
-			detkp=uFTraR(lsd,0.1,0.3);
-
-		if(temp_d==NB)
-			detkd=uFTraL(lsd,-3,-1);
-		else if(temp_d==NM)
-			detkd=uFTri(lsd,-3,-2,0);
-		else if(temp_d==NS)
-			detkd=uFTri(lsd,-3,1,1);
-		else if(temp_d==ZO)
-			detkd=uFTri(lsd,-2,0,2);
-		else if(temp_d==PS)
-			detkd=uFTri(lsd,-1,1,3);
-		else if(temp_d==PM)
-			detkd=uFTri(lsd,0,2,3);
-		else if(temp_d==PB)
-			detkd=uFTraR(lsd,1,3);
-
-		if(temp_i==NB)
-			detki=uFTraL(lsd,-0.06,-0.02);
-		else if(temp_i==NM)
-			detki=uFTri(lsd,-0.06,-0.04,0);
-		else if(temp_i==NS)
-			detki=uFTri(lsd,-0.06,-0.02,0.02);
-		else if(temp_i==ZO)
-			detki=uFTri(lsd,-0.04,0,0.04);
-		else if(temp_i==PS)
-			detki=uFTri(lsd,-0.02,0.02,0.06);
-		else if(temp_i==PM)
-			detki=uFTri(lsd,0,0.04,0.06);
-		else if (temp_i==PB)
-			detki=uFTraR(lsd,0.02,0.06);
-
-		//pid三项系数的修改
-		structpid->Kp+=detkp;
-		structpid->Ki+=detki;
-		//structpid->Kd+=detkd;
-		structpid->Kd=0;//取消微分作用
-		
-		//对Kp,Ki进行限幅
-		if(structpid->Kp<0)
-		{
-			structpid->Kp=0;
-		}
-		if(structpid->Ki<0)
-		{
-			structpid->Ki=0;
-		}
-		
-		//计算新的K1,K2,K3
-		structpid->K1=structpid->Kp+structpid->Ki+structpid->Kd;
-		structpid->K2=-(structpid->Kp+2*structpid->Kd);
-		structpid->K3=structpid->Kd;
 	}
 	
-	if(iError>CONFIG_PID_FUZZY_EMAX)
+	//取出具有最大隶属度的那一项
+	for(i=0;i<7;i++)
+	{
+		for(j=0;j<7;j++)
+		{
+			if(form[MaxX][MaxY]<form[i][j]) 
+			{
+				MaxX=i;
+				MaxY=j;
+			}
+		}
+	}
+	//进行模糊推理，并去模糊
+	lsd=form[MaxX][MaxY];
+	temp_p=kp[MaxX][MaxY];
+	temp_d=kd[MaxX][MaxY];   
+	temp_i=ki[MaxX][MaxY];
+	
+	if(temp_p==NB)
+		detkp=uFTraL(lsd,-0.3,-0.1);
+	else if(temp_p==NM)
+		detkp=uFTri(lsd,-0.3,-0.2,0);
+	else if(temp_p==NS)
+		detkp=uFTri(lsd,-0.3,-0.1,0.1);
+	else if(temp_p==ZO)
+		detkp=uFTri(lsd,-0.2,0,0.2);
+	else if(temp_p==PS)
+		detkp=uFTri(lsd,-0.1,0.1,0.3);
+	else if(temp_p==PM)
+		detkp=uFTri(lsd,0,0.2,0.3);
+	else if(temp_p==PB)
+		detkp=uFTraR(lsd,0.1,0.3);
+
+	if(temp_d==NB)
+		detkd=uFTraL(lsd,-3,-1);
+	else if(temp_d==NM)
+		detkd=uFTri(lsd,-3,-2,0);
+	else if(temp_d==NS)
+		detkd=uFTri(lsd,-3,1,1);
+	else if(temp_d==ZO)
+		detkd=uFTri(lsd,-2,0,2);
+	else if(temp_d==PS)
+		detkd=uFTri(lsd,-1,1,3);
+	else if(temp_d==PM)
+		detkd=uFTri(lsd,0,2,3);
+	else if(temp_d==PB)
+		detkd=uFTraR(lsd,1,3);
+
+	if(temp_i==NB)
+		detki=uFTraL(lsd,-0.06,-0.02);
+	else if(temp_i==NM)
+		detki=uFTri(lsd,-0.06,-0.04,0);
+	else if(temp_i==NS)
+		detki=uFTri(lsd,-0.06,-0.02,0.02);
+	else if(temp_i==ZO)
+		detki=uFTri(lsd,-0.04,0,0.04);
+	else if(temp_i==PS)
+		detki=uFTri(lsd,-0.02,0.02,0.06);
+	else if(temp_i==PM)
+		detki=uFTri(lsd,0,0.04,0.06);
+	else if (temp_i==PB)
+		detki=uFTraR(lsd,0.02,0.06);
+
+	//pid三项系数的修改
+	structpid->Kp+=detkp;
+	structpid->Ki+=detki;
+	//structpid->Kd+=detkd;
+	structpid->Kd=0;//取消微分作用
+	
+	//对Kp,Ki进行限幅
+	if(structpid->Kp<0)
+	{structpid->Kp=0;}
+	if(structpid->Ki<0)
+	{structpid->Ki=0;}
+	
+	//计算新的K1,K2,K3
+	structpid->K1=structpid->Kp+structpid->Ki+structpid->Kd;
+	structpid->K2=-(structpid->Kp+2*structpid->Kd);
+	structpid->K3=structpid->Kd;
+	
+	}
+	
+	if(iError>Emax)
 	{
 		structpid->pwm_out=7200;
 		pwm_var = 0;
 		structpid->flag=1;//设定标志位，如果误差超过了门限值，则认为当控制量第一次到达给定值时，应该采取下面的 抑制超调 的措施
 	}
-	else if(iError<-CONFIG_PID_FUZZY_EMAX)
+	else if(iError<-Emax)
 	{
 		structpid->pwm_out=0;
 		pwm_var = 0;
 	}
-	else if( fabs(iError) < CONFIG_PID_FUZZY_EMIN ) //误差的阀值(死区控制??)
+	else if( fabs(iError) < Emin ) //误差的阀值(死区控制??)
 	{
 		pwm_var = 0;
 	}
 	else
 	{
-		if( iError<CONFIG_PID_FUZZY_EMID && structpid->flag==1 )//第一次超过(设定值-Emid(-0.08)摄氏度)，是输出为零，防止超调，也可以输出其他值，不至于太小而引起震荡
+		if( iError<Emid && structpid->flag==1 )//第一次超过(设定值-Emid(-0.08)摄氏度)，是输出为零，防止超调，也可以输出其他值，不至于太小而引起震荡
 		{
 			structpid->pwm_out=0;
 			structpid->flag=0;
 		}
-		else if( -iError>CONFIG_PID_FUZZY_EMID)//超过(设定+Emid(+0.08)摄氏度)
+		else if( -iError>Emid)//超过(设定+Emid(+0.08)摄氏度)
 		{
 			pwm_var=-1;
 		}
@@ -280,14 +286,12 @@ int16_t pidFuzzyRealize(pidFuzzy_t *structpid,uint16_t s,uint16_t in)
 			+ structpid->K2 * structpid->LastError	//e[k-1]
 			+ structpid->K3 * structpid->PrevError);	//e[k-2]
 		}
-		if(pwm_var >= CONFIG_PID_FUZZY_UMAX)
-			pwm_var = CONFIG_PID_FUZZY_UMAX;      //调整值限幅，防止积分饱和
-		if(pwm_var <= CONFIG_PID_FUZZY_UMIN)
-			pwm_var = CONFIG_PID_FUZZY_UMIN;    	//调整值限幅，防止积分饱和
+		if(pwm_var >= Umax)pwm_var = Umax;      //调整值限幅，防止积分饱和
+		if(pwm_var <= Umin)pwm_var = Umin;    	//调整值限幅，防止积分饱和
 
 	}
-	structpid->PrevError = structpid->LastError;
-	structpid->LastError = iError;
+	structpid->PrevError=structpid->LastError;
+	structpid->LastError=iError;
 	
 	structpid->pwm_out += 360*pwm_var;        //调整PWM输出
   
@@ -295,6 +299,7 @@ int16_t pidFuzzyRealize(pidFuzzy_t *structpid,uint16_t s,uint16_t in)
 		structpid->pwm_out = CONFIG_PID_FUZZY_PMAX;    //输出值限幅
 	if(structpid->pwm_out < CONFIG_PID_FUZZY_PMIN)
 		structpid->pwm_out = CONFIG_PID_FUZZY_PMIN;    //输出值限幅
+	
 	return (int16_t)(structpid->pwm_out); // 微分项
 }
 
@@ -305,14 +310,14 @@ void pidFuzzySet(pidFuzzy_t *structpid, fp32_t Kp, fp32_t Ki, fp32_t Kd, fp32_t 
 	(*structpid).Kd=Kd;
 	(*structpid).T=T;
 	
-	structpid->K1 = structpid->Kp * (1 + structpid->Ki + structpid->Kd);
-	structpid->K2 = -(structpid->Kp + 2 * structpid->Kp * structpid->Kd);
-	structpid->K3 = structpid->Kp * structpid->Kd;
+	structpid->K1=structpid->Kp*(1+structpid->Ki+structpid->Kd);
+	structpid->K2=-(structpid->Kp+2*structpid->Kp*structpid->Kd);
+	structpid->K3=structpid->Kp*structpid->Kd;
 }
 
 void pidFuzzyInit(pidFuzzy_t *structpid)
 {
-	pidFuzzySet(structpid, 8.3, 1.2, 0,1);
+	pidFuzzySet(structpid,8.3,1.2,0,1);
 	structpid->flag=0;
 	structpid->pwm_out=0;
 }

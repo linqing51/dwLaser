@@ -40,13 +40,17 @@ void modbusSerialSendBuffer(uint8_t *buf, uint8_t size)
 void InitModbusSerial(int32_t baudrate)
 {//初始化MODBUS串口
 	uint32_t temp;
-	CKCON |= ~(1 << 4);//TIMER1 SYSCLK / 12
 	temp = (uint32_t)(CONFIG_SYSCLK / 32 / baudrate);
 	temp = 65536 - temp;	
+	
+	T2CON &= 1 << 4;//Timer 1 overflows used for transmit clock.
+	T2CON &= 1 << 5;//Timer 1 overflows used for receive clock.
+	
 	TMOD &= 0x0F;
 	TMOD |= 1 << 5;//Mode 2: 8-bit counter/timer with auto-reload
 	
 	TH1 = (uint8_t)(temp & 0xff);
+	TL1 = (uint8_t)(temp & 0xff);
 	TR1 = 1;
 	//T2CON |= 1 << 2;//Timer 2 enabled
 	RS485_DIRECTION_RXD;//接收状态
@@ -57,8 +61,8 @@ void InitModbusSerial(int32_t baudrate)
 void InitModbusTimer(void)
 {//初始化MODBUS计时器 1mS TIMER2
 	uint16_t temp;
-	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / 1000 * 10));
-	CKCON &= ~(1 << 5);//TIMER1 CLK = SYSCLK / 12
+	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 1000));
+	
 	T2CON = 0x0;//RCLK0=0,TCLK0=0
     RCAP2L = (uint8_t)(temp & 0xFF);
 	RCAP2H = (uint8_t)((temp >> 8) & 0xFF);
