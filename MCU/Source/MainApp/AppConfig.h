@@ -62,16 +62,17 @@
 //SOFTPLC设置
 #define CONFIG_SOFTPLC_HWTIME				(uint16_t)(65536 - (CONFIG_SYSCLK / 1000 / 12 ))//SoftPLC 硬件计时器基准10ms
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波周期
-#define CONFIG_PLC_T_1MS_NUM				16//1ms计时器
-#define CONFIG_PLC_T_10MS_NUM				16//10ms计时器
-#define CONFIG_PLC_T_100MS_NUM				16//100mS计时器
-#define CONFIG_PLC_T_1000MS_NUM				16//1S计时器
-#define CONFIG_PLC_N_NUM					128//保持辅助寄存器
-#define CONFIG_PLC_M_NUM					1024//非保持辅助寄存器
-#define CONFIG_PLC_X_NUM					8//输入寄存器个数
-#define CONFIG_PLC_Y_NUM					8//输出寄存器个数
-#define CONFIG_PLC_D_NUM					32//保持寄存器
-#define CONFIG_PLC_R_NUM					32//非保持
+#define CONFIG_PLC_T_NUM					256//延时计时器
+#define CONFIG_PLC_T_1MS_NUM				0//1ms计时器
+#define CONFIG_PLC_T_10MS_NUM				50//10ms计时器
+#define CONFIG_PLC_T_100MS_NUM				150//100mS计时器
+#define CONFIG_PLC_T_1000MS_NUM				56//1S计时器			
+#define CONFIG_PLC_M_NUM					1400//位寄存器
+#define CONFIG_PLC_M_HOLD_STARTADR			800//掉电存储位寄存器起始地址
+#define CONFIG_PLC_X_NUM					256//输入寄存器个数
+#define CONFIG_PLC_Y_NUM					256//输出寄存器个数
+#define CONFIG_PLC_D_NUM					256//数据寄存器
+#define CONFIG_PLC_D_HOLD_STARTADR			32//掉电存储数据寄存器起始地址
 #define CONFIG_PLC_C_NUM					32//计数器
 #define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
 #define CONFIG_IPID_PWM_CYCLE				20//IPID输出周期 默认 20 * 100mS
@@ -110,12 +111,13 @@
 #include "compiler_defs.h"
 #include "C8051F020_defs.h"
 /*****************************************************************************/
-#include "stdio.h"
-#include "string.h"
-#include "INTRINS.H"
+#include <stdio.h>
+#include <stdlib.h> 
+#include <string.h>
+#include <INTRINS.H>
 #include <ctype.h>
-#include "LIMITS.H"
-#include "math.h"
+#include <LIMITS.H>
+#include <math.h>
 /*****************************************************************************/
 #include "softPlc.h"
 #include "pidFuzzy.h"

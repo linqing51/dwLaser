@@ -71,10 +71,10 @@ uint8_t code auchCRCLo[] =
 };
 
 void presetSingleRegister(void);
-uint16_t setCoilVal(uint16_t addr,uint16_t tempData);
-uint16_t getCoilVal(uint16_t addr,uint16_t *tempData);
-uint16_t getRegisterVal(uint16_t addr,uint16_t *tempData);
-uint16_t setRegisterVal(uint16_t addr,uint16_t tempData);
+void setCoilVal(uint16_t addr,uint16_t tempData);
+void getCoilVal(uint16_t addr,uint16_t *tempData);
+void getRegisterVal(uint16_t addr,uint16_t *tempData);
+void setRegisterVal(uint16_t addr,uint16_t tempData);
 
 /*****************************************************************************/
 void InitModbusHardware(uint32_t baudrate)
@@ -322,8 +322,8 @@ static void forceSingleCoil(void)
 	{ 
 		tempData = 0;
 	}
-	setCoilVal(tempAddr,tempData); 
-	for(i=0;i<receCount;i++)
+	setCoilVal(tempAddr, tempData); 
+	for(i=0;i<receCount; i++)
 	{
 		sendBuf[i] = receBuf[i];
 	}

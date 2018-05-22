@@ -1,67 +1,42 @@
 #include "softPlc.h"
 /*****************************************************************************/
-SI_SEG_DATA uint8_t inputFilterCounter;//输入滤波常熟
-SI_SEG_DATA uint16_t inputFilter[CONFIG_PLC_X_NUM / 16 + 2];//已滤波输入
-SI_SEG_DATA uint16_t inputCurrent[CONFIG_PLC_X_NUM / 16 + 2];//当前输入
-SI_SEG_DATA uint16_t inputLast[CONFIG_PLC_X_NUM / 16 + 2];//上次输入
+//SI_SEG_PDATA uint16_t InputFilterCounter;//输入滤波常熟
+//SI_SEG_PDATA uint16_t InputFilter[(CONFIG_PLC_X_NUM / 16 + 1)];//已滤波输入
+//SI_SEG_PDATA uint16_t InputCurrent[(CONFIG_PLC_X_NUM / 16 + 1)];//当前输入
+//SI_SEG_PDATA uint16_t InputLast[(CONFIG_PLC_X_NUM / 16 + 1)];//上次输入
+SI_SEG_DATA uint8_t Tcounter_1ms =0;
+SI_SEG_DATA uint8_t Tcounter_10ms = 0;
+SI_SEG_DATA uint8_t Tcounter_100ms = 0;
+SI_SEG_DATA uint8_t Tcounter_1000ms = 0;
 softPlc_t softPlc;
 static void plcHwTimer_Init(void);
 /*****************************************************************************/
 void SoftPlc_Init(softPlc_t *pt)
 {
-	int16_t i;
 	//初始化
-	memset(inputFilter, 0x0, (CONFIG_PLC_X_NUM / 16 + 1));
-	memset(inputCurrent, 0x0, (CONFIG_PLC_X_NUM / 16 + 1));
-	memset(inputLast, 0x0, (CONFIG_PLC_X_NUM / 16 + 1));
-	inputFilterCounter = 3;//3mS
-	memset(softPlc.X, 0x0, (CONFIG_PLC_X_NUM / 16 + 1));
-	memset(softPlc.Y, 0x0, (CONFIG_PLC_Y_NUM / 16 + 1));
-	memset(softPlc.M, 0x0, (CONFIG_PLC_M_NUM / 16 + 1));
-	memset(softPlc.N, 0x0, (CONFIG_PLC_N_NUM / 16 + 1));
-	memset(softPlc.T_1ms, 0x0, (CONFIG_PLC_T_1MS_NUM / 16 + 1));
-	memset(softPlc.T_10ms, 0x0, (CONFIG_PLC_T_10MS_NUM / 16 + 1));
-	memset(softPlc.T_100ms, 0x0, (CONFIG_PLC_T_100MS_NUM / 16 + 1));
-	memset(softPlc.T_1000ms, 0x0, (CONFIG_PLC_T_1000MS_NUM / 16 + 1));
-	memset(softPlc.D, 0x0, CONFIG_PLC_D_NUM);
-	memset(softPlc.R, 0x0, CONFIG_PLC_R_NUM);
-	pt->counter_1ms =0;
-	pt->counter_10ms = 0;
-	pt->counter_100ms = 0;
 	
-	for(i = 0; i<= CONFIG_PLC_T_1MS_NUM; i++)
-	{
-		pt->T_1ms[i].value = 0;
-		pt->T_1ms[i].mate = 0;
-		pt->T_1ms[i].enable = 0;
-		pt->T_1ms[i].output = 0;
-	}
+	//输入寄存器
+	memset(pt->X, 0x0, (CONFIG_PLC_X_NUM / 16 + 1));
+	memset(pt->X1, 0x0, (CONFIG_PLC_X_NUM / 16 + 1));
+	//输出寄存器
+	memset(pt->Y, 0x0, (CONFIG_PLC_Y_NUM / 16 + 1));
+	memset(pt->Y1, 0x0, (CONFIG_PLC_Y_NUM / 16 + 1));
+	//位寄存器
+	memset(pt->M, 0x0, (CONFIG_PLC_M_NUM / 16 + 1));
+	memset(pt->M1, 0x0, (CONFIG_PLC_M_NUM / 16 + 1));
+	//计时器
+	memset(pt->T, 0x0, (CONFIG_PLC_T_NUM / 16 + 1));
+	memset(pt->T1, 0x0, (CONFIG_PLC_T_NUM / 16 + 1));
+	memset(pt->T_EN, 0x0, (CONFIG_PLC_T_NUM /16 + 1));
+	memset(pt->T_MATE, 0x0, CONFIG_PLC_T_NUM);
+	memset(pt->T_VALUE, 0x0, CONFIG_PLC_T_NUM);
+	//计数器
+	memset(pt->C, 0x0, (CONFIG_PLC_C_NUM / 16 + 1));
+	memset(pt->C_VALUE, 0x0, (CONFIG_PLC_C_NUM));
+	//数据寄存器
+	memset(pt->D, 0x0, CONFIG_PLC_D_NUM);
 	
-	for(i = 0; i<= CONFIG_PLC_T_10MS_NUM; i++)
-	{
-		pt->T_10ms[i].value = 0;
-		pt->T_10ms[i].mate = 0;
-		pt->T_10ms[i].enable = 0;
-		pt->T_10ms[i].output = 0;
-	}
-	
-	for(i = 0; i<= CONFIG_PLC_T_100MS_NUM; i++)
-	{
-		pt->T_100ms[i].value = 0;
-		pt->T_100ms[i].mate = 0;
-		pt->T_100ms[i].enable = 0;
-		pt->T_100ms[i].output = 0;
-	}
-	
-	for(i = 0; i<= CONFIG_PLC_T_1000MS_NUM; i++)
-	{
-		pt->T_1000ms[i].value = 0;
-		pt->T_1000ms[i].mate = 0;
-		pt->T_1000ms[i].enable = 0;
-		pt->T_1000ms[i].output = 0;
-	}
-	
-	//从EEPROM中恢复D寄存器
+	//从EEPROM中恢复寄存器
 	plcHwTimer_Init();
 }
 static void plcHwTimer_Init(void)
@@ -74,174 +49,226 @@ static void plcHwTimer_Init(void)
 }
 void plcHwTimer_ISR(void) interrupt INTERRUPT_TIMER4
 {//硬件sTimer计时器中断 1mS
-	SI_SEG_DATA uint8_t i, j, temp0, temp1;
-	T4CON &= ~(1 << 7);//TF4: Timer 4 output Flag Clear	
-	
-	for(i = 0;i < CONFIG_PLC_T_1MS_NUM;i ++)
-	{//10mS计数器增加
-		if(softPlc.T_1ms[i].enable)
-		{
-			if(softPlc.T_1ms[i].value >= softPlc.T_1ms[i].mate)
-				softPlc.T_1ms[i].output = 1;
-			else
-				softPlc.T_1ms[i].output = 0;
-			if(softPlc.T_1ms[i].value < SHRT_MAX)
-				softPlc.T_1ms[i].value ++;
-			else
-				softPlc.T_1ms[1].output = 0;
-		}
-	}
-	softPlc.counter_1ms ++;
-	
-	if(softPlc.counter_1ms >= 10)
-	{
-		for(i = 0;i < CONFIG_PLC_T_10MS_NUM;i ++)
-		{//10mS计数器增加
-			if(softPlc.T_10ms[i].enable)
-			{
-				if(softPlc.T_10ms[i].value >= softPlc.T_10ms[i].mate)
-					softPlc.T_10ms[i].output = 1;
-				else
-					softPlc.T_10ms[i].output = 0;
-				if(softPlc.T_10ms[i].value < SHRT_MAX)
-					softPlc.T_10ms[i].value ++;
-				else
-					softPlc.T_10ms[1].output = 0;
-			}
-		}
-		softPlc.counter_1ms = 0;
-		softPlc.counter_10ms ++;
-	}
-	
-	if(softPlc.counter_10ms >= 10)
-	{//100mS T
-		for(i = 0;i < CONFIG_PLC_T_100MS_NUM;i ++)
-		{//100mS计数器增加
-			if(softPlc.T_100ms[i].enable)
-			{
-				if(softPlc.T_100ms[i].value >= softPlc.T_100ms[i].mate)
-					softPlc.T_100ms[i].output = 1;
-				else
-					softPlc.T_100ms[i].output = 0;
-				
-				if(softPlc.T_100ms[i].value < SHRT_MAX)
-					softPlc.T_100ms[i].value ++;
-				else
-					softPlc.T_100ms[1].output = 0;
-			}
-		}
-		softPlc.counter_10ms = 0;
-		softPlc.counter_100ms ++;
-	}
-	
-	if(softPlc.counter_100ms >= 10)
-	{//1000mS T
-		for(i = 0;i < CONFIG_PLC_T_1000MS_NUM;i ++)
-		{//1000mS计数器增加
-			if(softPlc.T_1000ms[i].enable)
-			{
-				if(softPlc.T_1000ms[i].value >= softPlc.T_1000ms[i].mate)
-					softPlc.T_1000ms[i].output = 1;
-				else
-					softPlc.T_1000ms[i].output = 0;
-				
-				if(softPlc.T_1000ms[i].value < SHRT_MAX)
-					softPlc.T_1000ms[i].value ++;
-				else
-					softPlc.T_1000ms[1].output = 0;
-			}
-		}
-		softPlc.counter_100ms = 0;
-	}
-	
-	//输入滤波
-	inputCurrent[0] = 0x0;
-	inputCurrent[0] += P7;
-	inputCurrent[0] += (P6 * 256);
-	if(inputFilterCounter >= CONFIG_INPUT_FILTER_TIME)
-	{//达到滤波时间常数
-		for(i = 0;i < (CONFIG_PLC_X_NUM / 16 + 1);i ++)
-		{
-			for(j = 0;j < 16;j ++)
-			{
-				temp0 = (inputCurrent[i] >> j) & 0x01;
-				temp1 = (inputLast[i] >> j) & 0x01;
-				if(temp0 == temp1)
-				{
-					inputFilter[i] &= ~((uint16_t)(1 << j));
-					inputFilter[i] |= (uint16_t)(temp0 << j);
-				}
-			}
-			inputLast[i] = inputCurrent[i];
-		}
-		inputFilterCounter = 0;
-	}
-	else
-		inputFilterCounter ++;
-}
-void getInput(void)
-{//扫描周期读取已滤波输入口状态
 	SI_SEG_DATA uint8_t i;
-	EIE2 &= ~(1 << 2);//ET4: Disable Timer 4 Interrupt//关闭PLC硬件计时器中断
-	for(i = 0;i <= CONFIG_PLC_X_NUM;i ++)
-	{
-		softPlc.X[i] = inputFilter[i];
+	softPlc_t *pt = &softPlc;
+	T4CON &= ~(1 << 7);//TF4: Timer 4 output Flag Clear	
+	for(i = 0;i < CONFIG_PLC_T_10MS_NUM;i ++)
+	{//10mS计数器增加
+		if(pt->T_EN[(i / 16)] >> (i % 16))
+		{
+			if(pt->T_VALUE[i] >= pt->T_MATE[i])
+				pt->T[(i / 16)] |= (1 << (i % 16));//置位
+			else
+				pt->T[(i / 16)] &= ~(1 << (i % 16));//复位
+			if(pt->T_VALUE[i] < SHRT_MAX)
+				pt->T_VALUE[i] ++;
+		}
 	}
-	EIE2 |= (1 << 2);//ET4: Enable Timer 4 Interrupt//打开PLC硬件计时器中断
+	Tcounter_10ms ++;
+	
+	if(Tcounter_10ms >= 10)
+	{//100mS
+		for(i = CONFIG_PLC_T_10MS_NUM;i < CONFIG_PLC_T_100MS_NUM;i ++)
+		{//10mS计数器增加
+			if(pt->T_EN[(i / 16)] >> (i % 16))
+			{
+				if(pt->T_VALUE[i] >= pt->T_MATE[i])
+					pt->T[(i / 16)] |= (1 << (i % 16));//置位
+				else
+					pt->T[(i / 16)] &= ~(1 << (i % 16));//复位
+				if(pt->T_VALUE[i] < SHRT_MAX)
+					pt->T_VALUE[i] ++;
+			}
+		}
+		Tcounter_10ms = 0;
+		Tcounter_100ms ++;
+	}
+	
+	if(Tcounter_100ms >= 10)
+	{//1000mS 
+		for(i = CONFIG_PLC_T_100MS_NUM;i < CONFIG_PLC_T_1000MS_NUM;i ++)
+		{//10mS计数器增加
+			if(pt->T_EN[(i / 16)] >> (i % 16))
+			{
+				if(pt->T_VALUE[i] >= pt->T_MATE[i])
+					pt->T[(i / 16)] |= (1 << (i % 16));//置位
+				else
+					pt->T[(i / 16)] &= ~(1 << (i % 16));//复位
+				if(pt->T_VALUE[i] < SHRT_MAX)
+					pt->T_VALUE[i] ++;
+			}
+		}
+		Tcounter_100ms = 0;
+		Tcounter_1000ms ++;
+	}
+	
+//	//输入滤波
+//	InputCurrent[0] = 0x0;
+//	*((uint8_t*)(InputCurrent)) = P7;
+//	*((uint8_t*)(InputCurrent + 1)) = P6;
+//	if(InputFilterCounter >= CONFIG_INPUT_FILTER_TIME)
+//	{//达到滤波时间常数
+//		for(i = 0;i < (CONFIG_PLC_X_NUM / 16 + 1);i ++)
+//		{
+//			for(j = 0;j < 16;j ++)
+//			{
+//				temp0 = (InputCurrent[i] >> j) & 0x01;
+//				temp1 = (InputLast[i] >> j) & 0x01;
+//				if(temp0 == temp1)
+//				{
+//					InputFilter[i] &= ~((uint16_t)(1 << j));
+//					InputFilter[i] |= (uint16_t)(temp0 << j);
+//				}
+//			}
+//			InputLast[i] = InputCurrent[i];
+//		}
+//		InputFilterCounter = 0;
+//	}
+//	else
+//		InputFilterCounter ++;
+}
+void getInput(softPlc_t *pt)
+{//扫描周期读取已滤波输入口状态
+	*((uint8_t*)(pt->X)) = P6;
+	*((uint8_t*)(pt->X + 1)) = P7;
 }
 
 
 void setOutput(void)
 {//输出端口刷新
-	P6 = softPlc.Y[0] & 0x00FF;
+	softPlc_t *pt = &softPlc;
+	P6 = pt->Y[0] & 0x00FF;
 	//P1^6 = (pt->Y[0] >> 8) & 0x01;
 	//P1^7 = (pt->Y[0] >> 9) & 0x01;
 }
-uint8_t getCoil(uint16_t *coil, uint16_t addr)
-{//获取线圈状态
-	return (uint8_t)((*(coil + (addr / 16)) >> (addr % 16)) & 0x01);
-}
-void setCoil(uint16_t *coil, uint16_t addr)
-{//置位线圈
-	SI_SEG_DATA uint16_t dat, mask;
-	dat = coil[(addr / 16)];
-	mask = addr % 16;
-	dat |= (1 << mask);
-}
-void resetCoil(uint16_t *coil, uint16_t addr)
-{//复位线圈
-	SI_SEG_DATA uint16_t dat, mask;
-	dat = coil[(addr / 16)];
-	mask = addr % 16;
-	dat &= ~(1 << mask);
-}
-void flipCoil(uint16_t *coil, uint16_t addr)
-{//翻转线圈
-	SI_SEG_DATA uint16_t dat, mask;
-	dat = coil[addr / 16];
-	mask = addr % 16;
-	if((dat >> mask) & 0x01)
-		dat &= ~(1 << mask);
+
+
+
+int8_t TB(int8_t en, int16_t num, int16_t value)
+{//一般计时器 en:计时器使能 num:定时器号码 value:定时器设定值 返回值:TUP 溢出值
+	int8_t res = 0;
+	if(en)
+	{//使能计时器
+		if(!(softPlc.T_EN[num / 16] >> (num % 16)))
+		{
+			softPlc.T_MATE[num] = value;//设定计时值
+			softPlc.T_VALUE[num] = 0;//复位计时值
+			softPlc.T_EN[(num /16)] |= (1 << (num % 16));
+			softPlc.T[num] = 0;
+		}
+		else
+		{
+			if(softPlc.T_VALUE >= softPlc.T_MATE)
+				res = 1;
+			else
+				res = 0;
+		}
+	}
 	else
-		dat |= (1 << mask);
+	{
+		softPlc.T_EN[(num / 16)] &= ~(1 << (num % 16));
+		softPlc.T[(num / 16)] &= ~(1 << (num % 16));
+		res = 0;
+	}
+	return res;
 }
 
-void startTimer(softPlcTimer_t *pt, int16_t value)
-{//启动计时器
-	if(pt->enable == 0x0)
+int8_t LD(uint8_t reg, uint16_t num)
+{//
+	switch(reg)
 	{
-		pt->mate = value;//设定初值
-		pt->value = 0;//复位计时值
-		pt->enable = 1;
-		pt->output = 0;
+		case SOFTPLC_X:
+			return softPlc.X[(num / 16)] >> (num % 16);
+		case SOFTPLC_Y:
+			return softPlc.Y[(num / 16)] >> (num % 16);
+		case SOFTPLC_M:
+			return softPlc.M[(num / 16)] >> (num % 16);
+		case SOFTPLC_T:
+			return softPlc.T[(num / 16)] >> (num % 16);
+		case SOFTPLC_C:
+			return softPlc.C[(num / 16)] >> (num % 16);
+		default:
+			return 0;
 	}
 }
 
-void stopTimer(softPlcTimer_t *pt)
-{//停止计时器
-	if(pt->enable != 0x0)
+void OUT(uint8_t reg, uint16_t num, int8_t ena)
+{//将运算结果送到线圈去 reg=寄存器类型 num=寄存器编号 ena=寄存器使能
+	switch(reg)
 	{
-		pt->enable = 0;
-		pt->output = 0;
+		case SOFTPLC_Y:
+		{
+			if(ena)
+				softPlc.Y[(num / 16)] |= (1 << (num % 16));
+			else
+				softPlc.Y[(num / 16)] &= ~(1 << (num % 16));
+			break;
+		}
+		case SOFTPLC_M:
+		{
+			if(ena)
+				softPlc.M[(num / 16)] |= (1 << (num % 16));
+			else
+				softPlc.M[(num / 16)] &= ~(1 << (num % 16));
+			break;
+		}
+		default:break;
 	}
 }
+//int8_t TU(uint8_t *opt)
+//{//上微分
+//	int8_t res = 0;
+//	int8_t reg;
+//	uint16_t num;
+//	reg = *opt;
+//	num = atoi(opt + 1);
+//	switch(reg)
+//	{
+//		case "X":
+//		{
+//			if(num > CONFIG_PLC_X_NUM)
+//				num = CONFIG_PLC_X_NUM;
+//			if(softPlc.X[num] == 1) && softPlc.X1[num] == 0)
+//				res = 1;
+//			else
+//				res = 0;
+//			break;
+//		}
+//		case "Y":
+//		{
+//			if(num > CONFIG_PLC_Y_NUM)
+//				num = CONFIG_PLC_Y_NUM;
+//			if(softPlc.Y[num] == 1) && softPlc.Y1[num] == 0)
+//				res = 1;
+//			else
+//				res = 0;
+//			break;
+//		}
+//		case 'M':
+//		{
+//			if(num > CONFIG_PLC_M_NUM)
+//				num = CONFIG_PLC_M_NUM;
+//			if(softPlc.M[num] == 1 && softPlc.M1[num] == 0)
+//				res = 1;
+//			else 
+//				res = 0;
+//			break;
+//		}
+//		case 'N'
+//		{
+//			if(num > CONFIG_PLC_M_NUM)
+//				num = CONFIG_PLC_M_NUM;
+//			if(softPlc.M[num] == 1 && softPlc.M1[num] == 0)
+//				res = 1;
+//			else 
+//				res = 0;
+//			break;
+//			break;
+//		}
+//		default:break;
+//	}
+//}
+int8_t TD(uint8_t name, uint16_t num)
+{//下微分
+	return 0;
+}	
