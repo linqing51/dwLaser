@@ -62,11 +62,15 @@
 //SOFTPLC设置
 #define CONFIG_SOFTPLC_HWTIME				(uint16_t)(65536 - (CONFIG_SYSCLK / 1000 / 12 ))//SoftPLC 硬件计时器基准10ms
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波周期
-#define CONFIG_PLC_T_NUM					256//延时计时器
-#define CONFIG_PLC_T_1MS_NUM				0//1ms计时器
-#define CONFIG_PLC_T_10MS_NUM				32//10ms计时器
-#define CONFIG_PLC_T_100MS_NUM				48//100mS计时器
-#define CONFIG_PLC_T_1000MS_NUM				64//1S计时器
+#define CONFIG_PLC_T_NUM					64//延时计时器
+#define CONFIG_PLC_T_1MS_START				0//1ms计时器开始编号
+#define CONFIG_PLC_T_1MS_END				15//1ms计时器结束编号
+#define CONFIG_PLC_T_10MS_START				16//10ms计时器开始编号
+#define CONFIG_PLC_T_10MS_END				31//10ms计时器结束编号
+#define CONFIG_PLC_T_100MS_START			32//100mS计时器开始编号
+#define CONFIG_PLC_T_100MS_END				47//100mS计时器结束编号
+#define CONFIG_PLC_T_1000MS_START			48//1S计时器开始编号
+#define CONFIG_PLC_T_1000MS_END				63//1S计时器结束编号
 
 #define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
 #define CONFIG_IPID_PWM_CYCLE				20//IPID输出周期 默认 20 * 100mS

@@ -35,7 +35,7 @@ void sTimerISR(void) interrupt INTERRUPT_TIMER4
 	SI_SEG_DATA uint8_t i;
 	sTimer_t *st = &sTimer;
 	T4CON &= ~(1 << 7);//TF4: Timer 4 output Flag Clear	
-	for(i = 0;i < CONFIG_PLC_T_1MS_NUM;i ++)
+	for(i = CONFIG_PLC_T_1MS_START;i < CONFIG_PLC_T_1MS_END;i ++)
 	{//10mS计数器增加
 		if(sTimer[i].enable)
 		{
@@ -51,7 +51,7 @@ void sTimerISR(void) interrupt INTERRUPT_TIMER4
 	
 	if(Tcounter_1ms >= 10)
 	{//100mS
-		for(i = CONFIG_PLC_T_1MS_NUM;i < CONFIG_PLC_T_10MS_NUM;i ++)
+		for(i = CONFIG_PLC_T_10MS_START;i < CONFIG_PLC_T_10MS_END;i ++)
 		{//10mS计数器增加
 			if(sTimer[i].enable)
 			{
@@ -69,7 +69,7 @@ void sTimerISR(void) interrupt INTERRUPT_TIMER4
 	
 	if(Tcounter_10ms >= 10)
 	{//1000mS 
-		for(i = CONFIG_PLC_T_10MS_NUM;i < CONFIG_PLC_T_100MS_NUM;i ++)
+		for(i = CONFIG_PLC_T_100MS_START;i < CONFIG_PLC_T_100MS_END;i ++)
 		{//10mS计数器增加
 			if(sTimer[i].enable)
 			{
@@ -87,7 +87,7 @@ void sTimerISR(void) interrupt INTERRUPT_TIMER4
 	
 	if(Tcounter_100ms >= 100)
 	{//1000mS 
-		for(i = CONFIG_PLC_T_100MS_NUM;i < CONFIG_PLC_T_1000MS_NUM;i ++)
+		for(i = CONFIG_PLC_T_1000MS_START;i < CONFIG_PLC_T_1000MS_END;i ++)
 		{//10mS计数器增加
 			if(sTimer[i].enable)
 			{
