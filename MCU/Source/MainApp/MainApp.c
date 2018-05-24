@@ -21,6 +21,14 @@ sbit LED_LASER1 = P1^6;//激光发射指示LED1 1470nM
 /*****************************************************************************/
 laser_t laser;
 
+#define INPUT_FOOTSWITCH_NC				0
+#define INPUT_FOOTSWITCH_NO				1
+#define INPUT_INTERLOCK					2
+#define INPUT_OPENCASE					3
+#define INPUT_FIBERDETECT0				4
+#define INPUT_FIBERDETECT1				5
+
+
 /*****************************************************************************/
 void main(void)
 {
@@ -30,7 +38,7 @@ void main(void)
 	//hwI2cInit();//初始化硬件I2C
 	sTimerInit();//初始化软逻辑
 	//SMB_Init();
-	//pidFuzzyInit(&pidFuzzy);//初始化模糊PID
+	pidFuzzyInit(&pidFuzzy, 2, 0.5, 0.1);
 	setModbusSlaveAddr(CONFIG_LOCAL_ADDRESS);//设置从机地址
 	InitModbusHardware(CONFIG_UART0_BAUDRATE);//初始化MODBUS从机串口
 	/**********************************************************************/
@@ -39,10 +47,20 @@ void main(void)
 	while(1)
 	{//开始循环扫描周期
 		//每10mS扫描输入IO
-		if(sTimer[0].status)
+		if(sTimer[(CONFIG_STIMER_1MS_NUM - 1)].status)
 		{
-		
+			if(((( P6 >> INPUT_FOOTSWITCH_NC) & 0x01) == 1) &&
+			  ((( P6 >> INPUT_FOOTSWITCH_NO) & 0x01) == 0))
+				laser.footSwitch = 1;
+			else
+				laser.footSwitch = 0;
+			laser.safeInterlock = (P6 >> INPUT_INTERLOCK) & 0x01;
+			laser.safeFiberDetect0 = (P6 >> INPUT_FIBERDETECT0) & 0x01;
+			laser.safeFiberDetect1 = (P6 >> INPUT_FIBERDETECT1) & 0x01;
+			sTimerCtrl(STIMER_OFF, (CONFIG_STIMER_1MS_NUM - 1), CONFIG_INPUT_FILTER_TIME);//T0 STOP
 		}
+		else
+			sTimerCtrl(STIMER_ON, (CONFIG_STIMER_1MS_NUM - 1), CONFIG_INPUT_FILTER_TIME);//T0 STOP
 		//获取过热状态
 		laser.overTempFault = (laser.overTempDiode && !laser.overTempDiodeIgnore) ||
 							  (laser.overTempAmplifier && !laser.overTempAmplifierIgnore) ||
@@ -92,41 +110,38 @@ void main(void)
 //			
 //		}
 		
-		
+		//Debug LED闪烁
 		if(LED_MCU)
 		{
-			if(sTimer[0].status)//等待时间A
+			if(sTimer[(CONFIG_STIMER_1000MS_NUM - 1)].status)//等待时间A
 			{
 				LED_MCU = 0;
-				sTimerCtrl(0, 0, 10);//T0 STOP
+				sTimerCtrl(STIMER_OFF, (CONFIG_STIMER_1000MS_NUM - 1), 1);//T0 STOP
 			}
 			else
-				sTimerCtrl(1, 0, 10);//T0 STOP
+				sTimerCtrl(STIMER_ON, (CONFIG_STIMER_1000MS_NUM - 1), 1);//T0 STOP
 		}
 		if(!LED_MCU)
 		{
-			if(sTimer[0].status)//等待时间B
+			if(sTimer[(CONFIG_STIMER_1000MS_NUM - 2)].status)//等待时间B
 			{
 				LED_MCU = 1;
-				sTimerCtrl(0, 1, 20);//T0 STOP
+				sTimerCtrl(STIMER_OFF, (CONFIG_STIMER_1000MS_NUM - 2), 1);//T0 STOP
 			}
 			else
-				sTimerCtrl(1, 1, 20);//T0 STOP
+				sTimerCtrl(STIMER_ON, (CONFIG_STIMER_1000MS_NUM - 2), 1);//T0 STOP
 		}
-		//PID指令
-		//if(getCoil(&softPlc.M, 100))
-		//{//执行PID 温控指令
-			//执行PID
-//		if(softPlc.T_10ms[2].output)//等待A时间
-//		{
-//			//pidFuzzyRealize(&pidFuzzy, 25.0, 30.0);
-//			stopTimer(&softPlc.T_10ms[2]);//停止计时器
-//		}
-//		else
-//		{
-//			startTimer(&softPlc.T_10ms[2], 100);//开始计数器	
-//		}
-//		
+		//PID 温控指令
+		if(sTimer[(CONFIG_STIMER_100MS_NUM - 3)].status)//等待A时间
+		{
+			
+		
+			laser.pidOut = pidFuzzyRealize(&pidFuzzy, 25, 30);
+			sTimerCtrl(STIMER_OFF, (CONFIG_STIMER_100MS_NUM - 3), 4);//T0 STOP
+		}
+		else
+			sTimerCtrl(STIMER_ON, (CONFIG_STIMER_100MS_NUM - 3), 4);//T0 STOP
+
 //		if(softPlc.T_100ms[4].output)
 //		{
 //			stopTimer(&softPlc.T_100ms[4]);

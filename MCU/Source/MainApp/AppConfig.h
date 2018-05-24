@@ -59,14 +59,14 @@
 #define CONFIG_USE_IPID_UPDATE				1//使能IPID参数更新功能
 #define CONFIG_USE_IPID_OUTSHOW				1//使能IPID输出显示
 /*****************************************************************************/
-//SOFTPLC设置
-#define CONFIG_SOFTPLC_HWTIME				(uint16_t)(65536 - (CONFIG_SYSCLK / 1000 / 12 ))//SoftPLC 硬件计时器基准10ms
+//STIMER设置
+#define CONFIG_SOFTPLC_HWTIME				(uint16_t)(65536 - (CONFIG_SYSCLK / 1000 / 12 / 10))//SoftPLC 硬件计时器基准1ms
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波周期
-#define CONFIG_PLC_T_NUM					256//延时计时器
-#define CONFIG_PLC_T_1MS_NUM				0//1ms计时器
-#define CONFIG_PLC_T_10MS_NUM				32//10ms计时器
-#define CONFIG_PLC_T_100MS_NUM				48//100mS计时器
-#define CONFIG_PLC_T_1000MS_NUM				64//1S计时器
+#define CONFIG_STIMER_NUM					64//延时计时器
+#define CONFIG_STIMER_1MS_NUM				16//1ms计时器 0-15
+#define CONFIG_STIMER_10MS_NUM				32//10ms计时器 16-31
+#define CONFIG_STIMER_100MS_NUM				48//100mS计时器 32-47
+#define CONFIG_STIMER_1000MS_NUM			64//1S计时器 48-63
 
 #define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
 #define CONFIG_IPID_PWM_CYCLE				20//IPID输出周期 默认 20 * 100mS

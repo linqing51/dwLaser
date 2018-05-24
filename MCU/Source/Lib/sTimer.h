@@ -3,7 +3,8 @@
 /*****************************************************************************/
 #include "appConfig.h"
 /*****************************************************************************/
-
+#define STIMER_ON						1
+#define STIMER_OFF						0
 /*****************************************************************************/
 typedef struct
 {//定义软件PLC功能
@@ -13,7 +14,7 @@ typedef struct
 	uint16_t value;//计时器计时值	
 }sTimer_t;
 /*****************************************************************************/
-extern sTimer_t sTimer[CONFIG_PLC_T_NUM];
+extern sTimer_t sTimer[CONFIG_STIMER_NUM];
 /*****************************************************************************/
 void sTimerInit(void);//初始化
 int8_t sTimerCtrl(int8_t enable, uint16_t num, uint16_t value);//计数器控制
