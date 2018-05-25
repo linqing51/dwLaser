@@ -9,6 +9,7 @@
 sbit LED_MCU = P2^3;//处理器指示LED
 sbit LED_LASER0 = P1^7;//激光发射指示LED0 980nM
 sbit LED_LASER1 = P1^6;//激光发射指示LED1 1470nM
+bit  COOL_OUT;
 /*****************************************************************************/
 #define ENUM_CHANNEL1					4321
 #define ENUM_CHANNEL2					8765
@@ -29,10 +30,13 @@ laser_t laser;
 #define INPUT_FIBERDETECT1				5
 
 
+
+
 /*****************************************************************************/
 void main(void)
 {
 	int8_t temp;
+	int16_t tecOnTime, tecOffTime;//制冷开关时间
 	pidFuzzy_t pidFuzzy;
 	Init_Device();//初始化MCU
 	//hwI2cInit();//初始化硬件I2C
@@ -134,31 +138,31 @@ void main(void)
 		//PID 温控指令
 		if(sTimer[(CONFIG_STIMER_100MS_NUM - 3)].status)//等待A时间
 		{
-			
-		
-			laser.pidOut = pidFuzzyRealize(&pidFuzzy, 25, 30);
-			sTimerCtrl(STIMER_OFF, (CONFIG_STIMER_100MS_NUM - 3), 4);//T0 STOP
+			laser.pidOut += pidFuzzyRealize(&pidFuzzy, 25.0, 26.0);
+			if(laser.pidOut > 1)
+				laser.pidOut = 1;
+			if(laser.pidOut < 0)
+				laser.pidOut = 0;
+			//laser.onTimerPid = (int16_t)(laser.pidOut * CONFIG_PIDOUT_PWM);
+			//laser.offTimerPid = CONFIG_TECOUT_MAX_CYCLE - laser.onTimerPid; 
+			sTimerCtrl(STIMER_OFF, (CONFIG_STIMER_100MS_NUM - 3), 10);
 		}
 		else
-			sTimerCtrl(STIMER_ON, (CONFIG_STIMER_100MS_NUM - 3), 4);//T0 STOP
+			sTimerCtrl(STIMER_ON, (CONFIG_STIMER_100MS_NUM - 3), 10);
+		//PID结果输出
 
-//		if(softPlc.T_100ms[4].output)
-//		{
-//			stopTimer(&softPlc.T_100ms[4]);
-//		}
-//		else
-//		{
-//			startTimer(&softPlc.T_100ms[4],1);
-//		}
-//		
-//		if(softPlc.T_1000ms[4].output)
-//		{
-//			stopTimer(&softPlc.T_1000ms[4]);
-//		}
-//		else
-//		{
-//			startTimer(&softPlc.T_1000ms[4],1);
-//		}
+		if(sTimer[1].value >= CONFIG_TECOUT_CYCLE || sTimer[1].enable == 0)
+		{
+			COOL_OUT = 1;
+			//tecOnTime = (int16_t)(laser.pidOut * CONFIG_TECOUT_CYCLE);
+			tecOnTime = (int16_t)(0.25 * CONFIG_TECOUT_CYCLE);
+			sTimerCtrl(STIMER_OFF, 1, tecOnTime);
+			sTimerCtrl(STIMER_ON, 1, tecOnTime);
+		}
+		if(sTimer[1].value >= tecOnTime)
+		{
+			COOL_OUT = 0;
+		}
 		modbusPoll();//执行MODBUS POLL
 		
 		//setOutput();//更新输出IO

@@ -54,7 +54,10 @@ typedef struct
 	//
 	uint8_t footSwitch;//脚踏开关常开
 	//模糊PID参数
-	int16_t pidOut;//IPID输出值
+	fp32_t pidOut;//IPID输出值
+	int16_t onTimerPid;//pid输出 开启时间  
+	int16_t offTimerPid;//pid输出 关闭时间
+	
 	int8_t  FlagStart;//发射触发
 	int8_t	FlagReady;//准备标志
 	int8_t	FiberSensor[2];//光纤检测

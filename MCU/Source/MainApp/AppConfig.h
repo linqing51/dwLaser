@@ -84,15 +84,7 @@
 #define COOLON_OUT_PORT						(1 * 8 + 3)
 /*****************************************************************************/
 //PID FUZZY 模糊PID配置
-#define CONFIG_PID_FUZZY_EMIN				0.0
-#define CONFIG_PID_FUZZY_EMID 				0.08
-#define CONFIG_PID_FUZZY_EMAX				0.6
-//调整值限幅，防止积分饱和
-#define CONFIG_PID_FUZZY_UMAX				5
-#define CONFIG_PID_FUZZY_UMIN 				-5
-//输出值限幅
-#define CONFIG_PID_FUZZY_PMAX 				7200
-#define CONFIG_PID_FUZZY_PMIN 				0
+#define CONFIG_TECOUT_CYCLE					4000//PID输出转PWM周期
 /*****************************************************************************/
 //MODBUS SALVE配置
 #define CONFIG_MODBUS_SLAVE_RX_BUFF_SIZE	128

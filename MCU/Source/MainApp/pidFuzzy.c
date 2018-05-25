@@ -9,37 +9,40 @@
 /*****************************************************************************/
 
 
-#define NB 									0
-#define NM 1
-#define NS 2
-#define ZO 3
-#define PS 4
-#define PM 5
-#define PB 6
+#define NB 			-3
+#define NM 			-2
+#define NS 			-1
+#define ZO 			0
+#define PS 			1
+#define PM 			2
+#define PB 			3
 
-int kp[7][7]={	{PB,PB,PM,PM,PS,ZO,ZO},
+int deltaKpMatrix[7][7]={	
+				{PB,PB,PM,PM,PS,ZO,ZO},
 				{PB,PB,PM,PS,PS,ZO,ZO},
 				{PM,PM,PM,PS,ZO,NS,NS},
 				{PM,PM,PS,ZO,NS,NM,NM},
 				{PS,PS,ZO,NS,NS,NM,NM},
 				{PS,ZO,NS,NM,NM,NM,NB},
-				{ZO,ZO,NM,NM,NM,NB,NB}    };
+				{ZO,ZO,NM,NM,NM,NB,NB}};
 
-int kd[7][7]={	{PS,NS,NB,NB,NB,NM,PS},
+int deltaKdMatrix[7][7]={	
+				{PS,NS,NB,NB,NB,NM,PS},
 				{PS,NS,NB,NM,NM,NS,ZO},
 				{ZO,NS,NM,NM,NS,NS,ZO},
 				{ZO,NS,NS,NS,NS,NS,ZO},
 				{ZO,ZO,ZO,ZO,ZO,ZO,ZO},
 				{PB,NS,PS,PS,PS,PS,PB},
-				{PB,PM,PM,PM,PS,PS,PB}    };
+				{PB,PM,PM,PM,PS,PS,PB}};
 
-int ki[7][7]={	{NB,NB,NM,NM,NS,ZO,ZO},
+int deltaKiMatrix[7][7]={	
+				{NB,NB,NM,NM,NS,ZO,ZO},
 				{NB,NB,NM,NS,NS,ZO,ZO},
 				{NB,NM,NS,NS,ZO,PS,PS},
 				{NM,NM,NS,ZO,PS,PM,PM},
 				{NM,NS,ZO,PS,PS,PM,PB},
 				{ZO,ZO,PS,PS,PM,PB,PB},
-				{ZO,ZO,PS,PM,PM,PB,PB}    };
+				{ZO,ZO,PS,PM,PM,PB,PB}};
 
 /**************求隶属度（三角形）***************/
 fp32_t FTri(fp32_t x,fp32_t a,fp32_t b,fp32_t c)//FuzzyTriangle
@@ -107,13 +110,12 @@ fp32_t forr(fp32_t a,fp32_t b)
 {
 	return (a<b)?b:a;
 }
-fp32_t ec;
 
-int16_t pidFuzzyRealize(pidFuzzy_t *p, fp32_t set, fp32_t fb)
+fp32_t pidFuzzyRealize(pidFuzzy_t *p, fp32_t set, fp32_t fb)
 {//PID计算部分   
 	
 	//计算隶属度表
-	fp32_t es[7], ecs[7], e;
+	fp32_t es[7], ecs[7], e, ec;
 	fp32_t form[7][7];
 	int i=0, j=0;
 	int MaxX=0, MaxY=0;
@@ -126,23 +128,22 @@ int16_t pidFuzzyRealize(pidFuzzy_t *p, fp32_t set, fp32_t fb)
 	e = p->error;
 	ec = e - p->error1;
 	
-
 	//计算iError在es与ecs中各项的隶属度
-	es[NB] = FTraL(e*5, -3, -1);  //e 
-	es[NM] = FTri(e*5, -3, -2, 0);
-	es[NS] = FTri(e*5, -3, -1, 1);
-	es[ZO] = FTri(e*5, -2, 0, 2);
-	es[PS] = FTri(e*5, -1, 1, 3);
-	es[PM] = FTri(e*5, 0, 2, 3);
-	es[PB] = FTraR(e*5, 1, 3);
+	es[0] = FTraL(e, -3, -1);  //e 
+	es[1] = FTri(e, -3, -2, 0);
+	es[2] = FTri(e, -3, -1, 1);
+	es[3] = FTri(e, -2, 0, 2);
+	es[4] = FTri(e, -1, 1, 3);
+	es[5] = FTri(e, 0, 2, 3);
+	es[6] = FTraR(e, 1, 3);
 
-	ecs[NB] = FTraL(ec * 30, -3, -1);//ec
-	ecs[NM] = FTri(ec * 30, -3, -2, 0);
-	ecs[NS] = FTri(ec * 30, -3, -1, 1);
-	ecs[ZO] = FTri(ec * 30, -2, 0, 2);
-	ecs[PS] = FTri(ec * 30, -1, 1, 3);
-	ecs[PM] = FTri(ec * 30, 0, 2, 3);
-	ecs[PB] = FTraR(ec * 30, 1, 3);
+	ecs[0] = FTraL(ec, -3, -1);//ec
+	ecs[1] = FTri(ec, -3, -2, 0);
+	ecs[2] = FTri(ec, -3, -1, 1);
+	ecs[3] = FTri(ec, -2, 0, 2);
+	ecs[4] = FTri(ec, -1, 1, 3);
+	ecs[5] = FTri(ec, 0, 2, 3);
+	ecs[6] = FTraR(ec, 1, 3);
 
 	//计算隶属度表，确定e和ec相关联后表格各项隶属度的值
 	for(i=0;i<7;i++)
@@ -166,10 +167,10 @@ int16_t pidFuzzyRealize(pidFuzzy_t *p, fp32_t set, fp32_t fb)
 		}
 	}
 	//进行模糊推理，并去模糊
-	lsd=form[MaxX][MaxY];
-	temp_p=kp[MaxX][MaxY];
-	temp_d=kd[MaxX][MaxY];   
-	temp_i=ki[MaxX][MaxY];
+	lsd = form[MaxX][MaxY];
+	temp_p = deltaKpMatrix[MaxX][MaxY];
+	temp_d = deltaKdMatrix[MaxX][MaxY];   
+	temp_i = deltaKiMatrix[MaxX][MaxY];
 
 	if(temp_p==NB)
 		detkp=uFTraL(lsd,-0.3,-0.1);
@@ -217,21 +218,20 @@ int16_t pidFuzzyRealize(pidFuzzy_t *p, fp32_t set, fp32_t fb)
 		detki=uFTraR(lsd,0.02,0.06);
 
 	//pid三项系数的修改
-	p->Kp_SA += detkp;
-	p->Ki_SA += detki;
-	p->Kd_SA += detkd;
+	p->Kp += detkp;
+	p->Ki += detki;
+	p->Kd += detkd;
 	
-	//对Kp,Ki进行限幅
-	if(p->Kp_SA < 0)
-		p->Kp = 0;
-	if(p->Ki_SA < 0)
-		p->Ki_SA = 0;
-	
+	////对Kp,Ki进行限幅
+	//if(p->Kp_SA < 0)
+	//	p->Kp = 0;
+	//if(p->Ki_SA < 0)
+	//	p->Ki_SA = 0;
 	
 	//dout = Kp*{e(n) - e(n-1)} + Ki*e(n) + Kd*{e(n) -2*e(n-1) + e(n-2)}
-	p->dout = p->Kp_SA * (p->error - p->error1);
-	p->dout += p->Ki_SA * p->error;
-	p->dout -=  p->Kd_SA * (p->error - (2 * p->error1) + p->error2);
+	p->dout = p->Kp * (p->error - p->error1);
+	p->dout += p->Ki * p->error;
+	p->dout -=  p->Kd * (p->error - (2 * p->error1) + p->error2);
 	p->error2 = p->error1; 
 	p->error1 = p->error;
 	return p->dout;
@@ -245,8 +245,4 @@ void pidFuzzyInit(pidFuzzy_t *p, fp32_t Kp, fp32_t Ki, fp32_t Kd)
 	p->Kp = Kp;
 	p->Ki = Ki;
 	p->Kd = Kd;
-	p->Kp_SA = Kp;
-	p->Ki_SA = Ki;
-	p->Kd_SA = Kd;
-
 }
