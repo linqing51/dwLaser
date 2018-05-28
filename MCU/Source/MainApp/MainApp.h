@@ -52,14 +52,12 @@ typedef struct
 	uint8_t safeOpenCase;//开箱检测
 	uint8_t safeOpenCaseIgnore;//开箱检测忽略
 	//
-	uint8_t footSwitch;//脚踏开关
+	uint8_t footSwitch;//脚踏开关常开
 	//模糊PID参数
-	int16_t IPID_Kp;//IPID参数比例增益
-	int16_t IPID_Ti;//IPID参数积分时间
-	int16_t IPID_Td;//IPID参数微分时间
-	int16_t IPID_Ts;//IPID参数采样周期
-	int16_t IPIDOutAdd;//IPID输出值增量
-	int16_t IPIDOut;//IPID输出值
+	fp32_t pidOut;//IPID输出值
+	int16_t onTimerPid;//pid输出 开启时间  
+	int16_t offTimerPid;//pid输出 关闭时间
+	
 	int8_t  FlagStart;//发射触发
 	int8_t	FlagReady;//准备标志
 	int8_t	FiberSensor[2];//光纤检测

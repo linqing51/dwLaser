@@ -59,9 +59,10 @@
 #define CONFIG_USE_IPID_UPDATE				1//使能IPID参数更新功能
 #define CONFIG_USE_IPID_OUTSHOW				1//使能IPID输出显示
 /*****************************************************************************/
-//SOFTPLC设置
-#define CONFIG_SOFTPLC_HWTIME				(uint16_t)(65536 - (CONFIG_SYSCLK / 1000 / 12 ))//SoftPLC 硬件计时器基准10ms
+//STIMER设置
+#define CONFIG_SOFTPLC_HWTIME				(uint16_t)(65536 - (CONFIG_SYSCLK / 1000 / 12 / 10))//SoftPLC 硬件计时器基准1ms
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波周期
+<<<<<<< HEAD
 #define CONFIG_PLC_T_NUM					64//延时计时器
 #define CONFIG_PLC_T_1MS_START				0//1ms计时器开始编号
 #define CONFIG_PLC_T_1MS_END				15//1ms计时器结束编号
@@ -71,6 +72,13 @@
 #define CONFIG_PLC_T_100MS_END				47//100mS计时器结束编号
 #define CONFIG_PLC_T_1000MS_START			48//1S计时器开始编号
 #define CONFIG_PLC_T_1000MS_END				63//1S计时器结束编号
+=======
+#define CONFIG_STIMER_NUM					64//延时计时器
+#define CONFIG_STIMER_1MS_NUM				16//1ms计时器 0-15
+#define CONFIG_STIMER_10MS_NUM				32//10ms计时器 16-31
+#define CONFIG_STIMER_100MS_NUM				48//100mS计时器 32-47
+#define CONFIG_STIMER_1000MS_NUM			64//1S计时器 48-63
+>>>>>>> f2e27d8502aafb19eb14774ec23e774246145beb
 
 #define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
 #define CONFIG_IPID_PWM_CYCLE				20//IPID输出周期 默认 20 * 100mS
@@ -88,15 +96,7 @@
 #define COOLON_OUT_PORT						(1 * 8 + 3)
 /*****************************************************************************/
 //PID FUZZY 模糊PID配置
-#define CONFIG_PID_FUZZY_EMIN				0.0
-#define CONFIG_PID_FUZZY_EMID 				0.08
-#define CONFIG_PID_FUZZY_EMAX				0.6
-//调整值限幅，防止积分饱和
-#define CONFIG_PID_FUZZY_UMAX				5
-#define CONFIG_PID_FUZZY_UMIN 				-5
-//输出值限幅
-#define CONFIG_PID_FUZZY_PMAX 				7200
-#define CONFIG_PID_FUZZY_PMIN 				0
+#define CONFIG_TECOUT_CYCLE					4000//PID输出转PWM周期
 /*****************************************************************************/
 //MODBUS SALVE配置
 #define CONFIG_MODBUS_SLAVE_RX_BUFF_SIZE	128
