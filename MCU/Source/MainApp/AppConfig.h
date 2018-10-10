@@ -1,28 +1,15 @@
 #ifndef __APPCONFIG_H__
 #define __APPCONFIG_H__
 /*****************************************************************************/
+#define CONFIG_MCU_F020						1
+#define CONFIG_MCU_F340 					0
+#define CONFIG_MCU_F580						0
 /*****************************************************************************/
-#define CONFIG_USE_INTOSC_12000000			0
-#define CONFIG_USE_INTOSC_24000000			0
-#define CONFIG_USE_INTOSC_48000000			0
-#define CONFIG_USE_EXTOSC_22184000			1
-#define CONFIG_USE_EXTOSC_44236800			0
-/*****************************************************************************/
-#if CONFIG_USE_INTOSC_12000000 == 1
-#define CONFIG_SYSCLK                       (12000000L)
-#endif
-#if CONFIG_USE_INTOSC_24000000 == 1
+//#define CONFIG_SYSCLK                       (12000000L)
 #define CONFIG_SYSCLK						(24000000L)
-#endif
-#if	CONFIG_USE_INTOSC_48000000 == 1
-#define CONFIG_SYSCLK                       (48000000L)
-#endif
-#if	CONFIG_USE_EXTOSC_22184000 == 1
-#define CONFIG_SYSCLK                       (22118400L)
-#endif
-#if	CONFIG_USE_EXTOSC_44236800 == 1
-#define CONFIG_SYSCLK                       (44236800L)
-#endif
+//#define CONFIG_SYSCLK                       (48000000L)
+//#define CONFIG_SYSCLK                       (22118400L)
+//#define CONFIG_SYSCLK                       (44236800L)
 /*****************************************************************************/
 #define CONFIG_DEBUG                        1//调试功能
 #define CONFIG_LOCAL_ADDRESS                0x01
@@ -62,7 +49,7 @@
 //STIMER设置
 #define CONFIG_SOFTPLC_HWTIME				(uint16_t)(65536 - (CONFIG_SYSCLK / 1000 / 12 / 10))//SoftPLC 硬件计时器基准1ms
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波周期
-<<<<<<< HEAD
+
 #define CONFIG_PLC_T_NUM					64//延时计时器
 #define CONFIG_PLC_T_1MS_START				0//1ms计时器开始编号
 #define CONFIG_PLC_T_1MS_END				15//1ms计时器结束编号
@@ -72,13 +59,13 @@
 #define CONFIG_PLC_T_100MS_END				47//100mS计时器结束编号
 #define CONFIG_PLC_T_1000MS_START			48//1S计时器开始编号
 #define CONFIG_PLC_T_1000MS_END				63//1S计时器结束编号
-=======
+
 #define CONFIG_STIMER_NUM					64//延时计时器
 #define CONFIG_STIMER_1MS_NUM				16//1ms计时器 0-15
 #define CONFIG_STIMER_10MS_NUM				32//10ms计时器 16-31
 #define CONFIG_STIMER_100MS_NUM				48//100mS计时器 32-47
 #define CONFIG_STIMER_1000MS_NUM			64//1S计时器 48-63
->>>>>>> f2e27d8502aafb19eb14774ec23e774246145beb
+
 
 #define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
 #define CONFIG_IPID_PWM_CYCLE				20//IPID输出周期 默认 20 * 100mS
@@ -102,12 +89,24 @@
 #define CONFIG_MODBUS_SLAVE_RX_BUFF_SIZE	128
 #define CONFIG_MODBUS_SLAVE_TX_BUFF_SIZE	128
 /*****************************************************************************/
+/*****************************************************************************/
+#include "si_toolchain.h"
+#include "compiler_defs.h"
 #include "stdint.h"
 #include "stdbool.h"
 #include "endian.h"
-#include "si_toolchain.h"
-#include "compiler_defs.h"
+
+#if CONFIG_MCU_F020 == 1
 #include "C8051F020_defs.h"
+#endif
+
+#if CONFIG_MCU_F340 == 1
+#include "C8051F340_defs.h"
+#endif
+
+#if CONFIG_MCU_F580 == 1
+#include "C8051F580_defs.h"
+#endif
 /*****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h> 
@@ -117,8 +116,12 @@
 #include <LIMITS.H>
 #include <math.h>
 /*****************************************************************************/
-#include "sTimer.h"
-#include "pidFuzzy.h"
+#include "os_cpu.h"
+#include "os_cfg.h"
+#include "ucos_ii.h"
+/*****************************************************************************/
+//#include "sTimer.h"
+//#include "pidFuzzy.h"
 /*****************************************************************************/
 #include "InitConfig.h"
 //#include "AppMath.h"
@@ -126,8 +129,8 @@
 //#include "ad5621.h"
 //#include "chipBeem.h"
 
-#include "modbusApp.h"
-#include "modbusPort.h"
-#include "slaveModbus.h"
+//#include "modbusApp.h"
+//#include "modbusPort.h"
+//#include "slaveModbus.h"
 /*****************************************************************************/
 #endif

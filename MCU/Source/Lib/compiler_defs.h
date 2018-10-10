@@ -3,8 +3,8 @@
 //-----------------------------------------------------------------------------
 // Portions of this file are copyright Maarten Brock
 // http://sdcc.sourceforge.net
-// Portions of this file are Copyright 2014 Silicon Laboratories, Inc.
-// http://developer.silabs.com/legal/version/v11/Silicon_Labs_Software_License_Agreement.txt
+// Portions of this file are copyright 2010, Silicon Laboratories, Inc.
+// http://www.silabs.com
 //
 // GNU LGPL boilerplate:
 /** This library is free software; you can redistribute it and/or
@@ -66,10 +66,6 @@
 // Tool chain:     Generic
 // Command Line:   None
 // 
-// Release 2.7 - 25 JUN 2014 (JM)
-//    -Added SI_GENERIC_PTR struct for accessing generic pointers
-//    -Added SI_GPTR_MTYPE_XXXX definitions for determining the memory type
-//     pointed at by a generic poitner
 // Release 2.6 - 14 DEC 2012 (GO)
 // 	  -Added define for deprecated SDCC keyword 'at'
 // Release 2.5 - 12 SEP 2012 (TP)
@@ -122,20 +118,9 @@
 #ifndef COMPILER_DEFS_H
 #define COMPILER_DEFS_H
 
-#include "stdbool.h"
-#include "stdint.h"
-
 //-----------------------------------------------------------------------------
 // Macro definitions
 //-----------------------------------------------------------------------------
-
-//SDK Version
-#define SDK_VERSION   2
-
-#ifndef NULL
-#define NULL ((void*) 0)
-#endif
-
 
 // SDCC - Small Device C Compiler
 // http://sdcc.sourceforge.net
@@ -227,25 +212,6 @@ typedef union UU32
 // NOP () macro support
 #define NOP() _asm NOP _endasm
 
-// generic pointer memory type specifiers
-#define SI_GPTR
-#define SI_GPTR_MTYPE_DATA       0x40
-#define SI_GPTR_MTYPE_IDATA      0x40
-#define SI_GPTR_MTYPE_BDATA      0x40
-#define SI_GPTR_MTYPE_PDATA      0x60
-#define SI_GPTR_MTYPE_XDATA      0x00
-#define SI_GPTR_MTYPE_CODE       0x80
-
-// generic pointer access struct
-typedef union SI_GENERIC_PTR
-{
-    U8 U8[3];
-    struct
-    {
-        UU16 ADDR;
-        U8 MTYPE;
-    } GPTR;
-} SI_GENERIC_PTR;
 
 //-----------------------------------------------------------------------------
 
@@ -330,25 +296,6 @@ typedef union UU32
 // NOP () macro support -- NOP is opcode 0x00
 #define NOP() asm { 0x00 }
 
-// generic pointer memory type specifiers
-#define SI_GPTR
-#define SI_GPTR_MTYPE_DATA       0x04
-#define SI_GPTR_MTYPE_IDATA      0x01
-#define SI_GPTR_MTYPE_BDATA      0x04
-#define SI_GPTR_MTYPE_PDATA      0x03
-#define SI_GPTR_MTYPE_XDATA      0x02
-#define SI_GPTR_MTYPE_CODE       0x05
-
-// generic pointer access struct
-typedef union SI_GENERIC_PTR
-{
-    U8 U8[3];
-    struct
-    {
-        U8 MTYPE;
-        UU16 ADDR;
-    } GPTR;
-} SI_GENERIC_PTR;
 
 //-----------------------------------------------------------------------------
 
@@ -377,8 +324,6 @@ typedef union SI_GENERIC_PTR
 # define SFR32(name, fulladdr)  /* not supported */
 # define SFR32E(name, fulladdr) /* not supported */
 
-# ifndef __SLS_IDE__
-
 # define INTERRUPT(name, vector) void name (void) interrupt vector
 # define INTERRUPT_USING(name, vector, regnum) void name (void) interrupt vector using regnum
 # define INTERRUPT_PROTO(name, vector) void name (void)
@@ -393,25 +338,6 @@ typedef union SI_GENERIC_PTR
 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype targsegment * locsegment name
 # define SEGMENT_POINTER(name, vartype, locsegment) vartype * locsegment name
 # define LOCATED_VARIABLE_NO_INIT(name, vartype, locsegment, addr) vartype locsegment name _at_ addr
-
-# else	// __SLS_IDE__
-
-# define INTERRUPT(name, vector) void name (void)
-# define INTERRUPT_USING(name, vector, regnum) void name (void)
-# define INTERRUPT_PROTO(name, vector) void name (void)
-# define INTERRUPT_PROTO_USING(name, vector, regnum) void name (void)
-
-# define FUNCTION_USING(name, return_value, parameter, regnum) return_value name (parameter)
-# define FUNCTION_PROTO_USING(name, return_value, parameter, regnum) return_value name (parameter)
-// Note: Parameter must be either 'void' or include a variable type and name. (Ex: char temp_variable)
-
-# define SEGMENT_VARIABLE(name, vartype, locsegment) vartype name
-# define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype * name
-# define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype * name
-# define SEGMENT_POINTER(name, vartype, locsegment) vartype * name
-# define LOCATED_VARIABLE_NO_INIT(name, vartype, locsegment, addr) vartype name
-
-# endif	// __SLS_IDE__
 
 // used with UU16
 # define LSB 1
@@ -453,26 +379,6 @@ typedef union UU32
 // NOP () macro support
 extern void _nop_ (void);
 #define NOP() _nop_()
-
-// generic pointer memory type specifiers
-#define SI_GPTR
-#define SI_GPTR_MTYPE_DATA      0x00
-#define SI_GPTR_MTYPE_IDATA     0x00
-#define SI_GPTR_MTYPE_BDATA     0x00
-#define SI_GPTR_MTYPE_PDATA     0xFE
-#define SI_GPTR_MTYPE_XDATA     0x01
-#define SI_GPTR_MTYPE_CODE      0xFF
-
-// generic pointer access struct
-typedef union SI_GENERIC_PTR
-{
-    U8 U8[3];
-    struct
-    {
-        U8 MTYPE;
-        UU16 ADDR;
-    } GPTR;
-} SI_GENERIC_PTR;
 
 //-----------------------------------------------------------------------------
 
@@ -732,27 +638,6 @@ typedef union UU32
 
 
 #define NOP() __no_operation();
-
-// generic pointer memory type specifiers
-#define SI_GPTR
-#define SI_GPTR_MTYPE_DATA       0x01
-#define SI_GPTR_MTYPE_IDATA      0x01
-#define SI_GPTR_MTYPE_BDATA      0x01
-#define SI_GPTR_MTYPE_PDATA      0x00
-#define SI_GPTR_MTYPE_XDATA      0x00
-#define SI_GPTR_MTYPE_CODE       0x80
-
-// generic pointer access struct
-typedef union SI_GENERIC_PTR
-{
-    U8 U8[3];
-    struct
-    {
-        UU16 ADDR;
-        U8 MTYPE;
-    } GPTR;
-} SI_GENERIC_PTR;
-
 //-----------------------------------------------------------------------------
 
 // Crossware
@@ -768,7 +653,7 @@ typedef union SI_GENERIC_PTR
 
 //-----------------------------------------------------------------------------
 
-// Wickenh√§user
+// Wickenh‰user
 // http://www.wickenhaeuser.de
 
 #elif defined __UC__
