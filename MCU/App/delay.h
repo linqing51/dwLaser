@@ -1,9 +1,10 @@
-#ifndef __INITCONFIG_H__
-#define __INITCONFIG_H__
+#ifndef __DELAY_H__
+#define __DELAY_H__
 /*****************************************************************************/
 #include "appConfig.h"
 /*****************************************************************************/
-void Init_Device(void);
-void Watchdog_Init (void);
-
+void delayMs(uint32_t ms);
+void delayUs(uint32_t us);
+/*****************************************************************************/
 #endif
+

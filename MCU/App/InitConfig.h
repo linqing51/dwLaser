@@ -4,6 +4,6 @@
 #include "appConfig.h"
 /*****************************************************************************/
 void Init_Device(void);
-void Watchdog_Init (void);
+
 
 #endif

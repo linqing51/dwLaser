@@ -1,5 +1,6 @@
 #ifndef __MAINAPP_H__
 #define __MAINAPP_H__
+//IO点用uint8_t 表示 最低位表示当前状态 最高位表示7次前状态 其它位依次
 /*****************************************************************************/
 #include "appConfig.h"
 /*****************************************************************************/
@@ -16,8 +17,12 @@ typedef struct
 }laserTimer_t;
 
 
+
 typedef struct
 {//全局设备结构体
+	//
+	laserTimer_t laserTimer;//激光计时器
+	//
 	int16_t	laserCurrent[2];//设置激光器电流
 	int16_t photoDiode[2];//PD电压
 	int16_t laserMode;//发射模式
@@ -53,19 +58,33 @@ typedef struct
 	uint8_t safeOpenCaseIgnore;//开箱检测忽略
 	//
 	uint8_t footSwitch;//脚踏开关常开
+	
 	//模糊PID参数
 	fp32_t pidOut;//IPID输出值
 	int16_t onTimerPid;//pid输出 开启时间  
 	int16_t offTimerPid;//pid输出 关闭时间
 	
-	int8_t  FlagStart;//发射触发
-	int8_t	FlagReady;//准备标志
-	int8_t	FiberSensor[2];//光纤检测
-	int8_t	FlagIndicate;//激光发射标志
-	int8_t	BeemEnabled;//蜂鸣器使能
-	int8_t	AimEnable;//指示激光使能
-	int8_t	CoolEnable;//制冷输出使能
-}laser_t;
+	//int8_t  FlagStart;//发射触发
+	//int8_t	FlagReady;//准备标志
+	//int8_t	FiberSensor[2];//光纤检测
+	//int8_t	FlagIndicate;//激光发射标志
+	//int8_t	BeemEnabled;//蜂鸣器使能
+	//int8_t	AimEnable;//指示激光使能
+	//int8_t	CoolEnable;//制冷输出使能
+	
+	//int8_t laserTrigger;//激光发射触发
+	int8_t laserEmiting;//激光发射中标志
+	int8_t laserEmitOver;//激光发射完毕	
+	int16_t checkCode;//HMI连接校验码 高8位校验码 低8位版本
+	int8_t heartFlag;//心跳标志
+	int8_t mcuReset;//单片机复位
+	int8_t clearError;
+	int16_t stepNum;//激光发射步骤号码
+	int8_t readyFlag;//待机准备状态
+	int8_t beemOn;//蜂鸣器
+	
+	
+}my_t;
 
 #endif
 

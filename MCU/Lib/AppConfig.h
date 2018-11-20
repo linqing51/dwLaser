@@ -18,37 +18,28 @@
 #define CONFIG_SYSCLK                       (48000000L)
 #endif
 #if	CONFIG_USE_EXTOSC_22184000 == 1
-#define CONFIG_SYSCLK                       (22118400L)
+#define CONFIG_SYSCLK                       (22184000L)
 #endif
 #if	CONFIG_USE_EXTOSC_44236800 == 1
 #define CONFIG_SYSCLK                       (44236800L)
 #endif
 /*****************************************************************************/
 #define CONFIG_DEBUG                        1//调试功能
-#define CONFIG_USING_WDT					0//使能看门狗
-#define CONFIG_USING_RESET					0//使能PLC复位MCU功能
 #define CONFIG_LOCAL_ADDRESS                0x01
+#define CONFIG_MODBUSTASK_DELAY				2//MOSBUS查询周期
+#define CONFIG_WATCHDOG_DELAY				5//WATCHDOG喂狗周期
 #define CONFIG_LASERTIMER_OVERFLOW_US		1000L//定时器周期 1mS
-#define CONFIG_VERSION  					0x0001
-#define CONFIG_CHECK_CODE 					0x5A00
+#define CONFIG_VER_MAJOR  					0x01
+#define CONFIG_VER_MINOR 					0x00
 /*****************************************************************************/
 #define CONFIG_UART0_BAUDRATE				115200//串口波特率
 #define CONFIG_UART0_PARITY					NONE
 #define CONFIG_UART0_STOPBIT				1
 #define CONFIG_UART0_DATABIT				8
-
-#define CONFIG_UART1_BAUDRATE				115200//串口波特率
-#define CONFIG_UART1_PARITY					NONE
-#define CONFIG_UART1_STOPBIT				1
-#define CONFIG_UART1_DATABIT				8
-
 /*****************************************************************************/
-//HARDWARE I2C
-#define CONFIG_SMB_FREQUENCY  				10000L// Target SCL clock rate This example supports between 10kHz and 100kHz
-#define CONFIG_EEPROM_ADDR    				0xA0// Device address for slave target
-#define CONFIG_MY_ADDR        				0x02// Address of this SMBus device
-#define CONFIG_SMB_BUFFER_SIZE				16//SMB读写缓冲最大长度                  
-/*****************************************************************************/
+#define CONFIG_USE_PLC_RESET				1//使能PLC复位MCU功能
+#define CONFIG_USE_WDT						1//使能看门狗
+#define CONFIG_RESET_WDT_TIME				5000//看门狗复位时间10mS
 #define CONFIG_USE_IPID						1//使能IPID温度控制
 /*****************************************************************************/
 #define CONFIG_USE_HWVER_SHOW				1//使能固件版本显示
@@ -62,19 +53,15 @@
 #define CONFIG_USE_IPID_UPDATE				1//使能IPID参数更新功能
 #define CONFIG_USE_IPID_OUTSHOW				1//使能IPID输出显示
 /*****************************************************************************/
-//STIMER设置
-#define CONFIG_SOFTPLC_HWTIME				(uint16_t)(65536 - (CONFIG_SYSCLK / 1000 / 12 / 10))//SoftPLC 硬件计时器基准1ms
-#define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波周期
-#define CONFIG_STIMER_1MS_START				0//1ms计时器开始编号
-#define CONFIG_STIMER_1MS_END				15//1ms计时器结束编号
-#define CONFIG_STIMER_10MS_START			16//10ms计时器开始编号
-#define CONFIG_STIMER_10MS_END				31//10ms计时器结束编号
-#define CONFIG_STIMER_100MS_START			32//100mS计时器开始编号
-#define CONFIG_STIMER_100MS_END				47//100mS计时器结束编号
-#define CONFIG_STIMER_1000MS_START			48//1S计时器开始编号
-#define CONFIG_STIMER_1000MS_END			63//1S计时器结束编号
-#define CONFIG_STIMER_NUM					64//延时计时器
-
+#define CONFIG_INPUT_FILTER					10//输入数字滤波时间
+#define CONFIG_TIME0_1MS					(65536 - (uint16_t)(CONFIG_SYSCLK / 48 / 1000))//计时1ms
+#define CONFIG_PLC_TIMER_1MS_NUM			8//1ms计时器个数
+#define CONFIG_PLC_TIMER_10MS_NUM			8//10ms计时器个数
+#define CONFIG_PLC_TIMER_100MS_NUM			8//100计时器个数
+#define CONFIG_PLC_M_NUM					32//辅助寄存器个数
+#define CONFIG_PLC_X_NUM					8//输入寄存器个数
+#define CONFIG_PLC_Y_NUM					8//输出寄存器个数
+#define CONFIG_PLC_D_NUM					32//D寄存器
 #define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
 #define CONFIG_IPID_PWM_CYCLE				20//IPID输出周期 默认 20 * 100mS
 /*****************************************************************************/
@@ -90,14 +77,6 @@
 #define FBS2_IN_PORT						2
 #define COOLON_OUT_PORT						(1 * 8 + 3)
 /*****************************************************************************/
-//PID FUZZY 模糊PID配置
-#define CONFIG_TECOUT_CYCLE					4000//PID输出转PWM周期
-/*****************************************************************************/
-//MODBUS SALVE配置
-#define CONFIG_MODBUS_SLAVE_RX_BUFF_SIZE	128
-#define CONFIG_MODBUS_SLAVE_TX_BUFF_SIZE	128
-/*****************************************************************************/
-
 #include "stdint.h"
 #include "stdbool.h"
 #include "endian.h"
@@ -105,25 +84,22 @@
 #include "compiler_defs.h"
 #include "C8051F020_defs.h"
 /*****************************************************************************/
-#include <stdio.h>
-#include <stdlib.h> 
-#include <string.h>
-#include <INTRINS.H>
+#include "stdio.h"
+#include "string.h"
+#include "INTRINS.H"
 #include <ctype.h>
-#include <LIMITS.H>
-#include <math.h>
+#include "LIMITS.H"
 /*****************************************************************************/
-#include "sTimer.h"
-#include "pidFuzzy.h"
+//#include "modbusApp.h"
+//#include "modbusPort.h"
+//#include "slaveModbus.h"
+//#include "SoftPlcPort.h"
+//#include "delay.h"
 /*****************************************************************************/
 #include "InitConfig.h"
 //#include "AppMath.h"
 //#include "chipAdc.h"
 //#include "ad5621.h"
 //#include "chipBeem.h"
-
-#include "modbusApp.h"
-#include "modbusPort.h"
-#include "slaveModbus.h"
 /*****************************************************************************/
 #endif

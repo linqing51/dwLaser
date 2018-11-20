@@ -1,24 +1,22 @@
-#include "InitConfig.h"
-/*****************************************************************************/
-sbit HWI2C_SCL = P0^3;
-sbit HWI2C_SDA = P0^2;
-/*****************************************************************************/
+#include "appConfig.h"
+
+
+// Peripheral specific initialization functions,
+// Called from the Init_Device() function
 void Reset_Sources_Init()
 {
     WDTCN     = 0xDE;
     WDTCN     = 0xAD;
-//    RSTSRC    = 0x06;
+    RSTSRC    = 0x06;
 }
-void Watchdog_Init (void)
-{
-   WDTCN &= ~0x80;// WDTCN.7 must be logic 0 when setting the interval.
-   WDTCN |= 0x07;// Set the WDTCN[2-0] to 110b
-}
-
 
 void Timer_Init()
-{	
-	CKCON &= 0x00;//T0/T1 CLK = SYSCLK /12;T2 CLK = SYSCLK;T4 CLK = SYSCLK
+{
+    CKCON     = 0x30;
+    TMOD      = 0x20;
+    TH1       = 0xFA;
+    RCAP2L    = 0xB8;
+    RCAP2H    = 0xFF;
 }
 
 void UART_Init()
@@ -83,23 +81,8 @@ void Port_IO_Init()
     XBR0      = 0x25;
     XBR2      = 0x44;
 }
-void resetSMBUS(void)
-{
-	uint8_t i;
-	while(!HWI2C_SDA)
-	{
-		// Provide clock pulses to allow the slave to advance out
-		// of its current state. This will allow it to release SDA.
-		XBR1 = 0x40;                     // Enable Crossbar
-		HWI2C_SCL = 0;                         // Drive the clock low
-		for(i = 0; i < 255; i++);        // Hold the clock low
-		HWI2C_SCL = 1;                         // Release the clock
-		while(!HWI2C_SCL);                     // Wait for open-drain clock output to rise
-		for(i = 0; i < 10; i++);         // Hold the clock high
-		XBR1 = 0x00;                     // Disable Crossbar
-	}
-}
-void Oscillator_Init(void)
+
+void Oscillator_Init()
 {
     int i = 0;
     OSCXCN    = 0x67;
@@ -113,12 +96,10 @@ void Oscillator_Init(void)
 void Init_Device(void)
 {
     Reset_Sources_Init();
-	Oscillator_Init();
     Timer_Init();
     UART_Init();
     DAC_Init();
     Voltage_Reference_Init();
-	resetSMBUS();
     Port_IO_Init();
-   
+    Oscillator_Init();
 }
