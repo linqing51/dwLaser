@@ -24,6 +24,7 @@
 #define CONFIG_SYSCLK                       (44236800L)
 #endif
 /*****************************************************************************/
+#define CONFIG_SIMULATION					1//仿真模式
 #define CONFIG_DEBUG                        1//调试功能
 #define CONFIG_USING_WDT					0//使能看门狗
 #define CONFIG_USING_RESET					0//使能PLC复位MCU功能
@@ -43,11 +44,7 @@
 #define CONFIG_UART1_DATABIT				8
 
 /*****************************************************************************/
-//HARDWARE I2C
-#define CONFIG_SMB_FREQUENCY  				10000L// Target SCL clock rate This example supports between 10kHz and 100kHz
-#define CONFIG_EEPROM_ADDR    				0xA0// Device address for slave target
-#define CONFIG_MY_ADDR        				0x02// Address of this SMBus device
-#define CONFIG_SMB_BUFFER_SIZE				16//SMB读写缓冲最大长度                  
+               
 /*****************************************************************************/
 #define CONFIG_USE_IPID						1//使能IPID温度控制
 /*****************************************************************************/
@@ -96,6 +93,8 @@
 //MODBUS SALVE配置
 #define CONFIG_MODBUS_SLAVE_RX_BUFF_SIZE	128
 #define CONFIG_MODBUS_SLAVE_TX_BUFF_SIZE	128
+#define CONFIG_MODBUS_SLAVE_RX_TIMEOUT		10//接收通讯超时 10mS
+#define CONFIG_MODBUS_SLAVE_IO_DELAY		1//RX TX切换延时
 /*****************************************************************************/
 
 #include "stdint.h"
@@ -103,7 +102,10 @@
 #include "endian.h"
 #include "si_toolchain.h"
 #include "compiler_defs.h"
+#if CONFIG_SIMULATION == 1
 #include "C8051F020_defs.h"
+#else
+#endif
 /*****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h> 

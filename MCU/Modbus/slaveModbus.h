@@ -3,9 +3,6 @@
 /*****************************************************************************/
 #include "AppConfig.h"
 /*****************************************************************************/
-#define  MB_CONFIG_RECE_TIMEOUT				10//接收通讯超时 10mS
-#define  MB_CONFIG_RS485_SWITCH_DELAY		1//RX TX切换延时
-
 void modbusSerialRxHandle(void);
 void modbusSerialTxHandle(void);
 void modbusTimerHandle(void);

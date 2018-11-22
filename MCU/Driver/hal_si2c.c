@@ -1,21 +1,13 @@
-#typedef struct Bus_Iic_T
-{
-	void *setSDA(uint8_t st);
-	void *setSCL(uint8_t st);
-	void *getSDA(void);
-	void *getSCL(void);
-	uint8_t busDelay;//总线频率 
-};
-
-/********** Function Definition　函数定义 ************/
+#include "hal_si2c.h"
+/*****************************************************************************/
 
 static void delayUs(uint16_t us) /*延时函数*/
-    {
-        while(t!=0)
-            t--;
-    }
+{
+	while(t!=0)
+		t--;
+}
 
-static void I2C_Start(Bus_Iic_T *i2c)
+static void start(Bus_Iic_T *i2c)
 {//启动I2C总线的函数，当SCL为高电平时使SDA产生一个负跳变
 	i2c->setSDA(1);
 	i2c->setSCL(1);
@@ -26,7 +18,7 @@ static void I2C_Start(Bus_Iic_T *i2c)
 	delayUs(i2c->busDelay);
 }
 
-static void I2C_Stop(Bus_Iic_T *i2c)
+static void stop(Bus_Iic_T *i2c)
 {//终止I2C总线，当SCL为高电平时使SDA产生一个正跳变
     i2c->setSDA(0);
     i2c->setSCL(1);
@@ -37,76 +29,74 @@ static void I2C_Stop(Bus_Iic_T *i2c)
     delayUs(i2c->busDelay);
 }
 
-    void SEND_0(void)   /* SEND ACK */
-    {
-        /*发送0，在SCL为高电平时使SDA信号为低*/
-        SDA=0;
-        SCL=1;
-        DELAY(DELAY_TIME);
-        SCL=0;
-        DELAY(DELAY_TIME);
-    }
+void send_Ack(void)
+{//发送0，在SCL为高电平时使SDA信号为低
+	SDA=0;
+	SCL=1;
+	DELAY(DELAY_TIME);
+	SCL=0;
+	DELAY(DELAY_TIME);
+}
 
-    void SEND_1(void)
-    {
-        /*发送1，在SCL为高电平时使SDA信号为高*/
-        SDA=1;
-        SCL=1;
-        DELAY(DELAY_TIME);
-        SCL=0;
-        DELAY(DELAY_TIME);
-    }
+void send_Nack(void)
+{//发送1，在SCL为高电平时使SDA信号为高
+	SDA=1;
+	SCL=1;
+	DELAY(DELAY_TIME);
+	SCL=0;
+	DELAY(DELAY_TIME);
+}
 
-    bit Check_Acknowledge(void)
-    {
-        /*发送完一个字节后检验设备的应答信号*/
-        SDA=1;
-        SCL=1;
-        DELAY(DELAY_TIME/2);
-        F0=SDA;
-        DELAY(DELAY_TIME/2);
-        SCL=0;
-        DELAY(DELAY_TIME);
-        if(F0==1)
-            return FALSE;
-        return TRUE;
-    }
+bit Check_Acknowledge(void)
+{
+	/*发送完一个字节后检验设备的应答信号*/
+	SDA=1;
+	SCL=1;
+	DELAY(DELAY_TIME/2);
+	F0=SDA;
+	DELAY(DELAY_TIME/2);
+	SCL=0;
+	DELAY(DELAY_TIME);
+	if(F0==1)
+		return FALSE;
+	return TRUE;
+}
 
-    void WriteI2CByte(char b)reentrant
-    {
-        /*向I2C总线写一个字节*/
-        char i;
-        for(i=0;i<8;i++)
-            if((b<<i)&0x80)
-                SEND_1();
-            else
-                SEND_0();
-    }
+void WriteI2CByte(char b)reentrant
+{
+	/*向I2C总线写一个字节*/
+	char i;
+	for(i=0;i<8;i++)
+		if((b<<i)&0x80)
+			SEND_1();
+		else
+			SEND_0();
+}
 
- 
 
-    char ReadI2CByte(void)reentrant
-    {
-        /*从I2C总线读一个字节*/
-        char b=0,i;
-        for(i=0;i<8;i++)
-        {
-            SDA=1;    /*释放总线*/
-            SCL=1;    /*接受数据*/
-            DELAY(10);
-            F0=SDA;
-            DELAY(10);
-            SCL=0;
-            if(F0==1)
-                {
-                    b=b<<1;
-                    b=b|0x01;
-                }
-            else
-                b=b<<1;
-        }
-        return b;
-    }
+
+char ReadI2CByte(void)reentrant
+{
+	/*从I2C总线读一个字节*/
+	char b=0,i;
+	for(i=0;i<8;i++)
+	{
+		SDA=1;    /*释放总线*/
+		SCL=1;    /*接受数据*/
+		DELAY(10);
+		F0=SDA;
+		DELAY(10);
+		SCL=0;
+		if(F0==1)
+			{
+				b=b<<1;
+				b=b|0x01;
+			}
+		else
+			b=b<<1;
+	}
+	return b;
+}
 
 
 /**********以下为读写24c02的函数**********/

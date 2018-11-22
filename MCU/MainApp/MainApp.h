@@ -16,15 +16,20 @@ typedef struct
 	uint16_t sCounter;//脉冲间隔计数值
 }laserTimer_t;
 
-
-
+int16_t DM[1024];//PLC DM寄存器
+int16_t MR[16];//PLC MR寄存器
+int16_t LR[16];//PLC LR寄存器
+#define DM_LASER_CURRENT_0			0
+#define DM_LASER_CURRENT_1			1
+#deifne DM_PHOTODIODE_0				2
+#define DM_PHOTODIODE_1				3
+#define DM_LASER_MODE				
+#define DM_LASER_POSWIDTH
+#define DM_LASER_NEGWIDTH
 typedef struct
 {//全局设备结构体
 	//
 	laserTimer_t laserTimer;//激光计时器
-	//
-	int16_t	laserCurrent[2];//设置激光器电流
-	int16_t photoDiode[2];//PD电压
 	int16_t laserMode;//发射模式
 	int16_t posWidth;//正脉宽
 	int16_t negWidth;//负脉宽

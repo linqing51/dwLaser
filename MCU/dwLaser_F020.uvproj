@@ -49,7 +49,7 @@
           <OutputName>dwLaser_F020</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
+          <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\Listings\</ListingPath>
@@ -149,7 +149,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>9</TargetSelection>
+          <TargetSelection>10</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -172,7 +172,7 @@
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>0</Capability>
+            <Capability>1</Capability>
             <DriverSelection>4101</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
@@ -187,7 +187,7 @@
         <Target51>
           <Target51Misc>
             <MemoryModel>2</MemoryModel>
-            <RTOS>0</RTOS>
+            <RTOS>1</RTOS>
             <RomSize>2</RomSize>
             <DataHold>0</DataHold>
             <XDataHold>0</XDataHold>
@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\Source\Lib;.\Source\Driver;.\Source\Modbus;.\Source\MainApp</IncludePath>
+              <IncludePath>.\Lib;.\Driver;.\MainApp;.\Modbus</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -377,36 +377,19 @@
           <GroupName>Lib</GroupName>
           <Files>
             <File>
-              <FileName>STARTUP.A51</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\Source\Lib\STARTUP.A51</FilePath>
+              <FileName>crc32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Lib\crc32.c</FilePath>
             </File>
             <File>
-              <FileName>sTimer.c</FileName>
+              <FileName>delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Source\Lib\sTimer.c</FilePath>
+              <FilePath>.\Lib\delay.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Driver</GroupName>
-          <Files>
-            <File>
-              <FileName>chipSmb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Source\Driver\chipSmb.c</FilePath>
-            </File>
-            <File>
-              <FileName>eprom.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Source\Driver\eprom.c</FilePath>
-            </File>
-            <File>
-              <FileName>chipAdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Source\Driver\chipAdc.c</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>Modbus</GroupName>
@@ -414,17 +397,17 @@
             <File>
               <FileName>modbusApp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Source\Modbus\modbusApp.c</FilePath>
+              <FilePath>.\Modbus\modbusApp.c</FilePath>
             </File>
             <File>
               <FileName>modbusPort.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Source\Modbus\modbusPort.c</FilePath>
+              <FilePath>.\Modbus\modbusPort.c</FilePath>
             </File>
             <File>
               <FileName>slaveModbus.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Source\Modbus\slaveModbus.c</FilePath>
+              <FilePath>.\Modbus\slaveModbus.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -432,19 +415,14 @@
           <GroupName>MainApp</GroupName>
           <Files>
             <File>
-              <FileName>InitConfig.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Source\MainApp\InitConfig.c</FilePath>
+              <FileName>CONF_TNY.A51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\MainApp\CONF_TNY.A51</FilePath>
             </File>
             <File>
               <FileName>MainApp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Source\MainApp\MainApp.c</FilePath>
-            </File>
-            <File>
-              <FileName>pidFuzzy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Source\MainApp\pidFuzzy.c</FilePath>
+              <FilePath>.\MainApp\MainApp.c</FilePath>
             </File>
           </Files>
         </Group>

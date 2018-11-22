@@ -6,10 +6,10 @@
 //TIMER3 ->HW I2C
 //TIMER4 ->SoftPLC HWTIMER
 /*****************************************************************************/
-sbit LED_MCU = P2^3;//处理器指示LED
-sbit LED_LASER0 = P1^7;//激光发射指示LED0 980nM
-sbit LED_LASER1 = P1^6;//激光发射指示LED1 1470nM
-bit  COOL_OUT;
+//sbit LED_MCU = P2^3;//处理器指示LED
+//sbit LED_LASER0 = P1^7;//激光发射指示LED0 980nM
+//sbit LED_LASER1 = P1^6;//激光发射指示LED1 1470nM
+//bit  COOL_OUT;
 my_t my;
 /*****************************************************************************/
 #define ENUM_CHANNEL1					4321
@@ -21,8 +21,6 @@ my_t my;
 #define ENUM_MODE_GP					3//群脉冲模式
 #define ENUM_MODE_CC					4//校正模式
 /*****************************************************************************/
-
-
 #define INPUT_FOOTSWITCH_NC				0
 #define INPUT_FOOTSWITCH_NO				1
 #define INPUT_INTERLOCK					2
@@ -61,8 +59,8 @@ void main(void)
 {
 	int8_t temp;
 	int16_t tecOnTime, tecOffTime;//制冷开关时间
-	my_t *p = my;
-	pidFuzzy_t pidFuzzy;
+//	my_t *p = my;
+//	pidFuzzy_t pidFuzzy;
 	Init_Device();//初始化MCU
 #if CONFIG_USING_WDT == 1
 	if ((RSTSRC & 0x02) == 0x00)
@@ -80,16 +78,16 @@ void main(void)
 	}
 #endif
 	//hwI2cInit();//初始化硬件I2C
-	sTimerInit();//初始化软逻辑
+	//sTimerInit();//初始化软逻辑
 	//SMB_Init();
-	pidFuzzyInit(&pidFuzzy, 2, 0.5, 0.1);
+	//pidFuzzyInit(&pidFuzzy, 2, 0.5, 0.1);
 	setModbusSlaveAddr(CONFIG_LOCAL_ADDRESS);//设置从机地址
 	InitModbusHardware(CONFIG_UART0_BAUDRATE);//初始化MODBUS从机串口
 	/**********************************************************************/
 //初始化my结构体
-	my.stepNum = 0;
-	my.checkCode = ((CONFIG_CHECK_CODE << 8) & 0xFF00);
-	my.checkCode |= CONFIG_VERSION;
+	//my.stepNum = 0;
+	//my.checkCode = ((CONFIG_CHECK_CODE << 8) & 0xFF00);
+	//my.checkCode |= CONFIG_VERSION;
 	
 //使能看门狗
 #if CONFIG_USING_WDT == 1
