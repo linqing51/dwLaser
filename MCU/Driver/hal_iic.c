@@ -1,110 +1,106 @@
 #include "hal_iic.h"
 /*****************************************************************************/
-void iic_start(hal_iic_t *i2c)
-{//启动I2C总线的函数，当SCL为高电平时使SDA产生一个负跳变
-	i2c->setSCL(0);
+void iic_start(hal_iic_t *iic)
+{//启动iic总线的函数，当SCL为高电平时使SDA产生一个负跳变
+	iic->setSDA_H();
+	iic->setSCL_H();
 	NOP();
-	i2c->setSDA(1);
-	NOP();
-	i2c->setSCL(1);
-	hwDelayUs(i2c->busFreq);
-	i2c->setSDA(0);
-	hwDelayUs(i2c->busFreq);
-	i2c->setSCL(0);
-	hwDelayUs(i2c->busFreq);	
+	iic->setSDA_L();
+	hwDelayUs(iic->busFreq);
+	iic->setSCL_L();
+}
+void iic_restart(hal_iic_t *iic )
+{//IIC复位
+	iic->setSDA_H();
+    iic->setSCL_H();
+	hwDelayUs(iic->busFreq);
+    iic->setSDA_L();
+	hwDelayUs(iic->busFreq);
+    iic->setSCL_L();
+}
+void iic_stop(hal_iic_t *iic)
+{//终止iic总线，当SCL为高电平时使SDA产生一个正跳变
+	iic->setSDA_L();
+	hwDelayUs(iic->busFreq);
+    iic->setSCL_H();
+	hwDelayUs(iic->busFreq);
+    iic->setSDA_H();
+	hwDelayUs(iic->busFreq);
 }
 
-void iic_stop(hal_iic_t *i2c)
-{//终止I2C总线，当SCL为高电平时使SDA产生一个正跳变
-    i2c->setSCL(0);
-	NOP();
-	i2c->setSDA(0);
-	NOP();
-    i2c->setSCL(1);
-	hwDelayUs(i2c->busFreq);
-    i2c->setSDA(1);
-    hwDelayUs(i2c->busFreq);
-    i2c->setSCL(0);
-    hwDelayUs(i2c->busFreq);
+uint8_t iic_waitAck(hal_iic_t *iic)
+{
+	uint8_t ack;
+    iic->setSDA_H();
+	hwDelayUs(iic->busFreq);
+    if(iic->setSCL_H() < 0)
+    {
+#if CONFIG_IIC_DEBUG == 1
+		printf("wait ack timeout\n");
+#endif
+        return IIC_TIMEOUT;
+    }
+    ack = !(iic->getSDA());//ACK:SDA pin is pulled low
+#if CONFIG_IIC_DEBUG == 1
+    printf("%s\n", ack ? "ACK" : "NACK");
+#endif
+    iic->setSCL_L();
+    return ack;
 }
 
-void iic_sendAck(hal_iic_t *i2c)
-{//发送0，在SCL为高电平时使SDA信号为低
-	i2c->setSCL(0);
-	NOP();
-	i2c->setSDA(0);
-	NOP();
-	i2c->setSCL(1);
-	hwDelayUs(i2c->busFreq);
-	i2c->setSCL(0);
-	hwDelayUs(i2c->busFreq);
+uint8_t iic_writeByte(hal_iic_t *iic, uint8_t wdata)
+{//向iic总线写一个字节*/
+    int32_t i;
+    uint8_t xbit;
+    for (i = 7; i >= 0; i--)
+    {
+        iic->setSCL_L();
+        xbit = (wdata >> i) & 1;
+		if(xbit)
+			iic->setSDA_H();
+		else
+			iic->setSDA_L();
+        hwDelayUs(iic->busFreq);
+        if((iic->setSCL_H()) < 0)
+        {
+#if CONFIG_IIC_DEBUG ==1 
+            printf("i2c_writeb: 0x%02x, "
+                    "wait scl pin high timeout at bit %d\n",
+                    wdata, i);
+#endif
+            return IIC_TIMEOUT;
+        }
+    }
+    iic->setSCL_L();
+    hwDelayUs(iic->busFreq);
+    return iic_waitAck(iic); 
 }
 
-void iic_sendNack(hal_iic_t *i2c)
-{//发送1，在SCL为高电平时使SDA信号为高
-	i2c->setSCL(0);
-	NOP();
-	i2c->setSDA(1);
-	NOP();
-	i2c->setSCL(1);
-	hwDelayUs(i2c->busFreq);
-	i2c->setSCL(0);
-	hwDelayUs(i2c->busFreq);
-}
-
-uint8_t iic_checkAcknowledge(hal_iic_t *i2c)
-{//发送完一个字节后检验设备的应答信号
-	int8_t temp;
-	i2c->setSDA(1);
-	NOP();
-	i2c->setSCL(1);
-	hwDelayUs(i2c->busFreq);
-	temp = i2c->getSDA();
-	hwDelayUs(i2c->busFreq);
-	i2c->setSCL(0);
-	hwDelayUs(i2c->busFreq);
-	return (temp & 0x01);
-}
-
-uint8_t iic_writeByte(hal_iic_t *i2c, uint8_t byte)
-{//向I2C总线写一个字节*/
-   uint8_t i;
-   uint8_t ack_bit;
-   for(i = 0; i < 8; i++)   // 循环移入8个位
-   {
-		i2c->setSDA(byte & 0x80);
-		hwDelayUs(i2c->busFreq);
-		i2c->setSCL(1);
-		hwDelayUs(i2c->busFreq);
-		i2c->setSCL(0);
-		byte <<= 1;
-   }
-	i2c->setSDA(1);// 读取应答
-	hwDelayUs(i2c->busFreq);
-	i2c->setSCL(1);
-	hwDelayUs(i2c->busFreq);
-	ack_bit = i2c->getSDA();
-	hwDelayUs(i2c->busFreq);
-	i2c->setSCL(0);
-	hwDelayUs(i2c->busFreq);	 
-	return ack_bit;// 返回AT24C02应答位
-}
-
-uint8_t iic_readByte(hal_iic_t *i2c)
-{//从I2C总线读一个字节
-   uint8_t i, read_data=0;
-   i2c->setSDA(1);
-   for(i = 0; i < 8; i++)
-   {
-		hwDelayUs(i2c->busFreq);
-		i2c->setSCL(1);
-		read_data <<= 1;
-		read_data |= i2c->getSDA();
-		hwDelayUs(i2c->busFreq);
-		i2c->setSCL(0);
-		hwDelayUs(i2c->busFreq);
-   }
-    return(read_data);
+uint8_t iic_readByte(hal_iic_t *iic)
+{//从iic总线读一个字节
+	uint8_t i;
+    uint8_t rdata = 0;
+    iic->setSDA_H();
+	hwDelayUs(iic->busFreq);
+    for(i = 0; i < 8; i++)
+    {
+        rdata <<= 1;
+        if((iic->setSCL_H()) < 0)
+        {
+#if CONFIG_IIC_DEBUG ==1 
+            printf("i2c_readb: wait scl pin high "
+                    "timeout at bit %d\n", 7 - i);
+#endif
+            return IIC_TIMEOUT;
+        }
+        if ( iic->getSDA())
+		{
+            rdata |= 1;
+		}
+        iic->setSCL_L();
+		hwDelayUs(iic->busFreq);
+    }
+    return rdata;
 }
 
 

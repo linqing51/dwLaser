@@ -1,5 +1,6 @@
 #include "delay.h"
 /*****************************************************************************/
+
 #if CONFIG_USING_HW_DELAY == 1
 void hwDelayUs(uint8_t us) reentrant
 {//¼ÆÊ±·¶Î§20-1000uS
