@@ -22,106 +22,133 @@ Dialog DLL:      TCYG.DLL V2.72.0.0
  
 <h2>Project:</h2>
 D:\GitHub\dwLaser\MCU\dwLaser_F020.uvproj
-Project File Date:  11/22/2018
+Project File Date:  11/24/2018
 
 <h2>Output:</h2>
 Build target 'Debug'
 compiling crc32.c...
+Lib\crc32.h(10): error C132: '_Crc32Buf': not in formal parameter list
+Lib\crc32.h(11): error C132: 'Crc32Clear': not in formal parameter list
+Lib\crc32.h(12): error C132: '_SetCrcOld': not in formal parameter list
+Lib\crc32.c(64): error C244: 'crc_32_tab': can't initialize, bad type or class
+Lib\crc32.c(108): error C132: 'crc_32_tab': not in formal parameter list
+Lib\crc32.c(109): error C127: 'oldcrc32': invalid storage class
+Lib\crc32.c(112): error C132: '_Crc32Buf': not in formal parameter list
+Lib\crc32.c(112): error C141: syntax error near '{', expected ';'
+Lib\crc32.c(113): error C132: 'i': not in formal parameter list
+Lib\crc32.c(114): error C141: syntax error near 'for', expected 'hdata'
+Lib\crc32.c(114): error C141: syntax error near '=', expected ')'
+Lib\crc32.c(114): error C129: missing ';' before '<'
 compiling delay.c...
-compiling modbusApp.c...
-compiling modbusPort.c...
-compiling slaveModbus.c...
+Lib\delay.h(6): error C132: 'hwDelayInit': not in formal parameter list
+Lib\delay.h(7): error C132: '_?hwDelayMs': not in formal parameter list
+Lib\delay.h(8): error C132: '_?hwDelayUs': not in formal parameter list
+Lib\delay.c(41): error C132: '_?hwDelayUs': not in formal parameter list
+Lib\delay.c(41): error C141: syntax error near '{', expected ';'
+Lib\delay.c(43): error C136: 'us': 'void' on variable
+Lib\delay.c(43): error C132: 'us': not in formal parameter list
+Lib\delay.c(43): error C141: syntax error near '{', expected ';'
+Lib\delay.c(44): error C136: 'us': 'void' on variable
+Lib\delay.c(44): error C132: 'us': not in formal parameter list
+Lib\delay.c(48): error C132: '_?hwDelayMs': not in formal parameter list
+Lib\delay.c(48): error C141: syntax error near '{', expected ';'
+Lib\delay.c(51): error C132: 'hwDelayUs': not in formal parameter list
+Lib\delay.c(52): error C141: syntax error near '}', expected 'hdata'
+compiling hal_iic.c...
+Driver\hal_iic.h(10): error C141: syntax error near 'hal_iic_t', expected 'hdata'
+Driver\hal_iic.c(4): error C132: '_iic_start': not in formal parameter list
+Driver\hal_iic.c(4): error C141: syntax error near '{', expected ';'
+Driver\hal_iic.c(5): error C136: 'i2c': 'void' on variable
+Driver\hal_iic.c(5): error C131: 'i2c': duplicate function-parameter
+Driver\hal_iic.c(5): error C132: 'setSDA': not in formal parameter list
+Driver\hal_iic.c(6): error C132: '__nop_': not in formal parameter list
+Driver\hal_iic.c(7): error C131: 'i2c': duplicate function-parameter
+Driver\hal_iic.c(7): error C141: syntax error near '->', expected ';'
+Driver\hal_iic.c(7): error C132: 'setSCL': not in formal parameter list
+Driver\hal_iic.c(8): error C141: syntax error near '->', expected ')'
+Driver\hal_iic.c(8): error C132: '_hwhwDelayUs': not in formal parameter list
+Driver\hal_iic.c(9): error C131: 'i2c': duplicate function-parameter
+Driver\hal_iic.c(9): error C141: syntax error near '->', expected ';'
+Driver\hal_iic.c(9): error C132: 'setSDA': not in formal parameter list
+Driver\hal_iic.c(10): error C141: syntax error near '->', expected ')'
+Driver\hal_iic.c(10): error C132: '_hwhwDelayUs': not in formal parameter list
+Driver\hal_iic.c(11): error C131: 'i2c': duplicate function-parameter
+Driver\hal_iic.c(11): error C141: syntax error near '->', expected ';'
+Driver\hal_iic.c(11): error C132: 'setSCL': not in formal parameter list
+Driver\hal_iic.c(12): error C141: syntax error near '->', expected ')'
+Driver\hal_iic.c(12): error C132: '_hwhwDelayUs': not in formal parameter list
+Driver\hal_iic.c(13): error C141: syntax error near '}', expected 'hdata'
+compiling eprom.c...
+Driver\eprom.c(3): error C132: 'i2c0': not in formal parameter list
+Driver\eprom.c(6): error C132: '_eprom_writeOneByte': not in formal parameter list
+Driver\eprom.c(6): error C141: syntax error near '{', expected ';'
+Driver\eprom.c(7): error C136: 'acktemp': 'void' on variable
+Driver\eprom.c(7): error C244: 'acktemp': can't initialize, bad type or class
+Driver\eprom.c(7): error C136: 'acktemp': 'void' on variable
+Driver\eprom.c(7): error C132: 'acktemp': not in formal parameter list
+Driver\eprom.c(9): error C141: syntax error near '&', expected 'bit'
+Driver\eprom.c(9): error C132: 'iic_start': not in formal parameter list
+Driver\eprom.c(10): error C141: syntax error near '&', expected 'bit'
+Driver\eprom.c(10): error C132: 'iic_writeByte': not in formal parameter list
+Driver\eprom.c(11): error C244: 'acktemp': can't initialize, bad type or class
+Driver\eprom.c(11): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(11): error C132: 'acktemp': not in formal parameter list
+Driver\eprom.c(12): error C141: syntax error near '&', expected 'bit'
+Driver\eprom.c(12): error C132: 'iic_writeByte': not in formal parameter list
+Driver\eprom.c(13): error C244: 'acktemp': can't initialize, bad type or class
+Driver\eprom.c(13): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(13): error C132: 'acktemp': not in formal parameter list
+Driver\eprom.c(14): error C141: syntax error near '&', expected 'bit'
+Driver\eprom.c(14): error C132: 'iic_writeByte': not in formal parameter list
+Driver\eprom.c(15): error C244: 'acktemp': can't initialize, bad type or class
+Driver\eprom.c(15): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(15): error C132: 'acktemp': not in formal parameter list
+Driver\eprom.c(16): error C141: syntax error near '&', expected 'bit'
+Driver\eprom.c(16): error C132: 'iic_stop': not in formal parameter list
+Driver\eprom.c(17): error C141: syntax error near '}', expected 'hdata'
+Driver\eprom.c(24): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(25): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(26): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(27): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(28): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(31): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(32): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(34): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(37): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(45): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(46): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(47): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(48): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(49): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(50): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(51): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(52): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(53): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(54): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(55): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(64): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(65): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(66): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(67): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(68): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(69): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(70): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(71): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(74): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(75): error C202: 'n': undefined identifier
+Driver\eprom.c(76): error C202: 'i2c0': undefined identifier
+Driver\eprom.c(78): error C202: 'i2c0': undefined identifier
 compiling MainApp.c...
-MainApp\MainApp.c(116): error C200: left side of '.' requires struct/union
-MainApp\MainApp.c(129): error C202: 'p': undefined identifier
-MainApp\MainApp.c(256): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(257): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(262): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(267): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(275): error C202: 'selectChannel': undefined identifier
-MainApp\MainApp.c(277): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(278): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(280): error C202: 'selectChannel': undefined identifier
-MainApp\MainApp.c(282): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(284): error C202: 'selectChannel': undefined identifier
-MainApp\MainApp.c(286): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(289): error C202: 'STIMER_1MS_LASER_ON': undefined identifier
-MainApp\MainApp.c(300): error C202: 'STIMER_1MS_LASER_ON': undefined identifier
-MainApp\MainApp.c(302): error C202: 'selectChannel': undefined identifier
-MainApp\MainApp.c(304): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(305): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(307): error C202: 'selectChannel': undefined identifier
-MainApp\MainApp.c(311): error C202: 'selectChannel': undefined identifier
-MainApp\MainApp.c(314): error C202: 'STIMER_1MS_LASER_ON': undefined identifier
-MainApp\MainApp.c(315): error C202: 'STIMER_1MS_LASER_ON': undefined identifier
-MainApp\MainApp.c(320): error C202: 'STIMER_1MS_LASER_ON': undefined identifier
-MainApp\MainApp.c(325): error C202: 'STIMER_1MS_LASER_OFF': undefined identifier
-MainApp\MainApp.c(326): error C202: 'STIMER_1MS_LASER_OFF': undefined identifier
-MainApp\MainApp.c(329): error C202: 'STIMER_1MS_LASER_ON': undefined identifier
-MainApp\MainApp.c(367): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(368): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(373): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(378): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(391): error C202: 'selectChannel': undefined identifier
-MainApp\MainApp.c(393): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(394): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(396): error C202: 'selectChannel': undefined identifier
-MainApp\MainApp.c(398): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(400): error C202: 'selectChannel': undefined identifier
-MainApp\MainApp.c(402): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(405): error C202: 'STIMER_1MS_LASER_ON': undefined identifier
-MainApp\MainApp.c(420): error C202: 'selectChannel': undefined identifier
-MainApp\MainApp.c(422): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(423): error C202: 'laserCurrent': undefined identifier
-MainApp\MainApp.c(425): error C202: 'selectChannel': undefined identifier
-MainApp\MainApp.c(429): error C202: 'selectChannel': undefined identifier
-MainApp\MainApp.c(432): error C202: 'STIMER_1MS_LASER_ON': undefined identifier
-MainApp\MainApp.c(433): error C202: 'STIMER_1MS_LASER_ON': undefined identifier
-MainApp\MainApp.c(438): error C202: 'STIMER_1MS_LASER_ON': undefined identifier
-MainApp\MainApp.c(443): error C202: 'STIMER_1MS_LASER_OFF': undefined identifier
-MainApp\MainApp.c(444): error C202: 'STIMER_1MS_LASER_OFF': undefined identifier
-MainApp\MainApp.c(447): error C202: 'STIMER_1MS_LASER_ON': undefined identifier
-MainApp\MainApp.c(457): error C202: 'LED_MCU': undefined identifier
-MainApp\MainApp.c(461): error C202: 'LED_MCU': undefined identifier
-MainApp\MainApp.c(467): error C202: 'LED_MCU': undefined identifier
-MainApp\MainApp.c(471): error C202: 'LED_MCU': undefined identifier
-MainApp\MainApp.c(495): error C202: 'COOL_OUT': undefined identifier
-MainApp\MainApp.c(503): error C202: 'COOL_OUT': undefined identifier
-MainApp\MainApp.c(530): error C202: 'TF2H': undefined identifier
-MainApp\MainApp.c(532): error C202: 'TMR2L': undefined identifier
-MainApp\MainApp.c(533): error C202: 'TMR2H': undefined identifier
-MainApp\MainApp.c(545): error C202: 'TF2H': undefined identifier
-MainApp\MainApp.c(547): error C202: 'TMR2L': undefined identifier
-MainApp\MainApp.c(548): error C202: 'TMR2H': undefined identifier
-MainApp\MainApp.c(553): error C141: syntax error near '*', expected ')'
-MainApp\MainApp.c(557): error C202: 'TF2H': undefined identifier
-MainApp\MainApp.c(566): error C202: 'TF2H': undefined identifier
-MainApp\MainApp.c(571): error C202: 'p': undefined identifier
-MainApp\MainApp.c(580): error C202: 'p': undefined identifier
-MainApp\MainApp.c(582): error C202: 'LaserMod_PIN': undefined identifier
-MainApp\MainApp.c(584): error C202: 'p': undefined identifier
-MainApp\MainApp.c(586): error C202: 'p': undefined identifier
-MainApp\MainApp.c(588): error C202: 'p': undefined identifier
-MainApp\MainApp.c(590): error C202: 'LaserMod_PIN': undefined identifier
-MainApp\MainApp.c(592): error C202: 'p': undefined identifier
-MainApp\MainApp.c(597): error C202: 'p': undefined identifier
-MainApp\MainApp.c(599): error C202: 'p': undefined identifier
-MainApp\MainApp.c(601): error C202: 'p': undefined identifier
-MainApp\MainApp.c(603): error C202: 'LaserMod_PIN': undefined identifier
-MainApp\MainApp.c(606): error C202: 'p': undefined identifier
-MainApp\MainApp.c(608): error C202: 'LaserMod_PIN': undefined identifier
-MainApp\MainApp.c(610): error C202: 'p': undefined identifier
-MainApp\MainApp.c(612): error C202: 'p': undefined identifier
-MainApp\MainApp.c(613): error C202: 'p': undefined identifier
-MainApp\MainApp.c(615): error C202: 'p': undefined identifier
-MainApp\MainApp.c(617): error C202: 'p': undefined identifier
-MainApp\MainApp.c(619): error C202: 'LaserMod_PIN': undefined identifier
-MainApp\MainApp.c(620): error C202: 'p': undefined identifier
-MainApp\MainApp.c(621): error C202: 'p': undefined identifier
-MainApp\MainApp.c(623): error C202: 'p': undefined identifier
-MainApp\MainApp.c(625): error C202: 'p': undefined identifier
-MainApp\MainApp.c(627): error C202: 'p': undefined identifier
-MainApp\MainApp.c(629): error C202: 'p': undefined identifier
+MainApp\MainApp.c(111): error C132: 'readNvram': not in formal parameter list
+MainApp\MainApp.c(111): error C141: syntax error near '{', expected ';'
+MainApp\MainApp.c(118): error C132: 'writeNvram': not in formal parameter list
+MainApp\MainApp.c(118): error C141: syntax error near '{', expected ';'
+MainApp\MainApp.c(122): error C132: 'updateNvram': not in formal parameter list
+MainApp\MainApp.c(122): error C141: syntax error near '{', expected ';'
+MainApp\MainApp.c(126): error C132: '_upDateDac0': not in formal parameter list
+MainApp\MainApp.c(127): error C132: '_upDateDac1': not in formal parameter list
+MainApp\MainApp.c(130): error C132: 'main': not in formal parameter list
+MainApp\MainApp.c(130): error C141: syntax error near '{', expected ';'
 Target not created.
 Build Time Elapsed:  00:00:01
 </pre>

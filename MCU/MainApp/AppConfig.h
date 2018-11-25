@@ -28,6 +28,7 @@
 #define CONFIG_DEBUG                        1//调试功能
 #define CONFIG_USING_WDT					0//使能看门狗
 #define CONFIG_USING_RESET					0//使能PLC复位MCU功能
+#define CONFIG_USING_HW_DELAY				0//启用硬件计时器延时
 #define CONFIG_LOCAL_ADDRESS                0x01
 #define CONFIG_LASERTIMER_OVERFLOW_US		1000L//定时器周期 1mS
 #define CONFIG_VERSION  					0x0001
@@ -115,17 +116,20 @@
 #include <LIMITS.H>
 #include <math.h>
 /*****************************************************************************/
-#include "sTimer.h"
-#include "pidFuzzy.h"
+#include "delay.h"
+#include "hal_iic.h"
 /*****************************************************************************/
-#include "InitConfig.h"
+//#include "sTimer.h"
+//#include "pidFuzzy.h"
+/*****************************************************************************/
+//#include "InitConfig.h"
 //#include "AppMath.h"
 //#include "chipAdc.h"
 //#include "ad5621.h"
 //#include "chipBeem.h"
 
-#include "modbusApp.h"
-#include "modbusPort.h"
-#include "slaveModbus.h"
+//#include "modbusApp.h"
+//#include "modbusPort.h"
+//#include "slaveModbus.h"
 /*****************************************************************************/
 #endif
