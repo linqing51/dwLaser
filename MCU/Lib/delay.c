@@ -1,7 +1,7 @@
 #include "delay.h"
 /*****************************************************************************/
 #if CONFIG_USING_HW_DELAY == 1
-void hwDelayUs(int16_t us) reentrant
+void hwDelayUs(uint8_t us) reentrant
 {//计时范围20-1000uS
 	uint16_t counter;
 	uint8_t SFRPAGE_save = SFRPAGE;
@@ -18,7 +18,7 @@ void hwDelayUs(int16_t us) reentrant
 	SFRPAGE = SFRPAGE_save;
 }
 
-void hwDelayMs(int16_t ms) reentrant
+void hwDelayMs(uint8_t ms) reentrant
 {//计时范围1-32765mS
 	uint16_t counter;
 	uint8_t SFRPAGE_save = SFRPAGE;

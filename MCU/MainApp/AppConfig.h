@@ -33,6 +33,7 @@
 #define CONFIG_LASERTIMER_OVERFLOW_US		1000L//定时器周期 1mS
 #define CONFIG_VERSION  					0x0001
 #define CONFIG_CHECK_CODE 					0x5A00
+
 /*****************************************************************************/
 #define CONFIG_UART0_BAUDRATE				115200//串口波特率
 #define CONFIG_UART0_PARITY					NONE
@@ -118,6 +119,7 @@
 /*****************************************************************************/
 #include "delay.h"
 #include "hal_iic.h"
+#include "eprom.h"
 /*****************************************************************************/
 //#include "sTimer.h"
 //#include "pidFuzzy.h"

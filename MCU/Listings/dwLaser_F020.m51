@@ -1,8 +1,8 @@
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/24/2018  23:20:05  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    11/25/2018  11:02:22  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
-C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\crc32.obj, .\Objects\delay.obj, .\Objects\hal_iic.obj, .\Objects\MainApp.obj TO .\
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\delay.obj, .\Objects\hal_iic.obj, .\Objects\eprom.obj, .\Objects\MainApp.obj TO .\
 >> Objects\dwLaser_F020 REGFILE (.\Objects\dwLaser_F020.ORC) PRINT (.\Listings\dwLaser_F020.m51) RAMSIZE (256) CODE (0X0
 >> 000-0XFFFF) XDATA (0X0000-0X0FFF)
 
@@ -11,31 +11,25 @@ MEMORY MODEL: LARGE
 
 
 INPUT MODULES INCLUDED:
-  .\Objects\crc32.obj (CRC32)
   .\Objects\delay.obj (DELAY)
   .\Objects\hal_iic.obj (HAL_IIC)
+  .\Objects\eprom.obj (EPROM)
   .\Objects\MainApp.obj (MAINAPP)
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C_STARTUP)
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C?CLDOPTR)
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?ULCMP)
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?ULSHR)
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?LLDIXDATA)
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?LSTXDATA)
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?LSTKXDATA)
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?OFFXADD)
+  C:\KEIL_V5\C51\LIB\C51L.LIB (?C?CSTOPTR)
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C?PLDPTR)
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C?PLDOPTR)
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C?ICALL)
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C_XBP)
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C?ADDXBP)
-  C:\KEIL_V5\C51\LIB\C51L.LIB (?C_INIT)
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C?PLDIDATA)
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C?PLDXDATA)
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C?PLDPDATA)
   C:\KEIL_V5\C51\LIB\C51L.LIB (?C?PLDCODE)
 
 
-LINK MAP OF MODULE:  .\Objects\dwLaser_F020 (CRC32)
+LINK MAP OF MODULE:  .\Objects\dwLaser_F020 (DELAY)
 
 
             TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
@@ -47,45 +41,53 @@ LINK MAP OF MODULE:  .\Objects\dwLaser_F020 (CRC32)
             IDATA   000AH     0001H     UNIT         ?STACK
 
             * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
-            XDATA   0000H     0404H     UNIT         ?XD?CRC32
-            XDATA   0404H     0009H     UNIT         ?XD?_CRC32BUF?CRC32
-            XDATA   040DH     0006H     UNIT         ?XD?_READBYTE?HAL_IIC
-            XDATA   0413H     0005H     UNIT         ?XD?_WRITEBYTE?HAL_IIC
-            XDATA   0418H     0004H     UNIT         ?XD?_CHECKACKNOWLEDGE?HAL_IIC
-            XDATA   041CH     0003H     UNIT         ?XD?_START?HAL_IIC
-            XDATA   041FH     0003H     UNIT         ?XD?_STOP?HAL_IIC
-            XDATA   0422H     0003H     UNIT         ?XD?_SENDACK?HAL_IIC
-            XDATA   0425H     0003H     UNIT         ?XD?_SENDNACK?HAL_IIC
+            XDATA   0000H     000DH     UNIT         ?XD?EPROM
+            XDATA   000DH     0007H     UNIT         ?XD?_EPROM_WRITEPAGE?EPROM
+            XDATA   0014H     0007H     UNIT         ?XD?_EPROM_READBYTES?EPROM
+            XDATA   001BH     0006H     UNIT         ?XD?_IIC_WRITEBYTE?HAL_IIC
+            XDATA   0021H     0005H     UNIT         ?XD?_IIC_READBYTE?HAL_IIC
+            XDATA   0026H     0004H     UNIT         ?XD?_IIC_CHECKACKNOWLEDGE?HAL_IIC
+            XDATA   002AH     0003H     UNIT         ?XD?_IIC_START?HAL_IIC
+            XDATA   002DH     0003H     UNIT         ?XD?_IIC_STOP?HAL_IIC
+            XDATA   0030H     0003H     UNIT         ?XD?_IIC_SENDACK?HAL_IIC
+            XDATA   0033H     0003H     UNIT         ?XD?_IIC_SENDNACK?HAL_IIC
+            XDATA   0036H     0002H     UNIT         ?XD?_EPROM_WRITEONEBYTE?EPROM
+            XDATA   0038H     0002H     UNIT         ?XD?_EPROM_READONEBYTE?EPROM
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/24/2018  23:20:05  PAGE 2
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     0168H     UNIT         ?PR?_IIC_WRITEBYTE?HAL_IIC
+            CODE    0968H     00F0H     UNIT         ?C?LIB_CODE
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/25/2018  11:02:22  PAGE 2
 
 
-            CODE    0003H     0405H     UNIT         ?C_INITSEG
-            CODE    0408H     0170H     UNIT         ?C?LIB_CODE
-            CODE    0578H     00D5H     UNIT         ?PR?_CRC32BUF?CRC32
-            CODE    064DH     00C6H     UNIT         ?PR?_READBYTE?HAL_IIC
-            CODE    0713H     008CH     UNIT         ?C_C51STARTUP
-            CODE    079FH     0086H     UNIT         ?PR?_START?HAL_IIC
-            CODE    0825H     007FH     UNIT         ?PR?_CHECKACKNOWLEDGE?HAL_IIC
-            CODE    08A4H     006EH     UNIT         ?PR?_STOP?HAL_IIC
-            CODE    0912H     0069H     UNIT         ?PR?_SENDACK?HAL_IIC
-            CODE    097BH     0069H     UNIT         ?PR?_SENDNACK?HAL_IIC
-            CODE    09E4H     0063H     UNIT         ?PR?_WRITEBYTE?HAL_IIC
-            CODE    0A47H     004FH     UNIT         ?PR?_?DELAYUS?DELAY
-            CODE    0A96H     002CH     UNIT         ?PR?_?DELAYMS?DELAY
-            CODE    0AC2H     0029H     UNIT         ?PR?_DELAYUS?HAL_IIC
-            CODE    0AEBH     000BH     UNIT         ?PR?CRC32CLEAR?CRC32
-            CODE    0AF6H     0006H     UNIT         ?PR?_SETCRCOLD?CRC32
-            CODE    0AFCH     0001H     UNIT         ?PR?READNVRAM?MAINAPP
-            CODE    0AFDH     0001H     UNIT         ?PR?WRITENVRAM?MAINAPP
-            CODE    0AFEH     0001H     UNIT         ?PR?UPDATENVRAM?MAINAPP
-            CODE    0AFFH     0001H     UNIT         ?PR?MAIN?MAINAPP
+            CODE    0A58H     00E2H     UNIT         ?PR?_EPROM_READBYTES?EPROM
+            CODE    0B3AH     00DAH     UNIT         ?PR?_IIC_READBYTE?HAL_IIC
+            CODE    0C14H     00BDH     UNIT         ?PR?_IIC_START?HAL_IIC
+            CODE    0CD1H     00BDH     UNIT         ?PR?_IIC_STOP?HAL_IIC
+            CODE    0D8EH     00ADH     UNIT         ?PR?_EPROM_WRITEPAGE?EPROM
+            CODE    0E3BH     00ACH     UNIT         ?PR?_IIC_CHECKACKNOWLEDGE?HAL_IIC
+            CODE    0EE7H     0091H     UNIT         ?PR?_IIC_SENDACK?HAL_IIC
+            CODE    0F78H     0091H     UNIT         ?PR?_IIC_SENDNACK?HAL_IIC
+            CODE    1009H     007CH     UNIT         ?PR?_EPROM_READONEBYTE?EPROM
+            CODE    1085H     005EH     UNIT         ?PR?_EPROM_WRITEONEBYTE?EPROM
+            CODE    10E3H     0037H     UNIT         ?PR?EPROM_INIT?EPROM
+            CODE    111AH     0022H     UNIT         ?PR?_?HWDELAYMS?DELAY
+            CODE    113CH     001CH     UNIT         ?PR?_?HWDELAYUS?DELAY
+            CODE    1158H     000CH     UNIT         ?C_C51STARTUP
+            CODE    1164H     0009H     UNIT         ?PR?_SETSDA?EPROM
+            CODE    116DH     0009H     UNIT         ?PR?_SETSCL?EPROM
+            CODE    1176H     0006H     UNIT         ?PR?GETSDA?EPROM
+            CODE    117CH     0006H     UNIT         ?PR?GETSCL?EPROM
+            CODE    1182H     0003H     UNIT         ?PR?MAIN?MAINAPP
+            CODE    1185H     0001H     UNIT         ?PR?READNVRAM?MAINAPP
+            CODE    1186H     0001H     UNIT         ?PR?WRITENVRAM?MAINAPP
+            CODE    1187H     0001H     UNIT         ?PR?UPDATENVRAM?MAINAPP
 
 
 
-OVERLAY MAP OF MODULE:   .\Objects\dwLaser_F020 (CRC32)
+OVERLAY MAP OF MODULE:   .\Objects\dwLaser_F020 (DELAY)
 
 
 SEGMENT
@@ -93,300 +95,401 @@ SEGMENT
 ---------------------
 ?C_C51STARTUP
   +--> ?PR?MAIN?MAINAPP
-  +--> ?C_INITSEG
+
+?PR?MAIN?MAINAPP
+  +--> ?PR?EPROM_INIT?EPROM
+
+?PR?EPROM_INIT?EPROM
+  +--> ?PR?_SETSDA?EPROM
+  +--> ?PR?_SETSCL?EPROM
+  +--> ?PR?GETSDA?EPROM
+  +--> ?PR?GETSCL?EPROM
 
 
 
-SYMBOL TABLE OF MODULE:  .\Objects\dwLaser_F020 (CRC32)
+SYMBOL TABLE OF MODULE:  .\Objects\dwLaser_F020 (DELAY)
 
   VALUE           TYPE          NAME
   ----------------------------------
 
-  -------         MODULE        CRC32
-  C:0000H         SYMBOL        _ICE_DUMMY_
-  X:0000H         PUBLIC        crc_32_tab
-  C:0578H         PUBLIC        _Crc32Buf
-  X:0400H         SYMBOL        oldcrc32
-  C:0AF6H         PUBLIC        _SetCrcOld
-  C:0AEBH         PUBLIC        Crc32Clear
-  -------         PROC          _CRC32BUF
-  X:0404H         SYMBOL        buf
-  X:0407H         SYMBOL        len
-  -------         DO            
-  X:040BH         SYMBOL        i
-  -------         ENDDO         
-  C:0578H         LINE#         111
-  C:0587H         LINE#         112
-  C:0587H         LINE#         114
-  C:05B0H         LINE#         115
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/24/2018  23:20:05  PAGE 3
-
-
-  C:05B0H         LINE#         116
-  C:0620H         LINE#         117
-  C:0634H         LINE#         118
-  C:064CH         LINE#         119
-  -------         ENDPROC       _CRC32BUF
-  -------         PROC          CRC32CLEAR
-  C:0AEBH         LINE#         121
-  C:0AEBH         LINE#         122
-  C:0AEBH         LINE#         123
-  C:0AF5H         LINE#         124
-  -------         ENDPROC       CRC32CLEAR
-  -------         PROC          _SETCRCOLD
-  D:0004H         SYMBOL        old
-  C:0AF6H         LINE#         125
-  C:0AF6H         LINE#         126
-  C:0AF6H         LINE#         127
-  -------         ENDPROC       _SETCRCOLD
-  -------         ENDMOD        CRC32
-
   -------         MODULE        DELAY
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:0A96H         PUBLIC        _?delayMs
-  C:0A47H         PUBLIC        _?delayUs
-  -------         PROC          _?DELAYUS
+  C:111AH         PUBLIC        _?hwDelayMs
+  C:113CH         PUBLIC        _?hwDelayUs
+  -------         PROC          _?HWDELAYUS
   x:0000H         SYMBOL        us
-  C:0A47H         LINE#         3
-  C:0A4FH         LINE#         5
-  C:0A66H         LINE#         6
-  C:0A66H         LINE#         7
-  C:0A8EH         LINE#         8
-  C:0A90H         LINE#         9
-  -------         ENDPROC       _?DELAYUS
-  -------         PROC          _?DELAYMS
+  C:113CH         LINE#         40
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/25/2018  11:02:22  PAGE 3
+
+
+  C:1144H         LINE#         42
+  C:114DH         LINE#         43
+  C:114DH         LINE#         44
+  C:1150H         LINE#         45
+  C:1152H         LINE#         46
+  -------         ENDPROC       _?HWDELAYUS
+  -------         PROC          _?HWDELAYMS
   x:0000H         SYMBOL        ms
-  C:0A96H         LINE#         10
-  C:0A9FH         LINE#         12
-  C:0AB0H         LINE#         13
-  C:0AB0H         LINE#         14
-  C:0ABAH         LINE#         15
-  C:0ABCH         LINE#         16
-  -------         ENDPROC       _?DELAYMS
+  C:111AH         LINE#         47
+  C:1122H         LINE#         49
+  C:112FH         LINE#         50
+  C:112FH         LINE#         51
+  C:1134H         LINE#         52
+  C:1136H         LINE#         53
+  -------         ENDPROC       _?HWDELAYMS
   -------         ENDMOD        DELAY
 
   -------         MODULE        HAL_IIC
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:097BH         PUBLIC        _sendNack
-  C:079FH         SYMBOL        _start
-  C:064DH         PUBLIC        _readByte
-  C:0912H         PUBLIC        _sendAck
-  C:09E4H         PUBLIC        _writeByte
-  C:08A4H         SYMBOL        _stop
-  C:0825H         PUBLIC        _CheckAcknowledge
-  C:0ADFH         SYMBOL        _delayUs
-  C:0ACEH         SYMBOL        L?0025
-  -------         PROC          L?0024
-  -------         ENDPROC       L?0024
-  C:0ACEH         SYMBOL        L?0025
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/24/2018  23:20:05  PAGE 4
+  C:0E3BH         PUBLIC        _iic_checkAcknowledge
+  C:0F78H         PUBLIC        _iic_sendNack
+  C:0C14H         PUBLIC        _iic_start
+  C:0B3AH         PUBLIC        _iic_readByte
+  C:0EE7H         PUBLIC        _iic_sendAck
+  C:0800H         PUBLIC        _iic_writeByte
+  C:0CD1H         PUBLIC        _iic_stop
+  -------         PROC          _IIC_START
+  X:002AH         SYMBOL        i2c
+  C:0C14H         LINE#         3
+  C:0C1FH         LINE#         4
+  C:0C1FH         LINE#         5
+  C:0C2EH         LINE#         6
+  C:0C2FH         LINE#         7
+  C:0C46H         LINE#         8
+  C:0C47H         LINE#         9
+  C:0C61H         LINE#         10
+  C:0C76H         LINE#         11
+  C:0C8DH         LINE#         12
+  C:0CA2H         LINE#         13
+  C:0CBCH         LINE#         14
+  -------         ENDPROC       _IIC_START
+  -------         PROC          _IIC_STOP
+  X:002DH         SYMBOL        i2c
+  C:0CD1H         LINE#         17
+  C:0CDCH         LINE#         18
+  C:0CDCH         LINE#         19
+  C:0CEBH         LINE#         20
+  C:0CECH         LINE#         21
+  C:0D03H         LINE#         22
+  C:0D04H         LINE#         23
+  C:0D1EH         LINE#         24
+  C:0D33H         LINE#         25
+  C:0D4AH         LINE#         26
+  C:0D5FH         LINE#         27
+  C:0D79H         LINE#         28
+  -------         ENDPROC       _IIC_STOP
+  -------         PROC          _IIC_SENDACK
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/25/2018  11:02:22  PAGE 4
 
 
-  -------         PROC          _DELAYUS
-  D:0006H         SYMBOL        us
-  C:0ADFH         LINE#         3
-  C:0ADFH         LINE#         4
-  C:0ADFH         LINE#         5
-  C:0AE3H         LINE#         6
-  C:0AEAH         LINE#         7
-  -------         ENDPROC       _DELAYUS
-  -------         PROC          _START
-  X:041CH         SYMBOL        i2c
-  C:079FH         LINE#         9
-  C:07AAH         LINE#         10
-  C:07AAH         LINE#         11
-  C:07B6H         LINE#         12
-  C:07B7H         LINE#         13
-  C:07D1H         LINE#         14
-  C:07D7H         LINE#         15
-  C:07EEH         LINE#         16
-  C:07F4H         LINE#         17
-  C:080EH         LINE#         18
-  -------         ENDPROC       _START
-  -------         PROC          _STOP
-  X:041FH         SYMBOL        i2c
-  C:08A4H         LINE#         21
-  C:08AFH         LINE#         22
-  C:08AFH         LINE#         23
-  C:08BBH         LINE#         24
-  C:08BCH         LINE#         25
-  C:08CDH         LINE#         26
-  C:08D0H         LINE#         27
-  C:08DEH         LINE#         28
-  C:08E1H         LINE#         29
-  C:08FBH         LINE#         30
-  -------         ENDPROC       _STOP
-  -------         PROC          _SENDACK
-  X:0422H         SYMBOL        i2c
-  C:0912H         LINE#         33
-  C:091DH         LINE#         34
-  C:091DH         LINE#         35
-  C:0929H         LINE#         36
-  C:092AH         LINE#         37
-  C:0944H         LINE#         38
-  C:094AH         LINE#         39
-  C:0964H         LINE#         40
-  -------         ENDPROC       _SENDACK
-  -------         PROC          _SENDNACK
-  X:0425H         SYMBOL        i2c
-  C:097BH         LINE#         43
-  C:0986H         LINE#         44
-  C:0986H         LINE#         45
-  C:0992H         LINE#         46
-  C:0993H         LINE#         47
-  C:09ADH         LINE#         48
-  C:09B3H         LINE#         49
-  C:09CDH         LINE#         50
-  -------         ENDPROC       _SENDNACK
-  -------         PROC          _CHECKACKNOWLEDGE
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/24/2018  23:20:05  PAGE 5
-
-
-  X:0418H         SYMBOL        i2c
+  X:0030H         SYMBOL        i2c
+  C:0EE7H         LINE#         31
+  C:0EF2H         LINE#         32
+  C:0EF2H         LINE#         33
+  C:0F01H         LINE#         34
+  C:0F02H         LINE#         35
+  C:0F19H         LINE#         36
+  C:0F1AH         LINE#         37
+  C:0F34H         LINE#         38
+  C:0F49H         LINE#         39
+  C:0F63H         LINE#         40
+  -------         ENDPROC       _IIC_SENDACK
+  -------         PROC          _IIC_SENDNACK
+  X:0033H         SYMBOL        i2c
+  C:0F78H         LINE#         43
+  C:0F83H         LINE#         44
+  C:0F83H         LINE#         45
+  C:0F92H         LINE#         46
+  C:0F93H         LINE#         47
+  C:0FAAH         LINE#         48
+  C:0FABH         LINE#         49
+  C:0FC5H         LINE#         50
+  C:0FDAH         LINE#         51
+  C:0FF4H         LINE#         52
+  -------         ENDPROC       _IIC_SENDNACK
+  -------         PROC          _IIC_CHECKACKNOWLEDGE
+  X:0026H         SYMBOL        i2c
   -------         DO            
-  X:041BH         SYMBOL        temp
+  X:0029H         SYMBOL        temp
   -------         ENDDO         
-  C:0825H         LINE#         53
-  C:0830H         LINE#         54
-  C:0830H         LINE#         56
-  C:083CH         LINE#         57
-  C:083DH         LINE#         58
-  C:0857H         LINE#         59
-  C:085DH         LINE#         60
-  C:0876H         LINE#         61
-  C:087CH         LINE#         62
-  C:0896H         LINE#         63
-  C:089CH         LINE#         64
-  C:08A3H         LINE#         65
-  -------         ENDPROC       _CHECKACKNOWLEDGE
-  -------         PROC          _WRITEBYTE
-  X:0413H         SYMBOL        i2c
-  X:0416H         SYMBOL        byte
+  C:0E3BH         LINE#         55
+  C:0E46H         LINE#         56
+  C:0E46H         LINE#         58
+  C:0E52H         LINE#         59
+  C:0E53H         LINE#         60
+  C:0E6DH         LINE#         61
+  C:0E82H         LINE#         62
+  C:0E9BH         LINE#         63
+  C:0EB0H         LINE#         64
+  C:0ECAH         LINE#         65
+  C:0EDFH         LINE#         66
+  C:0EE6H         LINE#         67
+  -------         ENDPROC       _IIC_CHECKACKNOWLEDGE
+  -------         PROC          _IIC_WRITEBYTE
+  X:001BH         SYMBOL        i2c
+  X:001EH         SYMBOL        byte
   -------         DO            
-  X:0417H         SYMBOL        i
+  X:001FH         SYMBOL        i
+  X:0020H         SYMBOL        ack_bit
   -------         ENDDO         
-  C:09E4H         LINE#         67
-  C:09F2H         LINE#         68
-  C:09F2H         LINE#         70
-  C:0A0AH         LINE#         71
-  C:0A0AH         LINE#         72
-  C:0A26H         LINE#         73
-  C:0A26H         LINE#         74
-  C:0A31H         LINE#         75
-  C:0A33H         LINE#         77
-  C:0A33H         LINE#         78
-  C:0A3EH         LINE#         79
-  C:0A3EH         LINE#         80
-  C:0A46H         LINE#         81
-  -------         ENDPROC       _WRITEBYTE
-  -------         PROC          _READBYTE
-  X:040DH         SYMBOL        i2c
-  -------         DO            
-  X:0410H         SYMBOL        byte
-  X:0411H         SYMBOL        i
-  X:0412H         SYMBOL        temp
-  -------         ENDDO         
-  C:064DH         LINE#         83
-  C:0658H         LINE#         84
-  C:0658H         LINE#         86
-  C:065BH         LINE#         87
-  C:0674H         LINE#         88
-  C:0674H         LINE#         89
-  C:068BH         LINE#         90
-  C:068CH         LINE#         91
-  C:06A6H         LINE#         92
-  C:06ACH         LINE#         93
-  C:06C5H         LINE#         94
-  C:06CBH         LINE#         95
-  C:06E5H         LINE#         96
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/24/2018  23:20:05  PAGE 6
+  C:0800H         LINE#         69
+  C:080EH         LINE#         70
+  C:080EH         LINE#         73
+  C:0821H         LINE#         74
+  C:0821H         LINE#         75
+  C:083DH         LINE#         76
+  C:0852H         LINE#         77
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/25/2018  11:02:22  PAGE 5
 
 
-  C:06F7H         LINE#         97
-  C:06F7H         LINE#         98
-  C:06FBH         LINE#         99
-  C:06FEH         LINE#         100
-  C:0700H         LINE#         102
-  C:0700H         LINE#         103
-  C:0704H         LINE#         104
-  C:0704H         LINE#         105
-  C:070DH         LINE#         106
-  C:0712H         LINE#         107
-  -------         ENDPROC       _READBYTE
+  C:086CH         LINE#         78
+  C:0881H         LINE#         79
+  C:089BH         LINE#         80
+  C:08A3H         LINE#         81
+  C:08AAH         LINE#         82
+  C:08C1H         LINE#         83
+  C:08D6H         LINE#         84
+  C:08F0H         LINE#         85
+  C:0905H         LINE#         86
+  C:091EH         LINE#         87
+  C:0933H         LINE#         88
+  C:094DH         LINE#         89
+  C:0962H         LINE#         90
+  C:0967H         LINE#         91
+  -------         ENDPROC       _IIC_WRITEBYTE
+  -------         PROC          _IIC_READBYTE
+  X:0021H         SYMBOL        i2c
+  -------         DO            
+  X:0024H         SYMBOL        i
+  X:0025H         SYMBOL        read_data
+  -------         ENDDO         
+  C:0B3AH         LINE#         93
+  C:0B45H         LINE#         94
+  C:0B45H         LINE#         95
+  C:0B4AH         LINE#         96
+  C:0B56H         LINE#         97
+  C:0B6BH         LINE#         98
+  C:0B6BH         LINE#         99
+  C:0B80H         LINE#         100
+  C:0B9AH         LINE#         101
+  C:0BA2H         LINE#         102
+  C:0BC1H         LINE#         103
+  C:0BD6H         LINE#         104
+  C:0BF0H         LINE#         105
+  C:0C05H         LINE#         106
+  C:0C0EH         LINE#         107
+  C:0C13H         LINE#         108
+  -------         ENDPROC       _IIC_READBYTE
   -------         ENDMOD        HAL_IIC
+
+  -------         MODULE        EPROM
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:00B0H         PUBLIC        P3
+  C:1176H         SYMBOL        getSDA
+  C:117CH         SYMBOL        getSCL
+  C:1164H         SYMBOL        _setSDA
+  C:0A58H         PUBLIC        _eprom_readBytes
+  C:116DH         SYMBOL        _setSCL
+  C:0D8EH         PUBLIC        _eprom_writePage
+  C:10E3H         PUBLIC        eprom_init
+  B:00B0H.5       PUBLIC        IIC0_SDA
+  B:00B0H.6       PUBLIC        IIC0_SCL
+  C:1009H         PUBLIC        _eprom_readOneByte
+  X:0000H         PUBLIC        iic0
+  C:1085H         PUBLIC        _eprom_writeOneByte
+  -------         PROC          _SETSDA
+  D:0007H         SYMBOL        st
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/25/2018  11:02:22  PAGE 6
+
+
+  C:1164H         LINE#         9
+  C:1164H         LINE#         10
+  C:1164H         LINE#         11
+  C:1167H         LINE#         12
+  C:116AH         LINE#         14
+  C:116CH         LINE#         15
+  -------         ENDPROC       _SETSDA
+  -------         PROC          _SETSCL
+  D:0007H         SYMBOL        st
+  C:116DH         LINE#         16
+  C:116DH         LINE#         17
+  C:116DH         LINE#         18
+  C:1170H         LINE#         19
+  C:1173H         LINE#         21
+  C:1175H         LINE#         22
+  -------         ENDPROC       _SETSCL
+  -------         PROC          GETSDA
+  C:1176H         LINE#         23
+  C:1176H         LINE#         24
+  C:1176H         LINE#         25
+  C:117BH         LINE#         26
+  -------         ENDPROC       GETSDA
+  -------         PROC          GETSCL
+  C:117CH         LINE#         27
+  C:117CH         LINE#         28
+  C:117CH         LINE#         29
+  C:1181H         LINE#         30
+  -------         ENDPROC       GETSCL
+  -------         PROC          EPROM_INIT
+  C:10E3H         LINE#         31
+  C:10E3H         LINE#         32
+  C:10E3H         LINE#         33
+  C:10F1H         LINE#         34
+  C:10FDH         LINE#         35
+  C:1109H         LINE#         36
+  C:1115H         LINE#         37
+  C:1119H         LINE#         38
+  -------         ENDPROC       EPROM_INIT
+  -------         PROC          _EPROM_WRITEONEBYTE
+  X:0036H         SYMBOL        addr
+  X:0037H         SYMBOL        thedata
+  -------         DO            
+  D:0007H         SYMBOL        acktemp
+  -------         ENDDO         
+  C:1085H         LINE#         39
+  C:108DH         LINE#         40
+  C:108DH         LINE#         41
+  C:108FH         LINE#         43
+  C:1098H         LINE#         44
+  C:10A3H         LINE#         45
+  C:10ACH         LINE#         46
+  C:10BAH         LINE#         47
+  C:10C3H         LINE#         48
+  C:10D1H         LINE#         49
+  C:10DAH         LINE#         50
+  -------         ENDPROC       _EPROM_WRITEONEBYTE
+  -------         PROC          _EPROM_WRITEPAGE
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/25/2018  11:02:22  PAGE 7
+
+
+  X:000DH         SYMBOL        buffer
+  X:0010H         SYMBOL        addr
+  -------         DO            
+  X:0011H         SYMBOL        acktemp
+  X:0012H         SYMBOL        i
+  -------         ENDDO         
+  C:0D8EH         LINE#         53
+  C:0D9CH         LINE#         54
+  C:0D9CH         LINE#         58
+  C:0DA5H         LINE#         59
+  C:0DB0H         LINE#         60
+  C:0DBEH         LINE#         61
+  C:0DCCH         LINE#         62
+  C:0DDAH         LINE#         63
+  C:0DF1H         LINE#         64
+  C:0DF1H         LINE#         65
+  C:0E0DH         LINE#         66
+  C:0E19H         LINE#         67
+  C:0E19H         LINE#         68
+  C:0E22H         LINE#         69
+  C:0E22H         LINE#         70
+  C:0E32H         LINE#         71
+  -------         ENDPROC       _EPROM_WRITEPAGE
+  -------         PROC          _EPROM_READONEBYTE
+  X:0038H         SYMBOL        addr
+  -------         DO            
+  D:0007H         SYMBOL        acktemp
+  X:0039H         SYMBOL        mydata
+  -------         ENDDO         
+  C:1009H         LINE#         74
+  C:100EH         LINE#         75
+  C:100EH         LINE#         79
+  C:1017H         LINE#         80
+  C:1022H         LINE#         81
+  C:102BH         LINE#         82
+  C:1039H         LINE#         83
+  C:1042H         LINE#         84
+  C:104BH         LINE#         85
+  C:1056H         LINE#         86
+  C:105FH         LINE#         87
+  C:106DH         LINE#         88
+  C:1076H         LINE#         89
+  C:107FH         LINE#         90
+  C:1084H         LINE#         91
+  -------         ENDPROC       _EPROM_READONEBYTE
+  -------         PROC          _EPROM_READBYTES
+  X:0014H         SYMBOL        buffer
+  X:0017H         SYMBOL        addr
+  X:0018H         SYMBOL        len
+  -------         DO            
+  D:0007H         SYMBOL        acktemp
+  X:0019H         SYMBOL        i
+  -------         ENDDO         
+  C:0A58H         LINE#         93
+  C:0A66H         LINE#         94
+  C:0A66H         LINE#         96
+  C:0A6DH         LINE#         98
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/25/2018  11:02:22  PAGE 8
+
+
+  C:0A76H         LINE#         99
+  C:0A81H         LINE#         100
+  C:0A8AH         LINE#         101
+  C:0A98H         LINE#         102
+  C:0AA1H         LINE#         103
+  C:0AAAH         LINE#         104
+  C:0AB5H         LINE#         105
+  C:0ABEH         LINE#         106
+  C:0ADCH         LINE#         107
+  C:0ADCH         LINE#         108
+  C:0B00H         LINE#         109
+  C:0B19H         LINE#         110
+  C:0B1EH         LINE#         112
+  C:0B21H         LINE#         113
+  C:0B31H         LINE#         114
+  -------         ENDPROC       _EPROM_READBYTES
+  -------         ENDMOD        EPROM
 
   -------         MODULE        MAINAPP
   C:0000H         SYMBOL        _ICE_DUMMY_
-  C:0AFEH         PUBLIC        updateNvram
-  C:0AFCH         PUBLIC        readNvram
-  C:0AFFH         PUBLIC        main
-  C:0AFDH         PUBLIC        writeNvram
+  C:1187H         PUBLIC        updateNvram
+  C:1185H         PUBLIC        readNvram
+  C:1182H         PUBLIC        main
+  C:1186H         PUBLIC        writeNvram
   -------         PROC          READNVRAM
-  C:0AFCH         LINE#         110
-  C:0AFCH         LINE#         111
-  C:0AFCH         LINE#         116
+  C:1185H         LINE#         110
+  C:1185H         LINE#         111
+  C:1185H         LINE#         116
   -------         ENDPROC       READNVRAM
   -------         PROC          WRITENVRAM
-  C:0AFDH         LINE#         117
-  C:0AFDH         LINE#         118
-  C:0AFDH         LINE#         120
+  C:1186H         LINE#         117
+  C:1186H         LINE#         118
+  C:1186H         LINE#         120
   -------         ENDPROC       WRITENVRAM
   -------         PROC          UPDATENVRAM
-  C:0AFEH         LINE#         121
-  C:0AFEH         LINE#         122
-  C:0AFEH         LINE#         124
+  C:1187H         LINE#         121
+  C:1187H         LINE#         122
+  C:1187H         LINE#         124
   -------         ENDPROC       UPDATENVRAM
   -------         PROC          MAIN
-  C:0AFFH         LINE#         129
-  C:0AFFH         LINE#         130
-  C:0AFFH         LINE#         131
+  C:1182H         LINE#         129
+  C:1182H         LINE#         130
+  C:1182H         LINE#         131
   -------         ENDPROC       MAIN
   -------         ENDMOD        MAINAPP
 
   -------         MODULE        ?C?CLDOPTR
-  C:0408H         PUBLIC        ?C?CLDOPTR
+  C:0968H         PUBLIC        ?C?CLDOPTR
   -------         ENDMOD        ?C?CLDOPTR
 
-  -------         MODULE        ?C?ULCMP
-  C:0435H         PUBLIC        ?C?ULCMP
-  -------         ENDMOD        ?C?ULCMP
-
-  -------         MODULE        ?C?ULSHR
-  C:0446H         PUBLIC        ?C?ULSHR
-  -------         ENDMOD        ?C?ULSHR
-
-  -------         MODULE        ?C?LLDIXDATA
-  C:0462H         PUBLIC        ?C?LLDIXDATA
-  C:0459H         PUBLIC        ?C?LLDIXDATA1
-  C:045BH         PUBLIC        ?C?LLDIXDATA8
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/24/2018  23:20:05  PAGE 7
-
-
-  -------         ENDMOD        ?C?LLDIXDATA
-
-  -------         MODULE        ?C?LSTXDATA
-  C:048EH         PUBLIC        ?C?LSTXDATA
-  -------         ENDMOD        ?C?LSTXDATA
-
-  -------         MODULE        ?C?LSTKXDATA
-  C:049AH         PUBLIC        ?C?LSTKXDATA
-  -------         ENDMOD        ?C?LSTKXDATA
-
-  -------         MODULE        ?C?OFFXADD
-  C:04CBH         PUBLIC        ?C?OFFXADD
-  -------         ENDMOD        ?C?OFFXADD
+  -------         MODULE        ?C?CSTOPTR
+  C:0995H         PUBLIC        ?C?CSTOPTR
+  -------         ENDMOD        ?C?CSTOPTR
 
   -------         MODULE        ?C?PLDPTR
-  C:04D7H         PUBLIC        ?C?PLDPTR
+  C:09B7H         PUBLIC        ?C?PLDPTR
   -------         ENDMOD        ?C?PLDPTR
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/25/2018  11:02:22  PAGE 9
+
+
 
   -------         MODULE        ?C?PLDOPTR
-  C:04F7H         PUBLIC        ?C?PLDOPTR
+  C:09D7H         PUBLIC        ?C?PLDOPTR
   -------         ENDMOD        ?C?PLDOPTR
 
   -------         MODULE        ?C?ICALL
-  C:0527H         PUBLIC        ?C?ICALL
-  C:052BH         PUBLIC        ?C?ICALL2
+  C:0A07H         PUBLIC        ?C?ICALL
+  C:0A0BH         PUBLIC        ?C?ICALL2
   -------         ENDMOD        ?C?ICALL
 
   -------         MODULE        ?C_XBP
@@ -394,23 +497,23 @@ SYMBOL TABLE OF MODULE:  .\Objects\dwLaser_F020 (CRC32)
   -------         ENDMOD        ?C_XBP
 
   -------         MODULE        ?C?ADDXBP
-  C:052DH         PUBLIC        ?C?ADDXBP
+  C:0A0DH         PUBLIC        ?C?ADDXBP
   -------         ENDMOD        ?C?ADDXBP
 
   -------         MODULE        ?C?PLDIDATA
-  C:0551H         PUBLIC        ?C?PLDIDATA
+  C:0A31H         PUBLIC        ?C?PLDIDATA
   -------         ENDMOD        ?C?PLDIDATA
 
   -------         MODULE        ?C?PLDXDATA
-  C:055AH         PUBLIC        ?C?PLDXDATA
+  C:0A3AH         PUBLIC        ?C?PLDXDATA
   -------         ENDMOD        ?C?PLDXDATA
 
   -------         MODULE        ?C?PLDPDATA
-  C:0563H         PUBLIC        ?C?PLDPDATA
+  C:0A43H         PUBLIC        ?C?PLDPDATA
   -------         ENDMOD        ?C?PLDPDATA
 
   -------         MODULE        ?C?PLDCODE
-  C:056CH         PUBLIC        ?C?PLDCODE
+  C:0A4CH         PUBLIC        ?C?PLDCODE
   -------         ENDMOD        ?C?PLDCODE
 
 
@@ -418,45 +521,32 @@ SYMBOL TABLE OF MODULE:  .\Objects\dwLaser_F020 (CRC32)
 FUNCTION REGISTER MASKS
 
 
-FUNCTION . . . . . . REG MASK
-BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/24/2018  23:20:05  PAGE 8
+FUNCTION . . . . . . . . . REG MASK
+-----------------------------------
 
-
------------------------------
-
-CRC32CLEAR . . . . . @0xbf8f
-MAIN . . . . . . . . @0x8000
-READNVRAM. . . . . . @0x8000
-UPDATENVRAM. . . . . @0x8000
-WRITENVRAM . . . . . @0x8000
-_SETCRCOLD . . . . . @0xbf8f
+EPROM_INIT . . . . . . . . @0xe300
+MAIN . . . . . . . . . . . @0xe300
+READNVRAM. . . . . . . . . @0x8000
+UPDATENVRAM. . . . . . . . @0x8000
+WRITENVRAM . . . . . . . . @0x8000
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_CRC32BUF?CRC32
+    SEGMENT: ?PR?_?HWDELAYMS?DELAY
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?CRC32CLEAR?CRC32
+    SEGMENT: ?PR?_EPROM_WRITEONEBYTE?EPROM
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_SETCRCOLD?CRC32
+    SEGMENT: ?PR?_EPROM_WRITEPAGE?EPROM
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  11/25/2018  11:02:22  PAGE 10
+
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_?DELAYMS?DELAY
+    SEGMENT: ?PR?_EPROM_READONEBYTE?EPROM
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_START?HAL_IIC
-
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_STOP?HAL_IIC
-
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_CHECKACKNOWLEDGE?HAL_IIC
-
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_WRITEBYTE?HAL_IIC
-
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_READBYTE?HAL_IIC
+    SEGMENT: ?PR?_EPROM_READBYTES?EPROM
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?READNVRAM?MAINAPP
@@ -467,5 +557,37 @@ _SETCRCOLD . . . . . @0xbf8f
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?UPDATENVRAM?MAINAPP
 
-Program Size: data=11.0 xdata=1064 code=2816
-LINK/LOCATE RUN COMPLETE.  12 WARNING(S),  0 ERROR(S)
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 088CH BYTE (106%) *
+******************************************************************************
+
+Program Size: data=11.0 xdata=58 code=2443
+LINK/LOCATE RUN COMPLETE.  8 WARNING(S),  0 ERROR(S)
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_?HWDELAYMS?DELAY
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_EPROM_WRITEONEBYTE?EPROM
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_EPROM_WRITEPAGE?EPROM
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_EPROM_READONEBYTE?EPROM
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_EPROM_READBYTES?EPROM
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?READNVRAM?MAINAPP
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?WRITENVRAM?MAINAPP
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?UPDATENVRAM?MAINAPP
+
+*** FATAL ERROR L250: CODE SIZE LIMIT IN RESTRICTED VERSION EXCEEDED
+    MODULE:  C:\KEIL_V5\C51\LIB\C51L.LIB (-----)
+    LIMIT:   0800H BYTES

@@ -128,6 +128,7 @@ void upDateDac1(uint16_t dat);
 /*****************************************************************************/
 void main(void)
 {
+	eprom_init();
 }
 //void main(void)
 //{

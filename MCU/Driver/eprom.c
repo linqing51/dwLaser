@@ -1,9 +1,43 @@
 #include "eprom.h"
 /*****************************************************************************/
-hal_iic_t i2c0;
-#define CONFIG_EPROM_I2C_BUS	&i2c0
-void eprom_writeOneByte(uint8_t addr, uint8_t thedata)
+#define CONFIG_EPROM_I2C_BUS				&iic0
+#define CONFIG_EPROM_SIZE					8196
+hal_iic_t iic0;
+sbit IIC0_SDA = P3^5;
+sbit IIC0_SCL = P3^6;
+/*****************************************************************************/
+static void setSDA(uint8_t st)
 {
+	if(st)
+		IIC0_SDA = 1;
+	else
+		IIC0_SDA = 0;
+}
+static void setSCL(uint8_t st)
+{
+	if(st)
+		IIC0_SCL = 1;
+	else
+		IIC0_SCL = 0;
+}
+static uint8_t getSDA(void)
+{
+	return (IIC0_SDA & 0x01);
+}
+static uint8_t getSCL(void)
+{
+	return (IIC0_SCL & 0x01);
+}
+void eprom_init(void)
+{
+	iic0.setSDA = setSDA;
+	iic0.setSCL = setSCL;
+	iic0.getSDA = getSDA;
+	iic0.getSCL = getSCL;
+	iic0.busFreq = 10;
+}
+void eprom_writeOneByte(uint8_t addr, uint8_t thedata)
+{//EPROM写入一个字节
 	int8_t acktemp = 1;
 	//write a byte to mem
 	iic_start(CONFIG_EPROM_I2C_BUS);
@@ -17,7 +51,7 @@ void eprom_writeOneByte(uint8_t addr, uint8_t thedata)
 }
 
 void eprom_writePage(uint8_t *buffer, uint8_t addr)
-{
+{//EPROM写入一页
 	uint8_t acktemp;
 	int i;
 	/*write a page to at24c02*/
@@ -38,7 +72,7 @@ void eprom_writePage(uint8_t *buffer, uint8_t addr)
 }
 
 uint8_t eprom_readOneByte(uint8_t addr)
-{         
+{//EPROM读取一个字节         
 	uint8_t acktemp;
 	uint8_t mydata;
 	//read a byte from mem
@@ -57,7 +91,7 @@ uint8_t eprom_readOneByte(uint8_t addr)
 }
 
 void eprom_readBytes(uint8_t *buffer,uint8_t addr, uint8_t len)
-{
+{//EPROM连续读取字节
 	uint8_t acktemp;
 	int i=0;
 	//read 8 bytes from mem
@@ -71,39 +105,232 @@ void eprom_readBytes(uint8_t *buffer,uint8_t addr, uint8_t len)
 	acktemp= iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
 	for(i = 0;i < len;i ++)
 	{
-		buffer[i]=ii2_readByte(CONFIG_EPROM_I2C_BUS);
-		if(i!=n-1)
+		buffer[i] = iic_readByte(CONFIG_EPROM_I2C_BUS);
+		if(i != (len - 1))
 			iic_sendNack(CONFIG_EPROM_I2C_BUS);//发送应答
 		else
-			iic_sendAckS(CONFIG_EPROM_I2C_BUS);//发送非应答
+			iic_sendAck(CONFIG_EPROM_I2C_BUS);//发送非应答
 	}
-
-	I2C_Stop();
+	iic_stop(CONFIG_EPROM_I2C_BUS);
 
 }
 
 
-//void main()
+//void eeprom_dump(void)
 //{
-//          int i;
-//          char mybyte;
-//          char myarray[8];
-//          char myarray2[8];
-//          char rdarray[16];
-//         
-//          for(i=0;i<8;i++)
-//          {
-//                myarray[i]=i;
-//                myarray2[i]=i+0x08;    
+//	uint8_t *pbuf;
+//	rt_int16_t i,j;
+//	rt_device_t dev;
+//	pbuf = RT_NULL;
+//	dev = RT_NULL;
+//	pbuf = rt_malloc(CONFIG_EE_MEM_SIZE);
+//	
+//		rt_device_read(dev, 0, pbuf, CONFIG_EE_MEM_SIZE );
+//		rt_device_close(dev);
+//		for (i = 0; i < 512; i++)
+//		{
+//			rt_kprintf("0x%08X:",(i*16));
+//			for (j = 0; j < 16; j++)
+//			{	
+//				rt_kprintf("0x%02X ", *(pbuf + i*16 +j));
+//			}
+//			rt_kprintf("\n");
+//		}
+//	}
+//	else
+//	{
+//		rt_kprintf("Dump EEPROM Fail\n");
+//	}
+//	if(pbuf != RT_NULL)
+//		rt_free(pbuf);
+//}
+//rt_int8_t eeprom_reset(void)
+//{//擦除EEPROM并插空
+//	uint8_t *pbuf;
+//	rt_uint16_t i;
 
-//          }
+//	pbuf = RT_NULL;
+//	pbuf = rt_malloc(CONFIG_EE_MEM_SIZE);
+//	memset(pbuf, 0x0, CONFIG_EE_MEM_SIZE);
+//	eprom_writeOneByte(uint8_t addr, uint8_t thedata);
+//		if (rt_device_write(dev, 0, pbuf, CONFIG_EE_MEM_SIZE ) == CONFIG_EE_MEM_SIZE)
+//			rt_kprintf("Write Success\n");
+//		rt_device_read(dev, 0, pbuf, CONFIG_EE_MEM_SIZE );
+//		rt_device_close(dev);
+//		for (i = 0; i < CONFIG_EE_MEM_SIZE; i++)
+//		{
+//		if (*(pbuf + i) != 0x0)
+//			rt_free(pbuf);
+//			return 0;
+//		}
+//		rt_free(pbuf);
+//		return 1;
+//	}
+//	else
+//	{
+//		if(pbuf != RT_NULL)
+//		{
+//			rt_free(pbuf);
+//		}
+//		return -1;
+//	}
+//}
 
-//          Write_One_Byte(0x20,0x28);
-
-//          Write_A_Page(myarray,0x10);
-//          Write_A_Page(myarray2,0x18);
-
-//          mybyte=Read_One_Byte(0x20);
-//          Read_N_Bytes(rdarray,16,0x10);
-
+//uint8_t eprom_test(void)
+//{//eprom写入读取测试
+//	uint8_t *pwbuf,*prbuf;
+//	uint16_t size;
+//	time_t now;
+//	pwbuf = rt_malloc(CONFIG_EE_MEM_SIZE);
+//	prbuf = rt_malloc(CONFIG_EE_MEM_SIZE);
+//	size = CONFIG_EE_MEM_SIZE;
+//	if ((pwbuf != RT_NULL) & (prbuf != RT_NULL))
+//	{
+//		time(&now);
+//		rt_kprintf("EEPROM Test:Start At %s\n",ctime(&now));
+//		rt_kprintf("EEPROM SIZE:0x%x Bytes\n",size);
+//		//填充测试-填充0x00
+//		rt_kprintf("EEPROM Test:Fill 0x00\n");
+//		for(size = 0;size < CONFIG_EE_MEM_SIZE;size++)
+//		{
+//			*(pwbuf + size) = 0x00;
+//		}
+//		rt_device_open(dev, RT_DEVICE_FLAG_ACTIVATED);
+//		if (rt_device_write(dev, 0, pwbuf, CONFIG_EE_MEM_SIZE ) == CONFIG_EE_MEM_SIZE)//写入
+//		{
+//			rt_kprintf("EEPROM Test:Fill 0x00 Write Success\n");
+//		}
+//		else
+//		{
+//			rt_kprintf("EEPROM Test:Fill 0x00 Write Fail\n");
+//			/* 释放内存块*/
+//			rt_free(pwbuf);
+//			rt_free(prbuf);
+//			rt_device_close(dev);
+//			return 0;
+//		}
+//		rt_device_read(dev, 0, prbuf, CONFIG_EE_MEM_SIZE );//读回
+//		for (size = 0; size < CONFIG_EE_MEM_SIZE; size++)
+//		{
+//			if (*(pwbuf + size) != *(prbuf + size))
+//			{
+//				rt_kprintf("EEPROM Test:Fill 0x00 Failed %X != %X at %d\n", *(pwbuf + size), *(prbuf + size), size);
+//				/* 释放内存块*/
+//				rt_free(pwbuf);
+//				rt_free(prbuf);
+//				rt_device_close(dev);
+//				return 0;
+//			}
+//		}
+//		rt_kprintf("EEPROM Test:Fill 0x00 Sucess\n");
+//		//填充测试-填充0x5A
+//		rt_kprintf("EEPROM Test:Fill 0x5A\n");
+//		for(size = 0;size < CONFIG_EE_MEM_SIZE;size++)
+//		{
+//			*(pwbuf + size) = 0x5A;
+//		}
+//		if (rt_device_write(dev, 0, pwbuf, CONFIG_EE_MEM_SIZE ) == CONFIG_EE_MEM_SIZE)//写入
+//		{
+//			rt_kprintf("EEPROM Test:Fill 0x5A Write Success\n");
+//		}
+//		else
+//		{
+//			rt_kprintf("EEPROM Test:Fill 0x5A Write Fail\n");
+//			/* 释放内存块*/
+//			rt_free(pwbuf);
+//			rt_free(prbuf);
+//			rt_device_close(dev);
+//			return 0;
+//		}
+//		rt_device_read(dev, 0, prbuf, CONFIG_EE_MEM_SIZE );//读回
+//		for (size = 0; size < CONFIG_EE_MEM_SIZE; size++)
+//		{
+//			if (*(pwbuf + size) != *(prbuf + size))
+//			{
+//				rt_kprintf("EEPROM Test:Fill 0x5A Failed %X != %X at %d\n", *(pwbuf + size), *(prbuf + size), size);
+//				/* 释放内存块*/
+//				rt_free(pwbuf);
+//				rt_free(prbuf);
+//				rt_device_close(dev);
+//				return 0;
+//			}
+//		}
+//		rt_kprintf("EEPROM Test:Fill 0x5A Sucess\n");
+//		//随机填充
+//		rt_kprintf("EEPROM Test:Fill Random\n");
+//		for(size =0;size < CONFIG_EE_MEM_SIZE;size++)
+//		{
+//			*(pwbuf + size) = RNG_GetRandomNumber();
+//		}
+//		if (rt_device_write(dev, 0, pwbuf, CONFIG_EE_MEM_SIZE ) == CONFIG_EE_MEM_SIZE)//写入
+//		{
+//			rt_kprintf("EEPROM Test:Fill Random Write Success\n");
+//		}
+//		else
+//		{
+//			rt_kprintf("EEPROM Test:Fill Random Write Fail\n");
+//			/* 释放内存块*/
+//			rt_free(pwbuf);
+//			rt_free(prbuf);
+//			rt_device_close(dev);
+//			return 0;
+//		}
+//		rt_device_read(dev, 0, prbuf, CONFIG_EE_MEM_SIZE );//读回
+//		for (size = 0; size < CONFIG_EE_MEM_SIZE; size++)
+//		{
+//			if (*(pwbuf + size) != *(prbuf + size))
+//			{
+//				rt_kprintf("EEPROM Test:Fill Random Failed %X != %X at %d\n", *(pwbuf + size), *(prbuf + size), size);
+//				/* 释放内存块*/
+//				rt_free(pwbuf);
+//				rt_free(prbuf);
+//				rt_device_close(dev);
+//				return 0;
+//			}
+//		}
+//		rt_kprintf("EEPROM Test:Fill Random Sucess\n");
+//		//查空检查
+//		rt_kprintf("EEPROM Test:Check Blank\n");
+//		for(size =0;size < CONFIG_EE_MEM_SIZE;size++)
+//		{
+//			*(pwbuf + size) = 0x00;
+//		}
+//		if (rt_device_write(dev, 0, pwbuf, CONFIG_EE_MEM_SIZE ) == CONFIG_EE_MEM_SIZE)//写入
+//		{
+//			rt_kprintf("EEPROM Test:Fill Blank Write Success\n");
+//		}
+//		else
+//		{
+//			rt_kprintf("EEPROM Test:Fill Blank Write Fail\n");
+//			/* 释放内存块*/
+//			rt_free(pwbuf);
+//			rt_free(prbuf);
+//			rt_device_close(dev);
+//			return 0;
+//		}
+//		rt_device_read(dev, 0, prbuf, CONFIG_EE_MEM_SIZE );//读回
+//		for (size = 0; size < CONFIG_EE_MEM_SIZE; size++)
+//		{
+//			if (*(pwbuf + size) != *(prbuf + size))
+//			{
+//				rt_kprintf("EEPROM Test:Check Blank Failed %X != %X at %d\n", *(pwbuf + size), *(prbuf + size), size);
+//				/* 释放内存块*/
+//				rt_free(pwbuf);
+//				rt_free(prbuf);
+//				rt_device_close(dev);
+//				return 0;
+//			}
+//		}
+//		rt_kprintf("EEPROM Test:Check Blank Sucess\n");
+//		/* 释放内存块*/
+//		rt_free(pwbuf);
+//		rt_free(prbuf);
+//		rt_device_close(dev);
+//		return 1;
+//	}
+//	else
+//	{
+//		rt_kprintf("EEPROM Test:rt_malloc failed!\n");
+//		return -1;
+//	}
 //}
