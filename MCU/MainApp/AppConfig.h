@@ -1,34 +1,20 @@
 #ifndef __APPCONFIG_H__
 #define __APPCONFIG_H__
 /*****************************************************************************/
+
 /*****************************************************************************/
-#define CONFIG_USE_INTOSC_12000000			0
-#define CONFIG_USE_INTOSC_24000000			0
-#define CONFIG_USE_INTOSC_48000000			0
-#define CONFIG_USE_EXTOSC_22184000			1
-#define CONFIG_USE_EXTOSC_44236800			0
+
 /*****************************************************************************/
-#if CONFIG_USE_INTOSC_12000000 == 1
+#define CONFIG_SIMULATION					1//仿真模式 C8051F020
+#if CONFIG_SIMULATION == 1
 #define CONFIG_SYSCLK                       (12000000L)
-#endif
-#if CONFIG_USE_INTOSC_24000000 == 1
-#define CONFIG_SYSCLK						(24000000L)
-#endif
-#if	CONFIG_USE_INTOSC_48000000 == 1
+#else
 #define CONFIG_SYSCLK                       (48000000L)
 #endif
-#if	CONFIG_USE_EXTOSC_22184000 == 1
-#define CONFIG_SYSCLK                       (22118400L)
-#endif
-#if	CONFIG_USE_EXTOSC_44236800 == 1
-#define CONFIG_SYSCLK                       (44236800L)
-#endif
-/*****************************************************************************/
-#define CONFIG_SIMULATION					1//仿真模式
 #define CONFIG_DEBUG                        1//调试功能
 #define CONFIG_USING_WDT					0//使能看门狗
 #define CONFIG_USING_RESET					0//使能PLC复位MCU功能
-#define CONFIG_USING_HW_DELAY				0//启用硬件计时器延时
+#define CONFIG_USING_HW_DELAY				1//启用硬件计时器延时
 #define CONFIG_LOCAL_ADDRESS                0x01
 #define CONFIG_LASERTIMER_OVERFLOW_US		1000L//定时器周期 1mS
 #define CONFIG_VERSION  					0x0001
@@ -117,14 +103,15 @@
 #include <LIMITS.H>
 #include <math.h>
 /*****************************************************************************/
+#include "InitConfig.h"
 #include "delay.h"
 #include "hal_iic.h"
+#include "hal_iic_port.h"
 #include "eprom.h"
 /*****************************************************************************/
 //#include "sTimer.h"
 //#include "pidFuzzy.h"
 /*****************************************************************************/
-//#include "InitConfig.h"
 //#include "AppMath.h"
 //#include "chipAdc.h"
 //#include "ad5621.h"

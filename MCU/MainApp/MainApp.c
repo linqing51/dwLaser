@@ -9,7 +9,7 @@
 //sbit LED_MCU = P2^3;//处理器指示LED
 //sbit LED_LASER0 = P1^7;//激光发射指示LED0 980nM
 //sbit LED_LASER1 = P1^6;//激光发射指示LED1 1470nM
-//bit  COOL_OUT;
+bit  COOL_OUT;
 
 /*****************************************************************************/
 #define ENUM_CHANNEL1					4321
@@ -128,7 +128,20 @@ void upDateDac1(uint16_t dat);
 /*****************************************************************************/
 void main(void)
 {
-	eprom_init();
+	Init_Device();
+	EA = 1;
+	hwDelayInit();
+	//eprom_init();
+	COOL_OUT = 0;
+	hwDelayUs(2000);
+	COOL_OUT = ~COOL_OUT;
+	hwDelayUs(1000);
+	COOL_OUT = ~COOL_OUT;
+	hwDelayUs(3000);
+	COOL_OUT = ~COOL_OUT;
+	hwDelayUs(1000);
+	COOL_OUT = ~COOL_OUT;
+	while(1);
 }
 //void main(void)
 //{

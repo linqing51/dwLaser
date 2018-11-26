@@ -6,33 +6,33 @@ void iic_start(hal_iic_t *iic)
 	iic->setSCL_H();
 	NOP();
 	iic->setSDA_L();
-	hwDelayUs(iic->busFreq);
+	swDelayUs(iic->busFreq);
 	iic->setSCL_L();
 }
 void iic_restart(hal_iic_t *iic )
 {//IIC复位
 	iic->setSDA_H();
     iic->setSCL_H();
-	hwDelayUs(iic->busFreq);
+	swDelayUs(iic->busFreq);
     iic->setSDA_L();
-	hwDelayUs(iic->busFreq);
+	swDelayUs(iic->busFreq);
     iic->setSCL_L();
 }
 void iic_stop(hal_iic_t *iic)
 {//终止iic总线，当SCL为高电平时使SDA产生一个正跳变
 	iic->setSDA_L();
-	hwDelayUs(iic->busFreq);
+	swDelayUs(iic->busFreq);
     iic->setSCL_H();
-	hwDelayUs(iic->busFreq);
+	swDelayUs(iic->busFreq);
     iic->setSDA_H();
-	hwDelayUs(iic->busFreq);
+	swDelayUs(iic->busFreq);
 }
 
 uint8_t iic_waitAck(hal_iic_t *iic)
 {
 	uint8_t ack;
     iic->setSDA_H();
-	hwDelayUs(iic->busFreq);
+	swDelayUs(iic->busFreq);
     if(iic->setSCL_H() < 0)
     {
 #if CONFIG_IIC_DEBUG == 1
@@ -60,7 +60,7 @@ uint8_t iic_writeByte(hal_iic_t *iic, uint8_t wdata)
 			iic->setSDA_H();
 		else
 			iic->setSDA_L();
-        hwDelayUs(iic->busFreq);
+        swDelayUs(iic->busFreq);
         if((iic->setSCL_H()) < 0)
         {
 #if CONFIG_IIC_DEBUG ==1 
@@ -72,7 +72,7 @@ uint8_t iic_writeByte(hal_iic_t *iic, uint8_t wdata)
         }
     }
     iic->setSCL_L();
-    hwDelayUs(iic->busFreq);
+    swDelayUs(iic->busFreq);
     return iic_waitAck(iic); 
 }
 
@@ -81,7 +81,7 @@ uint8_t iic_readByte(hal_iic_t *iic)
 	uint8_t i;
     uint8_t rdata = 0;
     iic->setSDA_H();
-	hwDelayUs(iic->busFreq);
+	swDelayUs(iic->busFreq);
     for(i = 0; i < 8; i++)
     {
         rdata <<= 1;
@@ -98,7 +98,7 @@ uint8_t iic_readByte(hal_iic_t *iic)
             rdata |= 1;
 		}
         iic->setSCL_L();
-		hwDelayUs(iic->busFreq);
+		swDelayUs(iic->busFreq);
     }
     return rdata;
 }

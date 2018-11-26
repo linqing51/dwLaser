@@ -3,6 +3,7 @@
 /*****************************************************************************/
 #include "appConfig.h"
 /*****************************************************************************/
+uint16_t hwGetTick(void);
 void hwDelayInit(void);
 void hwDelayMs(uint8_t ms) reentrant;
 void hwDelayUs(uint8_t us) reentrant;
