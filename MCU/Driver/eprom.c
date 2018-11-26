@@ -1,5 +1,12 @@
 #include "eprom.h"
 /*****************************************************************************/
+static uint8_t setSDA_H(void);
+static uint8_t setSDA_L(void);
+static uint8_t setSCL_H(void);
+static uint8_t setSCL_L(void);
+static uint8_t getSDA(void);
+static uint8_t getSCL(void);
+/*****************************************************************************/
 #define CONFIG_EPROM_I2C_BUS				&iic0
 #define CONFIG_EPROM_SIZE					8196
 hal_iic_t iic0;
