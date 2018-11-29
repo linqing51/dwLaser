@@ -124,11 +124,20 @@ void upDateDac1(uint16_t dat);
 /*****************************************************************************/
 void main(void)
 {
-	uint8_t array_name[8];
+	uint8_t wbuffer[8] = {1,2,3,4,0x5A,6,7,8};
+	uint8_t rbuffer[8] = {0,0,0,0,0xA5,0,0,0};
 	int8_t flag;
 	Init_Device();
-	EA = 0;
+	//EA = 0;
 	//sTimerInit();
+	
+    //要写入到24c02的字符串数组
+	AT24CXX_Init();			//IIC初始化 
+     
+    AT24CXX_Write(0, wbuffer, 8);
+    AT24CXX_Read(0, rbuffer, 8);
+  
+	
 	COOL_OUT = 0;
 	delayUs(2000);
 	COOL_OUT = ~COOL_OUT;
@@ -138,10 +147,10 @@ void main(void)
 	COOL_OUT = ~COOL_OUT;
 	delayUs(1000);
 	COOL_OUT = ~COOL_OUT;
-	iic0_Init();
+	//IICc0_Init();
 	Timer0_Init();
-	flag=iic0_write(0x43, 8, array_name); 
-	flag=iic0_read(0x43, 8, array_name); 
+	//flag=iic0_write(0x50, 8, wbuffer); 
+	//flag=iic0_read(0x50, 8, rbuffer); 
 	nvram_load();//上电恢复NVRAM
 	while(1)
 	{

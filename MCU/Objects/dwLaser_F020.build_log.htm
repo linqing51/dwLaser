@@ -5,7 +5,7 @@
 <h2>Tool Versions:</h2>
 IDE-Version: ¦ÌVision V5.26.2.0
 Copyright (C) 2018 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: 1 1, 1, LIC=UJ5GK-ZVCHF-JU64W-Q1KJM-T75GU-XTR4K
+License Information: 1 1, 1, LIC=YAC01-CV04U-5FDI6-DNGVD-S64JY-BLQVF
  
 Tool Versions:
 Toolchain:       PK51 Prof. Developers Kit  Version: 9.59.0.0
@@ -26,17 +26,19 @@ Project File Date:  11/29/2018
 
 <h2>Output:</h2>
 Build target 'Debug'
-compiling delay.c...
-compiling i2c0.c...
-compiling modbusApp.c...
-compiling modbusPort.c...
-compiling slaveModbus.c...
 compiling MainApp.c...
-compiling InitConfig.c...
-compiling sPlc.c...
+MainApp\MainApp.c(129): warning C280: 'flag': unreferenced local variable
 linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_?DELAYMS?DELAY
+    SEGMENT: ?PR?_HWDELAYINIT?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_HWDELAY?DELAY
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?GETSCL?I2C0
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_AT24CXX_WRITELENBYTE?EPROM
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_AT24CXX_READLENBYTE?EPROM
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_INITMODBUSHARDWARE?SLAVEMODBUS
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
@@ -65,10 +67,10 @@ linking...
     SEGMENT: ?PR?_T1MS?SPLC
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_T10MS?SPLC
-Program Size: data=166.2 xdata=3929 code=9871
+Program Size: data=166.2 xdata=3954 code=10186
 creating hex file from ".\Objects\dwLaser_F020"...
-".\Objects\dwLaser_F020" - 0 Error(s), 15 Warning(s).
-Build Time Elapsed:  00:00:01
+".\Objects\dwLaser_F020" - 0 Error(s), 20 Warning(s).
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

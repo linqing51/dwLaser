@@ -1,128 +1,122 @@
 #include "i2c0.h"
 /*****************************************************************************/
 sbit SDA0 = P3^5;
-sbit SCL0 = P3^7;
+sbit SCL0 = P3^6;				
 static uint8_t TimeReload_H, TimeReload_L;
 /*****************************************************************************/
-void iic0_Init(void)
-{
+void iic0_Init(void){
 	uint16_t temp = 0;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 /CONFIG_I2C0_FREQ));
 	TimeReload_H = (temp >> 8) & 0xFF;
 	TimeReload_L = temp & 0xFF;
 }
-uint8_t iic0_write(uint8_t dev_addr, uint8_t num_bytes, uint8_t *array_name)
-{
-	uint8_t return_val, num_bits, send_val, send_bit, index=0;
-	if((SCL0 == 1) && (SDA0 == 1))
-	{
-		return_val = IIC_NO_ERROR;
-	}
+static void setSCL(uint8_t s){
+	if(s)
+		SCL0 = 1;
 	else
-	{
-		return_val = IIC_BUSY_ERROR;
-	}
-	hwDelayInit(TimeReload_H, TimeReload_L);
-	SDA0 = 0;
-	send_val = (dev_addr << 1) & 0xFE;
-	num_bytes ++;
-	do
-	{
-		num_bits = 8;
-		do
-		{
-			hwDelay(1, TimeReload_H, TimeReload_L);
-			SCL0 = 0;
-			num_bits --;
-			send_bit = ((send_val>>num_bits)&0x01);
-			SDA0 = (bit)send_bit;
-			hwDelay(1, TimeReload_H, TimeReload_L);
-			SCL0 = 1;
-			while(SCL0 != 1);
-			send_bit = SDA0;
-			if(send_bit != send_bit) 
-				return_val = IIC_BUSY_ERROR;
-		}while((num_bits > 0)&& return_val==0);
-		if(return_val != IIC_BUSY_ERROR)
-		{
-			hwDelay(1, TimeReload_H, TimeReload_L);
-			SCL0 = 0;
-			SDA0 = 1;
-			hwDelay(1, TimeReload_H, TimeReload_L);
-			SCL0 = 1;
-			while(SCL0 != 1);
-			send_bit = SDA0;
-			if(send_bit != 0)
-			{	
-				return_val = IIC_NACK_ERROR;
-			}
-			send_val = array_name[index];
-			index ++;
-			num_bytes --;
-		}
-		}while((num_bytes > 0)&& (return_val == 0));
-		if(return_val != IIC_BUSY_ERROR)
-		{
-			hwDelay(1, TimeReload_H, TimeReload_L);
-			SCL0 = 0;
-			SDA0 = 0;
-			hwDelay(1, TimeReload_H, TimeReload_L);
-			SCL0 = 1;
-			while(SCL0 != 1);
-			hwDelay(1, TimeReload_H, TimeReload_L);
-			SDA0 = 1;
-		}
-	return return_val;
+		SCL0 = 0;
+}
+static void setSDA(uint8_t s){
+	if(s)
+		SDA0 = 1;
+	else
+		SDA0 = 0;
+}
+static uint8_t getSCL(void){
+	return SCL0;
+}
+static uint8_t getSDA(void){
+	return SDA0; 
+}
+void IIC0_Start(void){//产生IIC起始信号
+	setSDA(1);	  	  
+	setSCL(1);
+	delayUs(4);
+ 	setSDA(0);//START:when CLK is high,DATA change form high to low 
+	delayUs(4);
+	setSCL(0);//钳住I2C总线，准备发送或接收数据 
+}	  
+void IIC0_Stop(void){//产生IIC停止信号
+	setSCL(0);
+	setSDA(0);//STOP:when CLK is high DATA change form low to high
+ 	delayUs(4);
+	setSCL(1); 
+	setSDA(1);//发送I2C总线结束信号
+	delayUs(4);							   	
 }
 
-uint8_t iic0_read(uint8_t dev_addr,uint8_t num_bytes,uint8_t *array_name)
-{
-	uint8_t return_val, rcv_val, send_bit, send_val, num_bits, index=0;
-	if((SCL0 == 1)&&(SDA0 == 1)){
-		return_val = IIC_NO_ERROR;
-	}
-	else{
-		return_val = IIC_BUSY_ERROR;
-	}
-	hwDelayInit(TimeReload_H, TimeReload_L);
-	SDA0 = 0;
-	send_val = (dev_addr << 1) & 0xFF;
-	do{
-		num_bits=8;
-		do{
-			hwDelay(1, TimeReload_H, TimeReload_L);
-			SCL0 = 0;
-			SDA0 = 1;
-			hwDelay(1, TimeReload_H, TimeReload_L);
-			SCL0 = 1;
-			while(SCL0 != 1);
-			send_bit = SDA0;
-			rcv_val = ((rcv_val << 1) | send_bit);
-			num_bits --;
-		}while(num_bits > 0);
-		array_name[index] = rcv_val;
-		index ++;
-		if(num_bytes == 1)
-		{
-			send_bit=1;
+uint8_t IIC0_Wait_Ack(void){
+//发送数据后，等待应答信号到来
+//返回值：1，接收应答失败，IIC直接退出
+//        0，接收应答成功，什么都不做
+	uint8_t ucErrTime=0;  
+	setSDA(1);delayUs(1);	   
+	setSCL(1);delayUs(1);	 
+	while(getSDA()){
+		ucErrTime++;
+		if(ucErrTime>250){
+			IIC0_Stop();
+			return 1;
 		}
+	}
+	setSCL(0);    //时钟输出0 	   
+	return 0;  
+} 
+
+void IIC0_Ack(void){//产生ACK应答
+	setSCL(0);
+	setSDA(0);
+	delayUs(2);
+	setSCL(1);
+	delayUs(2);
+	setSCL(0);
+}
+	    
+void IIC0_NAck(void){//不产生ACK应答	
+	setSCL(0);
+	setSDA(1);
+	delayUs(2);
+	setSCL(1);
+	delayUs(2);
+	setSCL(0);
+}					 				     
+			  
+void IIC0_Send_Byte(uint8_t txd){//IIC发送一个字节
+//返回从机有无应答
+//1，有应答
+//0，无应答                        
+    uint8_t t;    	    
+    setSCL(0);//拉低时钟开始数据传输
+    for(t = 0;t < 8;t ++)
+    {              
+        //SDA0=(txd&0x80)>>7;
+		if((txd & 0x80) >> 7)
+			setSDA(1);
 		else
-		{
-			send_bit=0;
-		}
-		SDA0 = send_bit;
-		num_bytes --;
-	}while(num_bytes > 0);
-	if(return_val != IIC_BUSY_ERROR)
-	{
-		hwDelay(1, TimeReload_H, TimeReload_L);
-		SCL0 = 0;
-		SDA0 = 0;
-		hwDelay(1, TimeReload_H, TimeReload_L);
-		SCL0 = 1;
-		while(SCL0 != 1);
-		hwDelay(1, TimeReload_H, TimeReload_L);
-		SDA0 = 1;
-	}
-	return return_val;
+			setSDA(0);
+		txd <<= 1; 	  
+		delayUs(2);
+		setSCL(1);
+		delayUs(2); 
+		setSCL(0);	
+		delayUs(2);
+    }	 
+} 	    
+  
+uint8_t IIC0_Read_Byte(uint8_t ack){//读1个字节，ack=1时，发送ACK，ack=0，发送nACK 
+	uint8_t i, receive=0;
+    for(i=0;i<8;i++ ){
+        setSCL(0); 
+        delayUs(2);
+		setSCL(1);
+        receive <<= 1;
+        if(getSDA())
+			receive ++;   
+		delayUs(1); 
+    }					 
+    if(!ack)
+        IIC0_NAck();        //发送nACK
+    else
+        IIC0_Ack();         //发送ACK   
+    return receive;
 }

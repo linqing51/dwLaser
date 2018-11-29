@@ -90,7 +90,7 @@ void nvram_load(void){//从EPROM中载入NVRAM
 	uint8_t flag;
 	DISABLE_INTERRUPT//关闭中断
 	memset(NVRAM0, 0x0, CONFIG_NVRAM_SIZE);//初始化NVRAM
-	flag = iic0_read(CONFIG_EPROM_ADDRESS, ((MR_END + 1) * 2), (uint8_t*)NVRAM0);//从EPROM中恢复NVRAM
+	//flag = iic0_read(CONFIG_EPROM_ADDRESS, ((MR_END + 1) * 2), (uint8_t*)NVRAM0);//从EPROM中恢复NVRAM
 	clear_em();
 	clear_r();
 	clear_t();
@@ -102,7 +102,7 @@ void nvram_load(void){//从EPROM中载入NVRAM
 void nvram_save(void){//强制将NVRAM存入EPROM
 	uint8_t flag;
 	DISABLE_INTERRUPT//关闭中断
-	flag = iic0_write(CONFIG_EPROM_ADDRESS, ((MR_END + 1) * 2), (uint8_t*)NVRAM0);
+	//flag = iic0_write(CONFIG_EPROM_ADDRESS, ((MR_END + 1) * 2), (uint8_t*)NVRAM0);
 	ENABLE_INTERRUPT
 }
 void nvram_updata(void){//更新NVRAM->EPROM
@@ -115,7 +115,7 @@ void nvram_updata(void){//更新NVRAM->EPROM
 	{
 		if(*(sp0 + i) != *(sp1 + i))
 		{
-			flag = iic0_write(CONFIG_EPROM_ADDRESS, 1, (uint8_t*)(sp0 + i));
+			//flag = iic0_write(CONFIG_EPROM_ADDRESS, 1, (uint8_t*)(sp0 + i));
 		}
 	}
 	memcpy(NVRAM1, NVRAM0, CONFIG_NVRAM_SIZE);

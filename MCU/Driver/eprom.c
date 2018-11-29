@@ -1,254 +1,108 @@
 #include "eprom.h"
 /*****************************************************************************/
-#define CONFIG_EPROM_I2C_BUS				&iic0
-#define CONFIG_EPROM_ADDRESS				0xA0
-#define CONFIG_EPROM_SIZE					8196
+#define AT24C01				127
+#define AT24C02				255
+#define AT24C04				511
+#define AT24C08				1023
+#define AT24C16				2047
+#define AT24C32				4095
+#define AT24C64	    		8191
+#define AT24C128			16383
+#define AT24C256			32767  
+#define EE_TYPE 			AT24C02
 /*****************************************************************************/
-
-
-void eprom_writePage(uint8_t *buffer, uint8_t addr)
-{//EPROM写入一页
-//	uint8_t acktemp;
-//	int i;
-//	/*write a page to at24c02*/
-//	iic_start(CONFIG_EPROM_I2C_BUS);
-//	iic_writeByte(CONFIG_EPROM_I2C_BUS, CONFIG_EPROM_ADDRESS);
-//	acktemp = iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
-//	iic_writeByte(CONFIG_EPROM_I2C_BUS, addr);//address
-//	acktemp = iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
-//	for(i = 0;i < 7;i ++)
-//	{
-//		iic_writeByte(CONFIG_EPROM_I2C_BUS, buffer[i]);
-//		if(! iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS))
-//		{
-//			iic_stop(CONFIG_EPROM_I2C_BUS);
-//		}
-//	}
-//	iic_stop(CONFIG_EPROM_I2C_BUS);
+void AT24CXX_Init(void){//初始化IIC接口
+	IIC0_Init();
 }
 
-
-void eprom_readBytes(uint8_t addr, uint8_t *rbuf, uint32_t len)
-{//EPROM连续读取字节
-	
+uint8_t AT24CXX_ReadOneByte(uint16_t ReadAddr){//在AT24CXX指定地址读出一个数据
+//ReadAddr:开始读数的地址  
+//返回值  :读到的数据				  
+	uint8_t temp=0;		  	    																 
+		IIC0_Start();  
+	if(EE_TYPE > AT24C16)            {//为了兼容24Cxx中其他的版本
+		IIC0_Send_Byte(0XA0);//发送写命令
+		IIC0_Wait_Ack();
+		IIC0_Send_Byte(ReadAddr >> 8);//发送高地址
+		IIC0_Wait_Ack();		 
+	}else      
+		IIC0_Send_Byte(0XA0 + ((ReadAddr / 256) << 1));//发送器件地址0XA0,写数据 	 
+	IIC0_Wait_Ack(); 
+	IIC0_Send_Byte(ReadAddr % 256);   //发送低地址
+	IIC0_Wait_Ack();	    
+	IIC0_Start();  	 	   
+	IIC0_Send_Byte(0XA1);           //进入接收模式			   
+	IIC0_Wait_Ack();	 
+	temp=IIC0_Read_Byte(0);//读一个字节，非应答信号信号	   
+	IIC0_Stop();        //产生一个停止条件	    
+	return temp;
 }
 
+void AT24CXX_WriteOneByte(uint16_t WriteAddr, uint8_t DataToWrite){//在AT24CXX指定地址写入一个数据
+//WriteAddr  :写入数据的目的地址    
+//DataToWrite:要写入的数据				   	  	    																 
+	IIC0_Start();  
+	if(EE_TYPE>AT24C16)
+	{
+		IIC0_Send_Byte(0XA0);	    //发送写命令
+		IIC0_Wait_Ack();
+		IIC0_Send_Byte(WriteAddr >> 8);    //发送高地址
+	}else
+	{
+		IIC0_Send_Byte(0XA0 +( (WriteAddr / 256) << 1));   //发送器件地址0XA0,写数据 
+	}	 
+	IIC0_Wait_Ack();	   
+	IIC0_Send_Byte(WriteAddr % 256);   //发送低地址
+	IIC0_Wait_Ack(); 	 										  		   
+	IIC0_Send_Byte(DataToWrite);     //发送字节							   
+	IIC0_Wait_Ack();  		    	   
+	IIC0_Stop();    //产生一个停止条件 
+	delayMs(10);	 
+}
 
-//void eeprom_dump(void)
-//{
-//	uint8_t *pbuf;
-//	rt_int16_t i,j;
-//	rt_device_t dev;
-//	pbuf = RT_NULL;
-//	dev = RT_NULL;
-//	pbuf = rt_malloc(CONFIG_EE_MEM_SIZE);
-//	
-//		rt_device_read(dev, 0, pbuf, CONFIG_EE_MEM_SIZE );
-//		rt_device_close(dev);
-//		for (i = 0; i < 512; i++)
-//		{
-//			rt_kprintf("0x%08X:",(i*16));
-//			for (j = 0; j < 16; j++)
-//			{	
-//				rt_kprintf("0x%02X ", *(pbuf + i*16 +j));
-//			}
-//			rt_kprintf("\n");
-//		}
-//	}
-//	else
-//	{
-//		rt_kprintf("Dump EEPROM Fail\n");
-//	}
-//	if(pbuf != RT_NULL)
-//		rt_free(pbuf);
-//}
-//rt_int8_t eeprom_reset(void)
-//{//擦除EEPROM并插空
-//	uint8_t *pbuf;
-//	rt_uint16_t i;
-
-//	pbuf = RT_NULL;
-//	pbuf = rt_malloc(CONFIG_EE_MEM_SIZE);
-//	memset(pbuf, 0x0, CONFIG_EE_MEM_SIZE);
-//	eprom_writeOneByte(uint8_t addr, uint8_t thedata);
-//		if (rt_device_write(dev, 0, pbuf, CONFIG_EE_MEM_SIZE ) == CONFIG_EE_MEM_SIZE)
-//			rt_kprintf("Write Success\n");
-//		rt_device_read(dev, 0, pbuf, CONFIG_EE_MEM_SIZE );
-//		rt_device_close(dev);
-//		for (i = 0; i < CONFIG_EE_MEM_SIZE; i++)
-//		{
-//		if (*(pbuf + i) != 0x0)
-//			rt_free(pbuf);
-//			return 0;
-//		}
-//		rt_free(pbuf);
-//		return 1;
-//	}
-//	else
-//	{
-//		if(pbuf != RT_NULL)
-//		{
-//			rt_free(pbuf);
-//		}
-//		return -1;
-//	}
-//}
-
-//uint8_t eprom_test(void)
-//{//eprom写入读取测试
-//	uint8_t *pwbuf,*prbuf;
-//	uint16_t size;
-//	time_t now;
-//	pwbuf = rt_malloc(CONFIG_EE_MEM_SIZE);
-//	prbuf = rt_malloc(CONFIG_EE_MEM_SIZE);
-//	size = CONFIG_EE_MEM_SIZE;
-//	if ((pwbuf != RT_NULL) & (prbuf != RT_NULL))
-//	{
-//		time(&now);
-//		rt_kprintf("EEPROM Test:Start At %s\n",ctime(&now));
-//		rt_kprintf("EEPROM SIZE:0x%x Bytes\n",size);
-//		//填充测试-填充0x00
-//		rt_kprintf("EEPROM Test:Fill 0x00\n");
-//		for(size = 0;size < CONFIG_EE_MEM_SIZE;size++)
-//		{
-//			*(pwbuf + size) = 0x00;
-//		}
-//		rt_device_open(dev, RT_DEVICE_FLAG_ACTIVATED);
-//		if (rt_device_write(dev, 0, pwbuf, CONFIG_EE_MEM_SIZE ) == CONFIG_EE_MEM_SIZE)//写入
-//		{
-//			rt_kprintf("EEPROM Test:Fill 0x00 Write Success\n");
-//		}
-//		else
-//		{
-//			rt_kprintf("EEPROM Test:Fill 0x00 Write Fail\n");
-//			/* 释放内存块*/
-//			rt_free(pwbuf);
-//			rt_free(prbuf);
-//			rt_device_close(dev);
-//			return 0;
-//		}
-//		rt_device_read(dev, 0, prbuf, CONFIG_EE_MEM_SIZE );//读回
-//		for (size = 0; size < CONFIG_EE_MEM_SIZE; size++)
-//		{
-//			if (*(pwbuf + size) != *(prbuf + size))
-//			{
-//				rt_kprintf("EEPROM Test:Fill 0x00 Failed %X != %X at %d\n", *(pwbuf + size), *(prbuf + size), size);
-//				/* 释放内存块*/
-//				rt_free(pwbuf);
-//				rt_free(prbuf);
-//				rt_device_close(dev);
-//				return 0;
-//			}
-//		}
-//		rt_kprintf("EEPROM Test:Fill 0x00 Sucess\n");
-//		//填充测试-填充0x5A
-//		rt_kprintf("EEPROM Test:Fill 0x5A\n");
-//		for(size = 0;size < CONFIG_EE_MEM_SIZE;size++)
-//		{
-//			*(pwbuf + size) = 0x5A;
-//		}
-//		if (rt_device_write(dev, 0, pwbuf, CONFIG_EE_MEM_SIZE ) == CONFIG_EE_MEM_SIZE)//写入
-//		{
-//			rt_kprintf("EEPROM Test:Fill 0x5A Write Success\n");
-//		}
-//		else
-//		{
-//			rt_kprintf("EEPROM Test:Fill 0x5A Write Fail\n");
-//			/* 释放内存块*/
-//			rt_free(pwbuf);
-//			rt_free(prbuf);
-//			rt_device_close(dev);
-//			return 0;
-//		}
-//		rt_device_read(dev, 0, prbuf, CONFIG_EE_MEM_SIZE );//读回
-//		for (size = 0; size < CONFIG_EE_MEM_SIZE; size++)
-//		{
-//			if (*(pwbuf + size) != *(prbuf + size))
-//			{
-//				rt_kprintf("EEPROM Test:Fill 0x5A Failed %X != %X at %d\n", *(pwbuf + size), *(prbuf + size), size);
-//				/* 释放内存块*/
-//				rt_free(pwbuf);
-//				rt_free(prbuf);
-//				rt_device_close(dev);
-//				return 0;
-//			}
-//		}
-//		rt_kprintf("EEPROM Test:Fill 0x5A Sucess\n");
-//		//随机填充
-//		rt_kprintf("EEPROM Test:Fill Random\n");
-//		for(size =0;size < CONFIG_EE_MEM_SIZE;size++)
-//		{
-//			*(pwbuf + size) = RNG_GetRandomNumber();
-//		}
-//		if (rt_device_write(dev, 0, pwbuf, CONFIG_EE_MEM_SIZE ) == CONFIG_EE_MEM_SIZE)//写入
-//		{
-//			rt_kprintf("EEPROM Test:Fill Random Write Success\n");
-//		}
-//		else
-//		{
-//			rt_kprintf("EEPROM Test:Fill Random Write Fail\n");
-//			/* 释放内存块*/
-//			rt_free(pwbuf);
-//			rt_free(prbuf);
-//			rt_device_close(dev);
-//			return 0;
-//		}
-//		rt_device_read(dev, 0, prbuf, CONFIG_EE_MEM_SIZE );//读回
-//		for (size = 0; size < CONFIG_EE_MEM_SIZE; size++)
-//		{
-//			if (*(pwbuf + size) != *(prbuf + size))
-//			{
-//				rt_kprintf("EEPROM Test:Fill Random Failed %X != %X at %d\n", *(pwbuf + size), *(prbuf + size), size);
-//				/* 释放内存块*/
-//				rt_free(pwbuf);
-//				rt_free(prbuf);
-//				rt_device_close(dev);
-//				return 0;
-//			}
-//		}
-//		rt_kprintf("EEPROM Test:Fill Random Sucess\n");
-//		//查空检查
-//		rt_kprintf("EEPROM Test:Check Blank\n");
-//		for(size =0;size < CONFIG_EE_MEM_SIZE;size++)
-//		{
-//			*(pwbuf + size) = 0x00;
-//		}
-//		if (rt_device_write(dev, 0, pwbuf, CONFIG_EE_MEM_SIZE ) == CONFIG_EE_MEM_SIZE)//写入
-//		{
-//			rt_kprintf("EEPROM Test:Fill Blank Write Success\n");
-//		}
-//		else
-//		{
-//			rt_kprintf("EEPROM Test:Fill Blank Write Fail\n");
-//			/* 释放内存块*/
-//			rt_free(pwbuf);
-//			rt_free(prbuf);
-//			rt_device_close(dev);
-//			return 0;
-//		}
-//		rt_device_read(dev, 0, prbuf, CONFIG_EE_MEM_SIZE );//读回
-//		for (size = 0; size < CONFIG_EE_MEM_SIZE; size++)
-//		{
-//			if (*(pwbuf + size) != *(prbuf + size))
-//			{
-//				rt_kprintf("EEPROM Test:Check Blank Failed %X != %X at %d\n", *(pwbuf + size), *(prbuf + size), size);
-//				/* 释放内存块*/
-//				rt_free(pwbuf);
-//				rt_free(prbuf);
-//				rt_device_close(dev);
-//				return 0;
-//			}
-//		}
-//		rt_kprintf("EEPROM Test:Check Blank Sucess\n");
-//		/* 释放内存块*/
-//		rt_free(pwbuf);
-//		rt_free(prbuf);
-//		rt_device_close(dev);
-//		return 1;
-//	}
-//	else
-//	{
-//		rt_kprintf("EEPROM Test:rt_malloc failed!\n");
-//		return -1;
-//	}
-//}
+void AT24CXX_WriteLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len){//在AT24CXX里面的指定地址开始写入长度为Len的数据
+//该函数用于写入16bit或者32bit的数据.
+//WriteAddr  :开始写入的地址  
+//DataToWrite:数据数组首地址
+//Len        :要写入数据的长度2,4  	
+	uint8_t t;
+	for(t = 0;t < Len;t ++){
+		AT24CXX_WriteOneByte(WriteAddr + t, (DataToWrite >> (8 * t)) & 0xff);
+	}												    
+}
+uint32_t AT24CXX_ReadLenByte(uint16_t ReadAddr, uint8_t Len)
+{//在AT24CXX里面的指定地址开始读出长度为Len的数据
+//该函数用于读出16bit或者32bit的数据.
+//ReadAddr   :开始读出的地址 
+//返回值     :数据
+//Len        :要读出数据的长度2,4  	
+	uint8_t t;
+	uint32_t temp=0;
+	for(t = 0;t < Len;t ++){
+		temp <<= 8;
+		temp += AT24CXX_ReadOneByte(ReadAddr + Len - t - 1); 	 				   
+	}
+	return temp;												    
+}
+     
+void AT24CXX_Read(uint16_t ReadAddr,uint8_t *pBuffer,uint16_t NumToRead){//在AT24CXX里面的指定地址开始读出指定个数的数据
+//ReadAddr :开始读出的地址 对24c02为0~255
+//pBuffer  :数据数组首地址
+//NumToRead:要读出数据的个数
+	while(NumToRead)
+	{
+		*pBuffer++ = AT24CXX_ReadOneByte(ReadAddr ++);	
+		NumToRead --;
+	}
+}  
+void AT24CXX_Write(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite){//在AT24CXX里面的指定地址开始写入指定个数的数据
+//WriteAddr :开始写入的地址 对24c02为0~255
+//pBuffer   :数据数组首地址
+//NumToWrite:要写入数据的个数
+	while(NumToWrite --)
+	{
+		AT24CXX_WriteOneByte(WriteAddr, *pBuffer);
+		WriteAddr ++;
+		pBuffer ++;
+	}
+}

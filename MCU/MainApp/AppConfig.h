@@ -6,7 +6,7 @@
 
 /*****************************************************************************/
 #define CONFIG_SIMULATION					1//仿真模式 C8051F020
-#define CONFIG_SYSCLK                       (48000000L)
+#define CONFIG_SYSCLK                       (16000000L)
 #define CONFIG_DEBUG                        1//调试功能
 #define CONFIG_USING_WDT					0//使能看门狗
 #define CONFIG_USING_RESET					0//使能PLC复位MCU功能
@@ -27,13 +27,13 @@
 #define CONFIG_UART1_DATABIT				8
 
 /*****************************************************************************/
-#define CONFIG_I2C0_FREQ 					(400000L)               
-#define CONFIG_I2C1_FREQ 					(400000L)
-#define CONFIG_I2C2_FREQ 					(400000L)
-#define CONFIG_I2C3_FREQ 					(400000L)
-#define CONFIG_I2C4_FREQ 					(400000L)
+#define CONFIG_I2C0_FREQ 					(10000L)               
+#define CONFIG_I2C1_FREQ 					(100000L)
+#define CONFIG_I2C2_FREQ 					(100000L)
+#define CONFIG_I2C3_FREQ 					(100000L)
+#define CONFIG_I2C4_FREQ 					(100000L)
 
-#define CONFIG_EPROM_ADDRESS				0x01
+#define CONFIG_EPROM_ADDRESS				0x50
 /*****************************************************************************/
 #define CONFIG_USE_IPID						1//使能IPID温度控制
 /*****************************************************************************/
@@ -102,7 +102,7 @@
 #include "InitConfig.h"
 #include "delay.h"
 #include "i2c0.h"
-
+#include "eprom.h"
 /*****************************************************************************/
 #include "sPLC.h"
 //#include "pidFuzzy.h"
