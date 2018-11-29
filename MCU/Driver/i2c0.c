@@ -4,7 +4,7 @@ sbit SDA0 = P3^5;
 sbit SCL0 = P3^6;				
 static uint8_t TimeReload_H, TimeReload_L;
 /*****************************************************************************/
-void iic0_Init(void){
+void iic0Init(void){
 	uint16_t temp = 0;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 /CONFIG_I2C0_FREQ));
 	TimeReload_H = (temp >> 8) & 0xFF;
@@ -28,60 +28,60 @@ static uint8_t getSCL(void){
 static uint8_t getSDA(void){
 	return SDA0; 
 }
-void IIC0_Start(void){//产生IIC起始信号
+void iic0Start(void){//产生IIC起始信号
 	setSDA(1);	  	  
 	setSCL(1);
-	delayUs(4);
+	delayUs(CONFIG_EPROM_FREQ);
  	setSDA(0);//START:when CLK is high,DATA change form high to low 
-	delayUs(4);
+	delayUs(CONFIG_EPROM_FREQ);
 	setSCL(0);//钳住I2C总线，准备发送或接收数据 
 }	  
-void IIC0_Stop(void){//产生IIC停止信号
+void iic0Stop(void){//产生IIC停止信号
 	setSCL(0);
 	setSDA(0);//STOP:when CLK is high DATA change form low to high
- 	delayUs(4);
+ 	delayUs(CONFIG_EPROM_FREQ);
 	setSCL(1); 
 	setSDA(1);//发送I2C总线结束信号
-	delayUs(4);							   	
+	delayUs(CONFIG_EPROM_FREQ);							   	
 }
 
-uint8_t IIC0_Wait_Ack(void){
+uint8_t iic0WaitAck(void){
 //发送数据后，等待应答信号到来
 //返回值：1，接收应答失败，IIC直接退出
 //        0，接收应答成功，什么都不做
 	uint8_t ucErrTime=0;  
-	setSDA(1);delayUs(1);	   
-	setSCL(1);delayUs(1);	 
+	setSDA(1);
+	delayUs(1);	   
+	setSCL(1);
+	delayUs(1);	 
 	while(getSDA()){
-		ucErrTime++;
-		if(ucErrTime>250){
-			IIC0_Stop();
+		ucErrTime ++;
+		if(ucErrTime >= 250){
+			iic0Stop();
 			return 1;
 		}
 	}
 	setSCL(0);    //时钟输出0 	   
 	return 0;  
-} 
-
-void IIC0_Ack(void){//产生ACK应答
+}
+void iic0Ack(void){//产生ACK应答
 	setSCL(0);
 	setSDA(0);
-	delayUs(2);
+	delayUs(CONFIG_EPROM_FREQ);
 	setSCL(1);
-	delayUs(2);
+	delayUs(CONFIG_EPROM_FREQ);
 	setSCL(0);
 }
 	    
-void IIC0_NAck(void){//不产生ACK应答	
+void iic0NAck(void){//不产生ACK应答	
 	setSCL(0);
 	setSDA(1);
-	delayUs(2);
+	delayUs(CONFIG_EPROM_FREQ);
 	setSCL(1);
-	delayUs(2);
+	delayUs(CONFIG_EPROM_FREQ);
 	setSCL(0);
-}					 				     
-			  
-void IIC0_Send_Byte(uint8_t txd){//IIC发送一个字节
+}					 				     	  
+void iic0SendByte(uint8_t txd){//IIC发送一个字节
 //返回从机有无应答
 //1，有应答
 //0，无应答                        
@@ -95,28 +95,28 @@ void IIC0_Send_Byte(uint8_t txd){//IIC发送一个字节
 		else
 			setSDA(0);
 		txd <<= 1; 	  
-		delayUs(2);
+		delayUs(CONFIG_EPROM_FREQ);
 		setSCL(1);
-		delayUs(2); 
+		delayUs(CONFIG_EPROM_FREQ); 
 		setSCL(0);	
-		delayUs(2);
+		delayUs(CONFIG_EPROM_FREQ);
     }	 
 } 	    
   
-uint8_t IIC0_Read_Byte(uint8_t ack){//读1个字节，ack=1时，发送ACK，ack=0，发送nACK 
+uint8_t iic0ReadByte(uint8_t ack){//读1个字节，ack=1时，发送ACK，ack=0，发送nACK 
 	uint8_t i, receive=0;
     for(i=0;i<8;i++ ){
         setSCL(0); 
-        delayUs(2);
+        delayUs(CONFIG_EPROM_FREQ);
 		setSCL(1);
         receive <<= 1;
         if(getSDA())
 			receive ++;   
-		delayUs(1); 
+		delayUs(CONFIG_EPROM_FREQ); 
     }					 
     if(!ack)
-        IIC0_NAck();        //发送nACK
+        iic0NAck();        //发送nACK
     else
-        IIC0_Ack();         //发送ACK   
+        iic0Ack();         //发送ACK   
     return receive;
 }

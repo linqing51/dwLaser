@@ -2,21 +2,21 @@
 /*****************************************************************************/
 
 /*****************************************************************************/
-void delayUs(uint8_t us) reentrant
+void delayUs(uint8_t data us) reentrant
 {//Œ¢√Î—” ±
 	while(us)
 	{
         us --;
 	}
 }
-void delayMs(uint8_t ms) reentrant
+void delayMs(uint8_t data ms) reentrant
 {//∫¡√Î—” ±
 	while(ms--)
 	{
 		delayUs(100);
 	}
 }
-void hwDelayInit(uint8_t reload_h, uint8_t reload_l)
+void hwDelayInit(uint8_t data reload_h, uint8_t data reload_l)
 {
 	TMOD &= 0x0F;
 	TMOD |= 0x10;

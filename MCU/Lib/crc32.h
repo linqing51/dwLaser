@@ -7,9 +7,10 @@
 /*****************************************************************************/
 #include "AppConfig.h"
 /*****************************************************************************/
-uint32_t Crc32Buf(uint8_t *buf, uint32_t len);//计算数组CRC32
-void Crc32Clear(void);//清空旧CRC32结果
-void SetCrcOld(uint32_t old);
+uint32_t crc32Calculate(uint8_t *buf, uint32_t len);//CRC32 计算数组
+uint32_t crc32CalculateAdd(uint8_t dat);//CRC32 计算连续字节
+void crc32Clear(void);//清空旧CRC32结果
+void crc32SetCrcOld(uint32_t old);
 /*****************************************************************************/
 //#ifdef __cplusplus
 //}

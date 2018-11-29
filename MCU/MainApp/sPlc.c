@@ -1,8 +1,8 @@
 #include "sPlc.h"
 /*****************************************************************************/			
 /*****************************************************************************/
-int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
-int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+int16_t xdata NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
+int16_t xdata NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 static data uint8_t TimerCounter_100uS = 0;
 static data uint8_t TimerCounter_1mS = 0;
 static data uint8_t TimerCounter_10mS = 0;
@@ -10,7 +10,7 @@ static data uint8_t TimerCounter_100mS = 0;
 static data uint8_t Timer0_L, Timer0_H;
 /*****************************************************************************/
 /******************************************************************************/
-void clear_dm(void){//清除DM寄存器
+void clearDM(void){//清除DM寄存器
 	uint16_t i;
 	for(i = 0;i <= DM_END;i ++)
 	{
@@ -18,7 +18,7 @@ void clear_dm(void){//清除DM寄存器
 		NVRAM1[i] = 0x0;
 	}
 }
-void clear_mr(void){//清除MR寄存器
+void clearMR(void){//清除MR寄存器
 	uint16_t i;
 	for(i = MR_START;i <= MR_END;i ++)
 	{
@@ -26,7 +26,7 @@ void clear_mr(void){//清除MR寄存器
 		NVRAM1[i] = 0x0;
 	}
 }
-void clear_em(void){//清除EM寄存器
+void clearEM(void){//清除EM寄存器
 	uint16_t i;
 	for(i = EM_START;i <= EM_END;i ++)
 	{
@@ -34,7 +34,7 @@ void clear_em(void){//清除EM寄存器
 		NVRAM1[i] = 0x0;
 	}
 }
-void clear_r(void){//清除R寄存器
+void clearR(void){//清除R寄存器
 	uint16_t i;
 	for(i = R_START;i <= R_END;i ++)
 	{
@@ -42,7 +42,7 @@ void clear_r(void){//清除R寄存器
 		NVRAM1[i] = 0x0;
 	}
 }
-void clear_t(void){//清除T寄存器
+void clearT(void){//清除T寄存器
 	uint16_t i;
 	for(i = T_1MS_START;i <= T_1MS_END;i ++)
 	{
@@ -60,7 +60,7 @@ void clear_t(void){//清除T寄存器
 		NVRAM1[i] = 0x0;
 	}
 }
-void clear_td(void){//清除TD寄存器
+void clearTD(void){//清除TD寄存器
 	uint16_t i;
 	for(i = TD_1MS_START;i <= TD_1MS_END;i ++)
 	{
@@ -78,7 +78,7 @@ void clear_td(void){//清除TD寄存器
 		NVRAM1[i] = 0x0;
 	}
 }
-void clear_c(void){//清除C寄存器
+void clearC(void){//清除C寄存器
 	uint16_t i;
 	for(i = C_START;i <= C_END;i ++)
 	{
@@ -86,26 +86,26 @@ void clear_c(void){//清除C寄存器
 		NVRAM1[i] = 0x0;
 	}
 }
-void nvram_load(void){//从EPROM中载入NVRAM
+void nvramLoad(void){//从EPROM中载入NVRAM
 	uint8_t flag;
 	DISABLE_INTERRUPT//关闭中断
 	memset(NVRAM0, 0x0, CONFIG_NVRAM_SIZE);//初始化NVRAM
 	//flag = iic0_read(CONFIG_EPROM_ADDRESS, ((MR_END + 1) * 2), (uint8_t*)NVRAM0);//从EPROM中恢复NVRAM
-	clear_em();
-	clear_r();
-	clear_t();
-	clear_td();
-	clear_c();
+	clearEM();
+	clearR();
+	clearT();
+	clearTD();
+	clearC();
 	memcpy(NVRAM1, NVRAM0, CONFIG_NVRAM_SIZE);
 	ENABLE_INTERRUPT
 }
-void nvram_save(void){//强制将NVRAM存入EPROM
+void nvramSave(void){//强制将NVRAM存入EPROM
 	uint8_t flag;
 	DISABLE_INTERRUPT//关闭中断
 	//flag = iic0_write(CONFIG_EPROM_ADDRESS, ((MR_END + 1) * 2), (uint8_t*)NVRAM0);
 	ENABLE_INTERRUPT
 }
-void nvram_updata(void){//更新NVRAM->EPROM
+void nvramUpdata(void){//更新NVRAM->EPROM
 	uint8_t flag, *sp0, *sp1;
 	uint16_t i;
 	sp0 = (uint8_t*)NVRAM0;
@@ -233,7 +233,7 @@ void T100MS(uint8_t A, uint8_t start, uint16_t value){
 	}
 }
 
-void Timer0_Init(void)
+void timer0Init(void)
 {//硬件sTimer计时器初始化
 	uint16_t temp;
 	TimerCounter_100uS = 0;
@@ -250,7 +250,7 @@ void Timer0_Init(void)
 	ET0 = 1;// Timer1 interrupt enabled
 	TR0 = 1;// Timer1 ON
 }
-void Timer0_ISR(void) interrupt INTERRUPT_TIMER0
+void timer0Isr(void) interrupt INTERRUPT_TIMER0
 {//硬件sTimer计时器中断 1mS
 	data uint16_t i;
 	TimerCounter_100uS ++;

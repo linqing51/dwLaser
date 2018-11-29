@@ -44,17 +44,17 @@
 
 #define CONFIG_NVRAM_SIZE 				(Y_END + 1)
 /*****************************************************************************/
-void Timer0_Init(void);
-void nvram_updata(void);
-void clear_dm(void);
-void clear_em(void);
-void clear_r(void);
-void clear_t(void);
-void clear_td(void);
-void clear_c(void);
-void nvram_load(void);
-void nvram_save(void);
-void nvram_updata(void);
+void timer0Init(void);
+void nvramUpdata(void);
+void clearDM(void);
+void clearEM(void);
+void clearR(void);
+void clearT(void);
+void clearTD(void);
+void clearC(void);
+void nvramLoad(void);
+void nvramSave(void);
+void nvramUpdata(void);
 
 void SET(uint16_t A);//÷√Œª
 void RESET(uint16_t A);//∏¥Œª
