@@ -4,9 +4,9 @@ static data uint8_t localAddr; //单片机控制板的地址
 static data uint8_t receTimeOut;//接收超时
 static data uint8_t sendCount;//发送字节个数
 static data uint8_t receCount;//接收到的字节个数
-static uint8_t receBuf[CONFIG_MODBUS_SLAVE_RX_BUFF_SIZE];
-static uint8_t sendBuf[CONFIG_MODBUS_SLAVE_TX_BUFF_SIZE];
-static uint8_t bt1ms;//定时标志位
+static idata uint8_t receBuf[CONFIG_MODBUS_SLAVE_RX_BUFF_SIZE];
+static idata uint8_t sendBuf[CONFIG_MODBUS_SLAVE_TX_BUFF_SIZE];
+static data uint8_t bt1ms;//定时标志位
 static void timeProc(void);
 static void checkComm0Modbus(void);
  

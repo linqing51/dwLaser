@@ -6,15 +6,10 @@
 
 /*****************************************************************************/
 #define CONFIG_SIMULATION					1//仿真模式 C8051F020
-#if CONFIG_SIMULATION == 1
-#define CONFIG_SYSCLK                       (12000000L)
-#else
 #define CONFIG_SYSCLK                       (48000000L)
-#endif
 #define CONFIG_DEBUG                        1//调试功能
 #define CONFIG_USING_WDT					0//使能看门狗
 #define CONFIG_USING_RESET					0//使能PLC复位MCU功能
-#define CONFIG_USING_HW_DELAY				1//启用硬件计时器延时
 #define CONFIG_LOCAL_ADDRESS                0x01
 #define CONFIG_LASERTIMER_OVERFLOW_US		1000L//定时器周期 1mS
 #define CONFIG_VERSION  					0x0001
@@ -32,7 +27,13 @@
 #define CONFIG_UART1_DATABIT				8
 
 /*****************************************************************************/
-               
+#define CONFIG_I2C0_FREQ 					(400000L)               
+#define CONFIG_I2C1_FREQ 					(400000L)
+#define CONFIG_I2C2_FREQ 					(400000L)
+#define CONFIG_I2C3_FREQ 					(400000L)
+#define CONFIG_I2C4_FREQ 					(400000L)
+
+#define CONFIG_EPROM_ADDRESS				0x01
 /*****************************************************************************/
 #define CONFIG_USE_IPID						1//使能IPID温度控制
 /*****************************************************************************/
@@ -50,15 +51,7 @@
 //STIMER设置
 #define CONFIG_SOFTPLC_HWTIME				(uint16_t)(65536 - (CONFIG_SYSCLK / 1000 / 12 / 10))//SoftPLC 硬件计时器基准1ms
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波周期
-#define CONFIG_STIMER_1MS_START				0//1ms计时器开始编号
-#define CONFIG_STIMER_1MS_END				15//1ms计时器结束编号
-#define CONFIG_STIMER_10MS_START			16//10ms计时器开始编号
-#define CONFIG_STIMER_10MS_END				31//10ms计时器结束编号
-#define CONFIG_STIMER_100MS_START			32//100mS计时器开始编号
-#define CONFIG_STIMER_100MS_END				47//100mS计时器结束编号
-#define CONFIG_STIMER_1000MS_START			48//1S计时器开始编号
-#define CONFIG_STIMER_1000MS_END			63//1S计时器结束编号
-#define CONFIG_STIMER_NUM					64//延时计时器
+
 
 #define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
 #define CONFIG_IPID_PWM_CYCLE				20//IPID输出周期 默认 20 * 100mS
@@ -79,11 +72,14 @@
 #define CONFIG_TECOUT_CYCLE					4000//PID输出转PWM周期
 /*****************************************************************************/
 //MODBUS SALVE配置
-#define CONFIG_MODBUS_SLAVE_RX_BUFF_SIZE	128
-#define CONFIG_MODBUS_SLAVE_TX_BUFF_SIZE	128
+#define CONFIG_MODBUS_SLAVE_RX_BUFF_SIZE	64
+#define CONFIG_MODBUS_SLAVE_TX_BUFF_SIZE	64
 #define CONFIG_MODBUS_SLAVE_RX_TIMEOUT		10//接收通讯超时 10mS
 #define CONFIG_MODBUS_SLAVE_IO_DELAY		1//RX TX切换延时
 /*****************************************************************************/
+#define DISABLE_INTERRUPT					EA = 0;
+#define ENABLE_INTERRUPT					EA = 1;
+
 
 #include "stdint.h"
 #include "stdbool.h"
@@ -105,11 +101,10 @@
 /*****************************************************************************/
 #include "InitConfig.h"
 #include "delay.h"
-#include "hal_iic.h"
-#include "hal_iic_port.h"
-#include "eprom.h"
+#include "i2c0.h"
+
 /*****************************************************************************/
-//#include "sTimer.h"
+#include "sPLC.h"
 //#include "pidFuzzy.h"
 /*****************************************************************************/
 //#include "AppMath.h"
@@ -117,8 +112,8 @@
 //#include "ad5621.h"
 //#include "chipBeem.h"
 
-//#include "modbusApp.h"
-//#include "modbusPort.h"
-//#include "slaveModbus.h"
+#include "modbusApp.h"
+#include "modbusPort.h"
+#include "slaveModbus.h"
 /*****************************************************************************/
 #endif

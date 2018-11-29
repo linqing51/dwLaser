@@ -1,21 +1,10 @@
 #include "eprom.h"
 /*****************************************************************************/
 #define CONFIG_EPROM_I2C_BUS				&iic0
+#define CONFIG_EPROM_ADDRESS				0xA0
 #define CONFIG_EPROM_SIZE					8196
 /*****************************************************************************/
-void eprom_writeOneByte(uint8_t addr, uint8_t thedata)
-{//EPROM写入一个字节
-//	int8_t acktemp = 1;
-//	//write a byte to mem
-//	iic_start(CONFIG_EPROM_I2C_BUS);
-//	iic_writeByte(CONFIG_EPROM_I2C_BUS, 0xa0);
-//	acktemp = iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
-//	iic_writeByte(CONFIG_EPROM_I2C_BUS, addr);//address
-//	acktemp=iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
-//	iic_writeByte(CONFIG_EPROM_I2C_BUS, thedata);//thedata
-//	acktemp=iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
-//	iic_stop(CONFIG_EPROM_I2C_BUS);
-}
+
 
 void eprom_writePage(uint8_t *buffer, uint8_t addr)
 {//EPROM写入一页
@@ -23,7 +12,7 @@ void eprom_writePage(uint8_t *buffer, uint8_t addr)
 //	int i;
 //	/*write a page to at24c02*/
 //	iic_start(CONFIG_EPROM_I2C_BUS);
-//	iic_writeByte(CONFIG_EPROM_I2C_BUS, 0xa0);
+//	iic_writeByte(CONFIG_EPROM_I2C_BUS, CONFIG_EPROM_ADDRESS);
 //	acktemp = iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
 //	iic_writeByte(CONFIG_EPROM_I2C_BUS, addr);//address
 //	acktemp = iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
@@ -38,48 +27,10 @@ void eprom_writePage(uint8_t *buffer, uint8_t addr)
 //	iic_stop(CONFIG_EPROM_I2C_BUS);
 }
 
-uint8_t eprom_readOneByte(uint8_t addr)
-{//EPROM读取一个字节         
-//	uint8_t acktemp;
-//	uint8_t mydata;
-//	//read a byte from mem
-//	iic_start(CONFIG_EPROM_I2C_BUS);
-//	iic_writeByte(CONFIG_EPROM_I2C_BUS, 0xa0);
-//	acktemp = iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
-//	iic_writeByte(CONFIG_EPROM_I2C_BUS, addr);//address
-//	acktemp = iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
-//	iic_start(CONFIG_EPROM_I2C_BUS);
-//	iic_writeByte(CONFIG_EPROM_I2C_BUS, 0xa1);
-//	acktemp = iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
-//	mydata = iic_readByte(CONFIG_EPROM_I2C_BUS);
-//	acktemp = iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
-//	iic_stop(CONFIG_EPROM_I2C_BUS);
-//	return mydata;	
-}
 
-void eprom_readBytes(uint8_t *buffer,uint8_t addr, uint8_t len)
+void eprom_readBytes(uint8_t addr, uint8_t *rbuf, uint32_t len)
 {//EPROM连续读取字节
-//	uint8_t acktemp;
-//	int i=0;
-//	//read 8 bytes from mem
-//	iic_start(CONFIG_EPROM_I2C_BUS);
-//	iic_writeByte(CONFIG_EPROM_I2C_BUS, 0xa0);
-//	acktemp = iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
-//	iic_writeByte(CONFIG_EPROM_I2C_BUS, addr);
-//	acktemp = iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
-//	iic_start(CONFIG_EPROM_I2C_BUS);
-//	iic_writeByte(CONFIG_EPROM_I2C_BUS, 0xa1);
-//	acktemp= iic_checkAcknowledge(CONFIG_EPROM_I2C_BUS);
-//	for(i = 0;i < len;i ++)
-//	{
-//		buffer[i] = iic_readByte(CONFIG_EPROM_I2C_BUS);
-//		if(i != (len - 1))
-//			iic_sendNack(CONFIG_EPROM_I2C_BUS);//发送应答
-//		else
-//			iic_sendAck(CONFIG_EPROM_I2C_BUS);//发送非应答
-//	}
-//	iic_stop(CONFIG_EPROM_I2C_BUS);
-
+	
 }
 
 

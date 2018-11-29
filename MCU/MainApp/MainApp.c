@@ -52,10 +52,6 @@ bit  COOL_OUT;
 #define STEPNUM_READY					3//准备
 #define STEPNUM_LASERON					4//激光开始
 
-#define CONFIG_NVRAM_SIZE				256
-
-//int16_t Nvram0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
-//int16_t Nvram1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 
 
 //#define DM_LASER_CURRENT_0			0//激光器电流0
@@ -128,20 +124,49 @@ void upDateDac1(uint16_t dat);
 /*****************************************************************************/
 void main(void)
 {
+	uint8_t array_name[8];
+	int8_t flag;
 	Init_Device();
-	EA = 1;
-	hwDelayInit();
-	//eprom_init();
+	EA = 0;
+	//sTimerInit();
 	COOL_OUT = 0;
-	hwDelayUs(2000);
+	delayUs(2000);
 	COOL_OUT = ~COOL_OUT;
-	hwDelayUs(1000);
+	delayUs(1000);
 	COOL_OUT = ~COOL_OUT;
-	hwDelayUs(3000);
+	delayUs(3000);
 	COOL_OUT = ~COOL_OUT;
-	hwDelayUs(1000);
+	delayUs(1000);
 	COOL_OUT = ~COOL_OUT;
-	while(1);
+	iic0_Init();
+	Timer0_Init();
+	flag=iic0_write(0x43, 8, array_name); 
+	flag=iic0_read(0x43, 8, array_name); 
+	nvram_load();//上电恢复NVRAM
+	while(1)
+	{
+		SET(10);
+		RESET(10);
+		SET(10);
+		RESET(10);
+		SET(10);
+		RESET(10);
+		SET(10);
+		RESET(10);
+		FLIP(10);
+		FLIP(10);
+		FLIP(10);
+		FLIP(10);
+		//读取IO
+		//执行程序
+		//输出IO
+		T100MS(0, 1, 2);
+		if(LD(TD_100MS_START * 16 + 0));
+		{
+			SET(0);	
+		}
+		nvram_updata();//更新NVRAM
+	}
 }
 //void main(void)
 //{

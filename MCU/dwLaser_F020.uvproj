@@ -133,7 +133,7 @@
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
             <RestoreFunctions>1</RestoreFunctions>
             <RestoreToolbox>1</RestoreToolbox>
-            <LimitSpeedToRealTime>1</LimitSpeedToRealTime>
+            <LimitSpeedToRealTime>0</LimitSpeedToRealTime>
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
@@ -173,7 +173,7 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4101</DriverSelection>
+            <DriverSelection>4102</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\SiC8051F.dll</Flash2>
@@ -387,24 +387,31 @@
           <GroupName>Driver</GroupName>
           <Files>
             <File>
-              <FileName>hal_iic.c</FileName>
+              <FileName>i2c0.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Driver\hal_iic.c</FilePath>
-            </File>
-            <File>
-              <FileName>eprom.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Driver\eprom.c</FilePath>
-            </File>
-            <File>
-              <FileName>hal_iic_port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Driver\hal_iic_port.c</FilePath>
+              <FilePath>.\Driver\i2c0.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Modbus</GroupName>
+          <Files>
+            <File>
+              <FileName>modbusApp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Modbus\modbusApp.c</FilePath>
+            </File>
+            <File>
+              <FileName>modbusPort.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Modbus\modbusPort.c</FilePath>
+            </File>
+            <File>
+              <FileName>slaveModbus.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Modbus\slaveModbus.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>MainApp</GroupName>
@@ -418,6 +425,11 @@
               <FileName>InitConfig.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MainApp\InitConfig.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainApp\sPlc.c</FilePath>
             </File>
           </Files>
         </Group>
