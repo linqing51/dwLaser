@@ -62,9 +62,7 @@
 /*****************************************************************************/
 //STIMER设置
 #define CONFIG_SOFTPLC_HWTIME				(uint16_t)(65536 - (CONFIG_SYSCLK / 1000 / 12 / 10))//SoftPLC 硬件计时器基准1ms
-#define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波周期
-
-
+#define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期
 #define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
 #define CONFIG_IPID_PWM_CYCLE				20//IPID输出周期 默认 20 * 100mS
 /*****************************************************************************/

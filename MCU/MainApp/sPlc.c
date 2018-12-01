@@ -8,6 +8,8 @@ static data uint8_t TimerCounter_1mS = 0;
 static data uint8_t TimerCounter_10mS = 0;
 static data uint8_t TimerCounter_100mS = 0;
 static data uint8_t Timer0_L, Timer0_H;
+static data uint16_t XinFilter0, XinFilter1;
+static data uint8_t InputFilterTime = CONFIG_INPUT_FILTER_TIME;
 /*****************************************************************************/
 /******************************************************************************/
 void clearDM(void){//清除DM寄存器
@@ -298,6 +300,24 @@ void timer0Isr(void) interrupt INTERRUPT_TIMER0
 	TL0 = Timer0_L;
 }
 
+void getInput(void){//获取输入IO
+	uint16_t xin = 0xA55A;
+	uint8_t i, temp0, temp1;
+	XinFilter1 = XinFilter0;
+	for(i = 0;i<=15;i++){
+		temp0 = (XinFilter0 >> i) & 0x01;
+		temp1 = (XinFilter1 >> i) & 0x01;
+		if(temp0 == temp1){
+			if(temp0)
+				NVRAM0[X_START] |= 1 << i;
+			else
+				NVRAM0[X_START] &= ~(1 << i);
+		}	
+	}
+}
+void setOutput(void){//设置输出IO
+	
+}
 //void inputFilter(softPlc_t *plc)
 //{//对P0-P3进行数字滤波滤波
 //	uint8_t i, j;
