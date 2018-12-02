@@ -9,8 +9,7 @@
 //sbit LED_MCU = P2^3;//处理器指示LED
 //sbit LED_LASER0 = P1^7;//激光发射指示LED0 980nM
 //sbit LED_LASER1 = P1^6;//激光发射指示LED1 1470nM
-bit  TP0, TP1, TP2, TP3;
-
+//bit  TP0, TP1, TP2, TP3;
 /*****************************************************************************/
 #define ENUM_CHANNEL1					4321
 #define ENUM_CHANNEL2					8765
@@ -102,7 +101,10 @@ bit  TP0, TP1, TP2, TP3;
 //#define XR_7
 //#define YR_0
 //#define YR_1
-
+#define MCP4768_DAC1		1
+#define MCP4768_DAC2		2
+#define MCP4768_DAC3		3
+#define MCP4768_DAC4		4
 void readNvram(void)
 {//EPROM->NVRAM0
 	//readEprom();
@@ -126,27 +128,13 @@ void main(void)
 {
 	initDevice();
 	timer0Init();
-	//epromInit();
-	//epromTest();
-	TP0 = 1;
-	delayUs(1);
-	TP0 = 0;
-	delayUs(10);
-	TP0 = 1;
-	delayUs(100);
-	TP0 = 0;
-	EA = 1;	
-	delayUs(2000);
-	//COOL_OUT = ~COOL_OUT;
-	delayUs(1000);
-	//COOL_OUT = ~COOL_OUT;
-	delayUs(3000);
-	//COOL_OUT = ~COOL_OUT;
-	delayUs(1000);
-	//COOL_OUT = ~COOL_OUT;
+	inPca9554Init();
+	outPca9554Init();
+	mcp47x6Init();
 	nvramLoad();//上电恢复NVRAM
 	while(1)
 	{
+		getInput();
 		SET(10);
 		RESET(10);
 		SET(10);

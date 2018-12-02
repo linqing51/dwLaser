@@ -13,14 +13,14 @@
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>C8051F020</Device>
+          <Device>C8051F580</Device>
           <Vendor>Silicon Labs</Vendor>
-          <Cpu>IRAM(0-0xFF) XRAM(0-0xFFF) IROM(0-0xFFFF) CLOCK(25000000)</Cpu>
+          <Cpu>IRAM(0-0xFF) XRAM(0x0-0x1FFF)  IROM(0-0x1FFFF) CLOCK(50000000)</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"LIB\STARTUP.A51" ("Standard 8051 Startup Code")</StartupFile>
           <FlashDriverDll></FlashDriverDll>
-          <DeviceId>3312</DeviceId>
-          <RegisterFile>C8051F020.H</RegisterFile>
+          <DeviceId>4933</DeviceId>
+          <RegisterFile>C8051F580.H</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -36,7 +36,7 @@
           <BinPath>C:\Keil_v5\C51\BIN\</BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath></RegisterFilePath>
+          <RegisterFilePath>Cygnal\</RegisterFilePath>
           <DBRegisterFilePath>Cygnal\</DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
@@ -110,11 +110,11 @@
           <SimDllName>S8051.DLL</SimDllName>
           <SimDllArguments></SimDllArguments>
           <SimDlgDll>DCYG.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pCYGF020</SimDlgDllArguments>
+          <SimDlgDllArguments>-pCYGF580</SimDlgDllArguments>
           <TargetDllName>S8051.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
           <TargetDlgDll>TCYG.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pCYGF020</TargetDlgDllArguments>
+          <TargetDlgDllArguments>-pCYGF580</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -177,7 +177,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\SiC8051F.dll</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -186,7 +186,7 @@
         </Utilities>
         <Target51>
           <Target51Misc>
-            <MemoryModel>1</MemoryModel>
+            <MemoryModel>2</MemoryModel>
             <RTOS>0</RTOS>
             <RomSize>2</RomSize>
             <DataHold>0</DataHold>
@@ -273,7 +273,7 @@
               <IRO>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0x20000</Size>
               </IRO>
               <IRA>
                 <Type>0</Type>
@@ -283,7 +283,7 @@
               <XRA>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x1000</Size>
+                <Size>0x2000</Size>
               </XRA>
               <XRA512>
                 <Type>0</Type>
@@ -386,6 +386,16 @@
               <FileType>1</FileType>
               <FilePath>.\Lib\crc32.c</FilePath>
             </File>
+            <File>
+              <FileName>F580_FlashPrimitives.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Lib\F580_FlashPrimitives.c</FilePath>
+            </File>
+            <File>
+              <FileName>F580_FlashUtils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Lib\F580_FlashUtils.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -397,9 +407,54 @@
               <FilePath>.\Driver\i2c0.c</FilePath>
             </File>
             <File>
+              <FileName>i2c1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Driver\i2c1.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Driver\i2c2.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Driver\i2c3.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c4.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Driver\i2c4.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c5.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Driver\i2c5.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c6.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Driver\i2c6.c</FilePath>
+            </File>
+            <File>
               <FileName>eprom.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\Driver\eprom.c</FilePath>
+            </File>
+            <File>
+              <FileName>outPca9554.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Driver\outPca9554.c</FilePath>
+            </File>
+            <File>
+              <FileName>inPca9554.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Driver\inPca9554.c</FilePath>
+            </File>
+            <File>
+              <FileName>mcp47x6.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Driver\mcp47x6.c</FilePath>
             </File>
           </Files>
         </Group>
