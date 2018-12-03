@@ -81,11 +81,14 @@
 #define CONFIG_TECOUT_CYCLE					4000//PID输出转PWM周期
 /*****************************************************************************/
 //MODBUS SALVE配置
-#define CONFIG_MODBUS_SLAVE_RX_BUFF_SIZE	64
-#define CONFIG_MODBUS_SLAVE_TX_BUFF_SIZE	64
+#define CONFIG_MODBUS_SLAVE_ADDRESS			0x01//从设备地址
+#define CONFIG_MODBUS_SLAVE_RX_BUFFER_SIZE	128//定义串口发送缓冲区大小
+#define CONFIG_MODBUS_SLAVE_TX_BUFFER_SIZE	128//定义串口接收缓冲区大小
 #define CONFIG_MODBUS_SLAVE_RX_TIMEOUT		10//接收通讯超时 10mS
 #define CONFIG_MODBUS_SLAVE_IO_DELAY		1//RX TX切换延时
 /*****************************************************************************/
+#define DISABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 0;
+#define ENABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 1;
 #define DISABLE_INTERRUPT					EA = 0;
 #define ENABLE_INTERRUPT					EA = 1;
 
@@ -125,6 +128,7 @@
 #include "outPca9554.h"
 /*****************************************************************************/
 #include "sPLC.h"
+#include "modbusSlaveAscii.h"
 //#include "pidFuzzy.h"
 /*****************************************************************************/
 //#include "AppMath.h"

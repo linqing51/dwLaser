@@ -139,27 +139,28 @@ void main(void)
 	nvramLoad();//上电恢复NVRAM
 	while(1)
 	{
-		getInput();
-		SET(10);
-		RESET(10);
-		SET(10);
-		RESET(10);
-		SET(10);
-		RESET(10);
-		SET(10);
-		RESET(10);
-		FLIP(10);
-		FLIP(10);
-		FLIP(10);
-		FLIP(10);
-		//读取IO
-		//执行程序
-		//输出IO
-		T100MS(0, 1, 2);
-		if(LD(TD_100MS_START * 16 + 0));
-		{
-			SET(0);	
-		}
+		modbusSlaveAsciiPoll();
+//		getInput();
+//		SET(10);
+//		RESET(10);
+//		SET(10);
+//		RESET(10);
+//		SET(10);
+//		RESET(10);
+//		SET(10);
+//		RESET(10);
+//		FLIP(10);
+//		FLIP(10);
+//		FLIP(10);
+//		FLIP(10);
+//		//读取IO
+//		//执行程序
+//		//输出IO
+//		T100MS(0, 1, 2);
+//		if(LD(TD_100MS_START * 16 + 0));
+//		{
+//			SET(0);	
+//		}
 		nvramUpdata();//更新NVRAM
 	}
 }

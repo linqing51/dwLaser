@@ -48,7 +48,7 @@
 #define CONFIG_NVRAM_SIZE 				(SPREG_END + 1)
 
 
-
+extern data uint16_t ModbusSlaveOverTimeCounter;//Modbus Slave通信超时计时器
 /*****************************************************************************/
 void timer0Init(void);
 /*****************************************************************************/

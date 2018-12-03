@@ -11,6 +11,7 @@ static data uint8_t Timer0_L, Timer0_H;
 static data uint8_t InputCounter;
 static data uint16_t XinFilter[2];
 static data uint8_t InputFilterTime = CONFIG_INPUT_FILTER_TIME;
+data uint16_t ModbusSlaveOverTimeCounter;//Modbus Slave通信超时计时器
 /*****************************************************************************/
 /******************************************************************************/
 void clearDM(void){//清除DM寄存器
@@ -243,6 +244,7 @@ void timer0Init(void)
 	TimerCounter_1mS = 0;
 	TimerCounter_10mS = 0;
 	TimerCounter_100mS = 0;
+	ModbusSlaveOverTimeCounter = 0;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 10000 / 12));//SoftPLC 硬件计时器基准1ms
 	Timer0_L = temp & 0xFF;
 	Timer0_H = (temp >> 8) & 0xFF;
@@ -257,6 +259,7 @@ void timer0Isr(void) interrupt INTERRUPT_TIMER0
 {//硬件sTimer计时器中断 1mS
 	data uint16_t i;
 	TimerCounter_100uS ++;
+	ModbusSlaveOverTimeCounter ++;
 	//100us
 	for(i = TD_100US_START;i <= TD_100US_END;i ++){
 		if(NVRAM0[i] < SHRT_MAX){
