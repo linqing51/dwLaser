@@ -126,11 +126,16 @@ void upDateDac1(uint16_t dat);
 /*****************************************************************************/
 void main(void)
 {
+	uint8_t rbuf[8];
+	uint8_t wbuf[8] = {1,2,3,4,5,6,7,8};
 	initDevice();
-	timer0Init();
-	inPca9554Init();
-	outPca9554Init();
-	mcp47x6Init();
+	//timer0Init();
+	//inPca9554Init();
+	//outPca9554Init();
+	//mcp47x6Init();
+	epromWrite(0x0, wbuf, 8);
+	epromRead(0x0, rbuf, 8);
+	epromTest();
 	nvramLoad();//…œµÁª÷∏¥NVRAM
 	while(1)
 	{

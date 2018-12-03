@@ -33,8 +33,7 @@
 #define CONFIG_I2C3_FREQ 					(100000L)
 #define CONFIG_I2C4_FREQ 					(100000L)
 /*****************************************************************************/
-
-#define CONFIG_EPROM_SIZE 					256
+#define CONFIG_EPROM_SIZE 					CONFIG_AT24C64_SIZE
 #define	CONFIG_AT24C02_SIZE 				256
 #define	CONFIG_AT24C04_SIZE  				512
 #define	CONFIG_AT24C08_SIZE 				1024
@@ -44,8 +43,8 @@
 #define	CONFIG_AT24C128_SIZE 				16384
 #define	CONFIG_AT24C256_SIZE 				32768
 #define CONFIG_EPROM_ADDR					0x50
-#define CONFIG_EPROM_FRAM					1//铁电存储体无写入等待
-#define CONFIG_EPROM_FREQ					4//
+#define CONFIG_EPROM_FRAM					0//铁电存储体无写入等待
+#define CONFIG_EPROM_FREQ					1//
 /*****************************************************************************/
 #define CONFIG_USE_IPID						1//使能IPID温度控制
 /*****************************************************************************/

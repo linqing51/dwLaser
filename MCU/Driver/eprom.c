@@ -13,12 +13,9 @@ uint8_t epromReadOneByte(uint16_t ReadAddr){//在AT24CXX指定地址读出一个数据
 	iic0Start();  
 #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
 //兼容24Cxx中其他的版本
-	((CONFIG_EPROM_ADDR << 1) & 0xFE)
-	
 	iic0SendByte(((CONFIG_EPROM_ADDR << 1) & 0xFE));//发送写命令
 	iic0WaitAck();
-	iic0SendByte(ReadAddr >> 8);//发送高地址
-	iic0WaitAck();		 
+	iic0SendByte(ReadAddr >> 8);//发送高地址		 
 #else 
 	iic0SendByte(((CONFIG_EPROM_ADDR << 1) & 0xFE) + ((ReadAddr / 256) << 1));//发送器件地址0XA0,写数据 	 
 #endif
@@ -104,22 +101,21 @@ void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite){//在A
 void epromTest(void){//EPROM 读写自测试
 	uint8_t temp;
 	uint32_t i, j, crc32Src, crc32Dist;
-	j = 10;
-	do{
-		crc32Clear();
-		for(i = 0;i <= CONFIG_EPROM_SIZE;i ++){
-			temp = rand() % 255;
-			crc32Src = crc32CalculateAdd(temp);
-			epromWriteOneByte(i, temp);
-		}
-		crc32Clear();
-		for(i = 0;i <= CONFIG_EPROM_SIZE;i ++){
-			temp = epromReadOneByte(i);
-			crc32Dist = crc32CalculateAdd(temp);
-		}
-		if(crc32Src == crc32Dist)
-			printf("EPROM:Self Test Loop %d OK\n", j);
-		else
-			printf("EPROM:Self Test Loop %d Fail\n", j);
-	}while(j--);
+	
+	crc32Clear();
+	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
+		temp = rand() % 255;
+		crc32Src = crc32CalculateAdd(temp);
+		epromWriteOneByte(i, temp);
+	}
+	crc32Clear();
+	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
+		temp = epromReadOneByte(i);
+		crc32Dist = crc32CalculateAdd(temp);
+	}
+	if(crc32Src == crc32Dist)
+		printf("EPROM:Self Test Loop %d OK\n", j);
+	else
+		printf("EPROM:Self Test Loop %d Fail\n", j);
+
 }
