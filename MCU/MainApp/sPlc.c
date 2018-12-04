@@ -8,12 +8,13 @@ static data uint8_t TimerCounter_1mS = 0;
 static data uint8_t TimerCounter_10mS = 0;
 static data uint8_t TimerCounter_100mS = 0;
 static data uint8_t Timer0_L, Timer0_H;
-static data uint8_t InputCounter;
-static data uint16_t XinFilter[2];
-static data uint8_t InputFilterTime = CONFIG_INPUT_FILTER_TIME;
+static data int8_t InputFilter[CONFIG_SPLC_HW_INPUT_NUM];//输入IO滤波器
 data uint16_t ModbusSlaveOverTimeCounter;//Modbus Slave通信超时计时器
 /*****************************************************************************/
 /******************************************************************************/
+
+
+
 void assertCoilAddress(uint16_t adr){//检查线圈地址
 	if(adr > (SPREG_END * 16))
 		while(1);
@@ -99,10 +100,9 @@ void clearC(void){//清除C寄存器
 	}
 }
 void nvramLoad(void){//从EPROM中载入NVRAM
-	uint8_t flag;
 	DISABLE_INTERRUPT//关闭中断
 	memset(NVRAM0, 0x0, CONFIG_NVRAM_SIZE);//初始化NVRAM
-	//flag = iic0_read(CONFIG_EPROM_ADDRESS, ((MR_END + 1) * 2), (uint8_t*)NVRAM0);//从EPROM中恢复NVRAM
+	epromRead(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));//从EPROM中恢复NVRAM
 	clearEM();
 	clearR();
 	clearT();
@@ -319,51 +319,40 @@ void timer0Isr(void) interrupt INTERRUPT_TIMER0
 }
 
 void getInput(void){//获取输入IO
-	data uint8_t i, temp0, temp1;
-	if(InputCounter >= InputFilterTime){
-		XinFilter[0] = inPca9554Read() ;
-		XinFilter[1] = XinFilter[0];
-		for(i = 0;i<=15;i++){
-			temp0 = (XinFilter[0] >> i) & 0x01;
-			temp1 = (XinFilter[1] >> i) & 0x01;
-			if(temp0 == temp1){
-				if(temp0)
-					NVRAM0[X_START] |= 1 << i;
-				else
-					NVRAM0[X_START] &= ~(1 << i);
-			}	
+	uint8_t ctemp, i;
+	ctemp = inPca9554Read() ;
+	for(i = 0;i < 8;i ++){
+		if((ctemp >> i) & 0x01){
+			if(InputFilter[i] < CONFIG_INPUT_FILTER_TIME){
+				InputFilter[i] ++;
+			}
+			else{
+				NVRAM0[X_START] |= (1 << i);
+			}
 		}
-		InputCounter = 0;
+		else{
+			if(InputFilter[i] > (CONFIG_INPUT_FILTER_TIME * -1)){
+				InputFilter[i] --;
+			}
+			else{
+				NVRAM0[X_START] &= ~(1 << i);
+			}
+		}
 	}
-	InputCounter ++;
 }
 void setOutput(void){//设置输出IO
 	
 }
-//void inputFilter(softPlc_t *plc)
-//{//对P0-P3进行数字滤波滤波
-//	uint8_t i, j;
-//	uint8_t s1, s2;
-//	plc->X_Input0[0] = 0x0000;
-//	plc->X_Input0[1] = 0x0000;
-//	plc->X_Input0[0] = (P0 | (P1 << 8));
-//	plc->X_Input0[1] = (P2 | (P3 << 8));
-//	
-//	plc->X_Input1[0] = plc->X_Input0[0];
-//	plc->X_Input1[1] = plc->X_Input0[1];
-//	for(i = 0;i < CONFIG_PLC_X_NUM;i ++)
-//	{//遍历所有X寄存器
-//		for(j = 0; j < 16;j ++)
-//		{
-//			s1 = (plc->X_Input0[i] >> j) & 0x01;
-//			s2 = (plc->X_Input1[i] >> j) & 0x01;
-//			if(s1 == s2)
-//			{
-//				plc->X_Coil[i] &= ~(1 << j);
-//			}
-//		}
-//	}
-//}
+void x_refresh(void)    //刷新输入点共4点
+ {      
+	  all_data[0x240/2]&=0x0000;		 //清除有外部输入的X
+	  all_data[0x240/2]|=in_x;			 //更新外部输入X数据
+	  //CH-X00:all_data[0x240/2]----all_data[0x240/2+15]	   16组
+	  //CH-Y00:all_data[0x180/2]----all_data[0x180/2+15]	   16组
+ }
+ void y_refresh(void)         
+ {
+ }
 //void outputRefush(softPlc_t *plc)
 //{//输出端口刷新
 //	uint8_t outbit;

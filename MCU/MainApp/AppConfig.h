@@ -60,6 +60,8 @@
 #define CONFIG_USE_IPID_OUTSHOW				1//使能IPID输出显示
 /*****************************************************************************/
 //STIMER设置
+#define CONFIG_SPLC_HW_INPUT_NUM			16//硬件输入点数
+#define CONFIG_SPLC_HW_OUTPUT_NUM			16//硬件输出点数
 #define CONFIG_SOFTPLC_HWTIME				(uint16_t)(65536 - (CONFIG_SYSCLK / 1000 / 12 / 10))//SoftPLC 硬件计时器基准1ms
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期
 #define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
@@ -89,6 +91,8 @@
 /*****************************************************************************/
 #define DISABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 0;
 #define ENABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 1;
+#define DISABLE_MODBUS_SERIAL_RX_INTERRUPT	RI0 = 0;
+#define ENABLE_MODBUS_SERIAL_RX_INTERRUPT	RI0 = 1;
 #define DISABLE_INTERRUPT					EA = 0;
 #define ENABLE_INTERRUPT					EA = 1;
 

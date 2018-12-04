@@ -1,5 +1,9 @@
 #include "modbusSlaveAscii.h"
 /****************************************************************************/
+#define MODBUS_NO_ERR				0
+#define MODBUS_ADR_ERR				1
+#define MODBUS_LRC_ERR				2
+#define MODBUS_OVERTIME_ERR			3
 extern NVRAM0[];
 data uint8_t ModbusSlaveRxNum, ModbusSlaveTxNum;                    
 xdata uint8_t ModbusSlaveRxBuf[CONFIG_MODBUS_SLAVE_RX_BUFFER_SIZE], ModbusSlaveTxBuf[CONFIG_MODBUS_SLAVE_TX_BUFFER_SIZE];
@@ -208,13 +212,12 @@ void modbusSlaveAsciiPoll(void){//Modbus Slave Ascii 轮询
 	data int16_t stemp[4], i, j, k;
 	prx = ModbusSlaveRxBuf;
 	if(ModbusSlaveFlagRxDone){
-		//DISABLE_MODBUS_SERIAL_RX_INTERRUPT//中断
-		
-		ctemp[0] = LRC((ModbusSlaveRxBuf + 1), (ModbusSlaveRxNum - 5));
-		ctemp[1] = asciiToUint8(ModbusSlaveRxBuf + ModbusSlaveRxNum - 3);
-		if(ctemp[0] == ctemp[1]){//LRC校验正确
-			ctemp[0] = asciiToUint8(ModbusSlaveRxBuf + 1);
-			if(ctemp[0] == CONFIG_MODBUS_SLAVE_ADDRESS){//从地址正确
+		DISABLE_MODBUS_SERIAL_RX_INTERRUPT//关闭协议接收中断
+		ctemp[0] = asciiToUint8(ModbusSlaveRxBuf + 1);
+		if(ctemp[0] == CONFIG_MODBUS_SLAVE_ADDRESS){//从地址正确
+			ctemp[0] = LRC((ModbusSlaveRxBuf + 1), (ModbusSlaveRxNum - 5));//计算接收数据LRC校验值
+			ctemp[1] = asciiToUint8(ModbusSlaveRxBuf + ModbusSlaveRxNum - 3);
+			if(ctemp[0] == ctemp[1]){//LRC校验正确
 				ctemp[0] = asciiToUint8(ModbusSlaveRxBuf + 3);//功能号
 				switch(ctemp[0]){
 					case 1:{//读取线圈状态
@@ -256,6 +259,7 @@ void modbusSlaveAsciiPoll(void){//Modbus Slave Ascii 轮询
 						ModbusSlaveTxBuf[14] = MODBUS_ASCII_END1;						
 						ModbusSlaveTxNum = 15;	
 						ModbusSlaveStartSend();
+						NVRAM0[SP_EM_MODBUS_SLAVE_ERR] = MODBUS_NO_ERR; 
 						break;
 					}
 					case 6:{//预置单寄存器
@@ -280,6 +284,7 @@ void modbusSlaveAsciiPoll(void){//Modbus Slave Ascii 轮询
 						ModbusSlaveTxBuf[14] = MODBUS_ASCII_END1;
 						ModbusSlaveTxNum = 15;	
 						ModbusSlaveStartSend();
+						NVRAM0[SP_EM_MODBUS_SLAVE_ERR] = MODBUS_NO_ERR; 
 						break;
 					}
 					case 7:{//读取异常状态
@@ -319,6 +324,36 @@ void modbusSlaveAsciiPoll(void){//Modbus Slave Ascii 轮询
 								}
 							}
 						}
+						ModbusSlaveTxBuf[0] = ModbusSlaveRxBuf[0];//STX
+						ModbusSlaveTxBuf[1] = ModbusSlaveRxBuf[1];//SLAVE ID
+						ModbusSlaveTxBuf[2] = ModbusSlaveRxBuf[2];
+						ModbusSlaveTxBuf[3] = ModbusSlaveRxBuf[3];//FUN
+						ModbusSlaveTxBuf[4] = ModbusSlaveRxBuf[4];
+						ModbusSlaveTxBuf[5] = ModbusSlaveRxBuf[5];//ADR
+						ModbusSlaveTxBuf[6] = ModbusSlaveRxBuf[6];
+						ModbusSlaveTxBuf[7] = ModbusSlaveRxBuf[7];
+						ModbusSlaveTxBuf[8] = ModbusSlaveRxBuf[8];
+						ModbusSlaveTxBuf[9] = ModbusSlaveRxBuf[9];//NUM
+						ModbusSlaveTxBuf[10] = ModbusSlaveRxBuf[10];
+						ModbusSlaveTxBuf[11] = ModbusSlaveRxBuf[11];
+						ModbusSlaveTxBuf[12] = ModbusSlaveRxBuf[12];
+						ModbusSlaveTxBuf[13] = MODBUS_ASCII_END0;
+						ModbusSlaveTxBuf[14] = MODBUS_ASCII_END1;						
+						ModbusSlaveTxNum = 15;	
+						ModbusSlaveStartSend();
+						NVRAM0[SP_EM_MODBUS_SLAVE_ERR] = MODBUS_NO_ERR; 
+						break;
+					}
+					case 16:{//预置多寄存器
+						stemp[0] = asciiToUint16(ModbusSlaveRxBuf + 5);//获取输出地址 
+						stemp[1] = asciiToUint16(ModbusSlaveRxBuf + 9);//获取输出数量
+						if(stemp[1] >= 1 && stemp[1] <= 0x0078){//检查输出数量
+							for(i = 0;i <stemp[1];i ++){
+								ctemp[0] = *(ModbusSlaveRxBuf + 13 + i);
+								stemp[2] = asciiToUint16(ModbusSlaveRxBuf + 13 + (i * 4));
+								NVRAM0[(stemp[0])] = stemp[2];
+							}
+						}
 						ModbusSlaveTxBuf[0] = ModbusSlaveRxBuf[0];
 						ModbusSlaveTxBuf[1] = ModbusSlaveRxBuf[1];
 						ModbusSlaveTxBuf[2] = ModbusSlaveRxBuf[2];
@@ -336,9 +371,7 @@ void modbusSlaveAsciiPoll(void){//Modbus Slave Ascii 轮询
 						ModbusSlaveTxBuf[14] = MODBUS_ASCII_END1;						
 						ModbusSlaveTxNum = 15;	
 						ModbusSlaveStartSend();
-						break;
-					}
-					case 16:{//预置多寄存器
+						NVRAM0[SP_EM_MODBUS_SLAVE_ERR] = MODBUS_NO_ERR; 
 						break;
 					}
 					case 17:{//报告从机标识
@@ -361,14 +394,14 @@ void modbusSlaveAsciiPoll(void){//Modbus Slave Ascii 轮询
 			}
 			else{//从地址错误
 				ModbusSlaveFlagRxDone = 0;//接收完成清零
-				//ModbusSlaveAsciiError = 				
+				NVRAM0[SP_EM_MODBUS_SLAVE_ERR] = MODBUS_LRC_ERR; 				
 			}
 		}
 		else{//LRC校验错误
 			ModbusSlaveFlagRxDone = 0;//接收完成清零
-			//ModbusSlaveAsciiError = 
+			NVRAM0[SP_EM_MODBUS_SLAVE_ERR] = MODBUS_ADR_ERR;
 		}
-		//ENABLE_MODBUS_SERIAL_INTERRUPT//中断
+		ENABLE_MODBUS_SERIAL_INTERRUPT//打开协议接收中断
 	}		
 }
 // INT16U wtemp;
