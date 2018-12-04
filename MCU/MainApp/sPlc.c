@@ -1,8 +1,8 @@
 #include "sPlc.h"
 /*****************************************************************************/			
 /*****************************************************************************/
-int16_t xdata NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
-int16_t xdata NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
+xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 static data uint8_t TimerCounter_100uS = 0;
 static data uint8_t TimerCounter_1mS = 0;
 static data uint8_t TimerCounter_10mS = 0;
@@ -14,6 +14,14 @@ static data uint8_t InputFilterTime = CONFIG_INPUT_FILTER_TIME;
 data uint16_t ModbusSlaveOverTimeCounter;//Modbus Slave通信超时计时器
 /*****************************************************************************/
 /******************************************************************************/
+void assertCoilAddress(uint16_t adr){//检查线圈地址
+	if(adr > (SPREG_END * 16))
+		while(1);
+}
+void assertRegisterAddress(uint16_t adr){//检查寄存器地址
+	if(adr >= SPREG_END)
+		while(1);
+}
 void clearDM(void){//清除DM寄存器
 	uint16_t i;
 	for(i = 0;i <= DM_END;i ++)
@@ -127,13 +135,16 @@ void nvramUpdata(void){//更新NVRAM->EPROM
 }
 
 void SET(uint16_t A){//置位
+	assertCoilAddress(A);//检查地址范围
 	NVRAM0[(A / 16)] |= 1 << (A % 16);
 }
 void RESET(uint16_t A){//置零
+	assertCoilAddress(A);//检查地址范围
 	NVRAM0[(A / 16)] &= ~(1 << (A % 16));
 }
 void FLIP(uint16_t A){//翻转
 	data uint16_t temp;
+	assertCoilAddress(A);//检查地址范围
 	temp= NVRAM0[(A / 16)] & (1 << (A % 16));
 	if(temp)
 		RESET(A);
@@ -141,10 +152,12 @@ void FLIP(uint16_t A){//翻转
 		SET(A);
 }
 uint8_t LD(uint16_t A){
+	assertCoilAddress(A);//检查地址范围
 	return (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
 }
 uint8_t LDP(uint16_t A){//脉冲上升沿
 	data uint8_t temp0, temp1;
+	assertCoilAddress(A);//检查地址范围
 	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
 	temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
 	if(temp0 && !temp1)
@@ -154,6 +167,7 @@ uint8_t LDP(uint16_t A){//脉冲上升沿
 }
 uint8_t LDN(uint16_t A){//脉冲下降沿
 	data uint8_t temp0, temp1;
+	assertCoilAddress(A);
 	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
 	temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
 	if(!temp0 && temp1)
@@ -161,6 +175,7 @@ uint8_t LDN(uint16_t A){//脉冲下降沿
 	else
 		return 0;
 }
+
 void T100US(uint8_t A, uint8_t start, uint16_t value){
 #if CONFIG_DEBUG
 	if(A > (TD_100US_END - TD_100US_START + 1))
@@ -211,7 +226,6 @@ void T10MS(uint8_t A, uint8_t start, uint16_t value){
 		else{
 			NVRAM0[(T_10MS_START + (A / 16))] &= ~(1 << (A % 16));
 		}
-			
 	}
 	else{
 		NVRAM0[(T_10MS_START + (A / 16))] &= ~(1 << (A % 16));

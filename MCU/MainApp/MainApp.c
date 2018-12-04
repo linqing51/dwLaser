@@ -128,40 +128,42 @@ void main(void)
 {
 	uint8_t rbuf[8];
 	uint8_t wbuf[8] = {1,2,3,4,5,6,7,8};
-	initDevice();
+	Init_Device();
 	//timer0Init();
 	//inPca9554Init();
 	//outPca9554Init();
 	//mcp47x6Init();
-	epromWrite(0x0, wbuf, 8);
-	epromRead(0x0, rbuf, 8);
-	epromTest();
-	nvramLoad();//上电恢复NVRAM
+	ES0 = 1;
+	EA = 1;
+//	epromWrite(0x0, wbuf, 8);
+//	epromRead(0x0, rbuf, 8);
+//	epromTest();
+//	nvramLoad();//上电恢复NVRAM
 	while(1)
 	{
 		modbusSlaveAsciiPoll();
-//		getInput();
-//		SET(10);
-//		RESET(10);
-//		SET(10);
-//		RESET(10);
-//		SET(10);
-//		RESET(10);
-//		SET(10);
-//		RESET(10);
-//		FLIP(10);
-//		FLIP(10);
-//		FLIP(10);
-//		FLIP(10);
-//		//读取IO
-//		//执行程序
-//		//输出IO
-//		T100MS(0, 1, 2);
-//		if(LD(TD_100MS_START * 16 + 0));
-//		{
-//			SET(0);	
-//		}
-		nvramUpdata();//更新NVRAM
+////		getInput();
+////		SET(10);
+////		RESET(10);
+////		SET(10);
+////		RESET(10);
+////		SET(10);
+////		RESET(10);
+////		SET(10);
+////		RESET(10);
+////		FLIP(10);
+////		FLIP(10);
+////		FLIP(10);
+////		FLIP(10);
+////		//读取IO
+////		//执行程序
+////		//输出IO
+////		T100MS(0, 1, 2);
+////		if(LD(TD_100MS_START * 16 + 0));
+////		{
+////			SET(0);	
+////		}
+//		nvramUpdata();//更新NVRAM
 	}
 }
 //void main(void)
