@@ -44,7 +44,7 @@
 
 #define EE_BASE_ADDR    0xF000      // Base address of EE in Flash
 #define FL_PAGES        2           // Pages to use for EEPROM emulation
-#define EE_SIZE         32          // EEPROM size in bytes
+#define EE_SIZE         64          // EEPROM size in bytes
 #define FL_ERASE_LIMIT  1           // Maximum retries on page erase
 
 #define RSTSRC_VAL      0x02        // Set to enable desired reset sources

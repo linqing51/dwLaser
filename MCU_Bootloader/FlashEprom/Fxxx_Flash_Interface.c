@@ -21,9 +21,9 @@
 //-----------------------------------------------------------------------------
 // Function PROTOTYPES
 //-----------------------------------------------------------------------------
-void FLASH_WriteErase (U16, S8, S8);
-U8 FLASH_BlankCheck (U16);
-U8 FLASH_Read (U16);
+void EE_FLASH_WriteErase (U16, S8, S8);
+U8 EE_FLASH_BlankCheck (U16);
+U8 EE_FLASH_Read (U16);
 
 //-----------------------------------------------------------------------------
 // Global Variables
@@ -42,7 +42,7 @@ SEGMENT_VARIABLE(flashAddress, U16, SEG_DATA) = FLASH_SAFE_ADDR;
 //             S8 byte - data byte to write (value is don't care on erase)
 //             S8 write_erase - 0x01 for writes, 0x03 to erase page
 // 
-void FLASH_WriteErase (U16 address, S8 byte, S8 write_erase)
+void EE_FLASH_WriteErase (U16 address, S8 byte, S8 write_erase)
 {
    bit EA_SAVE = EA;                   // preserve EA
    SEGMENT_VARIABLE_SEGMENT_POINTER(pwrite, S8, SEG_XDATA, SEG_DATA);
@@ -108,7 +108,7 @@ void FLASH_WriteErase (U16 address, S8 byte, S8 write_erase)
 //
 // Returns : U8 Byte that was read
 // 
-U8 FLASH_Read (U16 address)
+U8 EE_FLASH_Read (U16 address)
 {
    U8 dataByte;
    PSBANK_STORE()
@@ -128,7 +128,7 @@ U8 FLASH_Read (U16 address)
 //
 // Returns U8 : 0 if not blank, 1 if blank.
 //
-U8 FLASH_BlankCheck(U16 address)
+U8 EE_FLASH_BlankCheck(U16 address)
 {
    SEGMENT_VARIABLE_SEGMENT_POINTER(readPointer, U8, SEG_CODE, SEG_DATA);
    U16 pageIndex;

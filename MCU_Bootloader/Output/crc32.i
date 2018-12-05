@@ -2413,6 +2413,11 @@
  
  
  
+#line 36 ".\Bootloader\AppConfig.h" /1
+  
+ 
+#line 38 ".\Bootloader\AppConfig.h" /0
+ 
   
 #line 1 "C:\Keil_v5\C51\Inc\stdio.h" /0
 
@@ -2460,7 +2465,7 @@
  
  
  
-#line 36 ".\Bootloader\AppConfig.h" /0
+#line 39 ".\Bootloader\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2568,7 +2573,7 @@
  #pragma RESTORE
  
  
-#line 37 ".\Bootloader\AppConfig.h" /0
+#line 40 ".\Bootloader\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2631,7 +2636,7 @@
  #pragma RESTORE
  
  
-#line 38 ".\Bootloader\AppConfig.h" /0
+#line 41 ".\Bootloader\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -2679,7 +2684,7 @@
  
  
  
-#line 39 ".\Bootloader\AppConfig.h" /0
+#line 42 ".\Bootloader\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -2717,7 +2722,7 @@
  #pragma RESTORE
  
  
-#line 40 ".\Bootloader\AppConfig.h" /0
+#line 43 ".\Bootloader\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -2750,7 +2755,7 @@
  
  
  
-#line 41 ".\Bootloader\AppConfig.h" /0
+#line 44 ".\Bootloader\AppConfig.h" /0
  
   
 #line 1 "Lib\crc32.h" /0
@@ -2770,7 +2775,7 @@
  
  
  
-#line 42 ".\Bootloader\AppConfig.h" /0
+#line 45 ".\Bootloader\AppConfig.h" /0
  
  
  
@@ -2818,6 +2823,9 @@
  
  
   
+ 
+ 
+  
   
   
   
@@ -2829,6 +2837,17 @@
   
   
   
+  
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+  
+ 
  
  
 #line 4 "Lib\delay.h" /0
@@ -2842,7 +2861,7 @@
  
  
  
-#line 45 ".\Bootloader\AppConfig.h" /0
+#line 48 ".\Bootloader\AppConfig.h" /0
  
   
 #line 1 ".\FlashEprom\Fxxx_EEPROM_Configuration.h" /0
@@ -5472,7 +5491,7 @@
  
  
  
-#line 46 ".\Bootloader\AppConfig.h" /0
+#line 49 ".\Bootloader\AppConfig.h" /0
  
   
 #line 1 ".\FlashEprom\Fxxx_EEPROM_Interface.h" /0
@@ -5506,8 +5525,279 @@
  
  
  
-#line 47 ".\Bootloader\AppConfig.h" /0
+#line 50 ".\Bootloader\AppConfig.h" /0
  
+  
+#line 1 ".\FlashEprom\Fxxx_Flash_Interface.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ extern void EE_FLASH_WriteErase (U16, S8, S8);
+ extern U8 EE_FLASH_BlankCheck(U16);
+ extern U8 EE_FLASH_Read (U16);
+ 
+ 
+ 
+ 
+ 
+ extern U8 data FlashKey1;
+ extern U8 data FlashKey2;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 51 ".\Bootloader\AppConfig.h" /0
+ 
+ 
+ 
+  
+#line 1 ".\LibFlash\F340_FlashPrimitives.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ typedef unsigned long ULONG;
+ typedef unsigned int  UINT;
+ typedef unsigned char UCHAR;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ typedef UINT FLADDR;
+ 
+ 
+ 
+ 
+ 
+ 
+ extern void FLASH_ByteWrite (FLADDR addr, char byte);
+ extern unsigned char FLASH_ByteRead (FLADDR addr);
+ extern void FLASH_PageErase (FLADDR addr);
+ 
+ 
+ 
+ 
+ 
+ 
+#line 54 ".\Bootloader\AppConfig.h" /0
+ 
+  
+#line 1 ".\LibFlash\F340_FlashUtils.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Bootloader\LibFlash\F340_FlashPrimitives.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 23 "\GitHub\dwLaser\MCU_Bootloader\LibFlash\F340_FlashPrimitives.h" /1
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+  
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 65 "\GitHub\dwLaser\MCU_Bootloader\LibFlash\F340_FlashPrimitives.h" /0
+ 
+ 
+ 
+ 
+#line 29 ".\LibFlash\F340_FlashUtils.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ extern void FLASH_Write (FLADDR dest, char *src, unsigned numbytes);
+ extern char * FLASH_Read (char *dest, FLADDR src, unsigned numbytes);
+ extern void FLASH_Clear (FLADDR addr, unsigned numbytes);
+ 
+ 
+ 
+ 
+ extern void FLASH_Update (FLADDR dest, char *src, unsigned numbytes);   
+ 
+ extern void FLASH_Copy (FLADDR dest, FLADDR src, unsigned numbytes);    
+ 
+ 
+ extern void FLASH_Fill (FLADDR addr, ULONG length, UCHAR fill);
+ 
+ 
+ 
+ 
+ 
+ 
+#line 55 ".\Bootloader\AppConfig.h" /0
+ 
+ 
+ 
+ 
+#line 59 ".\Bootloader\AppConfig.h" /1
+  
+  
+ 
+#line 62 ".\Bootloader\AppConfig.h" /0
  
  
 #line 4 "Lib\crc32.h" /0
@@ -5631,7 +5921,7 @@
  static uint32_t oldcrc32;
  
  uint32_t crc32Calculate(uint8_t *buf, uint32_t len){ 
- unsigned int i;  
+ data unsigned int i;  
  for (i = 0; i < len; i++)
  {  
  oldcrc32 = crc32Tab[(oldcrc32 ^ buf[i]) & 0xff] ^ (oldcrc32 >> 8);  

@@ -1,11 +1,11 @@
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/05/2018 18:16:18 PAGE 1   
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/05/2018 23:50:45 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE BOOTLOADER
 OBJECT MODULE PLACED IN .\Output\Bootloader.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Bootloader\Bootloader.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Lib;.\LibFlash
-                    -;.\FlashEprom;.\Bootloader;.\Driver) DEFINE(C8051F340) DEBUG OBJECTEXTEND PRINT(.\Output\Bootloader.lst) PREPRINT(.\Outp
-                    -ut\Bootloader.i) OBJECT(.\Output\Bootloader.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Bootloader\Bootloader.c COMPACT OMF2 OPTIMIZE(8,SPEED) BROWSE INCDIR(.\L
+                    -ib;.\LibFlash;.\FlashEprom;.\Bootloader;.\Driver) DEFINE(C8051F340) VARBANKING(1) DEBUG PRINT(.\Output\Bootloader.lst) P
+                    -REPRINT(.\Output\Bootloader.i) OBJECT(.\Output\Bootloader.obj)
 
 line level    source
 
@@ -17,100 +17,128 @@ line level    source
    6          #define FW_OTA1_ADR_END                                 0x8000
    7          #define FW_OTA2_ADR_START                               0x8000//应用程序2起始地址
    8          #define FW_OTA2_ADR_END                                 0xF000
-   9          #define BOOT_OTA1                                               0xA5
-  10          #define BOOT_OTA2                                               0x5A
+   9          #define BOOT_OTA1                                               0xA5A5
+  10          #define BOOT_OTA2                                               0x5A5A
   11          /*****************************************************************************/
-  12          void (*BOOT_APP)();//引导程序指针
-  13          void (*OTA1_APP)();//应用程序1指针
-  14          void (*OTA2_APP)();//应用程序2指针
+  12          void (*BOOT_Program)();//引导程序指针
+  13          void (*OTA1_Program)();//应用程序1指针
+  14          void (*OTA2_Program)();//应用程序2指针
   15          /*****************************************************************************/
   16          void main (void) 
   17          {
-  18   1              uint8_t flashEprom[EE_SIZE];//BOOT_MD5 16B | OTA1_MD5 16B | OTA2_MD5 16B | SN 15B | SELECT_BOOT 1B 
-  19   1              uint32_t bootCrc32, ota1Crc32, ota2Crc32;
-  20   1              uint8_t temp;
-  21   1              uint32_t i;
-  22   1              
-  23   1              crc32Clear();
-  24   1              for(i = FW_BOOT_ADR_START;i < FW_BOOT_ADR_END;i ++)
-  25   1              {//计算BOOT CRC32
-  26   2                      temp = crc32CalculateAdd(i);
-  27   2                      bootCrc32 = crc32CalculateAdd(temp);
-  28   2              }
-  29   1              
-  30   1              for(i = FW_OTA1_ADR_START;i < FW_OTA1_ADR_END;i ++)
-  31   1              {
-  32   2                      temp = crc32CalculateAdd(i);
-  33   2                      ota1Crc32 = crc32CalculateAdd(temp);
-  34   2              }
-  35   1              
-  36   1              for(i = FW_OTA2_ADR_START;i < FW_OTA2_ADR_END;i ++)
-  37   1              {
-  38   2                      temp = crc32CalculateAdd(i);
-  39   2                      ota2Crc32 = crc32CalculateAdd(temp);
-  40   2              }
-  41   1      
-  42   1              //SFRPAGE_SWITCH()
-  43   1      //      ENABLE_VDDMON()
-  44   1      //      DISABLE_WDT()
-  45   1      //      SFRPAGE_RESTORE()                       
-  46   1      //      if(EEPROM_ReadBlock(0, FLASH_EPROM, EE_SIZE) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
-  47   1      //              while(1);// Error reading EEPROM
-  48   1      //      }
-  49   1      //      if(FLASH_EPROM[(EE_SIZE - 1)] == BOOT_OTA1)
-  50   1      //      {
-  51   1      //              
-  52   1      //      }
-  53   1      //      else if(FLASH_EPROM[(EE_SIZE - 1)] == BOOT_OTA2)
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/05/2018 18:16:18 PAGE 2   
+  18   1              //FLASH EEPROM 32BYTE
+  19   1              //BOOT_CRC 4B | BOOT_VER 4B
+  20   1              //OTA1_CRC 4B | OTA1_VER 4B 
+  21   1              //OTA2_CRC 4B | OTA2_VER 4B 
+  22   1              //HW_VER   4B | NULL     4B     
+  23   1              //SN_H     4B | SN_L     4B
+  24   1              //NULL     4B | SEL_BOOT 4B
+  25   1              
+  26   1              data uint8_t flashEprom[EE_SIZE];
+  27   1              data uint32_t bootCrc32, ota1Crc32, ota2Crc32;
+  28   1              data uint8_t temp;
+  29   1              data uint32_t i;
+  30   1              SFRPAGE_SWITCH()
+  31   1              ENABLE_VDDMON()
+  32   1              DISABLE_WDT()
+  33   1              SFRPAGE_RESTORE()                       
+  34   1              if(EEPROM_ReadBlock(0, flashEprom, EE_SIZE) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
+  35   2                      while(1);// Error reading EEPROM
+  36   2              }
+  37   1              
+  38   1              crc32Clear();//CRC32清除
+  39   1              for(i = FW_BOOT_ADR_START;i < FW_BOOT_ADR_END;i ++)
+  40   1              {//计算BOOT CRC32
+  41   2                      FLASH_Read(&temp, i, 1);
+  42   2                      bootCrc32 = crc32CalculateAdd(temp);
+  43   2              }
+  44   1              
+  45   1              for(i = FW_OTA1_ADR_START;i < FW_OTA1_ADR_END;i ++)
+  46   1              {//计算OTA1 CRC32
+  47   2                      FLASH_Read(&temp, i, 1);
+  48   2                      ota1Crc32 = crc32CalculateAdd(temp);
+  49   2              }
+  50   1              for(i = FW_OTA2_ADR_START;i < FW_OTA2_ADR_END;i ++)
+  51   1              {//计算OTA2 CRC32
+  52   2                      FLASH_Read(&temp, i, 1);
+  53   2                      ota2Crc32 = crc32CalculateAdd(temp);
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/05/2018 23:50:45 PAGE 2   
 
-  54   1      //      {
-  55   1      //      }
-  56   1              
-  57   1      //   // Write RAM buffer to EEPROM.
-  58   1      //   if (EEPROM_WriteBlock (0, wBuffer, EE_SIZE) != EE_NO_ERROR)
-  59   1      //   {
-  60   1      //      while(1);      // Error writing EEPROM
-  61   1      //   }
-  62   1      
-  63   1      //   // Read EEPROM contents back into RAM 
-  64   1      //   if (EEPROM_ReadBlock(0, rBuffer, EE_SIZE) != EE_NO_ERROR)
-  65   1      //   {
-  66   1      //      while(1);      // Error reading EEPROM
-  67   1      //   }
-  68   1         while (1){
-  69   2            //1秒内等待串口发出更新码
-  70   2                //FLASH_Clear(CONFIG_APP_START_ADR, (CONFIG_APP_END_ADR - CONFIG_APP_START_ADR));
-  71   2                 //检测到更新码
-  72   2                //擦除FLASH
-  73   2                //执行固件更新
-  74   2                //执行应用程序
-  75   2            
-  76   2       
-  77   2         }
-  78   1      
-  79   1      }
-*** WARNING C280 IN LINE 18 OF Bootloader\Bootloader.c: 'flashEprom': unreferenced local variable
-  80          
-  81          //void loadAppFunction(void)
-  82          //{
-  83          //      //读取FEPROM中APP_HW MD5校正值
-  84          //      if(f_valid){
-  85          //      appFunction = (void code *) CONFIG_APP_START_ADR;//获取APP起始地址
-  86          //      appFunction();//执行应用程序
-  87          //}
-  88          
+  54   2              }
+  55   1              //      //读取FEPROM中APP_HW MD5校正值
+  56   1              if(flashEprom[20] == BOOT_OTA1)
+  57   1              {
+  58   2                      if(bootCrc32 == flashEprom[0] && ota1Crc32 == flashEprom[8]     )
+  59   2                      {
+  60   3                              OTA1_Program = (void code *) FW_OTA1_ADR_START;//获取OTA1起始地址
+  61   3                              OTA1_Program();//执行应用程序
+  62   3                      }
+  63   2              }
+  64   1              if(flashEprom[20] == BOOT_OTA2)
+  65   1              {
+  66   2                      if(bootCrc32 == flashEprom[0] && ota2Crc32 == flashEprom[16]    )
+  67   2                      {
+  68   3                              OTA2_Program = (void code *) FW_OTA2_ADR_START;//获取OTA2起始地址
+  69   3                              OTA2_Program();//执行应用程序
+  70   3                      }       
+  71   2              }
+  72   1              
+  73   1              //SFRPAGE_SWITCH()
+  74   1      //      ENABLE_VDDMON()
+  75   1      //      DISABLE_WDT()
+  76   1      //      SFRPAGE_RESTORE()                       
+  77   1      //      if(EEPROM_ReadBlock(0, FLASH_EPROM, EE_SIZE) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
+  78   1      //              while(1);// Error reading EEPROM
+  79   1      //      }
+  80   1      //      if(FLASH_EPROM[(EE_SIZE - 1)] == BOOT_OTA1)
+  81   1      //      {
+  82   1      //              
+  83   1      //      }
+  84   1      //      else if(FLASH_EPROM[(EE_SIZE - 1)] == BOOT_OTA2)
+  85   1      //      {
+  86   1      //      }
+  87   1              
+  88   1      //   // Write RAM buffer to EEPROM.
+  89   1      //   if (EEPROM_WriteBlock (0, wBuffer, EE_SIZE) != EE_NO_ERROR)
+  90   1      //   {
+  91   1      //      while(1);      // Error writing EEPROM
+  92   1      //   }
+  93   1      
+  94   1      //   // Read EEPROM contents back into RAM 
+  95   1      //   if (EEPROM_ReadBlock(0, rBuffer, EE_SIZE) != EE_NO_ERROR)
+  96   1      //   {
+  97   1      //      while(1);      // Error reading EEPROM
+  98   1      //   }
+  99   1         while (1){
+ 100   2            //1秒内等待串口发出更新码
+ 101   2                //FLASH_Clear(CONFIG_APP_START_ADR, (CONFIG_APP_END_ADR - CONFIG_APP_START_ADR));
+ 102   2                 //检测到更新码
+ 103   2                //擦除FLASH
+ 104   2                //执行固件更新
+ 105   2                //执行应用程序
+ 106   2            
+ 107   2       
+ 108   2         }
+ 109   1      
+ 110   1      }
+ 111          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    218    ----
+   CODE SIZE        =    425    ----
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/05/2018 23:50:45 PAGE 3   
+
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
-   PDATA SIZE       =   ----    ----
-   DATA SIZE        =      9      49
+   PDATA SIZE       =      9    ----
+   DATA SIZE        =   ----      81
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

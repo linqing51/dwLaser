@@ -2405,6 +2405,11 @@
  
  
  
+#line 36 "Bootloader\appConfig.h" /1
+  
+ 
+#line 38 "Bootloader\appConfig.h" /0
+ 
   
 #line 1 "C:\Keil_v5\C51\Inc\stdio.h" /0
 
@@ -2452,7 +2457,7 @@
  
  
  
-#line 36 "Bootloader\appConfig.h" /0
+#line 39 "Bootloader\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2560,7 +2565,7 @@
  #pragma RESTORE
  
  
-#line 37 "Bootloader\appConfig.h" /0
+#line 40 "Bootloader\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2623,7 +2628,7 @@
  #pragma RESTORE
  
  
-#line 38 "Bootloader\appConfig.h" /0
+#line 41 "Bootloader\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -2671,7 +2676,7 @@
  
  
  
-#line 39 "Bootloader\appConfig.h" /0
+#line 42 "Bootloader\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -2709,7 +2714,7 @@
  #pragma RESTORE
  
  
-#line 40 "Bootloader\appConfig.h" /0
+#line 43 "Bootloader\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -2742,7 +2747,7 @@
  
  
  
-#line 41 "Bootloader\appConfig.h" /0
+#line 44 "Bootloader\appConfig.h" /0
  
   
 #line 1 ".\Lib\crc32.h" /0
@@ -2788,6 +2793,9 @@
  
  
   
+ 
+ 
+  
   
   
   
@@ -2799,6 +2807,17 @@
   
   
   
+  
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+  
+ 
  
  
 #line 4 ".\Lib\crc32.h" /0
@@ -2814,7 +2833,7 @@
  
  
  
-#line 42 "Bootloader\appConfig.h" /0
+#line 45 "Bootloader\appConfig.h" /0
  
  
  
@@ -2862,6 +2881,9 @@
  
  
   
+ 
+ 
+  
   
   
   
@@ -2873,6 +2895,17 @@
   
   
   
+  
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+  
+ 
  
  
 #line 4 ".\Lib\delay.h" /0
@@ -2886,7 +2919,7 @@
  
  
  
-#line 45 "Bootloader\appConfig.h" /0
+#line 48 "Bootloader\appConfig.h" /0
  
   
 #line 1 ".\FlashEprom\Fxxx_EEPROM_Configuration.h" /0
@@ -5516,7 +5549,7 @@
  
  
  
-#line 46 "Bootloader\appConfig.h" /0
+#line 49 "Bootloader\appConfig.h" /0
  
   
 #line 1 ".\FlashEprom\Fxxx_EEPROM_Interface.h" /0
@@ -5550,8 +5583,279 @@
  
  
  
-#line 47 "Bootloader\appConfig.h" /0
+#line 50 "Bootloader\appConfig.h" /0
  
+  
+#line 1 ".\FlashEprom\Fxxx_Flash_Interface.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ extern void EE_FLASH_WriteErase (U16, S8, S8);
+ extern U8 EE_FLASH_BlankCheck(U16);
+ extern U8 EE_FLASH_Read (U16);
+ 
+ 
+ 
+ 
+ 
+ extern U8 data FlashKey1;
+ extern U8 data FlashKey2;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 51 "Bootloader\appConfig.h" /0
+ 
+ 
+ 
+  
+#line 1 ".\LibFlash\F340_FlashPrimitives.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ typedef unsigned long ULONG;
+ typedef unsigned int  UINT;
+ typedef unsigned char UCHAR;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ typedef UINT FLADDR;
+ 
+ 
+ 
+ 
+ 
+ 
+ extern void FLASH_ByteWrite (FLADDR addr, char byte);
+ extern unsigned char FLASH_ByteRead (FLADDR addr);
+ extern void FLASH_PageErase (FLADDR addr);
+ 
+ 
+ 
+ 
+ 
+ 
+#line 54 "Bootloader\appConfig.h" /0
+ 
+  
+#line 1 ".\LibFlash\F340_FlashUtils.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Bootloader\LibFlash\F340_FlashPrimitives.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 23 "\GitHub\dwLaser\MCU_Bootloader\LibFlash\F340_FlashPrimitives.h" /1
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+  
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 65 "\GitHub\dwLaser\MCU_Bootloader\LibFlash\F340_FlashPrimitives.h" /0
+ 
+ 
+ 
+ 
+#line 29 ".\LibFlash\F340_FlashUtils.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ extern void FLASH_Write (FLADDR dest, char *src, unsigned numbytes);
+ extern char * FLASH_Read (char *dest, FLADDR src, unsigned numbytes);
+ extern void FLASH_Clear (FLADDR addr, unsigned numbytes);
+ 
+ 
+ 
+ 
+ extern void FLASH_Update (FLADDR dest, char *src, unsigned numbytes);   
+ 
+ extern void FLASH_Copy (FLADDR dest, FLADDR src, unsigned numbytes);    
+ 
+ 
+ extern void FLASH_Fill (FLADDR addr, ULONG length, UCHAR fill);
+ 
+ 
+ 
+ 
+ 
+ 
+#line 55 "Bootloader\appConfig.h" /0
+ 
+ 
+ 
+ 
+#line 59 "Bootloader\appConfig.h" /1
+  
+  
+ 
+#line 62 "Bootloader\appConfig.h" /0
  
  
 #line 1 "Bootloader\Bootloader.c" /0
@@ -5566,34 +5870,65 @@
  
  
  
- void (*BOOT_APP)(); 
- void (*OTA1_APP)(); 
- void (*OTA2_APP)(); 
+ void (*BOOT_Program)(); 
+ void (*OTA1_Program)(); 
+ void (*OTA2_Program)(); 
  
  void main (void) 
  {
- uint8_t flashEprom[32]; 
- uint32_t bootCrc32, ota1Crc32, ota2Crc32;
- uint8_t temp;
- uint32_t i;
  
- crc32Clear();
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ data uint8_t flashEprom[64];
+ data uint32_t bootCrc32, ota1Crc32, ota2Crc32;
+ data uint8_t temp;
+ data uint32_t i;
+  
+  VDM0CN = 0x80; RSTSRC = (0x02 | 0x02);
+  PCA0MD &= ~0x40;
+  
+ if(EEPROM_ReadBlock(0, flashEprom, 64) != 0x00){ 
+ while(1); 
+ }
+ 
+ crc32Clear(); 
  for(i = 0x0000;i < 0x0FFF;i ++)
  { 
- temp = crc32CalculateAdd(i);
+ FLASH_Read(&temp, i, 1);
  bootCrc32 = crc32CalculateAdd(temp);
  }
  
  for(i = 0x1000;i < 0x8000;i ++)
- {
- temp = crc32CalculateAdd(i);
+ { 
+ FLASH_Read(&temp, i, 1);
  ota1Crc32 = crc32CalculateAdd(temp);
  }
- 
  for(i = 0x8000;i < 0xF000;i ++)
- {
- temp = crc32CalculateAdd(i);
+ { 
+ FLASH_Read(&temp, i, 1);
  ota2Crc32 = crc32CalculateAdd(temp);
+ }
+ 
+ if(flashEprom[20] == 0xA5A5)
+ {
+ if(bootCrc32 == flashEprom[0] && ota1Crc32 == flashEprom[8]	)
+ {
+ OTA1_Program = (void code *) 0x1000; 
+ OTA1_Program(); 
+ }
+ }
+ if(flashEprom[20] == 0x5A5A)
+ {
+ if(bootCrc32 == flashEprom[0] && ota2Crc32 == flashEprom[16]	)
+ {
+ OTA2_Program = (void code *) 0x8000; 
+ OTA2_Program(); 
+ }	
  }
  
  
@@ -5634,12 +5969,4 @@
  }
  
  }
- 
- 
- 
- 
- 
- 
- 
- 
  

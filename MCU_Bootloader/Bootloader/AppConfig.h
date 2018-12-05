@@ -32,6 +32,9 @@
 #ifdef C8051F340
 #include "C8051F340_defs.h"
 #endif
+#ifdef C8051F580
+#include "C8051F580_defs.h"
+#endif
 /*****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h> 
@@ -45,5 +48,16 @@
 #include "delay.h"
 #include "Fxxx_EEPROM_Configuration.h"
 #include "Fxxx_EEPROM_Interface.h"
+#include "Fxxx_Flash_Interface.h"
+
+#ifdef C8051F340
+#include "F340_FlashPrimitives.h"
+#include "F340_FlashUtils.h"
+#endif
+
+#ifdef C8051F580
+#include "F580_FlashPrimitives.h"
+#include "F580_FlashUtils.h"
+#endif
 /*****************************************************************************/
 #endif

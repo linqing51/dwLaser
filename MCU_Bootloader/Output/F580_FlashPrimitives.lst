@@ -1,0 +1,322 @@
+C51 COMPILER V9.59.0.0   F580_FLASHPRIMITIVES                                              12/05/2018 22:05:14 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE F580_FLASHPRIMITIVES
+OBJECT MODULE PLACED IN .\Output\F580_FlashPrimitives.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE LibFlash\F580_FlashPrimitives.c COMPACT OMF2 OPTIMIZE(8,SPEED) BROWSE IN
+                    -CDIR(.\Lib;.\LibFlash;.\FlashEprom;.\Bootloader;.\Driver) DEFINE(C8051F580) VARBANKING(1) DEBUG PRINT(.\Output\F580_Flas
+                    -hPrimitives.lst) PREPRINT(.\Output\F580_FlashPrimitives.i) OBJECT(.\Output\F580_FlashPrimitives.obj)
+
+line level    source
+
+   1          //-----------------------------------------------------------------------------
+   2          // F580_FlashPrimitives.c
+   3          //-----------------------------------------------------------------------------
+   4          // Copyright 2008 Silicon Laboratories, Inc.
+   5          //
+   6          // This program contains several useful utilities for writing and updating
+   7          // FLASH memory.
+   8          //
+   9          // Target:         C8051F580
+  10          // Tool chain:     Raisonance / Keil / SDCC
+  11          // Command Line:   None
+  12          //
+  13          // Release 1.1 / 11 MAR 2010 (GP)
+  14          //    -Tested with Raisonance
+  15          //    -Updated to meet new data sheet guidelines for writing/erasing
+  16          //
+  17          // Release 1.0 / 23 OCT 2008 (GP)
+  18          //    -Initial Revision
+  19          
+  20          //
+  21          //-----------------------------------------------------------------------------
+  22          // Includes
+  23          //-----------------------------------------------------------------------------
+  24          
+  25          #include <compiler_defs.h>
+  26          #include <c8051F580_defs.h>
+  27          #include "F580_FlashPrimitives.h"
+  28          
+  29          //-----------------------------------------------------------------------------
+  30          // Structures, Unions, Enumerations, and Type Definitions
+  31          //-----------------------------------------------------------------------------
+  32          
+  33          //-----------------------------------------------------------------------------
+  34          // Global Constants
+  35          //-----------------------------------------------------------------------------
+  36          
+  37          //-----------------------------------------------------------------------------
+  38          // Function Prototypes
+  39          //-----------------------------------------------------------------------------
+  40          
+  41          // FLASH read/write/erase routines
+  42          U8   FLASH_ByteWrite (FLADDR addr, U8 byte, bit SFLE);
+  43          U8   FLASH_ByteRead  (FLADDR addr, bit SFLE);
+  44          U8   FLASH_PageErase (FLADDR addr, bit SFLE);
+  45          
+  46          //-----------------------------------------------------------------------------
+  47          // Global Variables
+  48          //-----------------------------------------------------------------------------
+  49          
+  50          //-----------------------------------------------------------------------------
+  51          // FLASH Routines
+  52          //-----------------------------------------------------------------------------
+  53          
+C51 COMPILER V9.59.0.0   F580_FLASHPRIMITIVES                                              12/05/2018 22:05:14 PAGE 2   
+
+  54          //-----------------------------------------------------------------------------
+  55          // FLASH_ByteWrite
+  56          //-----------------------------------------------------------------------------
+  57          //
+  58          // This routine writes <byte> to the linear FLASH address <addr>.
+  59          // Linear map is decoded as follows:
+  60          // Linear Address       Bank     Bank Address
+  61          // ------------------------------------------------
+  62          // 0x00000 - 0x07FFF    0        0x0000 - 0x7FFF
+  63          // 0x08000 - 0x0FFFF    1        0x8000 - 0xFFFF
+  64          // 0x10000 - 0x17FFF    2        0x8000 - 0xFFFF
+  65          // 0x18000 - 0x1FFFF    3        0x8000 - 0xFFFF
+  66          //
+  67          // This routine conforms to the recommendations in the C8051F58x data sheet
+  68          // 
+  69          // If the MCU is operating from the internal voltage regulator, the VDD
+  70          // monitor should be set threshold and enabled as a reset source only when
+  71          // writing or erasing Flash. Otherwise, it should be set to the low threshold.
+  72          //
+  73          // If the MCU is operating from an external voltage regulator powering VDD
+  74          // directly, the VDD monitor can be set to the high threshold permanently.
+  75          //-----------------------------------------------------------------------------
+  76          U8 FLASH_ByteWrite (FLADDR addr, U8 byte, bit SFLE)
+  77          {
+  78   1         S8 SFRPAGE_SAVE = SFRPAGE;          // Preserve SFRPAGE
+  79   1         bit EA_SAVE = EA;                   // Preserve EA
+  80   1         S8 PSBANK_SAVE = PSBANK;            // Preserve PSBANK
+  81   1         S8 xdata * data pwrite;             // FLASH write pointer
+  82   1         U8 i;
+  83   1      
+  84   1         EA = 0;                             // Disable interrupts
+  85   1      
+  86   1         SFRPAGE = ACTIVE_PAGE;
+  87   1      
+  88   1         if (addr < 0x10000) {               // 64K linear address
+  89   2            pwrite = (S8 xdata *) addr;
+  90   2         } else if (addr < 0x18000) {        // BANK 2
+  91   2            addr |= 0x8000;
+  92   2            pwrite = (S8 xdata *) addr;
+  93   2            PSBANK &= ~0x30;                 // COBANK = 0x2
+  94   2            PSBANK |=  0x20;
+  95   2         } else {                            // BANK 3
+  96   2            pwrite = (S8 xdata *) addr;
+  97   2            PSBANK &= ~0x30;                 // COBANK = 0x3
+  98   2            PSBANK |=  0x30;
+  99   2         }
+ 100   1      
+ 101   1         RSTSRC = 0x00;                      // 1. Disable VDD monitor as a reset source
+ 102   1      
+ 103   1         VDM0CN = 0xA0;                      // 2. Enable VDD monitor and high threshold
+ 104   1      
+ 105   1         for (i = 0; i < 255; i++) {}        // 3. Wait for VDD monitor to stabilize
+ 106   1      
+ 107   1         if (!(VDM0CN & 0x40))               // 4. If the VDD voltage is not high
+ 108   1            return 0;                        //    enough don't write to Flash
+ 109   1      
+ 110   1         RSTSRC = 0x02;                      // 5. Safe to enable VDD Monitor as a 
+ 111   1                                             //    reset source
+ 112   1      
+ 113   1                                             // 6. Enable Flash Writes
+ 114   1      
+ 115   1         FLKEY  = 0xA5;                      // Key Sequence 1
+C51 COMPILER V9.59.0.0   F580_FLASHPRIMITIVES                                              12/05/2018 22:05:14 PAGE 3   
+
+ 116   1         FLKEY  = 0xF1;                      // Key Sequence 2
+ 117   1         PSCTL |= 0x01;                      // PSWE = 1
+ 118   1      
+ 119   1         if (SFLE) {
+ 120   2            PSCTL |= 0x04;                   // Set SFLE
+ 121   2         }
+ 122   1      
+ 123   1         VDM0CN = 0xA0;                      // 7. Enable VDD monitor and high threshold
+ 124   1      
+ 125   1         RSTSRC = 0x02;                      // 8. Enable VDD monitor as a reset source
+ 126   1      
+ 127   1         *pwrite = byte;                     // 9. Write the byte
+ 128   1      
+ 129   1         RSTSRC = 0x00;                      // 10. Disable the VDD monitor as reset 
+ 130   1                                             //     source
+ 131   1         VDM0CN = 0x80;                      // 11. Change VDD Monitor to low threshold
+ 132   1         RSTSRC = 0x02;                      // 12. Re-enable the VDD monitor as a 
+ 133   1                                             //     reset source
+ 134   1         if (SFLE) {
+ 135   2            PSCTL &= ~0x04;                  // Clear SFLE
+ 136   2         }
+ 137   1         PSCTL &= ~0x01;                     // PSWE = 0
+ 138   1      
+ 139   1         PSBANK  = PSBANK_SAVE;              // Restore PSBANK
+ 140   1         SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
+ 141   1         EA      = EA_SAVE;                  // Restore interrupts
+ 142   1      
+ 143   1         return 1;
+ 144   1      }
+ 145          
+ 146          //-----------------------------------------------------------------------------
+ 147          // FLASH_ByteRead
+ 148          //-----------------------------------------------------------------------------
+ 149          //
+ 150          // This routine reads a <byte> from the linear FLASH address <addr>.
+ 151          //
+ 152          //-----------------------------------------------------------------------------
+ 153          U8 FLASH_ByteRead (FLADDR addr, bit SFLE)
+ 154          {
+ 155   1         S8 SFRPAGE_SAVE = SFRPAGE;          // Preserve SFRPAGE
+ 156   1         bit EA_SAVE = EA;                   // Preserve EA
+ 157   1         S8 PSBANK_SAVE = PSBANK;            // Preserve PSBANK
+ 158   1         S8 code * data pread;               // FLASH read pointer
+ 159   1         U8 byte;
+ 160   1      
+ 161   1         EA = 0;                             // Disable interrupts
+ 162   1      
+ 163   1         SFRPAGE = ACTIVE_PAGE;
+ 164   1      
+ 165   1         if (addr < 0x10000) {               // 64K linear address
+ 166   2            pread = (S8 code *) addr;
+ 167   2         } else if (addr < 0x18000) {        // BANK 2
+ 168   2            addr |= 0x8000;
+ 169   2            pread = (S8 code *) addr;
+ 170   2            PSBANK &= ~0x30;                 // COBANK = 0x2
+ 171   2            PSBANK |=  0x20;
+ 172   2         } else {                            // BANK 3
+ 173   2            pread = (S8 code *) addr;
+ 174   2            PSBANK &= ~0x30;                 // COBANK = 0x3
+ 175   2            PSBANK |=  0x30;
+ 176   2         }
+ 177   1      
+C51 COMPILER V9.59.0.0   F580_FLASHPRIMITIVES                                              12/05/2018 22:05:14 PAGE 4   
+
+ 178   1         if (SFLE) {
+ 179   2            PSCTL |= 0x04;                   // Set SFLE
+ 180   2         }
+ 181   1      
+ 182   1         byte = *pread;                      // Read the byte
+ 183   1      
+ 184   1         if (SFLE) {
+ 185   2            PSCTL &= ~0x04;                  // Clear SFLE
+ 186   2         }
+ 187   1      
+ 188   1         PSBANK = PSBANK_SAVE;               // Restore PSBANK
+ 189   1         SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
+ 190   1         EA = EA_SAVE;                       // Restore interrupts
+ 191   1      
+ 192   1         return byte;
+ 193   1      }
+ 194          
+ 195          //-----------------------------------------------------------------------------
+ 196          // FLASH_PageErase
+ 197          //-----------------------------------------------------------------------------
+ 198          //
+ 199          // This routine erases the FLASH page containing the linear FLASH address
+ 200          // <addr>.
+ 201          //
+ 202          // This routine conforms to the recommendations in the C8051F50x data sheet
+ 203          // 
+ 204          // If the MCU is operating from the internal voltage regulator, the VDD
+ 205          // monitor should be set threshold and enabled as a reset source only when
+ 206          // writing or erasing Flash. Otherwise, it should be set to the low threshold.
+ 207          //
+ 208          // If the MCU is operating from an external voltage regulator powering VDD
+ 209          // directly, the VDD monitor can be set to the high threshold permanently.
+ 210          //-----------------------------------------------------------------------------
+ 211          U8 FLASH_PageErase (FLADDR addr, bit SFLE)
+ 212          {
+ 213   1         S8 SFRPAGE_SAVE = SFRPAGE;          // Preserve SFRPAGE
+ 214   1         bit EA_SAVE = EA;                   // Preserve EA
+ 215   1         S8 PSBANK_SAVE = PSBANK;            // Preserve PSBANK
+ 216   1         S8 xdata * data pwrite;             // FLASH write pointer
+ 217   1         U8 i;
+ 218   1      
+ 219   1         EA = 0;                             // Disable interrupts
+ 220   1      
+ 221   1         SFRPAGE = ACTIVE_PAGE;
+ 222   1      
+ 223   1         if (addr < 0x10000) {               // 64K linear address
+ 224   2            pwrite = (S8 xdata *) addr;
+ 225   2         } else if (addr < 0x18000) {        // BANK 2
+ 226   2            addr |= 0x8000;
+ 227   2            pwrite = (S8 xdata *) addr;
+ 228   2            PSBANK &= ~0x30;                 // COBANK = 0x2
+ 229   2            PSBANK |=  0x20;
+ 230   2         } else {                            // BANK 3
+ 231   2            pwrite = (S8 xdata *) addr;
+ 232   2            PSBANK &= ~0x30;                 // COBANK = 0x3
+ 233   2            PSBANK |=  0x30;
+ 234   2         }
+ 235   1      
+ 236   1         RSTSRC = 0x00;                      // 1. Disable VDD monitor as a reset source
+ 237   1      
+ 238   1         VDM0CN = 0xA0;                      // 2. Enable VDD monitor and high threshold
+ 239   1      
+C51 COMPILER V9.59.0.0   F580_FLASHPRIMITIVES                                              12/05/2018 22:05:14 PAGE 5   
+
+ 240   1         for (i = 0; i < 255; i++) {}        // 3. Wait for VDD monitor to stabilize
+ 241   1      
+ 242   1         if (!(VDM0CN & 0x40))               // 4. If the VDD voltage is not high enough
+ 243   1            return 0;                        //    don't attempt to write to Flash
+ 244   1      
+ 245   1         RSTSRC = 0x02;                      // 5. Safe to enable VDD Monitor as a reset 
+ 246   1                                             //    source
+ 247   1      
+ 248   1                                             // 6. Enable Flash Writes
+ 249   1      
+ 250   1         FLKEY  = 0xA5;                      // Key Sequence 1
+ 251   1         FLKEY  = 0xF1;                      // Key Sequence 2
+ 252   1         PSCTL |= 0x03;                      // PSWE = 1; PSEE = 1
+ 253   1      
+ 254   1         if (SFLE) {
+ 255   2            PSCTL |= 0x04;                   // Set SFLE
+ 256   2         }
+ 257   1      
+ 258   1         VDM0CN = 0xA0;                      // 7. Enable VDD monitor and high threshold
+ 259   1      
+ 260   1         RSTSRC = 0x02;                      // 8. Enable VDD monitor as a reset source
+ 261   1      
+ 262   1         *pwrite = 0;                        // 9. Initiate page erase
+ 263   1      
+ 264   1         RSTSRC = 0x00;                      // 10. Disable the VDD monitor as a reset
+ 265   1                                             //     source
+ 266   1         VDM0CN = 0x80;                      // 11. Change VDD Monitor to low threshold
+ 267   1         RSTSRC = 0x02;                      // 12. Re-enable the VDD monitor as a reset 
+ 268   1      
+ 269   1         if (SFLE) {
+ 270   2            PSCTL &= ~0x04;                  // Clear SFLE
+ 271   2         }
+ 272   1      
+ 273   1         PSCTL &= ~0x03;                     // PSWE = 0; PSEE = 0
+ 274   1      
+ 275   1         PSBANK = PSBANK_SAVE;               // Restore PSBANK
+ 276   1         SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
+ 277   1         EA = EA_SAVE;                       // Restore interrupts
+ 278   1      
+ 279   1         return 1;
+ 280   1      }
+ 281          
+ 282          
+ 283          //-----------------------------------------------------------------------------
+ 284          // End Of File
+ 285          //-----------------------------------------------------------------------------
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    671    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----      19
+   DATA SIZE        =   ----       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       6
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

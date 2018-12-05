@@ -2763,9 +2763,9 @@
  
  
  
- void FLASH_WriteErase (U16, S8, S8);
- U8 FLASH_BlankCheck (U16);
- U8 FLASH_Read (U16);
+ void EE_FLASH_WriteErase (U16, S8, S8);
+ U8 EE_FLASH_BlankCheck (U16);
+ U8 EE_FLASH_Read (U16);
  
  
  
@@ -2784,7 +2784,7 @@
  
  
  
- void FLASH_WriteErase (U16 address, S8 byte, S8 write_erase)
+ void EE_FLASH_WriteErase (U16 address, S8 byte, S8 write_erase)
  {
  bit EA_SAVE = EA;                    
   S8 xdata * data pwrite;
@@ -2850,7 +2850,7 @@
  
  
  
- U8 FLASH_Read (U16 address)
+ U8 EE_FLASH_Read (U16 address)
  {
  U8 dataByte;
   
@@ -2870,7 +2870,7 @@
  
  
  
- U8 FLASH_BlankCheck(U16 address)
+ U8 EE_FLASH_BlankCheck(U16 address)
  {
   U8 code * data readPointer;
  U16 pageIndex;

@@ -1,11 +1,11 @@
-C51 COMPILER V9.59.0.0   CRC32                                                             12/05/2018 18:16:17 PAGE 1   
+C51 COMPILER V9.59.0.0   CRC32                                                             12/05/2018 23:50:45 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE CRC32
 OBJECT MODULE PLACED IN .\Output\crc32.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Lib\crc32.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Lib;.\LibFlash;.\FlashEpro
-                    -m;.\Bootloader;.\Driver) DEFINE(C8051F340) DEBUG OBJECTEXTEND PRINT(.\Output\crc32.lst) PREPRINT(.\Output\crc32.i) OBJEC
-                    -T(.\Output\crc32.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Lib\crc32.c COMPACT OMF2 OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Lib;.\LibFlas
+                    -h;.\FlashEprom;.\Bootloader;.\Driver) DEFINE(C8051F340) VARBANKING(1) DEBUG PRINT(.\Output\crc32.lst) PREPRINT(.\Output\
+                    -crc32.i) OBJECT(.\Output\crc32.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   51          /*     generated at runtime, you can start by generating the table for */
   52          /*     the polynomial in question and use exactly the same "updcrc",   */
   53          /*     if your application needn't simultaneously handle two CRC       */
-C51 COMPILER V9.59.0.0   CRC32                                                             12/05/2018 18:16:17 PAGE 2   
+C51 COMPILER V9.59.0.0   CRC32                                                             12/05/2018 23:50:45 PAGE 2   
 
   54          /*     polynomials.  (Note, however, that XMODEM is strange.)          */
   55          /*                                                                     */
@@ -122,11 +122,11 @@ line level    source
  109          static uint32_t oldcrc32;
  110          
  111          uint32_t crc32Calculate(uint8_t *buf, uint32_t len){//CRC32 ¼ÆËãÊý×é
- 112   1          unsigned int i;  
+ 112   1          data unsigned int i;  
  113   1          for (i = 0; i < len; i++)
  114   1              {  
  115   2             oldcrc32 = crc32Tab[(oldcrc32 ^ buf[i]) & 0xff] ^ (oldcrc32 >> 8);  
-C51 COMPILER V9.59.0.0   CRC32                                                             12/05/2018 18:16:17 PAGE 3   
+C51 COMPILER V9.59.0.0   CRC32                                                             12/05/2018 23:50:45 PAGE 3   
 
  116   2          }  
  117   1              return (oldcrc32 ^ 0xFFFFFFFF);  
@@ -146,13 +146,17 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    244    ----
+   CODE SIZE        =    312    ----
    CONSTANT SIZE    =   1024    ----
    XDATA SIZE       =   ----    ----
-   PDATA SIZE       =   ----    ----
-   DATA SIZE        =      4       9
+   PDATA SIZE       =      4       7
+   DATA SIZE        =   ----       2
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
 END OF MODULE INFORMATION.
 
 

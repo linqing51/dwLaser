@@ -1,11 +1,11 @@
-C51 COMPILER V9.59.0.0   FXXX_FLASH_INTERFACE                                              12/05/2018 18:16:17 PAGE 1   
+C51 COMPILER V9.59.0.0   FXXX_FLASH_INTERFACE                                              12/05/2018 23:39:08 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE FXXX_FLASH_INTERFACE
 OBJECT MODULE PLACED IN .\Output\Fxxx_Flash_Interface.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE FlashEprom\Fxxx_Flash_Interface.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Lib;
-                    -.\LibFlash;.\FlashEprom;.\Bootloader;.\Driver) DEFINE(C8051F340) DEBUG OBJECTEXTEND PRINT(.\Output\Fxxx_Flash_Interface.
-                    -lst) PREPRINT(.\Output\Fxxx_Flash_Interface.i) OBJECT(.\Output\Fxxx_Flash_Interface.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE FlashEprom\Fxxx_Flash_Interface.c COMPACT OMF2 OPTIMIZE(8,SPEED) BROWSE 
+                    -INCDIR(.\Lib;.\LibFlash;.\FlashEprom;.\Bootloader;.\Driver) DEFINE(C8051F340) VARBANKING(1) DEBUG PRINT(.\Output\Fxxx_Fl
+                    -ash_Interface.lst) PREPRINT(.\Output\Fxxx_Flash_Interface.i) OBJECT(.\Output\Fxxx_Flash_Interface.obj)
 
 line level    source
 
@@ -32,9 +32,9 @@ line level    source
   21          //-----------------------------------------------------------------------------
   22          // Function PROTOTYPES
   23          //-----------------------------------------------------------------------------
-  24          void FLASH_WriteErase (U16, S8, S8);
-  25          U8 FLASH_BlankCheck (U16);
-  26          U8 FLASH_Read (U16);
+  24          void EE_FLASH_WriteErase (U16, S8, S8);
+  25          U8 EE_FLASH_BlankCheck (U16);
+  26          U8 EE_FLASH_Read (U16);
   27          
   28          //-----------------------------------------------------------------------------
   29          // Global Variables
@@ -53,7 +53,7 @@ line level    source
   42          //             S8 byte - data byte to write (value is don't care on erase)
   43          //             S8 write_erase - 0x01 for writes, 0x03 to erase page
   44          // 
-  45          void FLASH_WriteErase (U16 address, S8 byte, S8 write_erase)
+  45          void EE_FLASH_WriteErase (U16 address, S8 byte, S8 write_erase)
   46          {
   47   1         bit EA_SAVE = EA;                   // preserve EA
   48   1         SEGMENT_VARIABLE_SEGMENT_POINTER(pwrite, S8, SEG_XDATA, SEG_DATA);
@@ -62,7 +62,7 @@ line level    source
   51   1      
   52   1         ENABLE_VDDMON()
   53   1      
-C51 COMPILER V9.59.0.0   FXXX_FLASH_INTERFACE                                              12/05/2018 18:16:17 PAGE 2   
+C51 COMPILER V9.59.0.0   FXXX_FLASH_INTERFACE                                              12/05/2018 23:39:08 PAGE 2   
 
   54   1         EA = 0;                             // disable interrupts
   55   1         write_erase &= 0x03;                // mask off important bits
@@ -121,12 +121,12 @@ line level    source
  108          //
  109          // Returns : U8 Byte that was read
  110          // 
- 111          U8 FLASH_Read (U16 address)
+ 111          U8 EE_FLASH_Read (U16 address)
  112          {
  113   1         U8 dataByte;
  114   1         PSBANK_STORE()
  115   1         PSBANK_SWITCH()
-C51 COMPILER V9.59.0.0   FXXX_FLASH_INTERFACE                                              12/05/2018 18:16:17 PAGE 3   
+C51 COMPILER V9.59.0.0   FXXX_FLASH_INTERFACE                                              12/05/2018 23:39:08 PAGE 3   
 
  116   1         dataByte = *((U8 SEG_CODE *) address);   
  117   1         PSBANK_RESTORE()
@@ -143,7 +143,7 @@ line level    source
  128          //
  129          // Returns U8 : 0 if not blank, 1 if blank.
  130          //
- 131          U8 FLASH_BlankCheck(U16 address)
+ 131          U8 EE_FLASH_BlankCheck(U16 address)
  132          {
  133   1         SEGMENT_VARIABLE_SEGMENT_POINTER(readPointer, U8, SEG_CODE, SEG_DATA);
  134   1         U16 pageIndex;
@@ -170,13 +170,17 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    154    ----
+   CODE SIZE        =    170    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      4    ----
+   DATA SIZE        =      4       4
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----       1
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
 END OF MODULE INFORMATION.
 
 

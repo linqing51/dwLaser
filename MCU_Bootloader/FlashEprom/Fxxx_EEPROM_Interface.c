@@ -97,8 +97,8 @@ U8 EEPROM_WriteBlock (U8 address, U8 *dataBuf, U8 length)
 
       while (pageEraseCounter < FL_ERASE_LIMIT)
       {
-         FLASH_WriteErase (writeAddr, 0xFF, FL_ERASE);
-         if (!FLASH_BlankCheck(writeAddr))
+         EE_FLASH_WriteErase (writeAddr, 0xFF, FL_ERASE);
+         if (!EE_FLASH_BlankCheck(writeAddr))
          {
             if (++pageEraseCounter == FL_ERASE_LIMIT)
             {
@@ -113,7 +113,7 @@ U8 EEPROM_WriteBlock (U8 address, U8 *dataBuf, U8 length)
    }
 
    // Mark new sector as copy in progress
-   FLASH_WriteErase (writeAddr + TAG_OFFSET, WIP_TAG, FL_WRITE);
+   EE_FLASH_WriteErase (writeAddr + TAG_OFFSET, WIP_TAG, FL_WRITE);
 
    // Copy from old to new sector excluding copy addresses
    copySector(readAddr, writeAddr, address, length);
@@ -121,7 +121,7 @@ U8 EEPROM_WriteBlock (U8 address, U8 *dataBuf, U8 length)
    // Write new info to sector
    for (byteCount = 0; byteCount < length; byteCount++)
    {
-      FLASH_WriteErase (writeAddr + address + byteCount, *dataBuf++, FL_WRITE);
+      EE_FLASH_WriteErase (writeAddr + address + byteCount, *dataBuf++, FL_WRITE);
    }
    if (currentTag == DONE_TAG_MAX)
    {
@@ -133,7 +133,7 @@ U8 EEPROM_WriteBlock (U8 address, U8 *dataBuf, U8 length)
    }
 
    // Mark new sector with valid tag
-   FLASH_WriteErase (writeAddr + TAG_OFFSET, currentTag, FL_WRITE);
+   EE_FLASH_WriteErase (writeAddr + TAG_OFFSET, currentTag, FL_WRITE);
 
    return EE_NO_ERROR;
 }
@@ -171,7 +171,7 @@ U8 EEPROM_ReadBlock (U8 address, U8 *dataBuf, U8 length)
    // Read data bytes
    for (byteCount = 0; byteCount < length; byteCount++)
    {
-      *dataBuf++ = FLASH_Read(sectorAddress+address+byteCount);
+      *dataBuf++ = EE_FLASH_Read(sectorAddress+address+byteCount);
    }
    return EE_NO_ERROR;
 }
@@ -199,11 +199,11 @@ void copySector(U16 fromAddr, U16 toAddr, U8 exclude, U8 length)
    for (offset_addr = 0; offset_addr < EE_SIZE; offset_addr++)
    {
       //copy_byte = *((U8 SEG_CODE *) (fromAddr+offset_addr));
-      copy_byte = FLASH_Read(fromAddr+offset_addr);
+      copy_byte = EE_FLASH_Read(fromAddr+offset_addr);
       
       if ((offset_addr < exclude)||(offset_addr >= exclude+length))
       {
-         FLASH_WriteErase ((toAddr+offset_addr), copy_byte, FL_WRITE);
+         EE_FLASH_WriteErase ((toAddr+offset_addr), copy_byte, FL_WRITE);
       }
    }
 }
@@ -239,7 +239,7 @@ U8 findNextSector(void)
          }
       }
       sectorAddress = getBaseAddress(currentEepromPage, currentEepromSector);
-      sectTag = FLASH_Read(sectorAddress+TAG_OFFSET);
+      sectTag = EE_FLASH_Read(sectorAddress+TAG_OFFSET);
       if (sectTag == NEW_TAG)
       {
          sectorFound = 1;
@@ -281,7 +281,7 @@ U8 findCurrentSector(void)
    {
       for (sectCount = 0; sectCount < EE_SECTORS; sectCount++)
       {
-         sectTag = FLASH_Read(getBaseAddress(pgCount, sectCount)+TAG_OFFSET);
+         sectTag = EE_FLASH_Read(getBaseAddress(pgCount, sectCount)+TAG_OFFSET);
 
          if (sectTag == NEW_TAG)
          {

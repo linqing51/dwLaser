@@ -21,9 +21,9 @@
 // External Function PROTOTYPES
 //-----------------------------------------------------------------------------
 
-extern void FLASH_WriteErase (U16, S8, S8);
-extern U8 FLASH_BlankCheck(U16);
-extern U8 FLASH_Read (U16);
+extern void EE_FLASH_WriteErase (U16, S8, S8);
+extern U8 EE_FLASH_BlankCheck(U16);
+extern U8 EE_FLASH_Read (U16);
 
 //-----------------------------------------------------------------------------
 // External Variables

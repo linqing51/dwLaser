@@ -967,9 +967,9 @@
  
  
  
- extern void FLASH_WriteErase (U16, S8, S8);
- extern U8 FLASH_BlankCheck(U16);
- extern U8 FLASH_Read (U16);
+ extern void EE_FLASH_WriteErase (U16, S8, S8);
+ extern U8 EE_FLASH_BlankCheck(U16);
+ extern U8 EE_FLASH_Read (U16);
  
  
  
@@ -3675,7 +3675,7 @@
  U8 byteCount;
  U8 pageEraseCounter;
  
- if ((U16)(address+length) > 32)
+ if ((U16)(address+length) > 64)
  {
  return 0x01;
  }
@@ -3700,8 +3700,8 @@
  
  while (pageEraseCounter < 1)
  {
- FLASH_WriteErase (writeAddr, 0xFF, 0x03);
- if (!FLASH_BlankCheck(writeAddr))
+ EE_FLASH_WriteErase (writeAddr, 0xFF, 0x03);
+ if (!EE_FLASH_BlankCheck(writeAddr))
  {
  if (++pageEraseCounter == 1)
  {
@@ -3716,7 +3716,7 @@
  }
  
  
- FLASH_WriteErase (writeAddr + 32, 0x7F, 0x01);
+ EE_FLASH_WriteErase (writeAddr + 64, 0x7F, 0x01);
  
  
  copySector(readAddr, writeAddr, address, length);
@@ -3724,7 +3724,7 @@
  
  for (byteCount = 0; byteCount < length; byteCount++)
  {
- FLASH_WriteErase (writeAddr + address + byteCount, *dataBuf++, 0x01);
+ EE_FLASH_WriteErase (writeAddr + address + byteCount, *dataBuf++, 0x01);
  }
  if (currentTag == 0x7E)
  {
@@ -3736,7 +3736,7 @@
  }
  
  
- FLASH_WriteErase (writeAddr + 32, currentTag, 0x01);
+ EE_FLASH_WriteErase (writeAddr + 64, currentTag, 0x01);
  
  return 0x00;
  }
@@ -3762,7 +3762,7 @@
  U16 sectorAddress;
  U8 byteCount;
  
- if ((U16)(address+length) > 32)
+ if ((U16)(address+length) > 64)
  {
  return 0x03;
  }
@@ -3774,7 +3774,7 @@
  
  for (byteCount = 0; byteCount < length; byteCount++)
  {
- *dataBuf++ = FLASH_Read(sectorAddress+address+byteCount);
+ *dataBuf++ = EE_FLASH_Read(sectorAddress+address+byteCount);
  }
  return 0x00;
  }
@@ -3799,14 +3799,14 @@
  U8 offset_addr;
  U8 copy_byte;
  
- for (offset_addr = 0; offset_addr < 32; offset_addr++)
+ for (offset_addr = 0; offset_addr < 64; offset_addr++)
  {
  
- copy_byte = FLASH_Read(fromAddr+offset_addr);
+ copy_byte = EE_FLASH_Read(fromAddr+offset_addr);
  
  if ((offset_addr < exclude)||(offset_addr >= exclude+length))
  {
- FLASH_WriteErase ((toAddr+offset_addr), copy_byte, 0x01);
+ EE_FLASH_WriteErase ((toAddr+offset_addr), copy_byte, 0x01);
  }
  }
  }
@@ -3832,7 +3832,7 @@
  while (sectorFound == 2)
  {
  currentEepromSector++;
- if (currentEepromSector == (U8)(512/(32+1)))
+ if (currentEepromSector == (U8)(512/(64+1)))
  {
  currentEepromSector = 0;
  currentEepromPage++;
@@ -3842,7 +3842,7 @@
  }
  }
  sectorAddress = getBaseAddress(currentEepromPage, currentEepromSector);
- sectTag = FLASH_Read(sectorAddress+32);
+ sectTag = EE_FLASH_Read(sectorAddress+64);
  if (sectTag == 0xFF)
  {
  sectorFound = 1;
@@ -3882,9 +3882,9 @@
  
  for (pgCount = 0; pgCount < 2; pgCount++)
  {
- for (sectCount = 0; sectCount < (U8)(512/(32+1)); sectCount++)
+ for (sectCount = 0; sectCount < (U8)(512/(64+1)); sectCount++)
  {
- sectTag = FLASH_Read(getBaseAddress(pgCount, sectCount)+32);
+ sectTag = EE_FLASH_Read(getBaseAddress(pgCount, sectCount)+64);
  
  if (sectTag == 0xFF)
  {
@@ -3911,11 +3911,11 @@
  }
  }
  
- if (emptySectors == 2*(U8)(512/(32+1)))
+ if (emptySectors == 2*(U8)(512/(64+1)))
  {
  latestTag = 0x01;
  currentEepromPage = 2-1;
- currentEepromSector = (U8)(512/(32+1))-1;
+ currentEepromSector = (U8)(512/(64+1))-1;
  }
  
  return latestTag;
@@ -3935,7 +3935,7 @@
  
  U16 getBaseAddress(U8 page, U8 sector)
  {
- return (0xF000+(512*page)+(32+1)*sector);
+ return (0xF000+(512*page)+(64+1)*sector);
  }
  
  
