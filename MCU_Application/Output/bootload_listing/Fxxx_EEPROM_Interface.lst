@@ -1,0 +1,376 @@
+C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/05/2018 17:20:28 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE FXXX_EEPROM_INTERFACE
+OBJECT MODULE PLACED IN .\Output\bootload_output\Fxxx_EEPROM_Interface.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE FlashEprom\Fxxx_EEPROM_Interface.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Con
+                    -fig;.\Lib;.\LibFlash;.\FlashEprom;.\Bootloader;.\Driver) DEFINE(C8051F340) DEBUG OBJECTEXTEND PRINT(.\Output\bootload_li
+                    -sting\Fxxx_EEPROM_Interface.lst) PREPRINT(.\Output\bootload_listing\Fxxx_EEPROM_Interface.i) OBJECT(.\Output\bootload_ou
+                    -tput\Fxxx_EEPROM_Interface.obj)
+
+line level    source
+
+   1          //-----------------------------------------------------------------------------
+   2          // Fxxx_EEPROM_Interface.c
+   3          //-----------------------------------------------------------------------------
+   4          // Copyright (C) 2010 Silicon Laboratories, Inc.
+   5          // http://www.silabs.com
+   6          //
+   7          // File Description:
+   8          //
+   9          // This file defines an emulated EEPROM interface for Silicon Labs Flash-based
+  10          // 8051 MCUs.
+  11          //
+  12          // Release 1.0 / 10NOV2010 (BD)
+  13          //    -Initial Revision
+  14          //
+  15          
+  16          //-----------------------------------------------------------------------------
+  17          // Includes
+  18          //-----------------------------------------------------------------------------
+  19          #include <compiler_defs.h>
+  20          #include "Fxxx_Flash_Interface.h"
+  21          #include "Fxxx_EEPROM_Configuration.h"
+  22          
+  23          //-----------------------------------------------------------------------------
+  24          // Internal Constants
+  25          //-----------------------------------------------------------------------------
+  26          
+  27          #define NEW_TAG         0xFF        // Value for New Sector
+  28          #define WIP_TAG         0x7F        // Value for WIP Sector
+  29          
+  30          #define DONE_TAG_MIN    0x01        // Done tag minimum
+  31          #define DONE_TAG_MAX    0x7E        // Done tag maximum
+  32          
+  33          #define NO_TAG          0x00
+  34          
+  35          //-----------------------------------------------------------------------------
+  36          // Global Variables
+  37          //-----------------------------------------------------------------------------
+  38          U8 currentEepromSector = 0, currentEepromPage = 0;
+  39          
+  40          //-----------------------------------------------------------------------------
+  41          // Function Prototypes
+  42          //-----------------------------------------------------------------------------
+  43          void copySector(U16, U16, U8, U8);
+  44          U16 getBaseAddress(U8, U8);
+  45          U8 findNextSector(void);
+  46          U8 findCurrentSector(void);
+  47          
+  48          U8 EEPROM_WriteBlock (U8, U8 *, U8);
+  49          U8 EEPROM_ReadBlock (U8, U8 *, U8);
+  50          
+  51          //-----------------------------------------------------------------------------
+  52          // EEPROM_WriteBlock
+C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/05/2018 17:20:28 PAGE 2   
+
+  53          //-----------------------------------------------------------------------------
+  54          //
+  55          // This routine writes the specified array into the emulated EEPROM by
+  56          // decoding the address and calling flash write functions.
+  57          //
+  58          // Arguments :  U8 address - 8-bit EEPROM address to start at
+  59          //              U8 *dataBuf - pointer to data array
+  60          //              U8 length - number of bytes to write
+  61          //
+  62          // Returns U8 : EE_NO_ERROR = Write was sucessful
+  63          //              EE_WRITE_ERROR = Write did not succeed, due to either a page
+  64          //                erase problem or an out-of-bounds address.
+  65          //              EE_SECTOR_ERROR = Could not determine current sector.
+  66          //
+  67          U8 EEPROM_WriteBlock (U8 address, U8 *dataBuf, U8 length)
+  68          {
+  69   1         U16 readAddr, writeAddr;
+  70   1         U8 nextSector;
+  71   1         U8 currentTag;
+  72   1         U8 byteCount;
+  73   1         U8 pageEraseCounter;
+  74   1      
+  75   1         if ((U16)(address+length) > EE_SIZE)
+  76   1         {
+  77   2            return EE_WRITE_ERROR;
+  78   2         }
+  79   1      
+  80   1         currentTag = findCurrentSector();
+  81   1         if (currentTag == NO_TAG)
+  82   1         {
+  83   2            return EE_SECTOR_ERROR;
+  84   2         }
+  85   1      
+  86   1         // Get the current sector's base address for read (copy) later
+  87   1         readAddr = getBaseAddress(currentEepromPage, currentEepromSector);
+  88   1      
+  89   1         nextSector = findNextSector();
+  90   1      
+  91   1         // Get base address of sector where we will be writing
+  92   1         writeAddr = getBaseAddress(currentEepromPage, currentEepromSector);
+  93   1      
+  94   1         if (nextSector == 0x00)
+  95   1         {
+  96   2            pageEraseCounter = 0;
+  97   2      
+  98   2            while (pageEraseCounter < FL_ERASE_LIMIT)
+  99   2            {
+ 100   3               FLASH_WriteErase (writeAddr, 0xFF, FL_ERASE);
+ 101   3               if (!FLASH_BlankCheck(writeAddr))
+ 102   3               {
+ 103   4                  if (++pageEraseCounter == FL_ERASE_LIMIT)
+ 104   4                  {
+ 105   5                     return EE_WRITE_ERROR;
+ 106   5                  }
+ 107   4               }
+ 108   3               else
+ 109   3               {
+ 110   4                  break;
+ 111   4               }
+ 112   3            }
+ 113   2         }
+ 114   1      
+C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/05/2018 17:20:28 PAGE 3   
+
+ 115   1         // Mark new sector as copy in progress
+ 116   1         FLASH_WriteErase (writeAddr + TAG_OFFSET, WIP_TAG, FL_WRITE);
+ 117   1      
+ 118   1         // Copy from old to new sector excluding copy addresses
+ 119   1         copySector(readAddr, writeAddr, address, length);
+ 120   1      
+ 121   1         // Write new info to sector
+ 122   1         for (byteCount = 0; byteCount < length; byteCount++)
+ 123   1         {
+ 124   2            FLASH_WriteErase (writeAddr + address + byteCount, *dataBuf++, FL_WRITE);
+ 125   2         }
+ 126   1         if (currentTag == DONE_TAG_MAX)
+ 127   1         {
+ 128   2            currentTag = DONE_TAG_MIN;
+ 129   2         }
+ 130   1         else
+ 131   1         {
+ 132   2            currentTag++;
+ 133   2         }
+ 134   1      
+ 135   1         // Mark new sector with valid tag
+ 136   1         FLASH_WriteErase (writeAddr + TAG_OFFSET, currentTag, FL_WRITE);
+ 137   1      
+ 138   1         return EE_NO_ERROR;
+ 139   1      }
+ 140          
+ 141          //-----------------------------------------------------------------------------
+ 142          // EEPROM_ReadBlock
+ 143          //-----------------------------------------------------------------------------
+ 144          //
+ 145          // This routine reads the emulated EEPROM information into the specified
+ 146          // buffer.
+ 147          //
+ 148          // Arguments :  U8 address - 8-bit EEPROM address to start at
+ 149          //              U8 *dataBuf - pointer to data array
+ 150          //              U8 length - number of bytes to read
+ 151          //
+ 152          // Returns U8 : EE_NO_ERROR = Read was sucessful
+ 153          //              EE_READ_ERROR = Read did not succeed, due to  out-of-bounds
+ 154          //                 address.
+ 155          //              EE_SECTOR_ERROR = Could not determine current sector.
+ 156          //
+ 157          U8 EEPROM_ReadBlock (U8 address, U8 *dataBuf, U8 length)
+ 158          {
+ 159   1         U16 sectorAddress;
+ 160   1         U8 byteCount;
+ 161   1      
+ 162   1         if ((U16)(address+length) > EE_SIZE)
+ 163   1         {
+ 164   2            return EE_READ_ERROR;
+ 165   2         }
+ 166   1         if (findCurrentSector() == 0x00)
+ 167   1         {
+ 168   2            return EE_SECTOR_ERROR;
+ 169   2         }
+ 170   1         sectorAddress = getBaseAddress(currentEepromPage, currentEepromSector);
+ 171   1         // Read data bytes
+ 172   1         for (byteCount = 0; byteCount < length; byteCount++)
+ 173   1         {
+ 174   2            *dataBuf++ = FLASH_Read(sectorAddress+address+byteCount);
+ 175   2         }
+ 176   1         return EE_NO_ERROR;
+C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/05/2018 17:20:28 PAGE 4   
+
+ 177   1      }
+ 178          
+ 179          
+ 180          //-----------------------------------------------------------------------------
+ 181          // copySector
+ 182          //-----------------------------------------------------------------------------
+ 183          //
+ 184          // This internal routine copies the contents of one sector to another, while
+ 185          // excluding the addresses about to be written.
+ 186          //
+ 187          // Arguments :  U16 fromAddr - 16-bit Flash address to copy from
+ 188          //              U16 toAddr - 16-bit Flash addres to copy to
+ 189          //              U8 exclude - Starting EEPROM address to exclude for copy.
+ 190          //              U8 length - Number of bytes to exlude from copy.
+ 191          //
+ 192          // Returns :    None
+ 193          //
+ 194          void copySector(U16 fromAddr, U16 toAddr, U8 exclude, U8 length)
+ 195          {
+ 196   1         U8 offset_addr;
+ 197   1         U8 copy_byte;
+ 198   1      
+ 199   1         for (offset_addr = 0; offset_addr < EE_SIZE; offset_addr++)
+ 200   1         {
+ 201   2            //copy_byte = *((U8 SEG_CODE *) (fromAddr+offset_addr));
+ 202   2            copy_byte = FLASH_Read(fromAddr+offset_addr);
+ 203   2            
+ 204   2            if ((offset_addr < exclude)||(offset_addr >= exclude+length))
+ 205   2            {
+ 206   3               FLASH_WriteErase ((toAddr+offset_addr), copy_byte, FL_WRITE);
+ 207   3            }
+ 208   2         }
+ 209   1      }
+ 210          
+ 211          //-----------------------------------------------------------------------------
+ 212          // findNextSector
+ 213          //-----------------------------------------------------------------------------
+ 214          //
+ 215          // This internal routine finds the next available sector in the EEPROM area
+ 216          // and updates the currentEepromPage and currentEepromSector variables.
+ 217          //
+ 218          // Arguments :  None
+ 219          //
+ 220          // Returns U8 : 0 if next page needs to be erased, 1 if empty sector found
+ 221          //
+ 222          U8 findNextSector(void)
+ 223          {
+ 224   1         U8 pageNow = currentEepromPage, sectorNow = currentEepromSector;
+ 225   1         U8 sectorFound = 2;
+ 226   1         U8 sectTag;
+ 227   1         U16 sectorAddress;
+ 228   1      
+ 229   1         while (sectorFound == 2)
+ 230   1         {
+ 231   2            currentEepromSector++;
+ 232   2            if (currentEepromSector == EE_SECTORS)
+ 233   2            {
+ 234   3               currentEepromSector = 0;
+ 235   3               currentEepromPage++;
+ 236   3               if (currentEepromPage == FL_PAGES)
+ 237   3               {
+ 238   4                  currentEepromPage = 0;
+C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/05/2018 17:20:28 PAGE 5   
+
+ 239   4               }
+ 240   3            }
+ 241   2            sectorAddress = getBaseAddress(currentEepromPage, currentEepromSector);
+ 242   2            sectTag = FLASH_Read(sectorAddress+TAG_OFFSET);
+ 243   2            if (sectTag == NEW_TAG)
+ 244   2            {
+ 245   3               sectorFound = 1;
+ 246   3            }
+ 247   2            else if ((pageNow == currentEepromPage)&&
+ 248   2                     (sectorNow == currentEepromSector))
+ 249   2            {
+ 250   3               currentEepromSector = 0;
+ 251   3               currentEepromPage++;
+ 252   3               if (currentEepromPage == FL_PAGES)
+ 253   3               {
+ 254   4                  currentEepromPage = 0;
+ 255   4               }
+ 256   3               sectorFound = 0;
+ 257   3            }
+ 258   2         }
+ 259   1         return sectorFound;
+ 260   1      }
+ 261          
+ 262          //-----------------------------------------------------------------------------
+ 263          // findCurrentSector
+ 264          //-----------------------------------------------------------------------------
+ 265          //
+ 266          // This internal routine finds the currently used sector in the EEPROM area
+ 267          // and updates the currentEepromPage and currentEepromSector variables.
+ 268          //
+ 269          // Arguments :  None
+ 270          //
+ 271          // Returns U8 : 0 if sector could not be determined, sector tag if sector
+ 272          //              was found
+ 273          //
+ 274          U8 findCurrentSector(void)
+ 275          {
+ 276   1         U8 pgCount, sectCount;
+ 277   1         U8 emptySectors = 0;
+ 278   1         U8 sectTag = NO_TAG, latestTag = NO_TAG, nextTag = NO_TAG;
+ 279   1      
+ 280   1         for (pgCount = 0; pgCount < FL_PAGES; pgCount++)
+ 281   1         {
+ 282   2            for (sectCount = 0; sectCount < EE_SECTORS; sectCount++)
+ 283   2            {
+ 284   3               sectTag = FLASH_Read(getBaseAddress(pgCount, sectCount)+TAG_OFFSET);
+ 285   3      
+ 286   3               if (sectTag == NEW_TAG)
+ 287   3               {
+ 288   4                  emptySectors++;
+ 289   4               }
+ 290   3               if ((sectTag >= DONE_TAG_MIN)&&(sectTag <= DONE_TAG_MAX))
+ 291   3               {
+ 292   4                  if ((latestTag == NO_TAG)||(sectTag == nextTag))
+ 293   4                  {
+ 294   5                     latestTag = sectTag;
+ 295   5                     currentEepromPage = pgCount;
+ 296   5                     currentEepromSector = sectCount;
+ 297   5      
+ 298   5                     if (sectTag == DONE_TAG_MAX)
+ 299   5                     {
+ 300   6                        nextTag = DONE_TAG_MIN;
+C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/05/2018 17:20:28 PAGE 6   
+
+ 301   6                     }
+ 302   5                     else
+ 303   5                     {
+ 304   6                        nextTag = sectTag + 1;
+ 305   6                     }
+ 306   5                  }
+ 307   4               }
+ 308   3            }
+ 309   2         }
+ 310   1         // If all sectors are empty, start fresh
+ 311   1         if (emptySectors == FL_PAGES*EE_SECTORS)
+ 312   1         {
+ 313   2            latestTag = DONE_TAG_MIN;
+ 314   2            currentEepromPage = FL_PAGES-1;
+ 315   2            currentEepromSector = EE_SECTORS-1;
+ 316   2         }
+ 317   1      
+ 318   1         return latestTag;
+ 319   1      }
+ 320          
+ 321          //-----------------------------------------------------------------------------
+ 322          // getBaseAddress
+ 323          //-----------------------------------------------------------------------------
+ 324          //
+ 325          // This internal routine calculates the base address for a Flash sector in the
+ 326          // emulated EEPROM area.
+ 327          //
+ 328          // Arguments :  U8 page - zero-based page number to calculate from.
+ 329          //              U8 sector - zero-based sector number to calculate from.
+ 330          //
+ 331          // Returns U16: 16-bit Flash address corresponding to the page and sector.
+ 332          //
+ 333          U16 getBaseAddress(U8 page, U8 sector)
+ 334          {
+ 335   1         return (EE_BASE_ADDR+(FL_PAGE_SIZE*page)+(EE_SIZE+EE_TAG_SIZE)*sector);
+ 336   1      }
+ 337          
+ 338          //-----------------------------------------------------------------------------
+ 339          // End Of File
+ 340          //-----------------------------------------------------------------------------
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    667    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2      36
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

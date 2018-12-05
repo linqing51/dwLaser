@@ -1,0 +1,184 @@
+C51 COMPILER V9.59.0.0   FXXX_FLASH_INTERFACE                                              12/05/2018 17:20:29 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE FXXX_FLASH_INTERFACE
+OBJECT MODULE PLACED IN .\Output\bootload_output\Fxxx_Flash_Interface.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE FlashEprom\Fxxx_Flash_Interface.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Conf
+                    -ig;.\Lib;.\LibFlash;.\FlashEprom;.\Bootloader;.\Driver) DEFINE(C8051F340) DEBUG OBJECTEXTEND PRINT(.\Output\bootload_lis
+                    -ting\Fxxx_Flash_Interface.lst) PREPRINT(.\Output\bootload_listing\Fxxx_Flash_Interface.i) OBJECT(.\Output\bootload_outpu
+                    -t\Fxxx_Flash_Interface.obj)
+
+line level    source
+
+   1          //-----------------------------------------------------------------------------
+   2          // Fxxx_Flash_Interface.c
+   3          //-----------------------------------------------------------------------------
+   4          // Copyright (C) 2010 Silicon Laboratories, Inc.
+   5          // http://www.silabs.com
+   6          //
+   7          // File Description:
+   8          //
+   9          // This file is part of the EEPROM emulation example code, and defines the 
+  10          // flash write/erase interface.
+  11          //
+  12          // Release 1.0 / 10NOV2010 (BD)
+  13          //    -Initial Revision
+  14          //
+  15          
+  16          //-----------------------------------------------------------------------------
+  17          // Includes
+  18          //-----------------------------------------------------------------------------
+  19          #include "Fxxx_EEPROM_Configuration.h"
+  20          
+  21          //-----------------------------------------------------------------------------
+  22          // Function PROTOTYPES
+  23          //-----------------------------------------------------------------------------
+  24          void FLASH_WriteErase (U16, S8, S8);
+  25          U8 FLASH_BlankCheck (U16);
+  26          U8 FLASH_Read (U16);
+  27          
+  28          //-----------------------------------------------------------------------------
+  29          // Global Variables
+  30          //-----------------------------------------------------------------------------
+  31          SEGMENT_VARIABLE(flashKey1, U8, SEG_DATA) = 0x00;
+  32          SEGMENT_VARIABLE(flashKey2, U8, SEG_DATA) = 0x00;
+  33          SEGMENT_VARIABLE(flashAddress, U16, SEG_DATA) = FLASH_SAFE_ADDR;
+  34          
+  35          //-----------------------------------------------------------------------------
+  36          // FLASH_WriteErase
+  37          //-----------------------------------------------------------------------------
+  38          //
+  39          // This routine writes a byte or erases a page of Flash.
+  40          //
+  41          // Arguments : U16 address - 16-bit address in code space to write/erase
+  42          //             S8 byte - data byte to write (value is don't care on erase)
+  43          //             S8 write_erase - 0x01 for writes, 0x03 to erase page
+  44          // 
+  45          void FLASH_WriteErase (U16 address, S8 byte, S8 write_erase)
+  46          {
+  47   1         bit EA_SAVE = EA;                   // preserve EA
+  48   1         SEGMENT_VARIABLE_SEGMENT_POINTER(pwrite, S8, SEG_XDATA, SEG_DATA);
+  49   1         PSBANK_STORE()
+  50   1         SFRPAGE_SWITCH()
+  51   1      
+  52   1         ENABLE_VDDMON()
+C51 COMPILER V9.59.0.0   FXXX_FLASH_INTERFACE                                              12/05/2018 17:20:29 PAGE 2   
+
+  53   1      
+  54   1         EA = 0;                             // disable interrupts
+  55   1         write_erase &= 0x03;                // mask off important bits
+  56   1      
+  57   1         flashAddress = address;             // copy passed address
+  58   1         flashKey2 = 0xF1;                   // set key2
+  59   1      
+  60   1         // check upper address limit
+  61   1         if (flashAddress > EE_TOP_ADDR)
+  62   1         {
+  63   2           flashKey1 = 0x00;                 // clear key1
+  64   2           flashKey2 = 0x00;                 // clear key2
+  65   2           flashAddress = FLASH_SAFE_ADDR;   // reset to safe address
+  66   2           FL_PROTECT()
+  67   2         }
+  68   1         // check lower address limit
+  69   1         else if (flashAddress >= EE_BASE_ADDR)
+  70   1         {
+  71   2             flashKey1 = 0xA5;               // set key1
+  72   2      
+  73   2             ENABLE_VDDMON()
+  74   2      
+  75   2             pwrite = (S8 SEG_XDATA *) flashAddress;
+  76   2      
+  77   2             PSBANK_SWITCH()
+  78   2             ENABLE_FL_MOD()
+  79   2             PSCTL |= write_erase;           // set up PSEE, PSWE
+  80   2             *pwrite = byte;                 // write the byte
+  81   2             PSCTL &= ~0x03;                 // clear PSEE and PSWE
+  82   2             DISABLE_FL_MOD()
+  83   2             PSBANK_RESTORE()
+  84   2             
+  85   2             flashKey2 = 0x00;               // clear key2
+  86   2             flashKey1 = 0x00;               // clear key1
+  87   2             flashAddress = FLASH_SAFE_ADDR; // reset to safe address
+  88   2         }
+  89   1         else
+  90   1         {
+  91   2           FL_PROTECT()
+  92   2           flashKey1 = 0x00;                 // clear key1
+  93   2           flashKey2 = 0x00;                 // clear key2
+  94   2           flashAddress = FLASH_SAFE_ADDR;   // reset to safe address
+  95   2         }
+  96   1      
+  97   1         EA = EA_SAVE;                       // restore interrupts
+  98   1         SFRPAGE_RESTORE()
+  99   1      }
+ 100          
+ 101          //-----------------------------------------------------------------------------
+ 102          // FLASH_Read
+ 103          //-----------------------------------------------------------------------------
+ 104          //
+ 105          // This routine reads a byte of Flash.
+ 106          //
+ 107          // Arguments : U16 address - 16-bit address in code space to read
+ 108          //
+ 109          // Returns : U8 Byte that was read
+ 110          // 
+ 111          U8 FLASH_Read (U16 address)
+ 112          {
+ 113   1         U8 dataByte;
+ 114   1         PSBANK_STORE()
+C51 COMPILER V9.59.0.0   FXXX_FLASH_INTERFACE                                              12/05/2018 17:20:29 PAGE 3   
+
+ 115   1         PSBANK_SWITCH()
+ 116   1         dataByte = *((U8 SEG_CODE *) address);   
+ 117   1         PSBANK_RESTORE()
+ 118   1         return dataByte;   
+ 119   1      }
+ 120          
+ 121          //-----------------------------------------------------------------------------
+ 122          // FLASH_BlankCheck
+ 123          //-----------------------------------------------------------------------------
+ 124          //
+ 125          // This routine checks a page of flash to determine if it is blank.
+ 126          //
+ 127          // Arguments :  U16 address - 16-bit base address of Flash page to check
+ 128          //
+ 129          // Returns U8 : 0 if not blank, 1 if blank.
+ 130          //
+ 131          U8 FLASH_BlankCheck(U16 address)
+ 132          {
+ 133   1         SEGMENT_VARIABLE_SEGMENT_POINTER(readPointer, U8, SEG_CODE, SEG_DATA);
+ 134   1         U16 pageIndex;
+ 135   1         PSBANK_STORE()
+ 136   1         PSBANK_SWITCH()
+ 137   1      
+ 138   1         readPointer = (U8 SEG_CODE *)address;
+ 139   1         for (pageIndex = 0; pageIndex < FL_PAGE_SIZE; pageIndex++)
+ 140   1         {
+ 141   2            if (*readPointer != 0xFF)
+ 142   2            {
+ 143   3               PSBANK_RESTORE()
+ 144   3               return 0;
+ 145   3            }
+ 146   2            readPointer++;
+ 147   2         }
+ 148   1         PSBANK_RESTORE()
+ 149   1         return 1;
+ 150   1      }
+ 151          
+ 152          //-----------------------------------------------------------------------------
+ 153          // End Of File
+ 154          //-----------------------------------------------------------------------------
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    154    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       1
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
