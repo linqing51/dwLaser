@@ -3675,7 +3675,7 @@
  U8 byteCount;
  U8 pageEraseCounter;
  
- if ((U16)(address+length) > 64)
+ if ((U16)(address+length) > 256)
  {
  return 0x01;
  }
@@ -3716,7 +3716,7 @@
  }
  
  
- EE_FLASH_WriteErase (writeAddr + 64, 0x7F, 0x01);
+ EE_FLASH_WriteErase (writeAddr + 256, 0x7F, 0x01);
  
  
  copySector(readAddr, writeAddr, address, length);
@@ -3736,7 +3736,7 @@
  }
  
  
- EE_FLASH_WriteErase (writeAddr + 64, currentTag, 0x01);
+ EE_FLASH_WriteErase (writeAddr + 256, currentTag, 0x01);
  
  return 0x00;
  }
@@ -3762,7 +3762,7 @@
  U16 sectorAddress;
  U8 byteCount;
  
- if ((U16)(address+length) > 64)
+ if ((U16)(address+length) > 256)
  {
  return 0x03;
  }
@@ -3799,7 +3799,7 @@
  U8 offset_addr;
  U8 copy_byte;
  
- for (offset_addr = 0; offset_addr < 64; offset_addr++)
+ for (offset_addr = 0; offset_addr < 256; offset_addr++)
  {
  
  copy_byte = EE_FLASH_Read(fromAddr+offset_addr);
@@ -3832,7 +3832,7 @@
  while (sectorFound == 2)
  {
  currentEepromSector++;
- if (currentEepromSector == (U8)(512/(64+1)))
+ if (currentEepromSector == (U8)(512/(256+1)))
  {
  currentEepromSector = 0;
  currentEepromPage++;
@@ -3842,7 +3842,7 @@
  }
  }
  sectorAddress = getBaseAddress(currentEepromPage, currentEepromSector);
- sectTag = EE_FLASH_Read(sectorAddress+64);
+ sectTag = EE_FLASH_Read(sectorAddress+256);
  if (sectTag == 0xFF)
  {
  sectorFound = 1;
@@ -3882,9 +3882,9 @@
  
  for (pgCount = 0; pgCount < 2; pgCount++)
  {
- for (sectCount = 0; sectCount < (U8)(512/(64+1)); sectCount++)
+ for (sectCount = 0; sectCount < (U8)(512/(256+1)); sectCount++)
  {
- sectTag = EE_FLASH_Read(getBaseAddress(pgCount, sectCount)+64);
+ sectTag = EE_FLASH_Read(getBaseAddress(pgCount, sectCount)+256);
  
  if (sectTag == 0xFF)
  {
@@ -3911,11 +3911,11 @@
  }
  }
  
- if (emptySectors == 2*(U8)(512/(64+1)))
+ if (emptySectors == 2*(U8)(512/(256+1)))
  {
  latestTag = 0x01;
  currentEepromPage = 2-1;
- currentEepromSector = (U8)(512/(64+1))-1;
+ currentEepromSector = (U8)(512/(256+1))-1;
  }
  
  return latestTag;
@@ -3935,7 +3935,7 @@
  
  U16 getBaseAddress(U8 page, U8 sector)
  {
- return (0xF000+(512*page)+(64+1)*sector);
+ return (0xF000+(512*page)+(256+1)*sector);
  }
  
  

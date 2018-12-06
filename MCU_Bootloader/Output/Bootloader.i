@@ -5884,84 +5884,417 @@
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  void (*BOOT_Program)(); 
  void (*OTA1_Program)(); 
  void (*OTA2_Program)(); 
- uint8_t CMD_RX_BUF[128];
- uint8_t CMD_TX_BUF[128];
- uint8_t FlashEprom[64]; 
+ uint8_t CmdRxBuf[2048];
+ uint8_t CmdTxBuf[1024];
+ uint8_t FlashEprom[256]; 
+ 
+ static void uint16ToAscii(uint16_t *dat, uint8_t *pstr){ 
+ data uint8_t temp;
+ temp = *dat & 0x000F; 
+ if(temp <= 0x09){
+ *(pstr + 3) = (temp + 0x30);
+ }
+ else{
+ *(pstr + 3) = (temp + 0x37);
+ }
+ temp = (*dat >> 4) & 0x000F; 
+ if(temp <= 0x09){
+ *(pstr + 2) = (temp + 0x30);
+ }
+ else{
+ *(pstr + 2) = (temp + 0x37);
+ }
+ temp = (*dat >> 8) & 0x000F; 
+ if(temp <= 0x09){
+ *(pstr + 1) = (temp + 0x30);
+ }
+ else{
+ *(pstr + 1) = (temp + 0x37);
+ }
+ temp = (*dat >> 12) & 0x000F; 
+ if(temp <= 0x09){
+ *pstr = (temp + 0x30);
+ }
+ else{
+ *pstr = (temp + 0x37);
+ }
+ }
+ static void uint8ToAscii(uint8_t *dat, uint8_t *pstr){ 
+ data uint8_t temp;
+ temp = (*dat & 0x0f);
+ if(temp <= 0x09){
+ *(pstr + 1) = (temp + 0x30);
+ }
+ else{
+ *(pstr + 1) = (temp + 0x37);
+ }
+ temp = ((*dat & 0xf0) >> 4);
+ if(temp <= 0x09){
+ *pstr = (temp + 0x30);
+ }
+ else{
+ *pstr = (temp + 0x37);
+ }
+ }
+ static uint8_t asciiToUint8(uint8_t *pstr){ 
+ data uint8_t temp[2];
+ data uint8_t hex;
+ if(*pstr >= 'A' && *pstr <='F'){ 
+ temp[1] = *pstr - 0x37; 
+ }
+ else if(*pstr >= '0' && *pstr <='9'){
+ temp[1] = *pstr - 0x30;	
+ }
+ if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){ 
+ temp[0] = *(pstr + 1) - 0x37; 
+ }
+ else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ temp[0] = *(pstr + 1) - 0x30;	
+ }
+ hex = 0;
+ hex |= temp[0] & 0xF;
+ hex |= (temp[1] & 0x0F << 4) & 0xF0;
+ return hex;
+ }
+ 
+ static uint16_t asciiToUint16(uint8_t *pstr){
+ data uint8_t temp[4];
+ data uint16_t hex;
+ 
+ if(*pstr >= 'A' && *pstr <='F'){ 
+ temp[3] = *pstr - 0x37; 
+ }
+ else if(*pstr >= '0' && *pstr <='9'){
+ temp[3] = *pstr - 0x30;	
+ }
+ 
+ if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){ 
+ temp[2] = *(pstr + 1) - 0x37; 
+ }
+ else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ temp[2] = *(pstr + 1) - 0x30;	
+ }
+ 
+ if(*pstr >= 'A' && *pstr <='F'){ 
+ temp[1] = *pstr - 0x37; 
+ }
+ else if(*pstr >= '0' && *pstr <='9'){
+ temp[1] = *pstr - 0x30;	
+ }
+ 
+ if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){ 
+ temp[0] = *(pstr + 1) - 0x37; 
+ }
+ else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ temp[0] = *(pstr + 1) - 0x30;	
+ }
+ hex = 0;
+ hex |= temp[0] & 0x000F;
+ hex |= ((temp[1] & 0x0F) << 4) & 0x00F0;
+ hex |= ((temp[2] & 0x0F) << 8) & 0x0F00;
+ hex |= ((temp[3] & 0x0F) << 12) & 0xF000;
+ return hex;
+ }
+ static uint8_t LRC(uint8_t *buf, int32_t len){ 
+ int i;
+ uint8_t lrc = 0;         
+ for( i = 0; i < len; i++ ){
+ lrc = lrc + buf[i];
+ }
+ return lrc;
+ }
+ void uart0Send(uint8_t *buf, uint16_t count){ 
+ uint8_t *ptr = buf;
+ do{
+ SBUF0 = *ptr++;
+ while(TI0 == 0);
+ TI0 = 0;
+ }while(--count);
+ }
+ void uart0Receive(uint8_t *buf, uint16_t count){ 
+ uint8_t * ptr = buf;
+ do{
+ if(RI0 == 1)
+ {
+ *ptr++ = SBUF0;
+ RI0 = 0;
+ count--;
+ }
+ }while(count);
+ }
+ void CmdSetHwVer(void){ 
+ memcpy((FlashEprom + 48), (CmdRxBuf + 2), 8);
+ if(EEPROM_WriteBlock(0, FlashEprom, 256) != 0x00){ 
+ CmdTxBuf[0] = 0x81;
+ CmdTxBuf[1] = 0x30;
+ CmdTxBuf[2] = 0x00;
+ CmdTxBuf[3] = 0x91;	
+ }
+ else{
+ CmdTxBuf[0] = 0x81;
+ CmdTxBuf[1] = 0x30;
+ CmdTxBuf[2] = 0xFF;
+ CmdTxBuf[3] = 0x91;
+ }
+ uart0Send(CmdTxBuf, 4);
+ }
+ uint8_t * CmdGetHwVer(void){ 
+ 
+ }
+ void CmdResetMcu(void){
  
  
+ 
+ 
+ }
+ void cmdPoll(void){
+ uint16_t i;
+ uint8_t *ptr, *ptw;
+ while(1){
+ ptr = CmdRxBuf;
+ uart0Receive(ptr, 1);
+ if(*ptr == 0x81){
+ ptr ++;
+ do{
+ uart0Receive(ptr, 1);
+ if(*ptr == 0x91){
+ switch(CmdRxBuf[1])
+ {
+ case 0x30:
+ CmdSetHwVer();
+ break;
+ case 0x31:
+ break;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ default:break;
+ }
+ break;
+ }
+ else if(ptr >= (CmdRxBuf + 2048)){
+ break;
+ }
+ }while(1);
+ }
+ }
+ }
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ void bootSequence(void);
+ uint32_t bootFlashCrc(void);
+ uint32_t ota1FlashCrc(void);
+ uint32_t ota2FlashCrc(void);
+ 
+ void bootSequence(void)
+ { 
+ data uint32_t ota1Crc32, ota2Crc32;
+ 
+ if(FlashEprom[20] == 0xA5A5)
+ { 
+ ota1Crc32 = ota1FlashCrc();
+ if(ota1Crc32 == FlashEprom[EPROM_OTA1_CRC])
+ {
+ OTA1_Program = (void code *)0x1000; 
+ OTA1_Program(); 
+ }
+ }
+ if(FlashEprom[20] == 0x5A5A){ 
+ if(ota2Crc32 == FlashEprom[EPROM_OTA2_CRC]){
+ OTA2_Program = (void code *)0x8000; 
+ OTA2_Program(); 
+ }	
+ }
+ }
+ uint32_t bootFlashCrc(void)
+ { 
+ data uint32_t crc = 0, i;
+ data uint8_t temp;
+ 
+ crc32Clear(); 
+ for(i = 0x0000;i < 0x0FFF;i ++)
+ { 
+ FLASH_Read(&temp, i, 1);
+ crc = crc32CalculateAdd(temp);
+ }
+ return crc;
+ }
+ uint32_t ota1FlashCrc(void)
+ { 
+ data uint32_t crc = 0 ,i;
+ data uint8_t temp;
+ crc32Clear(); 
+ for(i = 0x1000;i < 0x8000;i ++)
+ { 
+ FLASH_Read(&temp, i, 1);
+ crc = crc32CalculateAdd(temp);
+ }
+ return crc;
+ }
+ uint32_t ota2FlashCrc(void)
+ { 
+ data uint32_t crc = 0, i;
+ data uint8_t temp;
+ for(i = 0x8000;i < 0xF000;i ++)
+ { 
+ FLASH_Read(&temp, i, 1);
+ crc = crc32CalculateAdd(temp);
+ }
+ return crc;
+ }
  
  void main (void) 
  {
  data uint32_t bootCrc32, ota1Crc32, ota2Crc32;
  data uint8_t temp, ctemp;
  data uint32_t i, rxCounter;
- ctemp = getkey();
- do{
- rxCounter ++;
- }while(ctemp != '$');
- CMD_RX_BUF[i] = ctemp;
  
- 
- 
- 
- 
-  
-  VDM0CN = 0x80; RSTSRC = (0x02 | 0x02);
-  PCA0MD &= ~0x40;
-  
- 
- if(EEPROM_ReadBlock(0, FlashEprom, 64) != 0x00){ 
- while(1); 
- }
- crc32Clear(); 
- for(i = 0x0000;i < 0x0FFF;i ++)
- { 
- FLASH_Read(&temp, i, 1);
- bootCrc32 = crc32CalculateAdd(temp);
- }
- 
- for(i = 0x1000;i < 0x8000;i ++)
- { 
- FLASH_Read(&temp, i, 1);
- ota1Crc32 = crc32CalculateAdd(temp);
- }
- for(i = 0x8000;i < 0xF000;i ++)
- { 
- FLASH_Read(&temp, i, 1);
- ota2Crc32 = crc32CalculateAdd(temp);
- }
- 
- if(FlashEprom[20] == 0xA5A5)
- {
- if(bootCrc32 == FlashEprom[0] && ota1Crc32 == FlashEprom[8]	)
- {
- OTA1_Program = (void code *) 0x1000; 
- OTA1_Program(); 
- }
- }
- if(FlashEprom[20] == 0x5A5A)
- {
- if(bootCrc32 == FlashEprom[0] && ota2Crc32 == FlashEprom[16]	)
- {
- OTA2_Program = (void code *) 0x8000; 
- OTA2_Program(); 
- }	
- }
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+ cmdPoll();
  
  
  
@@ -5989,4 +6322,3 @@
  }
  
  }
- 
