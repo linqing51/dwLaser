@@ -5870,32 +5870,52 @@
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  void (*BOOT_Program)(); 
  void (*OTA1_Program)(); 
  void (*OTA2_Program)(); 
+ uint8_t CMD_RX_BUF[128];
+ uint8_t CMD_TX_BUF[128];
+ uint8_t FlashEprom[64]; 
+ 
+ 
  
  void main (void) 
  {
- 
- 
- 
- 
- 
- 
- 
- 
- data uint8_t flashEprom[64];
  data uint32_t bootCrc32, ota1Crc32, ota2Crc32;
- data uint8_t temp;
- data uint32_t i;
+ data uint8_t temp, ctemp;
+ data uint32_t i, rxCounter;
+ ctemp = getkey();
+ do{
+ rxCounter ++;
+ }while(ctemp != '$');
+ CMD_RX_BUF[i] = ctemp;
+ 
+ 
+ 
+ 
+ 
   
   VDM0CN = 0x80; RSTSRC = (0x02 | 0x02);
   PCA0MD &= ~0x40;
   
- if(EEPROM_ReadBlock(0, flashEprom, 64) != 0x00){ 
+ 
+ if(EEPROM_ReadBlock(0, FlashEprom, 64) != 0x00){ 
  while(1); 
  }
- 
  crc32Clear(); 
  for(i = 0x0000;i < 0x0FFF;i ++)
  { 
@@ -5914,17 +5934,17 @@
  ota2Crc32 = crc32CalculateAdd(temp);
  }
  
- if(flashEprom[20] == 0xA5A5)
+ if(FlashEprom[20] == 0xA5A5)
  {
- if(bootCrc32 == flashEprom[0] && ota1Crc32 == flashEprom[8]	)
+ if(bootCrc32 == FlashEprom[0] && ota1Crc32 == FlashEprom[8]	)
  {
  OTA1_Program = (void code *) 0x1000; 
  OTA1_Program(); 
  }
  }
- if(flashEprom[20] == 0x5A5A)
+ if(FlashEprom[20] == 0x5A5A)
  {
- if(bootCrc32 == flashEprom[0] && ota2Crc32 == flashEprom[16]	)
+ if(bootCrc32 == FlashEprom[0] && ota2Crc32 == FlashEprom[16]	)
  {
  OTA2_Program = (void code *) 0x8000; 
  OTA2_Program(); 

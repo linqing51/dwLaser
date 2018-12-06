@@ -1,0 +1,55 @@
+C51 COMPILER V9.59.0.0   GETKEY                                                            12/06/2018 16:48:28 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE GETKEY
+OBJECT MODULE PLACED IN .\Output\GETKEY.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Bootloader\GETKEY.C LARGE OMF2 OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Lib;.\L
+                    -ibFlash;.\FlashEprom;.\Bootloader;.\Driver) DEFINE(C8051F340) VARBANKING(1) DEBUG PRINT(.\Output\GETKEY.lst) PREPRINT(.\
+                    -Output\GETKEY.i) OBJECT(.\Output\GETKEY.obj)
+
+line level    source
+
+   1          /***********************************************************************/
+   2          /*  This file is part of the C51 Compiler package                      */
+   3          /*  Copyright KEIL ELEKTRONIK GmbH 1993 - 2002                         */
+   4          /***********************************************************************/
+   5          /*                                                                     */
+   6          /*  GETKEY.C:  This routine is the general character input of C51.     */
+   7          /*  You may add this file to a uVision2 project.                       */
+   8          /*                                                                     */
+   9          /*  To translate this file use C51 with the following invocation:      */
+  10          /*     C51 GETKEY.C  <memory model>                                    */
+  11          /*                                                                     */
+  12          /*  To link the modified GETKEY.OBJ file to your application use the   */
+  13          /*  following Lx51 invocation:                                         */
+  14          /*     Lx51 <your object file list>, GETKEY.OBJ <controls>             */
+  15          /*                                                                     */
+  16          /***********************************************************************/
+  17          
+  18          #include <reg51.h>
+  19          
+  20          char _getkey ()  {
+  21   1        char c;
+  22   1        while (!RI);
+  23   1        c = SBUF;
+  24   1        RI = 0;
+  25   1        return (c);
+  26   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =      8    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
