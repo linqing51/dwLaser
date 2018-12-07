@@ -5904,6 +5904,10 @@
  uint8_t CmdTxBuf[1024];
  uint8_t FlashEprom[256]; 
  
+ static void uint32ToAscii(uint32_t *dat, uint8_t *pstr){ 
+ }
+ static uint32_t asciiToUint32(uint8_t *pstr){ 
+ }
  static void uint16ToAscii(uint16_t *dat, uint8_t *pstr){ 
  data uint8_t temp;
  temp = *dat & 0x000F; 
@@ -6039,7 +6043,7 @@
  }while(count);
  }
  void CmdSetHwVer(void){ 
- memcpy((FlashEprom + 48), (CmdRxBuf + 2), 8);
+ memcpy((FlashEprom + EPROM_HW_VER_BCD), (CmdRxBuf + 2), 8);
  if(EEPROM_WriteBlock(0, FlashEprom, 256) != 0x00){ 
  CmdTxBuf[0] = 0x81;
  CmdTxBuf[1] = 0x30;
@@ -6238,14 +6242,14 @@
  if(FlashEprom[20] == 0xA5A5)
  { 
  ota1Crc32 = ota1FlashCrc();
- if(ota1Crc32 == FlashEprom[EPROM_OTA1_CRC])
+ if(ota1Crc32 == FlashEprom[8])
  {
  OTA1_Program = (void code *)0x1000; 
  OTA1_Program(); 
  }
  }
  if(FlashEprom[20] == 0x5A5A){ 
- if(ota2Crc32 == FlashEprom[EPROM_OTA2_CRC]){
+ if(ota2Crc32 == FlashEprom[16]){
  OTA2_Program = (void code *)0x8000; 
  OTA2_Program(); 
  }	

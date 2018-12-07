@@ -22,18 +22,18 @@
 #define CMD_RX_BUFFER_SIZE				2048
 #define CMD_TX_BUFFER_SIZE				1024
 /*****************************************************************************/
-#define EPROM_BOOT_CRC_BCD				0
-#define EPROM_OTA1_CRC_BCD				8
-#define EPROM_OTA2_CRC_BCD				16
-#define EPROM_BOOT_VER_BCD				24
-#define EPROM_OTA1_VER_BCD				32
-#define EPROM_OTA2_VER_BCD				40
-#define EPROM_HW_VER_BCD				48
-#define EPROM_OTA1_START_BCD			56
-#define EPROM_OTA1_END_BCD				64
-#define EPROM_OTA2_START_BCD			72
-#define EPROM_OTA2_END_BCD				80
-#define EPROM_BOOT_ORDER_BCD			88
+#define EPROM_BOOT_CRC				0
+#define EPROM_OTA1_CRC				8
+#define EPROM_OTA2_CRC				16
+#define EPROM_BOOT_VER				24
+#define EPROM_OTA1_VER				32
+#define EPROM_OTA2_VER				40
+#define EPROM_HW_VER				48
+#define EPROM_OTA1_START			56
+#define EPROM_OTA1_END				64
+#define EPROM_OTA2_START			72
+#define EPROM_OTA2_END				80
+#define EPROM_BOOT_ORDER			88
 
 /*****************************************************************************/
 void (*BOOT_Program)();//引导程序指针
@@ -43,6 +43,10 @@ uint8_t CmdRxBuf[CMD_RX_BUFFER_SIZE];
 uint8_t CmdTxBuf[CMD_TX_BUFFER_SIZE];
 uint8_t FlashEprom[EE_SIZE];//FLASH EPROM模拟
 /*****************************************************************************/
+static void uint32ToAscii(uint32_t *dat, uint8_t *pstr){//将32位有符号数转换为8个ASCII字符
+}
+static uint32_t asciiToUint32(uint8_t *pstr){//将8个BCD组合成一个32进制数
+}
 static void uint16ToAscii(uint16_t *dat, uint8_t *pstr){//将16位有符号数转换为4个ASCII字符
 	data uint8_t temp;
 	temp = *dat & 0x000F;//0x000A
@@ -178,7 +182,7 @@ void uart0Receive(uint8_t *buf, uint16_t count){//串口0查询接收
 	}while(count);
 }
 void CmdSetHwVer(void){//设置硬件版本
-	memcpy((FlashEprom + EPROM_HW_VER_BCD), (CmdRxBuf + 2), 8);
+	memcpy((FlashEprom + EPROM_HW_VER), (CmdRxBuf + 2), 8);
 	if(EEPROM_WriteBlock(0, FlashEprom, EE_SIZE) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
 		CmdTxBuf[0] = CMD_STX;
 		CmdTxBuf[1] = CMD_SET_HW_VER;
