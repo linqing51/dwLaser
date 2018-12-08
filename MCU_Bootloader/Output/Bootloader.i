@@ -5897,46 +5897,201 @@
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  void (*BOOT_Program)(); 
  void (*OTA1_Program)(); 
  void (*OTA2_Program)(); 
+ void bootSequence(void);
+ uint32_t bootFlashCrc(void);
+ uint32_t ota1FlashCrc(void);
+ uint32_t ota2FlashCrc(void);
  uint8_t CmdRxBuf[2048];
  uint8_t CmdTxBuf[1024];
  uint8_t FlashEprom[256]; 
  
  static void uint32ToAscii(uint32_t *dat, uint8_t *pstr){ 
- }
- static uint32_t asciiToUint32(uint8_t *pstr){ 
- }
- static void uint16ToAscii(uint16_t *dat, uint8_t *pstr){ 
- data uint8_t temp;
- temp = *dat & 0x000F; 
+ data uint8_t temp;	
+ temp = *dat & 0xF; 
  if(temp <= 0x09){
- *(pstr + 3) = (temp + 0x30);
+ *(pstr + 0) = (temp + 0x30);
  }
  else{
- *(pstr + 3) = (temp + 0x37);
+ *(pstr + 0) = (temp + 0x37);
  }
- temp = (*dat >> 4) & 0x000F; 
- if(temp <= 0x09){
- *(pstr + 2) = (temp + 0x30);
- }
- else{
- *(pstr + 2) = (temp + 0x37);
- }
- temp = (*dat >> 8) & 0x000F; 
+ 
+ temp = (*dat >> 4) & 0xF; 
  if(temp <= 0x09){
  *(pstr + 1) = (temp + 0x30);
  }
  else{
  *(pstr + 1) = (temp + 0x37);
  }
- temp = (*dat >> 12) & 0x000F; 
+ 
+ temp = (*dat >> 8) & 0xF; 
+ if(temp <= 0x09){
+ *(pstr + 2) = (temp + 0x30);
+ }
+ else{
+ *(pstr + 2) = (temp + 0x37);
+ }
+ 
+ temp = (*dat >> 12) & 0xF; 
  if(temp <= 0x09){
  *pstr = (temp + 0x30);
  }
  else{
  *pstr = (temp + 0x37);
+ }
+ 
+ temp = (*dat >> 16) & 0xF; 
+ if(temp <= 0x09){
+ *(pstr + 4) = (temp + 0x30);
+ }
+ else{
+ *(pstr + 4) = (temp + 0x37);
+ }
+ 
+ temp = (*dat >> 20) & 0xF; 
+ if(temp <= 0x09){
+ *(pstr + 5) = (temp + 0x30);
+ }
+ else{
+ *(pstr + 5) = (temp + 0x37);
+ }
+ 
+ temp = (*dat >> 24) & 0xF; 
+ if(temp <= 0x09){
+ *(pstr + 6) = (temp + 0x30);
+ }
+ else{
+ *(pstr + 6) = (temp + 0x37);
+ }
+ 
+ temp = (*dat >> 28) & 0xF; 
+ if(temp <= 0x09){
+ *(pstr + 7) = (temp + 0x30);
+ }
+ else{
+ *(pstr + 7) = (temp + 0x37);
+ }
+ }
+ static uint32_t asciiToUint32(uint8_t *pstr){ 
+ data uint8_t temp[8];
+ data uint32_t hex;
+ 
+ if(*pstr >= 'A' && *pstr <='F'){ 
+ temp[0] = *pstr - 0x37; 
+ }
+ else if(*pstr >= '0' && *pstr <='9'){
+ temp[0] = *pstr - 0x30;	
+ }
+ 
+ if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){ 
+ temp[1] = *(pstr + 1) - 0x37; 
+ }
+ else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ temp[1] = *(pstr + 1) - 0x30;	
+ }
+ 
+ if(*pstr >= 'A' && *pstr <='F'){ 
+ temp[2] = *pstr - 0x37; 
+ }
+ else if(*pstr >= '0' && *pstr <='9'){
+ temp[2] = *pstr - 0x30;	
+ }
+ 
+ if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){ 
+ temp[3] = *(pstr + 1) - 0x37; 
+ }
+ else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ temp[3] = *(pstr + 1) - 0x30;	
+ }
+ 
+ 
+ if(*pstr >= 'A' && *pstr <='F'){ 
+ temp[4] = *pstr - 0x37; 
+ }
+ else if(*pstr >= '0' && *pstr <='9'){
+ temp[4] = *pstr - 0x30;	
+ }
+ 
+ if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){ 
+ temp[5] = *(pstr + 1) - 0x37; 
+ }
+ else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ temp[5] = *(pstr + 1) - 0x30;	
+ }
+ 
+ if(*pstr >= 'A' && *pstr <='F'){ 
+ temp[6] = *pstr - 0x37; 
+ }
+ else if(*pstr >= '0' && *pstr <='9'){
+ temp[6] = *pstr - 0x30;	
+ }
+ 
+ if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){ 
+ temp[7] = *(pstr + 1) - 0x37; 
+ }
+ else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ temp[7] = *(pstr + 1) - 0x30;	
+ }
+ hex = 0;
+ hex |= (temp[0] & 0x0000000F);
+ hex |= (((temp[1] & 0x0F) << 4) & 0x000000F0);
+ hex |= (((temp[2] & 0x0F) << 8) & 0x00000F00);
+ hex |= (((temp[3] & 0x0F) << 12) & 0x0000F000);
+ hex |= (((temp[4] & 0x0F) << 16) & 0x000F0000);
+ hex |= (((temp[5] & 0x0F) << 20) & 0x00F00000);
+ hex |= (((temp[6] & 0x0F) << 24) & 0x00F00000);
+ hex |= (((temp[7] & 0x0F) << 28) & 0x00F00000);
+ return hex;
+ }
+ static void uint16ToAscii(uint16_t *dat, uint8_t *pstr){ 
+ data uint8_t temp;
+ temp = *dat & 0x000F; 
+ if(temp <= 0x09){
+ *(pstr + 0) = (temp + 0x30);
+ }
+ else{
+ *(pstr + 0) = (temp + 0x37);
+ }
+ temp = (*dat >> 4) & 0x000F; 
+ if(temp <= 0x09){
+ *(pstr + 1) = (temp + 0x30);
+ }
+ else{
+ *(pstr + 1) = (temp + 0x37);
+ }
+ temp = (*dat >> 8) & 0x000F; 
+ if(temp <= 0x09){
+ *(pstr + 2) = (temp + 0x30);
+ }
+ else{
+ *(pstr + 2) = (temp + 0x37);
+ }
+ temp = (*dat >> 12) & 0x000F; 
+ if(temp <= 0x09){
+ *(pstr + 3) = (temp + 0x30);
+ }
+ else{
+ *(pstr + 3) = (temp + 0x37);
  }
  }
  static void uint8ToAscii(uint8_t *dat, uint8_t *pstr){ 
@@ -6043,8 +6198,8 @@
  }while(count);
  }
  void CmdSetHwVer(void){ 
- memcpy((FlashEprom + EPROM_HW_VER_BCD), (CmdRxBuf + 2), 8);
- if(EEPROM_WriteBlock(0, FlashEprom, 256) != 0x00){ 
+ FlashEprom[15] = asciiToUint8(CmdRxBuf + 2);
+ if(EEPROM_WriteBlock(15, FlashEprom, 1) != 0x00){ 
  CmdTxBuf[0] = 0x81;
  CmdTxBuf[1] = 0x30;
  CmdTxBuf[2] = 0x00;
@@ -6058,15 +6213,98 @@
  }
  uart0Send(CmdTxBuf, 4);
  }
- uint8_t * CmdGetHwVer(void){ 
- 
+ void CmdGetHwVer(void){ 
+ CmdTxBuf[0] = 0x81;
+ CmdTxBuf[1] = 0x30;
+ CmdTxBuf[2] = FlashEprom[15];
+ CmdTxBuf[3] = 0x91;
+ uart0Send(CmdTxBuf, 4);
  }
- void CmdResetMcu(void){
- 
- 
- 
- 
+ void CmdResetMcu(void){ 
+ RSTSRC |= (1 << 4);
  }
+ void CmdGetBootLoaderVer(void){ 
+ CmdTxBuf[0] = 0x81;
+ CmdTxBuf[1] = 0x33;
+ CmdTxBuf[2] = FlashEprom[12];
+ CmdTxBuf[3] = 0x91;	
+ uart0Send(CmdTxBuf, 4);
+ }
+ void CmdSetBootLoaderVer(void){ 
+ FlashEprom[12] = asciiToUint8(CmdRxBuf + 2);
+ if(EEPROM_WriteBlock(15, FlashEprom, 1) != 0x00){ 
+ CmdTxBuf[0] = 0x81;
+ CmdTxBuf[1] = 12;
+ CmdTxBuf[2] = 0x00;
+ CmdTxBuf[3] = 0x91;	
+ }
+ else{
+ CmdTxBuf[0] = 0x81;
+ CmdTxBuf[1] = 12;
+ CmdTxBuf[2] = 0xFF;
+ CmdTxBuf[3] = 0x91;
+ }
+ uart0Send(CmdTxBuf, 4);
+ }
+ 
+ void CmdGetOTA1Ver(void){ 
+ CmdTxBuf[0] = 0x81;
+ CmdTxBuf[1] = 0x34;
+ CmdTxBuf[2] = FlashEprom[13];
+ CmdTxBuf[3] = 0x91;	
+ uart0Send(CmdTxBuf, 4);
+ }
+ void CmdSetOTA1Ver(void){ 
+ FlashEprom[13] = asciiToUint8(CmdRxBuf + 2);
+ if(EEPROM_WriteBlock(13, FlashEprom, 1) != 0x00){ 
+ CmdTxBuf[0] = 0x81;
+ CmdTxBuf[1] = 0x34;
+ CmdTxBuf[2] = 0x00;
+ CmdTxBuf[3] = 0x91;	
+ }
+ else{
+ CmdTxBuf[0] = 0x81;
+ CmdTxBuf[1] = 0x34;
+ CmdTxBuf[2] = 0xFF;
+ CmdTxBuf[3] = 0x91;
+ }
+ uart0Send(CmdTxBuf, 4);
+ }
+ void CmdGetOTA2Ver(void){ 
+ CmdTxBuf[0] = 0x81;
+ CmdTxBuf[1] = 0x35;
+ CmdTxBuf[2] = FlashEprom[14];
+ CmdTxBuf[3] = 0x91;	
+ uart0Send(CmdTxBuf, 4);
+ }
+ void CmdGetBootCrc(void){ 
+ CmdTxBuf[0] = 0x81;
+ CmdTxBuf[1] = 0x36;
+ CmdTxBuf[2] = FlashEprom[0];
+ CmdTxBuf[3] = 0x91;	
+ uart0Send(CmdTxBuf, 4);
+ }
+ void CmdGetOTA1Crc(void){ 
+ CmdTxBuf[0] = 0x81;
+ CmdTxBuf[1] = 0x36;
+ CmdTxBuf[2] = FlashEprom[4];
+ CmdTxBuf[3] = 0x91;	
+ uart0Send(CmdTxBuf, 4);
+ }
+ void CmdGetOTA2Crc(void){ 
+ CmdTxBuf[0] = 0x81;
+ CmdTxBuf[1] = 0x36;
+ CmdTxBuf[2] = FlashEprom[8];
+ CmdTxBuf[3] = 0x91;	
+ uart0Send(CmdTxBuf, 4);
+ }
+ void CmdEraseFlashPage(void){ 
+ uint8_t page;
+ page = asciiToUint8(CmdRxBuf + 2);
+ 
+ EE_FLASH_WriteErase (page, 0, 0x13);
+ }
+  
  void cmdPoll(void){
  uint16_t i;
  uint8_t *ptr, *ptw;
@@ -6085,16 +6323,16 @@
  break;
  case 0x31:
  break;
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+ case 0x32:
+ break;
+ case 0x33:
+ break;
+ case 0x34:
+ break;
+ case 0x35:
+ break;
+ case 0x36:
+ break;
  default:break;
  }
  break;
@@ -6230,29 +6468,25 @@
  
  
  
- void bootSequence(void);
- uint32_t bootFlashCrc(void);
- uint32_t ota1FlashCrc(void);
- uint32_t ota2FlashCrc(void);
  
  void bootSequence(void)
  { 
  data uint32_t ota1Crc32, ota2Crc32;
- 
- if(FlashEprom[20] == 0xA5A5)
- { 
+ if(FlashEprom[20] == 0xA5A5){ 
  ota1Crc32 = ota1FlashCrc();
- if(ota1Crc32 == FlashEprom[8])
+ if(ota1Crc32 == FlashEprom[4])
  {
- OTA1_Program = (void code *)0x1000; 
+ OTA1_Program = (void code *)(0x1000 & 0x1FFFF); 
  OTA1_Program(); 
  }
  }
- if(FlashEprom[20] == 0x5A5A){ 
- if(ota2Crc32 == FlashEprom[16]){
- OTA2_Program = (void code *)0x8000; 
+ else if(FlashEprom[20] == 0x5A5A){ 
+ if(ota2Crc32 == FlashEprom[8]){
+ OTA2_Program = (void code *)(0x8000 & 0x1FFFF); 
  OTA2_Program(); 
  }	
+ }
+ else if(FlashEprom[20] == 0x5555){
  }
  }
  uint32_t bootFlashCrc(void)

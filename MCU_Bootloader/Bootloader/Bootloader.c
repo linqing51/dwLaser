@@ -4,10 +4,27 @@
 #define CMD_END								0x91
 #define CMD_SET_HW_VER						0x30
 #define CMD_GET_HW_VER						0x31
+#define CMD_RESET_MCU						0x32
+#define CMD_GET_BOOTLOADER_VER				0x33
+#define CMD_GET_OTA1_VER					0x34
+#define CMD_GET_OTA2_VER					0x35
+#define CMD_SET_BOOTLOADER_VER				0x33
+#define CMD_SET_OTA1_VER					0x34
+#define CMD_SET_OTA2_VER					0x35
+#define CMD_GET_BOOT_CRC					0x36
+#define CMD_GET_OTA1_CRC					0x36
+#define CMD_GET_OTA2_CRC					0x36
+#define CMD_ERASE_FLASH_PAGE
+#define CMD_WRITE_FLASH_BYTES
+#define CMD_READ_FLASH_BYTES
+#define CMD_GOTO_OTA1
+#define CMD_GOTO_OTA2
 #define CMD_GET_HW_VER_TX_SZ				3
 #define CMD_GET_HW_VER_RX_SZ 				6
 #define CMD_SET_HW_VER_TX_SZ				7
 #define CMD_SET_HW_VER_RX_SZ				3
+#define CMD_RESPOND_OK 						0xFF
+#define CMD_RESPOND_FAIL					0x00
 /*****************************************************************************/
 #define FW_BOOT_ADR_START				0x0000//引导程序起始
 #define FW_BOOT_ADR_END					0x0FFF//引导程序结束
@@ -23,59 +40,197 @@
 #define CMD_TX_BUFFER_SIZE				1024
 /*****************************************************************************/
 #define EPROM_BOOT_CRC				0
-#define EPROM_OTA1_CRC				8
-#define EPROM_OTA2_CRC				16
-#define EPROM_BOOT_VER				24
-#define EPROM_OTA1_VER				32
-#define EPROM_OTA2_VER				40
-#define EPROM_HW_VER				48
-#define EPROM_OTA1_START			56
-#define EPROM_OTA1_END				64
-#define EPROM_OTA2_START			72
-#define EPROM_OTA2_END				80
-#define EPROM_BOOT_ORDER			88
+#define EPROM_OTA1_CRC				4
+#define EPROM_OTA2_CRC				8
+#define EPROM_BOOT_VER				12
+#define EPROM_OTA1_VER				13
+#define EPROM_OTA2_VER				14
+#define EPROM_HW_VER				15
+#define EPROM_OTA1_START			16
+#define EPROM_OTA1_END				20
+#define EPROM_OTA2_START			24
+#define EPROM_OTA2_END				28
+#define EPROM_BOOT_ORDER			32
+
 
 /*****************************************************************************/
 void (*BOOT_Program)();//引导程序指针
 void (*OTA1_Program)();//应用程序1指针
 void (*OTA2_Program)();//应用程序2指针
+void bootSequence(void);
+uint32_t bootFlashCrc(void);
+uint32_t ota1FlashCrc(void);
+uint32_t ota2FlashCrc(void);
 uint8_t CmdRxBuf[CMD_RX_BUFFER_SIZE];
 uint8_t CmdTxBuf[CMD_TX_BUFFER_SIZE];
 uint8_t FlashEprom[EE_SIZE];//FLASH EPROM模拟
 /*****************************************************************************/
 static void uint32ToAscii(uint32_t *dat, uint8_t *pstr){//将32位有符号数转换为8个ASCII字符
-}
-static uint32_t asciiToUint32(uint8_t *pstr){//将8个BCD组合成一个32进制数
-}
-static void uint16ToAscii(uint16_t *dat, uint8_t *pstr){//将16位有符号数转换为4个ASCII字符
-	data uint8_t temp;
-	temp = *dat & 0x000F;//0x000A
+	data uint8_t temp;	
+	temp = *dat & 0xF;//0x0000000A
 	if(temp <= 0x09){
-		*(pstr + 3) = (temp + 0x30);
+		*(pstr + 0) = (temp + 0x30);
     }
     else{
-		 *(pstr + 3) = (temp + 0x37);
+		 *(pstr + 0) = (temp + 0x37);
     }
-	temp = (*dat >> 4) & 0x000F;//0x00A0
-	if(temp <= 0x09){
-		*(pstr + 2) = (temp + 0x30);
-    }
-    else{
-		 *(pstr + 2) = (temp + 0x37);
-    }
-	temp = (*dat >> 8) & 0x000F;//0x0A00
+	
+	temp = (*dat >> 4) & 0xF;//0x000000A0
 	if(temp <= 0x09){
 		*(pstr + 1) = (temp + 0x30);
     }
     else{
 		 *(pstr + 1) = (temp + 0x37);
     }
-	temp = (*dat >> 12) & 0x000F;//0xA000
+	
+	temp = (*dat >> 8) & 0xF;//0x00000A00
+	if(temp <= 0x09){
+		*(pstr + 2) = (temp + 0x30);
+    }
+    else{
+		 *(pstr + 2) = (temp + 0x37);
+    }
+	
+	temp = (*dat >> 12) & 0xF;//0x0000A000
 	if(temp <= 0x09){
 		*pstr = (temp + 0x30);
     }
     else{
 		*pstr = (temp + 0x37);
+    }
+	
+	temp = (*dat >> 16) & 0xF;//0x000A0000
+	if(temp <= 0x09){
+		*(pstr + 4) = (temp + 0x30);
+    }
+    else{
+		 *(pstr + 4) = (temp + 0x37);
+    }
+
+	temp = (*dat >> 20) & 0xF;//0x00A00000
+	if(temp <= 0x09){
+		*(pstr + 5) = (temp + 0x30);
+    }
+    else{
+		 *(pstr + 5) = (temp + 0x37);
+    }
+	
+	temp = (*dat >> 24) & 0xF;//0x0A000000
+	if(temp <= 0x09){
+		*(pstr + 6) = (temp + 0x30);
+    }
+    else{
+		 *(pstr + 6) = (temp + 0x37);
+    }
+	
+	temp = (*dat >> 28) & 0xF;//0x00A00000
+	if(temp <= 0x09){
+		*(pstr + 7) = (temp + 0x30);
+    }
+    else{
+		 *(pstr + 7) = (temp + 0x37);
+    }
+}
+static uint32_t asciiToUint32(uint8_t *pstr){//将8个BCD组合成一个32进制数
+	data uint8_t temp[8];
+	data uint32_t hex;
+	//取出0x0000000A
+	if(*pstr >= 'A' && *pstr <='F'){//A-F
+		temp[0] = *pstr - 0x37; 
+	}
+	else if(*pstr >= '0' && *pstr <='9'){
+		temp[0] = *pstr - 0x30;	
+	}
+	//取出0x000000A0
+	if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
+		temp[1] = *(pstr + 1) - 0x37; 
+	}
+	else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+		temp[1] = *(pstr + 1) - 0x30;	
+	}
+	//取出0x00000A00
+	if(*pstr >= 'A' && *pstr <='F'){//A-F
+		temp[2] = *pstr - 0x37; 
+	}
+	else if(*pstr >= '0' && *pstr <='9'){
+		temp[2] = *pstr - 0x30;	
+	}
+	//取出0x0000A000
+	if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
+		temp[3] = *(pstr + 1) - 0x37; 
+	}
+	else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+		temp[3] = *(pstr + 1) - 0x30;	
+	}
+	
+	//取出0x0000A000
+	if(*pstr >= 'A' && *pstr <='F'){//A-F
+		temp[4] = *pstr - 0x37; 
+	}
+	else if(*pstr >= '0' && *pstr <='9'){
+		temp[4] = *pstr - 0x30;	
+	}
+	//取出0x00000A00
+	if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
+		temp[5] = *(pstr + 1) - 0x37; 
+	}
+	else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+		temp[5] = *(pstr + 1) - 0x30;	
+	}
+	//取出0x000000A0
+	if(*pstr >= 'A' && *pstr <='F'){//A-F
+		temp[6] = *pstr - 0x37; 
+	}
+	else if(*pstr >= '0' && *pstr <='9'){
+		temp[6] = *pstr - 0x30;	
+	}
+	//取出0x0000000A
+	if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
+		temp[7] = *(pstr + 1) - 0x37; 
+	}
+	else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+		temp[7] = *(pstr + 1) - 0x30;	
+	}
+	hex = 0;
+	hex |= (temp[0] & 0x0000000F);
+	hex |= (((temp[1] & 0x0F) << 4) & 0x000000F0);
+	hex |= (((temp[2] & 0x0F) << 8) & 0x00000F00);
+	hex |= (((temp[3] & 0x0F) << 12) & 0x0000F000);
+	hex |= (((temp[4] & 0x0F) << 16) & 0x000F0000);
+	hex |= (((temp[5] & 0x0F) << 20) & 0x00F00000);
+	hex |= (((temp[6] & 0x0F) << 24) & 0x00F00000);
+	hex |= (((temp[7] & 0x0F) << 28) & 0x00F00000);
+	return hex;
+}
+static void uint16ToAscii(uint16_t *dat, uint8_t *pstr){//将16位有符号数转换为4个ASCII字符
+	data uint8_t temp;
+	temp = *dat & 0x000F;//0x000A
+	if(temp <= 0x09){
+		*(pstr + 0) = (temp + 0x30);
+    }
+    else{
+		 *(pstr + 0) = (temp + 0x37);
+    }
+	temp = (*dat >> 4) & 0x000F;//0x00A0
+	if(temp <= 0x09){
+		*(pstr + 1) = (temp + 0x30);
+    }
+    else{
+		 *(pstr + 1) = (temp + 0x37);
+    }
+	temp = (*dat >> 8) & 0x000F;//0x0A00
+	if(temp <= 0x09){
+		*(pstr + 2) = (temp + 0x30);
+    }
+    else{
+		 *(pstr + 2) = (temp + 0x37);
+    }
+	temp = (*dat >> 12) & 0x000F;//0xA000
+	if(temp <= 0x09){
+		*(pstr + 3) = (temp + 0x30);
+    }
+    else{
+		*(pstr + 3) = (temp + 0x37);
     }
 }
 static void uint8ToAscii(uint8_t *dat, uint8_t *pstr){//将16进制数转换成两个ASCII字符
@@ -182,30 +337,113 @@ void uart0Receive(uint8_t *buf, uint16_t count){//串口0查询接收
 	}while(count);
 }
 void CmdSetHwVer(void){//设置硬件版本
-	memcpy((FlashEprom + EPROM_HW_VER), (CmdRxBuf + 2), 8);
-	if(EEPROM_WriteBlock(0, FlashEprom, EE_SIZE) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
+	FlashEprom[EPROM_HW_VER] = asciiToUint8(CmdRxBuf + 2);
+	if(EEPROM_WriteBlock(EPROM_HW_VER, FlashEprom, 1) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
 		CmdTxBuf[0] = CMD_STX;
 		CmdTxBuf[1] = CMD_SET_HW_VER;
-		CmdTxBuf[2] = 0x00;
+		CmdTxBuf[2] = CMD_RESPOND_FAIL;
 		CmdTxBuf[3] = CMD_END;	
 	}
 	else{
 		CmdTxBuf[0] = CMD_STX;
 		CmdTxBuf[1] = CMD_SET_HW_VER;
-		CmdTxBuf[2] = 0xFF;
+		CmdTxBuf[2] = CMD_RESPOND_OK;
 		CmdTxBuf[3] = CMD_END;
 	}
 	uart0Send(CmdTxBuf, 4);
 }
-uint8_t * CmdGetHwVer(void){//获取硬件版本
+void CmdGetHwVer(void){//获取硬件版本
+	CmdTxBuf[0] = CMD_STX;
+	CmdTxBuf[1] = CMD_SET_HW_VER;
+	CmdTxBuf[2] = FlashEprom[EPROM_HW_VER];
+	CmdTxBuf[3] = CMD_END;
+	uart0Send(CmdTxBuf, 4);
+}
+void CmdResetMcu(void){//强制复位
+	RSTSRC |= (1 << 4);
+}
+void CmdGetBootLoaderVer(void){//获取BOOTLOADER版本
+	CmdTxBuf[0] = CMD_STX;
+	CmdTxBuf[1] = CMD_GET_BOOTLOADER_VER;
+	CmdTxBuf[2] = FlashEprom[EPROM_BOOT_VER];
+	CmdTxBuf[3] = CMD_END;	
+	uart0Send(CmdTxBuf, 4);
+}
+void CmdSetBootLoaderVer(void){//设置Bootloader版本号
+	FlashEprom[EPROM_BOOT_VER] = asciiToUint8(CmdRxBuf + 2);
+	if(EEPROM_WriteBlock(EPROM_HW_VER, FlashEprom, 1) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
+		CmdTxBuf[0] = CMD_STX;
+		CmdTxBuf[1] = EPROM_BOOT_VER;
+		CmdTxBuf[2] = CMD_RESPOND_FAIL;
+		CmdTxBuf[3] = CMD_END;	
+	}
+	else{
+		CmdTxBuf[0] = CMD_STX;
+		CmdTxBuf[1] = EPROM_BOOT_VER;
+		CmdTxBuf[2] = CMD_RESPOND_OK;
+		CmdTxBuf[3] = CMD_END;
+	}
+	uart0Send(CmdTxBuf, 4);
+}
 
+void CmdGetOTA1Ver(void){//获取OTA1版本号
+	CmdTxBuf[0] = CMD_STX;
+	CmdTxBuf[1] = CMD_GET_OTA1_VER;
+	CmdTxBuf[2] = FlashEprom[EPROM_OTA1_VER];
+	CmdTxBuf[3] = CMD_END;	
+	uart0Send(CmdTxBuf, 4);
 }
-void CmdResetMcu(void){
-//	uint8_t txbuf[CMD_RESET_MCU_TX_SZ], rxbuf[CMD_RESET_MCU_RX_SZ];
-//	txbuf[0] = CMD_STX;
-//	txbuf[1] = CMD_SET_HW_VER;
-	
+void CmdSetOTA1Ver(void){//设置OTA1版本号
+	FlashEprom[EPROM_OTA1_VER] = asciiToUint8(CmdRxBuf + 2);
+	if(EEPROM_WriteBlock(EPROM_OTA1_VER, FlashEprom, 1) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
+		CmdTxBuf[0] = CMD_STX;
+		CmdTxBuf[1] = CMD_SET_OTA1_VER;
+		CmdTxBuf[2] = CMD_RESPOND_FAIL;
+		CmdTxBuf[3] = CMD_END;	
+	}
+	else{
+		CmdTxBuf[0] = CMD_STX;
+		CmdTxBuf[1] = CMD_SET_OTA1_VER;
+		CmdTxBuf[2] = CMD_RESPOND_OK;
+		CmdTxBuf[3] = CMD_END;
+	}
+	uart0Send(CmdTxBuf, 4);
 }
+void CmdGetOTA2Ver(void){//获取OTA2版本号
+	CmdTxBuf[0] = CMD_STX;
+	CmdTxBuf[1] = CMD_GET_OTA2_VER;
+	CmdTxBuf[2] = FlashEprom[EPROM_OTA2_VER];
+	CmdTxBuf[3] = CMD_END;	
+	uart0Send(CmdTxBuf, 4);
+}
+void CmdGetBootCrc(void){//获取BOOT CRC
+	CmdTxBuf[0] = CMD_STX;
+	CmdTxBuf[1] = CMD_GET_BOOT_CRC;
+	CmdTxBuf[2] = FlashEprom[EPROM_BOOT_CRC];
+	CmdTxBuf[3] = CMD_END;	
+	uart0Send(CmdTxBuf, 4);
+}
+void CmdGetOTA1Crc(void){//获取OTA1 CRC
+	CmdTxBuf[0] = CMD_STX;
+	CmdTxBuf[1] = CMD_GET_OTA1_CRC;
+	CmdTxBuf[2] = FlashEprom[EPROM_OTA1_CRC];
+	CmdTxBuf[3] = CMD_END;	
+	uart0Send(CmdTxBuf, 4);
+}
+void CmdGetOTA2Crc(void){//获取OTA2 CRC
+	CmdTxBuf[0] = CMD_STX;
+	CmdTxBuf[1] = CMD_GET_OTA2_CRC;
+	CmdTxBuf[2] = FlashEprom[EPROM_OTA2_CRC];
+	CmdTxBuf[3] = CMD_END;	
+	uart0Send(CmdTxBuf, 4);
+}
+void CmdEraseFlashPage(void){//查出FLASH指定页
+	uint8_t page;
+	page = asciiToUint8(CmdRxBuf + 2);
+	//限制page范围
+	EE_FLASH_WriteErase (page, 0, 0x13);
+}
+CMD_ERASE_FLASH_PAGE
 void cmdPoll(void){
 	uint16_t i;
 	uint8_t *ptr, *ptw;
@@ -224,16 +462,16 @@ void cmdPoll(void){
 							break;
 						case CMD_GET_HW_VER:
 							break;
-//						case CMD_RESET_MCU:
-//							break;
-//						case CMD_GET_BOOTLOADER_VER:
-//							break;
-//						case CMD_GET_OTA1_VER:
-//							break;
-//						case CMD_GET_OTA2_VER:
-//							break;
-//						case CMD_GET_OTA1_CRC32:
-//							break;
+						case CMD_RESET_MCU:
+							break;
+						case CMD_GET_BOOTLOADER_VER:
+							break;
+						case CMD_GET_OTA1_VER:
+							break;
+						case CMD_GET_OTA2_VER:
+							break;
+						case CMD_GET_OTA1_CRC:
+							break;
 						default:break;
 					}
 					break;
@@ -369,29 +607,25 @@ void cmdPoll(void){
 //   
 //   printf("\n** Firmware Update Complete. **\n");
 //}
-void bootSequence(void);
-uint32_t bootFlashCrc(void);
-uint32_t ota1FlashCrc(void);
-uint32_t ota2FlashCrc(void);
 
 void bootSequence(void)
 {//启动顺序选择
 	data uint32_t ota1Crc32, ota2Crc32;
-	
-	if(FlashEprom[20] == BOOT_OTA1)
-	{//启动顺序选择BOOT_OTA1
+	if(FlashEprom[20] == BOOT_OTA1){//启动顺序选择BOOT_OTA1
 		ota1Crc32 = ota1FlashCrc();
 		if(ota1Crc32 == FlashEprom[EPROM_OTA1_CRC])
 		{
-			OTA1_Program = (void code *)FW_OTA1_ADR_START;//获取OTA1起始地址
+			OTA1_Program = (void code *)(FW_OTA1_ADR_START & 0x1FFFF);//获取OTA1起始地址
 			OTA1_Program();//执行应用程序
 		}
 	}
-	if(FlashEprom[20] == BOOT_OTA2){//启动顺序选择BOOT_OTA2
+	else if(FlashEprom[20] == BOOT_OTA2){//启动顺序选择BOOT_OTA2
 		if(ota2Crc32 == FlashEprom[EPROM_OTA2_CRC]){
-			OTA2_Program = (void code *)FW_OTA2_ADR_START;//获取OTA2起始地址
+			OTA2_Program = (void code *)(FW_OTA2_ADR_START & 0x1FFFF);//获取OTA2起始地址
 			OTA2_Program();//执行应用程序
 		}	
+	}
+	else if(FlashEprom[20] == BOOT_LOADER){
 	}
 }
 uint32_t bootFlashCrc(void)
