@@ -44,7 +44,7 @@
 #include <LIMITS.H>
 #include "crc32.h"
 /*****************************************************************************/
-//#include "InitConfig.h"
+#include "InitDevice.h"
 #include "delay.h"
 #include "Fxxx_EEPROM_Configuration.h"
 #include "Fxxx_EEPROM_Interface.h"

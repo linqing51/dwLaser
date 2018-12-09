@@ -1,11 +1,11 @@
-C51 COMPILER V9.59.0.0   GETKEY                                                            12/06/2018 16:48:28 PAGE 1   
+C51 COMPILER V9.59.0.0   GETKEY                                                            12/09/2018 22:13:24 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE GETKEY
 OBJECT MODULE PLACED IN .\Output\GETKEY.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Bootloader\GETKEY.C LARGE OMF2 OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Lib;.\L
-                    -ibFlash;.\FlashEprom;.\Bootloader;.\Driver) DEFINE(C8051F340) VARBANKING(1) DEBUG PRINT(.\Output\GETKEY.lst) PREPRINT(.\
-                    -Output\GETKEY.i) OBJECT(.\Output\GETKEY.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Bootloader\GETKEY.C COMPACT OMF2 OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Lib;.
+                    -\LibFlash;.\FlashEprom;.\Bootloader;.\Driver) DEFINE(C8051F340) VARBANKING(1) DEBUG PRINT(.\Output\GETKEY.lst) PREPRINT(
+                    -.\Output\GETKEY.i) OBJECT(.\Output\GETKEY.obj)
 
 line level    source
 
@@ -26,15 +26,16 @@ line level    source
   15          /*                                                                     */
   16          /***********************************************************************/
   17          
-  18          #include <reg51.h>
+  18          #include <appConfig.h>
   19          
   20          char _getkey ()  {
   21   1        char c;
-  22   1        while (!RI);
-  23   1        c = SBUF;
-  24   1        RI = 0;
-  25   1        return (c);
-  26   1      }
+  22   1      
+  23   1        while (!RI0);
+  24   1        c = SBUF0;
+  25   1        RI0 = 0;
+  26   1        return (c);
+  27   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

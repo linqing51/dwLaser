@@ -2778,6 +2778,17 @@
 #line 45 ".\Bootloader\AppConfig.h" /0
  
  
+  
+#line 1 "\GitHub\dwLaser\MCU_Bootloader\Bootloader\InitDevice.h" /0
+ 
+ 
+ 
+ 
+ void Init_Device(void);
+ 
+ 
+ 
+#line 47 ".\Bootloader\AppConfig.h" /0
  
   
 #line 1 "Lib\delay.h" /0
@@ -2833,7 +2844,7 @@
   
   
  
- 
+  
   
   
   
