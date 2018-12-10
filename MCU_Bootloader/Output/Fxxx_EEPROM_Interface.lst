@@ -1,11 +1,12 @@
-C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/09/2018 22:13:23 PAGE 1   
+C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/10/2018 22:23:51 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE FXXX_EEPROM_INTERFACE
 OBJECT MODULE PLACED IN .\Output\Fxxx_EEPROM_Interface.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE FlashEprom\Fxxx_EEPROM_Interface.c COMPACT OMF2 OPTIMIZE(8,SPEED) BROWSE
-                    - INCDIR(.\Lib;.\LibFlash;.\FlashEprom;.\Bootloader;.\Driver) DEFINE(C8051F340) VARBANKING(1) DEBUG PRINT(.\Output\Fxxx_E
-                    -EPROM_Interface.lst) PREPRINT(.\Output\Fxxx_EEPROM_Interface.i) OBJECT(.\Output\Fxxx_EEPROM_Interface.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE FlashEprom\Fxxx_EEPROM_Interface.c COMPACT OMF2 OPTIMIZE(9,SPEED) REGFIL
+                    -E(.\Output\bootload.ORC) BROWSE INCDIR(.\Lib;.\LibFlash;.\FlashEprom;.\Bootloader;.\Driver) DEFINE(C8051F340) VARBANKING
+                    -(1) DEBUG PRINT(.\Output\Fxxx_EEPROM_Interface.lst) PREPRINT(.\Output\Fxxx_EEPROM_Interface.i) OBJECT(.\Output\Fxxx_EEPR
+                    -OM_Interface.obj)
 
 line level    source
 
@@ -61,9 +62,9 @@ line level    source
   50          
   51          //-----------------------------------------------------------------------------
   52          // EEPROM_WriteBlock
-  53          //-----------------------------------------------------------------------------
-C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/09/2018 22:13:23 PAGE 2   
+C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/10/2018 22:23:51 PAGE 2   
 
+  53          //-----------------------------------------------------------------------------
   54          //
   55          // This routine writes the specified array into the emulated EEPROM by
   56          // decoding the address and calling flash write functions.
@@ -125,9 +126,9 @@ line level    source
  112   3            }
  113   2         }
  114   1      
- 115   1         // Mark new sector as copy in progress
-C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/09/2018 22:13:23 PAGE 3   
+C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/10/2018 22:23:51 PAGE 3   
 
+ 115   1         // Mark new sector as copy in progress
  116   1         EE_FLASH_WriteErase (writeAddr + TAG_OFFSET, WIP_TAG, FL_WRITE);
  117   1      
  118   1         // Copy from old to new sector excluding copy addresses
@@ -189,9 +190,9 @@ line level    source
  174   2            *dataBuf++ = EE_FLASH_Read(sectorAddress+address+byteCount);
  175   2         }
  176   1         return EE_NO_ERROR;
- 177   1      }
-C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/09/2018 22:13:23 PAGE 4   
+C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/10/2018 22:23:51 PAGE 4   
 
+ 177   1      }
  178          
  179          
  180          //-----------------------------------------------------------------------------
@@ -253,9 +254,9 @@ line level    source
  236   3               if (currentEepromPage == FL_PAGES)
  237   3               {
  238   4                  currentEepromPage = 0;
- 239   4               }
-C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/09/2018 22:13:23 PAGE 5   
+C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/10/2018 22:23:51 PAGE 5   
 
+ 239   4               }
  240   3            }
  241   2            sectorAddress = getBaseAddress(currentEepromPage, currentEepromSector);
  242   2            sectTag = EE_FLASH_Read(sectorAddress+TAG_OFFSET);
@@ -317,9 +318,9 @@ line level    source
  298   5                     if (sectTag == DONE_TAG_MAX)
  299   5                     {
  300   6                        nextTag = DONE_TAG_MIN;
- 301   6                     }
-C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/09/2018 22:13:23 PAGE 6   
+C51 COMPILER V9.59.0.0   FXXX_EEPROM_INTERFACE                                             12/10/2018 22:23:51 PAGE 6   
 
+ 301   6                     }
  302   5                     else
  303   5                     {
  304   6                        nextTag = sectTag + 1;
@@ -362,10 +363,10 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    825    ----
+   CODE SIZE        =    780    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
-   PDATA SIZE       =      2      36
+   PDATA SIZE       =      2      34
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

@@ -5939,8 +5939,8 @@
  uint32_t bootFlashCrc(void);
  uint32_t ota1FlashCrc(void);
  uint32_t ota2FlashCrc(void);
- xdata uint8_t CmdRxBuf[2048];
- xdata uint8_t CmdTxBuf[64];
+ xdata uint8_t CmdRxBuf[1100];
+ xdata uint8_t CmdTxBuf[1100];
  xdata uint8_t FlashEprom[64]; 
  
  static void uint32ToAscii(uint32_t *dat, uint8_t *pstr){ 
@@ -6266,6 +6266,7 @@
  uint8_t ctemp[2];
  uint16_t itemp;
  uint8ToAscii((FlashEprom + 15), ctemp);
+ EEPROM_ReadBlock(15, FlashEprom, 1);
  
  itemp = FlashEprom[15];
  printf("Bootloader->Debug->CMD_GET_HW_VER:%2X\n", itemp);
@@ -6283,6 +6284,7 @@
  void CmdGetBootLoaderVer(void){ 
  uint8_t ctemp[2];
  uint16_t itemp;
+ EEPROM_ReadBlock(12, FlashEprom, 1);
  uint8ToAscii((FlashEprom + 12), ctemp);
  
  itemp = FlashEprom[12];
@@ -6319,6 +6321,7 @@
  void CmdGetOTA1Ver(void){ 
  uint8_t ctemp[2];
  uint16_t itemp;
+ EEPROM_ReadBlock(13, FlashEprom, 1);
  uint8ToAscii((FlashEprom + 13), ctemp);
  
  itemp = FlashEprom[13];
@@ -6355,6 +6358,7 @@
  void CmdGetOTA2Ver(void){ 
  uint8_t ctemp[2];
  uint16_t itemp;
+ EEPROM_ReadBlock(14, FlashEprom, 1);
  uint8ToAscii((FlashEprom + 14), ctemp);
  
  itemp = FlashEprom[14];
@@ -6391,6 +6395,7 @@
  void CmdGetBootCrc(void){ 
  uint8_t ctemp[2];
  uint16_t itemp;
+ EEPROM_ReadBlock(0, FlashEprom, 1);
  uint8ToAscii((FlashEprom + 0), ctemp);
  
  itemp = FlashEprom[0];
@@ -6406,6 +6411,7 @@
  void CmdGetOTA1Crc(void){ 
  uint8_t ctemp[2];
  uint16_t itemp;
+ EEPROM_ReadBlock(4, FlashEprom, 1);
  uint8ToAscii((FlashEprom + 4), ctemp);
  
  itemp = FlashEprom[4];
@@ -6421,6 +6427,7 @@
  void CmdGetOTA2Crc(void){ 
  uint8_t ctemp[2];
  uint16_t itemp;
+ EEPROM_ReadBlock(8, FlashEprom, 1);
  uint8ToAscii((FlashEprom + 8), ctemp);
  
  itemp = FlashEprom[8];
@@ -6433,31 +6440,75 @@
  CmdTxBuf[4] = 0x25;	
  uart0Send(CmdTxBuf, 5);
  }
- void CmdEraseFlashPage(void){ 
- uint8_t page, temp;
- uint32_t
+ void CmdReadFlashPage(void){ 
+ uint16_t i;
+ uint32_t adr, crc;
+ uint8_t temp, page;
  page = asciiToUint8(CmdRxBuf + 2);
- if((page > (0x2000 / 512)) && (page < (0xEFFF / 512))){
- 
- printf("Bootloader->Debug->CMD_ERASE_FLASH_PAGE:0x%2XH\n", temp);	
- 
- EE_FLASH_WriteErase (page, 0, 0x13);
+ if(page > (0x1FFF / 512) && (page < (0x0F800L / 512)))
+ {	
+ adr = (uint32_t)(page - 1) * 512;
+ crc32Clear();crc = 0;
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x45;
+ uint8ToAscii(&page, (CmdTxBuf + 2));
+ for(i = 0;i < 512;i ++){
+ FLASH_Read (&temp, (adr + i), 1); 
+ crc = crc32CalculateAdd(temp);
+ uint8ToAscii(&temp, (CmdTxBuf + 4 + (i * 2)));
+ }
+ uint32ToAscii(&crc, (CmdTxBuf + 4 + 1024));
+ CmdTxBuf[1032] = 0x25;	
+ uart0Send(CmdTxBuf, 1033);
  }
  else{
- 
- printf("Bootloader->Debug->CMD_ERASE_FLASH_PAGE:0x%2XH Fail\n", temp);	
- 
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x45;
+ uint8ToAscii(&page, (CmdTxBuf + 2));
+ CmdTxBuf[4] = 0x30;
+ CmdTxBuf[5] = 0x25;	
+ uart0Send(CmdTxBuf, 6);
  }
  }
- 
- 
- void CmdWriteFlashBytes(void){ 
+ void CmdClearFlashPage(void){ 
+ uint32_t adr;
+ uint8_t page;
+ page = asciiToUint8(CmdRxBuf + 2);
+ if(page > (0x1FFF / 512) && (page < (0x0F800L / 512))){	
+ adr = (uint32_t)(page - 1) * 512;
+ FLASH_Clear (adr, 512);
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x46;
+ uint8ToAscii(&page, (CmdTxBuf + 2));
+ CmdTxBuf[4] = 0x31;
+ CmdTxBuf[5] = 0x25;	
+ uart0Send(CmdTxBuf, 6);
+ }
+ else{
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x46;
+ uint8ToAscii(&page, (CmdTxBuf + 2));
+ CmdTxBuf[4] = 0x30;
+ CmdTxBuf[5] = 0x25;	
+ uart0Send(CmdTxBuf, 6);
+ }
+ }
+ void CmdWriteFlashPage(void){ 
+ uint32_t adr;
+ uint8_t page;
+ page = asciiToUint8(CmdRxBuf + 2);
+ if(page > (0x1FFF / 512) && (page < (0x0F800L / 512))){	
  
  }
- void CmdReadFlashBytes(void){ 
- 
+ else{
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x44;
+ uint8ToAscii(&page, (CmdTxBuf + 2));
+ CmdTxBuf[4] = 0x30;
+ CmdTxBuf[5] = 0x25;	
+ uart0Send(CmdTxBuf, 6);
  }
- 
+ }
  void loaderCmdPoll(void){ 
  uint8_t *ptr, *ptw;
  uart0Send("C", 1);
@@ -6527,17 +6578,19 @@
  CmdGetOTA2Crc();
  break;
  }
- case CMD_ERASE_FLASH_PAGE:
+ case 0x44:
  {
- CmdEraseFlashPage();
+ CmdWriteFlashPage();
  break;
  }
- case CMD_WRITE_FLASH_BYTES:
+ case 0x45:
  {
+ CmdReadFlashPage();
  break;
  }
- case CMD_READ_FLASH_BYTES:
+ case 0x46:
  {
+ CmdClearFlashPage();
  break;
  }
  case 0x47:
@@ -6552,7 +6605,7 @@
  }
  break;
  }
- else if(ptr >= (CmdRxBuf + 2048)){
+ else if(ptr >= (CmdRxBuf + 1100)){
   _nop_();
  break;
  }

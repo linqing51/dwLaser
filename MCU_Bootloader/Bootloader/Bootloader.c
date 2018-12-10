@@ -32,7 +32,7 @@
 #define BOOT_SELECT_TIMEOUT					1000000UL
 #define BOOT_SELECT_CHECKSUM				0x8A//BOOTLOADER选择校验码
 /*****************************************************************************/
-#define FW_SECTORS_SIZE						512//FLASH扇区
+#define FLASH_PAGESIZE						512//FLASH扇区
 #define FW_BOOT_ADR_START					0x0000//引导程序起始
 #define FW_BOOT_ADR_END						0x1FFF//引导程序结束
 #define FW_OTA1_ADR_START					0x2000//应用程序1起始地址
@@ -44,8 +44,8 @@
 #define SELECT_BOOT_OTA1                 	0xA5A5
 #define SELECT_BOOT_OTA2					0x5A5A
 /*****************************************************************************/
-#define CMD_RX_BUFFER_SIZE					2048
-#define CMD_TX_BUFFER_SIZE					1024
+#define CMD_RX_BUFFER_SIZE					1100
+#define CMD_TX_BUFFER_SIZE					1100
 /*****************************************************************************/
 #define EPROM_BOOT_CRC						0
 #define EPROM_OTA1_CRC						4
@@ -394,6 +394,7 @@ void CmdGetHwVer(void){//获取硬件版本
 	uint8_t ctemp[2];
 	uint16_t itemp;
 	uint8ToAscii((FlashEprom + EPROM_HW_VER), ctemp);
+	EEPROM_ReadBlock(EPROM_HW_VER, FlashEprom, 1);
 #if CONFIG_DEBUG == 1
 	itemp = FlashEprom[EPROM_HW_VER];
 	printf("Bootloader->Debug->CMD_GET_HW_VER:%2X\n", itemp);
@@ -411,6 +412,7 @@ void CmdResetMcu(void){//强制复位
 void CmdGetBootLoaderVer(void){//获取BOOTLOADER版本
 	uint8_t ctemp[2];
 	uint16_t itemp;
+	EEPROM_ReadBlock(EPROM_BOOT_VER, FlashEprom, 1);
 	uint8ToAscii((FlashEprom + EPROM_BOOT_VER), ctemp);
 #if CONFIG_DEBUG == 1
 	itemp = FlashEprom[EPROM_BOOT_VER];
@@ -447,6 +449,7 @@ void CmdSetBootLoaderVer(void){//设置Bootloader版本号
 void CmdGetOTA1Ver(void){//获取OTA1版本号
 	uint8_t ctemp[2];
 	uint16_t itemp;
+	EEPROM_ReadBlock(EPROM_OTA1_VER, FlashEprom, 1);
 	uint8ToAscii((FlashEprom + EPROM_OTA1_VER), ctemp);
 #if CONFIG_DEBUG == 1
 	itemp = FlashEprom[EPROM_OTA1_VER];
@@ -483,6 +486,7 @@ void CmdSetOTA1Ver(void){//设置OTA1版本号
 void CmdGetOTA2Ver(void){//获取OTA2版本号
 	uint8_t ctemp[2];
 	uint16_t itemp;
+	EEPROM_ReadBlock(EPROM_OTA2_VER, FlashEprom, 1);
 	uint8ToAscii((FlashEprom + EPROM_OTA2_VER), ctemp);
 #if CONFIG_DEBUG == 1
 	itemp = FlashEprom[EPROM_OTA2_VER];
@@ -519,6 +523,7 @@ void CmdSetOTA2Ver(void){//设置OTA2版本号
 void CmdGetBootCrc(void){//获取BOOT CRC
 	uint8_t ctemp[2];
 	uint16_t itemp;
+	EEPROM_ReadBlock(EPROM_BOOT_CRC, FlashEprom, 1);
 	uint8ToAscii((FlashEprom + EPROM_BOOT_CRC), ctemp);
 #if CONFIG_DEBUG == 1
 	itemp = FlashEprom[EPROM_BOOT_CRC];
@@ -534,6 +539,7 @@ void CmdGetBootCrc(void){//获取BOOT CRC
 void CmdGetOTA1Crc(void){//获取OTA1 CRC
 	uint8_t ctemp[2];
 	uint16_t itemp;
+	EEPROM_ReadBlock(EPROM_OTA1_CRC, FlashEprom, 1);
 	uint8ToAscii((FlashEprom + EPROM_OTA1_CRC), ctemp);
 #if CONFIG_DEBUG == 1
 	itemp = FlashEprom[EPROM_OTA1_CRC];
@@ -549,6 +555,7 @@ void CmdGetOTA1Crc(void){//获取OTA1 CRC
 void CmdGetOTA2Crc(void){//获取OTA2 CRC
 	uint8_t ctemp[2];
 	uint16_t itemp;
+	EEPROM_ReadBlock(EPROM_OTA2_CRC, FlashEprom, 1);
 	uint8ToAscii((FlashEprom + EPROM_OTA2_CRC), ctemp);
 #if CONFIG_DEBUG == 1
 	itemp = FlashEprom[EPROM_OTA2_CRC];
@@ -561,44 +568,75 @@ void CmdGetOTA2Crc(void){//获取OTA2 CRC
 	CmdTxBuf[4] = CMD_END;	
 	uart0Send(CmdTxBuf, 5);
 }
-void CmdWriteFlashPage(void){//写入FLASH指定页
-//	uint16_t flashPage;
-//	uint8_t page, temp;
-//	uint32_t
-//	page = asciiToUint8(CmdRxBuf + 2);
-//	if((page > (FW_OTA1_ADR_START / FW_SECTORS_SIZE)) && (page < (FW_OTA2_ADR_END / FW_SECTORS_SIZE))){
-//#if CONFIG_DEBUG == 1
-//		printf("Bootloader->Debug->CMD_ERASE_FLASH_PAGE:0x%2XH\n", temp);	
-//#endif
-//		EE_FLASH_WriteErase (page, 0, 0x13);
-//	}
-//	else{
-//#if CONFIG_DEBUG == 1
-//	printf("Bootloader->Debug->CMD_ERASE_FLASH_PAGE:0x%2XH Fail\n", temp);	
-//#endif
-//	}
-}
-CmdReadFlashPage(){//读取FLASH指定页
-	uint16_t flashPage;
-	uint32_t flashAddr;
-	uint8_t temp;
-	for(i = 0;i < FW_SECTORS_SIZE;i ++){
-		flashAddr = 
-		FLASH_Read (&temp, flashAddr, 1);//读取FLSAH
-		uint8ToAscii(temp, ctemp);//HEX->ASCII
+void CmdReadFlashPage(void){//读取FLASH指定页
+	uint16_t i;
+	uint32_t adr, crc;
+	uint8_t temp, page;
+	page = asciiToUint8(CmdRxBuf + 2);
+	if(page > (FW_BOOT_ADR_END / FLASH_PAGESIZE) && (page < (FLASH_TEMP / FLASH_PAGESIZE)))
+	{	
+		adr = (uint32_t)(page - 1) * FLASH_PAGESIZE;
+		crc32Clear();crc = 0;
+		CmdTxBuf[0] = CMD_STX;
+		CmdTxBuf[1] = CMD_READ_FLASH_PAGE;
+		uint8ToAscii(&page, (CmdTxBuf + 2));
+		for(i = 0;i < FLASH_PAGESIZE;i ++){
+			FLASH_Read (&temp, (adr + i), 1);//读取FLSAH
+			crc = crc32CalculateAdd(temp);
+			uint8ToAscii(&temp, (CmdTxBuf + 4 + (i * 2)));
+		}
+		uint32ToAscii(&crc, (CmdTxBuf + 4 + 1024));
+		CmdTxBuf[1032] = CMD_END;	
+		uart0Send(CmdTxBuf, 1033);
 	}
-	
-	
+	else{
+		CmdTxBuf[0] = CMD_STX;
+		CmdTxBuf[1] = CMD_READ_FLASH_PAGE;
+		uint8ToAscii(&page, (CmdTxBuf + 2));
+		CmdTxBuf[4] = CMD_RESPOND_FAIL;
+		CmdTxBuf[5] = CMD_END;	
+		uart0Send(CmdTxBuf, 6);
+	}
 }
-CmdClearFlashPage(){//清除FLASH指定页
+void CmdClearFlashPage(void){//清除FLASH指定页
+	uint32_t adr;
+	uint8_t page;
+	page = asciiToUint8(CmdRxBuf + 2);
+	if(page > (FW_BOOT_ADR_END / FLASH_PAGESIZE) && (page < (FLASH_TEMP / FLASH_PAGESIZE))){	
+		adr = (uint32_t)(page - 1) * FLASH_PAGESIZE;
+		FLASH_Clear (adr, FLASH_PAGESIZE);
+		CmdTxBuf[0] = CMD_STX;
+		CmdTxBuf[1] = CMD_CLEAR_FLASH_PAGE;
+		uint8ToAscii(&page, (CmdTxBuf + 2));
+		CmdTxBuf[4] = CMD_RESPOND_OK;
+		CmdTxBuf[5] = CMD_END;	
+		uart0Send(CmdTxBuf, 6);
+	}
+	else{
+		CmdTxBuf[0] = CMD_STX;
+		CmdTxBuf[1] = CMD_CLEAR_FLASH_PAGE;
+		uint8ToAscii(&page, (CmdTxBuf + 2));
+		CmdTxBuf[4] = CMD_RESPOND_FAIL;
+		CmdTxBuf[5] = CMD_END;	
+		uart0Send(CmdTxBuf, 6);
+	}
 }
-void CmdWriteFlashBytes(void){//写入FLASH
-	
-}
-void CmdReadFlashBytes(void){//读取FLASH
-	
-}
+void CmdWriteFlashPage(void){//写入FLASH指定页
+	uint32_t adr;
+	uint8_t page;
+	page = asciiToUint8(CmdRxBuf + 2);
+	if(page > (FW_BOOT_ADR_END / FLASH_PAGESIZE) && (page < (FLASH_TEMP / FLASH_PAGESIZE))){	
 
+	}
+	else{
+		CmdTxBuf[0] = CMD_STX;
+		CmdTxBuf[1] = CMD_WRITE_FLASH_PAGE;
+		uint8ToAscii(&page, (CmdTxBuf + 2));
+		CmdTxBuf[4] = CMD_RESPOND_FAIL;
+		CmdTxBuf[5] = CMD_END;	
+		uart0Send(CmdTxBuf, 6);
+	}
+}
 void loaderCmdPoll(void){//串口命令轮询
 	uint8_t *ptr, *ptw;
 	uart0Send("C", 1);
