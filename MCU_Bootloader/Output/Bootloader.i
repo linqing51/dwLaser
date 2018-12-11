@@ -5931,7 +5931,6 @@
  
  
  
- 
  void (*BOOT_Program)(); 
  void (*OTA1_Program)(); 
  void (*OTA2_Program)(); 
@@ -5941,6 +5940,7 @@
  uint32_t ota2FlashCrc(void);
  xdata uint8_t CmdRxBuf[1100];
  xdata uint8_t CmdTxBuf[1100];
+ xdata uint8_t TempBuf[512]; 
  xdata uint8_t FlashEprom[64]; 
  
  static void uint32ToAscii(uint32_t *dat, uint8_t *pstr){ 
@@ -6494,11 +6494,25 @@
  }
  }
  void CmdWriteFlashPage(void){ 
- uint32_t adr;
- uint8_t page;
+ uint32_t adr, crc0, crc1;
+ uint8_t page, dat;
+ uint16_t i;
  page = asciiToUint8(CmdRxBuf + 2);
- if(page > (0x1FFF / 512) && (page < (0x0F800L / 512))){	
- 
+ adr = page * 512;
+ uint32ToAscii(&crc0, (CmdTxBuf + 4 + 1024)); 
+ for(i = 0;i < 512;i ++){
+ *(TempBuf + i) = asciiToUint8(CmdRxBuf + 2 + (i * 2));
+ }
+ crc32Clear();
+ crc1 = crc32Calculate(TempBuf, 512);
+ if(page > (0x1FFF / 512) && (page < (0x0F800L / 512)) && crc0 == crc1){	
+ FLASH_Write(adr, TempBuf, 512);
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x44;
+ uint8ToAscii(&page, (CmdTxBuf + 2));
+ CmdTxBuf[4] = 0x31;
+ CmdTxBuf[5] = 0x25;	
+ uart0Send(CmdTxBuf, 6);
  }
  else{
  CmdTxBuf[0] = 0x24;
@@ -6573,32 +6587,34 @@
  CmdGetOTA1Crc();
  break;
  }
- case 0x43:
+ case 0x43: 
  {
  CmdGetOTA2Crc();
  break;
  }
- case 0x44:
+ case 0x44: 
  {
  CmdWriteFlashPage();
  break;
  }
- case 0x45:
+ case 0x45: 
  {
  CmdReadFlashPage();
  break;
  }
- case 0x46:
+ case 0x46: 
  {
  CmdClearFlashPage();
  break;
  }
- case 0x47:
+ case 0x47: 
  {
+ OTA1_Program();
  break;
  }
- case 0x48:
+ case 0x48: 
  {
+ OTA2_Program();
  break;
  }
  default:break;

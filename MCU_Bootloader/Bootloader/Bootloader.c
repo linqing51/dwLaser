@@ -32,7 +32,6 @@
 #define BOOT_SELECT_TIMEOUT					1000000UL
 #define BOOT_SELECT_CHECKSUM				0x8A//BOOTLOADER选择校验码
 /*****************************************************************************/
-#define FLASH_PAGESIZE						512//FLASH扇区
 #define FW_BOOT_ADR_START					0x0000//引导程序起始
 #define FW_BOOT_ADR_END						0x1FFF//引导程序结束
 #define FW_OTA1_ADR_START					0x2000//应用程序1起始地址
@@ -69,6 +68,7 @@ uint32_t ota1FlashCrc(void);
 uint32_t ota2FlashCrc(void);
 xdata uint8_t CmdRxBuf[CMD_RX_BUFFER_SIZE];
 xdata uint8_t CmdTxBuf[CMD_TX_BUFFER_SIZE];
+xdata uint8_t TempBuf[FL_PAGE_SIZE];//临时缓冲区
 xdata uint8_t FlashEprom[EE_SIZE];//FLASH EPROM模拟
 /*****************************************************************************/
 static void uint32ToAscii(uint32_t *dat, uint8_t *pstr){//将32位有符号数转换为8个ASCII字符
@@ -573,14 +573,14 @@ void CmdReadFlashPage(void){//读取FLASH指定页
 	uint32_t adr, crc;
 	uint8_t temp, page;
 	page = asciiToUint8(CmdRxBuf + 2);
-	if(page > (FW_BOOT_ADR_END / FLASH_PAGESIZE) && (page < (FLASH_TEMP / FLASH_PAGESIZE)))
+	if(page > (FW_BOOT_ADR_END / FL_PAGE_SIZE) && (page < (FLASH_TEMP / FL_PAGE_SIZE)))
 	{	
-		adr = (uint32_t)(page - 1) * FLASH_PAGESIZE;
+		adr = (uint32_t)(page - 1) * FL_PAGE_SIZE;
 		crc32Clear();crc = 0;
 		CmdTxBuf[0] = CMD_STX;
 		CmdTxBuf[1] = CMD_READ_FLASH_PAGE;
 		uint8ToAscii(&page, (CmdTxBuf + 2));
-		for(i = 0;i < FLASH_PAGESIZE;i ++){
+		for(i = 0;i < FL_PAGE_SIZE;i ++){
 			FLASH_Read (&temp, (adr + i), 1);//读取FLSAH
 			crc = crc32CalculateAdd(temp);
 			uint8ToAscii(&temp, (CmdTxBuf + 4 + (i * 2)));
@@ -602,9 +602,9 @@ void CmdClearFlashPage(void){//清除FLASH指定页
 	uint32_t adr;
 	uint8_t page;
 	page = asciiToUint8(CmdRxBuf + 2);
-	if(page > (FW_BOOT_ADR_END / FLASH_PAGESIZE) && (page < (FLASH_TEMP / FLASH_PAGESIZE))){	
-		adr = (uint32_t)(page - 1) * FLASH_PAGESIZE;
-		FLASH_Clear (adr, FLASH_PAGESIZE);
+	if(page > (FW_BOOT_ADR_END / FL_PAGE_SIZE) && (page < (FLASH_TEMP / FL_PAGE_SIZE))){	
+		adr = (uint32_t)(page - 1) * FL_PAGE_SIZE;
+		FLASH_Clear (adr, FL_PAGE_SIZE);
 		CmdTxBuf[0] = CMD_STX;
 		CmdTxBuf[1] = CMD_CLEAR_FLASH_PAGE;
 		uint8ToAscii(&page, (CmdTxBuf + 2));
@@ -622,11 +622,25 @@ void CmdClearFlashPage(void){//清除FLASH指定页
 	}
 }
 void CmdWriteFlashPage(void){//写入FLASH指定页
-	uint32_t adr;
-	uint8_t page;
+	uint32_t adr, crc0, crc1;
+	uint8_t page, dat;
+	uint16_t i;
 	page = asciiToUint8(CmdRxBuf + 2);
-	if(page > (FW_BOOT_ADR_END / FLASH_PAGESIZE) && (page < (FLASH_TEMP / FLASH_PAGESIZE))){	
-
+	adr = page * FL_PAGE_SIZE;
+	uint32ToAscii(&crc0, (CmdTxBuf + 4 + 1024));//接收到的CRC32值
+	for(i = 0;i < FL_PAGE_SIZE;i ++){
+		*(TempBuf + i) = asciiToUint8(CmdRxBuf + 2 + (i * 2));
+	}
+	crc32Clear();
+	crc1 = crc32Calculate(TempBuf, FL_PAGE_SIZE);
+	if(page > (FW_BOOT_ADR_END / FL_PAGE_SIZE) && (page < (FLASH_TEMP / FL_PAGE_SIZE)) && crc0 == crc1){	
+		FLASH_Write(adr, TempBuf, FL_PAGE_SIZE);
+		CmdTxBuf[0] = CMD_STX;
+		CmdTxBuf[1] = CMD_WRITE_FLASH_PAGE;
+		uint8ToAscii(&page, (CmdTxBuf + 2));
+		CmdTxBuf[4] = CMD_RESPOND_OK;
+		CmdTxBuf[5] = CMD_END;	
+		uart0Send(CmdTxBuf, 6);
 	}
 	else{
 		CmdTxBuf[0] = CMD_STX;
@@ -696,37 +710,39 @@ void loaderCmdPoll(void){//串口命令轮询
 							CmdSetOTA2Ver();
 							break;
 						}							
-						case CMD_GET_OTA1_CRC://
+						case CMD_GET_OTA1_CRC://A
 						{
 							CmdGetOTA1Crc();
 							break;
 						}
-						case CMD_GET_OTA2_CRC:
+						case CMD_GET_OTA2_CRC://B
 						{
 							CmdGetOTA2Crc();
 							break;
 						}
-						case CMD_WRITE_FLASH_PAGE:
+						case CMD_WRITE_FLASH_PAGE://C
 						{
 							CmdWriteFlashPage();
 							break;
 						}
-						case CMD_READ_FLASH_PAGE:
+						case CMD_READ_FLASH_PAGE://D
 						{
 							CmdReadFlashPage();
 							break;
 						}
-						case CMD_CLEAR_FLASH_PAGE:
+						case CMD_CLEAR_FLASH_PAGE://E
 						{
 							CmdClearFlashPage();
 							break;
 						}
-						case CMD_GOTO_OTA1:
+						case CMD_GOTO_OTA1://F
 						{
+							OTA1_Program();
 							break;
 						}
-						case CMD_GOTO_OTA2:
+						case CMD_GOTO_OTA2://G
 						{
+							OTA2_Program();
 							break;
 						}
 						default:break;
