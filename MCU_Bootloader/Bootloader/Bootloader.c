@@ -20,6 +20,8 @@
 #define CMD_CLEAR_FLASH_PAGE				0x46//F	清除FLASH PAGE
 #define CMD_GOTO_OTA1						0x47//G
 #define CMD_GOTO_OTA2						0x48//H
+#define CMD_REFRESH_OTA1_CRC				0x49//I
+#define CMD_REFRESH_OTA2_CRC				0x4A//J
 #define CMD_GET_HW_VER_TX_SZ				3
 #define CMD_GET_HW_VER_RX_SZ 				6
 #define CMD_SET_HW_VER_TX_SZ				7
@@ -59,9 +61,9 @@
 #define EPROM_OTA2_END						28
 #define EPROM_BOOT_ORDER					32
 /*****************************************************************************/
-void (*BOOT_Program)();//引导程序指针
-void (*OTA1_Program)();//应用程序1指针
-void (*OTA2_Program)();//应用程序2指针
+//void (*BOOT_Program)();//引导程序指针
+void (*CmdGotoOTA1)();//应用程序1指针
+void (*CmdGotoOTA2)();//应用程序2指针
 void bootSequence(void);
 uint32_t bootFlashCrc(void);
 uint32_t ota1FlashCrc(void);
@@ -651,6 +653,25 @@ void CmdWriteFlashPage(void){//写入FLASH指定页
 		uart0Send(CmdTxBuf, 6);
 	}
 }
+void CmdRefreshOTA1Crc(void){//刷新OTA1校验码
+	uint32_t crc;
+	uint8_t temp;
+	crc32Clear();crc = 0;
+	for(i = FW_OTA1_ADR_START;i < FW_OTA1_ADR_END;i ++){
+		FLASH_Read(&temp, i, 1);
+		crc = crc32CalculateAdd(temp);
+	}
+	= (uint32_t)(&FlashEprom[]) = 
+	CmdTxBuf[0] = CMD_STX;
+	CmdTxBuf[1] = CMD_WRITE_FLASH_PAGE;
+	uint8ToAscii(&page, (CmdTxBuf + 2));
+	CmdTxBuf[4] = CMD_RESPOND_OK;
+	CmdTxBuf[5] = CMD_END;	
+	uart0Send(CmdTxBuf, 6);
+}
+void CmdRefreshOTA2Crc(void){//刷新OTA2校验码
+	
+}
 void loaderCmdPoll(void){//串口命令轮询
 	uint8_t *ptr, *ptw;
 	uart0Send("C", 1);
@@ -737,12 +758,22 @@ void loaderCmdPoll(void){//串口命令轮询
 						}
 						case CMD_GOTO_OTA1://F
 						{
-							OTA1_Program();
+							CmdGotoOTA1();
 							break;
 						}
 						case CMD_GOTO_OTA2://G
 						{
-							OTA2_Program();
+							CmdGotoOTA2();
+							break;
+						}
+						case CMD_REFRESH_OTA1_CRC:
+						{
+							CmdRefreshOTA1Crc();
+							break;
+						}
+						case CMD_REFRESH_OTA2_CRC:
+						{
+							CmdRefreshOTA2Crc();
 							break;
 						}
 						default:break;
@@ -771,16 +802,16 @@ void bootSequence(void){//启动顺序选择
 			ota1Crc32 = ota1FlashCrc();
 			if(ota1Crc32 == FlashEprom[EPROM_OTA1_CRC])
 			{
-				OTA1_Program = (void code *)(FW_OTA1_ADR_START & 0x1FFFF);//获取OTA1起始地址
-				OTA1_Program();//执行应用程序
+				CmdGotoOTA1 = (void code *)(FW_OTA1_ADR_START & 0x1FFFF);//获取OTA1起始地址
+				CmdGotoOTA1();//执行应用程序
 			}
 		}
 		else if(FlashEprom[EPROM_BOOT_ORDER] == SELECT_BOOT_OTA2)
 		{//启动顺序选择BOOT_OTA2
 			if(ota2Crc32 == FlashEprom[EPROM_OTA2_CRC])
 			{
-				OTA2_Program = (void code *)(FW_OTA2_ADR_START & 0x1FFFF);//获取OTA2起始地址
-				OTA2_Program();//执行应用程序
+				CmdGotoOTA2 = (void code *)(FW_OTA2_ADR_START & 0x1FFFF);//获取OTA2起始地址
+				CmdGotoOTA2();//执行应用程序
 			}	
 		}
 		else{

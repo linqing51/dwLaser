@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 1   
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE BOOTLOADER
@@ -31,862 +31,882 @@ line level    source
   20          #define CMD_CLEAR_FLASH_PAGE                            0x46//F 清除FLASH PAGE
   21          #define CMD_GOTO_OTA1                                           0x47//G
   22          #define CMD_GOTO_OTA2                                           0x48//H
-  23          #define CMD_GET_HW_VER_TX_SZ                            3
-  24          #define CMD_GET_HW_VER_RX_SZ                            6
-  25          #define CMD_SET_HW_VER_TX_SZ                            7
-  26          #define CMD_SET_HW_VER_RX_SZ                            3
-  27          #define CMD_RESPOND_OK                                          0x31
-  28          #define CMD_RESPOND_FAIL                                        0x30
-  29          /*****************************************************************************/
-  30          #define BOOT_SELECT_OTA                                         0x5A
-  31          #define BOOT_SELECT_LOADER                                      0xA5
-  32          #define BOOT_SELECT_TIMEOUT                                     1000000UL
-  33          #define BOOT_SELECT_CHECKSUM                            0x8A//BOOTLOADER选择校验码
-  34          /*****************************************************************************/
-  35          #define FW_BOOT_ADR_START                                       0x0000//引导程序起始
-  36          #define FW_BOOT_ADR_END                                         0x1FFF//引导程序结束
-  37          #define FW_OTA1_ADR_START                                       0x2000//应用程序1起始地址
-  38          #define FW_OTA1_ADR_END                                         0x7FFF
-  39          #define FW_OTA2_ADR_START                                       0x8000//应用程序2起始地址
-  40          #define FW_OTA2_ADR_END                                         0xEFFF
-  41          /*****************************************************************************/
-  42          #define SELECT_BOOT_LOADER                                      0x5555
-  43          #define SELECT_BOOT_OTA1                        0xA5A5
-  44          #define SELECT_BOOT_OTA2                                        0x5A5A
-  45          /*****************************************************************************/
-  46          #define CMD_RX_BUFFER_SIZE                                      1100
-  47          #define CMD_TX_BUFFER_SIZE                                      1100
-  48          /*****************************************************************************/
-  49          #define EPROM_BOOT_CRC                                          0
-  50          #define EPROM_OTA1_CRC                                          4
-  51          #define EPROM_OTA2_CRC                                          8
-  52          #define EPROM_BOOT_VER                                          12
-  53          #define EPROM_OTA1_VER                                          13
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 2   
+  23          #define CMD_REFRESH_OTA1_CRC                            0x49//I
+  24          #define CMD_REFRESH_OTA2_CRC                            0x4A//J
+  25          #define CMD_GET_HW_VER_TX_SZ                            3
+  26          #define CMD_GET_HW_VER_RX_SZ                            6
+  27          #define CMD_SET_HW_VER_TX_SZ                            7
+  28          #define CMD_SET_HW_VER_RX_SZ                            3
+  29          #define CMD_RESPOND_OK                                          0x31
+  30          #define CMD_RESPOND_FAIL                                        0x30
+  31          /*****************************************************************************/
+  32          #define BOOT_SELECT_OTA                                         0x5A
+  33          #define BOOT_SELECT_LOADER                                      0xA5
+  34          #define BOOT_SELECT_TIMEOUT                                     1000000UL
+  35          #define BOOT_SELECT_CHECKSUM                            0x8A//BOOTLOADER选择校验码
+  36          /*****************************************************************************/
+  37          #define FW_BOOT_ADR_START                                       0x0000//引导程序起始
+  38          #define FW_BOOT_ADR_END                                         0x1FFF//引导程序结束
+  39          #define FW_OTA1_ADR_START                                       0x2000//应用程序1起始地址
+  40          #define FW_OTA1_ADR_END                                         0x7FFF
+  41          #define FW_OTA2_ADR_START                                       0x8000//应用程序2起始地址
+  42          #define FW_OTA2_ADR_END                                         0xEFFF
+  43          /*****************************************************************************/
+  44          #define SELECT_BOOT_LOADER                                      0x5555
+  45          #define SELECT_BOOT_OTA1                        0xA5A5
+  46          #define SELECT_BOOT_OTA2                                        0x5A5A
+  47          /*****************************************************************************/
+  48          #define CMD_RX_BUFFER_SIZE                                      1100
+  49          #define CMD_TX_BUFFER_SIZE                                      1100
+  50          /*****************************************************************************/
+  51          #define EPROM_BOOT_CRC                                          0
+  52          #define EPROM_OTA1_CRC                                          4
+  53          #define EPROM_OTA2_CRC                                          8
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 2   
 
-  54          #define EPROM_OTA2_VER                                          14
-  55          #define EPROM_HW_VER                                            15
-  56          #define EPROM_OTA1_START                                        16
-  57          #define EPROM_OTA1_END                                          20
-  58          #define EPROM_OTA2_START                                        24
-  59          #define EPROM_OTA2_END                                          28
-  60          #define EPROM_BOOT_ORDER                                        32
-  61          /*****************************************************************************/
-  62          void (*BOOT_Program)();//引导程序指针
-  63          void (*OTA1_Program)();//应用程序1指针
-  64          void (*OTA2_Program)();//应用程序2指针
-  65          void bootSequence(void);
-  66          uint32_t bootFlashCrc(void);
-  67          uint32_t ota1FlashCrc(void);
-  68          uint32_t ota2FlashCrc(void);
-  69          xdata uint8_t CmdRxBuf[CMD_RX_BUFFER_SIZE];
-  70          xdata uint8_t CmdTxBuf[CMD_TX_BUFFER_SIZE];
-  71          xdata uint8_t TempBuf[FL_PAGE_SIZE];//临时缓冲区
-  72          xdata uint8_t FlashEprom[EE_SIZE];//FLASH EPROM模拟
-  73          /*****************************************************************************/
-  74          static void uint32ToAscii(uint32_t *dat, uint8_t *pstr){//将32位有符号数转换为8个ASCII字符
-  75   1              data uint8_t temp;      
-  76   1              temp = *dat & 0xF;//0x0000000A
-  77   1              if(temp <= 0x09){
-  78   2                      *(pstr + 0) = (temp + 0x30);
-  79   2          }
-  80   1          else{
-  81   2                       *(pstr + 0) = (temp + 0x37);
-  82   2          }
-  83   1              
-  84   1              temp = (*dat >> 4) & 0xF;//0x000000A0
-  85   1              if(temp <= 0x09){
-  86   2                      *(pstr + 1) = (temp + 0x30);
-  87   2          }
-  88   1          else{
-  89   2                       *(pstr + 1) = (temp + 0x37);
-  90   2          }
-  91   1              
-  92   1              temp = (*dat >> 8) & 0xF;//0x00000A00
-  93   1              if(temp <= 0x09){
-  94   2                      *(pstr + 2) = (temp + 0x30);
-  95   2          }
-  96   1          else{
-  97   2                       *(pstr + 2) = (temp + 0x37);
-  98   2          }
-  99   1              
- 100   1              temp = (*dat >> 12) & 0xF;//0x0000A000
- 101   1              if(temp <= 0x09){
- 102   2                      *pstr = (temp + 0x30);
- 103   2          }
- 104   1          else{
- 105   2                      *pstr = (temp + 0x37);
- 106   2          }
- 107   1              
- 108   1              temp = (*dat >> 16) & 0xF;//0x000A0000
- 109   1              if(temp <= 0x09){
- 110   2                      *(pstr + 4) = (temp + 0x30);
- 111   2          }
- 112   1          else{
- 113   2                       *(pstr + 4) = (temp + 0x37);
- 114   2          }
- 115   1      
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 3   
+  54          #define EPROM_BOOT_VER                                          12
+  55          #define EPROM_OTA1_VER                                          13
+  56          #define EPROM_OTA2_VER                                          14
+  57          #define EPROM_HW_VER                                            15
+  58          #define EPROM_OTA1_START                                        16
+  59          #define EPROM_OTA1_END                                          20
+  60          #define EPROM_OTA2_START                                        24
+  61          #define EPROM_OTA2_END                                          28
+  62          #define EPROM_BOOT_ORDER                                        32
+  63          /*****************************************************************************/
+  64          //void (*BOOT_Program)();//引导程序指针
+  65          void (*CmdGotoOTA1)();//应用程序1指针
+  66          void (*CmdGotoOTA2)();//应用程序2指针
+  67          void bootSequence(void);
+  68          uint32_t bootFlashCrc(void);
+  69          uint32_t ota1FlashCrc(void);
+  70          uint32_t ota2FlashCrc(void);
+  71          xdata uint8_t CmdRxBuf[CMD_RX_BUFFER_SIZE];
+  72          xdata uint8_t CmdTxBuf[CMD_TX_BUFFER_SIZE];
+  73          xdata uint8_t TempBuf[FL_PAGE_SIZE];//临时缓冲区
+  74          xdata uint8_t FlashEprom[EE_SIZE];//FLASH EPROM模拟
+  75          /*****************************************************************************/
+  76          static void uint32ToAscii(uint32_t *dat, uint8_t *pstr){//将32位有符号数转换为8个ASCII字符
+  77   1              data uint8_t temp;      
+  78   1              temp = *dat & 0xF;//0x0000000A
+  79   1              if(temp <= 0x09){
+  80   2                      *(pstr + 0) = (temp + 0x30);
+  81   2          }
+  82   1          else{
+  83   2                       *(pstr + 0) = (temp + 0x37);
+  84   2          }
+  85   1              
+  86   1              temp = (*dat >> 4) & 0xF;//0x000000A0
+  87   1              if(temp <= 0x09){
+  88   2                      *(pstr + 1) = (temp + 0x30);
+  89   2          }
+  90   1          else{
+  91   2                       *(pstr + 1) = (temp + 0x37);
+  92   2          }
+  93   1              
+  94   1              temp = (*dat >> 8) & 0xF;//0x00000A00
+  95   1              if(temp <= 0x09){
+  96   2                      *(pstr + 2) = (temp + 0x30);
+  97   2          }
+  98   1          else{
+  99   2                       *(pstr + 2) = (temp + 0x37);
+ 100   2          }
+ 101   1              
+ 102   1              temp = (*dat >> 12) & 0xF;//0x0000A000
+ 103   1              if(temp <= 0x09){
+ 104   2                      *pstr = (temp + 0x30);
+ 105   2          }
+ 106   1          else{
+ 107   2                      *pstr = (temp + 0x37);
+ 108   2          }
+ 109   1              
+ 110   1              temp = (*dat >> 16) & 0xF;//0x000A0000
+ 111   1              if(temp <= 0x09){
+ 112   2                      *(pstr + 4) = (temp + 0x30);
+ 113   2          }
+ 114   1          else{
+ 115   2                       *(pstr + 4) = (temp + 0x37);
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 3   
 
- 116   1              temp = (*dat >> 20) & 0xF;//0x00A00000
- 117   1              if(temp <= 0x09){
- 118   2                      *(pstr + 5) = (temp + 0x30);
- 119   2          }
- 120   1          else{
- 121   2                       *(pstr + 5) = (temp + 0x37);
- 122   2          }
- 123   1              
- 124   1              temp = (*dat >> 24) & 0xF;//0x0A000000
- 125   1              if(temp <= 0x09){
- 126   2                      *(pstr + 6) = (temp + 0x30);
- 127   2          }
- 128   1          else{
- 129   2                       *(pstr + 6) = (temp + 0x37);
- 130   2          }
- 131   1              
- 132   1              temp = (*dat >> 28) & 0xF;//0x00A00000
- 133   1              if(temp <= 0x09){
- 134   2                      *(pstr + 7) = (temp + 0x30);
- 135   2          }
- 136   1          else{
- 137   2                       *(pstr + 7) = (temp + 0x37);
- 138   2          }
- 139   1      }
- 140          static uint32_t asciiToUint32(uint8_t *pstr){//将8个BCD组合成一个32进制数
- 141   1              data uint8_t temp[8];
- 142   1              data uint32_t hex;
- 143   1              //取出0x0000000A
- 144   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
- 145   2                      temp[0] = *pstr - 0x37; 
- 146   2              }
- 147   1              else if(*pstr >= '0' && *pstr <='9'){
- 148   2                      temp[0] = *pstr - 0x30; 
- 149   2              }
- 150   1              //取出0x000000A0
- 151   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
- 152   2                      temp[1] = *(pstr + 1) - 0x37; 
- 153   2              }
- 154   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
- 155   2                      temp[1] = *(pstr + 1) - 0x30;   
- 156   2              }
- 157   1              //取出0x00000A00
- 158   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
- 159   2                      temp[2] = *pstr - 0x37; 
- 160   2              }
- 161   1              else if(*pstr >= '0' && *pstr <='9'){
- 162   2                      temp[2] = *pstr - 0x30; 
- 163   2              }
- 164   1              //取出0x0000A000
- 165   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
- 166   2                      temp[3] = *(pstr + 1) - 0x37; 
- 167   2              }
- 168   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
- 169   2                      temp[3] = *(pstr + 1) - 0x30;   
- 170   2              }
- 171   1              
- 172   1              //取出0x0000A000
- 173   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
- 174   2                      temp[4] = *pstr - 0x37; 
- 175   2              }
- 176   1              else if(*pstr >= '0' && *pstr <='9'){
- 177   2                      temp[4] = *pstr - 0x30; 
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 4   
+ 116   2          }
+ 117   1      
+ 118   1              temp = (*dat >> 20) & 0xF;//0x00A00000
+ 119   1              if(temp <= 0x09){
+ 120   2                      *(pstr + 5) = (temp + 0x30);
+ 121   2          }
+ 122   1          else{
+ 123   2                       *(pstr + 5) = (temp + 0x37);
+ 124   2          }
+ 125   1              
+ 126   1              temp = (*dat >> 24) & 0xF;//0x0A000000
+ 127   1              if(temp <= 0x09){
+ 128   2                      *(pstr + 6) = (temp + 0x30);
+ 129   2          }
+ 130   1          else{
+ 131   2                       *(pstr + 6) = (temp + 0x37);
+ 132   2          }
+ 133   1              
+ 134   1              temp = (*dat >> 28) & 0xF;//0x00A00000
+ 135   1              if(temp <= 0x09){
+ 136   2                      *(pstr + 7) = (temp + 0x30);
+ 137   2          }
+ 138   1          else{
+ 139   2                       *(pstr + 7) = (temp + 0x37);
+ 140   2          }
+ 141   1      }
+ 142          static uint32_t asciiToUint32(uint8_t *pstr){//将8个BCD组合成一个32进制数
+ 143   1              data uint8_t temp[8];
+ 144   1              data uint32_t hex;
+ 145   1              //取出0x0000000A
+ 146   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
+ 147   2                      temp[0] = *pstr - 0x37; 
+ 148   2              }
+ 149   1              else if(*pstr >= '0' && *pstr <='9'){
+ 150   2                      temp[0] = *pstr - 0x30; 
+ 151   2              }
+ 152   1              //取出0x000000A0
+ 153   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
+ 154   2                      temp[1] = *(pstr + 1) - 0x37; 
+ 155   2              }
+ 156   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ 157   2                      temp[1] = *(pstr + 1) - 0x30;   
+ 158   2              }
+ 159   1              //取出0x00000A00
+ 160   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
+ 161   2                      temp[2] = *pstr - 0x37; 
+ 162   2              }
+ 163   1              else if(*pstr >= '0' && *pstr <='9'){
+ 164   2                      temp[2] = *pstr - 0x30; 
+ 165   2              }
+ 166   1              //取出0x0000A000
+ 167   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
+ 168   2                      temp[3] = *(pstr + 1) - 0x37; 
+ 169   2              }
+ 170   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ 171   2                      temp[3] = *(pstr + 1) - 0x30;   
+ 172   2              }
+ 173   1              
+ 174   1              //取出0x0000A000
+ 175   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
+ 176   2                      temp[4] = *pstr - 0x37; 
+ 177   2              }
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 4   
 
- 178   2              }
- 179   1              //取出0x00000A00
- 180   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
- 181   2                      temp[5] = *(pstr + 1) - 0x37; 
- 182   2              }
- 183   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
- 184   2                      temp[5] = *(pstr + 1) - 0x30;   
- 185   2              }
- 186   1              //取出0x000000A0
- 187   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
- 188   2                      temp[6] = *pstr - 0x37; 
- 189   2              }
- 190   1              else if(*pstr >= '0' && *pstr <='9'){
- 191   2                      temp[6] = *pstr - 0x30; 
- 192   2              }
- 193   1              //取出0x0000000A
- 194   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
- 195   2                      temp[7] = *(pstr + 1) - 0x37; 
- 196   2              }
- 197   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
- 198   2                      temp[7] = *(pstr + 1) - 0x30;   
- 199   2              }
- 200   1              hex = 0;
- 201   1              hex |= (temp[0] & 0x0000000F);
- 202   1              hex |= (((temp[1] & 0x0F) << 4) & 0x000000F0);
- 203   1              hex |= (((temp[2] & 0x0F) << 8) & 0x00000F00);
- 204   1              hex |= (((temp[3] & 0x0F) << 12) & 0x0000F000);
- 205   1              hex |= (((temp[4] & 0x0F) << 16) & 0x000F0000);
- 206   1              hex |= (((temp[5] & 0x0F) << 20) & 0x00F00000);
- 207   1              hex |= (((temp[6] & 0x0F) << 24) & 0x00F00000);
- 208   1              hex |= (((temp[7] & 0x0F) << 28) & 0x00F00000);
- 209   1              return hex;
- 210   1      }
- 211          static void uint16ToAscii(uint16_t *dat, uint8_t *pstr){//将16位有符号数转换为4个ASCII字符
- 212   1              data uint8_t temp;
- 213   1              temp = *dat & 0x000F;//0x000A
- 214   1              if(temp <= 0x09){
- 215   2                      *(pstr + 0) = (temp + 0x30);
- 216   2          }
- 217   1          else{
- 218   2                       *(pstr + 0) = (temp + 0x37);
- 219   2          }
- 220   1              temp = (*dat >> 4) & 0x000F;//0x00A0
- 221   1              if(temp <= 0x09){
- 222   2                      *(pstr + 1) = (temp + 0x30);
- 223   2          }
- 224   1          else{
- 225   2                       *(pstr + 1) = (temp + 0x37);
- 226   2          }
- 227   1              temp = (*dat >> 8) & 0x000F;//0x0A00
- 228   1              if(temp <= 0x09){
- 229   2                      *(pstr + 2) = (temp + 0x30);
- 230   2          }
- 231   1          else{
- 232   2                       *(pstr + 2) = (temp + 0x37);
- 233   2          }
- 234   1              temp = (*dat >> 12) & 0x000F;//0xA000
- 235   1              if(temp <= 0x09){
- 236   2                      *(pstr + 3) = (temp + 0x30);
- 237   2          }
- 238   1          else{
- 239   2                      *(pstr + 3) = (temp + 0x37);
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 5   
+ 178   1              else if(*pstr >= '0' && *pstr <='9'){
+ 179   2                      temp[4] = *pstr - 0x30; 
+ 180   2              }
+ 181   1              //取出0x00000A00
+ 182   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
+ 183   2                      temp[5] = *(pstr + 1) - 0x37; 
+ 184   2              }
+ 185   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ 186   2                      temp[5] = *(pstr + 1) - 0x30;   
+ 187   2              }
+ 188   1              //取出0x000000A0
+ 189   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
+ 190   2                      temp[6] = *pstr - 0x37; 
+ 191   2              }
+ 192   1              else if(*pstr >= '0' && *pstr <='9'){
+ 193   2                      temp[6] = *pstr - 0x30; 
+ 194   2              }
+ 195   1              //取出0x0000000A
+ 196   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
+ 197   2                      temp[7] = *(pstr + 1) - 0x37; 
+ 198   2              }
+ 199   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ 200   2                      temp[7] = *(pstr + 1) - 0x30;   
+ 201   2              }
+ 202   1              hex = 0;
+ 203   1              hex |= (temp[0] & 0x0000000F);
+ 204   1              hex |= (((temp[1] & 0x0F) << 4) & 0x000000F0);
+ 205   1              hex |= (((temp[2] & 0x0F) << 8) & 0x00000F00);
+ 206   1              hex |= (((temp[3] & 0x0F) << 12) & 0x0000F000);
+ 207   1              hex |= (((temp[4] & 0x0F) << 16) & 0x000F0000);
+ 208   1              hex |= (((temp[5] & 0x0F) << 20) & 0x00F00000);
+ 209   1              hex |= (((temp[6] & 0x0F) << 24) & 0x00F00000);
+ 210   1              hex |= (((temp[7] & 0x0F) << 28) & 0x00F00000);
+ 211   1              return hex;
+ 212   1      }
+ 213          static void uint16ToAscii(uint16_t *dat, uint8_t *pstr){//将16位有符号数转换为4个ASCII字符
+ 214   1              data uint8_t temp;
+ 215   1              temp = *dat & 0x000F;//0x000A
+ 216   1              if(temp <= 0x09){
+ 217   2                      *(pstr + 0) = (temp + 0x30);
+ 218   2          }
+ 219   1          else{
+ 220   2                       *(pstr + 0) = (temp + 0x37);
+ 221   2          }
+ 222   1              temp = (*dat >> 4) & 0x000F;//0x00A0
+ 223   1              if(temp <= 0x09){
+ 224   2                      *(pstr + 1) = (temp + 0x30);
+ 225   2          }
+ 226   1          else{
+ 227   2                       *(pstr + 1) = (temp + 0x37);
+ 228   2          }
+ 229   1              temp = (*dat >> 8) & 0x000F;//0x0A00
+ 230   1              if(temp <= 0x09){
+ 231   2                      *(pstr + 2) = (temp + 0x30);
+ 232   2          }
+ 233   1          else{
+ 234   2                       *(pstr + 2) = (temp + 0x37);
+ 235   2          }
+ 236   1              temp = (*dat >> 12) & 0x000F;//0xA000
+ 237   1              if(temp <= 0x09){
+ 238   2                      *(pstr + 3) = (temp + 0x30);
+ 239   2          }
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 5   
 
- 240   2          }
- 241   1      }
- 242          static void uint8ToAscii(uint8_t *dat, uint8_t *pstr){//将16进制数转换成两个ASCII字符
- 243   1              data uint8_t temp;
- 244   1              temp = (*dat & 0x0f);
- 245   1              if(temp <= 0x09){
- 246   2                      *(pstr + 1) = (temp + 0x30);
- 247   2          }
- 248   1          else{
- 249   2                       *(pstr + 1) = (temp + 0x37);
- 250   2          }
- 251   1              temp = ((*dat & 0xf0) >> 4);
- 252   1              if(temp <= 0x09){
- 253   2                      *pstr = (temp + 0x30);
- 254   2              }
- 255   1              else{
- 256   2                      *pstr = (temp + 0x37);
- 257   2              }
- 258   1      }
- 259          static uint8_t asciiToUint8(uint8_t *pstr){//将两个int8_t 组合成一个16进制数
- 260   1              data uint8_t temp[2];
- 261   1              data uint8_t hex;
- 262   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
- 263   2                      temp[0] = *pstr - 0x37; 
- 264   2              }
- 265   1              else if(*pstr >= '0' && *pstr <='9'){
- 266   2                      temp[0] = *pstr - 0x30; 
- 267   2              }
- 268   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
- 269   2                      temp[1] = *(pstr + 1) - 0x37; 
- 270   2              }
- 271   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
- 272   2                      temp[1] = *(pstr + 1) - 0x30;   
- 273   2              }
- 274   1              hex = 0;
- 275   1              hex |= temp[1] & 0xF;
- 276   1              hex |= ((temp[0] << 4) & 0xF0);
- 277   1              return hex;
- 278   1      }
- 279          
- 280          static uint16_t asciiToUint16(uint8_t *pstr){
- 281   1              data uint8_t temp[4];
- 282   1              data uint16_t hex;
- 283   1              //取出0xA000
- 284   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
- 285   2                      temp[3] = *pstr - 0x37; 
- 286   2              }
- 287   1              else if(*pstr >= '0' && *pstr <='9'){
- 288   2                      temp[3] = *pstr - 0x30; 
- 289   2              }
- 290   1              //取出0x0A00
- 291   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
- 292   2                      temp[2] = *(pstr + 1) - 0x37; 
- 293   2              }
- 294   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
- 295   2                      temp[2] = *(pstr + 1) - 0x30;   
- 296   2              }
- 297   1              //取出0x00A0
- 298   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
- 299   2                      temp[1] = *pstr - 0x37; 
- 300   2              }
- 301   1              else if(*pstr >= '0' && *pstr <='9'){
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 6   
+ 240   1          else{
+ 241   2                      *(pstr + 3) = (temp + 0x37);
+ 242   2          }
+ 243   1      }
+ 244          static void uint8ToAscii(uint8_t *dat, uint8_t *pstr){//将16进制数转换成两个ASCII字符
+ 245   1              data uint8_t temp;
+ 246   1              temp = (*dat & 0x0f);
+ 247   1              if(temp <= 0x09){
+ 248   2                      *(pstr + 1) = (temp + 0x30);
+ 249   2          }
+ 250   1          else{
+ 251   2                       *(pstr + 1) = (temp + 0x37);
+ 252   2          }
+ 253   1              temp = ((*dat & 0xf0) >> 4);
+ 254   1              if(temp <= 0x09){
+ 255   2                      *pstr = (temp + 0x30);
+ 256   2              }
+ 257   1              else{
+ 258   2                      *pstr = (temp + 0x37);
+ 259   2              }
+ 260   1      }
+ 261          static uint8_t asciiToUint8(uint8_t *pstr){//将两个int8_t 组合成一个16进制数
+ 262   1              data uint8_t temp[2];
+ 263   1              data uint8_t hex;
+ 264   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
+ 265   2                      temp[0] = *pstr - 0x37; 
+ 266   2              }
+ 267   1              else if(*pstr >= '0' && *pstr <='9'){
+ 268   2                      temp[0] = *pstr - 0x30; 
+ 269   2              }
+ 270   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
+ 271   2                      temp[1] = *(pstr + 1) - 0x37; 
+ 272   2              }
+ 273   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ 274   2                      temp[1] = *(pstr + 1) - 0x30;   
+ 275   2              }
+ 276   1              hex = 0;
+ 277   1              hex |= temp[1] & 0xF;
+ 278   1              hex |= ((temp[0] << 4) & 0xF0);
+ 279   1              return hex;
+ 280   1      }
+ 281          
+ 282          static uint16_t asciiToUint16(uint8_t *pstr){
+ 283   1              data uint8_t temp[4];
+ 284   1              data uint16_t hex;
+ 285   1              //取出0xA000
+ 286   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
+ 287   2                      temp[3] = *pstr - 0x37; 
+ 288   2              }
+ 289   1              else if(*pstr >= '0' && *pstr <='9'){
+ 290   2                      temp[3] = *pstr - 0x30; 
+ 291   2              }
+ 292   1              //取出0x0A00
+ 293   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
+ 294   2                      temp[2] = *(pstr + 1) - 0x37; 
+ 295   2              }
+ 296   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ 297   2                      temp[2] = *(pstr + 1) - 0x30;   
+ 298   2              }
+ 299   1              //取出0x00A0
+ 300   1              if(*pstr >= 'A' && *pstr <='F'){//A-F
+ 301   2                      temp[1] = *pstr - 0x37; 
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 6   
 
- 302   2                      temp[1] = *pstr - 0x30; 
- 303   2              }
- 304   1              //取出0x000A
- 305   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
- 306   2                      temp[0] = *(pstr + 1) - 0x37; 
- 307   2              }
- 308   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
- 309   2                      temp[0] = *(pstr + 1) - 0x30;   
- 310   2              }
- 311   1              hex = 0;
- 312   1              hex |= temp[0] & 0x000F;
- 313   1              hex |= ((temp[1] & 0x0F) << 4) & 0x00F0;
- 314   1              hex |= ((temp[2] & 0x0F) << 8) & 0x0F00;
- 315   1              hex |= ((temp[3] & 0x0F) << 12) & 0xF000;
- 316   1              return hex;
- 317   1      }
- 318          static uint8_t LRC(uint8_t *buf, int32_t len){//计算LRC LRC方法是将消息中的8Bit的字节连续累加，丢弃了进位
- 319   1              int i;
- 320   1              uint8_t lrc = 0;        /*lrc字节初始化*/
- 321   1              for( i = 0; i < len; i++ ){
- 322   2                      lrc = lrc + buf[i];
- 323   2              }
- 324   1              return lrc;
- 325   1      }
- 326          void uart0Send(uint8_t *buf, uint16_t count){//串口0查询发送
- 327   1              uint8_t *ptr = buf;
- 328   1              do{
- 329   2                  SBUF0 = *ptr++;
- 330   2                      while(TI0 == 0);
- 331   2                      TI0 = 0;
- 332   2              }while(--count);
- 333   1      }
- 334          void uart0Receive(uint8_t *buf, uint16_t count){//串口0查询接收
- 335   1              uint8_t * ptr = buf;
- 336   1              do{
- 337   2                      if(RI0 == 1)
- 338   2                      {
- 339   3                              *ptr++ = SBUF0;
- 340   3                              RI0 = 0;
- 341   3                              count--;
- 342   3                      }
- 343   2              }while(count);
- 344   1      }
- 345          uint8_t uart0ReceiveBootOrder(void){//串口0查询接收带超时
- 346   1              uint8_t temp;
- 347   1              uint32_t timeOutCounter;
- 348   1      #if CONFIG_DEBUG == 1
- 349   1              sprintf(CmdTxBuf,"Bootloader->Debug:Input 'C' Into Loader Mode\n");
- 350   1              printf(CmdTxBuf);
- 351   1      #endif
- 352   1              timeOutCounter = 0;
- 353   1              do{
- 354   2                      if(RI0 == 1){
- 355   3                              temp = SBUF0;
- 356   3                              RI0 = 0;
- 357   3                              if(temp == 'c')
- 358   3                              {
- 359   4      #if CONFIG_DEBUG == 1
- 360   4                                      printf("Bootloader->Debug:BOOT_SELECT_LOADER\n");
- 361   4      #endif
- 362   4                                      return BOOT_SELECT_LOADER;
- 363   4                              }
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 7   
+ 302   2              }
+ 303   1              else if(*pstr >= '0' && *pstr <='9'){
+ 304   2                      temp[1] = *pstr - 0x30; 
+ 305   2              }
+ 306   1              //取出0x000A
+ 307   1              if(*(pstr + 1) >= 'A' && *(pstr + 1) <='F'){//A-F
+ 308   2                      temp[0] = *(pstr + 1) - 0x37; 
+ 309   2              }
+ 310   1              else if(*(pstr + 1) >= '0' && *(pstr + 1) <='9'){
+ 311   2                      temp[0] = *(pstr + 1) - 0x30;   
+ 312   2              }
+ 313   1              hex = 0;
+ 314   1              hex |= temp[0] & 0x000F;
+ 315   1              hex |= ((temp[1] & 0x0F) << 4) & 0x00F0;
+ 316   1              hex |= ((temp[2] & 0x0F) << 8) & 0x0F00;
+ 317   1              hex |= ((temp[3] & 0x0F) << 12) & 0xF000;
+ 318   1              return hex;
+ 319   1      }
+ 320          static uint8_t LRC(uint8_t *buf, int32_t len){//计算LRC LRC方法是将消息中的8Bit的字节连续累加，丢弃了进位
+ 321   1              int i;
+ 322   1              uint8_t lrc = 0;        /*lrc字节初始化*/
+ 323   1              for( i = 0; i < len; i++ ){
+ 324   2                      lrc = lrc + buf[i];
+ 325   2              }
+ 326   1              return lrc;
+ 327   1      }
+ 328          void uart0Send(uint8_t *buf, uint16_t count){//串口0查询发送
+ 329   1              uint8_t *ptr = buf;
+ 330   1              do{
+ 331   2                  SBUF0 = *ptr++;
+ 332   2                      while(TI0 == 0);
+ 333   2                      TI0 = 0;
+ 334   2              }while(--count);
+ 335   1      }
+ 336          void uart0Receive(uint8_t *buf, uint16_t count){//串口0查询接收
+ 337   1              uint8_t * ptr = buf;
+ 338   1              do{
+ 339   2                      if(RI0 == 1)
+ 340   2                      {
+ 341   3                              *ptr++ = SBUF0;
+ 342   3                              RI0 = 0;
+ 343   3                              count--;
+ 344   3                      }
+ 345   2              }while(count);
+ 346   1      }
+ 347          uint8_t uart0ReceiveBootOrder(void){//串口0查询接收带超时
+ 348   1              uint8_t temp;
+ 349   1              uint32_t timeOutCounter;
+ 350   1      #if CONFIG_DEBUG == 1
+ 351   1              sprintf(CmdTxBuf,"Bootloader->Debug:Input 'C' Into Loader Mode\n");
+ 352   1              printf(CmdTxBuf);
+ 353   1      #endif
+ 354   1              timeOutCounter = 0;
+ 355   1              do{
+ 356   2                      if(RI0 == 1){
+ 357   3                              temp = SBUF0;
+ 358   3                              RI0 = 0;
+ 359   3                              if(temp == 'c')
+ 360   3                              {
+ 361   4      #if CONFIG_DEBUG == 1
+ 362   4                                      printf("Bootloader->Debug:BOOT_SELECT_LOADER\n");
+ 363   4      #endif
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 7   
 
- 364   3                      }
- 365   2                      timeOutCounter ++;
- 366   2              }while(timeOutCounter <= BOOT_SELECT_TIMEOUT);
- 367   1      #if CONFIG_DEBUG == 1
- 368   1              printf("Bootloader->Debug:BOOT_SELECT_OTA\n");
- 369   1      #endif
- 370   1              return BOOT_SELECT_OTA;
- 371   1      }
- 372          void CmdSetHwVer(void){//设置硬件版本
- 373   1              uint16_t itemp;
- 374   1              FlashEprom[EPROM_HW_VER] = asciiToUint8(CmdRxBuf + 2);
- 375   1      #if CONFIG_DEBUG == 1
- 376   1              itemp = FlashEprom[EPROM_HW_VER];
- 377   1              printf("Bootloader->Debug->CMD_SET_HW_VER:%2X\n", itemp);
- 378   1      #endif
- 379   1              if(EEPROM_WriteBlock(EPROM_HW_VER, FlashEprom, 1) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
- 380   2                      CmdTxBuf[0] = CMD_STX;
- 381   2                      CmdTxBuf[1] = CMD_SET_HW_VER;
- 382   2                      CmdTxBuf[2] = CMD_RESPOND_FAIL;
- 383   2                      CmdTxBuf[3] = CMD_END;  
- 384   2              }
- 385   1              else{
- 386   2                      CmdTxBuf[0] = CMD_STX;
- 387   2                      CmdTxBuf[1] = CMD_SET_HW_VER;
- 388   2                      CmdTxBuf[2] = CMD_RESPOND_OK;
- 389   2                      CmdTxBuf[3] = CMD_END;
- 390   2              }
- 391   1              uart0Send(CmdTxBuf, 4);
- 392   1      }
- 393          void CmdGetHwVer(void){//获取硬件版本
- 394   1              uint8_t ctemp[2];
- 395   1              uint16_t itemp;
- 396   1              uint8ToAscii((FlashEprom + EPROM_HW_VER), ctemp);
- 397   1              EEPROM_ReadBlock(EPROM_HW_VER, FlashEprom, 1);
- 398   1      #if CONFIG_DEBUG == 1
- 399   1              itemp = FlashEprom[EPROM_HW_VER];
- 400   1              printf("Bootloader->Debug->CMD_GET_HW_VER:%2X\n", itemp);
- 401   1      #endif
- 402   1              CmdTxBuf[0] = CMD_STX;
- 403   1              CmdTxBuf[1] = CMD_GET_HW_VER;
- 404   1              CmdTxBuf[2] = ctemp[0];
- 405   1              CmdTxBuf[3] = ctemp[1];
- 406   1              CmdTxBuf[4] = CMD_END;
- 407   1              uart0Send(CmdTxBuf, 5);
- 408   1      }
- 409          void CmdResetMcu(void){//强制复位
- 410   1              RSTSRC |= (1 << 4);
- 411   1      }
- 412          void CmdGetBootLoaderVer(void){//获取BOOTLOADER版本
- 413   1              uint8_t ctemp[2];
- 414   1              uint16_t itemp;
- 415   1              EEPROM_ReadBlock(EPROM_BOOT_VER, FlashEprom, 1);
- 416   1              uint8ToAscii((FlashEprom + EPROM_BOOT_VER), ctemp);
- 417   1      #if CONFIG_DEBUG == 1
- 418   1              itemp = FlashEprom[EPROM_BOOT_VER];
- 419   1              printf("Bootloader->Debug->CMD_GET_BOOT_VER:%2X\n", itemp);
- 420   1      #endif
- 421   1              CmdTxBuf[0] = CMD_STX;
- 422   1              CmdTxBuf[1] = CMD_GET_BOOTLOADER_VER;
- 423   1              CmdTxBuf[2] = ctemp[0];
- 424   1              CmdTxBuf[3] = ctemp[1];
- 425   1              CmdTxBuf[4] = CMD_END;  
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 8   
+ 364   4                                      return BOOT_SELECT_LOADER;
+ 365   4                              }
+ 366   3                      }
+ 367   2                      timeOutCounter ++;
+ 368   2              }while(timeOutCounter <= BOOT_SELECT_TIMEOUT);
+ 369   1      #if CONFIG_DEBUG == 1
+ 370   1              printf("Bootloader->Debug:BOOT_SELECT_OTA\n");
+ 371   1      #endif
+ 372   1              return BOOT_SELECT_OTA;
+ 373   1      }
+ 374          void CmdSetHwVer(void){//设置硬件版本
+ 375   1              uint16_t itemp;
+ 376   1              FlashEprom[EPROM_HW_VER] = asciiToUint8(CmdRxBuf + 2);
+ 377   1      #if CONFIG_DEBUG == 1
+ 378   1              itemp = FlashEprom[EPROM_HW_VER];
+ 379   1              printf("Bootloader->Debug->CMD_SET_HW_VER:%2X\n", itemp);
+ 380   1      #endif
+ 381   1              if(EEPROM_WriteBlock(EPROM_HW_VER, FlashEprom, 1) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
+ 382   2                      CmdTxBuf[0] = CMD_STX;
+ 383   2                      CmdTxBuf[1] = CMD_SET_HW_VER;
+ 384   2                      CmdTxBuf[2] = CMD_RESPOND_FAIL;
+ 385   2                      CmdTxBuf[3] = CMD_END;  
+ 386   2              }
+ 387   1              else{
+ 388   2                      CmdTxBuf[0] = CMD_STX;
+ 389   2                      CmdTxBuf[1] = CMD_SET_HW_VER;
+ 390   2                      CmdTxBuf[2] = CMD_RESPOND_OK;
+ 391   2                      CmdTxBuf[3] = CMD_END;
+ 392   2              }
+ 393   1              uart0Send(CmdTxBuf, 4);
+ 394   1      }
+ 395          void CmdGetHwVer(void){//获取硬件版本
+ 396   1              uint8_t ctemp[2];
+ 397   1              uint16_t itemp;
+ 398   1              uint8ToAscii((FlashEprom + EPROM_HW_VER), ctemp);
+ 399   1              EEPROM_ReadBlock(EPROM_HW_VER, FlashEprom, 1);
+ 400   1      #if CONFIG_DEBUG == 1
+ 401   1              itemp = FlashEprom[EPROM_HW_VER];
+ 402   1              printf("Bootloader->Debug->CMD_GET_HW_VER:%2X\n", itemp);
+ 403   1      #endif
+ 404   1              CmdTxBuf[0] = CMD_STX;
+ 405   1              CmdTxBuf[1] = CMD_GET_HW_VER;
+ 406   1              CmdTxBuf[2] = ctemp[0];
+ 407   1              CmdTxBuf[3] = ctemp[1];
+ 408   1              CmdTxBuf[4] = CMD_END;
+ 409   1              uart0Send(CmdTxBuf, 5);
+ 410   1      }
+ 411          void CmdResetMcu(void){//强制复位
+ 412   1              RSTSRC |= (1 << 4);
+ 413   1      }
+ 414          void CmdGetBootLoaderVer(void){//获取BOOTLOADER版本
+ 415   1              uint8_t ctemp[2];
+ 416   1              uint16_t itemp;
+ 417   1              EEPROM_ReadBlock(EPROM_BOOT_VER, FlashEprom, 1);
+ 418   1              uint8ToAscii((FlashEprom + EPROM_BOOT_VER), ctemp);
+ 419   1      #if CONFIG_DEBUG == 1
+ 420   1              itemp = FlashEprom[EPROM_BOOT_VER];
+ 421   1              printf("Bootloader->Debug->CMD_GET_BOOT_VER:%2X\n", itemp);
+ 422   1      #endif
+ 423   1              CmdTxBuf[0] = CMD_STX;
+ 424   1              CmdTxBuf[1] = CMD_GET_BOOTLOADER_VER;
+ 425   1              CmdTxBuf[2] = ctemp[0];
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 8   
 
- 426   1              uart0Send(CmdTxBuf, 5);
- 427   1      }
- 428          void CmdSetBootLoaderVer(void){//设置Bootloader版本号
- 429   1              uint16_t itemp;
- 430   1              FlashEprom[EPROM_BOOT_VER] = asciiToUint8(CmdRxBuf + 2);
- 431   1      #if CONFIG_DEBUG == 1
- 432   1              itemp = FlashEprom[EPROM_BOOT_VER];
- 433   1              printf("Bootloader->Debug->CMD_SET_BOOT_VER:%2X\n", itemp);
- 434   1      #endif
- 435   1              if(EEPROM_WriteBlock(EPROM_HW_VER, FlashEprom, 1) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
- 436   2                      CmdTxBuf[0] = CMD_STX;
- 437   2                      CmdTxBuf[1] = CMD_SET_BOOTLOADER_VER;
- 438   2                      CmdTxBuf[2] = CMD_RESPOND_FAIL;
- 439   2                      CmdTxBuf[3] = CMD_END;  
- 440   2              }
- 441   1              else{
- 442   2                      CmdTxBuf[0] = CMD_STX;
- 443   2                      CmdTxBuf[1] = CMD_SET_BOOTLOADER_VER;
- 444   2                      CmdTxBuf[2] = CMD_RESPOND_OK;
- 445   2                      CmdTxBuf[3] = CMD_END;
- 446   2              }
- 447   1              uart0Send(CmdTxBuf, 4);
- 448   1      }
- 449          void CmdGetOTA1Ver(void){//获取OTA1版本号
- 450   1              uint8_t ctemp[2];
- 451   1              uint16_t itemp;
- 452   1              EEPROM_ReadBlock(EPROM_OTA1_VER, FlashEprom, 1);
- 453   1              uint8ToAscii((FlashEprom + EPROM_OTA1_VER), ctemp);
- 454   1      #if CONFIG_DEBUG == 1
- 455   1              itemp = FlashEprom[EPROM_OTA1_VER];
- 456   1              printf("Bootloader->Debug->CMD_GET_OTA1_VER:%2X\n", itemp);
- 457   1      #endif
- 458   1              CmdTxBuf[0] = CMD_STX;
- 459   1              CmdTxBuf[1] = CMD_GET_OTA1_VER;
- 460   1              CmdTxBuf[2] = ctemp[0];
- 461   1              CmdTxBuf[3] = ctemp[1];
- 462   1              CmdTxBuf[4] = CMD_END;  
- 463   1              uart0Send(CmdTxBuf, 5);
- 464   1      }
- 465          void CmdSetOTA1Ver(void){//设置OTA1版本号
- 466   1              uint16_t itemp;
- 467   1              FlashEprom[EPROM_OTA1_VER] = asciiToUint8(CmdRxBuf + 2);
- 468   1      #if CONFIG_DEBUG == 1
- 469   1              itemp = FlashEprom[EPROM_OTA1_VER];
- 470   1              printf("Bootloader->Debug->CMD_SET_OTA1_VER:%2X\n", itemp);
- 471   1      #endif
- 472   1              if(EEPROM_WriteBlock(EPROM_OTA1_VER, FlashEprom, 1) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
- 473   2                      CmdTxBuf[0] = CMD_STX;
- 474   2                      CmdTxBuf[1] = CMD_SET_OTA1_VER;
- 475   2                      CmdTxBuf[2] = CMD_RESPOND_FAIL;
- 476   2                      CmdTxBuf[3] = CMD_END;  
- 477   2              }
- 478   1              else{
- 479   2                      CmdTxBuf[0] = CMD_STX;
- 480   2                      CmdTxBuf[1] = CMD_SET_OTA1_VER;
- 481   2                      CmdTxBuf[2] = CMD_RESPOND_OK;
- 482   2                      CmdTxBuf[3] = CMD_END;
- 483   2              }
- 484   1              uart0Send(CmdTxBuf, 4);
- 485   1      }
- 486          void CmdGetOTA2Ver(void){//获取OTA2版本号
- 487   1              uint8_t ctemp[2];
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 9   
+ 426   1              CmdTxBuf[3] = ctemp[1];
+ 427   1              CmdTxBuf[4] = CMD_END;  
+ 428   1              uart0Send(CmdTxBuf, 5);
+ 429   1      }
+ 430          void CmdSetBootLoaderVer(void){//设置Bootloader版本号
+ 431   1              uint16_t itemp;
+ 432   1              FlashEprom[EPROM_BOOT_VER] = asciiToUint8(CmdRxBuf + 2);
+ 433   1      #if CONFIG_DEBUG == 1
+ 434   1              itemp = FlashEprom[EPROM_BOOT_VER];
+ 435   1              printf("Bootloader->Debug->CMD_SET_BOOT_VER:%2X\n", itemp);
+ 436   1      #endif
+ 437   1              if(EEPROM_WriteBlock(EPROM_HW_VER, FlashEprom, 1) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
+ 438   2                      CmdTxBuf[0] = CMD_STX;
+ 439   2                      CmdTxBuf[1] = CMD_SET_BOOTLOADER_VER;
+ 440   2                      CmdTxBuf[2] = CMD_RESPOND_FAIL;
+ 441   2                      CmdTxBuf[3] = CMD_END;  
+ 442   2              }
+ 443   1              else{
+ 444   2                      CmdTxBuf[0] = CMD_STX;
+ 445   2                      CmdTxBuf[1] = CMD_SET_BOOTLOADER_VER;
+ 446   2                      CmdTxBuf[2] = CMD_RESPOND_OK;
+ 447   2                      CmdTxBuf[3] = CMD_END;
+ 448   2              }
+ 449   1              uart0Send(CmdTxBuf, 4);
+ 450   1      }
+ 451          void CmdGetOTA1Ver(void){//获取OTA1版本号
+ 452   1              uint8_t ctemp[2];
+ 453   1              uint16_t itemp;
+ 454   1              EEPROM_ReadBlock(EPROM_OTA1_VER, FlashEprom, 1);
+ 455   1              uint8ToAscii((FlashEprom + EPROM_OTA1_VER), ctemp);
+ 456   1      #if CONFIG_DEBUG == 1
+ 457   1              itemp = FlashEprom[EPROM_OTA1_VER];
+ 458   1              printf("Bootloader->Debug->CMD_GET_OTA1_VER:%2X\n", itemp);
+ 459   1      #endif
+ 460   1              CmdTxBuf[0] = CMD_STX;
+ 461   1              CmdTxBuf[1] = CMD_GET_OTA1_VER;
+ 462   1              CmdTxBuf[2] = ctemp[0];
+ 463   1              CmdTxBuf[3] = ctemp[1];
+ 464   1              CmdTxBuf[4] = CMD_END;  
+ 465   1              uart0Send(CmdTxBuf, 5);
+ 466   1      }
+ 467          void CmdSetOTA1Ver(void){//设置OTA1版本号
+ 468   1              uint16_t itemp;
+ 469   1              FlashEprom[EPROM_OTA1_VER] = asciiToUint8(CmdRxBuf + 2);
+ 470   1      #if CONFIG_DEBUG == 1
+ 471   1              itemp = FlashEprom[EPROM_OTA1_VER];
+ 472   1              printf("Bootloader->Debug->CMD_SET_OTA1_VER:%2X\n", itemp);
+ 473   1      #endif
+ 474   1              if(EEPROM_WriteBlock(EPROM_OTA1_VER, FlashEprom, 1) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
+ 475   2                      CmdTxBuf[0] = CMD_STX;
+ 476   2                      CmdTxBuf[1] = CMD_SET_OTA1_VER;
+ 477   2                      CmdTxBuf[2] = CMD_RESPOND_FAIL;
+ 478   2                      CmdTxBuf[3] = CMD_END;  
+ 479   2              }
+ 480   1              else{
+ 481   2                      CmdTxBuf[0] = CMD_STX;
+ 482   2                      CmdTxBuf[1] = CMD_SET_OTA1_VER;
+ 483   2                      CmdTxBuf[2] = CMD_RESPOND_OK;
+ 484   2                      CmdTxBuf[3] = CMD_END;
+ 485   2              }
+ 486   1              uart0Send(CmdTxBuf, 4);
+ 487   1      }
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 9   
 
- 488   1              uint16_t itemp;
- 489   1              EEPROM_ReadBlock(EPROM_OTA2_VER, FlashEprom, 1);
- 490   1              uint8ToAscii((FlashEprom + EPROM_OTA2_VER), ctemp);
- 491   1      #if CONFIG_DEBUG == 1
- 492   1              itemp = FlashEprom[EPROM_OTA2_VER];
- 493   1              printf("Bootloader->Debug->CMD_GET_OTA2_VER:%2X\n", itemp);
- 494   1      #endif
- 495   1              CmdTxBuf[0] = CMD_STX;
- 496   1              CmdTxBuf[1] = CMD_GET_OTA2_VER;
- 497   1              CmdTxBuf[2] = ctemp[0];
- 498   1              CmdTxBuf[3] = ctemp[1];
- 499   1              CmdTxBuf[4] = CMD_END;  
- 500   1              uart0Send(CmdTxBuf, 5);
- 501   1      }
- 502          void CmdSetOTA2Ver(void){//设置OTA2版本号
- 503   1              uint16_t itemp;
- 504   1              FlashEprom[EPROM_OTA2_VER] = asciiToUint8(CmdRxBuf + 2);
- 505   1      #if CONFIG_DEBUG == 1
- 506   1              itemp = FlashEprom[EPROM_OTA2_VER];
- 507   1              printf("Bootloader->Debug->CMD_SET_OTA2_VER:%2X\n", itemp);
- 508   1      #endif
- 509   1              if(EEPROM_WriteBlock(EPROM_OTA2_VER, FlashEprom, 1) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
- 510   2                      CmdTxBuf[0] = CMD_STX;
- 511   2                      CmdTxBuf[1] = CMD_SET_OTA2_VER;
- 512   2                      CmdTxBuf[2] = CMD_RESPOND_FAIL;
- 513   2                      CmdTxBuf[3] = CMD_END;  
- 514   2              }
- 515   1              else{
- 516   2                      CmdTxBuf[0] = CMD_STX;
- 517   2                      CmdTxBuf[1] = CMD_SET_OTA2_VER;
- 518   2                      CmdTxBuf[2] = CMD_RESPOND_OK;
- 519   2                      CmdTxBuf[3] = CMD_END;
- 520   2              }
- 521   1              uart0Send(CmdTxBuf, 4);
- 522   1      }
- 523          void CmdGetBootCrc(void){//获取BOOT CRC
- 524   1              uint8_t ctemp[2];
- 525   1              uint16_t itemp;
- 526   1              EEPROM_ReadBlock(EPROM_BOOT_CRC, FlashEprom, 1);
- 527   1              uint8ToAscii((FlashEprom + EPROM_BOOT_CRC), ctemp);
- 528   1      #if CONFIG_DEBUG == 1
- 529   1              itemp = FlashEprom[EPROM_BOOT_CRC];
- 530   1              printf("Bootloader->Debug->CMD_GET_BOOT_CRC:%2X\n", itemp);
- 531   1      #endif  
- 532   1              CmdTxBuf[0] = CMD_STX;
- 533   1              CmdTxBuf[1] = CMD_GET_BOOT_CRC;
- 534   1              CmdTxBuf[2] = ctemp[0];
- 535   1              CmdTxBuf[3] = ctemp[1];
- 536   1              CmdTxBuf[4] = CMD_END;  
- 537   1              uart0Send(CmdTxBuf, 5);
- 538   1      }
- 539          void CmdGetOTA1Crc(void){//获取OTA1 CRC
- 540   1              uint8_t ctemp[2];
- 541   1              uint16_t itemp;
- 542   1              EEPROM_ReadBlock(EPROM_OTA1_CRC, FlashEprom, 1);
- 543   1              uint8ToAscii((FlashEprom + EPROM_OTA1_CRC), ctemp);
- 544   1      #if CONFIG_DEBUG == 1
- 545   1              itemp = FlashEprom[EPROM_OTA1_CRC];
- 546   1              printf("Bootloader->Debug->CMD_GET_OTA1_CRC:%2X\n", itemp);
- 547   1      #endif
- 548   1              CmdTxBuf[0] = CMD_STX;
- 549   1              CmdTxBuf[1] = CMD_GET_OTA1_CRC;
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 10  
+ 488          void CmdGetOTA2Ver(void){//获取OTA2版本号
+ 489   1              uint8_t ctemp[2];
+ 490   1              uint16_t itemp;
+ 491   1              EEPROM_ReadBlock(EPROM_OTA2_VER, FlashEprom, 1);
+ 492   1              uint8ToAscii((FlashEprom + EPROM_OTA2_VER), ctemp);
+ 493   1      #if CONFIG_DEBUG == 1
+ 494   1              itemp = FlashEprom[EPROM_OTA2_VER];
+ 495   1              printf("Bootloader->Debug->CMD_GET_OTA2_VER:%2X\n", itemp);
+ 496   1      #endif
+ 497   1              CmdTxBuf[0] = CMD_STX;
+ 498   1              CmdTxBuf[1] = CMD_GET_OTA2_VER;
+ 499   1              CmdTxBuf[2] = ctemp[0];
+ 500   1              CmdTxBuf[3] = ctemp[1];
+ 501   1              CmdTxBuf[4] = CMD_END;  
+ 502   1              uart0Send(CmdTxBuf, 5);
+ 503   1      }
+ 504          void CmdSetOTA2Ver(void){//设置OTA2版本号
+ 505   1              uint16_t itemp;
+ 506   1              FlashEprom[EPROM_OTA2_VER] = asciiToUint8(CmdRxBuf + 2);
+ 507   1      #if CONFIG_DEBUG == 1
+ 508   1              itemp = FlashEprom[EPROM_OTA2_VER];
+ 509   1              printf("Bootloader->Debug->CMD_SET_OTA2_VER:%2X\n", itemp);
+ 510   1      #endif
+ 511   1              if(EEPROM_WriteBlock(EPROM_OTA2_VER, FlashEprom, 1) != EE_NO_ERROR){//从FLASH中读取OTA MD5值
+ 512   2                      CmdTxBuf[0] = CMD_STX;
+ 513   2                      CmdTxBuf[1] = CMD_SET_OTA2_VER;
+ 514   2                      CmdTxBuf[2] = CMD_RESPOND_FAIL;
+ 515   2                      CmdTxBuf[3] = CMD_END;  
+ 516   2              }
+ 517   1              else{
+ 518   2                      CmdTxBuf[0] = CMD_STX;
+ 519   2                      CmdTxBuf[1] = CMD_SET_OTA2_VER;
+ 520   2                      CmdTxBuf[2] = CMD_RESPOND_OK;
+ 521   2                      CmdTxBuf[3] = CMD_END;
+ 522   2              }
+ 523   1              uart0Send(CmdTxBuf, 4);
+ 524   1      }
+ 525          void CmdGetBootCrc(void){//获取BOOT CRC
+ 526   1              uint8_t ctemp[2];
+ 527   1              uint16_t itemp;
+ 528   1              EEPROM_ReadBlock(EPROM_BOOT_CRC, FlashEprom, 1);
+ 529   1              uint8ToAscii((FlashEprom + EPROM_BOOT_CRC), ctemp);
+ 530   1      #if CONFIG_DEBUG == 1
+ 531   1              itemp = FlashEprom[EPROM_BOOT_CRC];
+ 532   1              printf("Bootloader->Debug->CMD_GET_BOOT_CRC:%2X\n", itemp);
+ 533   1      #endif  
+ 534   1              CmdTxBuf[0] = CMD_STX;
+ 535   1              CmdTxBuf[1] = CMD_GET_BOOT_CRC;
+ 536   1              CmdTxBuf[2] = ctemp[0];
+ 537   1              CmdTxBuf[3] = ctemp[1];
+ 538   1              CmdTxBuf[4] = CMD_END;  
+ 539   1              uart0Send(CmdTxBuf, 5);
+ 540   1      }
+ 541          void CmdGetOTA1Crc(void){//获取OTA1 CRC
+ 542   1              uint8_t ctemp[2];
+ 543   1              uint16_t itemp;
+ 544   1              EEPROM_ReadBlock(EPROM_OTA1_CRC, FlashEprom, 1);
+ 545   1              uint8ToAscii((FlashEprom + EPROM_OTA1_CRC), ctemp);
+ 546   1      #if CONFIG_DEBUG == 1
+ 547   1              itemp = FlashEprom[EPROM_OTA1_CRC];
+ 548   1              printf("Bootloader->Debug->CMD_GET_OTA1_CRC:%2X\n", itemp);
+ 549   1      #endif
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 10  
 
- 550   1              CmdTxBuf[2] = ctemp[0];
- 551   1              CmdTxBuf[3] = ctemp[1];
- 552   1              CmdTxBuf[4] = CMD_END;  
- 553   1              uart0Send(CmdTxBuf, 5);
- 554   1      }
- 555          void CmdGetOTA2Crc(void){//获取OTA2 CRC
- 556   1              uint8_t ctemp[2];
- 557   1              uint16_t itemp;
- 558   1              EEPROM_ReadBlock(EPROM_OTA2_CRC, FlashEprom, 1);
- 559   1              uint8ToAscii((FlashEprom + EPROM_OTA2_CRC), ctemp);
- 560   1      #if CONFIG_DEBUG == 1
- 561   1              itemp = FlashEprom[EPROM_OTA2_CRC];
- 562   1              printf("Bootloader->Debug->CMD_GET_OTA2_CRC:%2X\n", itemp);
- 563   1      #endif
- 564   1              CmdTxBuf[0] = CMD_STX;
- 565   1              CmdTxBuf[1] = CMD_GET_OTA2_CRC;
- 566   1              CmdTxBuf[2] = ctemp[0];
- 567   1              CmdTxBuf[3] = ctemp[1];
- 568   1              CmdTxBuf[4] = CMD_END;  
- 569   1              uart0Send(CmdTxBuf, 5);
- 570   1      }
- 571          void CmdReadFlashPage(void){//读取FLASH指定页
- 572   1              uint16_t i;
- 573   1              uint32_t adr, crc;
- 574   1              uint8_t temp, page;
- 575   1              page = asciiToUint8(CmdRxBuf + 2);
- 576   1              if(page > (FW_BOOT_ADR_END / FL_PAGE_SIZE) && (page < (FLASH_TEMP / FL_PAGE_SIZE)))
- 577   1              {       
- 578   2                      adr = (uint32_t)(page - 1) * FL_PAGE_SIZE;
- 579   2                      crc32Clear();crc = 0;
- 580   2                      CmdTxBuf[0] = CMD_STX;
- 581   2                      CmdTxBuf[1] = CMD_READ_FLASH_PAGE;
- 582   2                      uint8ToAscii(&page, (CmdTxBuf + 2));
- 583   2                      for(i = 0;i < FL_PAGE_SIZE;i ++){
- 584   3                              FLASH_Read (&temp, (adr + i), 1);//读取FLSAH
- 585   3                              crc = crc32CalculateAdd(temp);
- 586   3                              uint8ToAscii(&temp, (CmdTxBuf + 4 + (i * 2)));
- 587   3                      }
- 588   2                      uint32ToAscii(&crc, (CmdTxBuf + 4 + 1024));
- 589   2                      CmdTxBuf[1032] = CMD_END;       
- 590   2                      uart0Send(CmdTxBuf, 1033);
- 591   2              }
- 592   1              else{
- 593   2                      CmdTxBuf[0] = CMD_STX;
- 594   2                      CmdTxBuf[1] = CMD_READ_FLASH_PAGE;
- 595   2                      uint8ToAscii(&page, (CmdTxBuf + 2));
- 596   2                      CmdTxBuf[4] = CMD_RESPOND_FAIL;
- 597   2                      CmdTxBuf[5] = CMD_END;  
- 598   2                      uart0Send(CmdTxBuf, 6);
- 599   2              }
- 600   1      }
- 601          void CmdClearFlashPage(void){//清除FLASH指定页
- 602   1              uint32_t adr;
- 603   1              uint8_t page;
- 604   1              page = asciiToUint8(CmdRxBuf + 2);
- 605   1              if(page > (FW_BOOT_ADR_END / FL_PAGE_SIZE) && (page < (FLASH_TEMP / FL_PAGE_SIZE))){    
- 606   2                      adr = (uint32_t)(page - 1) * FL_PAGE_SIZE;
- 607   2                      FLASH_Clear (adr, FL_PAGE_SIZE);
- 608   2                      CmdTxBuf[0] = CMD_STX;
- 609   2                      CmdTxBuf[1] = CMD_CLEAR_FLASH_PAGE;
- 610   2                      uint8ToAscii(&page, (CmdTxBuf + 2));
- 611   2                      CmdTxBuf[4] = CMD_RESPOND_OK;
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 11  
+ 550   1              CmdTxBuf[0] = CMD_STX;
+ 551   1              CmdTxBuf[1] = CMD_GET_OTA1_CRC;
+ 552   1              CmdTxBuf[2] = ctemp[0];
+ 553   1              CmdTxBuf[3] = ctemp[1];
+ 554   1              CmdTxBuf[4] = CMD_END;  
+ 555   1              uart0Send(CmdTxBuf, 5);
+ 556   1      }
+ 557          void CmdGetOTA2Crc(void){//获取OTA2 CRC
+ 558   1              uint8_t ctemp[2];
+ 559   1              uint16_t itemp;
+ 560   1              EEPROM_ReadBlock(EPROM_OTA2_CRC, FlashEprom, 1);
+ 561   1              uint8ToAscii((FlashEprom + EPROM_OTA2_CRC), ctemp);
+ 562   1      #if CONFIG_DEBUG == 1
+ 563   1              itemp = FlashEprom[EPROM_OTA2_CRC];
+ 564   1              printf("Bootloader->Debug->CMD_GET_OTA2_CRC:%2X\n", itemp);
+ 565   1      #endif
+ 566   1              CmdTxBuf[0] = CMD_STX;
+ 567   1              CmdTxBuf[1] = CMD_GET_OTA2_CRC;
+ 568   1              CmdTxBuf[2] = ctemp[0];
+ 569   1              CmdTxBuf[3] = ctemp[1];
+ 570   1              CmdTxBuf[4] = CMD_END;  
+ 571   1              uart0Send(CmdTxBuf, 5);
+ 572   1      }
+ 573          void CmdReadFlashPage(void){//读取FLASH指定页
+ 574   1              uint16_t i;
+ 575   1              uint32_t adr, crc;
+ 576   1              uint8_t temp, page;
+ 577   1              page = asciiToUint8(CmdRxBuf + 2);
+ 578   1              if(page > (FW_BOOT_ADR_END / FL_PAGE_SIZE) && (page < (FLASH_TEMP / FL_PAGE_SIZE)))
+ 579   1              {       
+ 580   2                      adr = (uint32_t)(page - 1) * FL_PAGE_SIZE;
+ 581   2                      crc32Clear();crc = 0;
+ 582   2                      CmdTxBuf[0] = CMD_STX;
+ 583   2                      CmdTxBuf[1] = CMD_READ_FLASH_PAGE;
+ 584   2                      uint8ToAscii(&page, (CmdTxBuf + 2));
+ 585   2                      for(i = 0;i < FL_PAGE_SIZE;i ++){
+ 586   3                              FLASH_Read (&temp, (adr + i), 1);//读取FLSAH
+ 587   3                              crc = crc32CalculateAdd(temp);
+ 588   3                              uint8ToAscii(&temp, (CmdTxBuf + 4 + (i * 2)));
+ 589   3                      }
+ 590   2                      uint32ToAscii(&crc, (CmdTxBuf + 4 + 1024));
+ 591   2                      CmdTxBuf[1032] = CMD_END;       
+ 592   2                      uart0Send(CmdTxBuf, 1033);
+ 593   2              }
+ 594   1              else{
+ 595   2                      CmdTxBuf[0] = CMD_STX;
+ 596   2                      CmdTxBuf[1] = CMD_READ_FLASH_PAGE;
+ 597   2                      uint8ToAscii(&page, (CmdTxBuf + 2));
+ 598   2                      CmdTxBuf[4] = CMD_RESPOND_FAIL;
+ 599   2                      CmdTxBuf[5] = CMD_END;  
+ 600   2                      uart0Send(CmdTxBuf, 6);
+ 601   2              }
+ 602   1      }
+ 603          void CmdClearFlashPage(void){//清除FLASH指定页
+ 604   1              uint32_t adr;
+ 605   1              uint8_t page;
+ 606   1              page = asciiToUint8(CmdRxBuf + 2);
+ 607   1              if(page > (FW_BOOT_ADR_END / FL_PAGE_SIZE) && (page < (FLASH_TEMP / FL_PAGE_SIZE))){    
+ 608   2                      adr = (uint32_t)(page - 1) * FL_PAGE_SIZE;
+ 609   2                      FLASH_Clear (adr, FL_PAGE_SIZE);
+ 610   2                      CmdTxBuf[0] = CMD_STX;
+ 611   2                      CmdTxBuf[1] = CMD_CLEAR_FLASH_PAGE;
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 11  
 
- 612   2                      CmdTxBuf[5] = CMD_END;  
- 613   2                      uart0Send(CmdTxBuf, 6);
- 614   2              }
- 615   1              else{
- 616   2                      CmdTxBuf[0] = CMD_STX;
- 617   2                      CmdTxBuf[1] = CMD_CLEAR_FLASH_PAGE;
- 618   2                      uint8ToAscii(&page, (CmdTxBuf + 2));
- 619   2                      CmdTxBuf[4] = CMD_RESPOND_FAIL;
- 620   2                      CmdTxBuf[5] = CMD_END;  
- 621   2                      uart0Send(CmdTxBuf, 6);
- 622   2              }
- 623   1      }
- 624          void CmdWriteFlashPage(void){//写入FLASH指定页
- 625   1              uint32_t adr, crc0, crc1;
- 626   1              uint8_t page, dat;
- 627   1              uint16_t i;
- 628   1              page = asciiToUint8(CmdRxBuf + 2);
- 629   1              adr = page * FL_PAGE_SIZE;
- 630   1              uint32ToAscii(&crc0, (CmdTxBuf + 4 + 1024));//接收到的CRC32值
- 631   1              for(i = 0;i < FL_PAGE_SIZE;i ++){
- 632   2                      *(TempBuf + i) = asciiToUint8(CmdRxBuf + 2 + (i * 2));
- 633   2              }
- 634   1              crc32Clear();
- 635   1              crc1 = crc32Calculate(TempBuf, FL_PAGE_SIZE);
- 636   1              if(page > (FW_BOOT_ADR_END / FL_PAGE_SIZE) && (page < (FLASH_TEMP / FL_PAGE_SIZE)) && crc0 == crc1){    
- 637   2                      FLASH_Write(adr, TempBuf, FL_PAGE_SIZE);
- 638   2                      CmdTxBuf[0] = CMD_STX;
- 639   2                      CmdTxBuf[1] = CMD_WRITE_FLASH_PAGE;
- 640   2                      uint8ToAscii(&page, (CmdTxBuf + 2));
- 641   2                      CmdTxBuf[4] = CMD_RESPOND_OK;
- 642   2                      CmdTxBuf[5] = CMD_END;  
- 643   2                      uart0Send(CmdTxBuf, 6);
- 644   2              }
- 645   1              else{
- 646   2                      CmdTxBuf[0] = CMD_STX;
- 647   2                      CmdTxBuf[1] = CMD_WRITE_FLASH_PAGE;
- 648   2                      uint8ToAscii(&page, (CmdTxBuf + 2));
- 649   2                      CmdTxBuf[4] = CMD_RESPOND_FAIL;
- 650   2                      CmdTxBuf[5] = CMD_END;  
- 651   2                      uart0Send(CmdTxBuf, 6);
- 652   2              }
- 653   1      }
-*** WARNING C280 IN LINE 626 OF Bootloader\Bootloader.c: 'dat': unreferenced local variable
- 654          void loaderCmdPoll(void){//串口命令轮询
- 655   1              uint8_t *ptr, *ptw;
- 656   1              uart0Send("C", 1);
- 657   1              while(1){
- 658   2                      ptr = CmdRxBuf;
- 659   2                      uart0Receive(ptr, 1);
- 660   2                      if(*ptr == CMD_STX){
- 661   3                              ptr ++;
- 662   3                              do{
- 663   4                                      uart0Receive(ptr, 1);
- 664   4                                      if(*ptr == CMD_END)
- 665   4                                      {
- 666   5                                              switch(CmdRxBuf[1])
- 667   5                                              {
- 668   6                                                      case CMD_SET_HW_VER://1
- 669   6                                                      {
- 670   7                                                              CmdSetHwVer();
- 671   7                                                              break;
- 672   7                                                      }
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 12  
+ 612   2                      uint8ToAscii(&page, (CmdTxBuf + 2));
+ 613   2                      CmdTxBuf[4] = CMD_RESPOND_OK;
+ 614   2                      CmdTxBuf[5] = CMD_END;  
+ 615   2                      uart0Send(CmdTxBuf, 6);
+ 616   2              }
+ 617   1              else{
+ 618   2                      CmdTxBuf[0] = CMD_STX;
+ 619   2                      CmdTxBuf[1] = CMD_CLEAR_FLASH_PAGE;
+ 620   2                      uint8ToAscii(&page, (CmdTxBuf + 2));
+ 621   2                      CmdTxBuf[4] = CMD_RESPOND_FAIL;
+ 622   2                      CmdTxBuf[5] = CMD_END;  
+ 623   2                      uart0Send(CmdTxBuf, 6);
+ 624   2              }
+ 625   1      }
+ 626          void CmdWriteFlashPage(void){//写入FLASH指定页
+ 627   1              uint32_t adr, crc0, crc1;
+ 628   1              uint8_t page, dat;
+ 629   1              uint16_t i;
+ 630   1              page = asciiToUint8(CmdRxBuf + 2);
+ 631   1              adr = page * FL_PAGE_SIZE;
+ 632   1              uint32ToAscii(&crc0, (CmdTxBuf + 4 + 1024));//接收到的CRC32值
+ 633   1              for(i = 0;i < FL_PAGE_SIZE;i ++){
+ 634   2                      *(TempBuf + i) = asciiToUint8(CmdRxBuf + 2 + (i * 2));
+ 635   2              }
+ 636   1              crc32Clear();
+ 637   1              crc1 = crc32Calculate(TempBuf, FL_PAGE_SIZE);
+ 638   1              if(page > (FW_BOOT_ADR_END / FL_PAGE_SIZE) && (page < (FLASH_TEMP / FL_PAGE_SIZE)) && crc0 == crc1){    
+ 639   2                      FLASH_Write(adr, TempBuf, FL_PAGE_SIZE);
+ 640   2                      CmdTxBuf[0] = CMD_STX;
+ 641   2                      CmdTxBuf[1] = CMD_WRITE_FLASH_PAGE;
+ 642   2                      uint8ToAscii(&page, (CmdTxBuf + 2));
+ 643   2                      CmdTxBuf[4] = CMD_RESPOND_OK;
+ 644   2                      CmdTxBuf[5] = CMD_END;  
+ 645   2                      uart0Send(CmdTxBuf, 6);
+ 646   2              }
+ 647   1              else{
+ 648   2                      CmdTxBuf[0] = CMD_STX;
+ 649   2                      CmdTxBuf[1] = CMD_WRITE_FLASH_PAGE;
+ 650   2                      uint8ToAscii(&page, (CmdTxBuf + 2));
+ 651   2                      CmdTxBuf[4] = CMD_RESPOND_FAIL;
+ 652   2                      CmdTxBuf[5] = CMD_END;  
+ 653   2                      uart0Send(CmdTxBuf, 6);
+ 654   2              }
+ 655   1      }
+*** WARNING C280 IN LINE 628 OF Bootloader\Bootloader.c: 'dat': unreferenced local variable
+ 656          void CmdRefreshOTA1Crc(void){//刷新OTA1校验码
+ 657   1              
+ 658   1      }
+ 659          void CmdRefreshOTA2Crc(void){//刷新OTA2校验码
+ 660   1              
+ 661   1      }
+ 662          void loaderCmdPoll(void){//串口命令轮询
+ 663   1              uint8_t *ptr, *ptw;
+ 664   1              uart0Send("C", 1);
+ 665   1              while(1){
+ 666   2                      ptr = CmdRxBuf;
+ 667   2                      uart0Receive(ptr, 1);
+ 668   2                      if(*ptr == CMD_STX){
+ 669   3                              ptr ++;
+ 670   3                              do{
+ 671   4                                      uart0Receive(ptr, 1);
+ 672   4                                      if(*ptr == CMD_END)
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 12  
 
- 673   6                                                      case CMD_GET_HW_VER://2
- 674   6                                                      {
- 675   7                                                              CmdGetHwVer();
- 676   7                                                              break;
- 677   7                                                      }
- 678   6                                                      case CMD_RESET_MCU://3
- 679   6                                                      {
- 680   7                                                              CmdResetMcu();
- 681   7                                                              break;
- 682   7                                                      }
- 683   6                                                      case CMD_GET_BOOTLOADER_VER://4
- 684   6                                                      {
- 685   7                                                              CmdGetBootLoaderVer();
- 686   7                                                              break;
- 687   7                                                      }
- 688   6                                                      case CMD_GET_OTA1_VER://5
- 689   6                                                      {
- 690   7                                                              CmdGetOTA1Ver();
- 691   7                                                              break;
- 692   7                                                      }
- 693   6                                                      case CMD_GET_OTA2_VER://6
- 694   6                                                      {
- 695   7                                                              CmdGetOTA2Ver();
- 696   7                                                              break;
- 697   7                                                      }
- 698   6                                                      case CMD_SET_BOOTLOADER_VER://7
- 699   6                                                      {
- 700   7                                                              CmdSetBootLoaderVer();
- 701   7                                                              break;
- 702   7                                                      }
- 703   6                                                      case CMD_SET_OTA1_VER://8
- 704   6                                                      {
- 705   7                                                              CmdSetOTA1Ver();
- 706   7                                                              break;
- 707   7                                                      }
- 708   6                                                      case CMD_SET_OTA2_VER://9
- 709   6                                                      {
- 710   7                                                              CmdSetOTA2Ver();
- 711   7                                                              break;
- 712   7                                                      }                                                       
- 713   6                                                      case CMD_GET_OTA1_CRC://A
- 714   6                                                      {
- 715   7                                                              CmdGetOTA1Crc();
- 716   7                                                              break;
- 717   7                                                      }
- 718   6                                                      case CMD_GET_OTA2_CRC://B
- 719   6                                                      {
- 720   7                                                              CmdGetOTA2Crc();
- 721   7                                                              break;
- 722   7                                                      }
- 723   6                                                      case CMD_WRITE_FLASH_PAGE://C
- 724   6                                                      {
- 725   7                                                              CmdWriteFlashPage();
- 726   7                                                              break;
- 727   7                                                      }
- 728   6                                                      case CMD_READ_FLASH_PAGE://D
- 729   6                                                      {
- 730   7                                                              CmdReadFlashPage();
- 731   7                                                              break;
- 732   7                                                      }
- 733   6                                                      case CMD_CLEAR_FLASH_PAGE://E
- 734   6                                                      {
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 13  
+ 673   4                                      {
+ 674   5                                              switch(CmdRxBuf[1])
+ 675   5                                              {
+ 676   6                                                      case CMD_SET_HW_VER://1
+ 677   6                                                      {
+ 678   7                                                              CmdSetHwVer();
+ 679   7                                                              break;
+ 680   7                                                      }
+ 681   6                                                      case CMD_GET_HW_VER://2
+ 682   6                                                      {
+ 683   7                                                              CmdGetHwVer();
+ 684   7                                                              break;
+ 685   7                                                      }
+ 686   6                                                      case CMD_RESET_MCU://3
+ 687   6                                                      {
+ 688   7                                                              CmdResetMcu();
+ 689   7                                                              break;
+ 690   7                                                      }
+ 691   6                                                      case CMD_GET_BOOTLOADER_VER://4
+ 692   6                                                      {
+ 693   7                                                              CmdGetBootLoaderVer();
+ 694   7                                                              break;
+ 695   7                                                      }
+ 696   6                                                      case CMD_GET_OTA1_VER://5
+ 697   6                                                      {
+ 698   7                                                              CmdGetOTA1Ver();
+ 699   7                                                              break;
+ 700   7                                                      }
+ 701   6                                                      case CMD_GET_OTA2_VER://6
+ 702   6                                                      {
+ 703   7                                                              CmdGetOTA2Ver();
+ 704   7                                                              break;
+ 705   7                                                      }
+ 706   6                                                      case CMD_SET_BOOTLOADER_VER://7
+ 707   6                                                      {
+ 708   7                                                              CmdSetBootLoaderVer();
+ 709   7                                                              break;
+ 710   7                                                      }
+ 711   6                                                      case CMD_SET_OTA1_VER://8
+ 712   6                                                      {
+ 713   7                                                              CmdSetOTA1Ver();
+ 714   7                                                              break;
+ 715   7                                                      }
+ 716   6                                                      case CMD_SET_OTA2_VER://9
+ 717   6                                                      {
+ 718   7                                                              CmdSetOTA2Ver();
+ 719   7                                                              break;
+ 720   7                                                      }                                                       
+ 721   6                                                      case CMD_GET_OTA1_CRC://A
+ 722   6                                                      {
+ 723   7                                                              CmdGetOTA1Crc();
+ 724   7                                                              break;
+ 725   7                                                      }
+ 726   6                                                      case CMD_GET_OTA2_CRC://B
+ 727   6                                                      {
+ 728   7                                                              CmdGetOTA2Crc();
+ 729   7                                                              break;
+ 730   7                                                      }
+ 731   6                                                      case CMD_WRITE_FLASH_PAGE://C
+ 732   6                                                      {
+ 733   7                                                              CmdWriteFlashPage();
+ 734   7                                                              break;
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 13  
 
- 735   7                                                              CmdClearFlashPage();
- 736   7                                                              break;
- 737   7                                                      }
- 738   6                                                      case CMD_GOTO_OTA1://F
- 739   6                                                      {
- 740   7                                                              OTA1_Program();
- 741   7                                                              break;
- 742   7                                                      }
- 743   6                                                      case CMD_GOTO_OTA2://G
- 744   6                                                      {
- 745   7                                                              OTA2_Program();
- 746   7                                                              break;
- 747   7                                                      }
- 748   6                                                      default:break;
- 749   6                                              }
- 750   5                                              break;
- 751   5                                      }
- 752   4                                      else if(ptr >= (CmdRxBuf + CMD_RX_BUFFER_SIZE)){
- 753   5                                              NOP();
- 754   5                                              break;
- 755   5                                      }
- 756   4                                      ptr ++;
- 757   4                              }while(1);
- 758   3                      }
- 759   2              }
- 760   1      }
-*** WARNING C280 IN LINE 655 OF Bootloader\Bootloader.c: 'ptw': unreferenced local variable
- 761          
- 762          void bootSequence(void){//启动顺序选择
- 763   1              data uint32_t ota1Crc32, ota2Crc32;
- 764   1              //开始计时器
- 765   1              data uint8_t temp;
- 766   1              temp = uart0ReceiveBootOrder();
- 767   1              if(temp == BOOT_SELECT_OTA)
- 768   1              {
- 769   2                      if(FlashEprom[EPROM_BOOT_ORDER] == SELECT_BOOT_OTA1)
- 770   2                      {//启动顺序选择BOOT_OTA1
- 771   3                              ota1Crc32 = ota1FlashCrc();
- 772   3                              if(ota1Crc32 == FlashEprom[EPROM_OTA1_CRC])
- 773   3                              {
- 774   4                                      OTA1_Program = (void code *)(FW_OTA1_ADR_START & 0x1FFFF);//获取OTA1起始地址
- 775   4                                      OTA1_Program();//执行应用程序
- 776   4                              }
- 777   3                      }
- 778   2                      else if(FlashEprom[EPROM_BOOT_ORDER] == SELECT_BOOT_OTA2)
- 779   2                      {//启动顺序选择BOOT_OTA2
- 780   3                              if(ota2Crc32 == FlashEprom[EPROM_OTA2_CRC])
- 781   3                              {
- 782   4                                      OTA2_Program = (void code *)(FW_OTA2_ADR_START & 0x1FFFF);//获取OTA2起始地址
- 783   4                                      OTA2_Program();//执行应用程序
- 784   4                              }       
- 785   3                      }
- 786   2                      else{
- 787   3      #if CONFIG_DEBUG == 1
- 788   3                              printf("Bootloader->Debug:OTA CRC32 Check Fail,Into Loader Mode\n");
- 789   3      #endif
- 790   3                              loaderCmdPoll();
- 791   3                      }       
- 792   2              }
- 793   1              else if(temp == BOOT_SELECT_LOADER)
- 794   1              {
- 795   2                      while(1)
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 14  
+ 735   7                                                      }
+ 736   6                                                      case CMD_READ_FLASH_PAGE://D
+ 737   6                                                      {
+ 738   7                                                              CmdReadFlashPage();
+ 739   7                                                              break;
+ 740   7                                                      }
+ 741   6                                                      case CMD_CLEAR_FLASH_PAGE://E
+ 742   6                                                      {
+ 743   7                                                              CmdClearFlashPage();
+ 744   7                                                              break;
+ 745   7                                                      }
+ 746   6                                                      case CMD_GOTO_OTA1://F
+ 747   6                                                      {
+ 748   7                                                              CmdGotoOTA1();
+ 749   7                                                              break;
+ 750   7                                                      }
+ 751   6                                                      case CMD_GOTO_OTA2://G
+ 752   6                                                      {
+ 753   7                                                              CmdGotoOTA2();
+ 754   7                                                              break;
+ 755   7                                                      }
+ 756   6                                                      case CMD_REFRESH_OTA1_CRC:
+ 757   6                                                      {
+ 758   7                                                              CmdRefreshOTA1Crc();
+ 759   7                                                              break;
+ 760   7                                                      }
+ 761   6                                                      case CMD_REFRESH_OTA2_CRC:
+ 762   6                                                      {
+ 763   7                                                              CmdRefreshOTA2Crc();
+ 764   7                                                              break;
+ 765   7                                                      }
+ 766   6                                                      default:break;
+ 767   6                                              }
+ 768   5                                              break;
+ 769   5                                      }
+ 770   4                                      else if(ptr >= (CmdRxBuf + CMD_RX_BUFFER_SIZE)){
+ 771   5                                              NOP();
+ 772   5                                              break;
+ 773   5                                      }
+ 774   4                                      ptr ++;
+ 775   4                              }while(1);
+ 776   3                      }
+ 777   2              }
+ 778   1      }
+*** WARNING C280 IN LINE 663 OF Bootloader\Bootloader.c: 'ptw': unreferenced local variable
+ 779          
+ 780          void bootSequence(void){//启动顺序选择
+ 781   1              data uint32_t ota1Crc32, ota2Crc32;
+ 782   1              //开始计时器
+ 783   1              data uint8_t temp;
+ 784   1              temp = uart0ReceiveBootOrder();
+ 785   1              if(temp == BOOT_SELECT_OTA)
+ 786   1              {
+ 787   2                      if(FlashEprom[EPROM_BOOT_ORDER] == SELECT_BOOT_OTA1)
+ 788   2                      {//启动顺序选择BOOT_OTA1
+ 789   3                              ota1Crc32 = ota1FlashCrc();
+ 790   3                              if(ota1Crc32 == FlashEprom[EPROM_OTA1_CRC])
+ 791   3                              {
+ 792   4                                      CmdGotoOTA1 = (void code *)(FW_OTA1_ADR_START & 0x1FFFF);//获取OTA1起始地址
+ 793   4                                      CmdGotoOTA1();//执行应用程序
+ 794   4                              }
+ 795   3                      }
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 14  
 
- 796   2                      {
- 797   3                              loaderCmdPoll();
- 798   3                      }
- 799   2              }       
- 800   1      }
- 801          uint32_t bootFlashCrc(void){//BOOT CRC32校验    
- 802   1              data uint32_t crc = 0, i;
- 803   1              data uint8_t temp;
- 804   1              
- 805   1              crc32Clear();//CRC32清除
- 806   1              for(i = FW_BOOT_ADR_START;i < FW_BOOT_ADR_END;i ++)
- 807   1              {//计算BOOT CRC32
- 808   2                      FLASH_Read(&temp, i, 1);
- 809   2                      crc = crc32CalculateAdd(temp);
+ 796   2                      else if(FlashEprom[EPROM_BOOT_ORDER] == SELECT_BOOT_OTA2)
+ 797   2                      {//启动顺序选择BOOT_OTA2
+ 798   3                              if(ota2Crc32 == FlashEprom[EPROM_OTA2_CRC])
+ 799   3                              {
+ 800   4                                      CmdGotoOTA2 = (void code *)(FW_OTA2_ADR_START & 0x1FFFF);//获取OTA2起始地址
+ 801   4                                      CmdGotoOTA2();//执行应用程序
+ 802   4                              }       
+ 803   3                      }
+ 804   2                      else{
+ 805   3      #if CONFIG_DEBUG == 1
+ 806   3                              printf("Bootloader->Debug:OTA CRC32 Check Fail,Into Loader Mode\n");
+ 807   3      #endif
+ 808   3                              loaderCmdPoll();
+ 809   3                      }       
  810   2              }
- 811   1              return crc;
- 812   1      }
- 813          uint32_t ota1FlashCrc(void){//OTA1 CRC32校验
- 814   1              data uint32_t crc = 0 ,i;
- 815   1              data uint8_t temp;
- 816   1              crc32Clear();//CRC32清除
- 817   1              for(i = FW_OTA1_ADR_START;i < FW_OTA1_ADR_END;i ++)
- 818   1              {//计算OTA1 CRC32
- 819   2                      FLASH_Read(&temp, i, 1);
- 820   2                      crc = crc32CalculateAdd(temp);
- 821   2              }
- 822   1              return crc;
- 823   1      }
- 824          uint32_t ota2FlashCrc(void){//OTA2 CRC32校验
- 825   1              data uint32_t crc = 0, i;
- 826   1              data uint8_t temp;
- 827   1              for(i = FW_OTA2_ADR_START;i < FW_OTA2_ADR_END;i ++)
- 828   1              {//计算OTA2 CRC32
- 829   2                      FLASH_Read(&temp, i, 1);
- 830   2                      crc = crc32CalculateAdd(temp);
- 831   2              }
- 832   1              return crc;
- 833   1      }
- 834          
- 835          void main (void) 
- 836          {
- 837   1              Init_Device();
- 838   1      #if CONFIG_DEBUG == 1
- 839   1              printf("Bootloader->Debug:Hello C8051 Bootloader\n");
- 840   1      #endif
- 841   1              bootSequence();
- 842   1              while(1);
- 843   1      }
+ 811   1              else if(temp == BOOT_SELECT_LOADER)
+ 812   1              {
+ 813   2                      while(1)
+ 814   2                      {
+ 815   3                              loaderCmdPoll();
+ 816   3                      }
+ 817   2              }       
+ 818   1      }
+ 819          uint32_t bootFlashCrc(void){//BOOT CRC32校验    
+ 820   1              data uint32_t crc = 0, i;
+ 821   1              data uint8_t temp;
+ 822   1              
+ 823   1              crc32Clear();//CRC32清除
+ 824   1              for(i = FW_BOOT_ADR_START;i < FW_BOOT_ADR_END;i ++)
+ 825   1              {//计算BOOT CRC32
+ 826   2                      FLASH_Read(&temp, i, 1);
+ 827   2                      crc = crc32CalculateAdd(temp);
+ 828   2              }
+ 829   1              return crc;
+ 830   1      }
+ 831          uint32_t ota1FlashCrc(void){//OTA1 CRC32校验
+ 832   1              data uint32_t crc = 0 ,i;
+ 833   1              data uint8_t temp;
+ 834   1              crc32Clear();//CRC32清除
+ 835   1              for(i = FW_OTA1_ADR_START;i < FW_OTA1_ADR_END;i ++)
+ 836   1              {//计算OTA1 CRC32
+ 837   2                      FLASH_Read(&temp, i, 1);
+ 838   2                      crc = crc32CalculateAdd(temp);
+ 839   2              }
+ 840   1              return crc;
+ 841   1      }
+ 842          uint32_t ota2FlashCrc(void){//OTA2 CRC32校验
+ 843   1              data uint32_t crc = 0, i;
+ 844   1              data uint8_t temp;
+ 845   1              for(i = FW_OTA2_ADR_START;i < FW_OTA2_ADR_END;i ++)
+ 846   1              {//计算OTA2 CRC32
+ 847   2                      FLASH_Read(&temp, i, 1);
+ 848   2                      crc = crc32CalculateAdd(temp);
+ 849   2              }
+ 850   1              return crc;
+ 851   1      }
+ 852          
+ 853          void main (void) 
+ 854          {
+ 855   1              Init_Device();
+ 856   1      #if CONFIG_DEBUG == 1
+ 857   1              printf("Bootloader->Debug:Hello C8051 Bootloader\n");
+C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/12/2018 17:43:01 PAGE 15  
+
+ 858   1      #endif
+ 859   1              bootSequence();
+ 860   1              while(1);
+ 861   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   3784    ----
+   CODE SIZE        =   3805    ----
    CONSTANT SIZE    =    667    ----
    XDATA SIZE       =   2776    ----
-   PDATA SIZE       =      9      94
+   PDATA SIZE       =      6      94
    DATA SIZE        =   ----      60
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
@@ -894,8 +914,6 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    HDATA SIZE       =   ----    ----
    XDATA CONST SIZE =   ----    ----
    FAR CONST SIZE   =   ----    ----
-C51 COMPILER V9.59.0.0   BOOTLOADER                                                        12/11/2018 23:27:22 PAGE 15  
-
 END OF MODULE INFORMATION.
 
 

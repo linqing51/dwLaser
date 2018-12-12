@@ -5931,9 +5931,11 @@
  
  
  
- void (*BOOT_Program)(); 
- void (*OTA1_Program)(); 
- void (*OTA2_Program)(); 
+ 
+ 
+ 
+ void (*CmdGotoOTA1)(); 
+ void (*CmdGotoOTA2)(); 
  void bootSequence(void);
  uint32_t bootFlashCrc(void);
  uint32_t ota1FlashCrc(void);
@@ -6523,6 +6525,12 @@
  uart0Send(CmdTxBuf, 6);
  }
  }
+ void CmdRefreshOTA1Crc(void){ 
+ 
+ }
+ void CmdRefreshOTA2Crc(void){ 
+ 
+ }
  void loaderCmdPoll(void){ 
  uint8_t *ptr, *ptw;
  uart0Send("C", 1);
@@ -6609,12 +6617,22 @@
  }
  case 0x47: 
  {
- OTA1_Program();
+ CmdGotoOTA1();
  break;
  }
  case 0x48: 
  {
- OTA2_Program();
+ CmdGotoOTA2();
+ break;
+ }
+ case 0x49:
+ {
+ CmdRefreshOTA1Crc();
+ break;
+ }
+ case 0x4A:
+ {
+ CmdRefreshOTA2Crc();
  break;
  }
  default:break;
@@ -6643,16 +6661,16 @@
  ota1Crc32 = ota1FlashCrc();
  if(ota1Crc32 == FlashEprom[4])
  {
- OTA1_Program = (void code *)(0x2000 & 0x1FFFF); 
- OTA1_Program(); 
+ CmdGotoOTA1 = (void code *)(0x2000 & 0x1FFFF); 
+ CmdGotoOTA1(); 
  }
  }
  else if(FlashEprom[32] == 0x5A5A)
  { 
  if(ota2Crc32 == FlashEprom[8])
  {
- OTA2_Program = (void code *)(0x8000 & 0x1FFFF); 
- OTA2_Program(); 
+ CmdGotoOTA2 = (void code *)(0x8000 & 0x1FFFF); 
+ CmdGotoOTA2(); 
  }	
  }
  else{

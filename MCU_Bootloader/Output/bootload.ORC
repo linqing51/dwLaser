@@ -14,6 +14,8 @@ $08000080  _getkey
 $80000000  _putchar
 $1E00083F  _uart0Receive
 $1E00083F  _uart0Send
+$80000000  CmdRefreshOTA1Crc
+$80000000  CmdRefreshOTA2Crc
 $80000000  CmdResetMcu
 $3E000CF1  crc32Clear
 $180008C0  Init_Device
