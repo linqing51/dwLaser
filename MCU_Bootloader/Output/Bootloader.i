@@ -5928,25 +5928,16 @@
  
  
  
- 
- 
- 
- 
- 
- 
  void (*CmdGotoOTA1)(); 
  void (*CmdGotoOTA2)(); 
  void bootSequence(void);
- uint32_t bootFlashCrc(void);
- uint32_t ota1FlashCrc(void);
- uint32_t ota2FlashCrc(void);
- xdata uint8_t CmdRxBuf[1100];
- xdata uint8_t CmdTxBuf[1100];
- xdata uint8_t TempBuf[512]; 
- xdata uint8_t FlashEprom[64]; 
+  xdata uint8_t CmdRxBuf[1100];
+  xdata uint8_t CmdTxBuf[1100];
+  xdata uint8_t TempBuf[512]; 
+  xdata uint8_t FlashEprom[64]; 
  
  static void uint32ToAscii(uint32_t *dat, uint8_t *pstr){ 
- data uint8_t temp;	
+  data uint8_t temp;	
  temp = *dat & 0xF; 
  if(temp <= 0x09){
  *(pstr + 0) = (temp + 0x30);
@@ -6012,8 +6003,8 @@
  }
  }
  static uint32_t asciiToUint32(uint8_t *pstr){ 
- data uint8_t temp[8];
- data uint32_t hex;
+  data uint8_t temp[8];
+  data uint32_t hex;
  
  if(*pstr >= 'A' && *pstr <='F'){ 
  temp[0] = *pstr - 0x37; 
@@ -6083,7 +6074,7 @@
  return hex;
  }
  static void uint16ToAscii(uint16_t *dat, uint8_t *pstr){ 
- data uint8_t temp;
+  data uint8_t temp;
  temp = *dat & 0x000F; 
  if(temp <= 0x09){
  *(pstr + 0) = (temp + 0x30);
@@ -6114,7 +6105,7 @@
  }
  }
  static void uint8ToAscii(uint8_t *dat, uint8_t *pstr){ 
- data uint8_t temp;
+  data uint8_t temp;
  temp = (*dat & 0x0f);
  if(temp <= 0x09){
  *(pstr + 1) = (temp + 0x30);
@@ -6131,8 +6122,8 @@
  }
  }
  static uint8_t asciiToUint8(uint8_t *pstr){ 
- data uint8_t temp[2];
- data uint8_t hex;
+  data uint8_t temp[2];
+  data uint8_t hex;
  if(*pstr >= 'A' && *pstr <='F'){ 
  temp[0] = *pstr - 0x37; 
  }
@@ -6152,8 +6143,8 @@
  }
  
  static uint16_t asciiToUint16(uint8_t *pstr){
- data uint8_t temp[4];
- data uint16_t hex;
+  data uint8_t temp[4];
+  data uint16_t hex;
  
  if(*pstr >= 'A' && *pstr <='F'){ 
  temp[3] = *pstr - 0x37; 
@@ -6189,16 +6180,16 @@
  hex |= ((temp[3] & 0x0F) << 12) & 0xF000;
  return hex;
  }
- static uint8_t LRC(uint8_t *buf, int32_t len){ 
- int i;
- uint8_t lrc = 0;         
+ static uint8_t LRC(uint8_t *buf, uint32_t len){ 
+  data uint32_t i;
+  data uint8_t lrc = 0;         
  for( i = 0; i < len; i++ ){
  lrc = lrc + buf[i];
  }
  return lrc;
  }
  void uart0Send(uint8_t *buf, uint16_t count){ 
- uint8_t *ptr = buf;
+  data uint8_t *ptr = buf;
  do{
  SBUF0 = *ptr++;
  while(TI0 == 0);
@@ -6206,7 +6197,7 @@
  }while(--count);
  }
  void uart0Receive(uint8_t *buf, uint16_t count){ 
- uint8_t * ptr = buf;
+  data uint8_t * ptr = buf;
  do{
  if(RI0 == 1)
  {
@@ -6217,11 +6208,10 @@
  }while(count);
  }
  uint8_t uart0ReceiveBootOrder(void){ 
- uint8_t temp;
- uint32_t timeOutCounter;
+  data uint8_t temp;
+  data uint32_t timeOutCounter;
  
- sprintf(CmdTxBuf,"Bootloader->Debug:Input 'C' Into Loader Mode\n");
- printf(CmdTxBuf);
+ printf("Bootloader->Debug:Input 'C' Into Loader Mode\n");
  
  timeOutCounter = 0;
  do{
@@ -6243,232 +6233,335 @@
  
  return 0x5A;
  }
+ uint32_t bootFlashCrc(void){ 
+  data uint32_t crc = 0, i;
+  data uint8_t temp;
+ crc32Clear(); 
+ for(i = 0x0000;i < 0x1FFF;i ++)
+ { 
+ FLASH_Read(&temp, i, 1);
+ crc = crc32CalculateAdd(temp);
+ }
+ return crc;
+ }
+ uint32_t ota1FlashCrc(void){ 
+  data uint32_t crc = 0 ,i;
+  data uint8_t temp;
+ crc32Clear(); 
+ for(i = 0x2000;i < 0x7FFF;i ++)
+ { 
+ FLASH_Read(&temp, i, 1);
+ crc = crc32CalculateAdd(temp);
+ }
+ return crc;
+ }
+ uint32_t ota2FlashCrc(void){ 
+  data uint32_t crc = 0, i;
+  data uint8_t temp;
+ for(i = 0x8000;i < 0xEFFF;i ++)
+ { 
+ FLASH_Read(&temp, i, 1);
+ crc = crc32CalculateAdd(temp);
+ }
+ return crc;
+ }
  void CmdSetHwVer(void){ 
- uint16_t itemp;
  FlashEprom[15] = asciiToUint8(CmdRxBuf + 2);
  
- itemp = FlashEprom[15];
- printf("Bootloader->Debug->CMD_SET_HW_VER:%2X\n", itemp);
+ printf("Bootloader->Debug->CMD_SET_HW_VER:%2X\n", (uint16_t)(FlashEprom[15]));
  
  if(EEPROM_WriteBlock(15, FlashEprom, 1) != 0x00){ 
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x31;
- CmdTxBuf[2] = 0x30;
+ CmdTxBuf[2] = 0x31;
  CmdTxBuf[3] = 0x25;	
  }
  else{
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x31;
- CmdTxBuf[2] = 0x31;
+ CmdTxBuf[2] = 0x30;
  CmdTxBuf[3] = 0x25;
  }
  uart0Send(CmdTxBuf, 4);
  }
  void CmdGetHwVer(void){ 
- uint8_t ctemp[2];
- uint16_t itemp;
+  data uint8_t ctemp[2];
  uint8ToAscii((FlashEprom + 15), ctemp);
- EEPROM_ReadBlock(15, FlashEprom, 1);
+ if(EEPROM_ReadBlock(15, FlashEprom, 1) != 0x00){
  
- itemp = FlashEprom[15];
- printf("Bootloader->Debug->CMD_GET_HW_VER:%2X\n", itemp);
+ printf("Bootloader->Debug->CMD_GET_HW_VER:%2X\n", (uint16_t)(FlashEprom[15]));
  
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x32;
  CmdTxBuf[2] = ctemp[0];
  CmdTxBuf[3] = ctemp[1];
  CmdTxBuf[4] = 0x25;
- uart0Send(CmdTxBuf, 5);
+ }
+ else
+ {
+ 
+ printf("Bootloader->Debug->CMD_GET_HW_VER->EPROM READ Fail\n");
+ 
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x32;
+ CmdTxBuf[2] = 0x30;
+ CmdTxBuf[3] = 0x30;
+ CmdTxBuf[4] = 0x25;
+ }
+ uart0Send(CmdTxBuf, 5);	
  }
  void CmdResetMcu(void){ 
+ 
+ printf("Bootloader->Debug->CMD_RESET_MCU\n");
+ 
  RSTSRC |= (1 << 4);
  }
  void CmdGetBootLoaderVer(void){ 
- uint8_t ctemp[2];
- uint16_t itemp;
- EEPROM_ReadBlock(12, FlashEprom, 1);
+  data uint8_t ctemp[2];
+ if(EEPROM_ReadBlock(12, FlashEprom, 1) != 0x00){
  uint8ToAscii((FlashEprom + 12), ctemp);
  
- itemp = FlashEprom[12];
- printf("Bootloader->Debug->CMD_GET_BOOT_VER:%2X\n", itemp);
+ printf("Bootloader->Debug->CMD_GET_BOOT_VER:%2X\n", (uint16_t)FlashEprom[12]);
  
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x34;
  CmdTxBuf[2] = ctemp[0];
  CmdTxBuf[3] = ctemp[1];
  CmdTxBuf[4] = 0x25;	
- uart0Send(CmdTxBuf, 5);
- }
- void CmdSetBootLoaderVer(void){ 
- uint16_t itemp;
- FlashEprom[12] = asciiToUint8(CmdRxBuf + 2);
- 
- itemp = FlashEprom[12];
- printf("Bootloader->Debug->CMD_SET_BOOT_VER:%2X\n", itemp);
- 
- if(EEPROM_WriteBlock(15, FlashEprom, 1) != 0x00){ 
- CmdTxBuf[0] = 0x24;
- CmdTxBuf[1] = 0x37;
- CmdTxBuf[2] = 0x30;
- CmdTxBuf[3] = 0x25;	
  }
  else{
+ 
+ printf("Bootloader->Debug->CMD_GET_BOOT_VER:EPROM Read Fail\n");
+ 
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x34;
+ CmdTxBuf[2] = 0x30;
+ CmdTxBuf[3] = 0x30;
+ CmdTxBuf[4] = 0x25;	
+ }
+ uart0Send(CmdTxBuf, 5);	
+ }
+ void CmdSetBootLoaderVer(void){ 
+ FlashEprom[12] = asciiToUint8(CmdRxBuf + 2);
+ if(EEPROM_WriteBlock(15, FlashEprom, 1) != 0x00){ 
+ 
+ printf("Bootloader->Debug->CMD_SET_BOOT_VER:%2X\n", (uint16_t)FlashEprom[12]);
+ 
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x37;
  CmdTxBuf[2] = 0x31;
+ CmdTxBuf[3] = 0x25;	
+ }
+ else{
+ 
+ printf("Bootloader->Debug->CMD_SET_BOOT_VER:EPROM Write Fail\n");
+ 
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x37;
+ CmdTxBuf[2] = 0x30;
  CmdTxBuf[3] = 0x25;
  }
  uart0Send(CmdTxBuf, 4);
  }
  void CmdGetOTA1Ver(void){ 
- uint8_t ctemp[2];
- uint16_t itemp;
- EEPROM_ReadBlock(13, FlashEprom, 1);
+  data uint8_t ctemp[2];
+ if(EEPROM_ReadBlock(13, FlashEprom, 1) != 0x00){
  uint8ToAscii((FlashEprom + 13), ctemp);
  
- itemp = FlashEprom[13];
- printf("Bootloader->Debug->CMD_GET_OTA1_VER:%2X\n", itemp);
+ printf("Bootloader->Debug->CMD_GET_OTA1_VER:%2X\n", (uint16_t)FlashEprom[13]);
  
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x35;
  CmdTxBuf[2] = ctemp[0];
  CmdTxBuf[3] = ctemp[1];
- CmdTxBuf[4] = 0x25;	
- uart0Send(CmdTxBuf, 5);
- }
- void CmdSetOTA1Ver(void){ 
- uint16_t itemp;
- FlashEprom[13] = asciiToUint8(CmdRxBuf + 2);
- 
- itemp = FlashEprom[13];
- printf("Bootloader->Debug->CMD_SET_OTA1_VER:%2X\n", itemp);
- 
- if(EEPROM_WriteBlock(13, FlashEprom, 1) != 0x00){ 
- CmdTxBuf[0] = 0x24;
- CmdTxBuf[1] = 0x38;
- CmdTxBuf[2] = 0x30;
- CmdTxBuf[3] = 0x25;	
+ CmdTxBuf[4] = 0x25;		
  }
  else{
  CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x35;
+ CmdTxBuf[2] = 0x30;
+ CmdTxBuf[3] = 0x30;
+ CmdTxBuf[4] = 0x25;
+ }	
+ uart0Send(CmdTxBuf, 5);
+ }
+ void CmdSetOTA1Ver(void){ 
+ FlashEprom[13] = asciiToUint8(CmdRxBuf + 2);
+ if(EEPROM_WriteBlock(13, FlashEprom, 1) != 0x00){ 
+ 
+ printf("Bootloader->Debug->CMD_SET_OTA1_VER:%2X\n", (uint16_t)FlashEprom[13]);
+ 
+ CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x38;
  CmdTxBuf[2] = 0x31;
+ CmdTxBuf[3] = 0x25;	
+ }
+ else{
+ 
+ printf("Bootloader->Debug->CMD_SET_OTA1_VER:EPROM Write Fail\n");
+ 
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x38;
+ CmdTxBuf[2] = 0x30;
  CmdTxBuf[3] = 0x25;
  }
  uart0Send(CmdTxBuf, 4);
  }
  void CmdGetOTA2Ver(void){ 
- uint8_t ctemp[2];
- uint16_t itemp;
- EEPROM_ReadBlock(14, FlashEprom, 1);
+  data uint8_t ctemp[2];
+ if(EEPROM_ReadBlock(14, FlashEprom, 1) != 0x00){
  uint8ToAscii((FlashEprom + 14), ctemp);
  
- itemp = FlashEprom[14];
- printf("Bootloader->Debug->CMD_GET_OTA2_VER:%2X\n", itemp);
+ printf("Bootloader->Debug->CMD_GET_OTA2_VER:%2X\n", (uint16_t)FlashEprom[14]);
  
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x36;
  CmdTxBuf[2] = ctemp[0];
  CmdTxBuf[3] = ctemp[1];
- CmdTxBuf[4] = 0x25;	
+ CmdTxBuf[4] = 0x25;
+ }
+ else{
+ 
+ printf("Bootloader->Debug->CMD_GET_OTA2_VER:%EPROM Write Fail\n");
+ 
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x36;
+ CmdTxBuf[2] = 0x30;
+ CmdTxBuf[3] = 0x30;
+ CmdTxBuf[4] = 0x25;
+ }
  uart0Send(CmdTxBuf, 5);
  }
  void CmdSetOTA2Ver(void){ 
- uint16_t itemp;
  FlashEprom[14] = asciiToUint8(CmdRxBuf + 2);
- 
- itemp = FlashEprom[14];
- printf("Bootloader->Debug->CMD_SET_OTA2_VER:%2X\n", itemp);
- 
  if(EEPROM_WriteBlock(14, FlashEprom, 1) != 0x00){ 
- CmdTxBuf[0] = 0x24;
- CmdTxBuf[1] = 0x39;
- CmdTxBuf[2] = 0x30;
- CmdTxBuf[3] = 0x25;	
- }
- else{
+ 
+ printf("Bootloader->Debug->CMD_SET_OTA2_VER:%2X\n", FlashEprom[14]);
+ 
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x39;
  CmdTxBuf[2] = 0x31;
+ CmdTxBuf[3] = 0x25;	
+ }
+ else{
+ 
+ printf("Bootloader->Debug->CMD_SET_OTA2_VER:EPROM Write Fail\n", FlashEprom[14]);
+ 
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x39;
+ CmdTxBuf[2] = 0x30;
  CmdTxBuf[3] = 0x25;
  }
  uart0Send(CmdTxBuf, 4);
  }
  void CmdGetBootCrc(void){ 
- uint8_t ctemp[2];
- uint16_t itemp;
- EEPROM_ReadBlock(0, FlashEprom, 1);
+  data uint8_t ctemp[2];
+ if(EEPROM_ReadBlock(0, FlashEprom, 1) != 0x00){
  uint8ToAscii((FlashEprom + 0), ctemp);
  
- itemp = FlashEprom[0];
- printf("Bootloader->Debug->CMD_GET_BOOT_CRC:%2X\n", itemp);
+ printf("Bootloader->Debug->CMD_GET_BOOT_CRC:%2X\n", *((uint32_t*)(&FlashEprom[0])));
  
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x41;
  CmdTxBuf[2] = ctemp[0];
  CmdTxBuf[3] = ctemp[1];
+ CmdTxBuf[4] = 0x25;		
+ }
+ else{
+ 
+ printf("Bootloader->Debug->CMD_GET_BOOT_CRC:EPROM Read Fail\n");
+ 
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x41;
+ CmdTxBuf[2] = 0x30;
+ CmdTxBuf[3] = 0x30;
  CmdTxBuf[4] = 0x25;	
+ }
  uart0Send(CmdTxBuf, 5);
  }
  void CmdGetOTA1Crc(void){ 
- uint8_t ctemp[2];
- uint16_t itemp;
- EEPROM_ReadBlock(4, FlashEprom, 1);
+  data uint8_t ctemp[2];
+ if(EEPROM_ReadBlock(4, FlashEprom, 1) != 0x00){
  uint8ToAscii((FlashEprom + 4), ctemp);
  
- itemp = FlashEprom[4];
- printf("Bootloader->Debug->CMD_GET_OTA1_CRC:%2X\n", itemp);
+ printf("Bootloader->Debug->CMD_GET_OTA1_CRC:%2X\n",  *((uint32_t*)(&FlashEprom[4])));
  
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x42;
  CmdTxBuf[2] = ctemp[0];
  CmdTxBuf[3] = ctemp[1];
+ CmdTxBuf[4] = 0x25;		
+ }
+ else{
+ 
+ printf("Bootloader->Debug->CMD_GET_OTA1_CRC:EPROM Read Fail\n");
+ 
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x42;
+ CmdTxBuf[2] = 0x30;
+ CmdTxBuf[3] = 0x30;
  CmdTxBuf[4] = 0x25;	
+ }
  uart0Send(CmdTxBuf, 5);
  }
  void CmdGetOTA2Crc(void){ 
- uint8_t ctemp[2];
- uint16_t itemp;
- EEPROM_ReadBlock(8, FlashEprom, 1);
+  data uint8_t ctemp[2];
+ if(EEPROM_ReadBlock(8, FlashEprom, 1) != 0x00){
  uint8ToAscii((FlashEprom + 8), ctemp);
  
- itemp = FlashEprom[8];
- printf("Bootloader->Debug->CMD_GET_OTA2_CRC:%2X\n", itemp);
+ printf("Bootloader->Debug->CMD_GET_OTA2_CRC:%2X\n", *((uint32_t*)(&FlashEprom[8])));
  
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x43;
  CmdTxBuf[2] = ctemp[0];
  CmdTxBuf[3] = ctemp[1];
+ CmdTxBuf[4] = 0x25;
+ }
+ else{
+ 
+ printf("Bootloader->Debug->CMD_GET_OTA2_CRC:EPROM Read Fail\n");
+ 
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x43;
+ CmdTxBuf[2] = 0x30;
+ CmdTxBuf[3] = 0x30;
  CmdTxBuf[4] = 0x25;	
+ }
  uart0Send(CmdTxBuf, 5);
  }
  void CmdReadFlashPage(void){ 
- uint16_t i;
- uint32_t adr, crc;
- uint8_t temp, page;
+  data uint16_t i;
+  data uint32_t adr, crc;
+  data uint8_t page;
  page = asciiToUint8(CmdRxBuf + 2);
  if(page > (0x1FFF / 512) && (page < (0x0F800L / 512)))
  {	
- adr = (uint32_t)(page - 1) * 512;
+ adr = (uint32_t)(page) * 512;
  crc32Clear();crc = 0;
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x45;
- uint8ToAscii(&page, (CmdTxBuf + 2));
+ CmdTxBuf[2] = CmdRxBuf[2];
+ CmdTxBuf[3] = CmdRxBuf[3];
+ FLASH_Read (TempBuf, adr, 512); 
+ 
+ crc = crc32Calculate(TempBuf, 512);
  for(i = 0;i < 512;i ++){
- FLASH_Read (&temp, (adr + i), 1); 
- crc = crc32CalculateAdd(temp);
- uint8ToAscii(&temp, (CmdTxBuf + 4 + (i * 2)));
+ uint8ToAscii((TempBuf + i), (CmdTxBuf + 4 + (i * 2)));
  }
  uint32ToAscii(&crc, (CmdTxBuf + 4 + 1024));
  CmdTxBuf[1032] = 0x25;	
  uart0Send(CmdTxBuf, 1033);
  }
  else{
+ 
+ printf("Bootloader->Debug->CMD_READ_FLASH_PAGE:Page Overflow\n");
+ 
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x45;
- uint8ToAscii(&page, (CmdTxBuf + 2));
+ CmdTxBuf[2] = CmdRxBuf[2];
+ CmdTxBuf[3] = CmdRxBuf[3];
  CmdTxBuf[4] = 0x30;
- CmdTxBuf[5] = 0x25;	
+ CmdTxBuf[5] = 0x25;
  uart0Send(CmdTxBuf, 6);
  }
  }
@@ -6481,23 +6574,29 @@
  FLASH_Clear (adr, 512);
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x46;
- uint8ToAscii(&page, (CmdTxBuf + 2));
+ CmdTxBuf[2] = CmdRxBuf[2];
+ CmdTxBuf[3] = CmdRxBuf[3];
  CmdTxBuf[4] = 0x31;
  CmdTxBuf[5] = 0x25;	
  uart0Send(CmdTxBuf, 6);
  }
  else{
+ 
+ printf("Bootloader->Debug->CMD_CLEAR_FLASH_PAGE:Page Overflow\n");
+ 
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x46;
- uint8ToAscii(&page, (CmdTxBuf + 2));
+ CmdTxBuf[2] = CmdRxBuf[2];
+ CmdTxBuf[3] = CmdRxBuf[3];
  CmdTxBuf[4] = 0x30;
  CmdTxBuf[5] = 0x25;	
  uart0Send(CmdTxBuf, 6);
  }
+ 
  }
  void CmdWriteFlashPage(void){ 
  uint32_t adr, crc0, crc1;
- uint8_t page, dat;
+ uint8_t page;
  uint16_t i;
  page = asciiToUint8(CmdRxBuf + 2);
  adr = page * 512;
@@ -6511,26 +6610,77 @@
  FLASH_Write(adr, TempBuf, 512);
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x44;
- uint8ToAscii(&page, (CmdTxBuf + 2));
+ CmdTxBuf[2] = CmdRxBuf[2];
+ CmdTxBuf[3] = CmdRxBuf[3];
  CmdTxBuf[4] = 0x31;
  CmdTxBuf[5] = 0x25;	
  uart0Send(CmdTxBuf, 6);
  }
  else{
+ 
+ printf("Bootloader->Debug->CMD_WRITE_FLASH_PAGE:Page Overflow\n");
+ 
  CmdTxBuf[0] = 0x24;
  CmdTxBuf[1] = 0x44;
- uint8ToAscii(&page, (CmdTxBuf + 2));
+ CmdTxBuf[2] = CmdRxBuf[2];
+ CmdTxBuf[3] = CmdRxBuf[3];
  CmdTxBuf[4] = 0x30;
  CmdTxBuf[5] = 0x25;	
  uart0Send(CmdTxBuf, 6);
  }
  }
- void CmdRefreshOTA1Crc(void){ 
+ void CmdUpdateOTA1Crc(void){ 
+ uint32_t crc, i;
+ crc32Clear();crc = 0;
  
+ for(i = 0x2000;i < 0x7FFF;i ++){
+ FLASH_Read(&temp, i, 1);
+ crc = crc32CalculateAdd(temp);
  }
- void CmdRefreshOTA2Crc(void){ 
  
+ *((uint32_t*)(&FlashEprom[4])) = crc;
+ 
+ if(EEPROM_WriteBlock(4, FlashEprom, 4) != 0x00){ 
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x49;
+ CmdTxBuf[2] = 0x30;
+ CmdTxBuf[3] = 0x25;	
  }
+ else{
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x49;
+ CmdTxBuf[2] = 0x31;
+ CmdTxBuf[3] = 0x25;
+ }		
+ uart0Send(CmdTxBuf, 4);
+ }
+ void CmdUpdateOTA2Crc(void){ 
+ uint32_t crc, i;
+ uint8_t temp;
+ crc32Clear();crc = 0;
+ 
+ for(i = 0x8000;i < 0xEFFF;i ++){
+ FLASH_Read(&temp, i, 1);
+ crc = crc32CalculateAdd(temp);
+ }
+ 
+ *((uint32_t*)(&FlashEprom[8])) = crc;
+ 
+ if(EEPROM_WriteBlock(8, FlashEprom, 4) != 0x00){ 
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x4A;
+ CmdTxBuf[2] = 0x30;
+ CmdTxBuf[3] = 0x25;	
+ }
+ else{
+ CmdTxBuf[0] = 0x24;
+ CmdTxBuf[1] = 0x4A;
+ CmdTxBuf[2] = 0x31;
+ CmdTxBuf[3] = 0x25;
+ }		
+ uart0Send(CmdTxBuf, 4);	
+ }
+ 
  void loaderCmdPoll(void){ 
  uint8_t *ptr, *ptw;
  uart0Send("C", 1);
@@ -6627,12 +6777,12 @@
  }
  case 0x49:
  {
- CmdRefreshOTA1Crc();
+ CmdUpdateOTA1Crc();
  break;
  }
  case 0x4A:
  {
- CmdRefreshOTA2Crc();
+ CmdUpdateOTA2Crc();
  break;
  }
  default:break;
@@ -6650,9 +6800,9 @@
  }
  
  void bootSequence(void){ 
- data uint32_t ota1Crc32, ota2Crc32;
+  data uint32_t ota1Crc32, ota2Crc32;
  
- data uint8_t temp;
+  data uint8_t temp;
  temp = uart0ReceiveBootOrder();
  if(temp == 0x5A)
  {
@@ -6667,6 +6817,7 @@
  }
  else if(FlashEprom[32] == 0x5A5A)
  { 
+ ota2Crc32 = ota2FlashCrc();
  if(ota2Crc32 == FlashEprom[8])
  {
  CmdGotoOTA2 = (void code *)(0x8000 & 0x1FFFF); 
@@ -6688,40 +6839,6 @@
  }
  }	
  }
- uint32_t bootFlashCrc(void){ 
- data uint32_t crc = 0, i;
- data uint8_t temp;
- 
- crc32Clear(); 
- for(i = 0x0000;i < 0x1FFF;i ++)
- { 
- FLASH_Read(&temp, i, 1);
- crc = crc32CalculateAdd(temp);
- }
- return crc;
- }
- uint32_t ota1FlashCrc(void){ 
- data uint32_t crc = 0 ,i;
- data uint8_t temp;
- crc32Clear(); 
- for(i = 0x2000;i < 0x7FFF;i ++)
- { 
- FLASH_Read(&temp, i, 1);
- crc = crc32CalculateAdd(temp);
- }
- return crc;
- }
- uint32_t ota2FlashCrc(void){ 
- data uint32_t crc = 0, i;
- data uint8_t temp;
- for(i = 0x8000;i < 0xEFFF;i ++)
- { 
- FLASH_Read(&temp, i, 1);
- crc = crc32CalculateAdd(temp);
- }
- return crc;
- }
- 
  void main (void) 
  {
  Init_Device();
