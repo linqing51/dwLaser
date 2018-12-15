@@ -1,0 +1,389 @@
+C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE SPLC
+OBJECT MODULE PLACED IN .\Objects\sPlc.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE MainApp\sPlc.c LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.OR
+                    -C) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F340) DEBUG OBJECTEXTEND PRINT(.\Listings\sPlc.lst
+                    -) OBJECT(.\Objects\sPlc.obj)
+
+line level    source
+
+   1          #include "sPlc.h"
+   2          /*****************************************************************************/                 
+   3          /*****************************************************************************/
+   4          //xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
+   5          //xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+   6          static data uint8_t TimerCounter_100uS = 0;
+   7          static data uint8_t TimerCounter_1mS = 0;
+   8          static data uint8_t TimerCounter_10mS = 0;
+   9          static data uint8_t TimerCounter_100mS = 0;
+  10          static data uint8_t Timer0_L, Timer0_H;
+  11          static data int8_t InputFilter[CONFIG_SPLC_HW_INPUT_NUM];//输入IO滤波器
+  12          data uint16_t ModbusSlaveOverTimeCounter;//Modbus Slave通信超时计时器
+  13          /*****************************************************************************/
+  14          /******************************************************************************/
+  15          
+  16          void ladder(void)
+  17          {
+  18   1              //
+  19   1      }
+  20          
+  21          
+  22          void assertCoilAddress(uint16_t adr){//检查线圈地址
+  23   1              if(adr > (SPREG_END * 16))
+  24   1                      while(1);
+  25   1      }
+  26          void assertRegisterAddress(uint16_t adr){//检查寄存器地址
+  27   1              if(adr >= SPREG_END)
+  28   1                      while(1);
+  29   1      }
+  30          void clearDM(void){//清除DM寄存器
+  31   1              uint16_t i;
+  32   1              for(i = 0;i <= DM_END;i ++)
+  33   1              {
+  34   2                      NVRAM0[i] = 0x0;
+  35   2                      NVRAM1[i] = 0x0;
+  36   2              }
+  37   1      }
+  38          void clearMR(void){//清除MR寄存器
+  39   1              uint16_t i;
+  40   1              for(i = MR_START;i <= MR_END;i ++)
+  41   1              {
+  42   2                      NVRAM0[i] = 0x0;
+  43   2                      NVRAM1[i] = 0x0;
+  44   2              }
+  45   1      }
+  46          void clearEM(void){//清除EM寄存器
+  47   1              uint16_t i;
+  48   1              for(i = EM_START;i <= EM_END;i ++)
+  49   1              {
+  50   2                      NVRAM0[i] = 0x0;
+  51   2                      NVRAM1[i] = 0x0;
+  52   2              }
+  53   1      }
+C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 2   
+
+  54          void clearR(void){//清除R寄存器
+  55   1              uint16_t i;
+  56   1              for(i = R_START;i <= R_END;i ++)
+  57   1              {
+  58   2                      NVRAM0[i] = 0x0;
+  59   2                      NVRAM1[i] = 0x0;
+  60   2              }
+  61   1      }
+  62          void clearT(void){//清除T寄存器
+  63   1              uint16_t i;
+  64   1              for(i = T_1MS_START;i <= T_1MS_END;i ++)
+  65   1              {
+  66   2                      NVRAM0[i] = 0x0;
+  67   2                      NVRAM1[i] = 0x0;
+  68   2              }
+  69   1              for(i = T_10MS_START;i <= T_10MS_END;i ++)
+  70   1              {
+  71   2                      NVRAM0[i] = 0x0;
+  72   2                      NVRAM1[i] = 0x0;
+  73   2              }
+  74   1              for(i = T_100MS_START;i <= T_100MS_END;i ++)
+  75   1              {
+  76   2                      NVRAM0[i] = 0x0;
+  77   2                      NVRAM1[i] = 0x0;
+  78   2              }
+  79   1      }
+  80          void clearTD(void){//清除TD寄存器
+  81   1              uint16_t i;
+  82   1              for(i = TD_1MS_START;i <= TD_1MS_END;i ++)
+  83   1              {
+  84   2                      NVRAM0[i] = 0x0;
+  85   2                      NVRAM1[i] = 0x0;
+  86   2              }
+  87   1              for(i = TD_10MS_START;i <= TD_10MS_END;i ++)
+  88   1              {
+  89   2                      NVRAM0[i] = 0x0;
+  90   2                      NVRAM1[i] = 0x0;
+  91   2              }
+  92   1              for(i = TD_100MS_START;i <= TD_100MS_END;i ++)
+  93   1              {
+  94   2                      NVRAM0[i] = 0x0;
+  95   2                      NVRAM1[i] = 0x0;
+  96   2              }
+  97   1      }
+  98          void clearC(void){//清除C寄存器
+  99   1              uint16_t i;
+ 100   1              for(i = C_START;i <= C_END;i ++)
+ 101   1              {
+ 102   2                      NVRAM0[i] = 0x0;
+ 103   2                      NVRAM1[i] = 0x0;
+ 104   2              }
+ 105   1      }
+ 106          void nvramLoad(void){//从EPROM中载入NVRAM
+ 107   1              DISABLE_INTERRUPT//关闭中断
+ 108   1              memset(NVRAM0, 0x0, CONFIG_NVRAM_SIZE);//初始化NVRAM
+ 109   1              epromRead(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));//从EPROM中恢复NVRAM
+ 110   1              clearEM();
+ 111   1              clearR();
+ 112   1              clearT();
+ 113   1              clearTD();
+ 114   1              clearC();
+ 115   1              memcpy(NVRAM1, NVRAM0, CONFIG_NVRAM_SIZE);
+C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 3   
+
+ 116   1              ENABLE_INTERRUPT
+ 117   1      }
+ 118          void nvramSave(void){//强制将NVRAM存入EPROM
+ 119   1              uint8_t flag;
+ 120   1              DISABLE_INTERRUPT//关闭中断
+ 121   1              //flag = iic0_write(CONFIG_EPROM_ADDRESS, ((MR_END + 1) * 2), (uint8_t*)NVRAM0);
+ 122   1              ENABLE_INTERRUPT
+ 123   1      }
+*** WARNING C280 IN LINE 119 OF MainApp\sPlc.c: 'flag': unreferenced local variable
+ 124          void nvramUpdata(void){//更新NVRAM->EPROM
+ 125   1              uint8_t flag, *sp0, *sp1;
+ 126   1              uint16_t i;
+ 127   1              sp0 = (uint8_t*)NVRAM0;
+ 128   1              sp1 = (uint8_t*)NVRAM1;
+ 129   1              DISABLE_INTERRUPT
+ 130   1              for(i = 0;i <= ((MR_END + 1) * 2);i ++)
+ 131   1              {
+ 132   2                      if(*(sp0 + i) != *(sp1 + i))
+ 133   2                      {
+ 134   3                              //flag = iic0_write(CONFIG_EPROM_ADDRESS, 1, (uint8_t*)(sp0 + i));
+ 135   3                      }
+ 136   2              }
+ 137   1              memcpy(NVRAM1, NVRAM0, CONFIG_NVRAM_SIZE);
+ 138   1              ENABLE_INTERRUPT
+ 139   1      }
+*** WARNING C280 IN LINE 125 OF MainApp\sPlc.c: 'flag': unreferenced local variable
+ 140          
+ 141          void SET(uint16_t A){//置位
+ 142   1              assertCoilAddress(A);//检查地址范围
+ 143   1              NVRAM0[(A / 16)] |= 1 << (A % 16);
+ 144   1      }
+ 145          void RESET(uint16_t A){//置零
+ 146   1              assertCoilAddress(A);//检查地址范围
+ 147   1              NVRAM0[(A / 16)] &= ~(1 << (A % 16));
+ 148   1      }
+ 149          void FLIP(uint16_t A){//翻转
+ 150   1              data uint16_t temp;
+ 151   1              assertCoilAddress(A);//检查地址范围
+ 152   1              temp= NVRAM0[(A / 16)] & (1 << (A % 16));
+ 153   1              if(temp)
+ 154   1                      RESET(A);
+ 155   1              else
+ 156   1                      SET(A);
+ 157   1      }
+ 158          uint8_t LD(uint16_t A){
+ 159   1              assertCoilAddress(A);//检查地址范围
+ 160   1              return (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
+ 161   1      }
+ 162          uint8_t LDP(uint16_t A){//脉冲上升沿
+ 163   1              data uint8_t temp0, temp1;
+ 164   1              assertCoilAddress(A);//检查地址范围
+ 165   1              temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
+ 166   1              temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
+ 167   1              if(temp0 && !temp1)
+ 168   1                      return 1;
+ 169   1              else
+ 170   1                      return 0;
+ 171   1      }
+ 172          uint8_t LDN(uint16_t A){//脉冲下降沿
+ 173   1              data uint8_t temp0, temp1;
+ 174   1              assertCoilAddress(A);
+ 175   1              temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
+C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 4   
+
+ 176   1              temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
+ 177   1              if(!temp0 && temp1)
+ 178   1                      return 1;
+ 179   1              else
+ 180   1                      return 0;
+ 181   1      }
+ 182          
+ 183          void T100US(uint8_t A, uint8_t start, uint16_t value){
+ 184   1      #if CONFIG_DEBUG
+ 185   1              if(A > (TD_100US_END - TD_100US_START + 1))
+ 186   1                      printf("T100US:%d Over Num\n", A);
+ 187   1      #endif
+ 188   1              if(start){
+ 189   2                      if(NVRAM0[(TD_100US_START + A)] >= value){
+ 190   3                              NVRAM0[(T_100US_START + (A / 16))] |= 1 << (A % 16);
+ 191   3                      }
+ 192   2                      else{
+ 193   3                              NVRAM0[(T_100US_START + (A / 16))] &= ~(1 << (A % 16));
+ 194   3                      }
+ 195   2                              
+ 196   2              }
+ 197   1              else{
+ 198   2                      NVRAM0[(T_100US_START + (A / 16))] &= ~(1 << (A % 16));
+ 199   2                      NVRAM0[(TD_100US_START + A)] = 0x0;
+ 200   2              }
+ 201   1      }
+ 202          void T1MS(uint8_t A, uint8_t start, uint16_t value){
+ 203   1      #if CONFIG_DEBUG
+ 204   1              if(A > (TD_1MS_END - TD_1MS_START + 1))
+ 205   1                      printf("T1MS:%d Over Num\n", A);
+ 206   1      #endif
+ 207   1              if(start){
+ 208   2                      if(NVRAM0[(TD_1MS_START + A)] >= value){
+ 209   3                              NVRAM0[(T_1MS_START + (A / 16))] |= 1 << (A % 16);
+ 210   3                      }
+ 211   2                      else{
+ 212   3                              NVRAM0[(T_1MS_START + (A / 16))] &= ~(1 << (A % 16));
+ 213   3                      }
+ 214   2                              
+ 215   2              }
+ 216   1              else{
+ 217   2                      NVRAM0[(T_1MS_START + (A / 16))] &= ~(1 << (A % 16));
+ 218   2                      NVRAM0[(TD_1MS_START + A)] = 0x0;
+ 219   2              }       
+ 220   1      }
+ 221          void T10MS(uint8_t A, uint8_t start, uint16_t value){
+ 222   1      #if CONFIG_DEBUG
+ 223   1              if(A > (TD_10MS_END - TD_10MS_START + 1))
+ 224   1                      printf("T10MS:%d Over Num\n", A);
+ 225   1      #endif
+ 226   1              if(start){
+ 227   2                      if(NVRAM0[(TD_10MS_START + A)] >= value){
+ 228   3                              NVRAM0[(T_10MS_START + (A / 16))] |= 1 << (A % 16);
+ 229   3                      }
+ 230   2                      else{
+ 231   3                              NVRAM0[(T_10MS_START + (A / 16))] &= ~(1 << (A % 16));
+ 232   3                      }
+ 233   2              }
+ 234   1              else{
+ 235   2                      NVRAM0[(T_10MS_START + (A / 16))] &= ~(1 << (A % 16));
+ 236   2                      NVRAM0[(TD_10MS_START + A)] = 0x0;
+ 237   2              }       
+C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 5   
+
+ 238   1      }
+ 239          void T100MS(uint8_t A, uint8_t start, uint16_t value){
+ 240   1      #if CONFIG_DEBUG
+ 241   1              if(A > (TD_100MS_END - TD_100MS_START + 1))
+ 242   1                      printf("T100MS:%d Over Num\n", A);
+ 243   1      #endif
+ 244   1              if(start){
+ 245   2                      if(NVRAM0[(TD_100MS_START + A)] >= value){
+ 246   3                              NVRAM0[(T_100MS_START + (A / 16))] |= 1 << (A % 16);
+ 247   3                      }
+ 248   2                      else{
+ 249   3                              NVRAM0[(T_100MS_START + (A / 16))] &= ~(1 << (A % 16));
+ 250   3                      }       
+ 251   2              }
+ 252   1              else{
+ 253   2                      NVRAM0[(T_100MS_START + (A / 16))] &= ~(1 << (A % 16));
+ 254   2                      NVRAM0[(TD_100MS_START + A)] = 0x0;
+ 255   2              }
+ 256   1      }
+ 257          
+ 258          void timer0Init(void)
+ 259          {//硬件sTimer计时器初始化
+ 260   1              uint16_t temp;
+ 261   1              TimerCounter_100uS = 0;
+ 262   1              TimerCounter_1mS = 0;
+ 263   1              TimerCounter_10mS = 0;
+ 264   1              TimerCounter_100mS = 0;
+ 265   1              ModbusSlaveOverTimeCounter = 0;
+ 266   1              temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 10000 / 12));//SoftPLC 硬件计时器基准1ms
+ 267   1              Timer0_L = temp & 0xFF;
+ 268   1              Timer0_H = (temp >> 8) & 0xFF;
+ 269   1              TH0 = Timer0_H;// Init Timer0 High register
+ 270   1              TL0 = Timer0_L;// Init Timer0 Low register
+ 271   1              TMOD &= 0xFC;
+ 272   1              TMOD |= 0x01;// Timer0 in 16-bit mode
+ 273   1              ET0 = 1;// Timer1 interrupt enabled
+ 274   1              TR0 = 1;// Timer1 ON
+ 275   1      }
+ 276          void timer0Isr(void) interrupt INTERRUPT_TIMER0
+ 277          {//硬件sTimer计时器中断 1mS
+ 278   1              data uint16_t i;
+ 279   1              TimerCounter_100uS ++;
+ 280   1              ModbusSlaveOverTimeCounter ++;
+ 281   1              //100us
+ 282   1              for(i = TD_100US_START;i <= TD_100US_END;i ++){
+ 283   2                      if(NVRAM0[i] < SHRT_MAX){
+ 284   3                              NVRAM0[i] ++;
+ 285   3                      }
+ 286   2              }
+ 287   1              //1ms
+ 288   1              if(TimerCounter_100uS >= 10){
+ 289   2                      for(i = TD_1MS_START;i <= TD_1MS_END;i ++){
+ 290   3                              if(NVRAM0[i] < SHRT_MAX){
+ 291   4                                      NVRAM0[i] ++;
+ 292   4                              }
+ 293   3                      }
+ 294   2                      TimerCounter_1mS ++;
+ 295   2                      TimerCounter_100uS = 0;
+ 296   2              }
+ 297   1              //10ms
+ 298   1              if(TimerCounter_1mS >= 10){
+ 299   2                      for(i = TD_10MS_START;i < TD_10MS_END;i ++){
+C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 6   
+
+ 300   3                              if(NVRAM0[i] < SHRT_MAX){
+ 301   4                                      NVRAM0[i] ++;
+ 302   4                              }
+ 303   3                      }
+ 304   2                      TimerCounter_10mS ++;
+ 305   2                      TimerCounter_1mS = 0;
+ 306   2              }
+ 307   1              //100ms
+ 308   1              if(TimerCounter_10mS >= 10){
+ 309   2                      for(i = TD_100MS_START;i < TD_100MS_END;i ++){
+ 310   3                              if(NVRAM0[i] < SHRT_MAX){
+ 311   4                                      NVRAM0[i] ++;
+ 312   4                              }
+ 313   3                      }
+ 314   2                      TimerCounter_10mS = 0;
+ 315   2                      TimerCounter_100mS ++;
+ 316   2              }
+ 317   1              if(TimerCounter_100mS >= 10){
+ 318   2                      TimerCounter_100mS = 0;
+ 319   2              }
+ 320   1              TimerCounter_100uS ++;
+ 321   1              TH0 = Timer0_H;
+ 322   1              TL0 = Timer0_L;
+ 323   1      }
+ 324          
+ 325          void refreshInput(void){//获取输入IO
+ 326   1              uint8_t ctemp, i;
+ 327   1              ctemp = inPca9554Read() ;
+*** WARNING C206 IN LINE 327 OF MainApp\sPlc.c: 'inPca9554Read': missing function-prototype
+ 328   1              for(i = 0;i < 8;i ++){
+ 329   2                      if((ctemp >> i) & 0x01){
+ 330   3                              if(InputFilter[i] < CONFIG_INPUT_FILTER_TIME){
+ 331   4                                      InputFilter[i] ++;
+ 332   4                              }
+ 333   3                              else{
+ 334   4                                      NVRAM0[X_START] |= (1 << i);
+ 335   4                              }
+ 336   3                      }
+ 337   2                      else{
+ 338   3                              if(InputFilter[i] > (CONFIG_INPUT_FILTER_TIME * -1)){
+ 339   4                                      InputFilter[i] --;
+ 340   4                              }
+ 341   3                              else{
+ 342   4                                      NVRAM0[X_START] &= ~(1 << i);
+ 343   4                              }
+ 344   3                      }
+ 345   2              }
+ 346   1      }
+ 347          void refreshOutput(void){//设置输出IO
+ 348   1              //outPca9554Write(NVRAM0[Y_START]);
+ 349   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   3268    ----
+   CONSTANT SIZE    =     77    ----
+   XDATA SIZE       =   3140      28
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     24       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 7   
+
+
+C51 COMPILATION COMPLETE.  3 WARNING(S),  0 ERROR(S)

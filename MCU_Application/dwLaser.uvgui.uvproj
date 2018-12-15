@@ -13,14 +13,14 @@
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>C8051F020</Device>
+          <Device>C8051F340</Device>
           <Vendor>Silicon Labs</Vendor>
-          <Cpu>IRAM(0-0xFF) XRAM(0-0xFFF) IROM(0-0xFFFF) CLOCK(25000000)</Cpu>
+          <Cpu>IRAM(0-0xFF) XRAM(0-0xFFF) IROM(0-0xFFFF) CLOCK(48000000)</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"LIB\STARTUP.A51" ("Standard 8051 Startup Code")</StartupFile>
           <FlashDriverDll></FlashDriverDll>
-          <DeviceId>3312</DeviceId>
-          <RegisterFile>C8051F020.H</RegisterFile>
+          <DeviceId>3997</DeviceId>
+          <RegisterFile>C8051F340.H</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -110,11 +110,11 @@
           <SimDllName>S8051.DLL</SimDllName>
           <SimDllArguments></SimDllArguments>
           <SimDlgDll>DCYG.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pCYGF020</SimDlgDllArguments>
+          <SimDlgDllArguments>-pCYGF340</SimDlgDllArguments>
           <TargetDllName>S8051.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
           <TargetDlgDll>TCYG.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pCYGF020</TargetDlgDllArguments>
+          <TargetDlgDllArguments>-pCYGF340</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -186,7 +186,7 @@
         </Utilities>
         <Target51>
           <Target51Misc>
-            <MemoryModel>1</MemoryModel>
+            <MemoryModel>2</MemoryModel>
             <RTOS>0</RTOS>
             <RomSize>2</RomSize>
             <DataHold>0</DataHold>
@@ -322,7 +322,7 @@
             <InterruptVectorAddress>0</InterruptVectorAddress>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define></Define>
+              <Define>C8051F340</Define>
               <Undefine></Undefine>
               <IncludePath>.\Lib;.\Driver;.\MainApp;.\Modbus</IncludePath>
             </VariousControls>
@@ -386,72 +386,10 @@
               <FileType>1</FileType>
               <FilePath>.\Lib\crc32.c</FilePath>
             </File>
-            <File>
-              <FileName>md5.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Lib\md5.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Driver</GroupName>
-          <Files>
-            <File>
-              <FileName>i2c0.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Driver\i2c0.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c1.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Driver\i2c1.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Driver\i2c2.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c3.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Driver\i2c3.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c4.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Driver\i2c4.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c5.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Driver\i2c5.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c6.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Driver\i2c6.c</FilePath>
-            </File>
-            <File>
-              <FileName>eprom.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Driver\eprom.c</FilePath>
-            </File>
-            <File>
-              <FileName>outPca9554.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Driver\outPca9554.c</FilePath>
-            </File>
-            <File>
-              <FileName>inPca9554.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Driver\inPca9554.c</FilePath>
-            </File>
-            <File>
-              <FileName>mcp47x6.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Driver\mcp47x6.c</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>Modbus</GroupName>
@@ -472,19 +410,9 @@
               <FilePath>.\MainApp\MainApp.c</FilePath>
             </File>
             <File>
-              <FileName>InitConfig.c</FileName>
+              <FileName>InitDevice.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\MainApp\InitConfig.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MainApp\sPlc.c</FilePath>
-            </File>
-            <File>
-              <FileName>ladder.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MainApp\ladder.c</FilePath>
+              <FilePath>.\MainApp\InitDevice.c</FilePath>
             </File>
           </Files>
         </Group>

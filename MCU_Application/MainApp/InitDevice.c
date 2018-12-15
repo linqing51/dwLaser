@@ -1,33 +1,28 @@
-#include "InitConfig.h"
-/*****************************************************************************/
+/////////////////////////////////////
+//  Generated Initialization File  //
+/////////////////////////////////////
 
+#include "compiler_defs.h"
+#include "C8051F340_defs.h"
 
 // Peripheral specific initialization functions,
 // Called from the Init_Device() function
-void Reset_Sources_Init()
+void PCA_Init()
 {
-    WDTCN     = 0xDE;
-    WDTCN     = 0xAD;
+    PCA0MD    &= ~0x40;
+    PCA0MD    = 0x00;
 }
 
 void Timer_Init()
 {
-    CKCON     = 0x30;
+    TCON      = 0x40;
     TMOD      = 0x20;
-    TH1       = 0xB8;
-    T2CON     = 0x34;
-    RCAP2L    = 0xB8;
-    RCAP2H    = 0xFF;
+    TH1       = 0x30;
 }
 
 void UART_Init()
 {
-    SCON0     = 0x50;
-}
-
-void DAC_Init()
-{
-    DAC0CN    = 0x80;
+    SCON0     = 0x10;
 }
 
 void Voltage_Reference_Init()
@@ -37,12 +32,12 @@ void Voltage_Reference_Init()
 
 void Port_IO_Init()
 {
-    // P0.0  -  TX0 (UART0), Push-Pull,  Digital
-    // P0.1  -  RX0 (UART0), Open-Drain, Digital
+    // P0.0  -  Unassigned,  Open-Drain, Digital
+    // P0.1  -  Unassigned,  Open-Drain, Digital
     // P0.2  -  Unassigned,  Open-Drain, Digital
     // P0.3  -  Unassigned,  Open-Drain, Digital
-    // P0.4  -  Unassigned,  Open-Drain, Digital
-    // P0.5  -  Unassigned,  Open-Drain, Digital
+    // P0.4  -  TX0 (UART0), Push-Pull,  Digital
+    // P0.5  -  RX0 (UART0), Open-Drain, Digital
     // P0.6  -  Unassigned,  Open-Drain, Digital
     // P0.7  -  Unassigned,  Open-Drain, Digital
 
@@ -73,35 +68,32 @@ void Port_IO_Init()
     // P3.6  -  Unassigned,  Open-Drain, Digital
     // P3.7  -  Unassigned,  Open-Drain, Digital
 
-    P0MDOUT   = 0x01;
-    XBR0      = 0x04;
-    XBR2      = 0x40;
+    P0MDOUT   = 0x10;
+    XBR0      = 0x01;
+    XBR1      = 0x40;
 }
 
 void Oscillator_Init()
 {
     int i = 0;
-    OSCXCN    = 0x67;
-    for (i = 0; i < 3000; i++);  // Wait 1ms for initialization
-    while ((OSCXCN & 0x80) == 0);
-    OSCICN    = 0x0F;
-}
-
-void Interrupts_Init()
-{
-    IE        = 0x90;
+    OSCLCN    |= 0x83;
+    FLSCL     = 0x90;
+    CLKMUL    = 0x80;
+    for (i = 0; i < 20; i++);    // Wait 5us for initialization
+    CLKMUL    |= 0xC0;
+    while ((CLKMUL & 0x20) == 0);
+    CLKSEL    = 0x03;
+    OSCICN    = 0x83;
 }
 
 // Initialization function for device,
 // Call Init_Device() from your main program
 void Init_Device(void)
 {
-    Reset_Sources_Init();
+    PCA_Init();
     Timer_Init();
     UART_Init();
-    DAC_Init();
     Voltage_Reference_Init();
     Port_IO_Init();
     Oscillator_Init();
-    Interrupts_Init();
 }

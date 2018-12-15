@@ -1,0 +1,71 @@
+C51 COMPILER V9.59.0.0   DELAY                                                             12/16/2018 00:07:51 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE DELAY
+OBJECT MODULE PLACED IN .\Objects\delay.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Lib\delay.c LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.ORC) 
+                    -BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F340) DEBUG OBJECTEXTEND PRINT(.\Listings\delay.lst) 
+                    -OBJECT(.\Objects\delay.obj)
+
+line level    source
+
+   1          #include "delay.h"
+   2          /*****************************************************************************/
+   3          
+   4          /*****************************************************************************/
+   5          void delayUs(uint8_t data us) reentrant
+   6          {//微秒延时
+   7   1              while(us)
+   8   1              {
+   9   2              us --;
+  10   2              }
+  11   1      }
+  12          void delayMs(uint8_t data ms) reentrant
+  13          {//毫秒延时
+  14   1              while(ms--)
+  15   1              {
+  16   2                      delayUs(100);
+  17   2              }
+  18   1      }
+  19          void hwDelayInit(uint8_t data reload_h, uint8_t data reload_l)
+  20          {
+  21   1              TMOD &= 0x0F;
+  22   1              TMOD |= 0x10;
+  23   1              ET1 = 0;
+  24   1              TH1 = reload_h;
+  25   1              TL1 = reload_l;
+  26   1              TF1 = 0;
+  27   1              TR1 = 1;
+  28   1      }
+  29          void hwDelay(uint8_t control, uint8_t reload_h, uint8_t reload_l)
+  30          {//control = 0 等待计时器完成 
+  31   1              //control 1 等待计时器重新开始后完成
+  32   1              if(TR1 == 1)
+  33   1              {
+  34   2                      while(TF1 == 0);
+  35   2              }
+  36   1              TR1 = 0;
+  37   1              if(control == 1)
+  38   1              {
+  39   2                      TH1 = reload_h;
+  40   2                      TL1 = reload_l;
+  41   2                      TF1 = 0;
+  42   2                      TR1 = 1;
+  43   2              }
+  44   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    107    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+C51 COMPILER V9.59.0.0   DELAY                                                             12/16/2018 00:07:51 PAGE 2   
+
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

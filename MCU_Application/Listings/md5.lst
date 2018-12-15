@@ -1,0 +1,176 @@
+C51 COMPILER V9.59.0.0   MD5                                                               12/15/2018 23:48:03 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MD5
+OBJECT MODULE PLACED IN .\Objects\md5.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Lib\md5.c COMPACT OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.ORC) 
+                    -BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEBUG OBJECTEXTEND PRINT(.\Listings\md5.lst) OBJECT(.\Objects\md5
+                    -.obj)
+
+line level    source
+
+   1          /*
+   2           * Simple MD5 implementation
+   3           *
+   4           * Compile with: gcc -o md5 md5.c
+   5           */
+   6          #include <stdio.h>
+   7          #include <stdlib.h>
+   8          #include <string.h>
+   9          #include <stdint.h>
+  10           
+  11          // Constants are the integer part of the sines of integers (in radians) * 2^32.
+  12          code uint32_t k[64] = {
+  13          0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee ,
+  14          0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501 ,
+  15          0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be ,
+  16          0x6b901122, 0xfd987193, 0xa679438e, 0x49b40821 ,
+  17          0xf61e2562, 0xc040b340, 0x265e5a51, 0xe9b6c7aa ,
+  18          0xd62f105d, 0x02441453, 0xd8a1e681, 0xe7d3fbc8 ,
+  19          0x21e1cde6, 0xc33707d6, 0xf4d50d87, 0x455a14ed ,
+  20          0xa9e3e905, 0xfcefa3f8, 0x676f02d9, 0x8d2a4c8a ,
+  21          0xfffa3942, 0x8771f681, 0x6d9d6122, 0xfde5380c ,
+  22          0xa4beea44, 0x4bdecfa9, 0xf6bb4b60, 0xbebfbc70 ,
+  23          0x289b7ec6, 0xeaa127fa, 0xd4ef3085, 0x04881d05 ,
+  24          0xd9d4d039, 0xe6db99e5, 0x1fa27cf8, 0xc4ac5665 ,
+  25          0xf4292244, 0x432aff97, 0xab9423a7, 0xfc93a039 ,
+  26          0x655b59c3, 0x8f0ccc92, 0xffeff47d, 0x85845dd1 ,
+  27          0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1 ,
+  28          0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391 };
+  29           
+  30          // r specifies the per-round shift amounts
+  31          code uint32_t r[] = {7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,
+  32                                5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20, 5,  9, 14, 20,
+  33                                4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,
+  34                                6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21};
+  35           
+  36          // leftrotate function definition
+  37          #define LEFTROTATE(x, c) (((x) << (c)) | ((x) >> (32 - (c))))
+  38           
+  39          void to_bytes(uint32_t val, uint8_t *bytes)
+  40          {
+  41   1          bytes[0] = (uint8_t) val;
+  42   1          bytes[1] = (uint8_t) (val >> 8);
+  43   1          bytes[2] = (uint8_t) (val >> 16);
+  44   1          bytes[3] = (uint8_t) (val >> 24);
+  45   1      }
+  46           
+  47          uint32_t to_int32(const uint8_t *bytes)
+  48          {
+  49   1          return (uint32_t) bytes[0]
+  50   1              | ((uint32_t) bytes[1] << 8)
+  51   1              | ((uint32_t) bytes[2] << 16)
+  52   1              | ((uint32_t) bytes[3] << 24);
+  53   1      }
+C51 COMPILER V9.59.0.0   MD5                                                               12/15/2018 23:48:03 PAGE 2   
+
+  54           
+  55          void md5(const uint8_t *initial_msg, size_t initial_len, uint8_t *digest) {
+  56   1       
+  57   1          // These vars will contain the hash
+  58   1          uint32_t h0, h1, h2, h3;
+  59   1       
+  60   1          // Message (to prepare)
+  61   1          uint8_t *msg = NULL;
+  62   1       
+  63   1          size_t new_len, offset;
+  64   1          uint32_t w[16];
+  65   1          uint32_t a, b, c, d, i, f, g, temp;
+  66   1       
+  67   1          // Initialize variables - simple count in nibbles:
+  68   1          h0 = 0x67452301;
+  69   1          h1 = 0xefcdab89;
+  70   1          h2 = 0x98badcfe;
+  71   1          h3 = 0x10325476;
+  72   1       
+  73   1          //Pre-processing:
+  74   1          //append "1" bit to message    
+  75   1          //append "0" bits until message length in bits ≡ 448 (mod 512)
+  76   1          //append length mod (2^64) to message
+  77   1       
+  78   1          for (new_len = initial_len + 1; new_len % (512/8) != 448/8; new_len++)
+  79   1              ;
+  80   1       
+  81   1          msg = (uint8_t*)malloc(new_len + 8);
+  82   1          memcpy(msg, initial_msg, initial_len);
+  83   1          msg[initial_len] = 0x80; // append the "1" bit; most significant bit is "first"
+  84   1          for (offset = initial_len + 1; offset < new_len; offset++)
+  85   1              msg[offset] = 0; // append "0" bits
+  86   1       
+  87   1          // append the len in bits at the end of the buffer.
+  88   1          to_bytes(initial_len*8, msg + new_len);
+  89   1          // initial_len>>29 == initial_len*8>>32, but avoids overflow.
+  90   1          to_bytes(initial_len>>29, msg + new_len + 4);
+  91   1       
+  92   1          // Process the message in successive 512-bit chunks:
+  93   1          //for each 512-bit chunk of message:
+  94   1          for(offset=0; offset<new_len; offset += (512/8)) {
+  95   2       
+  96   2              // break chunk into sixteen 32-bit words w[j], 0 ≤ j ≤ 15
+  97   2              for (i = 0; i < 16; i++)
+  98   2                  w[i] = to_int32(msg + offset + i*4);
+  99   2       
+ 100   2              // Initialize hash value for this chunk:
+ 101   2              a = h0;
+ 102   2              b = h1;
+ 103   2              c = h2;
+ 104   2              d = h3;
+ 105   2       
+ 106   2              // Main loop:
+ 107   2              for(i = 0; i<64; i++) {
+ 108   3       
+ 109   3                  if (i < 16) {
+ 110   4                      f = (b & c) | ((~b) & d);
+ 111   4                      g = i;
+ 112   4                  } else if (i < 32) {
+ 113   4                      f = (d & b) | ((~d) & c);
+ 114   4                      g = (5*i + 1) % 16;
+ 115   4                  } else if (i < 48) {
+C51 COMPILER V9.59.0.0   MD5                                                               12/15/2018 23:48:03 PAGE 3   
+
+ 116   4                      f = b ^ c ^ d;
+ 117   4                      g = (3*i + 5) % 16;          
+ 118   4                  } else {
+ 119   4                      f = c ^ (b | (~d));
+ 120   4                      g = (7*i) % 16;
+ 121   4                  }
+ 122   3       
+ 123   3                  temp = d;
+ 124   3                  d = c;
+ 125   3                  c = b;
+ 126   3                  b = b + LEFTROTATE((a + f + k[i] + w[g]), r[i]);
+ 127   3                  a = temp;
+ 128   3       
+ 129   3              }
+ 130   2       
+ 131   2              // Add this chunk's hash to result so far:
+ 132   2              h0 += a;
+ 133   2              h1 += b;
+ 134   2              h2 += c;
+ 135   2              h3 += d;
+ 136   2       
+ 137   2          }
+ 138   1       
+ 139   1          // cleanup
+ 140   1          free(msg);
+ 141   1       
+ 142   1          //var char digest[16] := h0 append h1 append h2 append h3 //(Output is in little-endian)
+ 143   1          to_bytes(h0, digest);
+ 144   1          to_bytes(h1, digest + 4);
+ 145   1          to_bytes(h2, digest + 8);
+ 146   1          to_bytes(h3, digest + 12);
+ 147   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   2363    ----
+   CONSTANT SIZE    =    512    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----     134
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

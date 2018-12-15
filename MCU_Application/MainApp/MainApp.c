@@ -132,16 +132,16 @@ void main(void)
 	uint8_t rbuf[8];
 	uint8_t wbuf[8] = {1,2,3,4,5,6,7,8};
 	Init_Device();
-	timer0Init();
-	inPca9554Init();
-	outPca9554Init();
-	mcp47x6Init();
+	//timer0Init();
+	//inPca9554Init();
+	//outPca9554Init();
+	//mcp47x6Init();
 	ES0 = 1;
 	ENABLE_INTERRUPT;
-	nvramLoad();//上电恢复NVRAM
+	//nvramLoad();//上电恢复NVRAM
 	while(1)
 	{
-		refreshInput();//刷新输入IO
+		//refreshInput();//刷新输入IO
 		modbusSlaveAsciiPoll();
 ////		SET(10);
 ////		RESET(10);
@@ -163,8 +163,8 @@ void main(void)
 ////		{
 ////			SET(0);	
 ////		}
-		nvramUpdata();//更新NVRAM
-		refreshOutput();//刷新输出IO
+		//nvramUpdata();//更新NVRAM
+		//refreshOutput();//刷新输出IO
 	}
 }
 //void main(void)

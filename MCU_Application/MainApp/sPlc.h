@@ -1,5 +1,5 @@
-#ifndef __SOFTPLC_H__
-#define __SOFTPLC_H__
+#ifndef __SPLC_H__
+#define __SPLC_H__
 /*****************************************************************************/
 #include "appConfig.h"
 //数据寄存器 保持 256个字
@@ -54,7 +54,10 @@
 #define SP_R_TICK_100MS					803//
 #define SP_R_TICK_1S					804//
 /*****************************************************************************/
-extern data uint16_t ModbusSlaveOverTimeCounter;//Modbus Slave通信超时计时器
+extern uint16_t ModbusSlaveAsciiOverTimeCounter;//Modbus Slave通信超时计时器
+//extern int16_t NVRAM0[];//掉电保持寄存器 当前
+xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
+xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 /*****************************************************************************/
 void assertCoilAddress(uint16_t adr);
 void assertRegisterAddress(uint16_t adr);

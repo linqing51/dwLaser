@@ -1,0 +1,153 @@
+C51 COMPILER V9.59.0.0   EPROM                                                             12/15/2018 23:58:38 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE EPROM
+OBJECT MODULE PLACED IN .\Objects\eprom.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Driver\eprom.c COMPACT OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.
+                    -ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F340) DEBUG OBJECTEXTEND PRINT(.\Listings\eprom.
+                    -lst) OBJECT(.\Objects\eprom.obj)
+
+line level    source
+
+   1          #include "eprom.h"
+   2          /*****************************************************************************/
+   3          
+   4          /*****************************************************************************/
+   5          void epromInit(void){//³õÊ¼»¯IIC½Ó¿Ú
+   6   1              iic0Init();
+   7   1      }
+   8          
+   9          uint8_t epromReadOneByte(uint16_t ReadAddr){//ÔÚAT24CXXÖ¸¶¨µØÖ·¶Á³öÒ»¸öÊý¾Ý
+  10   1      //ReadAddr:¿ªÊ¼¶ÁÊýµÄµØÖ·  
+  11   1      //·µ»ØÖµ  :¶Áµ½µÄÊý¾Ý                             
+  12   1              uint8_t temp=0;                                                                                                                                                  
+  13   1              iic0Start();  
+  14   1      #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
+  15   1      //¼æÈÝ24CxxÖÐÆäËûµÄ°æ±¾
+  16   1              iic0SendByte(((CONFIG_EPROM_ADDR << 1) & 0xFE));//·¢ËÍÐ´ÃüÁî
+  17   1              iic0WaitAck();
+  18   1              iic0SendByte(ReadAddr >> 8);//·¢ËÍ¸ßµØÖ·                 
+  19   1      #else 
+                      iic0SendByte(((CONFIG_EPROM_ADDR << 1) & 0xFE) + ((ReadAddr / 256) << 1));//·¢ËÍÆ÷¼þµØÖ·0XA0,Ð´Êý¾Ý      
+              #endif
+  22   1              iic0WaitAck(); 
+  23   1              iic0SendByte(ReadAddr % 256);   //·¢ËÍµÍµØÖ·
+  24   1              iic0WaitAck();      
+  25   1              iic0Start();               
+  26   1              iic0SendByte(((CONFIG_EPROM_ADDR << 1) | 0x01));//½øÈë½ÓÊÕÄ£Ê½                     
+  27   1              iic0WaitAck();   
+  28   1              temp = iic0ReadByte(0);//¶ÁÒ»¸ö×Ö½Ú£¬·ÇÓ¦´ðÐÅºÅÐÅºÅ        
+  29   1              iic0Stop();        //²úÉúÒ»¸öÍ£Ö¹Ìõ¼þ       
+  30   1              return temp;
+  31   1      }
+  32          
+  33          void epromWriteOneByte(uint16_t WriteAddr, uint8_t DataToWrite){//ÔÚAT24CXXÖ¸¶¨µØÖ·Ð´ÈëÒ»¸öÊý¾Ý
+  34   1      //WriteAddr  :Ð´ÈëÊý¾ÝµÄÄ¿µÄµØÖ·    
+  35   1      //DataToWrite:ÒªÐ´ÈëµÄÊý¾Ý                                                                                                                                                                               
+  36   1              iic0Start();  
+  37   1      #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
+  38   1              iic0SendByte(((CONFIG_EPROM_ADDR << 1) & 0xFE));            //·¢ËÍÐ´ÃüÁî
+  39   1              iic0WaitAck();
+  40   1              iic0SendByte(WriteAddr >> 8);    //·¢ËÍ¸ßµØÖ·
+  41   1      #else
+                      iic0SendByte(((CONFIG_EPROM_ADDR << 1) & 0xFE) +( (WriteAddr / 256) << 1));   //·¢ËÍÆ÷¼þµØÖ·0XA0,Ð´Êý¾Ý 
+              #endif 
+  44   1              iic0WaitAck();     
+  45   1              iic0SendByte(WriteAddr % 256);   //·¢ËÍµÍµØÖ·
+  46   1              iic0WaitAck();                                                                                                     
+  47   1              iic0SendByte(DataToWrite);     //·¢ËÍ×Ö½Ú                                                          
+  48   1              iic0WaitAck();                             
+  49   1              iic0Stop();//²úÉúÒ»¸öÍ£Ö¹Ìõ¼þ 
+  50   1      #if CONFIG_EPROM_FRAM != 1
+  51   1              delayMs(10);     
+  52   1      #endif
+  53   1      }
+C51 COMPILER V9.59.0.0   EPROM                                                             12/15/2018 23:58:38 PAGE 2   
+
+  54          
+  55          void epromWriteLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ
+             -¼Ð´Èë³¤¶ÈÎªLenµÄÊý¾Ý
+  56   1      //¸Ãº¯ÊýÓÃÓÚÐ´Èë16bit»òÕß32bitµÄÊý¾Ý.
+  57   1      //WriteAddr  :¿ªÊ¼Ð´ÈëµÄµØÖ·  
+  58   1      //DataToWrite:Êý¾ÝÊý×éÊ×µØÖ·
+  59   1      //Len        :ÒªÐ´ÈëÊý¾ÝµÄ³¤¶È2,4       
+  60   1              uint8_t t;
+  61   1              for(t = 0;t < Len;t ++){
+  62   2                      epromWriteOneByte(WriteAddr + t, (DataToWrite >> (8 * t)) & 0xff);
+  63   2              }                                                                                                   
+  64   1      }
+  65          uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len)
+  66          {//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ¼¶Á³ö³¤¶ÈÎªLenµÄÊý¾Ý
+  67   1      //¸Ãº¯ÊýÓÃÓÚ¶Á³ö16bit»òÕß32bitµÄÊý¾Ý.
+  68   1      //ReadAddr   :¿ªÊ¼¶Á³öµÄµØÖ· 
+  69   1      //·µ»ØÖµ     :Êý¾Ý
+  70   1      //Len        :Òª¶Á³öÊý¾ÝµÄ³¤¶È2,4       
+  71   1              uint8_t t;
+  72   1              uint32_t temp=0;
+  73   1              for(t = 0;t < Len;t ++){
+  74   2                      temp <<= 8;
+  75   2                      temp += epromReadOneByte(ReadAddr + Len - t - 1);                                          
+  76   2              }
+  77   1              return temp;                                                                                                
+  78   1      }
+  79               
+  80          void epromRead(uint16_t ReadAddr,uint8_t *pBuffer,uint16_t NumToRead){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ¼¶Á³öÖ¸¶
+             -¨¸öÊýµÄÊý¾Ý
+  81   1      //ReadAddr :¿ªÊ¼¶Á³öµÄµØÖ· ¶Ô24c02Îª0~255
+  82   1      //pBuffer  :Êý¾ÝÊý×éÊ×µØÖ·
+  83   1      //NumToRead:Òª¶Á³öÊý¾ÝµÄ¸öÊý
+  84   1              while(NumToRead)
+  85   1              {
+  86   2                      *pBuffer++ = epromReadOneByte(ReadAddr ++);     
+  87   2                      NumToRead --;
+  88   2              }
+  89   1      }  
+  90          void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ¼Ð´
+             -ÈëÖ¸¶¨¸öÊýµÄÊý¾Ý
+  91   1      //WriteAddr :¿ªÊ¼Ð´ÈëµÄµØÖ· ¶Ô24c02Îª0~255
+  92   1      //pBuffer   :Êý¾ÝÊý×éÊ×µØÖ·
+  93   1      //NumToWrite:ÒªÐ´ÈëÊý¾ÝµÄ¸öÊý
+  94   1              while(NumToWrite --)
+  95   1              {
+  96   2                      epromWriteOneByte(WriteAddr, *pBuffer);
+  97   2                      WriteAddr ++;
+  98   2                      pBuffer ++;
+  99   2              }
+ 100   1      }
+ 101          void epromTest(void){//EPROM ¶ÁÐ´×Ô²âÊÔ
+ 102   1              uint8_t temp;
+ 103   1              uint32_t i, j, crc32Src, crc32Dist;
+ 104   1              
+ 105   1              crc32Clear();
+ 106   1              for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
+ 107   2                      temp = rand() % 255;
+ 108   2                      crc32Src = crc32CalculateAdd(temp);
+ 109   2                      epromWriteOneByte(i, temp);
+ 110   2              }
+ 111   1              crc32Clear();
+ 112   1              for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
+C51 COMPILER V9.59.0.0   EPROM                                                             12/15/2018 23:58:38 PAGE 3   
+
+ 113   2                      temp = epromReadOneByte(i);
+ 114   2                      crc32Dist = crc32CalculateAdd(temp);
+ 115   2              }
+ 116   1              if(crc32Src == crc32Dist)
+ 117   1                      printf("EPROM:Self Test Loop %d OK\n", j);
+ 118   1              else
+ 119   1                      printf("EPROM:Self Test Loop %d Fail\n", j);
+ 120   1      
+ 121   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    798    ----
+   CONSTANT SIZE    =     58    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----      53
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
