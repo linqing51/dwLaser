@@ -3,7 +3,7 @@
 /*****************************************************************************/
 static void ModbusHandle() interrupt INTERRUPT_TIMER2
 {//硬件计时器TIMER1中断函数 1mS
-	TF2 = 0;
+	//TF2 = 0;
 	modbusTimerHandle();
 } 
 
@@ -43,8 +43,8 @@ void InitModbusSerial(int32_t baudrate)
 	temp = (uint32_t)(CONFIG_SYSCLK / 32 / baudrate);
 	temp = 65536 - temp;	
 	
-	T2CON &= 1 << 4;//Timer 1 overflows used for transmit clock.
-	T2CON &= 1 << 5;//Timer 1 overflows used for receive clock.
+	//T2CON &= 1 << 4;//Timer 1 overflows used for transmit clock.
+	//T2CON &= 1 << 5;//Timer 1 overflows used for receive clock.
 	
 	TMOD &= 0x0F;
 	TMOD |= 1 << 5;//Mode 2: 8-bit counter/timer with auto-reload
@@ -63,12 +63,12 @@ void InitModbusTimer(void)
 	uint16_t temp;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 1000));
 	
-	T2CON = 0x0;//RCLK0=0,TCLK0=0
-    RCAP2L = (uint8_t)(temp & 0xFF);
-	RCAP2H = (uint8_t)((temp >> 8) & 0xFF);
-	TF2 = 0;
-	TR2 = 1;        
-	ET2 = 1; //开中断T0
+	//T2CON = 0x0;//RCLK0=0,TCLK0=0
+    //RCAP2L = (uint8_t)(temp & 0xFF);
+	//RCAP2H = (uint8_t)((temp >> 8) & 0xFF);
+	//TF2 = 0;
+	//TR2 = 1;        
+	//ET2 = 1; //开中断T0
 }
 
 

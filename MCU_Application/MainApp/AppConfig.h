@@ -134,8 +134,9 @@
 //#include "inPca9554.h"
 //#include "outPca9554.h"
 /*****************************************************************************/
+
 //#include "sPLC.h"
-#include "modbusSlaveAscii.h"
+//#include "modbusSlaveAscii.h"
 //#include "pidFuzzy.h"
 /*****************************************************************************/
 //#include "AppMath.h"
@@ -143,8 +144,8 @@
 //#include "ad5621.h"
 //#include "chipBeem.h"
 
-//#include "modbusApp.h"
-//#include "modbusPort.h"
-//#include "slaveModbus.h"
+#include "modbusApp.h"
+#include "modbusPort.h"
+#include "slaveModbus.h"
 /*****************************************************************************/
 #endif

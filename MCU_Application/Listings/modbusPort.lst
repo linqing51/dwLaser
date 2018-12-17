@@ -1,0 +1,103 @@
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/17/2018 23:24:15 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MODBUSPORT
+OBJECT MODULE PLACED IN .\Objects\modbusPort.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\modbusPort.c LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F0
+                    -20.ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F340) DEBUG OBJECTEXTEND PRINT(.\Listings\mod
+                    -busPort.lst) OBJECT(.\Objects\modbusPort.obj)
+
+line level    source
+
+   1          /*****************************************************************************/
+   2          #include "modbusPort.h"
+   3          /*****************************************************************************/
+   4          static void ModbusHandle() interrupt INTERRUPT_TIMER2
+   5          {//硬件计时器TIMER1中断函数 1mS
+   6   1              //TF2 = 0;
+   7   1              modbusTimerHandle();
+   8   1      } 
+   9          
+  10          static void SerialHandle() interrupt INTERRUPT_UART0
+  11          {//UART0 串口中断程序
+  12   1              if(RI0)
+  13   1              {
+  14   2                      RI0 = 0;  
+  15   2                      modbusSerialRxHandle();
+  16   2              }
+  17   1              if(TI0)
+  18   1              {
+  19   2                      TI0 = 0;
+  20   2                      modbusSerialTxHandle();
+  21   2              }
+  22   1      }  
+  23          static void modbusSerialSendbyte(uint8_t *dt)
+  24          {//串口发送一个字节
+  25   1              ES0 = 0;
+  26   1              TI0 = 0;
+  27   1              SBUF0 = *dt;
+  28   1              while( !TI0 );
+  29   1              TI0 = 0;
+  30   1              ES0 = 1;
+  31   1      }
+  32          void modbusSerialSendBuffer(uint8_t *buf, uint8_t size)
+  33          {//串口发送一组字节
+  34   1              uint8_t i;
+  35   1              for(i = 0;i < size;i ++)
+  36   1              {
+  37   2                      modbusSerialSendbyte(buf + i);
+  38   2              }
+  39   1      }
+  40          void InitModbusSerial(int32_t baudrate)
+  41          {//初始化MODBUS串口
+  42   1              uint32_t temp;
+  43   1              temp = (uint32_t)(CONFIG_SYSCLK / 32 / baudrate);
+  44   1              temp = 65536 - temp;    
+  45   1              
+  46   1              //T2CON &= 1 << 4;//Timer 1 overflows used for transmit clock.
+  47   1              //T2CON &= 1 << 5;//Timer 1 overflows used for receive clock.
+  48   1              
+  49   1              TMOD &= 0x0F;
+  50   1              TMOD |= 1 << 5;//Mode 2: 8-bit counter/timer with auto-reload
+  51   1              
+  52   1              TH1 = (uint8_t)(temp & 0xff);
+  53   1              TL1 = (uint8_t)(temp & 0xff);
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/17/2018 23:24:15 PAGE 2   
+
+  54   1              TR1 = 1;
+  55   1              //T2CON |= 1 << 2;//Timer 2 enabled
+  56   1              RS485_DIRECTION_RXD;//接收状态
+  57   1              ES0 = 1;
+  58   1              TI0 = 0;//清除发送完成                  
+  59   1              RI0 = 0;//清除接收完成                  
+  60   1      }
+  61          void InitModbusTimer(void)
+  62          {//初始化MODBUS计时器 1mS TIMER2
+  63   1              uint16_t temp;
+  64   1              temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 1000));
+  65   1              
+  66   1              //T2CON = 0x0;//RCLK0=0,TCLK0=0
+  67   1          //RCAP2L = (uint8_t)(temp & 0xFF);
+  68   1              //RCAP2H = (uint8_t)((temp >> 8) & 0xFF);
+  69   1              //TF2 = 0;
+  70   1              //TR2 = 1;        
+  71   1              //ET2 = 1; //开中断T0
+  72   1      }
+  73          
+  74          
+  75          
+  76          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    217    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----       9
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

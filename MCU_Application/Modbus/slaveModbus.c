@@ -1,11 +1,13 @@
 #include "slaveModbus.h"
 /*****************************************************************************/
 static data uint8_t localAddr; //单片机控制板的地址
-static data uint8_t receTimeOut;//接收超时
-static data uint8_t sendCount;//发送字节个数
-static data uint8_t receCount;//接收到的字节个数
-static xdata uint8_t receBuf[CONFIG_MODBUS_SLAVE_RX_BUFF_SIZE];
-static xdata uint8_t sendBuf[CONFIG_MODBUS_SLAVE_TX_BUFF_SIZE];
+static data uint16_t idleCounter;//接收超时
+static data uint16_t maxIdleCounter;
+static data uint8_t sendCounter;//发送字节个数
+static data uint8_t receCounter;//接收到的字节个数
+static uint8_t flagResetReceBuf;//复位接收缓冲
+static xdata uint8_t receBuf[CONFIG_MODBUS_SLAVE_RX_BUFFER_SIZE];
+static xdata uint8_t sendBuf[CONFIG_MODBUS_SLAVE_TX_BUFFER_SIZE];
 static data uint8_t bt1ms;//定时标志位
 static void timeProc(void);
 static void checkComm0Modbus(void);
@@ -79,53 +81,54 @@ void setRegisterVal(uint16_t addr,uint16_t tempData);
 /*****************************************************************************/
 void InitModbusHardware(uint32_t baudrate)
 {//初始化MODBUS硬件
-	memset(receBuf, 0x00, sizeof(receBuf)); 
-	memset(sendBuf, 0x00, sizeof(receBuf)); 
+	maxIdleCounter = 99;
 	InitModbusTimer();//初始化计时器
 	InitModbusSerial(baudrate);//初始化串口
-	
 }
 void modbusTimerHandle(void)
 {//计时器中断
-	bt1ms = 1;
+	if(idleCounter < maxIdleCounter){
+		idleCounter ++;
+	}
+	else{
+		flagResetReceBuf |= 0x01;
+	}
+	
 }
 void modbusSerialRxHandle(void)
 {//串口接收中断
-	receTimeOut = CONFIG_MODBUS_SLAVE_RX_TIMEOUT;//通讯超时值这个地方很重要	10ms
-	receBuf[receCount] = SBUF0;
-	receCount++;          //接收地址偏移寄存器加1	
+	if(receCounter < CONFIG_MODBUS_SLAVE_RX_BUFFER_SIZE){
+		receBuf[receCounter] = SBUF0;
+		receCounter ++;          //接收地址偏移寄存器加1	
+	}
+	else{
+		flagResetReceBuf = 0x01;
+	}
+	
 }
 void modbusSerialTxHandle(void)
 {//串口发射中断
 }
 void modbusPoll(void)
 {
-	timeProc();
-	checkComm0Modbus();	
+	if(flagResetReceBuf)
+	{
+		RS485_DIRECTION_RXD;//将485置为接收状态  
+		receCounter = 0x0;//
+		idleCounter = 0x0;
+		flagResetReceBuf = 0x0;
+	}
+	else{
+		checkComm0Modbus();	
+	}
+
+	
 }
 void setModbusSlaveAddr(uint8_t addr)
 {//设置从机地址
 	localAddr = addr;
 }
 /*****************************************************************************/
-
-static void timeProc(void)
-{//定时处理
-	if(bt1ms)
-	{
-		bt1ms = 0;
-		if(receTimeOut > 0)
-		{ 
-			receTimeOut --;
-			if(receTimeOut == 0 && receCount>0)   //判断通讯接收是否超时
-			{
-				RS485_DIRECTION_RXD;//将485置为接收状态                                                                                                                                                              
-				receCount = 0;//      //将接收地址偏移寄存器清零
-				memset(receBuf, 0x00, sizeof(receBuf)); 
-			 }
-		 }
-	}
-}
 static uint16_t crc16(uint8_t *puchMsg, uint16_t usDataLen) 
 {//CRC16生成器 
 	data uint8_t uchCRCHi = 0xFF ; /* 高CRC字节初始化 */ 
@@ -142,9 +145,9 @@ static uint16_t crc16(uint8_t *puchMsg, uint16_t usDataLen)
 static void beginSend(void)
 {//发送数据
 	RS485_DIRECTION_TXD;//处于发送
-	modbusSerialSendBuffer(sendBuf, sendCount);
+	modbusSerialSendBuffer(sendBuf, sendCounter);
 	RS485_DIRECTION_RXD;//发送完后将485置于接收状态
-    receCount = 0;   //清接收地址偏移寄存器
+    receCounter = 0;   //清接收地址偏移寄存器
 }
 static void readCoils(void)
 {//fuction:01 读单个或多个线圈状态
@@ -191,7 +194,7 @@ static void readCoils(void)
 	sendBuf[byteCount] = crcData & 0xff;
 	byteCount++;
 	sendBuf[byteCount] = crcData >> 8;
-	sendCount = byteCount + 1;
+	sendCounter = byteCount + 1;
 	beginSend();   
 }
 static void readInPutCoils(void)
@@ -241,7 +244,7 @@ static void readInPutCoils(void)
 	sendBuf[byteCount] = crcData & 0xff;
 	byteCount++;
 	sendBuf[byteCount] = crcData >> 8;
-	sendCount = byteCount + 1;
+	sendCounter = byteCount + 1;
 	beginSend();   
 }
 static void readRegisters(void)
@@ -271,7 +274,7 @@ static void readRegisters(void)
 	sendBuf[byteCount] = crcData & 0xff;   // CRC代码低位在前
 	byteCount++;
 	sendBuf[byteCount] = crcData >> 8 ;	   //高位在后
-	sendCount = byteCount + 1;			//例如byteCount=49，则sendBuf[]中实际上有49+1个元素待发
+	sendCounter = byteCount + 1;			//例如byteCount=49，则sendBuf[]中实际上有49+1个元素待发
 	beginSend();
 }
 static void readInPutRegisters(void)
@@ -301,7 +304,7 @@ static void readInPutRegisters(void)
 	sendBuf[byteCount] = crcData & 0xff;   // CRC代码低位在前
 	byteCount++;
 	sendBuf[byteCount] = crcData >> 8 ;	   //高位在后
-	sendCount = byteCount + 1;			//例如byteCount=49，则sendBuf[]中实际上有49+1个元素待发
+	sendCounter = byteCount + 1;			//例如byteCount=49，则sendBuf[]中实际上有49+1个元素待发
 	beginSend();
 }
 static void forceSingleCoil(void)
@@ -323,11 +326,11 @@ static void forceSingleCoil(void)
 		tempData = 0;
 	}
 	setCoilVal(tempAddr, tempData); 
-	for(i=0;i<receCount; i++)
+	for(i=0;i<receCounter; i++)
 	{
 		sendBuf[i] = receBuf[i];
 	}
-	sendCount = receCount;
+	sendCounter = receCounter;
 	beginSend(); 
 }
 
@@ -350,7 +353,7 @@ static void presetSingleRegister(void)
 	crcData = crc16(sendBuf,6);//生成CRC校验码
 	sendBuf[6] = crcData & 0xff;  //CRC代码低位在前
 	sendBuf[7] = crcData >> 8;	  //高位在后
-	sendCount = 8;
+	sendCounter = 8;
 	beginSend(); 
 }
 
@@ -397,7 +400,7 @@ static void forceMultipleCoils(void)
 	crcData = crc16(sendBuf, 6);//生成CRC校验码
 	sendBuf[6] = crcData & 0xff;  //CRC代码低位在前
 	sendBuf[7] = crcData >> 8;	  //高位在后
-	sendCount = 8;
+	sendCounter = 8;
 	beginSend(); 
 }
 
@@ -426,7 +429,7 @@ static void presetMultipleRegisters(void)
 	crcData = crc16(sendBuf,6);//生成CRC校验码
 	sendBuf[6] = crcData & 0xff;  //CRC代码低位在前
 	sendBuf[7] = crcData >> 8;	  //高位在后
-	sendCount = 8;
+	sendCounter = 8;
 	beginSend(); 
 }
 /*************************查询uart接收的数据包内容函数 **************************/
@@ -437,33 +440,34 @@ static void checkComm0Modbus(void)		   //10ms内必须响应接收数据
 	uint16_t crcData;
 	uint16_t tempData;
 	uint16_t temp;
-	if(receCount > 4)		 
+	//关闭串口接收中断
+	if(receCounter > 4)		 
 	{//如果接收到数据	 
 		switch(receBuf[1])
 		{
 			case 1:								
 			{//读取寄存器(一个或多个)	 
 				
-				if(receCount >= 8)  //从询问数据包格式可知，receCount应该等于8	，接收完成一组数据应该关闭接收中断
+				if(receCounter >= 8)  //从询问数据包格式可知，receCounter应该等于8	，接收完成一组数据应该关闭接收中断
 				{	   	 
 					if(receBuf[0] == localAddr)//核对地址
 					{	 
 						crcData = crc16(receBuf, 6);//核对校验码
-						temp=receBuf[7];
-						temp=(temp<<8)+receBuf[6];
+						temp = receBuf[7];
+						temp = (temp << 8) + receBuf[6];
 						if(crcData == temp)
 						{
 							readCoils();//读取线圈输出状态(一个或多个) 
 						}
-						receCount = 0; 									  
+						receCounter = 0; 									  
 					}					
 				}      
 				break;
 			}
 			case 2:								
 			{//读取寄存器(一个或多个)	 
-				if(receCount >= 8)  
-				{//从询问数据包格式可知，receCount应该等于8	，接收完成一组数据应该关闭接收中断   	 
+				if(receCounter >= 8)  
+				{//从询问数据包格式可知，receCounter应该等于8	，接收完成一组数据应该关闭接收中断   	 
 					if(receBuf[0] == localAddr)  
 					{//核对地址	 
 						crcData = crc16(receBuf,6);                     //核对校验码
@@ -473,16 +477,15 @@ static void checkComm0Modbus(void)		   //10ms内必须响应接收数据
 						{
 							readInPutCoils();			//读取线圈输入状态(一个或多个) 
 						}
-						receCount = 0; 									  
+						receCounter = 0; 									  
 					}				
 				}      
 				break;
-			}
-			
+			}			
 			case 3:
 			{//读取寄存器(一个或多个)	 
-				if(receCount >= 8)  
-				{//从询问数据包格式可知，receCount应该等于8 接收完成一组数据应该关闭接收中断
+				if(receCounter >= 8)  
+				{//从询问数据包格式可知，receCounter应该等于8 接收完成一组数据应该关闭接收中断
 					if(receBuf[0]==localAddr)   
 					{//核对地址	 
 						crcData = crc16(receBuf,6);                     //核对校验码
@@ -492,15 +495,15 @@ static void checkComm0Modbus(void)		   //10ms内必须响应接收数据
 						{
 							readRegisters();//读取保持寄存器(一个或多个) 						  
 						}	
-						receCount = 0; 				
+						receCounter = 0; 				
 					}
 				}					
 				break;
 			}
 			case 4:								
 			{//读取寄存器(一个或多个)	 
-				if(receCount >= 8)  
-				{//从询问数据包格式可知，receCount应该等于8 接收完成一组数据应该关闭接收中断   					
+				if(receCounter >= 8)  
+				{//从询问数据包格式可知，receCounter应该等于8 接收完成一组数据应该关闭接收中断   					
 					if(receBuf[0]==localAddr)   //核对地址
 					{	 
 						crcData = crc16(receBuf,6);                     //核对校验码
@@ -510,15 +513,15 @@ static void checkComm0Modbus(void)		   //10ms内必须响应接收数据
 						{ 
 							readInPutRegisters();//读取输入寄存器(一个或多个) 
 						}
-						receCount = 0; 									  
+						receCounter = 0; 									  
 					}	
 				}      
 				break;
 			}
 			case 5:								
 			{//读取寄存器(一个或多个)	 
-				if(receCount >= 8)  
-				{//从询问数据包格式可知 receCount应该等于8 接收完成一组数据应该关闭接收中断   		
+				if(receCounter >= 8)  
+				{//从询问数据包格式可知 receCounter应该等于8 接收完成一组数据应该关闭接收中断   		
 					if(receBuf[0] == localAddr)   
 					{//核对地址	 
 						crcData = crc16(receBuf, 6);//核对校验码
@@ -528,14 +531,14 @@ static void checkComm0Modbus(void)		   //10ms内必须响应接收数据
 						{ 
 							forceSingleCoil();//强置单个线圈 状态
 						}
-						receCount = 0; 									  
+						receCounter = 0; 									  
 					}
 				}      
 				break;
 			}
 			case 6: 
 			{//写单个保持寄存器	
-				if(receCount >= 8)
+				if(receCounter >= 8)
 				{//预设单个保持寄存器    
 					if(receBuf[0]==localAddr)
 					{
@@ -547,7 +550,7 @@ static void checkComm0Modbus(void)		   //10ms内必须响应接收数据
 							presetSingleRegister();      //预置单个保持寄存器
 							//可选保存设置数据到EPROM  
 						} 
-					receCount = 0;                                                                                                                                         
+					receCounter = 0;                                                                                                                                         
 					}
 				}
 				break;
@@ -556,7 +559,7 @@ static void checkComm0Modbus(void)		   //10ms内必须响应接收数据
 			{//设置多个线圈
 				tempData = receBuf[6]; 
 				tempData += 9; //数据个数
-				if(receCount >= tempData)
+				if(receCounter >= tempData)
 				{
 					if(receBuf[0] == localAddr )
 					{
@@ -567,7 +570,7 @@ static void checkComm0Modbus(void)		   //10ms内必须响应接收数据
 							//可选保存设置数据到EPROM  
 						}
 					} 
-					receCount = 0;
+					receCounter = 0;
 				}
 				break;
 			}				
@@ -575,8 +578,8 @@ static void checkComm0Modbus(void)		   //10ms内必须响应接收数据
 			{//设置多个寄存器
 				tempData = (receBuf[4]<<8) + receBuf[5];//设置寄存器个数
 				tempData = tempData * 2;//数据个数=	寄存器*2
-				tempData += 9;       //从询问数据包格式可知，receCount应该等于9+byteCount
-				if(receCount >= tempData)
+				tempData += 9;       //从询问数据包格式可知，receCounter应该等于9+byteCount
+				if(receCounter >= tempData)
 				{  	
 					if(receBuf[0]==localAddr )	//核对地址
 					{	 
@@ -589,11 +592,12 @@ static void checkComm0Modbus(void)		   //10ms内必须响应接收数据
 							//可选保存设置数据到EPROM  
 						}
 					} 
-					receCount = 0;
+					receCounter = 0;
 				}
 				break; 	
 			}   
 			default: break;  
 		}
 	}
+	//打开串口接收中断
 }
