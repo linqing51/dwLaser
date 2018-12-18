@@ -1,11 +1,11 @@
-C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/17/2018 23:24:15 PAGE 1   
+C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/18/2018 21:40:55 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE SLAVEMODBUS
 OBJECT MODULE PLACED IN .\Objects\slaveModbus.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\slaveModbus.c LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F
-                    -020.ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F340) DEBUG OBJECTEXTEND PRINT(.\Listings\sl
-                    -aveModbus.lst) OBJECT(.\Objects\slaveModbus.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\slaveModbus.c OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.OR
+                    -C) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\slaveMod
+                    -bus.lst) OBJECT(.\Objects\slaveModbus.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   51                  0x1E, 0xDE, 0xDF, 0x1F, 0xDD, 0x1D, 0x1C, 0xDC, 0x14, 0xD4, 
   52                  0xD5, 0x15, 0xD7, 0x17, 0x16, 0xD6, 0xD2, 0x12, 0x13, 0xD3, 
   53                  0x11, 0xD1, 0xD0, 0x10, 0xF0, 0x30, 0x31, 0xF1, 0x33, 0xF3, 
-C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/17/2018 23:24:15 PAGE 2   
+C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/18/2018 21:40:55 PAGE 2   
 
   54                  0xF2, 0x32, 0x36, 0xF6, 0xF7, 0x37, 0xF5, 0x35, 0x34, 0xF4, 
   55                  0x3C, 0xFC, 0xFD, 0x3D, 0xFF, 0x3F, 0x3E, 0xFE, 0xFA, 0x3A, 
@@ -126,7 +126,7 @@ line level    source
  113          {
  114   1              if(flagResetReceBuf)
  115   1              {
-C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/17/2018 23:24:15 PAGE 3   
+C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/18/2018 21:40:55 PAGE 3   
 
  116   2                      RS485_DIRECTION_RXD;//将485置为接收状态  
  117   2                      receCounter = 0x0;//
@@ -190,7 +190,7 @@ line level    source
  175   2                      for(i = 0; i < 8; i ++)
  176   2                      {
  177   3                              getCoilVal(tempAddr, &tempData);
-C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/17/2018 23:24:15 PAGE 4   
+C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/18/2018 21:40:55 PAGE 4   
 
  178   3                              sendBuf[position] |= tempData << i;
  179   3                              tempAddr++;
@@ -254,7 +254,7 @@ line level    source
  237   3                      }
  238   2              }
  239   1              sendBuf[0] = localAddr;
-C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/17/2018 23:24:15 PAGE 5   
+C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/18/2018 21:40:55 PAGE 5   
 
  240   1              sendBuf[1] = 0x02; 
  241   1              sendBuf[2] = byteCount;
@@ -318,7 +318,7 @@ line level    source
  299   1              sendBuf[0] = localAddr;
  300   1              sendBuf[1] = 4;  //function code : 04
  301   1              sendBuf[2] = byteCount;
-C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/17/2018 23:24:15 PAGE 6   
+C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/18/2018 21:40:55 PAGE 6   
 
  302   1              byteCount += 3;             //加上前面的地址，功能码，地址 共3+byteCount个字节
  303   1              crcData = crc16(sendBuf,byteCount);
@@ -382,7 +382,7 @@ line level    source
  361          {//function code : 15，强置多线圈值
  362   1              uint16_t addr;
  363   1              uint16_t tempAddr;
-C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/17/2018 23:24:15 PAGE 7   
+C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/18/2018 21:40:55 PAGE 7   
 
  364   1              uint16_t byteCount;
  365   1              uint16_t  bitCount;
@@ -446,7 +446,7 @@ line level    source
  423   1              sendBuf[0] = localAddr;
  424   1              sendBuf[1] = 16;    //function code : 16
  425   1              sendBuf[2] = addr >> 8;  //寄存器地址高位
-C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/17/2018 23:24:15 PAGE 8   
+C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/18/2018 21:40:55 PAGE 8   
 
  426   1              sendBuf[3] = addr & 0xff;//寄存器地址低位
  427   1              sendBuf[4] = setCount >> 8;//待设置寄存器数量高位
@@ -510,7 +510,7 @@ line level    source
  485   3                              case 3:
  486   3                              {//读取寄存器(一个或多个)        
  487   4                                      if(receCounter >= 8)  
-C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/17/2018 23:24:15 PAGE 9   
+C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/18/2018 21:40:55 PAGE 9   
 
  488   4                                      {//从询问数据包格式可知，receCounter应该等于8 接收完成一组数据应该关闭接收中断
  489   5                                              if(receBuf[0]==localAddr)   
@@ -574,7 +574,7 @@ line level    source
  547   6                                                      temp = (temp<<8) + receBuf[6];
  548   6                                                      if(crcData == temp)
  549   6                                                      { 
-C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/17/2018 23:24:15 PAGE 10  
+C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/18/2018 21:40:55 PAGE 10  
 
  550   7                                                              presetSingleRegister();      //预置单个保持寄存器
  551   7                                                              //可选保存设置数据到EPROM  
@@ -634,13 +634,13 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   3320    ----
+   CODE SIZE        =   2634    ----
    CONSTANT SIZE    =    512    ----
-   XDATA SIZE       =    257      73
+   XDATA SIZE       =    256    ----
    PDATA SIZE       =   ----    ----
-C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/17/2018 23:24:15 PAGE 11  
+C51 COMPILER V9.59.0.0   SLAVEMODBUS                                                       12/18/2018 21:40:55 PAGE 11  
 
-   DATA SIZE        =      8       4
+   DATA SIZE        =      9      75
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
