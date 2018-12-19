@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/18/2018 21:40:55 PAGE 1   
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/18/2018 23:50:51 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MODBUSPORT
@@ -14,7 +14,7 @@ line level    source
    3          /*****************************************************************************/
    4          static void ModbusHandle() interrupt INTERRUPT_TIMER2
    5          {//硬件计时器TIMER1中断函数 1mS
-   6   1              //TF2 = 0;
+   6   1              TF2 = 0;
    7   1              modbusTimerHandle();
    8   1      } 
    9          
@@ -54,18 +54,18 @@ line level    source
   43   1              temp = (uint32_t)(CONFIG_SYSCLK / 32 / baudrate);
   44   1              temp = 65536 - temp;    
   45   1              
-  46   1              //T2CON &= 1 << 4;//Timer 1 overflows used for transmit clock.
-  47   1              //T2CON &= 1 << 5;//Timer 1 overflows used for receive clock.
+  46   1              T2CON &= 1 << 4;//Timer 1 overflows used for transmit clock.
+  47   1              T2CON &= 1 << 5;//Timer 1 overflows used for receive clock.
   48   1              
   49   1              TMOD &= 0x0F;
   50   1              TMOD |= 1 << 5;//Mode 2: 8-bit counter/timer with auto-reload
   51   1              
   52   1              TH1 = (uint8_t)(temp & 0xff);
   53   1              TL1 = (uint8_t)(temp & 0xff);
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/18/2018 21:40:55 PAGE 2   
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/18/2018 23:50:51 PAGE 2   
 
   54   1              TR1 = 1;
-  55   1              //T2CON |= 1 << 2;//Timer 2 enabled
+  55   1              T2CON |= 1 << 2;//Timer 2 enabled
   56   1              RS485_DIRECTION_RXD;//接收状态
   57   1              ES0 = 1;
   58   1              TI0 = 0;//清除发送完成                  
@@ -75,26 +75,24 @@ line level    source
   62          {//初始化MODBUS计时器 1mS TIMER2
   63   1              uint16_t temp;
   64   1              temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 1000));
-  65   1              
-  66   1              //T2CON = 0x0;//RCLK0=0,TCLK0=0
-  67   1          //RCAP2L = (uint8_t)(temp & 0xFF);
-  68   1              //RCAP2H = (uint8_t)((temp >> 8) & 0xFF);
-  69   1              //TF2 = 0;
-  70   1              //TR2 = 1;        
-  71   1              //ET2 = 1; //开中断T0
-  72   1      }
+  65   1              T2CON = 0x0;//RCLK0=0,TCLK0=0
+  66   1          RCAP2L = (uint8_t)(temp & 0xFF);
+  67   1              RCAP2H = (uint8_t)((temp >> 8) & 0xFF);
+  68   1              TF2 = 0;
+  69   1              TR2 = 1;        
+  70   1              ET2 = 1; //开中断T0
+  71   1      }
+  72          
   73          
   74          
-  75          
-  76          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    182    ----
+   CODE SIZE        =    220    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----       9
+   DATA SIZE        =   ----       7
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

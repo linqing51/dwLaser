@@ -17,7 +17,7 @@
 #define CONFIG_CHECK_CODE 					0x5A00
 
 /*****************************************************************************/
-#define CONFIG_UART0_BAUDRATE				115200//串口波特率
+#define CONFIG_UART0_BAUDRATE				9600//串口波特率
 #define CONFIG_UART0_PARITY					NONE
 #define CONFIG_UART0_STOPBIT				1
 #define CONFIG_UART0_DATABIT				8
@@ -134,6 +134,8 @@
 //#include "inPca9554.h"
 //#include "outPca9554.h"
 /*****************************************************************************/
+#include "PetitModbus.h"
+#include "PetitModbusPort.h"
 
 //#include "sPLC.h"
 //#include "modbusSlaveAscii.h"
@@ -144,8 +146,5 @@
 //#include "ad5621.h"
 //#include "chipBeem.h"
 
-#include "modbusApp.h"
-#include "modbusPort.h"
-#include "slaveModbus.h"
 /*****************************************************************************/
 #endif

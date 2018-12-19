@@ -3,9 +3,9 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: ¦ÌVision V5.25.3.0
+IDE-Version: ¦ÌVision V5.26.2.0
 Copyright (C) 2018 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: 22 linqi_000, 3, LIC=65SCX-HLQG8-389FK-ZWMGD-FD8A7-M7KR7
+License Information: 1 1, 1, LIC=UJ5GK-ZVCHF-JU64W-Q1KJM-T75GU-XTR4K
  
 Tool Versions:
 Toolchain:       PK51 Prof. Developers Kit  Version: 9.59.0.0
@@ -22,22 +22,17 @@ Dialog DLL:      TCYG.DLL V2.72.0.0
  
 <h2>Project:</h2>
 D:\GitHub\dwLaser\MCU_Application\dwLaser.uvgui.uvproj
-Project File Date:  12/18/2018
+Project File Date:  12/19/2018
 
 <h2>Output:</h2>
-Build target 'Debug'
+Build target 'Simulation'
 compiling delay.c...
 compiling crc32.c...
-compiling modbusApp.c...
-compiling modbusPort.c...
-compiling slaveModbus.c...
+compiling PetitModbus.c...
+compiling PetitModbusPort.c...
+compiling PetitRegConstant.c...
 compiling MainApp.c...
-MainApp\MainApp.c(128): warning C173: missing return-expression
-MainApp\MainApp.c(127): warning C280: 'blank': unreferenced local variable
-MainApp\MainApp.c(145): warning C206: 'modbusSlaveAsciiPoll': missing function-prototype
-MainApp\MainApp.c(132): warning C280: 'rbuf': unreferenced local variable
-MainApp\MainApp.c(128): warning C290: missing return value
-compiling InitDevice.c...
+MainApp\MainApp.c(130): warning C280: 'rbuf': unreferenced local variable
 linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_?DELAYMS?DELAY
@@ -54,76 +49,15 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_CRC32SETCRCOLD?CRC32
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_INITMODBUSHARDWARE?SLAVEMODBUS
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?MODBUSPOLL?SLAVEMODBUS
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_SETMODBUSSLAVEADDR?SLAVEMODBUS
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?READNVRAM?MAINAPP
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?WRITENVRAM?MAINAPP
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?UPDATENVRAM?MAINAPP
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_CHECKFIRMWARE?MAINAPP
-*** ERROR L107: ADDRESS SPACE OVERFLOW
-    SPACE:   DATA    
-    SEGMENT: ?DT?PRESETSINGLEREGISTER?SLAVEMODBUS
-    LENGTH:  0002H
-*** ERROR L107: ADDRESS SPACE OVERFLOW
-    SPACE:   DATA    
-    SEGMENT: ?DT?_CHECKFIRMWARE?MAINAPP
-    LENGTH:  0001H
-*** ERROR L107: ADDRESS SPACE OVERFLOW
-    SPACE:   DATA    
-    SEGMENT: ?C?LIB_DATA
-    LENGTH:  0001H
-*** ERROR L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
-    SYMBOL:  ?C_IBP
-    MODULE:  .\Objects\delay.obj (DELAY)
-    ADDRESS: 14E9H
-*** ERROR L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
-    SYMBOL:  ?C_IBP
-    MODULE:  .\Objects\delay.obj (DELAY)
-    ADDRESS: 14EBH
-*** ERROR L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
-    SYMBOL:  ?C_IBP
-    MODULE:  .\Objects\delay.obj (DELAY)
-    ADDRESS: 14EFH
-*** ERROR L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
-    SYMBOL:  ?C_IBP
-    MODULE:  .\Objects\delay.obj (DELAY)
-    ADDRESS: 14F7H
-*** ERROR L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
-    SYMBOL:  ?C_IBP
-    MODULE:  .\Objects\delay.obj (DELAY)
-    ADDRESS: 1485H
-*** ERROR L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
-    SYMBOL:  ?C_IBP
-    MODULE:  .\Objects\delay.obj (DELAY)
-    ADDRESS: 1487H
-*** ERROR L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
-    SYMBOL:  ?C_IBP
-    MODULE:  .\Objects\delay.obj (DELAY)
-    ADDRESS: 148BH
-*** ERROR L118: REFERENCE MADE TO ERRONEOUS EXTERNAL
-    SYMBOL:  ?C_IBP
-    MODULE:  .\Objects\delay.obj (DELAY)
-    ADDRESS: 1498H
-*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
-    SYMBOL:  MODBUSSLAVEASCIIPOLL
-    MODULE:  .\Objects\MainApp.obj (MAINAPP)
-*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
-    SYMBOL:  MODBUSSLAVEASCIIPOLL
-    MODULE:  .\Objects\MainApp.obj (MAINAPP)
-    ADDRESS: 1468H
-*** ERROR L105: PUBLIC REFERS TO IGNORED SEGMENT
-    SYMBOL:  ?C_IBP
-    SEGMENT: ?C?LIB_DATA
-Program Size: data=133.0 xdata=256 code=5531
-Target not created.
-Build Time Elapsed:  00:00:03
+Program Size: data=10.0 xdata=181 code=4106
+creating hex file from ".\Objects\dwLaser_F020"...
+".\Objects\dwLaser_F020" - 0 Error(s), 11 Warning(s).
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>

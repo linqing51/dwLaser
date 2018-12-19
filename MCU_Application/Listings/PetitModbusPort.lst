@@ -1,0 +1,150 @@
+C51 COMPILER V9.59.0.0   PETITMODBUSPORT                                                   12/19/2018 23:00:15 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE PETITMODBUSPORT
+OBJECT MODULE PLACED IN .\Objects\PetitModbusPort.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\PetitModbusPort.c COMPACT OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwL
+                    -aser_F020.ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listi
+                    -ngs\PetitModbusPort.lst) OBJECT(.\Objects\PetitModbusPort.obj)
+
+line level    source
+
+   1          #include "appConfig.h"
+   2          #include "PetitModbus.h"
+   3          #include "PetitModbusPort.h"
+   4          // Modbus RTU Variables
+   5          volatile unsigned char   PetitReceiveBuffer[PETITMODBUS_RECEIVE_BUFFER_SIZE];   // Buffer to collect data 
+             -from hardware
+   6          volatile unsigned char   PetitReceiveCounter=0;                                 // Collected data number
+   7          void InitModbusSerial(int32_t baudrate)
+   8          {//初始化MODBUS串口
+   9   1              uint32_t temp;
+  10   1              temp = (uint32_t)(CONFIG_SYSCLK / 32 / baudrate);
+  11   1              temp = 65536 - temp;            
+  12   1              T2CON &= 1 << 4;//Timer 1 overflows used for transmit clock.
+  13   1              T2CON &= 1 << 5;//Timer 1 overflows used for receive clock.     
+  14   1              TMOD &= 0x0F;
+  15   1              TMOD |= 1 << 5;//Mode 2: 8-bit counter/timer with auto-reload
+  16   1              TH1 = (uint8_t)(temp & 0xff);
+  17   1              TL1 = (uint8_t)(temp & 0xff);
+  18   1              TR1 = 1;
+  19   1              T2CON |= 1 << 2;//Timer 2 enabled
+  20   1              //RS485_DIRECTION_RXD;//接收状态
+  21   1              ES0 = 1;
+  22   1              TI0 = 0;//清除发送完成            
+  23   1              RI0 = 0;//清除接收完成                    
+  24   1      }
+  25          void InitModbusTimer(void)
+  26          {//初始化MODBUS计时器 1mS TIMER2
+  27   1              uint16_t temp;
+  28   1              temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 1000));
+  29   1              T2CON = 0x0;//RCLK0=0,TCLK0=0
+  30   1          RCAP2L = (uint8_t)(temp & 0xFF);
+  31   1              RCAP2H = (uint8_t)((temp >> 8) & 0xFF);
+  32   1              TF2 = 0;
+  33   1              TR2 = 1;        
+  34   1              ET2 = 1; //开中断T0
+  35   1      }
+  36          static void modbusSerialSendbyte(uint8_t *dt)
+  37          {//串口发送一个字节
+  38   1              ES0 = 0;
+  39   1              TI0 = 0;
+  40   1              SBUF0 = *dt;
+  41   1              while( !TI0 );
+  42   1              TI0 = 0;
+  43   1              ES0 = 1;
+  44   1      }
+  45          // UART Initialize for Microconrollers, yes you can use another phsycal layer!
+  46          void PetitModBus_UART_Initialise(unsigned long bd)
+  47          {
+  48   1      // Insert UART Init Code Here
+  49   1          InitModbusSerial(bd);
+  50   1      }
+  51          
+  52          // Timer Initialize for Petit Modbus, 1ms Timer will be good for us!
+C51 COMPILER V9.59.0.0   PETITMODBUSPORT                                                   12/19/2018 23:00:15 PAGE 2   
+
+  53          void PetitModBus_TIMER_Initialise(void)
+  54          {
+  55   1      // Insert TMR Init Code Here
+  56   1          InitModbusTimer();
+  57   1      }
+  58          
+  59          // This is used for send one character
+  60          void PetitModBus_UART_Putch(unsigned char c)
+  61          {
+  62   1              modbusSerialSendbyte(&c);
+  63   1      }
+  64          
+  65          // This is used for send string, better to use DMA for it ;)
+  66          unsigned char PetitModBus_UART_String(unsigned char *s, unsigned int Length)
+  67          {
+  68   1          unsigned short  DummyCounter;
+  69   1          
+  70   1          for(DummyCounter=0;DummyCounter<Length;DummyCounter++)
+  71   1              PetitModBus_UART_Putch(s[DummyCounter]);
+  72   1          
+  73   1          return TRUE;
+  74   1      }
+  75          
+  76          /*************************Interrupt Fonction Slave*****************************/
+  77          // Call this function into your UART Interrupt. Collect data from it!
+  78          // Better to use DMA
+  79          void ReceiveInterrupt(unsigned char Data)
+  80          {
+  81   1          PetitReceiveBuffer[PetitReceiveCounter]   =Data;
+  82   1          PetitReceiveCounter++;
+  83   1      
+  84   1          if(PetitReceiveCounter>PETITMODBUS_RECEIVE_BUFFER_SIZE)  
+  85   1              PetitReceiveCounter=0;
+  86   1      
+  87   1          PetitModbusTimerValue=0;
+  88   1      }
+  89          
+  90          // Call this function into 1ms Interrupt or Event!
+  91          void PetitModBus_TimerValues(void)
+  92          {
+  93   1          PetitModbusTimerValue++;
+  94   1      }
+  95          /******************************************************************************/
+  96          static void ModbusHandle() interrupt INTERRUPT_TIMER2
+  97          {//硬件计时器TIMER1中断函数 1mS
+  98   1              TF2 = 0;
+  99   1              PetitModBus_TimerValues();
+ 100   1      } 
+ 101          
+ 102          static void SerialHandle() interrupt INTERRUPT_UART0
+ 103          {//UART0 串口中断程序
+ 104   1              uint8_t ctemp;
+ 105   1              if(RI0)
+ 106   1              {
+ 107   2                      RI0 = 0;
+ 108   2                      ctemp = SBUF0;          
+ 109   2                      ReceiveInterrupt(ctemp);
+ 110   2                      if(RI0)
+ 111   2                      {
+ 112   3                              RI0 = 0;
+ 113   3                      }
+ 114   2              }
+C51 COMPILER V9.59.0.0   PETITMODBUSPORT                                                   12/19/2018 23:00:15 PAGE 3   
+
+ 115   1              if(TI0)
+ 116   1              {
+ 117   2                      TI0 = 0;
+ 118   2                      //modbusSerialTxHandle();
+ 119   2              }
+ 120   1      } 
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    312    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =     26      10
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

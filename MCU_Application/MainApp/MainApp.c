@@ -124,8 +124,6 @@ void updateNvram(void)
 void upDateDac0(uint16_t dat);
 void upDateDac1(uint16_t dat);
 /*****************************************************************************/
-uint32_t checkFirmware(uint8_t blank){//固件CRC32检查
-}
 
 void main(void)
 {
@@ -136,13 +134,17 @@ void main(void)
 	//inPca9554Init();
 	//outPca9554Init();
 	//mcp47x6Init();
+	//setModbusSlaveAddr(0x1);//设置从机地址
+	//InitModbusHardware(CONFIG_UART0_BAUDRATE);
+	InitPetitModbus(1, 115200);
 	ES0 = 1;
 	ENABLE_INTERRUPT;
 	//nvramLoad();//上电恢复NVRAM
 	while(1)
 	{
+		ProcessPetitModbus();
 		//refreshInput();//刷新输入IO
-		modbusSlaveAsciiPoll();
+//		modbusSlaveAsciiPoll();
 ////		SET(10);
 ////		RESET(10);
 ////		SET(10);
