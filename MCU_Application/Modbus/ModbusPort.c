@@ -1,9 +1,9 @@
-#include "appConfig.h"
-#include "PetitModbus.h"
-#include "PetitModbusPort.h"
-// Modbus RTU Variables
-volatile unsigned char   PetitReceiveBuffer[PETITMODBUS_RECEIVE_BUFFER_SIZE];   // Buffer to collect data from hardware
-volatile unsigned char   PetitReceiveCounter=0;                                 // Collected data number
+#include "modbusPort.h"
+/*****************************************************************************/
+volatile uint16_t ModbusTimerValue;
+extern volatile uint8_t ModbusReceiveCounter;
+volatile uint8_t ModbusReceiveBuffer[];
+/*****************************************************************************/
 void InitModbusSerial(int32_t baudrate)
 {//初始化MODBUS串口
 	uint32_t temp;
@@ -76,21 +76,18 @@ unsigned char PetitModBus_UART_String(unsigned char *s, unsigned int Length)
 /*************************Interrupt Fonction Slave*****************************/
 // Call this function into your UART Interrupt. Collect data from it!
 // Better to use DMA
-void ReceiveInterrupt(unsigned char Data)
-{
-    PetitReceiveBuffer[PetitReceiveCounter]   =Data;
-    PetitReceiveCounter++;
-
-    if(PetitReceiveCounter>PETITMODBUS_RECEIVE_BUFFER_SIZE)  
-        PetitReceiveCounter=0;
-
-    PetitModbusTimerValue=0;
+void ReceiveInterrupt(unsigned char Data){
+    ModbusReceiveBuffer[ModbusReceiveCounter]   =Data;
+    ModbusReceiveCounter ++;
+    if(ModbusReceiveCounter > CONFIG_MODBUS_SLAVE_BUFFER_SIZE){  
+        ModbusReceiveCounter = 0;
+	}
+    ModbusTimerValue = 0;
 }
 
 // Call this function into 1ms Interrupt or Event!
-void PetitModBus_TimerValues(void)
-{
-    PetitModbusTimerValue++;
+void PetitModBus_TimerValues(void){
+    ModbusTimerValue ++;
 }
 /******************************************************************************/
 static void ModbusHandle() interrupt INTERRUPT_TIMER2

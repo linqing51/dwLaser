@@ -1,98 +1,143 @@
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/18/2018 23:50:51 PAGE 1   
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/20/2018 23:28:22 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MODBUSPORT
-OBJECT MODULE PLACED IN .\Objects\modbusPort.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\modbusPort.c OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.ORC
-                    -) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\modbusPor
-                    -t.lst) OBJECT(.\Objects\modbusPort.obj)
+OBJECT MODULE PLACED IN .\Objects\ModbusPort.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\ModbusPort.c LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F0
+                    -20.ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\Mod
+                    -busPort.lst) OBJECT(.\Objects\ModbusPort.obj)
 
 line level    source
 
-   1          /*****************************************************************************/
-   2          #include "modbusPort.h"
-   3          /*****************************************************************************/
-   4          static void ModbusHandle() interrupt INTERRUPT_TIMER2
-   5          {//”≤º˛º∆ ±∆˜TIMER1÷–∂œ∫Ø ˝ 1mS
-   6   1              TF2 = 0;
-   7   1              modbusTimerHandle();
-   8   1      } 
-   9          
-  10          static void SerialHandle() interrupt INTERRUPT_UART0
-  11          {//UART0 ¥Æø⁄÷–∂œ≥Ã–Ú
-  12   1              if(RI0)
-  13   1              {
-  14   2                      RI0 = 0;  
-  15   2                      modbusSerialRxHandle();
-  16   2              }
-  17   1              if(TI0)
-  18   1              {
-  19   2                      TI0 = 0;
-  20   2                      modbusSerialTxHandle();
-  21   2              }
-  22   1      }  
-  23          static void modbusSerialSendbyte(uint8_t *dt)
-  24          {//¥Æø⁄∑¢ÀÕ“ª∏ˆ◊÷Ω⁄
-  25   1              ES0 = 0;
-  26   1              TI0 = 0;
-  27   1              SBUF0 = *dt;
-  28   1              while( !TI0 );
-  29   1              TI0 = 0;
-  30   1              ES0 = 1;
-  31   1      }
-  32          void modbusSerialSendBuffer(uint8_t *buf, uint8_t size)
-  33          {//¥Æø⁄∑¢ÀÕ“ª◊È◊÷Ω⁄
-  34   1              uint8_t i;
-  35   1              for(i = 0;i < size;i ++)
-  36   1              {
-  37   2                      modbusSerialSendbyte(buf + i);
-  38   2              }
-  39   1      }
-  40          void InitModbusSerial(int32_t baudrate)
-  41          {//≥ı ºªØMODBUS¥Æø⁄
-  42   1              uint32_t temp;
-  43   1              temp = (uint32_t)(CONFIG_SYSCLK / 32 / baudrate);
-  44   1              temp = 65536 - temp;    
-  45   1              
-  46   1              T2CON &= 1 << 4;//Timer 1 overflows used for transmit clock.
-  47   1              T2CON &= 1 << 5;//Timer 1 overflows used for receive clock.
-  48   1              
-  49   1              TMOD &= 0x0F;
-  50   1              TMOD |= 1 << 5;//Mode 2: 8-bit counter/timer with auto-reload
-  51   1              
-  52   1              TH1 = (uint8_t)(temp & 0xff);
-  53   1              TL1 = (uint8_t)(temp & 0xff);
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/18/2018 23:50:51 PAGE 2   
+   1          #include "modbusPort.h"
+   2          /*****************************************************************************/
+   3          volatile uint16_t ModbusTimerValue;
+   4          extern volatile uint8_t ModbusReceiveCounter;
+   5          volatile uint8_t ModbusReceiveBuffer[];
+   6          /*****************************************************************************/
+   7          void InitModbusSerial(int32_t baudrate)
+   8          {//ÂàùÂßãÂåñMODBUS‰∏≤Âè£
+   9   1              uint32_t temp;
+  10   1              temp = (uint32_t)(CONFIG_SYSCLK / 32 / baudrate);
+  11   1              temp = 65536 - temp;            
+  12   1              T2CON &= 1 << 4;//Timer 1 overflows used for transmit clock.
+  13   1              T2CON &= 1 << 5;//Timer 1 overflows used for receive clock.     
+  14   1              TMOD &= 0x0F;
+  15   1              TMOD |= 1 << 5;//Mode 2: 8-bit counter/timer with auto-reload
+  16   1              TH1 = (uint8_t)(temp & 0xff);
+  17   1              TL1 = (uint8_t)(temp & 0xff);
+  18   1              TR1 = 1;
+  19   1              T2CON |= 1 << 2;//Timer 2 enabled
+  20   1              //RS485_DIRECTION_RXD;//Êé•Êî∂Áä∂ÊÄÅ
+  21   1              ES0 = 1;
+  22   1              TI0 = 0;//Ê∏ÖÈô§ÂèëÈÄÅÂÆåÊàê            
+  23   1              RI0 = 0;//Ê∏ÖÈô§Êé•Êî∂ÂÆåÊàê                    
+  24   1      }
+  25          void InitModbusTimer(void)
+  26          {//ÂàùÂßãÂåñMODBUSËÆ°Êó∂Âô® 1mS TIMER2
+  27   1              uint16_t temp;
+  28   1              temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 1000));
+  29   1              T2CON = 0x0;//RCLK0=0,TCLK0=0
+  30   1          RCAP2L = (uint8_t)(temp & 0xFF);
+  31   1              RCAP2H = (uint8_t)((temp >> 8) & 0xFF);
+  32   1              TF2 = 0;
+  33   1              TR2 = 1;        
+  34   1              ET2 = 1; //ÂºÄ‰∏≠Êñ≠T0
+  35   1      }
+  36          static void modbusSerialSendbyte(uint8_t *dt)
+  37          {//‰∏≤Âè£ÂèëÈÄÅ‰∏Ä‰∏™Â≠óËäÇ
+  38   1              ES0 = 0;
+  39   1              TI0 = 0;
+  40   1              SBUF0 = *dt;
+  41   1              while( !TI0 );
+  42   1              TI0 = 0;
+  43   1              ES0 = 1;
+  44   1      }
+  45          // UART Initialize for Microconrollers, yes you can use another phsycal layer!
+  46          void PetitModBus_UART_Initialise(unsigned long bd)
+  47          {
+  48   1      // Insert UART Init Code Here
+  49   1          InitModbusSerial(bd);
+  50   1      }
+  51          
+  52          // Timer Initialize for Petit Modbus, 1ms Timer will be good for us!
+  53          void PetitModBus_TIMER_Initialise(void)
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/20/2018 23:28:22 PAGE 2   
 
-  54   1              TR1 = 1;
-  55   1              T2CON |= 1 << 2;//Timer 2 enabled
-  56   1              RS485_DIRECTION_RXD;//Ω” ’◊¥Ã¨
-  57   1              ES0 = 1;
-  58   1              TI0 = 0;//«Â≥˝∑¢ÀÕÕÍ≥…                  
-  59   1              RI0 = 0;//«Â≥˝Ω” ’ÕÍ≥…                  
-  60   1      }
-  61          void InitModbusTimer(void)
-  62          {//≥ı ºªØMODBUSº∆ ±∆˜ 1mS TIMER2
-  63   1              uint16_t temp;
-  64   1              temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 1000));
-  65   1              T2CON = 0x0;//RCLK0=0,TCLK0=0
-  66   1          RCAP2L = (uint8_t)(temp & 0xFF);
-  67   1              RCAP2H = (uint8_t)((temp >> 8) & 0xFF);
-  68   1              TF2 = 0;
-  69   1              TR2 = 1;        
-  70   1              ET2 = 1; //ø™÷–∂œT0
-  71   1      }
-  72          
-  73          
-  74          
+  54          {
+  55   1      // Insert TMR Init Code Here
+  56   1          InitModbusTimer();
+  57   1      }
+  58          
+  59          // This is used for send one character
+  60          void PetitModBus_UART_Putch(unsigned char c)
+  61          {
+  62   1              modbusSerialSendbyte(&c);
+  63   1      }
+  64          
+  65          // This is used for send string, better to use DMA for it ;)
+  66          unsigned char PetitModBus_UART_String(unsigned char *s, unsigned int Length)
+  67          {
+  68   1          unsigned short  DummyCounter;
+  69   1          
+  70   1          for(DummyCounter=0;DummyCounter<Length;DummyCounter++)
+  71   1              PetitModBus_UART_Putch(s[DummyCounter]);
+  72   1          
+  73   1          return TRUE;
+  74   1      }
+  75          
+  76          /*************************Interrupt Fonction Slave*****************************/
+  77          // Call this function into your UART Interrupt. Collect data from it!
+  78          // Better to use DMA
+  79          void ReceiveInterrupt(unsigned char Data){
+  80   1          ModbusReceiveBuffer[ModbusReceiveCounter]   =Data;
+  81   1          ModbusReceiveCounter ++;
+  82   1          if(ModbusReceiveCounter > CONFIG_MODBUS_SLAVE_BUFFER_SIZE){  
+  83   2              ModbusReceiveCounter = 0;
+  84   2              }
+  85   1          ModbusTimerValue = 0;
+  86   1      }
+  87          
+  88          // Call this function into 1ms Interrupt or Event!
+  89          void PetitModBus_TimerValues(void){
+  90   1          ModbusTimerValue ++;
+  91   1      }
+  92          /******************************************************************************/
+  93          static void ModbusHandle() interrupt INTERRUPT_TIMER2
+  94          {//Á°¨‰ª∂ËÆ°Êó∂Âô®TIMER1‰∏≠Êñ≠ÂáΩÊï∞ 1mS
+  95   1              TF2 = 0;
+  96   1              PetitModBus_TimerValues();
+  97   1      } 
+  98          
+  99          static void SerialHandle() interrupt INTERRUPT_UART0
+ 100          {//UART0 ‰∏≤Âè£‰∏≠Êñ≠Á®ãÂ∫è
+ 101   1              uint8_t ctemp;
+ 102   1              if(RI0)
+ 103   1              {
+ 104   2                      RI0 = 0;
+ 105   2                      ctemp = SBUF0;          
+ 106   2                      ReceiveInterrupt(ctemp);
+ 107   2                      if(RI0)
+ 108   2                      {
+ 109   3                              RI0 = 0;
+ 110   3                      }
+ 111   2              }
+ 112   1              if(TI0)
+ 113   1              {
+ 114   2                      TI0 = 0;
+ 115   2                      //modbusSerialTxHandle();
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/20/2018 23:28:22 PAGE 3   
+
+ 116   2              }
+ 117   1      } 
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    220    ----
+   CODE SIZE        =    334    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----    ----
+   XDATA SIZE       =      2      10
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----       7
+   DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

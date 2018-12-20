@@ -17,7 +17,7 @@
 #define CONFIG_CHECK_CODE 					0x5A00
 
 /*****************************************************************************/
-#define CONFIG_UART0_BAUDRATE				9600//串口波特率
+#define CONFIG_UART0_BAUDRATE				115200//串口波特率
 #define CONFIG_UART0_PARITY					NONE
 #define CONFIG_UART0_STOPBIT				1
 #define CONFIG_UART0_DATABIT				8
@@ -26,7 +26,6 @@
 #define CONFIG_UART1_PARITY					NONE
 #define CONFIG_UART1_STOPBIT				1
 #define CONFIG_UART1_DATABIT				8
-
 /*****************************************************************************/
 #define CONFIG_I2C0_FREQ 					(10000L)               
 #define CONFIG_I2C1_FREQ 					(100000L)
@@ -85,8 +84,7 @@
 /*****************************************************************************/
 //MODBUS SALVE配置
 #define CONFIG_MODBUS_SLAVE_ADDRESS			0x01//从设备地址
-#define CONFIG_MODBUS_SLAVE_RX_BUFFER_SIZE	128//定义串口发送缓冲区大小
-#define CONFIG_MODBUS_SLAVE_TX_BUFFER_SIZE	128//定义串口接收缓冲区大小
+#define CONFIG_MODBUS_SLAVE_BUFFER_SIZE		(256 + 32)//发送接收缓冲区
 #define CONFIG_MODBUS_SLAVE_RX_TIMEOUT		10//接收通讯超时 10mS
 #define CONFIG_MODBUS_SLAVE_IO_DELAY		1//RX TX切换延时
 /*****************************************************************************/
@@ -120,25 +118,23 @@
 #include "crc32.h"
 /*****************************************************************************/
 #include "InitDevice.h"
-
 #include "delay.h"
-//#include "i2c0.h"
+#include "i2c0.h"
 //#include "i2c1.h"
 //#include "i2c2.h"
 //#include "i2c3.h"
 //#include "i2c4.h"
 //#include "i2c5.h"
 //#include "i2c6.h"
-//#include "eprom.h"
+#include "eprom.h"
 //#include "mcp47x6.h"
 //#include "inPca9554.h"
 //#include "outPca9554.h"
 /*****************************************************************************/
-#include "PetitModbus.h"
-#include "PetitModbusPort.h"
+#include "Modbus.h"
+#include "ModbusPort.h"
 
-//#include "sPLC.h"
-//#include "modbusSlaveAscii.h"
+#include "sPLC.h"
 //#include "pidFuzzy.h"
 /*****************************************************************************/
 //#include "AppMath.h"

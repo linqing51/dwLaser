@@ -186,7 +186,7 @@
         </Utilities>
         <Target51>
           <Target51Misc>
-            <MemoryModel>1</MemoryModel>
+            <MemoryModel>2</MemoryModel>
             <RTOS>0</RTOS>
             <RomSize>2</RomSize>
             <DataHold>0</DataHold>
@@ -194,7 +194,7 @@
             <UseOnchipRom>1</UseOnchipRom>
             <UseOnchipArithmetic>0</UseOnchipArithmetic>
             <UseMultipleDPTR>0</UseMultipleDPTR>
-            <UseOnchipXram>1</UseOnchipXram>
+            <UseOnchipXram>0</UseOnchipXram>
             <HadIRAM>1</HadIRAM>
             <HadXRAM>1</HadXRAM>
             <HadIROM>1</HadIROM>
@@ -243,7 +243,7 @@
               <Ocm1>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <Size>0xffff</Size>
               </Ocm1>
               <Ocm2>
                 <Type>0</Type>
@@ -356,7 +356,7 @@
             <UserClasses></UserClasses>
             <CSection></CSection>
             <UserSection></UserSection>
-            <CodeBaseAddress></CodeBaseAddress>
+            <CodeBaseAddress>0X0000-0XFFFE</CodeBaseAddress>
             <XDataBaseAddress></XDataBaseAddress>
             <PDataBaseAddress></PDataBaseAddress>
             <BitBaseAddress></BitBaseAddress>
@@ -390,24 +390,31 @@
         </Group>
         <Group>
           <GroupName>Driver</GroupName>
+          <Files>
+            <File>
+              <FileName>i2c0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Driver\i2c0.c</FilePath>
+            </File>
+            <File>
+              <FileName>eprom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Driver\eprom.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>Modbus</GroupName>
           <Files>
             <File>
-              <FileName>PetitModbus.c</FileName>
+              <FileName>Modbus.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Modbus\PetitModbus.c</FilePath>
+              <FilePath>.\Modbus\Modbus.c</FilePath>
             </File>
             <File>
-              <FileName>PetitModbusPort.c</FileName>
+              <FileName>ModbusPort.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Modbus\PetitModbusPort.c</FilePath>
-            </File>
-            <File>
-              <FileName>PetitRegConstant.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Modbus\PetitRegConstant.c</FilePath>
+              <FilePath>.\Modbus\ModbusPort.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -423,6 +430,11 @@
               <FileName>InitDeviceSimulation.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MainApp\InitDeviceSimulation.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainApp\sPlc.c</FilePath>
             </File>
           </Files>
         </Group>

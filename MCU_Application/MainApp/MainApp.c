@@ -134,9 +134,7 @@ void main(void)
 	//inPca9554Init();
 	//outPca9554Init();
 	//mcp47x6Init();
-	//setModbusSlaveAddr(0x1);//设置从机地址
-	//InitModbusHardware(CONFIG_UART0_BAUDRATE);
-	InitPetitModbus(1, 115200);
+	InitPetitModbus(CONFIG_MODBUS_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 	ES0 = 1;
 	ENABLE_INTERRUPT;
 	//nvramLoad();//上电恢复NVRAM

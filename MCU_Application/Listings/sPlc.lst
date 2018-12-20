@@ -1,10 +1,10 @@
-C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 1   
+C51 COMPILER V9.59.0.0   SPLC                                                              12/20/2018 23:23:39 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE SPLC
 OBJECT MODULE PLACED IN .\Objects\sPlc.obj
 COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE MainApp\sPlc.c LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.OR
-                    -C) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F340) DEBUG OBJECTEXTEND PRINT(.\Listings\sPlc.lst
+                    -C) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\sPlc.lst
                     -) OBJECT(.\Objects\sPlc.obj)
 
 line level    source
@@ -12,8 +12,8 @@ line level    source
    1          #include "sPlc.h"
    2          /*****************************************************************************/                 
    3          /*****************************************************************************/
-   4          //xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
-   5          //xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+   4          xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
+   5          xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
    6          static data uint8_t TimerCounter_100uS = 0;
    7          static data uint8_t TimerCounter_1mS = 0;
    8          static data uint8_t TimerCounter_10mS = 0;
@@ -62,7 +62,7 @@ line level    source
   51   2                      NVRAM1[i] = 0x0;
   52   2              }
   53   1      }
-C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 2   
+C51 COMPILER V9.59.0.0   SPLC                                                              12/20/2018 23:23:39 PAGE 2   
 
   54          void clearR(void){//清除R寄存器
   55   1              uint16_t i;
@@ -126,7 +126,7 @@ line level    source
  113   1              clearTD();
  114   1              clearC();
  115   1              memcpy(NVRAM1, NVRAM0, CONFIG_NVRAM_SIZE);
-C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 3   
+C51 COMPILER V9.59.0.0   SPLC                                                              12/20/2018 23:23:39 PAGE 3   
 
  116   1              ENABLE_INTERRUPT
  117   1      }
@@ -190,7 +190,7 @@ line level    source
  173   1              data uint8_t temp0, temp1;
  174   1              assertCoilAddress(A);
  175   1              temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
-C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 4   
+C51 COMPILER V9.59.0.0   SPLC                                                              12/20/2018 23:23:39 PAGE 4   
 
  176   1              temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
  177   1              if(!temp0 && temp1)
@@ -254,7 +254,7 @@ line level    source
  235   2                      NVRAM0[(T_10MS_START + (A / 16))] &= ~(1 << (A % 16));
  236   2                      NVRAM0[(TD_10MS_START + A)] = 0x0;
  237   2              }       
-C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 5   
+C51 COMPILER V9.59.0.0   SPLC                                                              12/20/2018 23:23:39 PAGE 5   
 
  238   1      }
  239          void T100MS(uint8_t A, uint8_t start, uint16_t value){
@@ -318,7 +318,7 @@ line level    source
  297   1              //10ms
  298   1              if(TimerCounter_1mS >= 10){
  299   2                      for(i = TD_10MS_START;i < TD_10MS_END;i ++){
-C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 6   
+C51 COMPILER V9.59.0.0   SPLC                                                              12/20/2018 23:23:39 PAGE 6   
 
  300   3                              if(NVRAM0[i] < SHRT_MAX){
  301   4                                      NVRAM0[i] ++;
@@ -383,7 +383,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
-C51 COMPILER V9.59.0.0   SPLC                                                              12/16/2018 00:06:42 PAGE 7   
+C51 COMPILER V9.59.0.0   SPLC                                                              12/20/2018 23:23:39 PAGE 7   
 
 
 C51 COMPILATION COMPLETE.  3 WARNING(S),  0 ERROR(S)
