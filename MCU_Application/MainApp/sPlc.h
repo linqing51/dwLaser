@@ -2,48 +2,44 @@
 #define __SPLC_H__
 /*****************************************************************************/
 #include "appConfig.h"
-//数据寄存器 保持 256个字
+//数据寄存器 保持 128个字
 #define DM_START						0//掉电保持寄存器
 #define DM_END							127
-//线圈 保持 128 * 16 = 2048个
+//线圈 保持 32 * 16 = 512个
 #define MR_START						128//线圈寄存器
-#define	MR_END							191
-//数据寄存器 非保持 128个字
-#define EM_START						192//随机寄存器
-#define EM_END							319
-//线圈寄存器 非保持 64 * 16 = 1024个
-#define R_START							320//掉电保持线圈寄存器
-#define R_END							383
+#define	MR_END							159//
+//数据寄存器 非保持 64个字
+#define EM_START						160//随机寄存器
+#define EM_END							223
+//线圈寄存器 非保持 32 * 16 = 512个
+#define R_START							224//掉电保持线圈寄存器
+#define R_END							255
 //延时线圈
-#define T_100US_START					384
-#define T_100US_END						387
-#define T_1MS_START						388
-#define T_1MS_END						391
-#define T_10MS_START					392
-#define T_10MS_END						395
-#define T_100MS_START					396	
-#define T_100MS_END						399
+#define T_1MS_START						256//32个1mS
+#define T_1MS_END						287
+#define T_10MS_START					288//32个10mS
+#define T_10MS_END						319
+#define T_100MS_START					320//32个100mS
+#define T_100MS_END						351
 //延时计时器 
-#define TD_100US_START					400//64个100uS
-#define TD_100US_END					463
-#define TD_1MS_START					464//64个1mS
-#define TD_1MS_END						527
-#define TD_10MS_START					528//64个10mS
-#define TD_10MS_END						591
-#define TD_100MS_START					592//64个100mS
-#define TD_100MS_END					655
+#define TD_1MS_START					352//32个1mS
+#define TD_1MS_END						383
+#define TD_10MS_START					384//32个10mS
+#define TD_10MS_END						415
+#define TD_100MS_START					416//32个100mS
+#define TD_100MS_END					447
 //计数器
-#define C_START							656//64个计数器
-#define C_END							719
+#define C_START							448//32个计数器
+#define C_END							479
 //输入位寄存器 16 * 16 = 256个
-#define X_START							720
-#define X_END							735
+#define X_START							480
+#define X_END							495
 //输出位寄存器 16 * 16 = 256个
-#define Y_START							736
-#define Y_END							751
-//特殊寄存器
-#define SPREG_START						752
-#define SPREG_END						784
+#define Y_START							496
+#define Y_END							511
+//特殊寄存器 32个字
+#define SPREG_START						512
+#define SPREG_END						544
 /*****************************************************************************/
 #define CONFIG_NVRAM_SIZE 				(SPREG_END + 1)
 /*****************************************************************************/

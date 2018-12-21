@@ -1,11 +1,11 @@
-C51 COMPILER V9.59.0.0   MODBUS                                                            12/20/2018 23:34:41 PAGE 1   
+C51 COMPILER V9.56.0.0   MODBUS                                                            12/21/2018 17:57:45 PAGE 1   
 
 
-C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MODBUS
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MODBUS
 OBJECT MODULE PLACED IN .\Objects\Modbus.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\Modbus.c LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.O
-                    -RC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\Modbus.
-                    -lst) OBJECT(.\Objects\Modbus.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\Modbus.c COMPACT OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020
+                    -.ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\Modbu
+                    -s.lst) PREPRINT(.\Listings\Modbus.i) OBJECT(.\Objects\Modbus.obj)
 
 line level    source
 
@@ -29,40 +29,40 @@ line level    source
   18          #define ERROR_CODE_03                                                   0x03//Some data values are out of range, invalid number of r
              -egister
   19          /*****************************************************************************/
-  20          uint8_t ModbusSlaveAddress = 1;
-  21          typedef enum{
-  22              RXTX_IDLE,
-  23              RXTX_START,
-  24              RXTX_DATABUF,
-  25              RXTX_WAIT_ANSWER,
-  26              RXTX_TIMEOUT
-  27          }RXTX_STATE;
-  28          typedef struct{
-  29            uint8_t address;
-  30            uint8_t function;
-  31            uint8_t dataBuf[CONFIG_MODBUS_SLAVE_BUFFER_SIZE];
-  32            uint16_t dataLen;
-  33          }RXTX_DATA;
-  34          /**********************Slave Transmit and Receive Variables********************/
-  35          RXTX_DATA Tx_Data;
-  36          uint32_t Tx_Current = 0;
-  37          uint32_t Tx_CRC16 = 0xFFFF;
-  38          RXTX_STATE Tx_State = RXTX_IDLE;
-  39          uint8_t Petit_Tx_Buf[CONFIG_MODBUS_SLAVE_BUFFER_SIZE];
-  40          uint32_t Tx_Buf_Size = 0;
+  20          typedef enum{
+  21              RXTX_IDLE,
+  22              RXTX_START,
+  23              RXTX_DATABUF,
+  24              RXTX_WAIT_ANSWER,
+  25              RXTX_TIMEOUT
+  26          }MODBUS_RXTX_STATE;
+  27          typedef struct{
+  28            uint8_t address;
+  29            uint8_t function;
+  30            uint8_t dataBuf[CONFIG_MODBUS_SLAVE_BUFFER_SIZE];
+  31            uint16_t dataLen;
+  32          }modbusRxTxData_t;
+  33          /**********************Slave Transmit and Receive Variables********************/
+  34          data uint8_t ModbusSlaveAddress = 1;
+  35          xdata modbusRxTxData_t Tx_Data;
+  36          data uint32_t Tx_Current = 0;
+  37          data uint32_t Tx_CRC16 = 0xFFFF;
+  38          data MODBUS_RXTX_STATE Tx_State = RXTX_IDLE;
+  39          xdata uint8_t Tx_Buf[CONFIG_MODBUS_SLAVE_BUFFER_SIZE];
+  40          data uint32_t Tx_Buf_Size = 0;
   41          /*****************************************************************************/
-  42          RXTX_DATA Rx_Data;
-  43          uint32_t Rx_CRC16 = 0xFFFF;
-  44          RXTX_STATE Rx_State = RXTX_IDLE;
-  45          uint8_t Rx_Data_Available = FALSE;
+  42          xdata modbusRxTxData_t Rx_Data;
+  43          data uint32_t Rx_CRC16 = 0xFFFF;
+  44          data MODBUS_RXTX_STATE Rx_State = RXTX_IDLE;
+  45          data uint8_t Rx_Data_Available = FALSE;
   46          /*****************************************************************************/
-  47          volatile uint16_t ModbusTimerValue = 0;
-  48          volatile uint8_t ModbusReceiveBuffer[CONFIG_MODBUS_SLAVE_BUFFER_SIZE];// Buffer to collect data from hardw
-             -are
-  49          volatile uint8_t ModbusReceiveCounter = 0;// Collected data number
+  47          xdata volatile uint16_t modbusTimerValue = 0;
+  48          xdata volatile uint8_t modbusReceiveCounter = 0;// Collected data number
+  49          xdata volatile uint8_t modbusReceiveBuffer[CONFIG_MODBUS_SLAVE_BUFFER_SIZE];// Buffer to collect data from
+             - hardware
   50          /*****************************************************************************/
-  51          void Petit_CRC16(const uint8_t Data, uint32_t* CRC){
-C51 COMPILER V9.59.0.0   MODBUS                                                            12/20/2018 23:34:41 PAGE 2   
+  51          void modbusCrc16(const uint8_t Data, uint32_t* CRC){
+C51 COMPILER V9.56.0.0   MODBUS                                                            12/21/2018 17:57:45 PAGE 2   
 
   52   1          data uint32_t i;
   53   1          *CRC = *CRC ^(uint32_t) Data;
@@ -73,372 +73,262 @@ line level    source
   58   2                  *CRC >>= 1;
   59   2          }
   60   1      }
-  61          /******************************************************************************/
-  62          
-  63          /*
-  64           * function Name        : DoTx
-  65           * @param[out]          : TRUE
-  66           * @How to use          : It is used for send data package over physical layer
-  67           */
-  68          uint8_t Petit_DoSlaveTX(void)
-  69          {  
-  70   1          PetitModBus_UART_String(Petit_Tx_Buf,Tx_Buf_Size);
-  71   1      
-  72   1          Tx_Buf_Size = 0;
-  73   1          return TRUE;
-  74   1      }
-  75          
-  76          /******************************************************************************/
-  77          
-  78          /*
-  79           * function Name        : SendMessage
-  80           * @param[out]          : TRUE/FALSE
-  81           * @How to use          : This function start to sending messages
-  82           */
-  83          uint8_t PetitSendMessage(void)
-  84          {
-  85   1          if (Tx_State != RXTX_IDLE)
-  86   1              return FALSE;
-  87   1      
-  88   1          Tx_Current  =0;
-  89   1          Tx_State    =RXTX_START;
-  90   1      
-  91   1          return TRUE;
-  92   1      }
-  93          
-  94          /******************************************************************************/
-  95          
-  96          /*
-  97           * function Name        : HandleModbusError
-  98           * @How to use          : This function generated errors to Modbus Master
-  99           */
- 100          void HandlePetitModbusError(char ErrorCode){// Initialise the output buffer. The first byte in the buffer 
-             -says how many registers we have read
- 101   1          Tx_Data.function = ErrorCode | 0x80;
- 102   1          Tx_Data.address = ModbusSlaveAddress;
- 103   1          Tx_Data.dataLen = 0;
- 104   1          PetitSendMessage();
- 105   1      }
- 106          
- 107          void HandlePetitModbusReadHoldingRegisters(void){//Modbus function 03 - Read holding registers
- 108   1          data uint16_t startAddress, numberOfRegisters, i;
- 109   1          data int16_t currentData;
- 110   1              // The message contains the requested start address and number of registers
- 111   1          startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
- 112   1          numberOfRegisters = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
-C51 COMPILER V9.59.0.0   MODBUS                                                            12/20/2018 23:34:41 PAGE 3   
-
- 113   1              if((startAddress + numberOfRegisters) > CONFIG_NVRAM_SIZE){//If it is bigger than RegisterNumber return e
+  61          uint8_t DoSlaveTX(void){//It is used for send data package over physical layer
+  62   1          modBusUartString(Tx_Buf, Tx_Buf_Size);
+  63   1          Tx_Buf_Size = 0;
+  64   1          return TRUE;
+  65   1      }
+  66          uint8_t SendMessage(void){//This function start to sending messages
+  67   1          if (Tx_State != RXTX_IDLE){
+  68   2              return FALSE;
+  69   2              }
+  70   1          Tx_Current  =0;
+  71   1          Tx_State    =RXTX_START;
+  72   1          return TRUE;
+  73   1      }
+  74          void HandleModbusError(char ErrorCode){// Initialise the output buffer. The first byte in the buffer says 
+             -how many registers we have read
+  75   1          Tx_Data.function = ErrorCode | 0x80;
+  76   1          Tx_Data.address = ModbusSlaveAddress;
+  77   1          Tx_Data.dataLen = 0;
+  78   1          SendMessage();
+  79   1      }
+  80          void HandleModbusReadHoldingRegisters(void){//Modbus function 03 - Read holding registers
+  81   1          data uint16_t startAddress, numberOfRegisters, i, currentData;
+  82   1              // The message contains the requested start address and number of registers
+  83   1          startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
+  84   1          numberOfRegisters = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
+  85   1              if((startAddress + numberOfRegisters) > CONFIG_NVRAM_SIZE){//If it is bigger than RegisterNumber return e
              -rror to Modbus Master
- 114   2              HandlePetitModbusError(ERROR_CODE_02);
- 115   2              }
- 116   1          else{//Initialise the output buffer. The first byte in the buffer says how many registers we have read
- 117   2              Tx_Data.function = MODBUS_READ_HOLDING_REGISTERS;
- 118   2              Tx_Data.address = ModbusSlaveAddress;
- 119   2              Tx_Data.dataLen = 1;
- 120   2              Tx_Data.dataBuf[0] = 0;
- 121   2              for (i = 0;i < numberOfRegisters;i ++){
- 122   3                  currentData = NVRAM0[startAddress + i];
- 123   3                  Tx_Data.dataBuf[Tx_Data.dataLen] = (uint8_t) ((currentData & 0xFF00) >> 8);
- 124   3                  Tx_Data.dataBuf[Tx_Data.dataLen + 1] = (uint8_t) (currentData & 0xFF);
- 125   3                  Tx_Data.dataLen += 2;
- 126   3                  Tx_Data.dataBuf[0] = Tx_Data.dataLen - 1;
- 127   3              }
- 128   2              PetitSendMessage();
- 129   2          }
- 130   1      }
- 131          
- 132          void HandlePetitModbusWriteSingleRegister(void){//Modbus function 06 - Write single register
- 133   1          data uint16_t address, value,i;
- 134   1          // The message contains the requested start address and number of registers
- 135   1          address = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t)(Rx_Data.dataBuf[1]);
- 136   1          value = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
- 137   1          // Initialise the output buffer. The first byte in the buffer says how many registers we have read
- 138   1          Tx_Data.function = MODBUS_WRITE_SINGLE_REGISTER;
- 139   1          Tx_Data.address = ModbusSlaveAddress;
- 140   1          Tx_Data.dataLen = 4;
- 141   1          if(address >= CONFIG_NVRAM_SIZE){
- 142   2              HandlePetitModbusError(ERROR_CODE_03);
- 143   2              }
- 144   1          else{
- 145   2              NVRAM0[address] = value;
- 146   2              // Output data buffer is exact copy of input buffer
- 147   2              for (i = 0; i < 4; ++i){
- 148   3                  Tx_Data.dataBuf[i] = Rx_Data.dataBuf[i];
- 149   3                      }
- 150   2          }
- 151   1          PetitSendMessage();
+  86   2              HandleModbusError(ERROR_CODE_02);
+  87   2              }
+  88   1          else{//Initialise the output buffer. The first byte in the buffer says how many registers we have read
+  89   2              Tx_Data.function = MODBUS_READ_HOLDING_REGISTERS;
+  90   2              Tx_Data.address = ModbusSlaveAddress;
+  91   2              Tx_Data.dataLen = 1;
+  92   2              Tx_Data.dataBuf[0] = 0;
+  93   2              for (i = 0;i < numberOfRegisters;i ++){
+  94   3                  currentData = (uint16_t)NVRAM0[startAddress + i];
+  95   3                  Tx_Data.dataBuf[Tx_Data.dataLen] = (uint8_t)((currentData & 0xFF00) >> 8);
+  96   3                  Tx_Data.dataBuf[Tx_Data.dataLen + 1] = (uint8_t)(currentData & 0x00FF);
+  97   3                  Tx_Data.dataLen += 2;
+  98   3                  Tx_Data.dataBuf[0] = Tx_Data.dataLen - 1;
+  99   3              }
+ 100   2              SendMessage();
+ 101   2          }
+ 102   1      }
+ 103          void HandleModbusWriteSingleRegister(void){//Modbus function 06 - Write single register
+ 104   1          data uint16_t address, value,i;
+ 105   1          // The message contains the requested start address and number of registers
+ 106   1          address = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t)(Rx_Data.dataBuf[1]);
+ 107   1          value = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
+ 108   1          // Initialise the output buffer. The first byte in the buffer says how many registers we have read
+ 109   1          Tx_Data.function = MODBUS_WRITE_SINGLE_REGISTER;
+ 110   1          Tx_Data.address = ModbusSlaveAddress;
+ 111   1          Tx_Data.dataLen = 4;
+C51 COMPILER V9.56.0.0   MODBUS                                                            12/21/2018 17:57:45 PAGE 3   
+
+ 112   1          if(address >= CONFIG_NVRAM_SIZE){
+ 113   2              HandleModbusError(ERROR_CODE_03);
+ 114   2              }
+ 115   1          else{
+ 116   2                      NVRAM0[address] = (int16_t)value;
+ 117   2              // Output data buffer is exact copy of input buffer
+ 118   2              for (i = 0; i < 4; ++i){
+ 119   3                  Tx_Data.dataBuf[i] = Rx_Data.dataBuf[i];
+ 120   3                      }
+ 121   2          }
+ 122   1          SendMessage();
+ 123   1      }
+ 124          void HandleModbusWriteMultipleRegisters(void){//Modbus function 16 - Write multiple registers
+ 125   1          // Write single numerical output
+ 126   1          data uint16_t startAddress, numberOfRegisters, value;
+ 127   1          data uint8_t byteCount , i;
+ 128   1          // The message contains the requested start address and number of registers
+ 129   1          startAddress = ((uint16_t)(Rx_Data.dataBuf[0]) << 8) + (uint16_t)(Rx_Data.dataBuf[1]);
+ 130   1          numberOfRegisters = ((uint16_t)(Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
+ 131   1          byteCount = Rx_Data.dataBuf[4];
+ 132   1          // If it is bigger than RegisterNumber return error to Modbus Master
+ 133   1          if((startAddress+numberOfRegisters) > CONFIG_NVRAM_SIZE){
+ 134   2              HandleModbusError(ERROR_CODE_03);
+ 135   2              }
+ 136   1          else{
+ 137   2              // Initialise the output buffer. The first byte in the buffer says how many outputs we have set
+ 138   2              Tx_Data.function = MODBUS_WRITE_MULTIPLE_REGISTERS;
+ 139   2              Tx_Data.address = ModbusSlaveAddress;
+ 140   2              Tx_Data.dataLen = 4;
+ 141   2              Tx_Data.dataBuf[0] = Rx_Data.dataBuf[0];
+ 142   2              Tx_Data.dataBuf[1] = Rx_Data.dataBuf[1];
+ 143   2              Tx_Data.dataBuf[2] = Rx_Data.dataBuf[2];
+ 144   2              Tx_Data.dataBuf[3] = Rx_Data.dataBuf[3];
+ 145   2              // Output data buffer is exact copy of input buffer
+ 146   2              for (i = 0;i < numberOfRegisters;i ++){
+ 147   3                  value = (uint16_t)((Rx_Data.dataBuf[5 + 2 * i] << 8) & 0xFF00) + (uint16_t)((Rx_Data.dataBuf[6
+             - + 2 * i]) & 0x00FF);
+ 148   3                  NVRAM0[startAddress + i] = (int16_t)value;
+ 149   3              }
+ 150   2              SendMessage();
+ 151   2          }
  152   1      }
- 153          void HandleMPetitodbusWriteMultipleRegisters(void){//Modbus function 16 - Write multiple registers
- 154   1          // Write single numerical output
- 155   1          data uint16_t startAddress, numberOfRegisters, value;
- 156   1          data uint8_t byteCount , i;
- 157   1          // The message contains the requested start address and number of registers
- 158   1          startAddress = ((uint16_t)(Rx_Data.dataBuf[0]) << 8) + (uint16_t)(Rx_Data.dataBuf[1]);
- 159   1          numberOfRegisters = ((uint16_t)(Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
- 160   1          byteCount = Rx_Data.dataBuf[4];
- 161   1          // If it is bigger than RegisterNumber return error to Modbus Master
- 162   1          if((startAddress+numberOfRegisters) > CONFIG_NVRAM_SIZE){
- 163   2              HandlePetitModbusError(ERROR_CODE_03);
- 164   2              }
- 165   1          else{
- 166   2              // Initialise the output buffer. The first byte in the buffer says how many outputs we have set
- 167   2              Tx_Data.function = MODBUS_WRITE_MULTIPLE_REGISTERS;
- 168   2              Tx_Data.address = ModbusSlaveAddress;
- 169   2              Tx_Data.dataLen = 4;
- 170   2              Tx_Data.dataBuf[0] = Rx_Data.dataBuf[0];
- 171   2              Tx_Data.dataBuf[1] = Rx_Data.dataBuf[1];
- 172   2              Tx_Data.dataBuf[2] = Rx_Data.dataBuf[2];
- 173   2              Tx_Data.dataBuf[3] = Rx_Data.dataBuf[3];
-C51 COMPILER V9.59.0.0   MODBUS                                                            12/20/2018 23:34:41 PAGE 4   
+ 153          uint8_t RxDataAvailable(void){//RxDataAvailable
+ 154   1          uint8_t Result = Rx_Data_Available;   
+ 155   1          Rx_Data_Available = FALSE;
+ 156   1          return Result;
+ 157   1      }
+ 158          uint8_t CheckRxTimeout(void){//CheckRxTimeout
+ 159   1          // A return value of true indicates there is a timeout    
+ 160   1          if (modbusTimerValue >= CONFIG_MODBUS_SLAVE_TIMEOUT){
+ 161   2              modbusTimerValue   =0;
+ 162   2              modbusReceiveCounter     =0;
+ 163   2              return true;
+ 164   2          }
+ 165   1          return false;
+ 166   1      }
+ 167          uint8_t checkModbusBufferComplete(void){//CheckBufferComplete
+ 168   1          data int32_t expectedReceiveCount=0;
+ 169   1          if(modbusReceiveCounter>4)
+ 170   1          {
+ 171   2              if(modbusReceiveBuffer[0]==ModbusSlaveAddress)
+ 172   2              {
+C51 COMPILER V9.56.0.0   MODBUS                                                            12/21/2018 17:57:45 PAGE 4   
 
- 174   2              // Output data buffer is exact copy of input buffer
- 175   2              for (i = 0;i < numberOfRegisters;i ++){
- 176   3                  value = (uint16_t)(Rx_Data.dataBuf[5 + 2 * i] << 8) + (uint16_t)(Rx_Data.dataBuf[6 + 2 * i]);
- 177   3                  NVRAM0[startAddress + i] = (int16_t)value;
- 178   3              }
- 179   2              PetitSendMessage();
- 180   2          }
- 181   1      }
- 182          
- 183          
- 184          /******************************************************************************/
- 185          
- 186          /*
- 187           * function Name        : RxDataAvailable
- 188           * @return              : If Data is Ready, Return TRUE
- 189           *                        If Data is not Ready, Return FALSE
- 190           */
- 191          uint8_t Petit_RxDataAvailable(void)
- 192          {
- 193   1          uint8_t Result    = Rx_Data_Available;
- 194   1          
- 195   1          Rx_Data_Available       = FALSE;
- 196   1      
- 197   1          return Result;
- 198   1      }
- 199          
- 200          /******************************************************************************/
- 201          
- 202          /*
- 203           * function Name        : CheckRxTimeout
- 204           * @return              : If Time is out return TRUE
- 205           *                        If Time is not out return FALSE
- 206           */
- 207          uint8_t Petit_CheckRxTimeout(void)
- 208          {
- 209   1          // A return value of true indicates there is a timeout    
- 210   1          if (ModbusTimerValue >= PETITMODBUS_TIMEOUTTIMER)
- 211   1          {
- 212   2              ModbusTimerValue   =0;
- 213   2              ModbusReceiveCounter     =0;
- 214   2              return TRUE;
- 215   2          }
- 216   1      
- 217   1          return FALSE;
- 218   1      }
- 219          
- 220          /******************************************************************************/
- 221          
- 222          /*
- 223           * function Name        : CheckBufferComplete
- 224           * @return              : If data is ready, return              DATA_READY
- 225           *                        If slave address is wrong, return     FALSE_SLAVE_ADDRESS
- 226           *                        If data is not ready, return          DATA_NOT_READY
- 227           *                        If functions is wrong, return         FALSE_FUNCTION
- 228           */
- 229          uint8_t CheckPetitModbusBufferComplete(void)
- 230          {
- 231   1          int PetitExpectedReceiveCount=0;
- 232   1      
- 233   1          if(ModbusReceiveCounter>4)
- 234   1          {
- 235   2              if(ModbusReceiveBuffer[0]==ModbusSlaveAddress)
-C51 COMPILER V9.59.0.0   MODBUS                                                            12/20/2018 23:34:41 PAGE 5   
+ 173   3                  if(modbusReceiveBuffer[1]==0x01 || modbusReceiveBuffer[1]==0x02 || modbusReceiveBuffer[1]==0x0
+             -3 || modbusReceiveBuffer[1]==0x04 || modbusReceiveBuffer[1]==0x05 || modbusReceiveBuffer[1]==0x06)  // RHR
+ 174   3                  {
+ 175   4                      expectedReceiveCount    =8;
+ 176   4                  }
+ 177   3                  else if(modbusReceiveBuffer[1]==0x0F || modbusReceiveBuffer[1]==0x10)
+ 178   3                  {
+ 179   4                      expectedReceiveCount=modbusReceiveBuffer[6]+9;
+ 180   4                  }
+ 181   3                  else
+ 182   3                  {
+ 183   4                      modbusReceiveCounter=0;
+ 184   4                      return FALSE_FUNCTION;
+ 185   4                  }
+ 186   3              }
+ 187   2              else
+ 188   2              {
+ 189   3                  modbusReceiveCounter=0;
+ 190   3                  return FALSE_SLAVE_ADDRESS;
+ 191   3              }
+ 192   2          }
+ 193   1          else
+ 194   1              return DATA_NOT_READY;
+ 195   1      
+ 196   1          if(modbusReceiveCounter==expectedReceiveCount)
+ 197   1          {
+ 198   2              return DATA_READY;
+ 199   2          }
+ 200   1      
+ 201   1          return DATA_NOT_READY;
+ 202   1      }
+ 203          void RxRTU(void){//Check for data ready, if it is good return answer
+ 204   1          uint8_t i;
+ 205   1          uint8_t receiveBufferControl=0;
+ 206   1          receiveBufferControl = checkModbusBufferComplete();
+ 207   1          if(receiveBufferControl == DATA_READY){
+ 208   2              Rx_Data.address               =modbusReceiveBuffer[0];
+ 209   2              Rx_CRC16                      = 0xffff;
+ 210   2              modbusCrc16(Rx_Data.address, &Rx_CRC16);
+ 211   2              Rx_Data.function              =modbusReceiveBuffer[1];
+ 212   2              modbusCrc16(Rx_Data.function, &Rx_CRC16);
+ 213   2      
+ 214   2              Rx_Data.dataLen=0;
+ 215   2      
+ 216   2              for(i=2;i<modbusReceiveCounter;i++)
+ 217   2                  Rx_Data.dataBuf[Rx_Data.dataLen++]=modbusReceiveBuffer[i];
+ 218   2      
+ 219   2              Rx_State =RXTX_DATABUF;
+ 220   2      
+ 221   2              modbusReceiveCounter=0;
+ 222   2          }
+ 223   1      
+ 224   1          CheckRxTimeout();
+ 225   1      
+ 226   1          if ((Rx_State == RXTX_DATABUF) && (Rx_Data.dataLen >= 2))
+ 227   1          {
+ 228   2              // Finish off our CRC check
+ 229   2              Rx_Data.dataLen -= 2;
+ 230   2              for (i = 0; i < Rx_Data.dataLen; ++i)
+ 231   2              {
+ 232   3                  modbusCrc16(Rx_Data.dataBuf[i], &Rx_CRC16);
+ 233   3              }
+C51 COMPILER V9.56.0.0   MODBUS                                                            12/21/2018 17:57:45 PAGE 5   
 
- 236   2              {
- 237   3                  if(ModbusReceiveBuffer[1]==0x01 || ModbusReceiveBuffer[1]==0x02 || ModbusReceiveBuffer[1]==0x0
-             -3 || ModbusReceiveBuffer[1]==0x04 || ModbusReceiveBuffer[1]==0x05 || ModbusReceiveBuffer[1]==0x06)  // RHR
- 238   3                  {
- 239   4                      PetitExpectedReceiveCount    =8;
- 240   4                  }
- 241   3                  else if(ModbusReceiveBuffer[1]==0x0F || ModbusReceiveBuffer[1]==0x10)
- 242   3                  {
- 243   4                      PetitExpectedReceiveCount=ModbusReceiveBuffer[6]+9;
- 244   4                  }
- 245   3                  else
- 246   3                  {
- 247   4                      ModbusReceiveCounter=0;
- 248   4                      return FALSE_FUNCTION;
- 249   4                  }
- 250   3              }
- 251   2              else
- 252   2              {
- 253   3                  ModbusReceiveCounter=0;
- 254   3                  return FALSE_SLAVE_ADDRESS;
- 255   3              }
- 256   2          }
- 257   1          else
- 258   1              return DATA_NOT_READY;
- 259   1      
- 260   1          if(ModbusReceiveCounter==PetitExpectedReceiveCount)
- 261   1          {
- 262   2              return DATA_READY;
- 263   2          }
- 264   1      
- 265   1          return DATA_NOT_READY;
- 266   1      }
- 267          
- 268          /******************************************************************************/
- 269          
- 270          /*
- 271           * function Name        : RxRTU
- 272           * @How to use          : Check for data ready, if it is good return answer
- 273           */
- 274          void Petit_RxRTU(void)
- 275          {
- 276   1          uint8_t   i;
- 277   1          uint8_t   Petit_ReceiveBufferControl=0;
- 278   1      
- 279   1          Petit_ReceiveBufferControl    =CheckPetitModbusBufferComplete();
- 280   1      
- 281   1          if(Petit_ReceiveBufferControl==DATA_READY)
- 282   1          {
- 283   2              Rx_Data.address               =ModbusReceiveBuffer[0];
- 284   2              Rx_CRC16                      = 0xffff;
- 285   2              Petit_CRC16(Rx_Data.address, &Rx_CRC16);
- 286   2              Rx_Data.function              =ModbusReceiveBuffer[1];
- 287   2              Petit_CRC16(Rx_Data.function, &Rx_CRC16);
- 288   2      
- 289   2              Rx_Data.dataLen=0;
- 290   2      
- 291   2              for(i=2;i<ModbusReceiveCounter;i++)
- 292   2                  Rx_Data.dataBuf[Rx_Data.dataLen++]=ModbusReceiveBuffer[i];
- 293   2      
- 294   2              Rx_State =RXTX_DATABUF;
- 295   2      
- 296   2              ModbusReceiveCounter=0;
-C51 COMPILER V9.59.0.0   MODBUS                                                            12/20/2018 23:34:41 PAGE 6   
-
- 297   2          }
- 298   1      
- 299   1          Petit_CheckRxTimeout();
- 300   1      
- 301   1          if ((Rx_State == RXTX_DATABUF) && (Rx_Data.dataLen >= 2))
- 302   1          {
- 303   2              // Finish off our CRC check
- 304   2              Rx_Data.dataLen -= 2;
- 305   2              for (i = 0; i < Rx_Data.dataLen; ++i)
- 306   2              {
- 307   3                  Petit_CRC16(Rx_Data.dataBuf[i], &Rx_CRC16);
- 308   3              }
- 309   2              
- 310   2              if (((uint32_t) Rx_Data.dataBuf[Rx_Data.dataLen] + ((uint32_t) Rx_Data.dataBuf[Rx_Data.dataLen + 1
+ 234   2              
+ 235   2              if (((uint32_t) Rx_Data.dataBuf[Rx_Data.dataLen] + ((uint32_t) Rx_Data.dataBuf[Rx_Data.dataLen + 1
              -] << 8)) == Rx_CRC16)
- 311   2              {
- 312   3                  // Valid message!
- 313   3                  Rx_Data_Available = TRUE;
- 314   3              }
- 315   2      
- 316   2              Rx_State = RXTX_IDLE;
- 317   2          }
- 318   1      }
- 319          
- 320          /******************************************************************************/
- 321          
- 322          /*
- 323           * function Name        : TxRTU
- 324           * @How to use          : If it is ready send answers!
- 325           */
- 326          void Petit_TxRTU(void)
- 327          {
- 328   1          Tx_CRC16                =0xFFFF;
- 329   1          Tx_Buf_Size             =0;
- 330   1          Petit_Tx_Buf[Tx_Buf_Size++]   =Tx_Data.address;
- 331   1          Petit_CRC16(Tx_Data.address, &Tx_CRC16);
- 332   1          Petit_Tx_Buf[Tx_Buf_Size++]   =Tx_Data.function;
- 333   1          Petit_CRC16(Tx_Data.function, &Tx_CRC16);
- 334   1      
- 335   1          for(Tx_Current=0; Tx_Current < Tx_Data.dataLen; Tx_Current++)
- 336   1          {
- 337   2              Petit_Tx_Buf[Tx_Buf_Size++]=Tx_Data.dataBuf[Tx_Current];
- 338   2              Petit_CRC16(Tx_Data.dataBuf[Tx_Current], &Tx_CRC16);
- 339   2          }
- 340   1          
- 341   1          Petit_Tx_Buf[Tx_Buf_Size++] = Tx_CRC16 & 0x00FF;
- 342   1          Petit_Tx_Buf[Tx_Buf_Size++] =(Tx_CRC16 & 0xFF00) >> 8;
- 343   1      
- 344   1          Petit_DoSlaveTX();
- 345   1      
- 346   1          Tx_State    =RXTX_IDLE;
- 347   1      }
- 348          
- 349          /******************************************************************************/
- 350          
- 351          /*
- 352           * function Name        : ProcessModbus
- 353           * @How to use          : ModBus main core! Call this function into main!
- 354           */
- 355          void ProcessPetitModbus(void)
- 356          {
- 357   1          if (Tx_State != RXTX_IDLE)                                      // If answer is ready, send it!
-C51 COMPILER V9.59.0.0   MODBUS                                                            12/20/2018 23:34:41 PAGE 7   
-
- 358   1              Petit_TxRTU();
- 359   1      
- 360   1          Petit_RxRTU();                                                              // Call this function ever
-             -y cycle
- 361   1      
- 362   1          if (Petit_RxDataAvailable())                                                // If data is ready enter 
-             -this!
- 363   1          {
- 364   2              if (Rx_Data.address == ModbusSlaveAddress)                 // Is Data for us?
- 365   2              {
- 366   3                  switch (Rx_Data.function)                                     // Data is for us but which func
+ 236   2              {
+ 237   3                  // Valid message!
+ 238   3                  Rx_Data_Available = TRUE;
+ 239   3              }
+ 240   2      
+ 241   2              Rx_State = RXTX_IDLE;
+ 242   2          }
+ 243   1      }
+ 244          void TxRTU(void){//If it is ready send answers!
+ 245   1          Tx_CRC16 = 0xFFFF;
+ 246   1          Tx_Buf_Size = 0;
+ 247   1          Tx_Buf[Tx_Buf_Size++] = Tx_Data.address;
+ 248   1          modbusCrc16(Tx_Data.address, &Tx_CRC16);
+ 249   1          Tx_Buf[Tx_Buf_Size++] = Tx_Data.function;
+ 250   1          modbusCrc16(Tx_Data.function, &Tx_CRC16);
+ 251   1          for(Tx_Current=0; Tx_Current < Tx_Data.dataLen; Tx_Current++){
+ 252   2              Tx_Buf[Tx_Buf_Size++] = Tx_Data.dataBuf[Tx_Current];
+ 253   2              modbusCrc16(Tx_Data.dataBuf[Tx_Current], &Tx_CRC16);
+ 254   2          }
+ 255   1          Tx_Buf[Tx_Buf_Size++] = Tx_CRC16 & 0x00FF;
+ 256   1          Tx_Buf[Tx_Buf_Size++] = (Tx_CRC16 & 0xFF00) >> 8;
+ 257   1          DoSlaveTX();
+ 258   1          Tx_State = RXTX_IDLE;
+ 259   1      }
+ 260          void ProcessModbus(void){//ModBus main core! Call this function into main!
+ 261   1          if (Tx_State != RXTX_IDLE){                                      // If answer is ready, send it!
+ 262   2              TxRTU();
+ 263   2              }
+ 264   1          RxRTU();                                                              // Call this function every cycl
+             -e
+ 265   1          if (RxDataAvailable()){
+ 266   2              if (Rx_Data.address == ModbusSlaveAddress){
+ 267   3                  switch (Rx_Data.function)                                     // Data is for us but which func
              -tion?
- 367   3                  {
- 368   4                      #if PETITMODBUS_READ_HOLDING_REGISTERS_ENABLED > 0
- 369   4                      case MODBUS_READ_HOLDING_REGISTERS:    {   HandlePetitModbusReadHoldingRegisters();       
-             - break;  }
- 370   4                      #endif
- 371   4                      #if PETITMODBUSWRITE_SINGLE_REGISTER_ENABLED > 0
- 372   4                      case MODBUS_WRITE_SINGLE_REGISTER:     {   HandlePetitModbusWriteSingleRegister();        
-             - break;  }
- 373   4                      #endif
- 374   4                      #if PETITMODBUS_WRITE_MULTIPLE_REGISTERS_ENABLED > 0
- 375   4                      case MODBUS_WRITE_MULTIPLE_REGISTERS:  {   HandleMPetitodbusWriteMultipleRegisters();     
-             - break;  }
- 376   4                      #endif
- 377   4                      default:                                    {   HandlePetitModbusError(ERROR_CODE_01);    
-             -break;  }
- 378   4                  }
- 379   3              }
- 380   2          }
- 381   1      }
- 382          
- 383          /******************************************************************************/
- 384          
- 385          /*
- 386           * function Name        : InitPetitModbus
- 387           * @How to use          : Petite ModBus slave initialize
- 388           */
- 389          void InitPetitModbus(uint8_t PetitModbusSlaveAddress, unsigned long baudrate)
- 390          {
- 391   1          ModbusSlaveAddress = PetitModbusSlaveAddress;
- 392   1          
- 393   1          PetitModBus_UART_Initialise(baudrate);
- 394   1          PetitModBus_TIMER_Initialise();
- 395   1      }
- 396          
- 397          /******************************************************************************/
+ 268   3                  {
+ 269   4                      case MODBUS_READ_HOLDING_REGISTERS:{
+ 270   5                                              HandleModbusReadHoldingRegisters();
+ 271   5                                              break;  
+ 272   5                                      }
+ 273   4                      case MODBUS_WRITE_SINGLE_REGISTER:{
+ 274   5                                              HandleModbusWriteSingleRegister();
+ 275   5                                              break;
+ 276   5                                      }
+ 277   4                      case MODBUS_WRITE_MULTIPLE_REGISTERS:{
+ 278   5                                              HandleModbusWriteMultipleRegisters();
+ 279   5                                              break;
+ 280   5                                      }
+ 281   4                      default:{
+ 282   5                                              HandleModbusError(ERROR_CODE_01);
+ 283   5                                              break;
+ 284   5                                      }
+ 285   4                  }
+ 286   3              }
+ 287   2          }
+ 288   1      }
+ 289          void InitModbus(uint8_t modbusSlaveAddress, uint32_t baudrate){//ModBus slave initialize
+ 290   1          ModbusSlaveAddress = modbusSlaveAddress;
+ 291   1          modBusUartInitialise(baudrate);
+ 292   1          modBusTimerInitialise();
+C51 COMPILER V9.56.0.0   MODBUS                                                            12/21/2018 17:57:45 PAGE 6   
+
+ 293   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1644    ----
+   CODE SIZE        =   1564    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   1183       9
-   PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----      26
+   XDATA SIZE       =   1163    ----
+   PDATA SIZE       =   ----       9
+   DATA SIZE        =     20      30
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

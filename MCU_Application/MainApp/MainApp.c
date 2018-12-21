@@ -134,13 +134,13 @@ void main(void)
 	//inPca9554Init();
 	//outPca9554Init();
 	//mcp47x6Init();
-	InitPetitModbus(CONFIG_MODBUS_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
+	initModbus(CONFIG_MODBUS_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 	ES0 = 1;
 	ENABLE_INTERRUPT;
 	//nvramLoad();//上电恢复NVRAM
 	while(1)
 	{
-		ProcessPetitModbus();
+		processModbus();
 		//refreshInput();//刷新输入IO
 //		modbusSlaveAsciiPoll();
 ////		SET(10);

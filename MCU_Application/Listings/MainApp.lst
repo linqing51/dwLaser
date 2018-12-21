@@ -1,11 +1,11 @@
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/20/2018 23:23:38 PAGE 1   
+C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 1   
 
 
-C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAINAPP
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAINAPP
 OBJECT MODULE PLACED IN .\Objects\MainApp.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE MainApp\MainApp.c LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020
-                    -.ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\MainA
-                    -pp.lst) OBJECT(.\Objects\MainApp.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE MainApp\MainApp.c COMPACT OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F0
+                    -20.ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\Mai
+                    -nApp.lst) PREPRINT(.\Listings\MainApp.i) OBJECT(.\Objects\MainApp.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   51          #define STEPNUM_READY                                   3//准备
   52          #define STEPNUM_LASERON                                 4//激光开始
   53          
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/20/2018 23:23:38 PAGE 2   
+C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 2   
 
   54          
   55          
@@ -126,7 +126,7 @@ line level    source
  113   1              
  114   1      }
  115          void writeNvram(void)
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/20/2018 23:23:38 PAGE 3   
+C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 3   
 
  116          {//掉电保持寄存器全部写入NVRAM 强制全部写入
  117   1              //DM0写入NVRAM
@@ -149,13 +149,13 @@ line level    source
  134   1              //inPca9554Init();
  135   1              //outPca9554Init();
  136   1              //mcp47x6Init();
- 137   1              InitPetitModbus(CONFIG_MODBUS_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
+ 137   1              initModbus(CONFIG_MODBUS_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
  138   1              ES0 = 1;
  139   1              ENABLE_INTERRUPT;
  140   1              //nvramLoad();//上电恢复NVRAM
  141   1              while(1)
  142   1              {
- 143   2                      ProcessPetitModbus();
+ 143   2                      processModbus();
  144   2                      //refreshInput();//刷新输入IO
  145   2      //              modbusSlaveAsciiPoll();
  146   2      ////            SET(10);
@@ -190,7 +190,7 @@ line level    source
  174          ////    my_t *p = my;
  175          ////    pidFuzzy_t pidFuzzy;
  176          //      Init_Device();//初始化MCU
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/20/2018 23:23:38 PAGE 4   
+C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 4   
 
  177          //#if CONFIG_USING_WDT == 1
  178          //      if ((RSTSRC & 0x02) == 0x00)
@@ -254,7 +254,7 @@ line level    source
  236          //                                                        (my.overTempAmplifier && !my.overTempAmplifierIgnore) ||
  237          //                                (my.overTempEnvironment && !my.overTempEnvironmentIgnore) ||
  238          //                                                        (my.overTempMcu && !my.overTempMcuIgnore);
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/20/2018 23:23:38 PAGE 5   
+C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 5   
 
  239          //          my.overTempFault = my.overTempFault && !my.overTempIgnore;
  240          //              //获取安全状态
@@ -318,7 +318,7 @@ line level    source
  298          //                              my.laserEmitOver = 0x0;//发射完成标志清零
  299          //                              switch(my.laserMode)
  300          //                              {
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/20/2018 23:23:38 PAGE 6   
+C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 6   
 
  301          //                                      case ENUM_MODE_CW:
  302          //                                      {
@@ -382,7 +382,7 @@ line level    source
  360          //                                              {
  361          //                                                      upDateDac1(laserCurrent[1]);
  362          //                                                      break;
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/20/2018 23:23:38 PAGE 7   
+C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 7   
 
  363          //                                              }
  364          //                                              default:break;
@@ -446,7 +446,7 @@ line level    source
  422          //                                      my.laserOnFlag = 1;
  423          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
  424          //                              }
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/20/2018 23:23:38 PAGE 8   
+C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 8   
 
  425          //                      }
  426          //              }
@@ -510,7 +510,7 @@ line level    source
  484          //                      {
  485          //                              if(selectChannel == ENUM_CHANNEL_BOTH)
  486          //                              {
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/20/2018 23:23:38 PAGE 9   
+C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 9   
 
  487          //                                      DAC0 = laserCurrent[0];
  488          //                                      DAC1 = laserCurrent[1];
@@ -574,7 +574,7 @@ line level    source
  546          //              {//校正模式
  547          //                      
  548          //              }
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/20/2018 23:23:38 PAGE 10  
+C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 10  
 
  549          //              
  550          //              //Debug LED闪烁
@@ -638,7 +638,7 @@ line level    source
  608          //      if(my.laserMode == ENUM_MODE_CW )
  609          //      {
  610          //              DAC0 = my.laserCurrent[0];
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/20/2018 23:23:38 PAGE 11  
+C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 11  
 
  611          //              DAC1 = my.laserCurrent[1];
  612          //      }
@@ -702,7 +702,7 @@ line level    source
  670          //                      break;
  671          //              }
  672          //              case ENUM_MODE_MP:
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/20/2018 23:23:38 PAGE 12  
+C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 12  
 
  673          //              {//MP模式       
  674          //                      if(p->softTimer.tCounter == p->softTimer.tMate)
@@ -766,7 +766,7 @@ line level    source
  732          //{//刷新DAC0
  733          //      static uint16_t oldDac0;
  734          //      if(dat != oldDac0)
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/20/2018 23:23:38 PAGE 13  
+C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 13  
 
  735          //      {
  736          //              DAC0 = dat;
@@ -785,10 +785,10 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     49    ----
+   CODE SIZE        =     48    ----
    CONSTANT SIZE    =      8    ----
-   XDATA SIZE       =   ----      16
-   PDATA SIZE       =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----      16
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

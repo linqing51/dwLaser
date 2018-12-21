@@ -1,11 +1,11 @@
-C51 COMPILER V9.59.0.0   EPROM                                                             12/20/2018 23:23:38 PAGE 1   
+C51 COMPILER V9.56.0.0   EPROM                                                             12/21/2018 17:57:59 PAGE 1   
 
 
-C51 COMPILER V9.59.0.0, COMPILATION OF MODULE EPROM
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE EPROM
 OBJECT MODULE PLACED IN .\Objects\eprom.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Driver\eprom.c LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.OR
-                    -C) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\eprom.ls
-                    -t) OBJECT(.\Objects\eprom.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Driver\eprom.c COMPACT OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.
+                    -ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\eprom.
+                    -lst) PREPRINT(.\Listings\eprom.i) OBJECT(.\Objects\eprom.obj)
 
 line level    source
 
@@ -24,17 +24,17 @@ line level    source
   13   1              iic0Start();  
   14   1      #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
   15   1      //ºÊ»›24Cxx÷–∆‰À˚µƒ∞Ê±æ
-  16   1              iic0SendByte(((CONFIG_EPROM_ADDR << 1) & 0xFE));//∑¢ÀÕ–¥√¸¡Ó
+  16   1              iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) & 0xFE));//∑¢ÀÕ–¥√¸¡Ó
   17   1              iic0WaitAck();
   18   1              iic0SendByte(ReadAddr >> 8);//∑¢ÀÕ∏ﬂµÿ÷∑                 
   19   1      #else 
-                      iic0SendByte(((CONFIG_EPROM_ADDR << 1) & 0xFE) + ((ReadAddr / 256) << 1));//∑¢ÀÕ∆˜º˛µÿ÷∑0XA0,–¥ ˝æ›      
+                      iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) & 0xFE) + ((ReadAddr / 256) << 1));//∑¢ÀÕ∆˜º˛µÿ÷∑0XA0,–¥ ˝æ›   
               #endif
   22   1              iic0WaitAck(); 
   23   1              iic0SendByte(ReadAddr % 256);   //∑¢ÀÕµÕµÿ÷∑
   24   1              iic0WaitAck();      
   25   1              iic0Start();               
-  26   1              iic0SendByte(((CONFIG_EPROM_ADDR << 1) | 0x01));//Ω¯»ÎΩ” ’ƒ£ Ω                     
+  26   1              iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) | 0x01));//Ω¯»ÎΩ” ’ƒ£ Ω                          
   27   1              iic0WaitAck();   
   28   1              temp = iic0ReadByte(0);//∂¡“ª∏ˆ◊÷Ω⁄£¨∑«”¶¥–≈∫≈–≈∫≈        
   29   1              iic0Stop();        //≤˙…˙“ª∏ˆÕ£÷πÃıº˛       
@@ -46,7 +46,7 @@ line level    source
   35   1      //DataToWrite:“™–¥»Îµƒ ˝æ›                                                                                                                                                                               
   36   1              iic0Start();  
   37   1      #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
-  38   1              iic0SendByte(((CONFIG_EPROM_ADDR << 1) & 0xFE));            //∑¢ÀÕ–¥√¸¡Ó
+  38   1              iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) & 0xFE));         //∑¢ÀÕ–¥√¸¡Ó
   39   1              iic0WaitAck();
   40   1              iic0SendByte(WriteAddr >> 8);    //∑¢ÀÕ∏ﬂµÿ÷∑
   41   1      #else
@@ -62,7 +62,7 @@ line level    source
   51   1              delayMs(10);     
   52   1      #endif
   53   1      }
-C51 COMPILER V9.59.0.0   EPROM                                                             12/20/2018 23:23:38 PAGE 2   
+C51 COMPILER V9.56.0.0   EPROM                                                             12/21/2018 17:57:59 PAGE 2   
 
   54          
   55          void epromWriteLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len){//‘⁄AT24CXX¿Ô√Êµƒ÷∏∂®µÿ÷∑ø™ 
@@ -126,7 +126,7 @@ line level    source
  110   2              }
  111   1              crc32Clear();
  112   1              for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
-C51 COMPILER V9.59.0.0   EPROM                                                             12/20/2018 23:23:38 PAGE 3   
+C51 COMPILER V9.56.0.0   EPROM                                                             12/21/2018 17:57:59 PAGE 3   
 
  113   2                      temp = epromReadOneByte(i);
  114   2                      crc32Dist = crc32CalculateAdd(temp);
@@ -140,10 +140,10 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    849    ----
+   CODE SIZE        =    772    ----
    CONSTANT SIZE    =     58    ----
-   XDATA SIZE       =   ----      53
-   PDATA SIZE       =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----      47
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

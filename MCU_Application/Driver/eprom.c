@@ -13,17 +13,17 @@ uint8_t epromReadOneByte(uint16_t ReadAddr){//‘⁄AT24CXX÷∏∂®µÿ÷∑∂¡≥ˆ“ª∏ˆ ˝æ›
 	iic0Start();  
 #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
 //ºÊ»›24Cxx÷–∆‰À˚µƒ∞Ê±æ
-	iic0SendByte(((CONFIG_EPROM_ADDR << 1) & 0xFE));//∑¢ÀÕ–¥√¸¡Ó
+	iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) & 0xFE));//∑¢ÀÕ–¥√¸¡Ó
 	iic0WaitAck();
 	iic0SendByte(ReadAddr >> 8);//∑¢ÀÕ∏ﬂµÿ÷∑		 
 #else 
-	iic0SendByte(((CONFIG_EPROM_ADDR << 1) & 0xFE) + ((ReadAddr / 256) << 1));//∑¢ÀÕ∆˜º˛µÿ÷∑0XA0,–¥ ˝æ› 	 
+	iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) & 0xFE) + ((ReadAddr / 256) << 1));//∑¢ÀÕ∆˜º˛µÿ÷∑0XA0,–¥ ˝æ› 	 
 #endif
 	iic0WaitAck(); 
 	iic0SendByte(ReadAddr % 256);   //∑¢ÀÕµÕµÿ÷∑
 	iic0WaitAck();	    
 	iic0Start();  	 	   
-	iic0SendByte(((CONFIG_EPROM_ADDR << 1) | 0x01));//Ω¯»ÎΩ” ’ƒ£ Ω			   
+	iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) | 0x01));//Ω¯»ÎΩ” ’ƒ£ Ω			   
 	iic0WaitAck();	 
 	temp = iic0ReadByte(0);//∂¡“ª∏ˆ◊÷Ω⁄£¨∑«”¶¥–≈∫≈–≈∫≈	   
 	iic0Stop();        //≤˙…˙“ª∏ˆÕ£÷πÃıº˛	    
@@ -35,7 +35,7 @@ void epromWriteOneByte(uint16_t WriteAddr, uint8_t DataToWrite){//‘⁄AT24CXX÷∏∂®µ
 //DataToWrite:“™–¥»Îµƒ ˝æ›				   	  	    																 
 	iic0Start();  
 #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
-	iic0SendByte(((CONFIG_EPROM_ADDR << 1) & 0xFE));	    //∑¢ÀÕ–¥√¸¡Ó
+	iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) & 0xFE));	    //∑¢ÀÕ–¥√¸¡Ó
 	iic0WaitAck();
 	iic0SendByte(WriteAddr >> 8);    //∑¢ÀÕ∏ﬂµÿ÷∑
 #else

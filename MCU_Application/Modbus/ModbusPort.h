@@ -1,5 +1,5 @@
-#ifndef __PETITMODBUSPORT__H
-#define __PETITMODBUSPORT__H
+#ifndef __PETITMODBUSPORT__H__
+#define __PETITMODBUSPORT__H__
 /*****************************************************************************/
 #include "appConfig.h"
 /*****************************************************************************/
@@ -10,15 +10,11 @@
 #define FALSE 0
 #endif
 
-//extern volatile unsigned char    PetitReceiveBuffer[PETITMODBUS_RECEIVE_BUFFER_SIZE];
-//extern volatile unsigned char    PetitReceiveCounter;
-
-extern void PetitModBus_UART_Initialise(unsigned long bd);
-extern void PetitModBus_TIMER_Initialise(void);
-extern void PetitModBus_UART_Putch(unsigned char c);
-extern uint8_t PetitModBus_UART_String(unsigned char *s, unsigned int Length);
-
-extern void ReceiveInterrupt(unsigned char Data);
-extern void PetitModBus_TimerValues(void);
+extern void modBusUartInitialise(uint32_t baudrate);
+extern void modBusTimerInitialise(void);
+extern void modBusUartPutch(uint8_t c);
+extern uint8_t modBusUartString(uint8_t *s, uint16_t Length);
+extern void receiveInterrupt(uint8_t Data);
+extern void modBusTimerValues(void);
 
 #endif

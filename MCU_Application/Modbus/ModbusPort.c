@@ -1,10 +1,10 @@
 #include "modbusPort.h"
 /*****************************************************************************/
-volatile uint16_t ModbusTimerValue;
-extern volatile uint8_t ModbusReceiveCounter;
-volatile uint8_t ModbusReceiveBuffer[];
+volatile uint16_t modbusTimerValue;
+extern volatile uint8_t modbusReceiveCounter;
+volatile uint8_t modbusReceiveBuffer[];
 /*****************************************************************************/
-void InitModbusSerial(int32_t baudrate)
+void initModbusSerial(int32_t baudrate)
 {//初始化MODBUS串口
 	uint32_t temp;
 	temp = (uint32_t)(CONFIG_SYSCLK / 32 / baudrate);
@@ -22,8 +22,7 @@ void InitModbusSerial(int32_t baudrate)
 	TI0 = 0;//清除发送完成   		
 	RI0 = 0;//清除接收完成			
 }
-void InitModbusTimer(void)
-{//初始化MODBUS计时器 1mS TIMER2
+void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER2
 	uint16_t temp;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 1000));
 	T2CON = 0x0;//RCLK0=0,TCLK0=0
@@ -33,8 +32,7 @@ void InitModbusTimer(void)
 	TR2 = 1;        
 	ET2 = 1; //开中断T0
 }
-static void modbusSerialSendbyte(uint8_t *dt)
-{//串口发送一个字节
+static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
 	ES0 = 0;
 	TI0 = 0;
 	SBUF0 = *dt;
@@ -42,75 +40,55 @@ static void modbusSerialSendbyte(uint8_t *dt)
 	TI0 = 0;
 	ES0 = 1;
 }
-// UART Initialize for Microconrollers, yes you can use another phsycal layer!
-void PetitModBus_UART_Initialise(unsigned long bd)
-{
-// Insert UART Init Code Here
-    InitModbusSerial(bd);
+void modBusUartInitialise(uint32_t baudrate){// UART Initialize for Microconrollers, yes you can use another phsycal layer!
+    initModbusSerial(baudrate);
 }
-
-// Timer Initialize for Petit Modbus, 1ms Timer will be good for us!
-void PetitModBus_TIMER_Initialise(void)
-{
-// Insert TMR Init Code Here
-    InitModbusTimer();
+void modBusTimerInitialise(void){// Timer Initialize for Petit Modbus, 1ms Timer will be good for us!
+    initModbusTimer();
 }
-
-// This is used for send one character
-void PetitModBus_UART_Putch(unsigned char c)
-{
+void modBusUartPutch(uint8_t c){// This is used for send one character
 	modbusSerialSendbyte(&c);
 }
-
-// This is used for send string, better to use DMA for it ;)
-unsigned char PetitModBus_UART_String(unsigned char *s, unsigned int Length)
-{
-    unsigned short  DummyCounter;
-    
-    for(DummyCounter=0;DummyCounter<Length;DummyCounter++)
-        PetitModBus_UART_Putch(s[DummyCounter]);
-    
+uint8_t modBusUartString(uint8_t *s, uint16_t  Length){// This is used for send string, better to use DMA for it ;)
+    uint16_t DummyCounter;
+    for(DummyCounter=0; DummyCounter < Length; DummyCounter ++){
+        modBusUartPutch(s[DummyCounter]);
+    }
     return TRUE;
 }
-
-/*************************Interrupt Fonction Slave*****************************/
-// Call this function into your UART Interrupt. Collect data from it!
-// Better to use DMA
-void ReceiveInterrupt(unsigned char Data){
-    ModbusReceiveBuffer[ModbusReceiveCounter]   =Data;
-    ModbusReceiveCounter ++;
-    if(ModbusReceiveCounter > CONFIG_MODBUS_SLAVE_BUFFER_SIZE){  
-        ModbusReceiveCounter = 0;
+void receiveInterrupt(uint8_t Data){//Call this function into your UART Interrupt. Collect data from it!
+    modbusReceiveBuffer[modbusReceiveCounter] = Data;
+    modbusReceiveCounter ++;
+    if(modbusReceiveCounter > CONFIG_MODBUS_SLAVE_BUFFER_SIZE){  
+        modbusReceiveCounter = 0;
 	}
-    ModbusTimerValue = 0;
+    modbusTimerValue = 0;
 }
 
-// Call this function into 1ms Interrupt or Event!
-void PetitModBus_TimerValues(void){
-    ModbusTimerValue ++;
+
+void modBusTimerValues(void){//Call this function into 1ms Interrupt or Event!
+    modbusTimerValue ++;
 }
 /******************************************************************************/
-static void ModbusHandle() interrupt INTERRUPT_TIMER2
+static void modbusHandle() interrupt INTERRUPT_TIMER2
 {//硬件计时器TIMER1中断函数 1mS
 	TF2 = 0;
-	PetitModBus_TimerValues();
+	modBusTimerValues();
 } 
 
-static void SerialHandle() interrupt INTERRUPT_UART0
+static void serialHandle() interrupt INTERRUPT_UART0
 {//UART0 串口中断程序
 	uint8_t ctemp;
-	if(RI0)
-	{
+	if(RI0){
 		RI0 = 0;
 		ctemp = SBUF0;		
-		ReceiveInterrupt(ctemp);
+		receiveInterrupt(ctemp);
 		if(RI0)
 		{
 			RI0 = 0;
 		}
 	}
-	if(TI0)
-	{
+	if(TI0){
 		TI0 = 0;
 		//modbusSerialTxHandle();
 	}

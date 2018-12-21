@@ -42,7 +42,7 @@
 #define	CONFIG_AT24C64_SIZE					8192
 #define	CONFIG_AT24C128_SIZE 				16384
 #define	CONFIG_AT24C256_SIZE 				32768
-#define CONFIG_EPROM_ADDR					0x50
+#define CONFIG_EPROM_ADDRESS				0x50
 #define CONFIG_EPROM_FRAM					0//铁电存储体无写入等待
 #define CONFIG_EPROM_FREQ					1//
 /*****************************************************************************/
@@ -85,13 +85,13 @@
 //MODBUS SALVE配置
 #define CONFIG_MODBUS_SLAVE_ADDRESS			0x01//从设备地址
 #define CONFIG_MODBUS_SLAVE_BUFFER_SIZE		(256 + 32)//发送接收缓冲区
-#define CONFIG_MODBUS_SLAVE_RX_TIMEOUT		10//接收通讯超时 10mS
+#define CONFIG_MODBUS_SLAVE_TIMEOUT			250//接收通讯超时 10mS
 #define CONFIG_MODBUS_SLAVE_IO_DELAY		1//RX TX切换延时
 /*****************************************************************************/
 #define DISABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 0;
 #define ENABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 1;
-#define DISABLE_MODBUS_SERIAL_RX_INTERRUPT	RI0 = 0;
-#define ENABLE_MODBUS_SERIAL_RX_INTERRUPT	RI0 = 1;
+//#define DISABLE_MODBUS_SERIAL_RX_INTERRUPT	RI0 = 0;
+//#define ENABLE_MODBUS_SERIAL_RX_INTERRUPT	RI0 = 1;
 #define DISABLE_INTERRUPT					EA = 0;
 #define ENABLE_INTERRUPT					EA = 1;
 
@@ -133,7 +133,7 @@
 /*****************************************************************************/
 #include "Modbus.h"
 #include "ModbusPort.h"
-
+/*****************************************************************************/
 #include "sPLC.h"
 //#include "pidFuzzy.h"
 /*****************************************************************************/

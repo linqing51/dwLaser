@@ -1,21 +1,21 @@
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/20/2018 23:28:22 PAGE 1   
+C51 COMPILER V9.56.0.0   MODBUSPORT                                                        12/21/2018 17:57:45 PAGE 1   
 
 
-C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MODBUSPORT
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MODBUSPORT
 OBJECT MODULE PLACED IN .\Objects\ModbusPort.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\ModbusPort.c LARGE OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F0
-                    -20.ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\Mod
-                    -busPort.lst) OBJECT(.\Objects\ModbusPort.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\ModbusPort.c COMPACT OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_
+                    -F020.ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\M
+                    -odbusPort.lst) PREPRINT(.\Listings\ModbusPort.i) OBJECT(.\Objects\ModbusPort.obj)
 
 line level    source
 
    1          #include "modbusPort.h"
    2          /*****************************************************************************/
-   3          volatile uint16_t ModbusTimerValue;
-   4          extern volatile uint8_t ModbusReceiveCounter;
-   5          volatile uint8_t ModbusReceiveBuffer[];
+   3          volatile uint16_t modbusTimerValue;
+   4          extern volatile uint8_t modbusReceiveCounter;
+   5          volatile uint8_t modbusReceiveBuffer[];
    6          /*****************************************************************************/
-   7          void InitModbusSerial(int32_t baudrate)
+   7          void initModbusSerial(int32_t baudrate)
    8          {//初始化MODBUS串口
    9   1              uint32_t temp;
   10   1              temp = (uint32_t)(CONFIG_SYSCLK / 32 / baudrate);
@@ -33,110 +33,88 @@ line level    source
   22   1              TI0 = 0;//清除发送完成            
   23   1              RI0 = 0;//清除接收完成                    
   24   1      }
-  25          void InitModbusTimer(void)
-  26          {//初始化MODBUS计时器 1mS TIMER2
-  27   1              uint16_t temp;
-  28   1              temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 1000));
-  29   1              T2CON = 0x0;//RCLK0=0,TCLK0=0
-  30   1          RCAP2L = (uint8_t)(temp & 0xFF);
-  31   1              RCAP2H = (uint8_t)((temp >> 8) & 0xFF);
-  32   1              TF2 = 0;
-  33   1              TR2 = 1;        
-  34   1              ET2 = 1; //开中断T0
-  35   1      }
-  36          static void modbusSerialSendbyte(uint8_t *dt)
-  37          {//串口发送一个字节
-  38   1              ES0 = 0;
-  39   1              TI0 = 0;
-  40   1              SBUF0 = *dt;
-  41   1              while( !TI0 );
-  42   1              TI0 = 0;
-  43   1              ES0 = 1;
-  44   1      }
-  45          // UART Initialize for Microconrollers, yes you can use another phsycal layer!
-  46          void PetitModBus_UART_Initialise(unsigned long bd)
-  47          {
-  48   1      // Insert UART Init Code Here
-  49   1          InitModbusSerial(bd);
-  50   1      }
-  51          
-  52          // Timer Initialize for Petit Modbus, 1ms Timer will be good for us!
-  53          void PetitModBus_TIMER_Initialise(void)
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/20/2018 23:28:22 PAGE 2   
+  25          void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER2
+  26   1              uint16_t temp;
+  27   1              temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 1000));
+  28   1              T2CON = 0x0;//RCLK0=0,TCLK0=0
+  29   1          RCAP2L = (uint8_t)(temp & 0xFF);
+  30   1              RCAP2H = (uint8_t)((temp >> 8) & 0xFF);
+  31   1              TF2 = 0;
+  32   1              TR2 = 1;        
+  33   1              ET2 = 1; //开中断T0
+  34   1      }
+  35          static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
+  36   1              ES0 = 0;
+  37   1              TI0 = 0;
+  38   1              SBUF0 = *dt;
+  39   1              while( !TI0 );
+  40   1              TI0 = 0;
+  41   1              ES0 = 1;
+  42   1      }
+  43          void modBusUartInitialise(uint32_t baudrate){// UART Initialize for Microconrollers, yes you can use anoth
+             -er phsycal layer!
+  44   1          initModbusSerial(baudrate);
+  45   1      }
+  46          void modBusTimerInitialise(void){// Timer Initialize for Petit Modbus, 1ms Timer will be good for us!
+  47   1          initModbusTimer();
+  48   1      }
+  49          void modBusUartPutch(uint8_t c){// This is used for send one character
+  50   1              modbusSerialSendbyte(&c);
+  51   1      }
+  52          uint8_t modBusUartString(uint8_t *s, uint16_t  Length){// This is used for send string, better to use DMA 
+C51 COMPILER V9.56.0.0   MODBUSPORT                                                        12/21/2018 17:57:45 PAGE 2   
 
-  54          {
-  55   1      // Insert TMR Init Code Here
-  56   1          InitModbusTimer();
-  57   1      }
-  58          
-  59          // This is used for send one character
-  60          void PetitModBus_UART_Putch(unsigned char c)
-  61          {
-  62   1              modbusSerialSendbyte(&c);
-  63   1      }
-  64          
-  65          // This is used for send string, better to use DMA for it ;)
-  66          unsigned char PetitModBus_UART_String(unsigned char *s, unsigned int Length)
-  67          {
-  68   1          unsigned short  DummyCounter;
-  69   1          
-  70   1          for(DummyCounter=0;DummyCounter<Length;DummyCounter++)
-  71   1              PetitModBus_UART_Putch(s[DummyCounter]);
-  72   1          
-  73   1          return TRUE;
-  74   1      }
-  75          
-  76          /*************************Interrupt Fonction Slave*****************************/
-  77          // Call this function into your UART Interrupt. Collect data from it!
-  78          // Better to use DMA
-  79          void ReceiveInterrupt(unsigned char Data){
-  80   1          ModbusReceiveBuffer[ModbusReceiveCounter]   =Data;
-  81   1          ModbusReceiveCounter ++;
-  82   1          if(ModbusReceiveCounter > CONFIG_MODBUS_SLAVE_BUFFER_SIZE){  
-  83   2              ModbusReceiveCounter = 0;
-  84   2              }
-  85   1          ModbusTimerValue = 0;
-  86   1      }
-  87          
-  88          // Call this function into 1ms Interrupt or Event!
-  89          void PetitModBus_TimerValues(void){
-  90   1          ModbusTimerValue ++;
-  91   1      }
-  92          /******************************************************************************/
-  93          static void ModbusHandle() interrupt INTERRUPT_TIMER2
-  94          {//硬件计时器TIMER1中断函数 1mS
-  95   1              TF2 = 0;
-  96   1              PetitModBus_TimerValues();
-  97   1      } 
-  98          
-  99          static void SerialHandle() interrupt INTERRUPT_UART0
- 100          {//UART0 串口中断程序
- 101   1              uint8_t ctemp;
- 102   1              if(RI0)
- 103   1              {
- 104   2                      RI0 = 0;
- 105   2                      ctemp = SBUF0;          
- 106   2                      ReceiveInterrupt(ctemp);
- 107   2                      if(RI0)
- 108   2                      {
- 109   3                              RI0 = 0;
- 110   3                      }
- 111   2              }
- 112   1              if(TI0)
- 113   1              {
- 114   2                      TI0 = 0;
- 115   2                      //modbusSerialTxHandle();
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        12/20/2018 23:28:22 PAGE 3   
-
- 116   2              }
- 117   1      } 
+             -for it ;)
+  53   1          uint16_t DummyCounter;
+  54   1          for(DummyCounter=0; DummyCounter < Length; DummyCounter ++){
+  55   2              modBusUartPutch(s[DummyCounter]);
+  56   2          }
+  57   1          return TRUE;
+  58   1      }
+  59          void receiveInterrupt(uint8_t Data){//Call this function into your UART Interrupt. Collect data from it!
+  60   1          modbusReceiveBuffer[modbusReceiveCounter] = Data;
+  61   1          modbusReceiveCounter ++;
+  62   1          if(modbusReceiveCounter > CONFIG_MODBUS_SLAVE_BUFFER_SIZE){  
+  63   2              modbusReceiveCounter = 0;
+  64   2              }
+  65   1          modbusTimerValue = 0;
+  66   1      }
+  67          
+  68          
+  69          void modBusTimerValues(void){//Call this function into 1ms Interrupt or Event!
+  70   1          modbusTimerValue ++;
+  71   1      }
+  72          /******************************************************************************/
+  73          static void modbusHandle() interrupt INTERRUPT_TIMER2
+  74          {//硬件计时器TIMER1中断函数 1mS
+  75   1              TF2 = 0;
+  76   1              modBusTimerValues();
+  77   1      } 
+  78          
+  79          static void serialHandle() interrupt INTERRUPT_UART0
+  80          {//UART0 串口中断程序
+  81   1              uint8_t ctemp;
+  82   1              if(RI0){
+  83   2                      RI0 = 0;
+  84   2                      ctemp = SBUF0;          
+  85   2                      receiveInterrupt(ctemp);
+  86   2                      if(RI0)
+  87   2                      {
+  88   3                              RI0 = 0;
+  89   3                      }
+  90   2              }
+  91   1              if(TI0){
+  92   2                      TI0 = 0;
+  93   2                      //modbusSerialTxHandle();
+  94   2              }
+  95   1      } 
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    334    ----
+   CODE SIZE        =    312    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =      2      10
-   PDATA SIZE       =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =      2      10
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
