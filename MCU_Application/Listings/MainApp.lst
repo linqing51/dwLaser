@@ -1,7 +1,7 @@
-C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 1   
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/22/2018 00:42:45 PAGE 1   
 
 
-C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MAINAPP
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAINAPP
 OBJECT MODULE PLACED IN .\Objects\MainApp.obj
 COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE MainApp\MainApp.c COMPACT OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F0
                     -20.ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\Mai
@@ -62,7 +62,7 @@ line level    source
   51          #define STEPNUM_READY                                   3//准备
   52          #define STEPNUM_LASERON                                 4//激光开始
   53          
-C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 2   
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/22/2018 00:42:45 PAGE 2   
 
   54          
   55          
@@ -118,681 +118,661 @@ line level    source
  105          #define MCP4768_DAC2            2
  106          #define MCP4768_DAC3            3
  107          #define MCP4768_DAC4            4
- 108          void readNvram(void)
- 109          {//EPROM->NVRAM0
- 110   1              //readEprom();
- 111   1              //NVRAM0->NVRAM1
- 112   1              //memcpy((uint8_t*)Nvram1, (uint8_t*)Nvram0, (CONFIG_NVRAM_SIZE * 2));
- 113   1              
- 114   1      }
- 115          void writeNvram(void)
-C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 3   
+ 108          
+ 109          void upDateDac0(uint16_t dat);
+ 110          void upDateDac1(uint16_t dat);
+ 111          /*****************************************************************************/
+ 112          
+ 113          void main(void){
+ 114   1              Init_Device();
+ 115   1              //timer0Init();
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/22/2018 00:42:45 PAGE 3   
 
- 116          {//掉电保持寄存器全部写入NVRAM 强制全部写入
- 117   1              //DM0写入NVRAM
- 118   1      }
- 119          void updateNvram(void)
- 120          {//掉电保持寄存器更新入NVRAM 仅写入更新部分
- 121   1              //
- 122   1      }
- 123          
- 124          void upDateDac0(uint16_t dat);
- 125          void upDateDac1(uint16_t dat);
- 126          /*****************************************************************************/
- 127          
- 128          void main(void)
- 129          {
- 130   1              uint8_t rbuf[8];
- 131   1              uint8_t wbuf[8] = {1,2,3,4,5,6,7,8};
- 132   1              Init_Device();
- 133   1              //timer0Init();
- 134   1              //inPca9554Init();
- 135   1              //outPca9554Init();
- 136   1              //mcp47x6Init();
- 137   1              initModbus(CONFIG_MODBUS_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
- 138   1              ES0 = 1;
- 139   1              ENABLE_INTERRUPT;
- 140   1              //nvramLoad();//上电恢复NVRAM
- 141   1              while(1)
- 142   1              {
- 143   2                      processModbus();
- 144   2                      //refreshInput();//刷新输入IO
- 145   2      //              modbusSlaveAsciiPoll();
- 146   2      ////            SET(10);
- 147   2      ////            RESET(10);
- 148   2      ////            SET(10);
- 149   2      ////            RESET(10);
- 150   2      ////            SET(10);
- 151   2      ////            RESET(10);
- 152   2      ////            SET(10);
- 153   2      ////            RESET(10);
- 154   2      ////            FLIP(10);
- 155   2      ////            FLIP(10);
- 156   2      ////            FLIP(10);
- 157   2      ////            FLIP(10);
- 158   2      ////            //读取IO
- 159   2      ////            //执行程序
- 160   2      ////            //输出IO
- 161   2      ////            T100MS(0, 1, 2);
- 162   2      ////            if(LD(TD_100MS_START * 16 + 0));
- 163   2      ////            {
- 164   2      ////                    SET(0); 
- 165   2      ////            }
- 166   2                      //nvramUpdata();//更新NVRAM
- 167   2                      //refreshOutput();//刷新输出IO
- 168   2              }
- 169   1      }
-*** WARNING C280 IN LINE 130 OF MainApp\MainApp.c: 'rbuf': unreferenced local variable
- 170          //void main(void)
- 171          //{
- 172          //      int8_t temp;
- 173          //      int16_t tecOnTime, tecOffTime;//制冷开关时间
- 174          ////    my_t *p = my;
- 175          ////    pidFuzzy_t pidFuzzy;
- 176          //      Init_Device();//初始化MCU
-C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 4   
+ 116   1              //inPca9554Init();
+ 117   1              //outPca9554Init();
+ 118   1              //mcp47x6Init();
+ 119   1              initModbus(CONFIG_MODBUS_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
+ 120   1              ES0 = 1;
+ 121   1              ENABLE_INTERRUPT;
+ 122   1              nvramLoad();//上电恢复NVRAM
+ 123   1              while(1){
+ 124   2                      processModbus();
+ 125   2                      //refreshInput();//刷新输入IO
+ 126   2                      //getAdc();
+ 127   2      ////            SET(10);
+ 128   2      ////            RESET(10);
+ 129   2      ////            SET(10);
+ 130   2      ////            RESET(10);
+ 131   2      ////            SET(10);
+ 132   2      ////            RESET(10);
+ 133   2      ////            SET(10);
+ 134   2      ////            RESET(10);
+ 135   2      ////            FLIP(10);
+ 136   2      ////            FLIP(10);
+ 137   2      ////            FLIP(10);
+ 138   2      ////            FLIP(10);
+ 139   2      ////            //读取IO
+ 140   2      ////            //执行程序
+ 141   2      ////            //输出IO
+ 142   2      ////            T100MS(0, 1, 2);
+ 143   2      ////            if(LD(TD_100MS_START * 16 + 0));
+ 144   2      ////            {
+ 145   2      ////                    SET(0); 
+ 146   2      ////            }
+ 147   2                      nvramUpdata();//更新NVRAM
+ 148   2                      //refreshOutput();//刷新输出IO
+ 149   2              }
+ 150   1      }
+ 151          //void main(void)
+ 152          //{
+ 153          //      int8_t temp;
+ 154          //      int16_t tecOnTime, tecOffTime;//制冷开关时间
+ 155          ////    my_t *p = my;
+ 156          ////    pidFuzzy_t pidFuzzy;
+ 157          //      Init_Device();//初始化MCU
+ 158          //#if CONFIG_USING_WDT == 1
+ 159          //      if ((RSTSRC & 0x02) == 0x00)
+ 160          //      {
+ 161          //              if (RSTSRC == 0x08)
+ 162          //              {//检测WDT看门狗 看门狗复位后锁定
+ 163          //                      //所有IO ->LOW
+ 164          //                      //关闭DAC
+ 165          //                      //关闭
+ 166          //                      LED_MCU = true;
+ 167          //                      LED_LASER0 = false;
+ 168          //                      LED_LASER1 = true;
+ 169          //                      while(1);
+ 170          //              }
+ 171          //      }
+ 172          //#endif
+ 173          
+ 174                  //pidFuzzyInit(&pidFuzzy, 2, 0.5, 0.1);
+ 175          //      setModbusSlaveAddr(CONFIG_LOCAL_ADDRESS);//设置从机地址
+ 176          //      InitModbusHardware(CONFIG_UART0_BAUDRATE);//初始化MODBUS从机串口
+ 177          //      /**********************************************************************/
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/22/2018 00:42:45 PAGE 4   
 
- 177          //#if CONFIG_USING_WDT == 1
- 178          //      if ((RSTSRC & 0x02) == 0x00)
- 179          //      {
- 180          //              if (RSTSRC == 0x08)
- 181          //              {//检测WDT看门狗 看门狗复位后锁定
- 182          //                      //所有IO ->LOW
- 183          //                      //关闭DAC
- 184          //                      //关闭
- 185          //                      LED_MCU = true;
- 186          //                      LED_LASER0 = false;
- 187          //                      LED_LASER1 = true;
- 188          //                      while(1);
- 189          //              }
- 190          //      }
- 191          //#endif
- 192          
- 193                  //pidFuzzyInit(&pidFuzzy, 2, 0.5, 0.1);
- 194          //      setModbusSlaveAddr(CONFIG_LOCAL_ADDRESS);//设置从机地址
- 195          //      InitModbusHardware(CONFIG_UART0_BAUDRATE);//初始化MODBUS从机串口
- 196          //      /**********************************************************************/
- 197          ////初始化my结构体
- 198          //      //my.stepNum = 0;
- 199          //      //my.checkCode = ((CONFIG_CHECK_CODE << 8) & 0xFF00);
- 200          //      //my.checkCode |= CONFIG_VERSION;
- 201          //      
- 202          ////使能看门狗
- 203          //#if CONFIG_USING_WDT == 1
- 204          //      Watchdog_Init();
- 205          //#endif        
- 206          //      EA = 1;
- 207          //      
- 208          //      while(1)
- 209          //      {//开始循环扫描周期
- 210          ////看门狗喂狗
- 211          //#if CONFIG_USING_WDT == 1
- 212          //               WDTCN = 0xA5;//喂狗
- 213          //#endif
- 214          ////上位机使能MCU软复位
- 215          //#if CONFIG_USING_RESET == 1
- 216          //              if(my.mcuReset)
- 217          //              {
- 218          //                      RSTSRC |= (1 << 1);//Forces a Power-On Reset. /RST is driven low.
- 219          //              }
- 220          //#endif
- 221          //              //数字滤波扫描输入IO
- 222          
- 223          //              p->flagConnectErr = 0;//每次扫描错误标志清零
- 224          //              //心跳->PLC
- 225          //              if(my.heartFlag)
- 226          //              {
- 227          //                      my.heatFlag = 0;
- 228          //              }
- 229          //              else
- 230          //              {
- 231          //                      my.heatFlag = 1;
- 232          //              }
- 233          //              
- 234          //              //获取过热状态
- 235          //              my.overTempFault = (my.overTempDiode && !my.overTempDiodeIgnore) ||
- 236          //                                                        (my.overTempAmplifier && !my.overTempAmplifierIgnore) ||
- 237          //                                (my.overTempEnvironment && !my.overTempEnvironmentIgnore) ||
- 238          //                                                        (my.overTempMcu && !my.overTempMcuIgnore);
-C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 5   
+ 178          ////初始化my结构体
+ 179          //      //my.stepNum = 0;
+ 180          //      //my.checkCode = ((CONFIG_CHECK_CODE << 8) & 0xFF00);
+ 181          //      //my.checkCode |= CONFIG_VERSION;
+ 182          //      
+ 183          ////使能看门狗
+ 184          //#if CONFIG_USING_WDT == 1
+ 185          //      Watchdog_Init();
+ 186          //#endif        
+ 187          //      EA = 1;
+ 188          //      
+ 189          //      while(1)
+ 190          //      {//开始循环扫描周期
+ 191          ////看门狗喂狗
+ 192          //#if CONFIG_USING_WDT == 1
+ 193          //               WDTCN = 0xA5;//喂狗
+ 194          //#endif
+ 195          ////上位机使能MCU软复位
+ 196          //#if CONFIG_USING_RESET == 1
+ 197          //              if(my.mcuReset)
+ 198          //              {
+ 199          //                      RSTSRC |= (1 << 1);//Forces a Power-On Reset. /RST is driven low.
+ 200          //              }
+ 201          //#endif
+ 202          //              //数字滤波扫描输入IO
+ 203          
+ 204          //              p->flagConnectErr = 0;//每次扫描错误标志清零
+ 205          //              //心跳->PLC
+ 206          //              if(my.heartFlag)
+ 207          //              {
+ 208          //                      my.heatFlag = 0;
+ 209          //              }
+ 210          //              else
+ 211          //              {
+ 212          //                      my.heatFlag = 1;
+ 213          //              }
+ 214          //              
+ 215          //              //获取过热状态
+ 216          //              my.overTempFault = (my.overTempDiode && !my.overTempDiodeIgnore) ||
+ 217          //                                                        (my.overTempAmplifier && !my.overTempAmplifierIgnore) ||
+ 218          //                                (my.overTempEnvironment && !my.overTempEnvironmentIgnore) ||
+ 219          //                                                        (my.overTempMcu && !my.overTempMcuIgnore);
+ 220          //          my.overTempFault = my.overTempFault && !my.overTempIgnore;
+ 221          //              //获取安全状态
+ 222          //              my.safeFault = (my.safeInterlock && !my.safeInterlockIgnore) ||
+ 223          //                                      (my.safeFiberDetect0 && my.safeFiberDetect0Ignore) ||
+ 224          //                                      (my.safeFiberDetect1 && my.safeFiberDetect1Ignore) ||
+ 225          //                                      (my.safeOpenCase && my.safeOpenCaseIgnore);
+ 226          //              my.safeFault = my.safeFault && !my.safeFaultIgnore;
+ 227          //              //模拟输入扫描
+ 228          //              STEP_LOOP_START:
+ 229          //              if(my.stepNum == STEPNUM_INIT)
+ 230          //              {//初始化
+ 231          //                      my.stepNum = STEPNUM_STANDBY;//Goto next step
+ 232          //                      goto STEP_LOOP_END;
+ 233          //              }
+ 234          //              if(my.stepNum == STEPNUM_STANDBY)
+ 235          //              {//第一步 待机状态->蜂鸣器提示
+ 236          //                      if(my.safeFault ||
+ 237          //               my.overTempFault)
+ 238          //                      {
+ 239          //                              my.stepNum = STEPNUM_FAULT;
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/22/2018 00:42:45 PAGE 5   
 
- 239          //          my.overTempFault = my.overTempFault && !my.overTempIgnore;
- 240          //              //获取安全状态
- 241          //              my.safeFault = (my.safeInterlock && !my.safeInterlockIgnore) ||
- 242          //                                      (my.safeFiberDetect0 && my.safeFiberDetect0Ignore) ||
- 243          //                                      (my.safeFiberDetect1 && my.safeFiberDetect1Ignore) ||
- 244          //                                      (my.safeOpenCase && my.safeOpenCaseIgnore);
- 245          //              my.safeFault = my.safeFault && !my.safeFaultIgnore;
- 246          //              //模拟输入扫描
- 247          //              STEP_LOOP_START:
- 248          //              if(my.stepNum == STEPNUM_INIT)
- 249          //              {//初始化
- 250          //                      my.stepNum = STEPNUM_STANDBY;//Goto next step
- 251          //                      goto STEP_LOOP_END;
- 252          //              }
- 253          //              if(my.stepNum == STEPNUM_STANDBY)
- 254          //              {//第一步 待机状态->蜂鸣器提示
- 255          //                      if(my.safeFault ||
- 256          //               my.overTempFault)
- 257          //                      {
- 258          //                              my.stepNum = STEPNUM_FAULT;
- 259          //                      }
- 260          //                      else if(my.readyFlag)
- 261          //                      {
- 262          //                              my.beemOn = true;
- 263          //                              my.stepNum = STEPNUM_INTO_READY;
+ 240          //                      }
+ 241          //                      else if(my.readyFlag)
+ 242          //                      {
+ 243          //                              my.beemOn = true;
+ 244          //                              my.stepNum = STEPNUM_INTO_READY;
+ 245          //                      }
+ 246          //                      else
+ 247          //                      {
+ 248          //                              my.stepNum = STEPNUM_STANDBY;
+ 249          //                      }
+ 250          //                      goto STEP_LOOP_END;
+ 251          //              }
+ 252          //              if(my.stepNum == STEPNUM_INTO_READY)
+ 253          //              {//第二步 等待1秒后进入
+ 254          //                      if(my.readyFlag)
+ 255          //                      {
+ 256          //                              my.beemOn = true;
+ 257          //                              sTimerCtrl(STIMER_ON, STIMER_100MS_INTOREADY_BEEM, 10);
+ 258          //                              if(sTimer[STIMER_100MS_INTOREADY_BEEM].status)
+ 259          //                              {//计时达到进入READY步骤
+ 260          //                                      sTimerCtrl(STIMER_OFF, STIMER_100MS_INTOREADY_BEEM, 10);
+ 261          //                                      my.beemOn = false;
+ 262          //                                      my.stepNum = STEPNUM_READY;
+ 263          //                              }
  264          //                      }
- 265          //                      else
- 266          //                      {
- 267          //                              my.stepNum = STEPNUM_STANDBY;
- 268          //                      }
- 269          //                      goto STEP_LOOP_END;
- 270          //              }
- 271          //              if(my.stepNum == STEPNUM_INTO_READY)
- 272          //              {//第二步 等待1秒后进入
- 273          //                      if(my.readyFlag)
- 274          //                      {
- 275          //                              my.beemOn = true;
- 276          //                              sTimerCtrl(STIMER_ON, STIMER_100MS_INTOREADY_BEEM, 10);
- 277          //                              if(sTimer[STIMER_100MS_INTOREADY_BEEM].status)
- 278          //                              {//计时达到进入READY步骤
- 279          //                                      sTimerCtrl(STIMER_OFF, STIMER_100MS_INTOREADY_BEEM, 10);
- 280          //                                      my.beemOn = false;
- 281          //                                      my.stepNum = STEPNUM_READY;
- 282          //                              }
- 283          //                      }
- 284          //                      goto STEP_LOOP_END;
- 285          //              }
- 286          //              if(my.stepNum == STEPNUM_READY)
- 287          //              {//第三步 准备状态 等待脚踏信号发射激光
- 288          //                      if(my.safeFault ||
- 289          //               my.overTempFault)
- 290          //                      {
- 291          //                              my.stepNum = STEPNUM_FAULT;
- 292          //                      }
- 293          //                      else if((my.footSwitch && 0x01) &&
- 294          //                                  !(my.footSwitch && 0x02))//检测footSwitch上升沿
- 295          //                      {//发射激光步骤
- 296          //                              //打开激光
- 297          //                              my.stepNum = STEPNUM_LASERON;
- 298          //                              my.laserEmitOver = 0x0;//发射完成标志清零
- 299          //                              switch(my.laserMode)
- 300          //                              {
-C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 6   
+ 265          //                      goto STEP_LOOP_END;
+ 266          //              }
+ 267          //              if(my.stepNum == STEPNUM_READY)
+ 268          //              {//第三步 准备状态 等待脚踏信号发射激光
+ 269          //                      if(my.safeFault ||
+ 270          //               my.overTempFault)
+ 271          //                      {
+ 272          //                              my.stepNum = STEPNUM_FAULT;
+ 273          //                      }
+ 274          //                      else if((my.footSwitch && 0x01) &&
+ 275          //                                  !(my.footSwitch && 0x02))//检测footSwitch上升沿
+ 276          //                      {//发射激光步骤
+ 277          //                              //打开激光
+ 278          //                              my.stepNum = STEPNUM_LASERON;
+ 279          //                              my.laserEmitOver = 0x0;//发射完成标志清零
+ 280          //                              switch(my.laserMode)
+ 281          //                              {
+ 282          //                                      case ENUM_MODE_CW:
+ 283          //                                      {
+ 284          //                                              my.laserEmiting |=  1 << ENUM_MODE_CW;
+ 285          //                                              break;
+ 286          //                                      }
+ 287          //                                      case ENUM_MODE_SP:
+ 288          //                                      {
+ 289          //                                              my.laserEmiting |=  1 << ENUM_MODE_SP;
+ 290          //                                              break;
+ 291          //                                      }
+ 292          //                                      case ENUM_MODE_MP:
+ 293          //                                      {
+ 294          //                                              my.laserEmiting |=  1 << ENUM_MODE_MP;
+ 295          //                                              break;
+ 296          //                                      }
+ 297          //                                      case ENUM_MODE_GP:
+ 298          //                                      {
+ 299          //                                              my.laserEmiting |=  1 << ENUM_MODE_GP;
+ 300          //                                              break;
+ 301          //                                      }
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/22/2018 00:42:45 PAGE 6   
 
- 301          //                                      case ENUM_MODE_CW:
- 302          //                                      {
- 303          //                                              my.laserEmiting |=  1 << ENUM_MODE_CW;
- 304          //                                              break;
- 305          //                                      }
- 306          //                                      case ENUM_MODE_SP:
- 307          //                                      {
- 308          //                                              my.laserEmiting |=  1 << ENUM_MODE_SP;
- 309          //                                              break;
- 310          //                                      }
- 311          //                                      case ENUM_MODE_MP:
- 312          //                                      {
- 313          //                                              my.laserEmiting |=  1 << ENUM_MODE_MP;
- 314          //                                              break;
- 315          //                                      }
- 316          //                                      case ENUM_MODE_GP:
- 317          //                                      {
- 318          //                                              my.laserEmiting |=  1 << ENUM_MODE_GP;
- 319          //                                              break;
- 320          //                                      }
- 321          //                                      case ENUM_MODE_CC:
- 322          //                                      {
- 323          //                                              my.laserEmiting |=  1 << ENUM_MODE_CC;
- 324          //                                              break;
- 325          //                                      }
- 326          //                                      default:break;
- 327          //                              }
- 328          //                      }
- 329          //                      goto STEP_LOOP_END;
- 330          //              }
- 331          //              if(my.stepNum == STEPNUM_LASERON)
- 332          //              {
- 333          //                      if(my.safeFault || my.overTempFault)
- 334          //                      {//故障:
- 335          //                              my.stepNum = STEPNUM_FAULT;
- 336          //                      }
- 337          //                      else if(!(my.footSwitch & 0x01))//脚踏复位
- 338          //                      {
- 339          //                              //关闭激光
- 340          //                              my.stepNum = STEPNUM_READY;//返回READY步骤
- 341          //                      }
- 342          //                      else
- 343          //                      {
- 344          //                              if( my.laserEmiting == ENUM_MODE_CW)
- 345          //                              {//连续模式
- 346          //                                      switch(my.selectChannel)
- 347          //                                      {
- 348          //                                              case ENUM_CHANNEL_BOTH:
- 349          //                                              {
- 350          //                                                      upDateDac0(laserCurrent[0]);
- 351          //                                                      upDateDac1(laserCurrent[1]);
- 352          //                                                      break;
- 353          //                                              }
- 354          //                                              case ENUM_CHANNEL1:
- 355          //                                              {
- 356          //                                                      upDateDac0(laserCurrent[0]);
- 357          //                                                      break;
- 358          //                                              }
- 359          //                                              case ENUM_CHANNEL2:
- 360          //                                              {
- 361          //                                                      upDateDac1(laserCurrent[1]);
- 362          //                                                      break;
-C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 7   
+ 302          //                                      case ENUM_MODE_CC:
+ 303          //                                      {
+ 304          //                                              my.laserEmiting |=  1 << ENUM_MODE_CC;
+ 305          //                                              break;
+ 306          //                                      }
+ 307          //                                      default:break;
+ 308          //                              }
+ 309          //                      }
+ 310          //                      goto STEP_LOOP_END;
+ 311          //              }
+ 312          //              if(my.stepNum == STEPNUM_LASERON)
+ 313          //              {
+ 314          //                      if(my.safeFault || my.overTempFault)
+ 315          //                      {//故障:
+ 316          //                              my.stepNum = STEPNUM_FAULT;
+ 317          //                      }
+ 318          //                      else if(!(my.footSwitch & 0x01))//脚踏复位
+ 319          //                      {
+ 320          //                              //关闭激光
+ 321          //                              my.stepNum = STEPNUM_READY;//返回READY步骤
+ 322          //                      }
+ 323          //                      else
+ 324          //                      {
+ 325          //                              if( my.laserEmiting == ENUM_MODE_CW)
+ 326          //                              {//连续模式
+ 327          //                                      switch(my.selectChannel)
+ 328          //                                      {
+ 329          //                                              case ENUM_CHANNEL_BOTH:
+ 330          //                                              {
+ 331          //                                                      upDateDac0(laserCurrent[0]);
+ 332          //                                                      upDateDac1(laserCurrent[1]);
+ 333          //                                                      break;
+ 334          //                                              }
+ 335          //                                              case ENUM_CHANNEL1:
+ 336          //                                              {
+ 337          //                                                      upDateDac0(laserCurrent[0]);
+ 338          //                                                      break;
+ 339          //                                              }
+ 340          //                                              case ENUM_CHANNEL2:
+ 341          //                                              {
+ 342          //                                                      upDateDac1(laserCurrent[1]);
+ 343          //                                                      break;
+ 344          //                                              }
+ 345          //                                              default:break;
+ 346          //                                      }
+ 347          //                              }
+ 348          //                              if( my.laserEmiting == ENUM_MODE_SP )
+ 349          //                              {//单脉冲模式
+ 350          //                                      if(selectChannel == ENUM_CHANNEL_BOTH)
+ 351          //                                      {
+ 352          //                                              upDateDac0(laserCurrent[0]);
+ 353          //                                              upDateDac1(laserCurrent[1]);
+ 354          //                                      }
+ 355          //                                      if(selectChannel == ENUM_CHANNEL1)
+ 356          //                                      {
+ 357          //                                              upDateDac0(laserCurrent[0]);
+ 358          //                                      }
+ 359          //                                      if(selectChannel = ENUM_CHANNEL2)
+ 360          //                                      {
+ 361          //                                              upDateDac1(laserCurrent[1]);
+ 362          //                                      }
+ 363          //                                      sTimerCtrl(STIMER_ON, STIMER_1MS_SP_LASER_ON, my.posWidth);
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/22/2018 00:42:45 PAGE 7   
 
- 363          //                                              }
- 364          //                                              default:break;
- 365          //                                      }
- 366          //                              }
- 367          //                              if( my.laserEmiting == ENUM_MODE_SP )
- 368          //                              {//单脉冲模式
- 369          //                                      if(selectChannel == ENUM_CHANNEL_BOTH)
- 370          //                                      {
- 371          //                                              upDateDac0(laserCurrent[0]);
- 372          //                                              upDateDac1(laserCurrent[1]);
- 373          //                                      }
- 374          //                                      if(selectChannel == ENUM_CHANNEL1)
- 375          //                                      {
- 376          //                                              upDateDac0(laserCurrent[0]);
- 377          //                                      }
- 378          //                                      if(selectChannel = ENUM_CHANNEL2)
- 379          //                                      {
- 380          //                                              upDateDac1(laserCurrent[1]);
- 381          //                                      }
- 382          //                                      sTimerCtrl(STIMER_ON, STIMER_1MS_SP_LASER_ON, my.posWidth);
- 383          //                                      if(sTimer[STIMER_1MS_LASER_ON].status)
- 384          //                                      {
- 385          //                                              upDateDac0(0x0);
- 386          //                                              upDateDac1(0x0);
- 387          //                                              my.laserEmiting &=  ~(1<< ENUM_MODE_CW);//发射完成清空正在发射标志位
- 388          //                                              my.laserEmitOver |= 1 << ENUM_MODE_CW;//发射完成标志位置位
- 389          //                                              sTimerCtrl(STIMER_OFF, STIMER_1MS_SP_LASER_ON, my.posWidth);
- 390          //                                      }
- 391          //                              }       
- 392          //                              if( my.laserEmiting == ENUM_MODE_MP )
- 393          //                              {//多脉冲模式
- 394          //                                      if(!sTimer[STIMER_1MS_LASER_ON].enable)
- 395          //                                      {//正脉宽计时
- 396          //                                      if(selectChannel == ENUM_CHANNEL_BOTH)
- 397          //                              {
- 398          //                                      DAC0 = laserCurrent[0];
- 399          //                                      DAC1 = laserCurrent[1];
- 400          //                              }
- 401          //                              if(selectChannel == ENUM_CHANNEL1)
+ 364          //                                      if(sTimer[STIMER_1MS_LASER_ON].status)
+ 365          //                                      {
+ 366          //                                              upDateDac0(0x0);
+ 367          //                                              upDateDac1(0x0);
+ 368          //                                              my.laserEmiting &=  ~(1<< ENUM_MODE_CW);//发射完成清空正在发射标志位
+ 369          //                                              my.laserEmitOver |= 1 << ENUM_MODE_CW;//发射完成标志位置位
+ 370          //                                              sTimerCtrl(STIMER_OFF, STIMER_1MS_SP_LASER_ON, my.posWidth);
+ 371          //                                      }
+ 372          //                              }       
+ 373          //                              if( my.laserEmiting == ENUM_MODE_MP )
+ 374          //                              {//多脉冲模式
+ 375          //                                      if(!sTimer[STIMER_1MS_LASER_ON].enable)
+ 376          //                                      {//正脉宽计时
+ 377          //                                      if(selectChannel == ENUM_CHANNEL_BOTH)
+ 378          //                              {
+ 379          //                                      DAC0 = laserCurrent[0];
+ 380          //                                      DAC1 = laserCurrent[1];
+ 381          //                              }
+ 382          //                              if(selectChannel == ENUM_CHANNEL1)
+ 383          //                              {
+ 384          //                                      
+ 385          //                              }
+ 386          //                              if(selectChannel = ENUM_CHANNEL2)
+ 387          //                              {
+ 388          //                              }
+ 389          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_ON, my.posWidth);
+ 390          //                              if(sTimer[STIMER_1MS_LASER_ON].status)
+ 391          //                              {
+ 392          //                                      //关闭激光
+ 393          //                                      //关闭计时器
+ 394          //                                      my.laserOnFlag = 0;
+ 395          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
+ 396          //                              }       
+ 397          //                      }
+ 398          //                      else if(!my.laserOnFlag)
+ 399          //                      {//负脉宽计时
+ 400          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_OFF, my.negWidth);
+ 401          //                              if(sTimer[STIMER_1MS_LASER_OFF].status)
  402          //                              {
- 403          //                                      
- 404          //                              }
- 405          //                              if(selectChannel = ENUM_CHANNEL2)
- 406          //                              {
- 407          //                              }
- 408          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_ON, my.posWidth);
- 409          //                              if(sTimer[STIMER_1MS_LASER_ON].status)
- 410          //                              {
- 411          //                                      //关闭激光
- 412          //                                      //关闭计时器
- 413          //                                      my.laserOnFlag = 0;
- 414          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
- 415          //                              }       
- 416          //                      }
- 417          //                      else if(!my.laserOnFlag)
- 418          //                      {//负脉宽计时
- 419          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_OFF, my.negWidth);
- 420          //                              if(sTimer[STIMER_1MS_LASER_OFF].status)
- 421          //                              {
- 422          //                                      my.laserOnFlag = 1;
- 423          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
- 424          //                              }
-C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 8   
+ 403          //                                      my.laserOnFlag = 1;
+ 404          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
+ 405          //                              }
+ 406          //                      }
+ 407          //              }
+ 408          //              if( !my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || my.triggerCC)
+ 409          //              {//校正模式
+ 410          //                      
+ 411          //              }
+ 412          //                      }
+ 413          //                      goto STEP_LOOP_END;
+ 414          //              }
+ 415          //              if(my.stepNum == STEPNUM_FAULT)
+ 416          //              {//错误状态
+ 417          //                      //关闭激光
+ 418          //                      if(!my.safeFault &&
+ 419          //               !my.overTempFault)
+ 420          //                      {//错误消除
+ 421          //                              if(my.clearError)
+ 422          //                              {//错误消除返回待机状态
+ 423          //                                      my.clearError = 0;
+ 424          //                                      my.stepNum = STEPNUM_STANDBY;
+ 425          //                              }
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/22/2018 00:42:45 PAGE 8   
 
- 425          //                      }
- 426          //              }
- 427          //              if( !my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || my.triggerCC)
- 428          //              {//校正模式
- 429          //                      
- 430          //              }
- 431          //                      }
- 432          //                      goto STEP_LOOP_END;
- 433          //              }
- 434          //              if(my.stepNum == STEPNUM_FAULT)
- 435          //              {//错误状态
- 436          //                      //关闭激光
- 437          //                      if(!my.safeFault &&
- 438          //               !my.overTempFault)
- 439          //                      {//错误消除
- 440          //                              if(my.clearError)
- 441          //                              {//错误消除返回待机状态
- 442          //                                      my.clearError = 0;
- 443          //                                      my.stepNum = STEPNUM_STANDBY;
- 444          //                              }
- 445          //                      }
- 446          //                      else
- 447          //                      {
- 448          //                              my.stepNum = STEPNUM_FAULT;
- 449          //                      }
- 450          //                      goto STEP_LOOP_END;
- 451          //              }
- 452          //              STEP_LOOP_END:
- 453          //              if( my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || !my.triggerCC)
- 454          //              {//连续模式
- 455          //                      if(!my.laserOnFlag)
- 456          //                      {       
- 457          //                              switch(my.selectChannel)
- 458          //                              {
- 459          //                                      case ENUM_CHANNEL_BOTH:
- 460          //                                      {
- 461          //                                              DAC0 = laserCurrent[0];
- 462          //                                              DAC1 = laserCurrent[1];
- 463          //                                              break;
- 464          //                                      }
- 465          //                                      case ENUM_CHANNEL1:
- 466          //                                      {
- 467          //                                              DAC0 = laserCurrent[0]; 
- 468          //                                              break;
- 469          //                                      }
- 470          //                                      case ENUM_CHANNEL2:
- 471          //                                      {
- 472          //                                              DAC1 = laserCurrent[1];
- 473          //                                              break;
- 474          //                                      }
- 475          //                                      default:break;
- 476          //                              }
- 477          //                              my.laserOnFlag = 1;
- 478          //                      }
- 479          //                      
- 480          //              }
- 481          //              if( my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || !my.triggerCC)
- 482          //              {//单脉冲模式
- 483          //                      if(!my.laserOnFlag)
- 484          //                      {
- 485          //                              if(selectChannel == ENUM_CHANNEL_BOTH)
- 486          //                              {
-C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 9   
+ 426          //                      }
+ 427          //                      else
+ 428          //                      {
+ 429          //                              my.stepNum = STEPNUM_FAULT;
+ 430          //                      }
+ 431          //                      goto STEP_LOOP_END;
+ 432          //              }
+ 433          //              STEP_LOOP_END:
+ 434          //              if( my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || !my.triggerCC)
+ 435          //              {//连续模式
+ 436          //                      if(!my.laserOnFlag)
+ 437          //                      {       
+ 438          //                              switch(my.selectChannel)
+ 439          //                              {
+ 440          //                                      case ENUM_CHANNEL_BOTH:
+ 441          //                                      {
+ 442          //                                              DAC0 = laserCurrent[0];
+ 443          //                                              DAC1 = laserCurrent[1];
+ 444          //                                              break;
+ 445          //                                      }
+ 446          //                                      case ENUM_CHANNEL1:
+ 447          //                                      {
+ 448          //                                              DAC0 = laserCurrent[0]; 
+ 449          //                                              break;
+ 450          //                                      }
+ 451          //                                      case ENUM_CHANNEL2:
+ 452          //                                      {
+ 453          //                                              DAC1 = laserCurrent[1];
+ 454          //                                              break;
+ 455          //                                      }
+ 456          //                                      default:break;
+ 457          //                              }
+ 458          //                              my.laserOnFlag = 1;
+ 459          //                      }
+ 460          //                      
+ 461          //              }
+ 462          //              if( my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || !my.triggerCC)
+ 463          //              {//单脉冲模式
+ 464          //                      if(!my.laserOnFlag)
+ 465          //                      {
+ 466          //                              if(selectChannel == ENUM_CHANNEL_BOTH)
+ 467          //                              {
+ 468          //                                      DAC0 = laserCurrent[0];
+ 469          //                                      DAC1 = laserCurrent[1];
+ 470          //                              }
+ 471          //                              if(selectChannel == ENUM_CHANNEL1)
+ 472          //                              {
+ 473          //                                      DAC0 = laserCurrent[0];
+ 474          //                              }
+ 475          //                              if(selectChannel = ENUM_CHANNEL2)
+ 476          //                              {
+ 477          //                                      DAC1 = laserCurrent[1];
+ 478          //                              }
+ 479          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_SP_LASER_ON, my.posWidth);
+ 480          //                              if(sTimer[STIMER_1MS_LASER_ON].status)
+ 481          //                              {
+ 482          //                                      DAC0 = 0x0;
+ 483          //                                      DAC1 = 0x0;
+ 484          //                                      my.laserOnFlag = 0;
+ 485          //                                      my.triggerSP = 0;
+ 486          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_SP_LASER_ON, my.posWidth);
+ 487          //                              }
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/22/2018 00:42:45 PAGE 9   
 
- 487          //                                      DAC0 = laserCurrent[0];
- 488          //                                      DAC1 = laserCurrent[1];
- 489          //                              }
- 490          //                              if(selectChannel == ENUM_CHANNEL1)
- 491          //                              {
- 492          //                                      DAC0 = laserCurrent[0];
- 493          //                              }
- 494          //                              if(selectChannel = ENUM_CHANNEL2)
- 495          //                              {
- 496          //                                      DAC1 = laserCurrent[1];
- 497          //                              }
- 498          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_SP_LASER_ON, my.posWidth);
- 499          //                              if(sTimer[STIMER_1MS_LASER_ON].status)
- 500          //                              {
- 501          //                                      DAC0 = 0x0;
- 502          //                                      DAC1 = 0x0;
- 503          //                                      my.laserOnFlag = 0;
- 504          //                                      my.triggerSP = 0;
- 505          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_SP_LASER_ON, my.posWidth);
+ 488          //                      }
+ 489          //                      
+ 490          //              }
+ 491          //              if( !my.triggerCW || !my.triggerSP || my.triggerMP || !my.triggerGP || !my.triggerCC)
+ 492          //              {//多脉冲模式
+ 493          //                      if(my.laserOnFlag)
+ 494          //                      {//正脉宽计时
+ 495          //                              if(selectChannel == ENUM_CHANNEL_BOTH)
+ 496          //                              {
+ 497          //                                      DAC0 = laserCurrent[0];
+ 498          //                                      DAC1 = laserCurrent[1];
+ 499          //                              }
+ 500          //                              if(selectChannel == ENUM_CHANNEL1)
+ 501          //                              {
+ 502          //                                      
+ 503          //                              }
+ 504          //                              if(selectChannel = ENUM_CHANNEL2)
+ 505          //                              {
  506          //                              }
- 507          //                      }
- 508          //                      
- 509          //              }
- 510          //              if( !my.triggerCW || !my.triggerSP || my.triggerMP || !my.triggerGP || !my.triggerCC)
- 511          //              {//多脉冲模式
- 512          //                      if(my.laserOnFlag)
- 513          //                      {//正脉宽计时
- 514          //                              if(selectChannel == ENUM_CHANNEL_BOTH)
- 515          //                              {
- 516          //                                      DAC0 = laserCurrent[0];
- 517          //                                      DAC1 = laserCurrent[1];
- 518          //                              }
- 519          //                              if(selectChannel == ENUM_CHANNEL1)
+ 507          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_ON, my.posWidth);
+ 508          //                              if(sTimer[STIMER_1MS_LASER_ON].status)
+ 509          //                              {
+ 510          //                                      //关闭激光
+ 511          //                                      //关闭计时器
+ 512          //                                      my.laserOnFlag = 0;
+ 513          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
+ 514          //                              }       
+ 515          //                      }
+ 516          //                      else if(!my.laserOnFlag)
+ 517          //                      {//负脉宽计时
+ 518          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_OFF, my.negWidth);
+ 519          //                              if(sTimer[STIMER_1MS_LASER_OFF].status)
  520          //                              {
- 521          //                                      
- 522          //                              }
- 523          //                              if(selectChannel = ENUM_CHANNEL2)
- 524          //                              {
- 525          //                              }
- 526          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_ON, my.posWidth);
- 527          //                              if(sTimer[STIMER_1MS_LASER_ON].status)
- 528          //                              {
- 529          //                                      //关闭激光
- 530          //                                      //关闭计时器
- 531          //                                      my.laserOnFlag = 0;
- 532          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
- 533          //                              }       
- 534          //                      }
- 535          //                      else if(!my.laserOnFlag)
- 536          //                      {//负脉宽计时
- 537          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_OFF, my.negWidth);
- 538          //                              if(sTimer[STIMER_1MS_LASER_OFF].status)
- 539          //                              {
- 540          //                                      my.laserOnFlag = 1;
- 541          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
- 542          //                              }
- 543          //                      }
- 544          //              }
- 545          //              if( !my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || my.triggerCC)
- 546          //              {//校正模式
- 547          //                      
- 548          //              }
-C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 10  
+ 521          //                                      my.laserOnFlag = 1;
+ 522          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
+ 523          //                              }
+ 524          //                      }
+ 525          //              }
+ 526          //              if( !my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || my.triggerCC)
+ 527          //              {//校正模式
+ 528          //                      
+ 529          //              }
+ 530          //              
+ 531          //              //Debug LED闪烁
+ 532          //              if(LED_MCU)
+ 533          //              {
+ 534          //                      if(sTimer[STIMER_1000MS_LED_ON].status)//等待时间A
+ 535          //                      {
+ 536          //                              LED_MCU = 0;
+ 537          //                              sTimerCtrl(STIMER_OFF, STIMER_1000MS_LED_ON, 1);
+ 538          //                      }
+ 539          //                      else
+ 540          //                              sTimerCtrl(STIMER_ON, STIMER_1000MS_LED_ON, 1);
+ 541          //              }
+ 542          //              if(!LED_MCU)
+ 543          //              {
+ 544          //                      if(sTimer[STIMER_1000MS_LED_OFF].status)//等待时间B
+ 545          //                      {
+ 546          //                              LED_MCU = 1;
+ 547          //                              sTimerCtrl(STIMER_OFF, STIMER_1000MS_LED_OFF, 1);
+ 548          //                      }
+ 549          //                      else
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/22/2018 00:42:45 PAGE 10  
 
- 549          //              
- 550          //              //Debug LED闪烁
- 551          //              if(LED_MCU)
- 552          //              {
- 553          //                      if(sTimer[STIMER_1000MS_LED_ON].status)//等待时间A
- 554          //                      {
- 555          //                              LED_MCU = 0;
- 556          //                              sTimerCtrl(STIMER_OFF, STIMER_1000MS_LED_ON, 1);
- 557          //                      }
- 558          //                      else
- 559          //                              sTimerCtrl(STIMER_ON, STIMER_1000MS_LED_ON, 1);
- 560          //              }
- 561          //              if(!LED_MCU)
- 562          //              {
- 563          //                      if(sTimer[STIMER_1000MS_LED_OFF].status)//等待时间B
- 564          //                      {
- 565          //                              LED_MCU = 1;
- 566          //                              sTimerCtrl(STIMER_OFF, STIMER_1000MS_LED_OFF, 1);
- 567          //                      }
- 568          //                      else
- 569          //                              sTimerCtrl(STIMER_ON, STIMER_1000MS_LED_OFF, 1);
- 570          //              }
- 571          //              //PID 温控指令
- 572          //              if(sTimer[(CONFIG_STIMER_100MS_END - 3)].status)//等待A时间
- 573          //              {
- 574          //                      my.pidOut += pidFuzzyRealize(&pidFuzzy, 25.0, 26.0);
- 575          //                      if(my.pidOut > 1)
- 576          //                              my.pidOut = 1;
- 577          //                      if(my.pidOut < 0)
- 578          //                              my.pidOut = 0;
- 579          //                      //my.onTimerPid = (int16_t)(my.pidOut * CONFIG_PIDOUT_PWM);
- 580          //                      //my.offTimerPid = CONFIG_TECOUT_MAX_CYCLE - my.onTimerPid; 
- 581          //                      sTimerCtrl(STIMER_OFF, (CONFIG_STIMER_100MS_END - 3), 10);
- 582          //              }
- 583          //              else
- 584          //                      sTimerCtrl(STIMER_ON, (CONFIG_STIMER_100MS_END - 3), 10);
- 585          //              //PID结果输出
+ 550          //                              sTimerCtrl(STIMER_ON, STIMER_1000MS_LED_OFF, 1);
+ 551          //              }
+ 552          //              //PID 温控指令
+ 553          //              if(sTimer[(CONFIG_STIMER_100MS_END - 3)].status)//等待A时间
+ 554          //              {
+ 555          //                      my.pidOut += pidFuzzyRealize(&pidFuzzy, 25.0, 26.0);
+ 556          //                      if(my.pidOut > 1)
+ 557          //                              my.pidOut = 1;
+ 558          //                      if(my.pidOut < 0)
+ 559          //                              my.pidOut = 0;
+ 560          //                      //my.onTimerPid = (int16_t)(my.pidOut * CONFIG_PIDOUT_PWM);
+ 561          //                      //my.offTimerPid = CONFIG_TECOUT_MAX_CYCLE - my.onTimerPid; 
+ 562          //                      sTimerCtrl(STIMER_OFF, (CONFIG_STIMER_100MS_END - 3), 10);
+ 563          //              }
+ 564          //              else
+ 565          //                      sTimerCtrl(STIMER_ON, (CONFIG_STIMER_100MS_END - 3), 10);
+ 566          //              //PID结果输出
+ 567          
+ 568          //              if(sTimer[1].value >= CONFIG_TECOUT_CYCLE || sTimer[1].enable == 0)
+ 569          //              {
+ 570          //                      COOL_OUT = 1;
+ 571          //                      //tecOnTime = (int16_t)(my.pidOut * CONFIG_TECOUT_CYCLE);
+ 572          //                      tecOnTime = (int16_t)(0.25 * CONFIG_TECOUT_CYCLE);
+ 573          //                      sTimerCtrl(STIMER_OFF, 1, tecOnTime);
+ 574          //                      sTimerCtrl(STIMER_ON, 1, tecOnTime);
+ 575          //              }
+ 576          //              if(sTimer[1].value >= tecOnTime)
+ 577          //              {
+ 578          //                      COOL_OUT = 0;
+ 579          //              }
+ 580          //              modbusPoll();//执行MODBUS POLL
+ 581          //              
+ 582          //              //setOutput();//更新输出IO
+ 583          //      
+ 584          //      }               
+ 585          //}
  586          
- 587          //              if(sTimer[1].value >= CONFIG_TECOUT_CYCLE || sTimer[1].enable == 0)
- 588          //              {
- 589          //                      COOL_OUT = 1;
- 590          //                      //tecOnTime = (int16_t)(my.pidOut * CONFIG_TECOUT_CYCLE);
- 591          //                      tecOnTime = (int16_t)(0.25 * CONFIG_TECOUT_CYCLE);
- 592          //                      sTimerCtrl(STIMER_OFF, 1, tecOnTime);
- 593          //                      sTimerCtrl(STIMER_ON, 1, tecOnTime);
- 594          //              }
- 595          //              if(sTimer[1].value >= tecOnTime)
- 596          //              {
- 597          //                      COOL_OUT = 0;
- 598          //              }
- 599          //              modbusPoll();//执行MODBUS POLL
- 600          //              
- 601          //              //setOutput();//更新输出IO
- 602          //      
- 603          //      }               
- 604          //}
- 605          
- 606          //void startLaser(void)
- 607          //{//开始发射脉冲       
- 608          //      if(my.laserMode == ENUM_MODE_CW )
- 609          //      {
- 610          //              DAC0 = my.laserCurrent[0];
-C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 11  
+ 587          //void startLaser(void)
+ 588          //{//开始发射脉冲       
+ 589          //      if(my.laserMode == ENUM_MODE_CW )
+ 590          //      {
+ 591          //              DAC0 = my.laserCurrent[0];
+ 592          //              DAC1 = my.laserCurrent[1];
+ 593          //      }
+ 594          //      else if((my.LaserMode == ENUM_MODE_SP) | 
+ 595          //                      (my.LaserMode == ENUM_MODE_MP) |
+ 596          //                      (my.LaserMode == ENUM_MODE_GP))
+ 597          //      {
+ 598          //              my.laserTimer.tMate = my.PosWidth;//设置匹配值
+ 599          //              my.laserTimer.tOverflow = my.NegWidth + my.PosWidth;//设置溢出值
+ 600          //              my.laserTimer.tCounter = 0x0;   
+ 601          //              my.laserTimer.pMate = 0x0;//脉冲个数匹配值
+ 602          //              my.laserTimer.sMate = 0x0;//脉个数溢出值
+ 603          //              my.laserTimer.pCounter = 0x0;
+ 604          //              my.laserTimer.sCounter = 0x0;   
+ 605          //              TF2H = 0;//Timer 2 High Byte Overflow Flag.
+ 606          //              ET2 = 1;
+ 607          //              TMR2L = 0xFF;
+ 608          //              TMR2H = 0xFF;
+ 609          //              TR2 = 1;//使能TIMER2计时器
+ 610          //      }
+ 611          //      else if(my.LaserMode == ENUM_MODE_CC)
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/22/2018 00:42:45 PAGE 11  
 
- 611          //              DAC1 = my.laserCurrent[1];
- 612          //      }
- 613          //      else if((my.LaserMode == ENUM_MODE_SP) | 
- 614          //                      (my.LaserMode == ENUM_MODE_MP) |
- 615          //                      (my.LaserMode == ENUM_MODE_GP))
- 616          //      {
- 617          //              my.laserTimer.tMate = my.PosWidth;//设置匹配值
- 618          //              my.laserTimer.tOverflow = my.NegWidth + my.PosWidth;//设置溢出值
- 619          //              my.laserTimer.tCounter = 0x0;   
- 620          //              my.laserTimer.pMate = 0x0;//脉冲个数匹配值
- 621          //              my.laserTimer.sMate = 0x0;//脉个数溢出值
- 622          //              my.laserTimer.pCounter = 0x0;
- 623          //              my.laserTimer.sCounter = 0x0;   
- 624          //              TF2H = 0;//Timer 2 High Byte Overflow Flag.
- 625          //              ET2 = 1;
- 626          //              TMR2L = 0xFF;
- 627          //              TMR2H = 0xFF;
- 628          //              TR2 = 1;//使能TIMER2计时器
- 629          //      }
- 630          //      else if(my.LaserMode == ENUM_MODE_CC)
- 631          //      {//校正模式
- 632          //              my.laserTimer.tMate = my.PosWidth;//设置匹配值
- 633          //              my.laserTimer.tOverflow = my.NegWidth + my.PosWidth;//设置溢出值
- 634          //              my.laserTimer.tCounter = 0x0;   
- 635          //              my.laserTimer.pMate = my.GroupNum;//脉冲个数匹配值
- 636          //              my.laserTimer.sMate = my.GroupSpace;//脉个数溢出值
- 637          //              my.laserTimer.pCounter = 0x0;
- 638          //              my.laserTimer.sCounter = 0x0;   
- 639          //              TF2H = 0;//Timer 2 High Byte Overflow Flag.
- 640          //              ET2 = 1;
- 641          //              TMR2L = 0xFF;
- 642          //              TMR2H = 0xFF;
- 643          //              TR2 = 1;//使能TIMER2计时器
- 644          //      }
- 645          //      my.FlagIndicate = 1;
- 646          //}
- 647          //void stopLaser(myDevice_t *p)
- 648          //{//停止发射脉冲
- 649          //      TR2 = 0;
- 650          //      ET2 = 0;
- 651          //      TF2H = 0;
- 652          //      DAC0 = 0;
- 653          //      DAC1 = 0;
- 654          //      my.FlagIndicate = 0;    
- 655          //}
- 656          
- 657          //void Timer0_ISR(void) interrupt INTERRUPT_TIMER0
- 658          //{//TIMER2 中断 激光发射
- 659          //      
- 660          //      TF2H = 0;
- 661          //      switch(my.LaserMode)
- 662          //      {
- 663          //              case ENUM_MODE_CC:
- 664          //              {//CC模式
- 665          //                      SetLaserCurrent(p);
- 666          //                      break;
- 667          //              }
- 668          //              case ENUM_MODE_SP:
- 669          //              {//SP模式
- 670          //                      break;
- 671          //              }
- 672          //              case ENUM_MODE_MP:
-C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 12  
+ 612          //      {//校正模式
+ 613          //              my.laserTimer.tMate = my.PosWidth;//设置匹配值
+ 614          //              my.laserTimer.tOverflow = my.NegWidth + my.PosWidth;//设置溢出值
+ 615          //              my.laserTimer.tCounter = 0x0;   
+ 616          //              my.laserTimer.pMate = my.GroupNum;//脉冲个数匹配值
+ 617          //              my.laserTimer.sMate = my.GroupSpace;//脉个数溢出值
+ 618          //              my.laserTimer.pCounter = 0x0;
+ 619          //              my.laserTimer.sCounter = 0x0;   
+ 620          //              TF2H = 0;//Timer 2 High Byte Overflow Flag.
+ 621          //              ET2 = 1;
+ 622          //              TMR2L = 0xFF;
+ 623          //              TMR2H = 0xFF;
+ 624          //              TR2 = 1;//使能TIMER2计时器
+ 625          //      }
+ 626          //      my.FlagIndicate = 1;
+ 627          //}
+ 628          //void stopLaser(myDevice_t *p)
+ 629          //{//停止发射脉冲
+ 630          //      TR2 = 0;
+ 631          //      ET2 = 0;
+ 632          //      TF2H = 0;
+ 633          //      DAC0 = 0;
+ 634          //      DAC1 = 0;
+ 635          //      my.FlagIndicate = 0;    
+ 636          //}
+ 637          
+ 638          //void Timer0_ISR(void) interrupt INTERRUPT_TIMER0
+ 639          //{//TIMER2 中断 激光发射
+ 640          //      
+ 641          //      TF2H = 0;
+ 642          //      switch(my.LaserMode)
+ 643          //      {
+ 644          //              case ENUM_MODE_CC:
+ 645          //              {//CC模式
+ 646          //                      SetLaserCurrent(p);
+ 647          //                      break;
+ 648          //              }
+ 649          //              case ENUM_MODE_SP:
+ 650          //              {//SP模式
+ 651          //                      break;
+ 652          //              }
+ 653          //              case ENUM_MODE_MP:
+ 654          //              {//MP模式       
+ 655          //                      if(p->softTimer.tCounter == p->softTimer.tMate)
+ 656          //                      {//计时器匹配
+ 657          //                              LaserMod_PIN = LASER_OFF;//翻转输出
+ 658          //                      }
+ 659          //                      if(p->softTimer.tCounter == p->softTimer.tOverflow)
+ 660          //                      {//计时器溢出
+ 661          //                              p->softTimer.tCounter = 0;//清零
+ 662          //                      }
+ 663          //                      if(p->softTimer.tCounter == 0)
+ 664          //                      {//翻转
+ 665          //                              LaserMod_PIN = LASER_ON;//翻转输出
+ 666          //                      }
+ 667          //                      p->softTimer.tCounter ++;
+ 668          //                      break;
+ 669          //              }
+ 670          //              case ENUM_MODE_GP:
+ 671          //              {//GP模式
+ 672          //                      if(p->softTimer.pCounter < p->softTimer.pMate)
+ 673          //                      {
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/22/2018 00:42:45 PAGE 12  
 
- 673          //              {//MP模式       
- 674          //                      if(p->softTimer.tCounter == p->softTimer.tMate)
- 675          //                      {//计时器匹配
- 676          //                              LaserMod_PIN = LASER_OFF;//翻转输出
- 677          //                      }
- 678          //                      if(p->softTimer.tCounter == p->softTimer.tOverflow)
- 679          //                      {//计时器溢出
- 680          //                              p->softTimer.tCounter = 0;//清零
- 681          //                      }
- 682          //                      if(p->softTimer.tCounter == 0)
- 683          //                      {//翻转
- 684          //                              LaserMod_PIN = LASER_ON;//翻转输出
- 685          //                      }
- 686          //                      p->softTimer.tCounter ++;
- 687          //                      break;
- 688          //              }
- 689          //              case ENUM_MODE_GP:
- 690          //              {//GP模式
- 691          //                      if(p->softTimer.pCounter < p->softTimer.pMate)
- 692          //                      {
- 693          //                              if(p->softTimer.tCounter == 0)
- 694          //                              {
- 695          //                                      if(p->softTimer.pCounter < p->softTimer.pMate)
- 696          //                                      {
- 697          //                                              LaserMod_PIN = LASER_ON;//翻转输出                                              
- 698          //                                      }
- 699          //                              }
- 700          //                              if(p->softTimer.tCounter == p->softTimer.tMate)
- 701          //                              {//计时器匹配
- 702          //                                      LaserMod_PIN = LASER_OFF;//翻转输出
+ 674          //                              if(p->softTimer.tCounter == 0)
+ 675          //                              {
+ 676          //                                      if(p->softTimer.pCounter < p->softTimer.pMate)
+ 677          //                                      {
+ 678          //                                              LaserMod_PIN = LASER_ON;//翻转输出                                              
+ 679          //                                      }
+ 680          //                              }
+ 681          //                              if(p->softTimer.tCounter == p->softTimer.tMate)
+ 682          //                              {//计时器匹配
+ 683          //                                      LaserMod_PIN = LASER_OFF;//翻转输出
+ 684          //                              }
+ 685          //                              if(p->softTimer.tCounter == (p->softTimer.tOverflow - 1))
+ 686          //                              {//计时器溢出
+ 687          //                                      p->softTimer.tCounter = 0xFFFF;//清零
+ 688          //                                      p->softTimer.pCounter ++;//清零 
+ 689          //                              }
+ 690          //                              p->softTimer.tCounter ++;
+ 691          //                      }
+ 692          //                      if(p->softTimer.pCounter == p->softTimer.pMate && p->softTimer.tCounter == 0)
+ 693          //                      {//脉冲个数发现匹配
+ 694          //                              LaserMod_PIN = LASER_OFF;
+ 695          //                              p->softTimer.pCounter = 0xFFFF;
+ 696          //                              p->softTimer.sCounter = 0x0;
+ 697          //                      }
+ 698          //                      if(p->softTimer.pCounter == 0xFFFF)
+ 699          //                      {               
+ 700          //                              if(p->softTimer.sCounter == p->softTimer.sMate)
+ 701          //                              {
+ 702          //                                      p->softTimer.pCounter = 0;      
  703          //                              }
- 704          //                              if(p->softTimer.tCounter == (p->softTimer.tOverflow - 1))
- 705          //                              {//计时器溢出
- 706          //                                      p->softTimer.tCounter = 0xFFFF;//清零
- 707          //                                      p->softTimer.pCounter ++;//清零 
- 708          //                              }
- 709          //                              p->softTimer.tCounter ++;
- 710          //                      }
- 711          //                      if(p->softTimer.pCounter == p->softTimer.pMate && p->softTimer.tCounter == 0)
- 712          //                      {//脉冲个数发现匹配
- 713          //                              LaserMod_PIN = LASER_OFF;
- 714          //                              p->softTimer.pCounter = 0xFFFF;
- 715          //                              p->softTimer.sCounter = 0x0;
- 716          //                      }
- 717          //                      if(p->softTimer.pCounter == 0xFFFF)
- 718          //                      {               
- 719          //                              if(p->softTimer.sCounter == p->softTimer.sMate)
- 720          //                              {
- 721          //                                      p->softTimer.pCounter = 0;      
- 722          //                              }
- 723          //                              p->softTimer.sCounter ++;
- 724          //                      }
- 725          //                      break;
- 726          //              }
- 727          //              default:break;
+ 704          //                              p->softTimer.sCounter ++;
+ 705          //                      }
+ 706          //                      break;
+ 707          //              }
+ 708          //              default:break;
+ 709          //      }
+ 710          //}
+ 711          
+ 712          //void upDateDac0(uint16_t dat)
+ 713          //{//刷新DAC0
+ 714          //      static uint16_t oldDac0;
+ 715          //      if(dat != oldDac0)
+ 716          //      {
+ 717          //              DAC0 = dat;
+ 718          //              oldDac0 = dat;
+ 719          //      }
+ 720          //}
+ 721          //void upDateDac1(uint16_t dat)
+ 722          //{//刷新DAC1
+ 723          //      static uint16_t oldDac1;
+ 724          //      if(dat != oldDac1)
+ 725          //      {
+ 726          //              DAC0 = dat;
+ 727          //              oldDac1 = dat;
  728          //      }
  729          //}
- 730          
- 731          //void upDateDac0(uint16_t dat)
- 732          //{//刷新DAC0
- 733          //      static uint16_t oldDac0;
- 734          //      if(dat != oldDac0)
-C51 COMPILER V9.56.0.0   MAINAPP                                                           12/21/2018 17:57:45 PAGE 13  
-
- 735          //      {
- 736          //              DAC0 = dat;
- 737          //              oldDac0 = dat;
- 738          //      }
- 739          //}
- 740          //void upDateDac1(uint16_t dat)
- 741          //{//刷新DAC1
- 742          //      static uint16_t oldDac1;
- 743          //      if(dat != oldDac1)
- 744          //      {
- 745          //              DAC0 = dat;
- 746          //              oldDac1 = dat;
- 747          //      }
- 748          //}
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     48    ----
-   CONSTANT SIZE    =      8    ----
+   CODE SIZE        =     32    ----
+   CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
-   PDATA SIZE       =   ----      16
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/22/2018 00:42:45 PAGE 13  
+
+   PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

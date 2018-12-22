@@ -62,8 +62,7 @@ void epromWriteLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len){//
 		epromWriteOneByte(WriteAddr + t, (DataToWrite >> (8 * t)) & 0xff);
 	}												    
 }
-uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len)
-{//在AT24CXX里面的指定地址开始读出长度为Len的数据
+uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len){//在AT24CXX里面的指定地址开始读出长度为Len的数据
 //该函数用于读出16bit或者32bit的数据.
 //ReadAddr   :开始读出的地址 
 //返回值     :数据

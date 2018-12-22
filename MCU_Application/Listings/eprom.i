@@ -4123,8 +4123,7 @@
  epromWriteOneByte(WriteAddr + t, (DataToWrite >> (8 * t)) & 0xff);
  }												    
  }
- uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len)
- { 
+ uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len){ 
  
  
  

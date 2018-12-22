@@ -1,13 +1,12 @@
 
-#line 1 "MainApp\MainApp.c" /0
+#line 1 "Driver\chipAdc.c" /0
   
-#line 1 "MainApp\MainApp.h" /0
- 
+#line 1 "Driver\chipAdc.h" /0
  
  
  
   
-#line 1 "MainApp\appConfig.h" /0
+#line 1 ".\MainApp\AppConfig.h" /0
  
  
  
@@ -162,7 +161,7 @@
 #line 51 ".\Lib\stdint.h" /0
  
  
-#line 99 "MainApp\appConfig.h" /0
+#line 99 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Lib\stdbool.h" /0
@@ -213,7 +212,7 @@
  
  
  
-#line 100 "MainApp\appConfig.h" /0
+#line 100 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Lib\endian.h" /0
@@ -275,7 +274,7 @@
 #line 55 ".\Lib\endian.h" /0
  
  
-#line 101 "MainApp\appConfig.h" /0
+#line 101 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Lib\si_toolchain.h" /0
@@ -1187,7 +1186,7 @@
  
  
  
-#line 102 "MainApp\appConfig.h" /0
+#line 102 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Lib\compiler_defs.h" /0
@@ -2113,7 +2112,7 @@
  
  
  
-#line 103 "MainApp\appConfig.h" /0
+#line 103 ".\MainApp\AppConfig.h" /0
  
  
   
@@ -2470,14 +2469,14 @@
  
  
  
-#line 105 "MainApp\appConfig.h" /0
+#line 105 ".\MainApp\AppConfig.h" /0
  
  
  
-#line 108 "MainApp\appConfig.h" /1
+#line 108 ".\MainApp\AppConfig.h" /1
   
  
-#line 110 "MainApp\appConfig.h" /0
+#line 110 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdio.h" /0
@@ -2526,7 +2525,7 @@
  
  
  
-#line 111 "MainApp\appConfig.h" /0
+#line 111 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2634,7 +2633,7 @@
  #pragma RESTORE
  
  
-#line 112 "MainApp\appConfig.h" /0
+#line 112 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2697,7 +2696,7 @@
  #pragma RESTORE
  
  
-#line 113 "MainApp\appConfig.h" /0
+#line 113 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -2745,7 +2744,7 @@
  
  
  
-#line 114 "MainApp\appConfig.h" /0
+#line 114 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -2783,7 +2782,7 @@
  #pragma RESTORE
  
  
-#line 115 "MainApp\appConfig.h" /0
+#line 115 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -2816,7 +2815,7 @@
  
  
  
-#line 116 "MainApp\appConfig.h" /0
+#line 116 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\math.h" /0
@@ -2890,7 +2889,7 @@
  #pragma RESTORE
  
  
-#line 117 "MainApp\appConfig.h" /0
+#line 117 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Lib\crc32.h" /0
@@ -2902,9 +2901,9 @@
  
  
   
-#line 1 "MainApp\AppConfig.h" /0
+#line 1 ".\MainApp\AppConfig.h" /0
  
-#line 2 "MainApp\AppConfig.h" /1
+#line 2 ".\MainApp\AppConfig.h" /1
   
  
  
@@ -3066,11 +3065,11 @@
  
  
  
-#line 118 "MainApp\appConfig.h" /0
+#line 118 ".\MainApp\AppConfig.h" /0
  
  
   
-#line 1 "MainApp\InitDevice.h" /0
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\InitDevice.h" /0
  
  
  
@@ -3079,7 +3078,7 @@
  
  
  
-#line 120 "MainApp\appConfig.h" /0
+#line 120 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Lib\delay.h" /0
@@ -3087,9 +3086,9 @@
  
  
   
-#line 1 "MainApp\appConfig.h" /0
+#line 1 ".\MainApp\appConfig.h" /0
  
-#line 2 "MainApp\appConfig.h" /1
+#line 2 ".\MainApp\appConfig.h" /1
   
  
  
@@ -3246,65 +3245,22 @@
  
  
  
-#line 121 "MainApp\appConfig.h" /0
+#line 121 ".\MainApp\AppConfig.h" /0
  
   
-#line 1 ".\Driver\i2c0.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
- 
+#line 1 "Driver\i2c0.h" /0
  
  
  
   
-  
-  
-  
-  
-  
-  
-  
-  
+#line 1 ".\MainApp\appConfig.h" /0
+ 
+#line 2 ".\MainApp\appConfig.h" /1
   
  
  
-  
-  
-  
-  
  
-  
-  
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
  
   
   
@@ -3322,6 +3278,49 @@
   
   
   
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
   
   
  
@@ -3402,8 +3401,8 @@
  
  
  
-#line 4 ".\Driver\i2c0.h" /0
-#line 4 ".\Driver\i2c0.h" /0
+#line 4 "Driver\i2c0.h" /0
+#line 4 "Driver\i2c0.h" /0
  
  
  
@@ -3420,7 +3419,7 @@
  
  
  
-#line 122 "MainApp\appConfig.h" /0
+#line 122 ".\MainApp\AppConfig.h" /0
  
  
  
@@ -3429,62 +3428,19 @@
  
  
   
-#line 1 ".\Driver\eprom.h" /0
+#line 1 "Driver\eprom.h" /0
  
  
  
   
-#line 1 "MainApp\appConfig.h" /0
+#line 1 ".\MainApp\appConfig.h" /0
  
-#line 2 "MainApp\appConfig.h" /1
+#line 2 ".\MainApp\appConfig.h" /1
   
- 
- 
  
  
  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
  
   
   
@@ -3502,6 +3458,49 @@
   
   
   
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
   
   
  
@@ -3582,8 +3581,8 @@
  
  
  
-#line 4 ".\Driver\eprom.h" /0
-#line 4 ".\Driver\eprom.h" /0
+#line 4 "Driver\eprom.h" /0
+#line 4 "Driver\eprom.h" /0
  
  
  
@@ -3596,7 +3595,7 @@
  void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
  void epromTest(void);
  
-#line 129 "MainApp\appConfig.h" /0
+#line 129 ".\MainApp\AppConfig.h" /0
  
  
  
@@ -3608,9 +3607,9 @@
  
  
   
-#line 1 "MainApp\appConfig.h" /0
+#line 1 ".\MainApp\appConfig.h" /0
  
-#line 2 "MainApp\appConfig.h" /1
+#line 2 ".\MainApp\appConfig.h" /1
   
  
  
@@ -3763,7 +3762,7 @@
  extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
  extern void processModbus(void);
  
-#line 134 "MainApp\appConfig.h" /0
+#line 134 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Modbus\ModbusPort.h" /0
@@ -3771,9 +3770,9 @@
  
  
   
-#line 1 "MainApp\appConfig.h" /0
+#line 1 ".\MainApp\appConfig.h" /0
  
-#line 2 "MainApp\appConfig.h" /1
+#line 2 ".\MainApp\appConfig.h" /1
   
  
  
@@ -3938,66 +3937,23 @@
  extern void modBusTimerValues(void);
  
  
-#line 135 "MainApp\appConfig.h" /0
+#line 135 ".\MainApp\AppConfig.h" /0
  
  
   
-#line 1 "MainApp\sPLC.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
- 
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
  
  
  
   
-  
-  
-  
-  
-  
-  
-  
-  
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /0
+ 
+#line 2 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /1
   
  
  
-  
-  
-  
-  
  
-  
-  
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
  
   
   
@@ -4015,6 +3971,49 @@
   
   
   
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
   
   
  
@@ -4095,8 +4094,8 @@
  
  
  
-#line 4 "MainApp\sPLC.h" /0
-#line 4 "MainApp\sPLC.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
  
  
  
@@ -4180,7 +4179,7 @@
  void refreshOutput(void);
  
  
-#line 137 "MainApp\appConfig.h" /0
+#line 137 ".\MainApp\AppConfig.h" /0
  
  
  
@@ -4191,7 +4190,7 @@
  
  
  
-#line 5 "MainApp\MainApp.h" /0
+#line 4 "Driver\chipAdc.h" /0
  
  
  
@@ -4206,833 +4205,55 @@
  
  
  
+ void chipAdcInit(void);
+ int16_t getChipAdcCode(uint8_t mux);
+ int16_t code2EnviTemp(int16_t dat);
+ int16_t code2NtcTemp(int16_t dat);
  
+#line 1 "Driver\chipAdc.c" /0
  
  
+ void chipAdcInit(void)
+ { 
  
  
  
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 1 "MainApp\MainApp.c" /0
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- void upDateDac0(uint16_t dat);
- void upDateDac1(uint16_t dat);
- 
- 
- void main(void){
- Init_Device();
- 
- 
- 
- 
- initModbus(0x01, 115200);
- ES0 = 1;
-  EA = 1;;
- nvramLoad(); 
- while(1){
- processModbus();
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- nvramUpdata(); 
  
  }
+ 
+ int16_t getChipAdcCode(uint8_t mux)
+ { 
+ uint16_t temp;
+ 
+ 
+ 
+ 
+ temp = ADC0 ;
+ return temp;
  }
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+ int16_t code2EnviTemp(int16_t dat)
+ { 
+ uint16_t temp;
+ temp = (int16_t)(2200L * dat / 4096); 
+ temp = (int16_t)((temp - 856L) * 1000 / 3330L);
+ return temp;
+ }
+ int16_t code2NtcTemp(int16_t dat)
+ { 
+ uint16_t temp;
+ fp32_t ftemp;
+ if(dat >= 2200L) dat = 2200L; 
+ if(dat < 0) dat = 0;
+ 
+ temp = (int16_t)(2200L * dat / 4096); 
+ temp = 10000 * 5000 / (5000 - temp); 
+ 
+ ftemp = ((1.0 / 3477)*log((fp32_t)(temp) / 10000)) + (1 / (25+273.0)); 
+ ftemp = ( 1.0 / ftemp ) - 273.0;
+ if(ftemp >= 100) ftemp = 100;
+ if(ftemp <= -100) ftemp = -100;
+ return (int16_t)(ftemp * 10);
+ }

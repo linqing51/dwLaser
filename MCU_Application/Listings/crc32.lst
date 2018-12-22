@@ -1,7 +1,7 @@
-C51 COMPILER V9.56.0.0   CRC32                                                             12/21/2018 17:57:44 PAGE 1   
+C51 COMPILER V9.59.0.0   CRC32                                                             12/22/2018 00:24:02 PAGE 1   
 
 
-C51 COMPILER V9.56.0.0, COMPILATION OF MODULE CRC32
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE CRC32
 OBJECT MODULE PLACED IN .\Objects\crc32.obj
 COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Lib\crc32.c COMPACT OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.ORC
                     -) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\crc32.lst
@@ -62,7 +62,7 @@ line level    source
   51          /*     generated at runtime, you can start by generating the table for */
   52          /*     the polynomial in question and use exactly the same "updcrc",   */
   53          /*     if your application needn't simultaneously handle two CRC       */
-C51 COMPILER V9.56.0.0   CRC32                                                             12/21/2018 17:57:44 PAGE 2   
+C51 COMPILER V9.59.0.0   CRC32                                                             12/22/2018 00:24:02 PAGE 2   
 
   54          /*     polynomials.  (Note, however, that XMODEM is strange.)          */
   55          /*                                                                     */
@@ -126,7 +126,7 @@ line level    source
  113   1          for (i = 0; i < len; i++)
  114   1              {  
  115   2             oldcrc32 = crc32Tab[(oldcrc32 ^ buf[i]) & 0xff] ^ (oldcrc32 >> 8);  
-C51 COMPILER V9.56.0.0   CRC32                                                             12/21/2018 17:57:44 PAGE 3   
+C51 COMPILER V9.59.0.0   CRC32                                                             12/22/2018 00:24:02 PAGE 3   
 
  116   2          }  
  117   1              return (oldcrc32 ^ 0xFFFFFFFF);  

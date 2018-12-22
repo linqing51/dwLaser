@@ -4133,10 +4133,8 @@
  xdata int16_t NVRAM1[(544 + 1)]; 
  static data uint8_t TimerCounter_1mS = 0;
  static data uint8_t TimerCounter_10mS = 0;
- 
  static data uint8_t Timer0_L, Timer0_H;
  static data int8_t InputFilter[16]; 
- data uint16_t ModbusSlaveOverTimeCounter; 
  
  
  void assertCoilAddress(uint16_t adr){ 
@@ -4217,15 +4215,14 @@
  }
  void clearC(void){ 
  uint16_t i;
- for(i = 448;i <= 479;i ++)
- {
+ for(i = 448;i <= 479;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
  void nvramLoad(void){ 
   EA = 0; 
- memset(NVRAM0, 0x0, (544 + 1)); 
+ 
  epromRead(0x0, (uint8_t*)NVRAM0, ((159 + 1) * 2)); 
  clearEM();
  clearR();
@@ -4236,22 +4233,19 @@
   EA = 1;
  }
  void nvramSave(void){ 
- uint8_t flag;
   EA = 0; 
- flag = iic0_write(0x50, ((159 + 1) * 2), (uint8_t*)NVRAM0);
+ epromWrite(0x0, (uint8_t*)NVRAM0, ((159 + 1) * 2));
   EA = 1;
  }
  void nvramUpdata(void){ 
- uint8_t flag, *sp0, *sp1;
+ uint8_t *sp0, *sp1;
  uint16_t i;
- sp0 = (uint8_t*)NVRAM0;
- sp1 = (uint8_t*)NVRAM1;
+ sp0 = (uint8_t*)(NVRAM0);
+ sp1 = (uint8_t*)(NVRAM1);
   EA = 0;
- for(i = 0;i <= ((159 + 1) * 2);i ++)
- {
- if(*(sp0 + i) != *(sp1 + i))
- {
- flag = iic0_write(0x50, 1, (uint8_t*)(sp0 + i));
+ for(i = 0;i < ((159 + 1) * 2);i ++){
+ if(*(sp0 + i) != *(sp1 + i)){
+ epromWriteOneByte(i, *(sp0 + i));
  }
  }
  memcpy(NVRAM1, NVRAM0, (544 + 1));
@@ -4267,7 +4261,7 @@
  NVRAM0[(A / 16)] &= ~(1 << (A % 16));
  }
  void FLIP(uint16_t A){ 
- data uint16_t temp;
+ uint16_t temp;
  assertCoilAddress(A); 
  temp= NVRAM0[(A / 16)] & (1 << (A % 16));
  if(temp)
@@ -4280,7 +4274,7 @@
  return (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
  }
  uint8_t LDP(uint16_t A){ 
- data uint8_t temp0, temp1;
+ uint8_t temp0, temp1;
  assertCoilAddress(A); 
  temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
  temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
@@ -4290,7 +4284,7 @@
  return 0;
  }
  uint8_t LDN(uint16_t A){ 
- data uint8_t temp0, temp1;
+ uint8_t temp0, temp1;
  assertCoilAddress(A);
  temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
  temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
@@ -4359,8 +4353,6 @@
  uint16_t temp;
  TimerCounter_1mS = 0;
  TimerCounter_10mS = 0;
- 
- ModbusSlaveOverTimeCounter = 0;
  temp = (uint16_t)(65536 - ((16000000L) / 10000 / 12)); 
  Timer0_L = temp & 0xFF;
  Timer0_H = (temp >> 8) & 0xFF;
@@ -4373,7 +4365,7 @@
  }
  void timer0Isr(void) interrupt 1
  { 
- data uint16_t i;
+ uint16_t i;
  TimerCounter_1mS ++;
  for(i = 352;i <= 383;i ++){ 
  if(NVRAM0[i] < 32767){

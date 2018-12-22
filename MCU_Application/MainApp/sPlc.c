@@ -5,10 +5,8 @@ xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 static data uint8_t TimerCounter_1mS = 0;
 static data uint8_t TimerCounter_10mS = 0;
-//static data uint8_t TimerCounter_100mS = 0;
 static data uint8_t Timer0_L, Timer0_H;
 static data int8_t InputFilter[CONFIG_SPLC_HW_INPUT_NUM];//输入IO滤波器
-data uint16_t ModbusSlaveOverTimeCounter;//Modbus Slave通信超时计时器
 /*****************************************************************************/
 /******************************************************************************/
 void assertCoilAddress(uint16_t adr){//检查线圈地址
@@ -89,15 +87,14 @@ void clearTD(void){//清除TD寄存器
 }
 void clearC(void){//清除C寄存器
 	uint16_t i;
-	for(i = C_START;i <= C_END;i ++)
-	{
+	for(i = C_START;i <= C_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 void nvramLoad(void){//从EPROM中载入NVRAM
 	DISABLE_INTERRUPT//关闭中断
-	memset(NVRAM0, 0x0, CONFIG_NVRAM_SIZE);//初始化NVRAM
+	//memset(NVRAM0, 0x0, CONFIG_NVRAM_SIZE);//初始化NVRAM
 	epromRead(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));//从EPROM中恢复NVRAM
 	clearEM();
 	clearR();
@@ -108,22 +105,19 @@ void nvramLoad(void){//从EPROM中载入NVRAM
 	ENABLE_INTERRUPT
 }
 void nvramSave(void){//强制将NVRAM存入EPROM
-	uint8_t flag;
 	DISABLE_INTERRUPT//关闭中断
-	flag = iic0_write(CONFIG_EPROM_ADDRESS, ((MR_END + 1) * 2), (uint8_t*)NVRAM0);
+	epromWrite(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));
 	ENABLE_INTERRUPT
 }
 void nvramUpdata(void){//更新NVRAM->EPROM
-	uint8_t flag, *sp0, *sp1;
+	uint8_t *sp0, *sp1;
 	uint16_t i;
-	sp0 = (uint8_t*)NVRAM0;
-	sp1 = (uint8_t*)NVRAM1;
+	sp0 = (uint8_t*)(NVRAM0);
+	sp1 = (uint8_t*)(NVRAM1);
 	DISABLE_INTERRUPT
-	for(i = 0;i <= ((MR_END + 1) * 2);i ++)
-	{
-		if(*(sp0 + i) != *(sp1 + i))
-		{
-			flag = iic0_write(CONFIG_EPROM_ADDRESS, 1, (uint8_t*)(sp0 + i));
+	for(i = 0;i < ((MR_END + 1) * 2);i ++){
+		if(*(sp0 + i) != *(sp1 + i)){
+			epromWriteOneByte(i, *(sp0 + i));
 		}
 	}
 	memcpy(NVRAM1, NVRAM0, CONFIG_NVRAM_SIZE);
@@ -139,7 +133,7 @@ void RESET(uint16_t A){//置零
 	NVRAM0[(A / 16)] &= ~(1 << (A % 16));
 }
 void FLIP(uint16_t A){//翻转
-	data uint16_t temp;
+	uint16_t temp;
 	assertCoilAddress(A);//检查地址范围
 	temp= NVRAM0[(A / 16)] & (1 << (A % 16));
 	if(temp)
@@ -152,7 +146,7 @@ uint8_t LD(uint16_t A){
 	return (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
 }
 uint8_t LDP(uint16_t A){//脉冲上升沿
-	data uint8_t temp0, temp1;
+	uint8_t temp0, temp1;
 	assertCoilAddress(A);//检查地址范围
 	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
 	temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
@@ -162,7 +156,7 @@ uint8_t LDP(uint16_t A){//脉冲上升沿
 		return 0;
 }
 uint8_t LDN(uint16_t A){//脉冲下降沿
-	data uint8_t temp0, temp1;
+	uint8_t temp0, temp1;
 	assertCoilAddress(A);
 	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
 	temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
@@ -231,8 +225,6 @@ void timer0Init(void){//硬件sTimer计时器初始化
 	uint16_t temp;
 	TimerCounter_1mS = 0;
 	TimerCounter_10mS = 0;
-//	TimerCounter_100mS = 0;
-	ModbusSlaveOverTimeCounter = 0;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 10000 / 12));//SoftPLC 硬件计时器基准1ms
 	Timer0_L = temp & 0xFF;
 	Timer0_H = (temp >> 8) & 0xFF;
@@ -245,7 +237,7 @@ void timer0Init(void){//硬件sTimer计时器初始化
 }
 void timer0Isr(void) interrupt INTERRUPT_TIMER0
 {//硬件sTimer计时器中断 1mS
-	data uint16_t i;
+	uint16_t i;
 	TimerCounter_1mS ++;
 	for(i = TD_1MS_START;i <= TD_1MS_END;i ++){//1mS计时
 		if(NVRAM0[i] < SHRT_MAX){

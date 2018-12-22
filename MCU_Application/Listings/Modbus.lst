@@ -1,7 +1,7 @@
-C51 COMPILER V9.56.0.0   MODBUS                                                            12/21/2018 17:57:45 PAGE 1   
+C51 COMPILER V9.59.0.0   MODBUS                                                            12/22/2018 00:24:03 PAGE 1   
 
 
-C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MODBUS
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MODBUS
 OBJECT MODULE PLACED IN .\Objects\Modbus.obj
 COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\Modbus.c COMPACT OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020
                     -.ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\Modbu
@@ -62,7 +62,7 @@ line level    source
              - hardware
   50          /*****************************************************************************/
   51          void modbusCrc16(const uint8_t Data, uint32_t* CRC){
-C51 COMPILER V9.56.0.0   MODBUS                                                            12/21/2018 17:57:45 PAGE 2   
+C51 COMPILER V9.59.0.0   MODBUS                                                            12/22/2018 00:24:03 PAGE 2   
 
   52   1          data uint32_t i;
   53   1          *CRC = *CRC ^(uint32_t) Data;
@@ -126,7 +126,7 @@ line level    source
  109   1          Tx_Data.function = MODBUS_WRITE_SINGLE_REGISTER;
  110   1          Tx_Data.address = ModbusSlaveAddress;
  111   1          Tx_Data.dataLen = 4;
-C51 COMPILER V9.56.0.0   MODBUS                                                            12/21/2018 17:57:45 PAGE 3   
+C51 COMPILER V9.59.0.0   MODBUS                                                            12/22/2018 00:24:03 PAGE 3   
 
  112   1          if(address >= CONFIG_NVRAM_SIZE){
  113   2              HandleModbusError(ERROR_CODE_03);
@@ -190,7 +190,7 @@ line level    source
  170   1          {
  171   2              if(modbusReceiveBuffer[0]==ModbusSlaveAddress)
  172   2              {
-C51 COMPILER V9.56.0.0   MODBUS                                                            12/21/2018 17:57:45 PAGE 4   
+C51 COMPILER V9.59.0.0   MODBUS                                                            12/22/2018 00:24:03 PAGE 4   
 
  173   3                  if(modbusReceiveBuffer[1]==0x01 || modbusReceiveBuffer[1]==0x02 || modbusReceiveBuffer[1]==0x0
              -3 || modbusReceiveBuffer[1]==0x04 || modbusReceiveBuffer[1]==0x05 || modbusReceiveBuffer[1]==0x06)  // RHR
@@ -254,7 +254,7 @@ line level    source
  231   2              {
  232   3                  modbusCrc16(Rx_Data.dataBuf[i], &Rx_CRC16);
  233   3              }
-C51 COMPILER V9.56.0.0   MODBUS                                                            12/21/2018 17:57:45 PAGE 5   
+C51 COMPILER V9.59.0.0   MODBUS                                                            12/22/2018 00:24:03 PAGE 5   
 
  234   2              
  235   2              if (((uint32_t) Rx_Data.dataBuf[Rx_Data.dataLen] + ((uint32_t) Rx_Data.dataBuf[Rx_Data.dataLen + 1
@@ -318,13 +318,13 @@ line level    source
  290   1          ModbusSlaveAddress = modbusSlaveAddress;
  291   1          modBusUartInitialise(baudrate);
  292   1          modBusTimerInitialise();
-C51 COMPILER V9.56.0.0   MODBUS                                                            12/21/2018 17:57:45 PAGE 6   
+C51 COMPILER V9.59.0.0   MODBUS                                                            12/22/2018 00:24:03 PAGE 6   
 
  293   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1564    ----
+   CODE SIZE        =   1572    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   1163    ----
    PDATA SIZE       =   ----       9

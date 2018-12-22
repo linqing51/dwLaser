@@ -1,0 +1,75 @@
+C51 COMPILER V9.59.0.0   CHIPADC                                                           12/22/2018 00:44:30 PAGE 1   
+
+
+C51 COMPILER V9.59.0.0, COMPILATION OF MODULE CHIPADC
+OBJECT MODULE PLACED IN .\Objects\chipAdc.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Driver\chipAdc.c COMPACT OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F02
+                    -0.ORC) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND PRINT(.\Listings\chip
+                    -Adc.lst) PREPRINT(.\Listings\chipAdc.i) OBJECT(.\Objects\chipAdc.obj)
+
+line level    source
+
+   1          #include "chipAdc.h"
+   2          /*****************************************************************************/
+   3          void chipAdcInit(void)
+   4          {//板载ADC初始化
+   5   1              //ADC0MX = 0;// Set ADC input to initial setting
+   6   1              //ADC0CF = ((CONFIG_SYSCLK / CONFIG_ADC_CLOCK) - 1) << 3;// Set SAR clock to 3MHz
+   7   1              //AD0CM0 = 0;//软件触发
+   8   1              //AD0CM1 = 0;
+   9   1              //AD0INT = 1;//使能中断标志
+  10   1              //AD0EN = 1;// Enable ADC0
+  11   1      }
+  12          
+  13          int16_t getChipAdcCode(uint8_t mux)
+  14          {//获取ADC采集值
+  15   1              uint16_t temp;
+  16   1      //      ADC0MX = mux;
+  17   1      //      AD0INT = 0;
+  18   1      //      AD0BUSY = 1;//AD0BUSY写入1
+  19   1      //      while(!AD0INT);//等待AD0BUSY清零
+  20   1              temp = ADC0 ;
+  21   1              return temp;
+  22   1      }
+*** WARNING C280 IN LINE 13 OF Driver\chipAdc.c: 'mux': unreferenced local variable
+  23          
+  24          int16_t code2EnviTemp(int16_t dat)
+  25          {//ADC CODE转换为环境温度
+  26   1              uint16_t temp;
+  27   1              temp = (int16_t)(ADC_INTERNAL_VREF * dat / 4096);//单位mV
+  28   1              temp = (int16_t)((temp - ADC_TEMP_SENSOR_OFFSET) * 1000 / ADC_TEMP_SENSOR_GAIN);
+  29   1              return temp;
+  30   1      }
+  31          int16_t code2NtcTemp(int16_t dat)
+  32          {//ADC CODE转换为NTC测量温度温度
+  33   1              uint16_t temp;
+  34   1              fp32_t ftemp;
+  35   1              if(dat >= ADC_INTERNAL_VREF) dat = ADC_INTERNAL_VREF;//限制输入最大值
+  36   1              if(dat < 0) dat = 0;
+  37   1              
+  38   1              temp = (int16_t)(ADC_INTERNAL_VREF * dat / 4096);//单位mV
+  39   1              temp = 10000 * 5000 / (5000 - temp);//电源5V 分压电阻10K
+  40   1              
+  41   1              ftemp = ((1.0 / 3477)*log((fp32_t)(temp) / 10000)) + (1 / (25+273.0));//limo R25=10740,B=3450    uniquemode
+             - 3988
+  42   1              ftemp = ( 1.0 / ftemp ) - 273.0;
+  43   1              if(ftemp >= 100) ftemp = 100;
+  44   1              if(ftemp <= -100) ftemp = -100;
+  45   1              return (int16_t)(ftemp * 10);
+  46   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    344    ----
+   CONSTANT SIZE    =   ----    ----
+C51 COMPILER V9.59.0.0   CHIPADC                                                           12/22/2018 00:44:30 PAGE 2   
+
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----       5
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

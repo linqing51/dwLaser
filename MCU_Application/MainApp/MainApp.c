@@ -105,30 +105,12 @@
 #define MCP4768_DAC2		2
 #define MCP4768_DAC3		3
 #define MCP4768_DAC4		4
-void readNvram(void)
-{//EPROM->NVRAM0
-	//readEprom();
-	//NVRAM0->NVRAM1
-	//memcpy((uint8_t*)Nvram1, (uint8_t*)Nvram0, (CONFIG_NVRAM_SIZE * 2));
-	
-}
-void writeNvram(void)
-{//掉电保持寄存器全部写入NVRAM 强制全部写入
-	//DM0写入NVRAM
-}
-void updateNvram(void)
-{//掉电保持寄存器更新入NVRAM 仅写入更新部分
-	//
-}
 
 void upDateDac0(uint16_t dat);
 void upDateDac1(uint16_t dat);
 /*****************************************************************************/
 
-void main(void)
-{
-	uint8_t rbuf[8];
-	uint8_t wbuf[8] = {1,2,3,4,5,6,7,8};
+void main(void){
 	Init_Device();
 	//timer0Init();
 	//inPca9554Init();
@@ -137,12 +119,11 @@ void main(void)
 	initModbus(CONFIG_MODBUS_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 	ES0 = 1;
 	ENABLE_INTERRUPT;
-	//nvramLoad();//上电恢复NVRAM
-	while(1)
-	{
+	nvramLoad();//上电恢复NVRAM
+	while(1){
 		processModbus();
 		//refreshInput();//刷新输入IO
-//		modbusSlaveAsciiPoll();
+		//getAdc();
 ////		SET(10);
 ////		RESET(10);
 ////		SET(10);
@@ -163,7 +144,7 @@ void main(void)
 ////		{
 ////			SET(0);	
 ////		}
-		//nvramUpdata();//更新NVRAM
+		nvramUpdata();//更新NVRAM
 		//refreshOutput();//刷新输出IO
 	}
 }
