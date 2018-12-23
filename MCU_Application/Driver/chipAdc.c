@@ -1,26 +1,5 @@
 #include "chipAdc.h"
 /*****************************************************************************/
-void chipAdcInit(void)
-{//板载ADC初始化
-	//ADC0MX = 0;// Set ADC input to initial setting
-	//ADC0CF = ((CONFIG_SYSCLK / CONFIG_ADC_CLOCK) - 1) << 3;// Set SAR clock to 3MHz
-	//AD0CM0 = 0;//软件触发
-	//AD0CM1 = 0;
-	//AD0INT = 1;//使能中断标志
-	//AD0EN = 1;// Enable ADC0
-}
-
-int16_t getChipAdcCode(uint8_t mux)
-{//获取ADC采集值
-	uint16_t temp;
-//	ADC0MX = mux;
-//	AD0INT = 0;
-//	AD0BUSY = 1;//AD0BUSY写入1
-//	while(!AD0INT);//等待AD0BUSY清零
-	temp = ADC0 ;
-	return temp;
-}
-
 int16_t code2EnviTemp(int16_t dat)
 {//ADC CODE转换为环境温度
 	uint16_t temp;

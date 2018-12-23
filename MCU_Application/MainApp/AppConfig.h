@@ -1,13 +1,11 @@
 #ifndef __APPCONFIG_H__
 #define __APPCONFIG_H__
 /*****************************************************************************/
-
-/*****************************************************************************/
-
-/*****************************************************************************/
-#define CONFIG_SIMULATION					1//仿真模式 C8051F020
-#define CONFIG_SYSCLK                       (16000000L)
-#define CONFIG_DEBUG                        1//调试功能
+#define CONFIG_SYSCLK                       (22118400L)
+#ifdef C8051F020
+#define SAR_CLK      						2000000L//ADC0时钟 <2.5MHz
+#endif
+#define CONFIG_DEBUG                        0//调试功能
 #define CONFIG_USING_WDT					0//使能看门狗
 #define CONFIG_USING_RESET					0//使能PLC复位MCU功能
 #define CONFIG_LADDER_SECTORS_START			64//指令起始地址
@@ -17,7 +15,7 @@
 #define CONFIG_CHECK_CODE 					0x5A00
 
 /*****************************************************************************/
-#define CONFIG_UART0_BAUDRATE				115200//串口波特率
+#define CONFIG_UART0_BAUDRATE				57600//串口波特率
 #define CONFIG_UART0_PARITY					NONE
 #define CONFIG_UART0_STOPBIT				1
 #define CONFIG_UART0_DATABIT				8
@@ -27,7 +25,7 @@
 #define CONFIG_UART1_STOPBIT				1
 #define CONFIG_UART1_DATABIT				8
 /*****************************************************************************/
-#define CONFIG_I2C0_FREQ 					(10000L)               
+#define CONFIG_I2C0_FREQ 					(100000L)               
 #define CONFIG_I2C1_FREQ 					(100000L)
 #define CONFIG_I2C2_FREQ 					(100000L)
 #define CONFIG_I2C3_FREQ 					(100000L)
@@ -62,10 +60,15 @@
 //STIMER设置
 #define CONFIG_SPLC_HW_INPUT_NUM			16//硬件输入点数
 #define CONFIG_SPLC_HW_OUTPUT_NUM			16//硬件输出点数
-#define CONFIG_SOFTPLC_HWTIME				(uint16_t)(65536 - (CONFIG_SYSCLK / 1000 / 12 / 10))//SoftPLC 硬件计时器基准1ms
+#define CONFIG_SOFTPLC_HWTIME				1000L//1mS
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期
 #define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
 #define CONFIG_IPID_PWM_CYCLE				20//IPID输出周期 默认 20 * 100mS
+/*****************************************************************************/
+/*****************************************************************************/
+//SADC设置
+#define CONFIG_SPLC_ADC_FILTER_TAP			48//ADC位移滤波次数
+#define CONFIG_SPLC_ADC_CHANNLE				9//ADC通道数
 /*****************************************************************************/
 #define ID_ONLY_1_CHANNEL					4321
 #define ID_ONLY_2_CHANNEL					8765
@@ -83,15 +86,14 @@
 #define CONFIG_TECOUT_CYCLE					4000//PID输出转PWM周期
 /*****************************************************************************/
 //MODBUS SALVE配置
+#define CONFIG_MODBUS_SLAVE_TIMER			1000L//1000uS
 #define CONFIG_MODBUS_SLAVE_ADDRESS			0x01//从设备地址
-#define CONFIG_MODBUS_SLAVE_BUFFER_SIZE		(256 + 32)//发送接收缓冲区
-#define CONFIG_MODBUS_SLAVE_TIMEOUT			250//接收通讯超时 10mS
+#define CONFIG_MODBUS_SLAVE_BUFFER_SIZE		(256 + 16)//发送接收缓冲区
+#define CONFIG_MODBUS_SLAVE_TIMEOUT			100//接收通讯超时 10mS
 #define CONFIG_MODBUS_SLAVE_IO_DELAY		1//RX TX切换延时
 /*****************************************************************************/
 #define DISABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 0;
 #define ENABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 1;
-//#define DISABLE_MODBUS_SERIAL_RX_INTERRUPT	RI0 = 0;
-//#define ENABLE_MODBUS_SERIAL_RX_INTERRUPT	RI0 = 1;
 #define DISABLE_INTERRUPT					EA = 0;
 #define ENABLE_INTERRUPT					EA = 1;
 
@@ -117,7 +119,10 @@
 #include <math.h>
 #include "crc32.h"
 /*****************************************************************************/
-#include "InitDevice.h"
+#ifdef C8051F020
+#include "InitDeviceF020.h"
+#endif
+
 #include "delay.h"
 #include "i2c0.h"
 //#include "i2c1.h"

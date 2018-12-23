@@ -15,7 +15,8 @@
 #define ADC_CHANNEL_MPD1				0x14//P1.2
 #define ADC_CHANNEL_MPD2				0x15//P1.1
 /*****************************************************************************/
-void chipAdcInit(void);
+void chipAdcInit(void);//初始化板载ADC
+void chipDacInit(void);//初始化板载DAC
 int16_t getChipAdcCode(uint8_t mux);
 int16_t code2EnviTemp(int16_t dat);
 int16_t code2NtcTemp(int16_t dat);

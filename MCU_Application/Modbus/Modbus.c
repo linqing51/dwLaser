@@ -42,10 +42,10 @@ data uint32_t Tx_Buf_Size = 0;
 xdata modbusRxTxData_t Rx_Data;
 data uint32_t Rx_CRC16 = 0xFFFF;
 data MODBUS_RXTX_STATE Rx_State = RXTX_IDLE;
-data uint8_t Rx_Data_Available = FALSE;
+data uint8_t Rx_Data_Available = false;
 /*****************************************************************************/
-xdata volatile uint16_t modbusTimerValue = 0;
-xdata volatile uint8_t modbusReceiveCounter = 0;// Collected data number
+volatile uint16_t modbusTimerValue = 0;
+volatile uint8_t modbusReceiveCounter = 0;// Collected data number
 xdata volatile uint8_t modbusReceiveBuffer[CONFIG_MODBUS_SLAVE_BUFFER_SIZE];// Buffer to collect data from hardware
 /*****************************************************************************/
 void modbusCrc16(const uint8_t Data, uint32_t* CRC){
@@ -61,15 +61,15 @@ void modbusCrc16(const uint8_t Data, uint32_t* CRC){
 uint8_t DoSlaveTX(void){//It is used for send data package over physical layer
     modBusUartString(Tx_Buf, Tx_Buf_Size);
     Tx_Buf_Size = 0;
-    return TRUE;
+    return true;
 }
 uint8_t SendMessage(void){//This function start to sending messages
     if (Tx_State != RXTX_IDLE){
-        return FALSE;
+        return false;
 	}
     Tx_Current  =0;
     Tx_State    =RXTX_START;
-    return TRUE;
+    return true;
 }
 void HandleModbusError(char ErrorCode){// Initialise the output buffer. The first byte in the buffer says how many registers we have read
     Tx_Data.function = ErrorCode | 0x80;
@@ -152,35 +152,34 @@ void HandleModbusWriteMultipleRegisters(void){//Modbus function 16 - Write multi
 }
 uint8_t RxDataAvailable(void){//RxDataAvailable
     uint8_t Result = Rx_Data_Available;   
-    Rx_Data_Available = FALSE;
+    Rx_Data_Available = false;
     return Result;
 }
 uint8_t CheckRxTimeout(void){//CheckRxTimeout
     // A return value of true indicates there is a timeout    
     if (modbusTimerValue >= CONFIG_MODBUS_SLAVE_TIMEOUT){
-        modbusTimerValue   =0;
-        modbusReceiveCounter     =0;
+        modbusTimerValue = 0;
+        modbusReceiveCounter = 0;
         return true;
     }
     return false;
 }
 uint8_t checkModbusBufferComplete(void){//CheckBufferComplete
     data int32_t expectedReceiveCount=0;
-    if(modbusReceiveCounter>4)
+    if(modbusReceiveCounter > 4)
     {
-        if(modbusReceiveBuffer[0]==ModbusSlaveAddress)
+        if(modbusReceiveBuffer[0] == ModbusSlaveAddress)
         {
             if(modbusReceiveBuffer[1]==0x01 || modbusReceiveBuffer[1]==0x02 || modbusReceiveBuffer[1]==0x03 || modbusReceiveBuffer[1]==0x04 || modbusReceiveBuffer[1]==0x05 || modbusReceiveBuffer[1]==0x06)  // RHR
             {
-                expectedReceiveCount    =8;
+                expectedReceiveCount = 8;
             }
-            else if(modbusReceiveBuffer[1]==0x0F || modbusReceiveBuffer[1]==0x10)
+            else if(modbusReceiveBuffer[1] == 0x0F || modbusReceiveBuffer[1] == 0x10)
             {
-                expectedReceiveCount=modbusReceiveBuffer[6]+9;
+                expectedReceiveCount=modbusReceiveBuffer[6] + 9;
             }
-            else
-            {
-                modbusReceiveCounter=0;
+            else{
+                modbusReceiveCounter = 0;
                 return FALSE_FUNCTION;
             }
         }
@@ -235,7 +234,7 @@ void RxRTU(void){//Check for data ready, if it is good return answer
         if (((uint32_t) Rx_Data.dataBuf[Rx_Data.dataLen] + ((uint32_t) Rx_Data.dataBuf[Rx_Data.dataLen + 1] << 8)) == Rx_CRC16)
         {
             // Valid message!
-            Rx_Data_Available = TRUE;
+            Rx_Data_Available = true;
         }
 
         Rx_State = RXTX_IDLE;

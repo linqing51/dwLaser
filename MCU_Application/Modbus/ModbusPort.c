@@ -1,36 +1,46 @@
 #include "modbusPort.h"
 /*****************************************************************************/
-volatile uint16_t modbusTimerValue;
-extern volatile uint8_t modbusReceiveCounter;
-volatile uint8_t modbusReceiveBuffer[];
+static uint8_t Timer1_L,Timer1_H;
 /*****************************************************************************/
 void initModbusSerial(int32_t baudrate)
 {//初始化MODBUS串口
-	uint32_t temp;
-	temp = (uint32_t)(CONFIG_SYSCLK / 32 / baudrate);
-	temp = 65536 - temp;		
-	T2CON &= 1 << 4;//Timer 1 overflows used for transmit clock.
-	T2CON &= 1 << 5;//Timer 1 overflows used for receive clock.	
-	TMOD &= 0x0F;
-	TMOD |= 1 << 5;//Mode 2: 8-bit counter/timer with auto-reload
-	TH1 = (uint8_t)(temp & 0xff);
-	TL1 = (uint8_t)(temp & 0xff);
-	TR1 = 1;
-	T2CON |= 1 << 2;//Timer 2 enabled
+#ifdef C8051F020
+	CKCON |= (1 << 5);//Timer2 uses the system clock
+	T2CON &= ~(1 << 0);//当定时器2 溢出或T2EX 上发生负跳变时将自动重装载（EXEN2=1）
+	T2CON &= ~(1 << 1);//定时器功能：定时器2 由T2M（CKCON.5）定义的时钟加1
+	T2CON |= (1 << 4);//Timer 2 overflows used for transmit clock.
+	T2CON |= (1 << 5);//Timer 2 overflows used for receive clock.	
+	RCAP2  = - ((long) ((uint32_t)CONFIG_SYSCLK / baudrate) / 32L);
+	TMR2 = RCAP2;
+	TR2= 1;                             // Start Timer2
+	SCON0 = 0x0;
+	SCON0 |= (1 << 4);//接收允许
+	SCON0 |= (1 << 6);//方式1：8 位UART，可变波特率
 	//RS485_DIRECTION_RXD;//接收状态
 	ES0 = 1;
+	IP |= (1 << 4);//UART0 中断高优先级
 	TI0 = 0;//清除发送完成   		
-	RI0 = 0;//清除接收完成			
+	RI0 = 0;//清除接收完成
+#endif
+#ifdef C8051F340
+	
+#endif	
 }
-void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER2
+void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER1
 	uint16_t temp;
-	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 1000));
-	T2CON = 0x0;//RCLK0=0,TCLK0=0
-    RCAP2L = (uint8_t)(temp & 0xFF);
-	RCAP2H = (uint8_t)((temp >> 8) & 0xFF);
-	TF2 = 0;
-	TR2 = 1;        
-	ET2 = 1; //开中断T0
+#ifdef C8051F020
+	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_MODBUS_SLAVE_TIMER));
+	Timer1_L = (uint8_t)(temp & 0xFF);
+	Timer1_H = (uint8_t)((temp >> 8) & 0xFF);
+	CKCON &= ~(1 << 4);//TIMER1 SYSCLK / 12
+	TMOD &= 0x0F;
+	TMOD |= (1 << 4);//方式1：16 位计数器/定时器
+	TH1 = Timer1_H;
+	TL1 = Timer1_L;	
+	TF1 = 0;
+	TR1 = 1;        
+	ET1 = 1; //开中断T1
+#endif
 }
 static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
 	ES0 = 0;
@@ -54,7 +64,7 @@ uint8_t modBusUartString(uint8_t *s, uint16_t  Length){// This is used for send 
     for(DummyCounter=0; DummyCounter < Length; DummyCounter ++){
         modBusUartPutch(s[DummyCounter]);
     }
-    return TRUE;
+    return true;
 }
 void receiveInterrupt(uint8_t Data){//Call this function into your UART Interrupt. Collect data from it!
     modbusReceiveBuffer[modbusReceiveCounter] = Data;
@@ -64,29 +74,26 @@ void receiveInterrupt(uint8_t Data){//Call this function into your UART Interrup
 	}
     modbusTimerValue = 0;
 }
-
-
-void modBusTimerValues(void){//Call this function into 1ms Interrupt or Event!
-    modbusTimerValue ++;
-}
 /******************************************************************************/
-static void modbusHandle() interrupt INTERRUPT_TIMER2
+static void modbusHandle() interrupt INTERRUPT_TIMER1
 {//硬件计时器TIMER1中断函数 1mS
-	TF2 = 0;
-	modBusTimerValues();
+	TF1 = 0;
+	TR1 = 0;
+	TH1 = Timer1_H;
+	TL1 = Timer1_L;
+	TR1 = 1;
+	modbusTimerValue ++;
 } 
 
 static void serialHandle() interrupt INTERRUPT_UART0
 {//UART0 串口中断程序
-	uint8_t ctemp;
 	if(RI0){
-		RI0 = 0;
-		ctemp = SBUF0;		
-		receiveInterrupt(ctemp);
-		if(RI0)
-		{
-			RI0 = 0;
-		}
+		RI0 = 0;	
+		receiveInterrupt(SBUF0);
+//		if(RI0)
+//		{
+//			RI0 = 0;
+//		}
 	}
 	if(TI0){
 		TI0 = 0;

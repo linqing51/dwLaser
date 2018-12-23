@@ -105,6 +105,8 @@
  
  
  
+ 
+ 
   
 #line 1 ".\Lib\stdint.h" /0
 
@@ -161,7 +163,7 @@
 #line 51 ".\Lib\stdint.h" /0
  
  
-#line 99 "MainApp\appConfig.h" /0
+#line 101 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\stdbool.h" /0
@@ -212,7 +214,7 @@
  
  
  
-#line 100 "MainApp\appConfig.h" /0
+#line 102 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\endian.h" /0
@@ -274,7 +276,7 @@
 #line 55 ".\Lib\endian.h" /0
  
  
-#line 101 "MainApp\appConfig.h" /0
+#line 103 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\si_toolchain.h" /0
@@ -1186,7 +1188,7 @@
  
  
  
-#line 102 "MainApp\appConfig.h" /0
+#line 104 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\compiler_defs.h" /0
@@ -2112,7 +2114,7 @@
  
  
  
-#line 103 "MainApp\appConfig.h" /0
+#line 105 "MainApp\appConfig.h" /0
  
  
   
@@ -2469,14 +2471,14 @@
  
  
  
-#line 105 "MainApp\appConfig.h" /0
+#line 107 "MainApp\appConfig.h" /0
  
  
  
-#line 108 "MainApp\appConfig.h" /1
+#line 110 "MainApp\appConfig.h" /1
   
  
-#line 110 "MainApp\appConfig.h" /0
+#line 112 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdio.h" /0
@@ -2525,7 +2527,7 @@
  
  
  
-#line 111 "MainApp\appConfig.h" /0
+#line 113 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2633,7 +2635,7 @@
  #pragma RESTORE
  
  
-#line 112 "MainApp\appConfig.h" /0
+#line 114 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2696,7 +2698,7 @@
  #pragma RESTORE
  
  
-#line 113 "MainApp\appConfig.h" /0
+#line 115 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -2744,7 +2746,7 @@
  
  
  
-#line 114 "MainApp\appConfig.h" /0
+#line 116 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -2782,7 +2784,7 @@
  #pragma RESTORE
  
  
-#line 115 "MainApp\appConfig.h" /0
+#line 117 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -2815,7 +2817,7 @@
  
  
  
-#line 116 "MainApp\appConfig.h" /0
+#line 118 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\math.h" /0
@@ -2889,7 +2891,7 @@
  #pragma RESTORE
  
  
-#line 117 "MainApp\appConfig.h" /0
+#line 119 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\crc32.h" /0
@@ -2906,12 +2908,10 @@
 #line 2 "MainApp\AppConfig.h" /1
   
  
- 
- 
- 
+  
  
   
-  
+ 
   
   
   
@@ -2972,6 +2972,11 @@
   
   
  
+ 
+ 
+  
+  
+ 
   
   
   
@@ -2992,24 +2997,11 @@
   
   
   
- 
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
   
  
   
- 
- 
+  
+  
   
  
  
@@ -3018,11 +3010,26 @@
   
   
   
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
   
   
   
  
+ 
   
+ 
+ 
   
   
  
@@ -3065,20 +3072,1190 @@
  
  
  
-#line 118 "MainApp\appConfig.h" /0
+#line 120 "MainApp\appConfig.h" /0
+ 
  
  
   
-#line 1 "MainApp\InitDevice.h" /0
+#line 1 "MainApp\InitDeviceF020.h" /0
+ 
+ 
+ 
+  
+#line 1 ".\Lib\compiler_defs.h" /0
  
  
  
  
- void Init_Device(void);
  
  
  
-#line 120 "MainApp\appConfig.h" /0
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 123 ".\Lib\compiler_defs.h" /1
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+  
+ 
+  
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 804 ".\Lib\compiler_defs.h" /0
+ 
+ 
+ 
+ 
+#line 4 "MainApp\InitDeviceF020.h" /0
+ 
+  
+#line 1 ".\Lib\C8051F020_defs.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 30 ".\Lib\C8051F020_defs.h" /1
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 347 ".\Lib\C8051F020_defs.h" /0
+ 
+ 
+ 
+ 
+#line 5 "MainApp\InitDeviceF020.h" /0
+ 
+ 
+ void initDeviceF020(void);
+ 
+#line 123 "MainApp\appConfig.h" /0
+ 
+ 
  
   
 #line 1 ".\Lib\delay.h" /0
@@ -3091,12 +4268,10 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
- 
+  
  
   
-  
+ 
   
   
   
@@ -3157,6 +4332,11 @@
   
   
  
+ 
+ 
+  
+  
+ 
   
   
   
@@ -3177,24 +4357,11 @@
   
   
   
- 
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
   
  
   
- 
- 
+  
+  
   
  
  
@@ -3203,11 +4370,26 @@
   
   
   
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
   
   
   
  
+ 
   
+ 
+ 
   
   
  
@@ -3245,7 +4427,7 @@
  
  
  
-#line 121 "MainApp\appConfig.h" /0
+#line 126 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c0.h" /0
@@ -3258,12 +4440,10 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
- 
+  
  
   
-  
+ 
   
   
   
@@ -3324,6 +4504,11 @@
   
   
  
+ 
+ 
+  
+  
+ 
   
   
   
@@ -3344,24 +4529,11 @@
   
   
   
- 
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
   
  
   
- 
- 
+  
+  
   
  
  
@@ -3370,11 +4542,26 @@
   
   
   
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
   
   
   
  
+ 
   
+ 
+ 
   
   
  
@@ -3419,7 +4606,7 @@
  
  
  
-#line 122 "MainApp\appConfig.h" /0
+#line 127 "MainApp\appConfig.h" /0
  
  
  
@@ -3438,12 +4625,10 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
- 
+  
  
   
-  
+ 
   
   
   
@@ -3504,6 +4689,11 @@
   
   
  
+ 
+ 
+  
+  
+ 
   
   
   
@@ -3524,24 +4714,11 @@
   
   
   
- 
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
   
  
   
- 
- 
+  
+  
   
  
  
@@ -3550,11 +4727,26 @@
   
   
   
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
   
   
   
  
+ 
   
+ 
+ 
   
   
  
@@ -3595,7 +4787,7 @@
  void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
  void epromTest(void);
  
-#line 129 "MainApp\appConfig.h" /0
+#line 134 "MainApp\appConfig.h" /0
  
  
  
@@ -3612,12 +4804,10 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
- 
+  
  
   
-  
+ 
   
   
   
@@ -3678,6 +4868,11 @@
   
   
  
+ 
+ 
+  
+  
+ 
   
   
   
@@ -3698,24 +4893,11 @@
   
   
   
- 
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
   
  
   
- 
- 
+  
+  
   
  
  
@@ -3724,11 +4906,26 @@
   
   
   
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
   
   
   
  
+ 
   
+ 
+ 
   
   
  
@@ -3758,11 +4955,15 @@
 #line 4 ".\Modbus\Modbus.h" /0
 #line 4 ".\Modbus\Modbus.h" /0
  
+ 
+ extern volatile uint16_t modbusTimerValue;
+ extern volatile uint8_t modbusReceiveCounter; 
+ extern xdata volatile uint8_t modbusReceiveBuffer[(256 + 16)];
  
  extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
  extern void processModbus(void);
  
-#line 134 "MainApp\appConfig.h" /0
+#line 139 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Modbus\ModbusPort.h" /0
@@ -3775,12 +4976,10 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
- 
+  
  
   
-  
+ 
   
   
   
@@ -3841,6 +5040,11 @@
   
   
  
+ 
+ 
+  
+  
+ 
   
   
   
@@ -3861,24 +5065,11 @@
   
   
   
- 
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
   
  
   
- 
- 
+  
+  
   
  
  
@@ -3887,11 +5078,26 @@
   
   
   
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
   
   
   
  
+ 
   
+ 
+ 
   
   
  
@@ -3920,13 +5126,6 @@
  
 #line 4 ".\Modbus\ModbusPort.h" /0
 #line 4 ".\Modbus\ModbusPort.h" /0
- 
- 
- 
- 
- 
- 
- 
  
  
  extern void modBusUartInitialise(uint32_t baudrate);
@@ -3934,10 +5133,9 @@
  extern void modBusUartPutch(uint8_t c);
  extern uint8_t modBusUartString(uint8_t *s, uint16_t Length);
  extern void receiveInterrupt(uint8_t Data);
- extern void modBusTimerValues(void);
  
  
-#line 135 "MainApp\appConfig.h" /0
+#line 140 "MainApp\appConfig.h" /0
  
  
   
@@ -3994,6 +5192,42 @@
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+  
+  
+  
+  
  
  
  
@@ -4029,8 +5263,13 @@
  
  
  
-#line 137 "MainApp\appConfig.h" /0
-#line 137 "MainApp\appConfig.h" /0
+ 
+ 
+ 
+ 
+ 
+#line 142 "MainApp\appConfig.h" /0
+#line 142 "MainApp\appConfig.h" /0
  
  
  
@@ -4091,13 +5330,50 @@
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(544 + 1)]; 
- extern xdata int16_t NVRAM1[(544 + 1)]; 
+ extern xdata int16_t NVRAM0[(431 + 1)]; 
+ extern xdata int16_t NVRAM1[(431 + 1)]; 
+ 
+ void sPlcInit(void); 
  
  void assertCoilAddress(uint16_t adr);
  void assertRegisterAddress(uint16_t adr);
- void timer0Init(void);
  
  void nvramUpdata(void);
  void clearDM(void);
@@ -4121,28 +5397,121 @@
  void T10MS(uint8_t A, uint8_t start, uint16_t value);
  void T100MS(uint8_t A, uint8_t start, uint16_t value);
  
+ void chipDacInit(void);
+ void chipAdcInit(void);
+ void sPlcInit(void);
  void refreshInput(void);
  void refreshOutput(void);
+ void refreshDac(void);
  
  
 #line 1 "MainApp\sPlc.c" /0
  
  
  
- xdata int16_t NVRAM0[(544 + 1)]; 
- xdata int16_t NVRAM1[(544 + 1)]; 
+ xdata int16_t NVRAM0[(431 + 1)]; 
+ xdata int16_t NVRAM1[(431 + 1)]; 
  static data uint8_t TimerCounter_1mS = 0;
  static data uint8_t TimerCounter_10mS = 0;
  static data uint8_t Timer0_L, Timer0_H;
- static data int8_t InputFilter[16]; 
  
+ typedef struct{ 
+ uint16_t dat[48];
+ uint16_t out;
+ uint8_t wIndex; 
+ }adcTempDat_t;
  
+ static xdata uint8_t InputFilter[16];
+ static xdata adcTempDat_t adcTempDat[9];
+ data uint8_t adcSelect; 
+ static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
+ void adcProcess(void);
+ static void initAdcData(adcTempDat_t *s);
+ static void chipDacInit(void);
+ static void chipAdcInit(void);
+ 
+ void adcProcess(void){ 
+ uint16_t result = 0;
+ 
+ while(!AD0INT);
+ 
+ result = (uint16_t)(ADC0H << 8) + (uint16_t)(ADC0L);
+ refreshAdcData(&adcTempDat[adcSelect], result);
+ NVRAM0[368 + adcSelect] = adcTempDat[adcSelect].out;
+ if(adcSelect < (9 - 1)){
+ adcSelect ++;
+ }
+ else{
+ adcSelect = 0;
+ }
+ switch(adcSelect){
+ case 0:{
+ AMX0SL = 0x00;break;
+ }
+ case 1:{
+ AMX0SL = 0x01;break;
+ }
+ case 2:{
+ AMX0SL = 0x02;break;
+ }
+ case 3:{
+ AMX0SL = 0x03;break;
+ }
+ case 4:{
+ AMX0SL = 0x04;break;
+ }
+ case 5:{
+ AMX0SL = 0x05;break;
+ }
+ case 6:{
+ AMX0SL = 0x06;break;
+ }
+ case 7:{
+ AMX0SL = 0x07;  break;
+ }
+ case 8:{
+ AMX0SL = 0x08;break;
+ }
+ case 9:{
+ break;
+ }
+ default:{
+ break;
+ }
+ }
+ AD0INT = 0;
+ AD0BUSY = 1; 
+ }
+ void initAdcData(adcTempDat_t *s){ 
+ uint8_t i;
+ for(i = 0;i < 48; i++){
+ s->dat[i] = 0x0;
+ }
+ s->out = 0;
+ s->wIndex = 0;
+ }
+ static void refreshAdcData(adcTempDat_t *s , uint16_t dat){ 
+ uint8_t i;
+ uint16_t temp;
+ uint32_t sum;
+ s->dat[s->wIndex] = dat;
+ s->wIndex ++;
+ if(s->wIndex >= 48){
+ s->wIndex = 0;
+ }
+ sum = 0;
+ for(i = 0;i < 48;i ++){
+ sum += s->dat[i];
+ }
+ temp = (uint16_t)(sum / (uint32_t)48);
+ s->out = temp;
+ }
  void assertCoilAddress(uint16_t adr){ 
- if(adr > (544 * 16))
+ if(adr > (431 * 16))
  while(1);
  }
  void assertRegisterAddress(uint16_t adr){ 
- if(adr >= 544)
+ if(adr >= 431)
  while(1);
  }
  void clearDM(void){ 
@@ -4155,7 +5524,7 @@
  }
  void clearMR(void){ 
  uint16_t i;
- for(i = 128;i <= 159;i ++)
+ for(i = 128;i <= 143;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
@@ -4163,7 +5532,7 @@
  }
  void clearEM(void){ 
  uint16_t i;
- for(i = 160;i <= 223;i ++)
+ for(i = 144;i <= 207;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
@@ -4171,7 +5540,7 @@
  }
  void clearR(void){ 
  uint16_t i;
- for(i = 224;i <= 255;i ++)
+ for(i = 208;i <= 223;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
@@ -4179,17 +5548,17 @@
  }
  void clearT(void){ 
  uint16_t i;
- for(i = 256;i <= 287;i ++)
+ for(i = 224;i <= 239;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
- for(i = 288;i <= 319;i ++)
+ for(i = 240;i <= 255;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
- for(i = 320;i <= 351;i ++)
+ for(i = 256;i <= 271;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
@@ -4197,17 +5566,17 @@
  }
  void clearTD(void){ 
  uint16_t i;
- for(i = 352;i <= 383;i ++)
+ for(i = 272;i <= 287;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
- for(i = 384;i <= 415;i ++)
+ for(i = 288;i <= 303;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
- for(i = 416;i <= 447;i ++)
+ for(i = 304;i <= 319;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
@@ -4215,26 +5584,26 @@
  }
  void clearC(void){ 
  uint16_t i;
- for(i = 448;i <= 479;i ++){
+ for(i = 320;i <= 335;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
  void nvramLoad(void){ 
   EA = 0; 
- 
- epromRead(0x0, (uint8_t*)NVRAM0, ((159 + 1) * 2)); 
+ memset(NVRAM0, 0x0, ((431 + 1) * 2)); 
+ epromRead(0x0, (uint8_t*)NVRAM0, ((143 + 1) * 2)); 
  clearEM();
  clearR();
  clearT();
  clearTD();
  clearC();
- memcpy(NVRAM1, NVRAM0, (544 + 1));
+ memcpy(NVRAM1, NVRAM0, (431 + 1));
   EA = 1;
  }
  void nvramSave(void){ 
   EA = 0; 
- epromWrite(0x0, (uint8_t*)NVRAM0, ((159 + 1) * 2));
+ epromWrite(0x0, (uint8_t*)NVRAM0, ((143 + 1) * 2));
   EA = 1;
  }
  void nvramUpdata(void){ 
@@ -4242,16 +5611,13 @@
  uint16_t i;
  sp0 = (uint8_t*)(NVRAM0);
  sp1 = (uint8_t*)(NVRAM1);
-  EA = 0;
- for(i = 0;i < ((159 + 1) * 2);i ++){
+ for(i = 0;i < ((143 + 1) * 2);i ++){
  if(*(sp0 + i) != *(sp1 + i)){
  epromWriteOneByte(i, *(sp0 + i));
  }
  }
- memcpy(NVRAM1, NVRAM0, (544 + 1));
-  EA = 1;
+ memcpy(NVRAM1, NVRAM0, ((431 + 1) * 2));
  }
- 
  void SET(uint16_t A){ 
  assertCoilAddress(A); 
  NVRAM0[(A / 16)] |= 1 << (A % 16);
@@ -4269,7 +5635,7 @@
  else
  SET(A);
  }
- uint8_t LD(uint16_t A){
+ uint8_t LD(uint16_t A){ 
  assertCoilAddress(A); 
  return (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
  }
@@ -4295,85 +5661,97 @@
  }
  void T1MS(uint8_t A, uint8_t start, uint16_t value){ 
  
- if(A > (383 - 352 + 1))
- printf("T1MS:%d Over Num\n", A);
+#line 256 "MainApp\sPlc.c" /1
  
+ 
+ 
+#line 259 "MainApp\sPlc.c" /0
  if(start){
- if(NVRAM0[(352 + A)] >= value){
+ if(NVRAM0[(272 + A)] >= value){
+ NVRAM0[(224 + (A / 16))] |= 1 << (A % 16);
+ }
+ else{
+ NVRAM0[(224 + (A / 16))] &= ~(1 << (A % 16));
+ }
+ 
+ }
+ else{
+ NVRAM0[(224 + (A / 16))] &= ~(1 << (A % 16));
+ NVRAM0[(272 + A)] = 0x0;
+ }	
+ }
+ void T10MS(uint8_t A, uint8_t start, uint16_t value){ 
+ 
+#line 275 "MainApp\sPlc.c" /1
+ 
+ 
+ 
+#line 278 "MainApp\sPlc.c" /0
+ if(start){
+ if(NVRAM0[(288 + A)] >= value){
+ NVRAM0[(240 + (A / 16))] |= 1 << (A % 16);
+ }
+ else{
+ NVRAM0[(240 + (A / 16))] &= ~(1 << (A % 16));
+ }
+ }
+ else{
+ NVRAM0[(240 + (A / 16))] &= ~(1 << (A % 16));
+ NVRAM0[(288 + A)] = 0x0;
+ }	
+ }
+ void T100MS(uint8_t A, uint8_t start, uint16_t value){ 
+ 
+#line 293 "MainApp\sPlc.c" /1
+ 
+ 
+ 
+#line 296 "MainApp\sPlc.c" /0
+ if(start){
+ if(NVRAM0[(304 + A)] >= value){
  NVRAM0[(256 + (A / 16))] |= 1 << (A % 16);
  }
  else{
  NVRAM0[(256 + (A / 16))] &= ~(1 << (A % 16));
- }
- 
+ }	
  }
  else{
  NVRAM0[(256 + (A / 16))] &= ~(1 << (A % 16));
- NVRAM0[(352 + A)] = 0x0;
- }	
- }
- void T10MS(uint8_t A, uint8_t start, uint16_t value){
- 
- if(A > (415 - 384 + 1))
- printf("T10MS:%d Over Num\n", A);
- 
- if(start){
- if(NVRAM0[(384 + A)] >= value){
- NVRAM0[(288 + (A / 16))] |= 1 << (A % 16);
- }
- else{
- NVRAM0[(288 + (A / 16))] &= ~(1 << (A % 16));
- }
- }
- else{
- NVRAM0[(288 + (A / 16))] &= ~(1 << (A % 16));
- NVRAM0[(384 + A)] = 0x0;
- }	
- }
- void T100MS(uint8_t A, uint8_t start, uint16_t value){
- 
- if(A > (447 - 416 + 1))
- printf("T100MS:%d Over Num\n", A);
- 
- if(start){
- if(NVRAM0[(416 + A)] >= value){
- NVRAM0[(320 + (A / 16))] |= 1 << (A % 16);
- }
- else{
- NVRAM0[(320 + (A / 16))] &= ~(1 << (A % 16));
- }	
- }
- else{
- NVRAM0[(320 + (A / 16))] &= ~(1 << (A % 16));
- NVRAM0[(416 + A)] = 0x0;
+ NVRAM0[(304 + A)] = 0x0;
  }
  }
  
  void timer0Init(void){ 
- uint16_t temp;
+ data uint16_t temp;
  TimerCounter_1mS = 0;
  TimerCounter_10mS = 0;
- temp = (uint16_t)(65536 - ((16000000L) / 10000 / 12)); 
+ 
+ temp = (uint16_t)(65536 - ((22118400L) / 12 /1000L));
  Timer0_L = temp & 0xFF;
  Timer0_H = (temp >> 8) & 0xFF;
  TH0 = Timer0_H; 
  TL0 = Timer0_L; 
- TMOD &= 0xFC;
- TMOD |= 0x01; 
+ CKCON &= ~(1 << 3); 
+ TMOD &= 0xF0;
+ TMOD |= (1 << 0); 
  ET0 = 1; 
  TR0 = 1; 
+ 
  }
- void timer0Isr(void) interrupt 1
- { 
+ void timer0Isr(void) interrupt 1{ 
  uint16_t i;
- TimerCounter_1mS ++;
- for(i = 352;i <= 383;i ++){ 
+ TF0 = 0;
+ TR0 = 0;
+ TH0 = Timer0_H;
+ TL0 = Timer0_L;
+ TR0 = 1;
+ for(i = 272;i <= 287;i ++){ 
  if(NVRAM0[i] < 32767){
  NVRAM0[i] ++;
  }
  }
  if(TimerCounter_1mS >= 10){ 
- for(i = 384;i <= 415;i ++){
+ for(i = 288;i <= 303;i ++){
  if(NVRAM0[i] < 32767){
  NVRAM0[i] ++;
  }
@@ -4381,18 +5759,16 @@
  TimerCounter_10mS ++;
  TimerCounter_1mS = 0;
  }
- 
  if(TimerCounter_10mS >= 10){ 
- for(i = 416;i < 447;i ++){
+ for(i = 304;i < 319;i ++){
  if(NVRAM0[i] < 32767){
  NVRAM0[i] ++;
  }
  }
  TimerCounter_10mS = 0;
  }
+ adcProcess(); 
  TimerCounter_1mS ++;
- TH0 = Timer0_H;
- TL0 = Timer0_L;
  }
  
  void refreshInput(void){ 
@@ -4404,7 +5780,7 @@
  InputFilter[i] ++;
  }
  else{
- NVRAM0[480] |= (1 << i);
+ NVRAM0[336] |= (1 << i);
  }
  }
  else{
@@ -4412,11 +5788,53 @@
  InputFilter[i] --;
  }
  else{
- NVRAM0[480] &= ~(1 << i);
+ NVRAM0[336] &= ~(1 << i);
  }
  }
  }
  }
  void refreshOutput(void){ 
+ 
+ }
+ static void chipAdcInit(void){ 
+ uint8_t i;
+ 
+ ADC0CN = 0x0; 
+ ADC0CN |= (1 << 6); 
+ ADC0CN |= (1 << 7); 
+ ADC0CF = 0x0;
+ ADC0CF |= ((22118400L) / 2000000L) << 3;      
+ AMX0CF = 0x00;                       
+ AMX0SL = 0x00;                       
+ AD0INT = 0;
+ AD0BUSY = 1; 
+ 
+ adcSelect = 0;
+ for(i = 0;i <= 9;i ++){
+ initAdcData(&adcTempDat[i]);
+ }
+ }
+ void sPlcInit(void){ 
+ nvramLoad(); 
+ chipDacInit();
+ chipAdcInit();
+ timer0Init();
+ }
+ void refreshDac(void){ 
+ 
+ if(DAC0 != NVRAM0[((368 + 31) + 1)]){
+ DAC0 = NVRAM0[((368 + 31) + 1)];
+ }
+ if(DAC1 != NVRAM0[(((368 + 31) + 1) + 1)]){
+ DAC1 = NVRAM0[(((368 + 31) + 1) + 1)];
+ }
+ 
+ }
+ static void chipDacInit(void){ 
+ 
+ DAC0CN = 0x0;
+ DAC0CN |= (1 << 7);
+ DAC0 = 0;
+ DAC1 = 0;
  
  }

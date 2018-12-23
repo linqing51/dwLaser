@@ -105,6 +105,8 @@
  
  
  
+ 
+ 
   
 #line 1 ".\Lib\stdint.h" /0
 
@@ -161,7 +163,7 @@
 #line 51 ".\Lib\stdint.h" /0
  
  
-#line 99 ".\MainApp\appConfig.h" /0
+#line 101 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\stdbool.h" /0
@@ -212,7 +214,7 @@
  
  
  
-#line 100 ".\MainApp\appConfig.h" /0
+#line 102 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\endian.h" /0
@@ -274,7 +276,7 @@
 #line 55 ".\Lib\endian.h" /0
  
  
-#line 101 ".\MainApp\appConfig.h" /0
+#line 103 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\si_toolchain.h" /0
@@ -1186,7 +1188,7 @@
  
  
  
-#line 102 ".\MainApp\appConfig.h" /0
+#line 104 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\compiler_defs.h" /0
@@ -2112,7 +2114,7 @@
  
  
  
-#line 103 ".\MainApp\appConfig.h" /0
+#line 105 ".\MainApp\appConfig.h" /0
  
  
   
@@ -2469,14 +2471,14 @@
  
  
  
-#line 105 ".\MainApp\appConfig.h" /0
+#line 107 ".\MainApp\appConfig.h" /0
  
  
  
-#line 108 ".\MainApp\appConfig.h" /1
+#line 110 ".\MainApp\appConfig.h" /1
   
  
-#line 110 ".\MainApp\appConfig.h" /0
+#line 112 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdio.h" /0
@@ -2525,7 +2527,7 @@
  
  
  
-#line 111 ".\MainApp\appConfig.h" /0
+#line 113 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2633,7 +2635,7 @@
  #pragma RESTORE
  
  
-#line 112 ".\MainApp\appConfig.h" /0
+#line 114 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2696,7 +2698,7 @@
  #pragma RESTORE
  
  
-#line 113 ".\MainApp\appConfig.h" /0
+#line 115 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -2744,7 +2746,7 @@
  
  
  
-#line 114 ".\MainApp\appConfig.h" /0
+#line 116 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -2782,7 +2784,7 @@
  #pragma RESTORE
  
  
-#line 115 ".\MainApp\appConfig.h" /0
+#line 117 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -2815,7 +2817,7 @@
  
  
  
-#line 116 ".\MainApp\appConfig.h" /0
+#line 118 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\math.h" /0
@@ -2889,7 +2891,7 @@
  #pragma RESTORE
  
  
-#line 117 ".\MainApp\appConfig.h" /0
+#line 119 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\crc32.h" /0
@@ -2906,12 +2908,10 @@
 #line 2 ".\MainApp\AppConfig.h" /1
   
  
- 
- 
- 
+  
  
   
-  
+ 
   
   
   
@@ -2972,6 +2972,11 @@
   
   
  
+ 
+ 
+  
+  
+ 
   
   
   
@@ -2992,24 +2997,11 @@
   
   
   
- 
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
   
  
   
- 
- 
+  
+  
   
  
  
@@ -3018,11 +3010,26 @@
   
   
   
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
   
   
   
  
+ 
   
+ 
+ 
   
   
  
@@ -3065,20 +3072,1190 @@
  
  
  
-#line 118 ".\MainApp\appConfig.h" /0
+#line 120 ".\MainApp\appConfig.h" /0
+ 
  
  
   
-#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\InitDevice.h" /0
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\InitDeviceF020.h" /0
+ 
+ 
+ 
+  
+#line 1 ".\Lib\compiler_defs.h" /0
  
  
  
  
- void Init_Device(void);
  
  
  
-#line 120 ".\MainApp\appConfig.h" /0
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 123 ".\Lib\compiler_defs.h" /1
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+  
+ 
+  
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 804 ".\Lib\compiler_defs.h" /0
+ 
+ 
+ 
+ 
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\InitDeviceF020.h" /0
+ 
+  
+#line 1 ".\Lib\C8051F020_defs.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 30 ".\Lib\C8051F020_defs.h" /1
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 347 ".\Lib\C8051F020_defs.h" /0
+ 
+ 
+ 
+ 
+#line 5 "\GitHub\dwLaser\MCU_Application\MainApp\InitDeviceF020.h" /0
+ 
+ 
+ void initDeviceF020(void);
+ 
+#line 123 ".\MainApp\appConfig.h" /0
+ 
+ 
  
   
 #line 1 ".\Lib\delay.h" /0
@@ -3091,12 +4268,10 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
- 
+  
  
   
-  
+ 
   
   
   
@@ -3157,6 +4332,11 @@
   
   
  
+ 
+ 
+  
+  
+ 
   
   
   
@@ -3177,24 +4357,11 @@
   
   
   
- 
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
   
  
   
- 
- 
+  
+  
   
  
  
@@ -3203,11 +4370,26 @@
   
   
   
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
   
   
   
  
+ 
   
+ 
+ 
   
   
  
@@ -3245,7 +4427,7 @@
  
  
  
-#line 121 ".\MainApp\appConfig.h" /0
+#line 126 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c0.h" /0
@@ -3258,12 +4440,10 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
- 
+  
  
   
-  
+ 
   
   
   
@@ -3324,6 +4504,11 @@
   
   
  
+ 
+ 
+  
+  
+ 
   
   
   
@@ -3344,24 +4529,11 @@
   
   
   
- 
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
   
  
   
- 
- 
+  
+  
   
  
  
@@ -3370,11 +4542,26 @@
   
   
   
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
   
   
   
  
+ 
   
+ 
+ 
   
   
  
@@ -3419,7 +4606,7 @@
  
  
  
-#line 122 ".\MainApp\appConfig.h" /0
+#line 127 ".\MainApp\appConfig.h" /0
  
  
  
@@ -3438,12 +4625,10 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
- 
+  
  
   
-  
+ 
   
   
   
@@ -3504,6 +4689,11 @@
   
   
  
+ 
+ 
+  
+  
+ 
   
   
   
@@ -3524,24 +4714,11 @@
   
   
   
- 
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
   
  
   
- 
- 
+  
+  
   
  
  
@@ -3550,11 +4727,26 @@
   
   
   
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
   
   
   
  
+ 
   
+ 
+ 
   
   
  
@@ -3595,7 +4787,7 @@
  void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
  void epromTest(void);
  
-#line 129 ".\MainApp\appConfig.h" /0
+#line 134 ".\MainApp\appConfig.h" /0
  
  
  
@@ -3612,8 +4804,12 @@
  
  
  
-#line 134 ".\MainApp\appConfig.h" /0
-#line 134 ".\MainApp\appConfig.h" /0
+ 
+ 
+ 
+ 
+#line 139 ".\MainApp\appConfig.h" /0
+#line 139 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Modbus\ModbusPort.h" /0
@@ -3626,12 +4822,10 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
- 
+  
  
   
-  
+ 
   
   
   
@@ -3692,6 +4886,11 @@
   
   
  
+ 
+ 
+  
+  
+ 
   
   
   
@@ -3712,24 +4911,11 @@
   
   
   
- 
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
   
  
   
- 
- 
+  
+  
   
  
  
@@ -3738,11 +4924,26 @@
   
   
   
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
   
   
   
  
+ 
   
+ 
+ 
   
   
  
@@ -3771,13 +4972,6 @@
  
 #line 4 "Modbus\ModbusPort.h" /0
 #line 4 "Modbus\ModbusPort.h" /0
- 
- 
- 
- 
- 
- 
- 
  
  
  extern void modBusUartInitialise(uint32_t baudrate);
@@ -3785,10 +4979,9 @@
  extern void modBusUartPutch(uint8_t c);
  extern uint8_t modBusUartString(uint8_t *s, uint16_t Length);
  extern void receiveInterrupt(uint8_t Data);
- extern void modBusTimerValues(void);
  
  
-#line 135 ".\MainApp\appConfig.h" /0
+#line 140 ".\MainApp\appConfig.h" /0
  
  
   
@@ -3802,12 +4995,10 @@
 #line 2 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /1
   
  
- 
- 
- 
+  
  
   
-  
+ 
   
   
   
@@ -3868,6 +5059,11 @@
   
   
  
+ 
+ 
+  
+  
+ 
   
   
   
@@ -3888,24 +5084,11 @@
   
   
   
- 
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
   
  
   
- 
- 
+  
+  
   
  
  
@@ -3914,11 +5097,26 @@
   
   
   
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
   
   
   
  
+ 
   
+ 
+ 
   
   
  
@@ -3947,6 +5145,42 @@
  
 #line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
 #line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
@@ -3997,12 +5231,13 @@
  
  
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(544 + 1)]; 
- extern xdata int16_t NVRAM1[(544 + 1)]; 
+ extern xdata int16_t NVRAM0[(431 + 1)]; 
+ extern xdata int16_t NVRAM1[(431 + 1)]; 
+ 
+ void sPlcInit(void); 
  
  void assertCoilAddress(uint16_t adr);
  void assertRegisterAddress(uint16_t adr);
- void timer0Init(void);
  
  void nvramUpdata(void);
  void clearDM(void);
@@ -4026,11 +5261,15 @@
  void T10MS(uint8_t A, uint8_t start, uint16_t value);
  void T100MS(uint8_t A, uint8_t start, uint16_t value);
  
+ void chipDacInit(void);
+ void chipAdcInit(void);
+ void sPlcInit(void);
  void refreshInput(void);
  void refreshOutput(void);
+ void refreshDac(void);
  
  
-#line 137 ".\MainApp\appConfig.h" /0
+#line 142 ".\MainApp\appConfig.h" /0
  
  
  
@@ -4043,6 +5282,10 @@
  
 #line 4 "Modbus\modbus.h" /0
  
+ 
+ extern volatile uint16_t modbusTimerValue;
+ extern volatile uint8_t modbusReceiveCounter; 
+ extern xdata volatile uint8_t modbusReceiveBuffer[(256 + 16)];
  
  extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
  extern void processModbus(void);
@@ -4077,7 +5320,7 @@
  typedef struct{
  uint8_t address;
  uint8_t function;
- uint8_t dataBuf[(256 + 32)];
+ uint8_t dataBuf[(256 + 16)];
  uint16_t dataLen;
  }modbusRxTxData_t;
  
@@ -4086,17 +5329,17 @@
  data uint32_t Tx_Current = 0;
  data uint32_t Tx_CRC16 = 0xFFFF;
  data MODBUS_RXTX_STATE Tx_State = RXTX_IDLE;
- xdata uint8_t Tx_Buf[(256 + 32)];
+ xdata uint8_t Tx_Buf[(256 + 16)];
  data uint32_t Tx_Buf_Size = 0;
  
  xdata modbusRxTxData_t Rx_Data;
  data uint32_t Rx_CRC16 = 0xFFFF;
  data MODBUS_RXTX_STATE Rx_State = RXTX_IDLE;
- data uint8_t Rx_Data_Available = 0;
+ data uint8_t Rx_Data_Available = false;
  
- xdata volatile uint16_t modbusTimerValue = 0;
- xdata volatile uint8_t modbusReceiveCounter = 0; 
- xdata volatile uint8_t modbusReceiveBuffer[(256 + 32)]; 
+ volatile uint16_t modbusTimerValue = 0;
+ volatile uint8_t modbusReceiveCounter = 0; 
+ xdata volatile uint8_t modbusReceiveBuffer[(256 + 16)]; 
  
  void modbusCrc16(const uint8_t Data, uint32_t* CRC){
  data uint32_t i;
@@ -4111,15 +5354,15 @@
  uint8_t DoSlaveTX(void){ 
  modBusUartString(Tx_Buf, Tx_Buf_Size);
  Tx_Buf_Size = 0;
- return 1;
+ return true;
  }
  uint8_t SendMessage(void){ 
  if (Tx_State != RXTX_IDLE){
- return 0;
+ return false;
  }
  Tx_Current  =0;
  Tx_State    =RXTX_START;
- return 1;
+ return true;
  }
  void HandleModbusError(char ErrorCode){ 
  Tx_Data.function = ErrorCode | 0x80;
@@ -4132,7 +5375,7 @@
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfRegisters = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
- if((startAddress + numberOfRegisters) > (544 + 1)){ 
+ if((startAddress + numberOfRegisters) > (431 + 1)){ 
  HandleModbusError(0x02);
  }
  else{ 
@@ -4159,7 +5402,7 @@
  Tx_Data.function = 6;
  Tx_Data.address = ModbusSlaveAddress;
  Tx_Data.dataLen = 4;
- if(address >= (544 + 1)){
+ if(address >= (431 + 1)){
  HandleModbusError(0x03);
  }
  else{
@@ -4180,7 +5423,7 @@
  numberOfRegisters = ((uint16_t)(Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
  byteCount = Rx_Data.dataBuf[4];
  
- if((startAddress+numberOfRegisters) > (544 + 1)){
+ if((startAddress+numberOfRegisters) > (431 + 1)){
  HandleModbusError(0x03);
  }
  else{
@@ -4202,35 +5445,34 @@
  }
  uint8_t RxDataAvailable(void){ 
  uint8_t Result = Rx_Data_Available;   
- Rx_Data_Available = 0;
+ Rx_Data_Available = false;
  return Result;
  }
  uint8_t CheckRxTimeout(void){ 
  
- if (modbusTimerValue >= 250){
- modbusTimerValue   =0;
- modbusReceiveCounter     =0;
+ if (modbusTimerValue >= 100){
+ modbusTimerValue = 0;
+ modbusReceiveCounter = 0;
  return true;
  }
  return false;
  }
  uint8_t checkModbusBufferComplete(void){ 
  data int32_t expectedReceiveCount=0;
- if(modbusReceiveCounter>4)
+ if(modbusReceiveCounter > 4)
  {
- if(modbusReceiveBuffer[0]==ModbusSlaveAddress)
+ if(modbusReceiveBuffer[0] == ModbusSlaveAddress)
  {
  if(modbusReceiveBuffer[1]==0x01 || modbusReceiveBuffer[1]==0x02 || modbusReceiveBuffer[1]==0x03 || modbusReceiveBuffer[1]==0x04 || modbusReceiveBuffer[1]==0x05 || modbusReceiveBuffer[1]==0x06)   
  {
- expectedReceiveCount    =8;
+ expectedReceiveCount = 8;
  }
- else if(modbusReceiveBuffer[1]==0x0F || modbusReceiveBuffer[1]==0x10)
+ else if(modbusReceiveBuffer[1] == 0x0F || modbusReceiveBuffer[1] == 0x10)
  {
- expectedReceiveCount=modbusReceiveBuffer[6]+9;
+ expectedReceiveCount=modbusReceiveBuffer[6] + 9;
  }
- else
- {
- modbusReceiveCounter=0;
+ else{
+ modbusReceiveCounter = 0;
  return 0;
  }
  }
@@ -4285,7 +5527,7 @@
  if (((uint32_t) Rx_Data.dataBuf[Rx_Data.dataLen] + ((uint32_t) Rx_Data.dataBuf[Rx_Data.dataLen + 1] << 8)) == Rx_CRC16)
  {
  
- Rx_Data_Available = 1;
+ Rx_Data_Available = true;
  }
  
  Rx_State = RXTX_IDLE;

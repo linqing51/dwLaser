@@ -1,6 +1,6 @@
 #include "eprom.h"
 /*****************************************************************************/
-
+sbit epromBusyFlag = P0^5;
 /*****************************************************************************/
 void epromInit(void){//³õÊ¼»¯IIC½Ó¿Ú
 	iic0Init();
@@ -10,6 +10,7 @@ uint8_t epromReadOneByte(uint16_t ReadAddr){//ÔÚAT24CXXÖ¸¶¨µØÖ·¶Á³öÒ»¸öÊı¾İ
 //ReadAddr:¿ªÊ¼¶ÁÊıµÄµØÖ·  
 //·µ»ØÖµ  :¶Áµ½µÄÊı¾İ				  
 	uint8_t temp=0;		  	    																 
+	epromBusyFlag = 0;
 	iic0Start();  
 #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
 //¼æÈİ24CxxÖĞÆäËûµÄ°æ±¾
@@ -26,13 +27,15 @@ uint8_t epromReadOneByte(uint16_t ReadAddr){//ÔÚAT24CXXÖ¸¶¨µØÖ·¶Á³öÒ»¸öÊı¾İ
 	iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) | 0x01));//½øÈë½ÓÊÕÄ£Ê½			   
 	iic0WaitAck();	 
 	temp = iic0ReadByte(0);//¶ÁÒ»¸ö×Ö½Ú£¬·ÇÓ¦´ğĞÅºÅĞÅºÅ	   
-	iic0Stop();        //²úÉúÒ»¸öÍ£Ö¹Ìõ¼ş	    
+	iic0Stop();        //²úÉúÒ»¸öÍ£Ö¹Ìõ¼ş
+	epromBusyFlag = 1;	
 	return temp;
 }
 
 void epromWriteOneByte(uint16_t WriteAddr, uint8_t DataToWrite){//ÔÚAT24CXXÖ¸¶¨µØÖ·Ğ´ÈëÒ»¸öÊı¾İ
 //WriteAddr  :Ğ´ÈëÊı¾İµÄÄ¿µÄµØÖ·    
 //DataToWrite:ÒªĞ´ÈëµÄÊı¾İ				   	  	    																 
+	epromBusyFlag = 0;
 	iic0Start();  
 #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
 	iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) & 0xFE));	    //·¢ËÍĞ´ÃüÁî
@@ -50,6 +53,7 @@ void epromWriteOneByte(uint16_t WriteAddr, uint8_t DataToWrite){//ÔÚAT24CXXÖ¸¶¨µ
 #if CONFIG_EPROM_FRAM != 1
 	delayMs(10);	 
 #endif
+	epromBusyFlag = 1;
 }
 
 void epromWriteLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ¼Ğ´Èë³¤¶ÈÎªLenµÄÊı¾İ
@@ -97,10 +101,10 @@ void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite){//ÔÚA
 		pBuffer ++;
 	}
 }
+#if CONFIG_DEBUG == 1
 void epromTest(void){//EPROM ¶ÁĞ´×Ô²âÊÔ
 	uint8_t temp;
-	uint32_t i, j, crc32Src, crc32Dist;
-	
+	uint32_t i, j, crc32Src, crc32Dist;	
 	crc32Clear();
 	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
 		temp = rand() % 255;
@@ -118,3 +122,4 @@ void epromTest(void){//EPROM ¶ÁĞ´×Ô²âÊÔ
 		printf("EPROM:Self Test Loop %d Fail\n", j);
 
 }
+#endif

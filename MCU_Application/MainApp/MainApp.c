@@ -1,10 +1,11 @@
 #include "MainApp.h"
 /*****************************************************************************/
-//TIMER0 ->Laser Pulse
-//TIMER1 ->UART0/1 Buadrate
-//TIMER2 ->Modbus Slave TIMER
-//TIMER3 ->HW I2C
-//TIMER4 ->SoftPLC HWTIMER
+//C8051F020 计时器功能定义
+//TIMER0 ->SPLC
+//TIMER1 ->Modbus RTU
+//TIMER2 ->UART0 Buadrate
+//TIMER3 ->
+//TIMER4 ->UART1 Buadrate
 /*****************************************************************************/
 //sbit LED_MCU = P2^3;//处理器指示LED
 //sbit LED_LASER0 = P1^7;//激光发射指示LED0 980nM
@@ -109,21 +110,25 @@
 void upDateDac0(uint16_t dat);
 void upDateDac1(uint16_t dat);
 /*****************************************************************************/
-
+sbit loopFlag = P0^4;
+sbit epromBusyFlag = P0^5;
 void main(void){
-	Init_Device();
-	//timer0Init();
+#ifdef C8051F020
+	initDeviceF020();
+#endif
+	//epromTest();
+	sPlcInit();//初始化软逻辑
 	//inPca9554Init();
 	//outPca9554Init();
 	//mcp47x6Init();
 	initModbus(CONFIG_MODBUS_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 	ES0 = 1;
 	ENABLE_INTERRUPT;
-	nvramLoad();//上电恢复NVRAM
 	while(1){
+		loopFlag = ~loopFlag;
 		processModbus();
+		
 		//refreshInput();//刷新输入IO
-		//getAdc();
 ////		SET(10);
 ////		RESET(10);
 ////		SET(10);
@@ -144,6 +149,7 @@ void main(void){
 ////		{
 ////			SET(0);	
 ////		}
+		refreshDac();
 		nvramUpdata();//更新NVRAM
 		//refreshOutput();//刷新输出IO
 	}
@@ -706,24 +712,5 @@ void main(void){
 //			break;
 //		}
 //		default:break;
-//	}
-//}
-
-//void upDateDac0(uint16_t dat)
-//{//刷新DAC0
-//	static uint16_t oldDac0;
-//	if(dat != oldDac0)
-//	{
-//		DAC0 = dat;
-//		oldDac0 = dat;
-//	}
-//}
-//void upDateDac1(uint16_t dat)
-//{//刷新DAC1
-//	static uint16_t oldDac1;
-//	if(dat != oldDac1)
-//	{
-//		DAC0 = dat;
-//		oldDac1 = dat;
 //	}
 //}
