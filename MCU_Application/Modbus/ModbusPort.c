@@ -29,7 +29,7 @@ void initModbusSerial(int32_t baudrate)
 void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER1
 	uint16_t temp;
 #ifdef C8051F020
-	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_MODBUS_SLAVE_TIMER));
+	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_MB_RTU_SLAVE_TIMER));
 	Timer1_L = (uint8_t)(temp & 0xFF);
 	Timer1_H = (uint8_t)((temp >> 8) & 0xFF);
 	CKCON &= ~(1 << 4);//TIMER1 SYSCLK / 12
@@ -69,7 +69,7 @@ uint8_t modBusUartString(uint8_t *s, uint16_t  Length){// This is used for send 
 void receiveInterrupt(uint8_t Data){//Call this function into your UART Interrupt. Collect data from it!
     modbusReceiveBuffer[modbusReceiveCounter] = Data;
     modbusReceiveCounter ++;
-    if(modbusReceiveCounter > CONFIG_MODBUS_SLAVE_BUFFER_SIZE){  
+    if(modbusReceiveCounter > CONFIG_MB_RTU_SLAVE_BUFFER_SIZE){  
         modbusReceiveCounter = 0;
 	}
     modbusTimerValue = 0;

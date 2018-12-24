@@ -57,7 +57,7 @@
 #define CONFIG_USE_IPID_UPDATE				1//使能IPID参数更新功能
 #define CONFIG_USE_IPID_OUTSHOW				1//使能IPID输出显示
 /*****************************************************************************/
-//STIMER设置
+//SPLC设置
 #define CONFIG_SPLC_HW_INPUT_NUM			16//硬件输入点数
 #define CONFIG_SPLC_HW_OUTPUT_NUM			16//硬件输出点数
 #define CONFIG_SOFTPLC_HWTIME				1000L//1mS
@@ -65,10 +65,30 @@
 #define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
 #define CONFIG_IPID_PWM_CYCLE				20//IPID输出周期 默认 20 * 100mS
 /*****************************************************************************/
+#define CONFIG_SPLC_USING_EPROM			1
+#if CONFIG_SPLC_USING_EPROM == 1
+#endif
 /*****************************************************************************/
-//SADC设置
+#define CONFIG_SPLC_USING_ADC				1//使能ADC模块
+#if CONFIG_SPLC_USING_ADC == 1
 #define CONFIG_SPLC_ADC_FILTER_TAP			48//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE				9//ADC通道数
+#endif
+/*****************************************************************************/
+#define CONFIG_SPLC_USING_DAC				1//是能DAC模块
+#if CONFIG_SPLC_USING_DAC == 1
+#endif
+/*****************************************************************************/
+#define CONFIG_SPLC_USING_MB_RTU_SLAVE		1//是能MODBUS RTU从站
+#if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1
+#define CONFIG_MB_RTU_SLAVE_TIMER			1000L//1000uS
+#define CONFIG_MB_RTU_SLAVE_ADDRESS			0x01//从设备地址
+#define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE		256//发送接收缓冲区
+#define CONFIG_MB_RTU_SLAVE_TIMEOUT			100//接收通讯超时 10mS
+#define CONFIG_MB_RTU_SLAVE_IO_DELAY		1//RX TX切换延时
+#endif
+/*****************************************************************************/
+
 /*****************************************************************************/
 #define ID_ONLY_1_CHANNEL					4321
 #define ID_ONLY_2_CHANNEL					8765
@@ -85,19 +105,12 @@
 //PID FUZZY 模糊PID配置
 #define CONFIG_TECOUT_CYCLE					4000//PID输出转PWM周期
 /*****************************************************************************/
-//MODBUS SALVE配置
-#define CONFIG_MODBUS_SLAVE_TIMER			1000L//1000uS
-#define CONFIG_MODBUS_SLAVE_ADDRESS			0x01//从设备地址
-#define CONFIG_MODBUS_SLAVE_BUFFER_SIZE		(256 + 16)//发送接收缓冲区
-#define CONFIG_MODBUS_SLAVE_TIMEOUT			100//接收通讯超时 10mS
-#define CONFIG_MODBUS_SLAVE_IO_DELAY		1//RX TX切换延时
 /*****************************************************************************/
 #define DISABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 0;
 #define ENABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 1;
 #define DISABLE_INTERRUPT					EA = 0;
 #define ENABLE_INTERRUPT					EA = 1;
-
-
+/*****************************************************************************/
 #include "stdint.h"
 #include "stdbool.h"
 #include "endian.h"

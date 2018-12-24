@@ -22,7 +22,7 @@ static void initAdcData(adcTempDat_t *s);
 static void chipDacInit(void);
 static void chipAdcInit(void);
 /******************************************************************************/
-void adcProcess(void){//循环采集ADC
+static void adcProcess(void){//循环采集ADC
 	uint16_t result = 0;
 #ifdef C8051F020
 	while(!AD0INT);
@@ -74,7 +74,7 @@ void adcProcess(void){//循环采集ADC
 	AD0INT = 0;
 	AD0BUSY = 1;//AD0BUSY写入1
 }
-void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
+static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
 	uint8_t i;
 	for(i = 0;i < CONFIG_SPLC_ADC_FILTER_TAP; i++){
 		s->dat[i] = 0x0;
@@ -181,7 +181,7 @@ void clearC(void){//清除C寄存器
 		NVRAM1[i] = 0x0;
 	}
 }
-void nvramLoad(void){//从EPROM中载入NVRAM
+static void nvramLoad(void){//从EPROM中载入NVRAM
 	DISABLE_INTERRUPT//关闭中断
 	memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
 	epromRead(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));//从EPROM中恢复NVRAM
@@ -193,12 +193,12 @@ void nvramLoad(void){//从EPROM中载入NVRAM
 	memcpy(NVRAM1, NVRAM0, CONFIG_NVRAM_SIZE);
 	ENABLE_INTERRUPT
 }
-void nvramSave(void){//强制将NVRAM存入EPROM
+static void nvramSave(void){//强制将NVRAM存入EPROM
 	DISABLE_INTERRUPT//关闭中断
 	epromWrite(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));
 	ENABLE_INTERRUPT
 }
-void nvramUpdata(void){//更新NVRAM->EPROM
+static void nvramUpdata(void){//更新NVRAM->EPROM
 	uint8_t *sp0, *sp1;
 	uint16_t i;
 	sp0 = (uint8_t*)(NVRAM0);
@@ -227,7 +227,7 @@ void FLIP(uint16_t A){//翻转
 	else
 		SET(A);
 }
-uint8_t LD(uint16_t A){//
+uint8_t LD(uint16_t A){//载入
 	assertCoilAddress(A);//检查地址范围
 	return (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
 }
@@ -307,7 +307,7 @@ void T100MS(uint8_t A, uint8_t start, uint16_t value){//100MS延时器
 	}
 }
 
-void timer0Init(void){//硬件sTimer计时器初始化
+static void timer0Init(void){//硬件sTimer计时器初始化
 	data uint16_t temp;
 	TimerCounter_1mS = 0;
 	TimerCounter_10mS = 0;
@@ -324,7 +324,7 @@ void timer0Init(void){//硬件sTimer计时器初始化
 	TR0 = 1;// T0 ON
 #endif
 }
-void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
+static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
 	uint16_t i;
 	TF0 = 0;
 	TR0 = 0;
@@ -357,7 +357,7 @@ void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
 	TimerCounter_1mS ++;
 }
 
-void refreshInput(void){//获取输入IO
+static void refreshInput(void){//获取输入IO
 	uint8_t ctemp, i;
 	//ctemp = inPca9554Read() ;
 	for(i = 0;i < 8;i ++){
@@ -379,7 +379,7 @@ void refreshInput(void){//获取输入IO
 		}
 	}
 }
-void refreshOutput(void){//设置输出IO
+static void refreshOutput(void){//设置输出IO
 	//outPca9554Write(NVRAM0[Y_START]);
 }
 static void chipAdcInit(void){//ADC模块初始化
@@ -401,10 +401,19 @@ static void chipAdcInit(void){//ADC模块初始化
 	}
 }
 void sPlcInit(void){//软逻辑初始化
+#if CONFIG_SPLC_USING_EPROM == 1
 	nvramLoad();//上电恢复NVRAM
-	chipDacInit();
-	chipAdcInit();
-	timer0Init();
+#endif
+#if CONFIG_SPLC_USING_ADC == 1
+	chipAdcInit();//初始化ADC模块
+#endif
+#if CONFIG_SPLC_USING_DAC == 1
+	chipDacInit();//初始化DAC模块
+#endif
+#if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1
+	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
+#endif
+	timer0Init();//初始化硬件计时器模块
 }
 static void refreshDac(void){//刷新DAC
 #ifdef C8051F020
@@ -422,5 +431,20 @@ static void chipDacInit(void){//初始化DAC
 	DAC0CN |= (1 << 7);
 	DAC0 = 0;
 	DAC1 = 0;
+#endif
+}
+void sPlcProcessStart(void){//sPLC轮询起始
+#if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1
+	modbusPorcess();//处理MODBUS
+#endif
+	refreshInput();//读取X口输入
+}
+void sPlcProcessEnd(void){//sPLC轮询结束
+	refreshOutput();//更新Y口输出
+#if CONFIG_SPLC_USING_DAC
+	refreshDac();//更新DAC输出
+#endif
+#if CONFIG_SPLC_USING_EPROM == 1
+	nvramUpdata();//更新NVRAM
 #endif
 }

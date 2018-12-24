@@ -91,6 +91,8 @@ extern xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 extern xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 /*****************************************************************************/
 void sPlcInit(void);//软逻辑初始化
+void sPlcProcessStart(void);//sPLC轮询起始
+void sPlcProcessEnd(void);//sPLC轮询结束
 /*****************************************************************************/
 void assertCoilAddress(uint16_t adr);
 void assertRegisterAddress(uint16_t adr);

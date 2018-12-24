@@ -27,7 +27,7 @@ typedef enum{
 typedef struct{
   uint8_t address;
   uint8_t function;
-  uint8_t dataBuf[CONFIG_MODBUS_SLAVE_BUFFER_SIZE];
+  uint8_t dataBuf[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];
   uint16_t dataLen;
 }modbusRxTxData_t;
 /**********************Slave Transmit and Receive Variables********************/
@@ -36,7 +36,7 @@ xdata modbusRxTxData_t Tx_Data;
 data uint32_t Tx_Current = 0;
 data uint32_t Tx_CRC16 = 0xFFFF;
 data MODBUS_RXTX_STATE Tx_State = RXTX_IDLE;
-xdata uint8_t Tx_Buf[CONFIG_MODBUS_SLAVE_BUFFER_SIZE];
+xdata uint8_t Tx_Buf[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];
 data uint32_t Tx_Buf_Size = 0;
 /*****************************************************************************/
 xdata modbusRxTxData_t Rx_Data;
@@ -46,7 +46,7 @@ data uint8_t Rx_Data_Available = false;
 /*****************************************************************************/
 volatile uint16_t modbusTimerValue = 0;
 volatile uint8_t modbusReceiveCounter = 0;// Collected data number
-xdata volatile uint8_t modbusReceiveBuffer[CONFIG_MODBUS_SLAVE_BUFFER_SIZE];// Buffer to collect data from hardware
+xdata volatile uint8_t modbusReceiveBuffer[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];// Buffer to collect data from hardware
 /*****************************************************************************/
 void modbusCrc16(const uint8_t Data, uint32_t* CRC){
     data uint32_t i;
@@ -157,7 +157,7 @@ uint8_t RxDataAvailable(void){//RxDataAvailable
 }
 uint8_t CheckRxTimeout(void){//CheckRxTimeout
     // A return value of true indicates there is a timeout    
-    if (modbusTimerValue >= CONFIG_MODBUS_SLAVE_TIMEOUT){
+    if (modbusTimerValue >= CONFIG_MB_RTU_SLAVE_BUFFER_SIZE){
         modbusTimerValue = 0;
         modbusReceiveCounter = 0;
         return true;
@@ -256,7 +256,7 @@ void TxRTU(void){//If it is ready send answers!
     DoSlaveTX();
     Tx_State = RXTX_IDLE;
 }
-void ProcessModbus(void){//ModBus main core! Call this function into main!
+void modbusPorcess(void){//ModBus main core! Call this function into main!
     if (Tx_State != RXTX_IDLE){                                      // If answer is ready, send it!
         TxRTU();
 	}

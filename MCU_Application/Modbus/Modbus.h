@@ -5,8 +5,8 @@
 /*****************************************************************************/
 extern volatile uint16_t modbusTimerValue;
 extern volatile uint8_t modbusReceiveCounter;// Collected data number
-extern xdata volatile uint8_t modbusReceiveBuffer[CONFIG_MODBUS_SLAVE_BUFFER_SIZE];
+extern xdata volatile uint8_t modbusReceiveBuffer[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];
 /*****************************************************************************/
 extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
-extern void processModbus(void);
+extern void modbusPorcess(void);
 #endif

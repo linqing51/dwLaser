@@ -107,6 +107,19 @@
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
   
 #line 1 ".\Lib\stdint.h" /0
 
@@ -163,7 +176,7 @@
 #line 51 ".\Lib\stdint.h" /0
  
  
-#line 101 "MainApp\appConfig.h" /0
+#line 114 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\stdbool.h" /0
@@ -214,7 +227,7 @@
  
  
  
-#line 102 "MainApp\appConfig.h" /0
+#line 115 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\endian.h" /0
@@ -276,7 +289,7 @@
 #line 55 ".\Lib\endian.h" /0
  
  
-#line 103 "MainApp\appConfig.h" /0
+#line 116 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\si_toolchain.h" /0
@@ -1188,7 +1201,7 @@
  
  
  
-#line 104 "MainApp\appConfig.h" /0
+#line 117 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\compiler_defs.h" /0
@@ -2114,7 +2127,7 @@
  
  
  
-#line 105 "MainApp\appConfig.h" /0
+#line 118 "MainApp\appConfig.h" /0
  
  
   
@@ -2471,14 +2484,14 @@
  
  
  
-#line 107 "MainApp\appConfig.h" /0
+#line 120 "MainApp\appConfig.h" /0
  
  
  
-#line 110 "MainApp\appConfig.h" /1
+#line 123 "MainApp\appConfig.h" /1
   
  
-#line 112 "MainApp\appConfig.h" /0
+#line 125 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdio.h" /0
@@ -2527,7 +2540,7 @@
  
  
  
-#line 113 "MainApp\appConfig.h" /0
+#line 126 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2635,7 +2648,7 @@
  #pragma RESTORE
  
  
-#line 114 "MainApp\appConfig.h" /0
+#line 127 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2698,7 +2711,7 @@
  #pragma RESTORE
  
  
-#line 115 "MainApp\appConfig.h" /0
+#line 128 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -2746,7 +2759,7 @@
  
  
  
-#line 116 "MainApp\appConfig.h" /0
+#line 129 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -2784,7 +2797,7 @@
  #pragma RESTORE
  
  
-#line 117 "MainApp\appConfig.h" /0
+#line 130 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -2817,7 +2830,7 @@
  
  
  
-#line 118 "MainApp\appConfig.h" /0
+#line 131 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\math.h" /0
@@ -2891,7 +2904,7 @@
  #pragma RESTORE
  
  
-#line 119 "MainApp\appConfig.h" /0
+#line 132 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\crc32.h" /0
@@ -2972,20 +2985,12 @@
   
   
  
+  
+ 
  
  
   
-  
  
-  
-  
-  
-  
-  
-  
-  
- 
-  
   
   
  
@@ -2993,6 +2998,20 @@
   
  
  
+ 
+  
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
   
   
   
@@ -3002,8 +3021,15 @@
   
   
   
+ 
+ 
   
  
+ 
+  
+  
+  
+  
  
   
   
@@ -3072,7 +3098,7 @@
  
  
  
-#line 120 "MainApp\appConfig.h" /0
+#line 133 "MainApp\appConfig.h" /0
  
  
  
@@ -4253,7 +4279,7 @@
  
  void initDeviceF020(void);
  
-#line 123 "MainApp\appConfig.h" /0
+#line 136 "MainApp\appConfig.h" /0
  
  
  
@@ -4332,20 +4358,12 @@
   
   
  
+  
+ 
  
  
   
-  
  
-  
-  
-  
-  
-  
-  
-  
- 
-  
   
   
  
@@ -4353,6 +4371,20 @@
   
  
  
+ 
+  
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
   
   
   
@@ -4362,8 +4394,15 @@
   
   
   
+ 
+ 
   
  
+ 
+  
+  
+  
+  
  
   
   
@@ -4427,7 +4466,7 @@
  
  
  
-#line 126 "MainApp\appConfig.h" /0
+#line 139 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c0.h" /0
@@ -4504,20 +4543,12 @@
   
   
  
+  
+ 
  
  
   
-  
  
-  
-  
-  
-  
-  
-  
-  
- 
-  
   
   
  
@@ -4525,6 +4556,20 @@
   
  
  
+ 
+  
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
   
   
   
@@ -4534,8 +4579,15 @@
   
   
   
+ 
+ 
   
  
+ 
+  
+  
+  
+  
  
   
   
@@ -4606,7 +4658,7 @@
  
  
  
-#line 127 "MainApp\appConfig.h" /0
+#line 140 "MainApp\appConfig.h" /0
  
  
  
@@ -4689,20 +4741,12 @@
   
   
  
+  
+ 
  
  
   
-  
  
-  
-  
-  
-  
-  
-  
-  
- 
-  
   
   
  
@@ -4710,6 +4754,20 @@
   
  
  
+ 
+  
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
   
   
   
@@ -4719,8 +4777,15 @@
   
   
   
+ 
+ 
   
  
+ 
+  
+  
+  
+  
  
   
   
@@ -4787,7 +4852,7 @@
  void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
  void epromTest(void);
  
-#line 134 "MainApp\appConfig.h" /0
+#line 147 "MainApp\appConfig.h" /0
  
  
  
@@ -4868,20 +4933,12 @@
   
   
  
+  
+ 
  
  
   
-  
  
-  
-  
-  
-  
-  
-  
-  
- 
-  
   
   
  
@@ -4889,6 +4946,20 @@
   
  
  
+ 
+  
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
   
   
   
@@ -4898,8 +4969,15 @@
   
   
   
+ 
+ 
   
  
+ 
+  
+  
+  
+  
  
   
   
@@ -4958,12 +5036,12 @@
  
  extern volatile uint16_t modbusTimerValue;
  extern volatile uint8_t modbusReceiveCounter; 
- extern xdata volatile uint8_t modbusReceiveBuffer[(256 + 16)];
+ extern xdata volatile uint8_t modbusReceiveBuffer[256];
  
  extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
- extern void processModbus(void);
+ extern void modbusPorcess(void);
  
-#line 139 "MainApp\appConfig.h" /0
+#line 152 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Modbus\ModbusPort.h" /0
@@ -5040,20 +5118,12 @@
   
   
  
+  
+ 
  
  
   
-  
  
-  
-  
-  
-  
-  
-  
-  
- 
-  
   
   
  
@@ -5061,6 +5131,20 @@
   
  
  
+ 
+  
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
   
   
   
@@ -5070,8 +5154,15 @@
   
   
   
+ 
+ 
   
  
+ 
+  
+  
+  
+  
  
   
   
@@ -5135,7 +5226,7 @@
  extern void receiveInterrupt(uint8_t Data);
  
  
-#line 140 "MainApp\appConfig.h" /0
+#line 153 "MainApp\appConfig.h" /0
  
  
   
@@ -5268,8 +5359,10 @@
  
  
  
-#line 142 "MainApp\appConfig.h" /0
-#line 142 "MainApp\appConfig.h" /0
+ 
+ 
+#line 155 "MainApp\appConfig.h" /0
+#line 155 "MainApp\appConfig.h" /0
  
  
  
@@ -5371,6 +5464,8 @@
  extern xdata int16_t NVRAM1[(431 + 1)]; 
  
  void sPlcInit(void); 
+ void sPlcProcessStart(void); 
+ void sPlcProcessEnd(void); 
  
  void assertCoilAddress(uint16_t adr);
  void assertRegisterAddress(uint16_t adr);
@@ -5430,7 +5525,7 @@
  static void chipDacInit(void);
  static void chipAdcInit(void);
  
- void adcProcess(void){ 
+ static void adcProcess(void){ 
  uint16_t result = 0;
  
  while(!AD0INT);
@@ -5482,7 +5577,7 @@
  AD0INT = 0;
  AD0BUSY = 1; 
  }
- void initAdcData(adcTempDat_t *s){ 
+ static void initAdcData(adcTempDat_t *s){ 
  uint8_t i;
  for(i = 0;i < 48; i++){
  s->dat[i] = 0x0;
@@ -5589,7 +5684,7 @@
  NVRAM1[i] = 0x0;
  }
  }
- void nvramLoad(void){ 
+ static void nvramLoad(void){ 
   EA = 0; 
  memset(NVRAM0, 0x0, ((431 + 1) * 2)); 
  epromRead(0x0, (uint8_t*)NVRAM0, ((143 + 1) * 2)); 
@@ -5601,12 +5696,12 @@
  memcpy(NVRAM1, NVRAM0, (431 + 1));
   EA = 1;
  }
- void nvramSave(void){ 
+ static void nvramSave(void){ 
   EA = 0; 
  epromWrite(0x0, (uint8_t*)NVRAM0, ((143 + 1) * 2));
   EA = 1;
  }
- void nvramUpdata(void){ 
+ static void nvramUpdata(void){ 
  uint8_t *sp0, *sp1;
  uint16_t i;
  sp0 = (uint8_t*)(NVRAM0);
@@ -5721,7 +5816,7 @@
  }
  }
  
- void timer0Init(void){ 
+ static void timer0Init(void){ 
  data uint16_t temp;
  TimerCounter_1mS = 0;
  TimerCounter_10mS = 0;
@@ -5738,7 +5833,7 @@
  TR0 = 1; 
  
  }
- void timer0Isr(void) interrupt 1{ 
+ static void timer0Isr(void) interrupt 1{ 
  uint16_t i;
  TF0 = 0;
  TR0 = 0;
@@ -5771,7 +5866,7 @@
  TimerCounter_1mS ++;
  }
  
- void refreshInput(void){ 
+ static void refreshInput(void){ 
  uint8_t ctemp, i;
  
  for(i = 0;i < 8;i ++){
@@ -5793,7 +5888,7 @@
  }
  }
  }
- void refreshOutput(void){ 
+ static void refreshOutput(void){ 
  
  }
  static void chipAdcInit(void){ 
@@ -5815,12 +5910,21 @@
  }
  }
  void sPlcInit(void){ 
+ 
  nvramLoad(); 
- chipDacInit();
- chipAdcInit();
- timer0Init();
+ 
+ 
+ chipAdcInit(); 
+ 
+ 
+ chipDacInit(); 
+ 
+ 
+ initModbus(0x01, 57600);
+ 
+ timer0Init(); 
  }
- void refreshDac(void){ 
+ static void refreshDac(void){ 
  
  if(DAC0 != NVRAM0[((368 + 31) + 1)]){
  DAC0 = NVRAM0[((368 + 31) + 1)];
@@ -5836,5 +5940,20 @@
  DAC0CN |= (1 << 7);
  DAC0 = 0;
  DAC1 = 0;
+ 
+ }
+ void sPlcProcessStart(void){ 
+ 
+ modbusPorcess(); 
+ 
+ refreshInput(); 
+ }
+ void sPlcProcessEnd(void){ 
+ refreshOutput(); 
+ 
+ refreshDac(); 
+ 
+ 
+ nvramUpdata(); 
  
  }

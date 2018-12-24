@@ -107,8 +107,6 @@
 #define MCP4768_DAC3		3
 #define MCP4768_DAC4		4
 
-void upDateDac0(uint16_t dat);
-void upDateDac1(uint16_t dat);
 /*****************************************************************************/
 sbit loopFlag = P0^4;
 sbit epromBusyFlag = P0^5;
@@ -116,19 +114,16 @@ void main(void){
 #ifdef C8051F020
 	initDeviceF020();
 #endif
-	//epromTest();
 	sPlcInit();//初始化软逻辑
 	//inPca9554Init();
 	//outPca9554Init();
 	//mcp47x6Init();
-	initModbus(CONFIG_MODBUS_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
-	ES0 = 1;
+	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 	ENABLE_INTERRUPT;
 	while(1){
 		loopFlag = ~loopFlag;
-		processModbus();
-		
-		//refreshInput();//刷新输入IO
+		sPlcProcessStart();
+		//SPLC代码插入此处
 ////		SET(10);
 ////		RESET(10);
 ////		SET(10);
@@ -149,9 +144,7 @@ void main(void){
 ////		{
 ////			SET(0);	
 ////		}
-		refreshDac();
-		nvramUpdata();//更新NVRAM
-		//refreshOutput();//刷新输出IO
+		sPlcProcessEnd();
 	}
 }
 //void main(void)
