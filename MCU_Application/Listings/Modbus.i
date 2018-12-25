@@ -5322,8 +5322,8 @@
  
  
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(431 + 1)]; 
- extern xdata int16_t NVRAM1[(431 + 1)]; 
+ extern xdata int16_t NVRAM0[(495 + 1)]; 
+ extern xdata int16_t NVRAM1[(495 + 1)]; 
  
  void sPlcInit(void); 
  void sPlcProcessStart(void); 
@@ -5463,12 +5463,33 @@
  Tx_Data.dataLen = 0;
  SendMessage();
  }
+ void HandleModbusReadCoils(void){ 
+ data uint16_t startAddress, numberOfCoil, i, currentData;
+ 
+ startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
+ numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
+ if((startAddress + numberOfCoil) > ((15 - 0 + 31 - 16) * 16)){ 
+ HandleModbusError(0x02);
+ }
+ else{
+ Tx_Data.function = 1;
+ Tx_Data.address = ModbusSlaveAddress;
+ Tx_Data.dataLen = 1;
+ Tx_Data.dataBuf[0] = 0;
+ 
+ for(i = startAddress;i <= numberOfCoil; i++){
+ 
+ }
+ }
+ }
+ void HandleModbusReadInputCoil(void){ 
+ }
  void HandleModbusReadHoldingRegisters(void){ 
  data uint16_t startAddress, numberOfRegisters, i, currentData;
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfRegisters = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
- if((startAddress + numberOfRegisters) > (431 + 1)){ 
+ if((startAddress + numberOfRegisters) > (495 + 1)){ 
  HandleModbusError(0x02);
  }
  else{ 
@@ -5486,6 +5507,8 @@
  SendMessage();
  }
  }
+ void HandleModbusWriteCoil(void){ 
+ }
  void HandleModbusWriteSingleRegister(void){ 
  data uint16_t address, value,i;
  
@@ -5495,7 +5518,7 @@
  Tx_Data.function = 6;
  Tx_Data.address = ModbusSlaveAddress;
  Tx_Data.dataLen = 4;
- if(address >= (431 + 1)){
+ if(address >= (495 + 1)){
  HandleModbusError(0x03);
  }
  else{
@@ -5516,7 +5539,7 @@
  numberOfRegisters = ((uint16_t)(Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
  byteCount = Rx_Data.dataBuf[4];
  
- if((startAddress+numberOfRegisters) > (431 + 1)){
+ if((startAddress+numberOfRegisters) > (495 + 1)){
  HandleModbusError(0x03);
  }
  else{
@@ -5651,6 +5674,10 @@
  if (Rx_Data.address == ModbusSlaveAddress){
  switch (Rx_Data.function)                                      
  {
+ case 1:{ 
+ HandleModbusReadCoils();
+ break;
+ }
  case 3:{
  HandleModbusReadHoldingRegisters();
  break;  

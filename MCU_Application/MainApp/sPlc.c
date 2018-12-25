@@ -182,16 +182,14 @@ void clearC(void){//清除C寄存器
 	}
 }
 static void nvramLoad(void){//从EPROM中载入NVRAM
-	DISABLE_INTERRUPT//关闭中断
 	memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
-	epromRead(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));//从EPROM中恢复NVRAM
+	epromRead(0, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
 	clearEM();
 	clearR();
 	clearT();
 	clearTD();
 	clearC();
 	memcpy(NVRAM1, NVRAM0, CONFIG_NVRAM_SIZE);
-	ENABLE_INTERRUPT
 }
 static void nvramSave(void){//强制将NVRAM存入EPROM
 	DISABLE_INTERRUPT//关闭中断
@@ -201,9 +199,16 @@ static void nvramSave(void){//强制将NVRAM存入EPROM
 static void nvramUpdata(void){//更新NVRAM->EPROM
 	uint8_t *sp0, *sp1;
 	uint16_t i;
-	sp0 = (uint8_t*)(NVRAM0);
-	sp1 = (uint8_t*)(NVRAM1);
-	for(i = 0;i < ((MR_END + 1) * 2);i ++){
+	sp0 = (uint8_t*)(NVRAM0 + (MR_START * 2));
+	sp1 = (uint8_t*)(NVRAM1 + (MR_START * 2));
+	for(i = MR_START;i < ((MR_END + 1) * 2);i ++){//储存MR
+		if(*(sp0 + i) != *(sp1 + i)){
+			epromWriteOneByte(i, *(sp0 + i));
+		}
+	}
+	sp0 = (uint8_t*)(NVRAM0 + (DM_START * 2));
+	sp1 = (uint8_t*)(NVRAM1 + (DM_START * 2));
+	for(i = DM_START;i < ((DM_END + 1) * 2);i ++){//储存DM
 		if(*(sp0 + i) != *(sp1 + i)){
 			epromWriteOneByte(i, *(sp0 + i));
 		}

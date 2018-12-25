@@ -5322,8 +5322,8 @@
  
  
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(431 + 1)]; 
- extern xdata int16_t NVRAM1[(431 + 1)]; 
+ extern xdata int16_t NVRAM0[(495 + 1)]; 
+ extern xdata int16_t NVRAM1[(495 + 1)]; 
  
  void sPlcInit(void); 
  void sPlcProcessStart(void); 
