@@ -80,116 +80,45 @@ void HandleModbusError(char ErrorCode){// Initialise the output buffer. The firs
     SendMessage();
 }
 
-static void readCoils(void)
-{//fuction:01 读单个或多个线圈状态
-	uint16_t addr;
-	uint16_t tempAddr;
-	uint16_t byteCount;
-	uint16_t bitCount;
-	uint16_t crcData;
-	uint16_t position;
-	uint16_t i, k;
-	uint16_t tempData;
-	uint8_t exit = 0;
-	addr = (receBuf[2]<<8) + receBuf[3]; 
-	tempAddr = addr;
-	bitCount = (receBuf[4]<<8) + receBuf[5]; //读取的位个数
-	byteCount = bitCount / 8;    //字节个数
-	if(bitCount%8 != 0)
-	{
-	  byteCount++;
-	}		
-	for(k = 0; k < byteCount; k ++)//字节位置
-	{
-		position = k + 3;
-		sendBuf[position] = 0;
-		for(i = 0; i < 8; i ++)
-		{
-			getCoilVal(tempAddr, &tempData);
-			sendBuf[position] |= tempData << i;
-			tempAddr++;
-			if(tempAddr >= addr + bitCount)//读完
-			{ 
-				exit = 1;
-				break;
-			} 
-		}
-		if(exit == 1)
-		break;
-	}
-	sendBuf[0] = localAddr;
-	sendBuf[1] = 0x01; 
-	sendBuf[2] = byteCount;
-	byteCount += 3;
-	crcData = crc16(sendBuf,byteCount); 
-	sendBuf[byteCount] = crcData & 0xff;
-	byteCount++;
-	sendBuf[byteCount] = crcData >> 8;
-	sendCount = byteCount + 1;
-	beginSend();   
-}
-
-
-
-
 void HandleModbusReadCoils(void){//Modbus function 01 - 读取线圈状态
-	uint16_t startAddress, numberOfCoil, byteCount, tempAddress;
+	uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
 	uint8_t tempData = 0;
 	// The message contains the requested start address and number of registers
     startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
     numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
-	byteCount = numberOfCoil / 8;
-	if((numberOfCoil % 8) != 0){
-		byteCount++;
-	}	
-	tempAddress = startAddress;
 	if((startAddress + numberOfCoil) > (CONFIG_NVRAM_SIZE * 16)){//If it is bigger than RegisterNumber return error to Modbus Master
         HandleModbusError(ERROR_CODE_02);
 	}
 	else{
+		byteCount = numberOfCoil / 8;
+		if((numberOfCoil % 8) != 0){
+			byteCount += 1;
+		}
 		Tx_Data.function = MODBUS_READ_COILS;
 		Tx_Data.address = ModbusSlaveAddress;
 		Tx_Data.dataLen = 1;
-		Tx_Data.dataBuf[0] = 0;	
+		tempAddr = startAddress;
 		for(i = 0; i < byteCount; i ++){
-			Tx_Data.dataBuf[i] = 0;
-			for(i = 0; i < 8; i ++){
+			Tx_Data.dataBuf[Tx_Data.dataLen] = 0;
+			for(j = 0; j < 8; j ++){
 				tempData = (NVRAM0[(tempAddr / 16)] >> (tempAddr % 16)) & 0x01;
-				Tx_Data.dataBuf[i] |= tempData << i;
+				Tx_Data.dataBuf[Tx_Data.dataLen] |= (uint8_t)(tempData << j);
 				tempAddr++;	
-				if(tempAddr >= startAddress + numberOfCoil){//读完
-					exit = 1;
-					break;
-				} 
+				//if(tempAddr >= startAddress + numberOfCoil){//读完
+				//	exit = 1;
+				//	break;
+				//} 
 			}
-			if(exit == 1)
-			break;
+			Tx_Data.dataLen ++;	
 		}
-		
-		
-	sendBuf[0] = localAddr;
-	sendBuf[1] = 0x01; 
-	sendBuf[2] = byteCount;
-	byteCount += 3;
-	crcData = crc16(sendBuf,byteCount); 
-	sendBuf[byteCount] = crcData & 0xff;
-	byteCount++;
-	sendBuf[byteCount] = crcData >> 8;
-	sendCount = byteCount + 1;
-	beginSend();   
-		
-		
-		
-		
-		
-		
+		Tx_Data.dataBuf[0] = Tx_Data.dataLen - 1;
 		SendMessage();
 	}
 }
 void HandleModbusReadInputCoil(void){//Modbus function 02 - 读取输入线圈状态
 }
 void HandleModbusReadHoldingRegisters(void){//Modbus function 03 - Read holding registers
-    data uint16_t startAddress, numberOfRegisters, i, currentData;
+    uint16_t startAddress, numberOfRegisters, i, currentData;
 	// The message contains the requested start address and number of registers
     startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
     numberOfRegisters = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
@@ -211,10 +140,37 @@ void HandleModbusReadHoldingRegisters(void){//Modbus function 03 - Read holding 
         SendMessage();
     }
 }
-void HandleModbusWriteCoil(void){//Modbus function 05 -强置单线圈
+void HandleModbusWriteSingleCoil(void){//Modbus function 05 -强置单线圈
+	uint16_t startAddress, value;
+	// The message contains the requested start address and number of registers
+    startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
+	value = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
+	if((startAddress) > (CONFIG_NVRAM_SIZE * 16)){//If it is bigger than RegisterNumber return error to Modbus Master
+        HandleModbusError(ERROR_CODE_02);
+	}
+	else{
+		Tx_Data.function = MODBUS_WRITE_SINGLE_COIL;
+		Tx_Data.address = ModbusSlaveAddress;
+		Tx_Data.dataLen = 4;
+		Tx_Data.dataBuf[0] = Rx_Data.dataBuf[0];
+		Tx_Data.dataBuf[1] = Rx_Data.dataBuf[1];
+		if(value == 0x0000){//0
+			NVRAM0[(startAddress / 16)] &= ~((uint16_t)(1 << (startAddress % 16)));
+			Tx_Data.dataBuf[2] = 0x00;
+			Tx_Data.dataBuf[3] = 0x00;
+		}
+		else if(value == 0xFF00){//1
+			NVRAM0[(startAddress / 16)] |= (uint16_t)(1 << (startAddress % 16));
+			Tx_Data.dataBuf[2] = 0xFF;
+			Tx_Data.dataBuf[3] = 0x00;
+		}
+		else{		
+		}
+		SendMessage();
+	}
 }
 void HandleModbusWriteSingleRegister(void){//Modbus function 06 - Write single register
-    data uint16_t address, value,i;
+    uint16_t address, value,i;
     // The message contains the requested start address and number of registers
     address = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t)(Rx_Data.dataBuf[1]);
     value = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
@@ -233,6 +189,48 @@ void HandleModbusWriteSingleRegister(void){//Modbus function 06 - Write single r
 		}
     }
     SendMessage();
+}
+void HandleModbusWriteMultipleCoils(void){//Modbus function 15 - Write multiple coils
+	uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
+	uint8_t tempData = 0;
+	// The message contains the requested start address and number of registers
+    startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
+    numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
+	if((startAddress + numberOfCoil) > (CONFIG_NVRAM_SIZE * 16)){//If it is bigger than RegisterNumber return error to Modbus Master
+        HandleModbusError(ERROR_CODE_02);
+	}
+	else{
+		byteCount = numberOfCoil / 8;
+		if((numberOfCoil % 8) != 0){
+			byteCount += 1;
+		}
+		Tx_Data.function = MODBUS_WRITE_MULTIPLE_COILS;
+		Tx_Data.address = ModbusSlaveAddress;
+		Tx_Data.dataLen = 4;
+		Tx_Data.dataBuf[0] = Rx_Data.dataBuf[0];
+		Tx_Data.dataBuf[1] = Rx_Data.dataBuf[1];
+		Tx_Data.dataBuf[2] = Rx_Data.dataBuf[2];
+		Tx_Data.dataBuf[3] = Rx_Data.dataBuf[3];
+		tempAddr = startAddress;
+		for(i = 0;i < byteCount;i ++){
+			for(j = 0;j < 8;j ++){
+				tempData = (uint8_t)((Rx_Data.dataBuf[(5 + i)] >> j) & 0x01);
+				if(tempData){//ON
+					NVRAM0[(tempAddr / 16)] |= (uint16_t)(1 << (tempAddr % 16));
+				}
+				else{//OFF
+					NVRAM0[(tempAddr / 16)] &= ~((uint16_t)(1 << (tempAddr % 16)));
+				}
+				tempAddr ++;
+				numberOfCoil --;
+				if(numberOfCoil == 0){
+					break;
+				}
+			}
+			
+		}
+		SendMessage();
+	}
 }
 void HandleModbusWriteMultipleRegisters(void){//Modbus function 16 - Write multiple registers
     // Write single numerical output
@@ -382,15 +380,23 @@ void modbusPorcess(void){//ModBus main core! Call this function into main!
 					HandleModbusReadCoils();
 					break;
 				}
-                case MODBUS_READ_HOLDING_REGISTERS:{
+                case MODBUS_READ_HOLDING_REGISTERS:{//FUN 03
 					HandleModbusReadHoldingRegisters();
 					break;  
 				}
-                case MODBUS_WRITE_SINGLE_REGISTER:{
+				case MODBUS_WRITE_SINGLE_COIL:{//FUN 05
+					HandleModbusWriteSingleCoil();
+					break;
+				}
+                case MODBUS_WRITE_SINGLE_REGISTER:{//FUN 06
 					HandleModbusWriteSingleRegister();
 					break;
 				}
-                case MODBUS_WRITE_MULTIPLE_REGISTERS:{
+				case MODBUS_WRITE_MULTIPLE_COILS:{//FUN 15
+					HandleModbusWriteMultipleCoils();
+					break;
+				}
+                case MODBUS_WRITE_MULTIPLE_REGISTERS:{//FUN 16
 					HandleModbusWriteMultipleRegisters();
 					break;
 				}

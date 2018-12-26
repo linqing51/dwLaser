@@ -119,6 +119,8 @@ void main(void){
 	//outPca9554Init();
 	//mcp47x6Init();
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
+	NVRAM0[0] = 0xA5;
+	NVRAM0[1] = 0x5A;
 	ENABLE_INTERRUPT;
 	while(1){
 		loopFlag = ~loopFlag;

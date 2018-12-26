@@ -65,19 +65,13 @@
 #define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
 #define CONFIG_IPID_PWM_CYCLE				20//IPID输出周期 默认 20 * 100mS
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM			1
-#if CONFIG_SPLC_USING_EPROM == 1
-#endif
+#define CONFIG_SPLC_USING_EPROM				0
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ADC				1//使能ADC模块
-#if CONFIG_SPLC_USING_ADC == 1
+#define CONFIG_SPLC_USING_ADC				0//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			48//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE				9//ADC通道数
-#endif
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DAC				1//是能DAC模块
-#if CONFIG_SPLC_USING_DAC == 1
-#endif
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_MB_RTU_SLAVE		1//是能MODBUS RTU从站
 #if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1

@@ -358,7 +358,9 @@ static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1m
 		}
 		TimerCounter_10mS = 0;
 	}
+#if CONFIG_SPLC_USING_ADC == 1
 	adcProcess();//ADC扫描
+#endif
 	TimerCounter_1mS ++;
 }
 

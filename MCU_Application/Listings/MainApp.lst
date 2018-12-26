@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 1   
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAINAPP
@@ -62,7 +62,7 @@ line level    source
   45      =2  #define CONFIG_EPROM_FREQ                                       1//
   46      =2  /*****************************************************************************/
   47      =2  #define CONFIG_USE_IPID                                         1//使能IPID温度控制
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 2   
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 2   
 
   48      =2  /*****************************************************************************/
   49      =2  #define CONFIG_USE_HWVER_SHOW                           1//使能固件版本显示
@@ -84,56 +84,50 @@ line level    source
   65      =2  #define CONFIG_IPID_RUN_CYCLE                           40//IPID运行周期 默认 40 * 100mS
   66      =2  #define CONFIG_IPID_PWM_CYCLE                           20//IPID输出周期 默认 20 * 100mS
   67      =2  /*****************************************************************************/
-  68      =2  #define CONFIG_SPLC_USING_EPROM                 1
-  69      =2  #if CONFIG_SPLC_USING_EPROM == 1
-  70      =2  #endif
-  71      =2  /*****************************************************************************/
-  72      =2  #define CONFIG_SPLC_USING_ADC                           1//使能ADC模块
-  73      =2  #if CONFIG_SPLC_USING_ADC == 1
-  74      =2  #define CONFIG_SPLC_ADC_FILTER_TAP                      48//ADC位移滤波次数
-  75      =2  #define CONFIG_SPLC_ADC_CHANNLE                         9//ADC通道数
-  76      =2  #endif
-  77      =2  /*****************************************************************************/
-  78      =2  #define CONFIG_SPLC_USING_DAC                           1//是能DAC模块
-  79      =2  #if CONFIG_SPLC_USING_DAC == 1
-  80      =2  #endif
-  81      =2  /*****************************************************************************/
-  82      =2  #define CONFIG_SPLC_USING_MB_RTU_SLAVE          1//是能MODBUS RTU从站
-  83      =2  #if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1
-  84      =2  #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
-  85      =2  #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//从设备地址
-  86      =2  #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//发送接收缓冲区
-  87      =2  #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//接收通讯超时 10mS
-  88      =2  #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TX切换延时
-  89      =2  #endif
-  90      =2  /*****************************************************************************/
-  91      =2  
-  92      =2  /*****************************************************************************/
-  93      =2  #define ID_ONLY_1_CHANNEL                                       4321
-  94      =2  #define ID_ONLY_2_CHANNEL                                       8765
-  95      =2  #define ID_BOTH_CHANNEL                                         9431
-  96      =2  #define ID_LASER_MODE_CW                                        7631
-  97      =2  #define ID_LASER_MODE_SP                                        8934
-  98      =2  #define ID_LASER_MODE_MP                                        2453
-  99      =2  #define ID_LASER_MODE_GP                                        3876
- 100      =2  /*****************************************************************************/
- 101      =2  #define FBS1_IN_PORT                                            3
- 102      =2  #define FBS2_IN_PORT                                            2
- 103      =2  #define COOLON_OUT_PORT                                         (1 * 8 + 3)
- 104      =2  /*****************************************************************************/
- 105      =2  //PID FUZZY 模糊PID配置
- 106      =2  #define CONFIG_TECOUT_CYCLE                                     4000//PID输出转PWM周期
+  68      =2  #define CONFIG_SPLC_USING_EPROM                         0
+  69      =2  /*****************************************************************************/
+  70      =2  #define CONFIG_SPLC_USING_ADC                           0//使能ADC模块
+  71      =2  #define CONFIG_SPLC_ADC_FILTER_TAP                      48//ADC位移滤波次数
+  72      =2  #define CONFIG_SPLC_ADC_CHANNLE                         9//ADC通道数
+  73      =2  /*****************************************************************************/
+  74      =2  #define CONFIG_SPLC_USING_DAC                           1//是能DAC模块
+  75      =2  /*****************************************************************************/
+  76      =2  #define CONFIG_SPLC_USING_MB_RTU_SLAVE          1//是能MODBUS RTU从站
+  77      =2  #if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1
+  78      =2  #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
+  79      =2  #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//从设备地址
+  80      =2  #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//发送接收缓冲区
+  81      =2  #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//接收通讯超时 10mS
+  82      =2  #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TX切换延时
+  83      =2  #endif
+  84      =2  /*****************************************************************************/
+  85      =2  
+  86      =2  /*****************************************************************************/
+  87      =2  #define ID_ONLY_1_CHANNEL                                       4321
+  88      =2  #define ID_ONLY_2_CHANNEL                                       8765
+  89      =2  #define ID_BOTH_CHANNEL                                         9431
+  90      =2  #define ID_LASER_MODE_CW                                        7631
+  91      =2  #define ID_LASER_MODE_SP                                        8934
+  92      =2  #define ID_LASER_MODE_MP                                        2453
+  93      =2  #define ID_LASER_MODE_GP                                        3876
+  94      =2  /*****************************************************************************/
+  95      =2  #define FBS1_IN_PORT                                            3
+  96      =2  #define FBS2_IN_PORT                                            2
+  97      =2  #define COOLON_OUT_PORT                                         (1 * 8 + 3)
+  98      =2  /*****************************************************************************/
+  99      =2  //PID FUZZY 模糊PID配置
+ 100      =2  #define CONFIG_TECOUT_CYCLE                                     4000//PID输出转PWM周期
+ 101      =2  /*****************************************************************************/
+ 102      =2  /*****************************************************************************/
+ 103      =2  #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
+ 104      =2  #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
+ 105      =2  #define DISABLE_INTERRUPT                                       EA = 0;
+ 106      =2  #define ENABLE_INTERRUPT                                        EA = 1;
  107      =2  /*****************************************************************************/
- 108      =2  /*****************************************************************************/
- 109      =2  #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 3   
-
- 110      =2  #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
- 111      =2  #define DISABLE_INTERRUPT                                       EA = 0;
- 112      =2  #define ENABLE_INTERRUPT                                        EA = 1;
- 113      =2  /*****************************************************************************/
- 114      =2  #include "stdint.h"
+ 108      =2  #include "stdint.h"
    1      =3  /**************************************************************************//**
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 3   
+
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
    4      =3   * http://developer.silabs.com/legal/version/v11/Silicon_Labs_Software_License_Agreement.txt
@@ -185,19 +179,19 @@ line level    source
            =3 #endif
   51      =3  
   52      =3  #endif
- 115      =2  #include "stdbool.h"
+ 109      =2  #include "stdbool.h"
    1      =3  /**************************************************************************//**
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
    4      =3   * http://developer.silabs.com/legal/version/v11/Silicon_Labs_Software_License_Agreement.txt
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 4   
-
    5      =3   *****************************************************************************/
    6      =3  
    7      =3  #ifndef STDBOOL_H
    8      =3  #define STDBOOL_H
    9      =3  
   10      =3  #if defined __C51__
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 4   
+
   11      =3  
   12      =3  typedef bit bool;
   13      =3  enum{
@@ -233,7 +227,7 @@ line level    source
   43      =3  
   44      =3  #endif //STDBOOL_H
   45      =3  
- 116      =2  #include "endian.h"
+ 110      =2  #include "endian.h"
    1      =3  /**************************************************************************//**
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
@@ -254,14 +248,14 @@ line level    source
   18      =3  #if ((defined __C51__) || (defined __RC51__) || (defined _CC51))
   19      =3  
   20      =3  #define htobe16(x) (x)
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 5   
-
   21      =3  #define htobe32(x) (x)
   22      =3  #define be16toh(x) (x)
   23      =3  #define be32toh(x) (x)
   24      =3  
   25      =3  #define htole16(x) bswap16(x)
   26      =3  #define htole32(x) bswap32(x)
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 5   
+
   27      =3  #define le16toh(x) bswap16(x)
   28      =3  #define le32toh(x) bswap32(x)
   29      =3  
@@ -292,7 +286,7 @@ line level    source
            =3 #endif  // Compiler Definitions
   55      =3  
   56      =3  #endif  // __ENDIAN_H__
- 117      =2  #include "si_toolchain.h"
+ 111      =2  #include "si_toolchain.h"
    1      =3  /******************************************************************************
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
@@ -318,14 +312,14 @@ line level    source
            =4 typedef unsigned short uint16_t;
            =4 typedef unsigned long uint32_t;
            =4 typedef uint32_t uint64_t[2];
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 6   
-
            =4 
            =4 typedef signed char int8_t;
            =4 typedef short int16_t;
            =4 typedef long int32_t;
            =4 typedef int32_t int64_t[2];
            =4 typedef float fp32_t;
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 6   
+
            =4 typedef double fp64_t;
            =4 
            =4 #elif defined __ICC8051__
@@ -382,14 +376,14 @@ line level    source
            =4 #endif
            =4 
            =4 #ifndef __cplusplus
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 7   
-
            =4 
            =4 #define bool _Bool
            =4 #define true 1
            =4 #define false 0
            =4 
            =4 #define __bool_true_false_are_defined 1
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 7   
+
            =4 
            =4 #endif /* !__cplusplus */
            =4 
@@ -446,14 +440,14 @@ line level    source
   50      =3   * |specific       |generic       |@ref SI_SEGMENT_POINTER                 |
   51      =3   * |specific       |specific      |@ref SI_SEGMENT_VARIABLE_SEGMENT_POINTER|
   52      =3   *
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 8   
-
   53      =3   * ## Prior Toolchain Abstraction Header File ##
   54      =3   *
   55      =3   * This file supercedes an earlier header file named `compiler_defs.h`.  We
   56      =3   * are deprecating the use of compiler_defs.h, however it will remain for
   57      =3   * backwards compatibility.  This file was created to normalize macro names,
   58      =3   * remove unused macros, and to provide documentation.
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 8   
+
   59      =3   *
   60      =3   * ## Supported Toolchains ##
   61      =3   *
@@ -510,14 +504,14 @@ line level    source
  112      =3   * @param bitnum The bit number (0-7) within the byte.
  113      =3   *
  114      =3   * This cannot be used to make any arbitrary SFR or variable into
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 9   
-
  115      =3   * a bit variable.  The underlying memory must support bit-addressability.
  116      =3   *****************************************************************************/
  117      =3  #define SI_SBIT(name, address, bitnum) sbit name = address^bitnum
  118      =3  
  119      =3  /**************************************************************************//**
  120      =3   * Declares an 8-bit special function register (SFR) variable.
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 9   
+
  121      =3   *
  122      =3   * @param name The name of the SFR variable.
  123      =3   * @param address The address of the SFR.
@@ -574,14 +568,14 @@ line level    source
  174      =3   * for interrupt handlers allows the prolog code to just switch banks instead
  175      =3   * of saving and restoring all the general purpose registers.  This can make
  176      =3   * interrupt entry/exit faster but requires dedicating a register bank for
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 10  
-
  177      =3   * the interrupt handler.
  178      =3   *
  179      =3   * @note This macro is used to define the function implementation.  To declare
  180      =3   * the interrupt function prototype, use @ref SI_INTERRUPT_PROTO_USING.
  181      =3   *****************************************************************************/
  182      =3  #define SI_INTERRUPT_USING(name, vector, regnum)                             \
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 10  
+
  183      =3               void name (void) interrupt vector using regnum
  184      =3  
  185      =3  /**************************************************************************//**
@@ -638,14 +632,14 @@ line level    source
  236      =3   * a parameter data type and name.  It can also be multiple parameters but
  237      =3   * they must be enclosed in parentheses and separated by commas.
  238      =3   *
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 11  
-
  239      =3   * __Example__
  240      =3   *
  241      =3   * ~~~~~~~~.c
  242      =3   * // The following is used to implement a function with the following
  243      =3   * // signature...
  244      =3   * uint16_t myFunction(uint8_t parm1, uint8_t parm2);
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 11  
+
  245      =3   *
  246      =3   * SI_REENTRANT_FUNCTION(myFunction, uint16_t, (uint8_t parm1, uint8_t parm2))
  247      =3   * {
@@ -702,14 +696,14 @@ line level    source
  298      =3   *
  299      =3   * __Example__
  300      =3   *
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 12  
-
  301      =3   * ~~~~~~~~.c
  302      =3   * // The following is used to implement a function with the following
  303      =3   * // signature, and that uses register bank 3 ...
  304      =3   * uint16_t myFunction(uint8_t parm1, uint8_t parm2);
  305      =3   *
  306      =3   * SI_FUNCTION_USING(myFunction, uint16_t, (uint8_t parm1, uint8_t parm2), 3)
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 12  
+
  307      =3   * {
  308      =3   *   // Function implementation body
  309      =3   * }
@@ -766,14 +760,14 @@ line level    source
  360      =3   * // The following macro can be used to create a variable located in
  361      =3   * // XDATA with the following signature:
  362      =3   * uint8_t myVar;
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 13  
-
  363      =3   *
  364      =3   * SI_SEGMENT_VARIABLE(myVar, uint8_t, SEG_XDATA);
  365      =3   * ~~~~~~~~
  366      =3   *****************************************************************************/
  367      =3  #define SI_SEGMENT_VARIABLE(name, vartype, memseg) vartype memseg name
  368      =3  
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 13  
+
  369      =3  /**************************************************************************//**
  370      =3   * Declare a memory segment specific pointer variable.
  371      =3   *
@@ -830,14 +824,14 @@ line level    source
  422      =3   * ~~~~~~~~.c
  423      =3   * // The following macro can be used to create a pointer that points to
  424      =3   * // a location in XDATA while the pointer itself is located in DATA, with
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 14  
-
  425      =3   * // the following signature:
  426      =3   * uint8_t *pVar; // where pVar is located in DATA and is pointing at XDATA
  427      =3   *
  428      =3   * SI_SEGMENT_VARIABLE_SEGMENT_POINTER(pVar, uint8_t, SEG_XDATA, SEG_DATA);
  429      =3   * ~~~~~~~~
  430      =3   *****************************************************************************/
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 14  
+
  431      =3  #define SI_SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targseg, memseg)  \
  432      =3               vartype targseg * memseg name
  433      =3  
@@ -894,14 +888,14 @@ line level    source
  484      =3   * - @ref SI_SEG_CODE
  485      =3   *
  486      =3   * __Example__
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 15  
-
  487      =3   *
  488      =3   * ~~~~~~~~.c
  489      =3   * // The following declares a variable located at 0x4000 in XDATA with
  490      =3   * // the following signature:
  491      =3   * uint8_t myMemVar;
  492      =3   *
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 15  
+
  493      =3   * SI_LOCATED_VARIABLE_NO_INIT(myMemVar, uint8_t, SEG_DATA, 0x4000);
  494      =3   * ~~~~~~~~
  495      =3   *****************************************************************************/
@@ -958,14 +952,14 @@ line level    source
  546      =3    int32_t s32;        ///< The 4-byte value as a 32-bit signed integer.
  547      =3    SI_UU16_t uu16[2];  ///< The 4-byte value as a SI_UU16_t.
  548      =3    uint16_t u16[2];    ///< The 4-byte value as two unsigned 16-bit integers.
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 16  
-
  549      =3    int16_t s16[2];     ///< The 4-byte value as two signed 16-bit integers.
  550      =3    uint8_t u8[4];      ///< The 4-byte value as 4 unsigned 8-bit integers.
  551      =3    int8_t s8[4];       ///< The 4-byte value as 4 signed 8-bit integers.
  552      =3  } SI_UU32_t;
  553      =3  
  554      =3  // Generic pointer memory segment constants.
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 16  
+
  555      =3  #define SI_GPTR                   ///< Generic pointer indeterminate type.
  556      =3  #define SI_GPTR_MTYPE_DATA  0x00  ///< Generic pointer for DATA segment.
  557      =3  #define SI_GPTR_MTYPE_IDATA 0x00  ///< Generic pointer for IDATA segment.
@@ -1022,14 +1016,14 @@ line level    source
            =3 // but the 8051-specific aspects (like memory segment) are ignored
            =3 #define SI_INTERRUPT(name, vector) void name (void)
            =3 #define SI_INTERRUPT_USING(name, vector, regnum) void name (void)
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 17  
-
            =3 #define SI_INTERRUPT_PROTO(name, vector) void name (void)
            =3 #define SI_INTERRUPT_PROTO_USING(name, vector, regnum) void name (void)
            =3 #define SI_FUNCTION_USING(name, return_value, parameter, regnum)              \
            =3              return_value name (parameter)
            =3 #define SI_FUNCTION_PROTO_USING(name, return_value, parameter, regnum)        \
            =3              return_value name (parameter)
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 17  
+
            =3 #define SI_SEGMENT_VARIABLE(name, vartype, memseg) vartype name
            =3 #define SI_VARIABLE_SEGMENT_POINTER(name, vartype, targseg)                  \
            =3              vartype * name
@@ -1086,14 +1080,14 @@ line level    source
            =3 
            =3 #define SI_BIT(name)              __no_init bool __bit name
            =3 #define SI_SBIT(name, addr, bit)  __bit __no_init volatile bool name @ (addr+bit)
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 18  
-
            =3 #define SI_SFR(name, addr)        __sfr __no_init volatile unsigned char name @ addr
            =3 #define SI_SFR16(name, addr)      __sfr __no_init volatile unsigned int  name @ addr
            =3 
            =3 #define SI_SEG_GENERIC __generic
            =3 #define SI_SEG_FAR  __xdata
            =3 #define SI_SEG_DATA __data
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 18  
+
            =3 #define SI_SEG_NEAR __data
            =3 #define SI_SEG_IDATA __idata
            =3 #define SI_SEG_XDATA __xdata
@@ -1150,14 +1144,14 @@ line level    source
            =3 
            =3 // The following are used for byte ordering when referring to individual
            =3 // bytes within a SI_UU32_t.  B0 is the least significant byte.
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 19  
-
            =3 #define B0 0 ///< Least significant byte of a 4 byte word
            =3 #define B1 1 ///< Byte 1 of a 4-byte word, where byte 0 is LSB
            =3 #define B2 2 ///< Byte 2 of a 4-byte word, where byte 0 is LSB
            =3 #define B3 3 ///< Most significant byte of a 4-byte word
            =3 
            =3 #define LSB 0 ///< Index to least significant bit of a 2 byte word
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 19  
+
            =3 #define MSB 1 ///< Index to most significant bit of a 2 byte word
            =3 
            =3 /// A union type to make it easier to access individual bytes of a 16-bit
@@ -1214,14 +1208,14 @@ line level    source
            =3 
            =3 #else // unknown toolchain
            =3 #error Unrecognized toolchain in si_toolchain.h
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 20  
-
            =3 #endif
  794      =3  
  795      =3  /** @} */
  796      =3  
  797      =3  #endif
- 118      =2  #include "compiler_defs.h"
+ 112      =2  #include "compiler_defs.h"
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 20  
+
    1      =3  //-----------------------------------------------------------------------------
    2      =3  // compiler_defs.h
    3      =3  //-----------------------------------------------------------------------------
@@ -1278,14 +1272,14 @@ line level    source
   54      =3  // SBIT  (P0_1, 0x80, 1);      // Port 0 pin 1
   55      =3  // SFR   (P0, 0x80);           // Port 0
   56      =3  // SFRX  (CPUCS, 0xE600);      // Cypress FX2 Control and Status register in
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 21  
-
   57      =3  //                             // xdata memory at 0xE600
   58      =3  // SFR16 (TMR2, 0xCC);         // Timer 2, lsb at 0xCC, msb at 0xCD
   59      =3  // SFR16E(TMR0, 0x8C8A);       // Timer 0, lsb at 0x8A, msb at 0x8C
   60      =3  // SFR32 (MAC0ACC, 0x93);      // SiLabs C8051F120 32 bits MAC0 Accumulator,
   61      =3  //                             // lsb at 0x93, msb at 0x96
   62      =3  // SFR32E(SUMR, 0xE5E4E3E2);   // TI MSC1210 SUMR 32 bits Summation register,
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 21  
+
   63      =3  //                             // lsb at 0xE2, msb at 0xE5
   64      =3  //
   65      =3  // Target:         C8051xxxx
@@ -1342,14 +1336,14 @@ line level    source
  116      =3  //    -Initial revision
  117      =3  
  118      =3  //-----------------------------------------------------------------------------
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 22  
-
  119      =3  // Header File Preprocessor Directive
  120      =3  //-----------------------------------------------------------------------------
  121      =3  
  122      =3  #ifndef COMPILER_DEFS_H
  123      =3  #define COMPILER_DEFS_H
  124      =3  
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 22  
+
  125      =3  #include "stdbool.h"
    1      =4  /**************************************************************************//**
    2      =4   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
@@ -1406,14 +1400,14 @@ line level    source
    7      =4  #ifndef STDINT_H
            =4 #define STDINT_H
            =4 
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 23  
-
            =4 #if defined __C51__
            =4 
            =4 typedef unsigned char uint8_t;
            =4 typedef unsigned short uint16_t;
            =4 typedef unsigned long uint32_t;
            =4 typedef uint32_t uint64_t[2];
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 23  
+
            =4 
            =4 typedef signed char int8_t;
            =4 typedef short int16_t;
@@ -1470,14 +1464,14 @@ line level    source
  143      =3  #if defined SDCC
            =3 
            =3 #if (SDCC >= 300)
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 24  
-
            =3 
            =3 #define interrupt __interrupt
            =3 #define _asm __asm
            =3 #define _endasm __endasm
            =3 #define bit __bit
            =3 #define code __code
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 24  
+
            =3 #define at __at
            =3 
            =3 #endif
@@ -1534,14 +1528,14 @@ line level    source
            =3 typedef unsigned int U16;
            =3 typedef unsigned long U32;
            =3 
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 25  
-
            =3 typedef signed char S8;
            =3 typedef signed int S16;
            =3 typedef signed long S32;
            =3 
            =3 typedef union UU16
            =3 {
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 25  
+
            =3    U16 U16;
            =3    S16 S16;
            =3    U8 U8[2];
@@ -1598,14 +1592,14 @@ line level    source
            =3 # define SEG_IDATA idata
            =3 # define SEG_XDATA xdata
            =3 # define SEG_PDATA pdata
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 26  
-
            =3 # define SEG_CODE  code
            =3 # define SEG_BDATA bdata
            =3 
            =3 # define SBIT(name, addr, bit)  at (addr+bit) sbit         name
            =3 # define SFR(name, addr)        sfr at addr                name
            =3 # define SFR16(name, addr)      sfr16 at addr              name
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 26  
+
            =3 # define SFR16E(name, fulladdr) /* not supported */
            =3 # define SFR32(name, fulladdr)  /* not supported */
            =3 # define SFR32E(name, fulladdr) /* not supported */
@@ -1662,14 +1656,14 @@ line level    source
            =3    U16 U16[2];
            =3    S16 S16[2];
            =3    U8 U8[4];
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 27  
-
            =3    S8 S8[4];
            =3 } UU32;
            =3 
            =3 // NOP () macro support -- NOP is opcode 0x00
            =3 #define NOP() asm { 0x00 }
            =3 
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 27  
+
            =3 // generic pointer memory type specifiers
            =3 #define SI_GPTR
            =3 #define SI_GPTR_MTYPE_DATA       0x04
@@ -1726,14 +1720,14 @@ line level    source
  386      =3  
  387      =3  # define FUNCTION_USING(name, return_value, parameter, regnum) return_value name (parameter) using regnum
  388      =3  # define FUNCTION_PROTO_USING(name, return_value, parameter, regnum) return_value name (parameter)
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 28  
-
  389      =3  // Note: Parameter must be either 'void' or include a variable type and name. (Ex: char temp_variable)
  390      =3  
  391      =3  # define SEGMENT_VARIABLE(name, vartype, locsegment) vartype locsegment name
  392      =3  # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype targsegment * name
  393      =3  # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype targsegment * lo
              -csegment name
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 28  
+
  394      =3  # define SEGMENT_POINTER(name, vartype, locsegment) vartype * locsegment name
  395      =3  # define LOCATED_VARIABLE_NO_INIT(name, vartype, locsegment, addr) vartype locsegment name _at_ addr
  396      =3  
@@ -1790,14 +1784,14 @@ line level    source
  447      =3     U16 U16[2];
  448      =3     S16 S16[2];
  449      =3     U8 U8[4];
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 29  
-
  450      =3     S8 S8[4];
  451      =3  } UU32;
  452      =3  
  453      =3  // NOP () macro support
  454      =3  extern void _nop_ (void);
  455      =3  #define NOP() _nop_()
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 29  
+
  456      =3  
  457      =3  // generic pointer memory type specifiers
  458      =3  #define SI_GPTR
@@ -1854,14 +1848,14 @@ line level    source
            =3 // Note: Hi-Tech does not support functions using different register banks. Register
            =3 //       banks can only be specified in interrupts. If a function is called from
            =3 //       inside an interrupt, it will use the same register bank as the interrupt.
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 30  
-
            =3 
            =3 # define SEGMENT_VARIABLE(name, vartype, locsegment) locsegment vartype name
            =3 # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) targsegment vartype * name
            =3 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) targsegment vartype * lo
              -csegment name
            =3 # define LOCATED_VARIABLE(name, vartype, locsegment, addr, init) locsegment vartype name @ addr
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 30  
+
            =3 
            =3 // used with UU16
            =3 # define LSB 0
@@ -1918,14 +1912,14 @@ line level    source
            =3 # define SEG_IDATA _idat
            =3 # define SEG_XDATA _xdat
            =3 # define SEG_PDATA _pdat
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 31  
-
            =3 # define SEG_CODE  _rom
            =3 # define SEG_BDATA _bdat
            =3 
            =3 # define SBIT(name, addr, bit)  _sfrbit  name _at(addr+bit)
            =3 # define SFR(name, addr)        _sfrbyte name _at(addr)
            =3 # define SFRX(name, addr)       _xdat volatile unsigned char name _at(addr)
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 31  
+
            =3 #if _CC51 > 71
            =3 # define SFR16(name, addr)      _sfrword _little name _at(addr)
            =3 #else
@@ -1982,14 +1976,14 @@ line level    source
            =3 
            =3 typedef union UU32
            =3 {
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 32  
-
            =3    U32 U32;
            =3    S32 S32;
            =3    UU16 UU16[2];
            =3    U16 U16[2];
            =3    S16 S16[2];
            =3    U8 U8[4];
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 32  
+
            =3    S8 S8[4];
            =3 } UU32;
            =3 
@@ -2046,14 +2040,14 @@ line level    source
            =3 # define SEGMENT_VARIABLE(name, vartype, locsegment)  locsegment vartype name
            =3 # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype targsegment  * name
            =3 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype targsegment * lo
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 33  
-
              -csegment name
            =3 
            =3 # define LOCATED_VARIABLE(name, vartype, locsegment, addr, init) locsegment __no_init vartype name @ addr
            =3 
            =3 // used with UU16
            =3 # define LSB 0
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 33  
+
            =3 # define MSB 1
            =3 
            =3 // used with UU32 (b0 is least-significant byte)
@@ -2110,14 +2104,14 @@ line level    source
            =3         UU16 ADDR;
            =3         U8 MTYPE;
            =3     } GPTR;
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 34  
-
            =3 } SI_GENERIC_PTR;
            =3 
            =3 //-----------------------------------------------------------------------------
            =3 
            =3 // Crossware
            =3 // http://www.crossware.com
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 34  
+
            =3 
            =3 #elif defined _XC51_VER
            =3 # define SBIT(name, addr, bit)  _sfrbit  name = (addr+bit)
@@ -2166,22 +2160,22 @@ line level    source
  805      =3  //-----------------------------------------------------------------------------
  806      =3  // End Of File
  807      =3  //-----------------------------------------------------------------------------
- 119      =2  #ifdef C8051F020
- 120      =2  #include "C8051F020_defs.h"
+ 113      =2  #ifdef C8051F020
+ 114      =2  #include "C8051F020_defs.h"
    1      =3  //-----------------------------------------------------------------------------
    2      =3  // C8051F020_defs.h
    3      =3  //-----------------------------------------------------------------------------
    4      =3  // Copyright 2007, Silicon Laboratories, Inc.
    5      =3  // http://www.silabs.com
    6      =3  //
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 35  
-
    7      =3  // Program Description:
    8      =3  //
    9      =3  // Register/bit definitions for the C8051F02x family.
   10      =3  // **Important Note**: The compiler_defs.h header file should be included
   11      =3  // before including this header file.
   12      =3  //
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 35  
+
   13      =3  // Target:         C8051F020, 'F021, 'F022, 'F023
   14      =3  // Tool chain:     Generic
   15      =3  // Command Line:   None
@@ -2238,14 +2232,14 @@ line level    source
   66      =3  SFR (CPT1CN, 0x9F);                    // Comparator 1 Control
   67      =3  SFR (P2, 0xA0);                        // Port 2 Latch
   68      =3  SFR (EMI0TC, 0xA1);                    // EMIF Timing Control
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 36  
-
   69      =3  SFR (EMI0CF, 0xA3);                    // EMIF Configuration
   70      =3  SFR (P0MDOUT, 0xA4);                   // Port 0 Output Mode Configuration
   71      =3  SFR (P1MDOUT, 0xA5);                   // Port 1 Output Mode Configuration
   72      =3  SFR (P2MDOUT, 0xA6);                   // Port 2 Output Mode Configuration
   73      =3  SFR (P3MDOUT, 0xA7);                   // Port 3 Output Mode Configuration
   74      =3  SFR (IE, 0xA8);                        // Interrupt Enable
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 36  
+
   75      =3  SFR (SADDR0, 0xA9);                    // Serial Port UART0 Slave Address
   76      =3  SFR (ADC1CN, 0xAA);                    // ADC1 Control
   77      =3  SFR (ADC1CF, 0xAB);                    // ADC1 Analog Mux Configuration
@@ -2302,14 +2296,14 @@ line level    source
  128      =3  SFR (XBR1, 0xE2);                      // Port I/O Crossbar Control 1
  129      =3  SFR (XBR2, 0xE3);                      // Port I/O Crossbar Control 2
  130      =3  SFR (RCAP4L, 0xE4);                    // Timer 4 Capture Register Low
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 37  
-
  131      =3  SFR (RCAP4H, 0xE5);                    // Timer 4 Capture Register High
  132      =3  SFR (EIE1, 0xE6);                      // External Interrupt Enable 1
  133      =3  SFR (EIE2, 0xE7);                      // External Interrupt Enable 2
  134      =3  SFR (ADC0CN, 0xE8);                    // ADC0 Control
  135      =3  SFR (PCA0L, 0xE9);                     // PCA0 Counter Low
  136      =3  SFR (PCA0CPL0, 0xEA);                  // PCA0 Capture 0 Low
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 37  
+
  137      =3  SFR (PCA0CPL1, 0xEB);                  // PCA0 Capture 1 Low
  138      =3  SFR (PCA0CPL2, 0xEC);                  // PCA0 Capture 2 Low
  139      =3  SFR (PCA0CPL3, 0xED);                  // PCA0 Capture 3 Low
@@ -2366,14 +2360,14 @@ line level    source
  190      =3  #define SFR_P3       0xB0
  191      =3  #define SFR_IP       0xB8
  192      =3  #define SFR_SMB0CN   0xC0
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 38  
-
  193      =3  #define SFR_T2CON    0xC8
  194      =3  #define SFR_PSW      0xD0
  195      =3  #define SFR_PCA0CN   0xD8
  196      =3  #define SFR_ACC      0xE0
  197      =3  #define SFR_ADC0CN   0xE8
  198      =3  #define SFR_B        0xF0
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 38  
+
  199      =3  #define SFR_SPI0CN   0xF8
  200      =3  
  201      =3  //-----------------------------------------------------------------------------
@@ -2430,14 +2424,14 @@ line level    source
  252      =3  SBIT (SMBFTE, SFR_SMB0CN, 1);          // SMBus 0 Free Timer Enable
  253      =3  SBIT (SMBTOE, SFR_SMB0CN, 0);          // SMBus 0 Timeout Enable
  254      =3  
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 39  
-
  255      =3  // T2CON 0xC8
  256      =3  SBIT (TF2, SFR_T2CON, 7);              // Timer 2 Overflow Flag
  257      =3  SBIT (EXF2, SFR_T2CON, 6);             // External Flag
  258      =3  SBIT (RCLK0, SFR_T2CON, 5);            // Uart0 Rx Clock Source
  259      =3  SBIT (TCLK0, SFR_T2CON, 4);            // Uart0 Tx Clock Source
  260      =3  SBIT (EXEN2, SFR_T2CON, 3);            // Timer 2 External Enable Flag
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 39  
+
  261      =3  SBIT (TR2, SFR_T2CON, 2);              // Timer 2 On/Off Control
  262      =3  SBIT (CT2, SFR_T2CON, 1);              // Timer Or Counter Select
  263      =3  SBIT (CPRL2, SFR_T2CON, 0);            // Capture Or Reload Select
@@ -2494,14 +2488,14 @@ line level    source
  314      =3  #define INTERRUPT_TIMER2         5     // Timer2 Overflow
  315      =3  #define INTERRUPT_SPI0           6     // SPI0 Interface
  316      =3  #define INTERRUPT_SMBUS0         7     // SMBus0 Interface
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 40  
-
  317      =3  #define INTERRUPT_ADC0_WINDOW    8     // ADC0 Window Comparison
  318      =3  #define INTERRUPT_PCA0           9     // PCA0 Peripheral
  319      =3  #define INTERRUPT_COMPARATOR0F   10    // Comparator0 Falling Edge
  320      =3  #define INTERRUPT_COMPARATOR0R   11    // Comparator0 Rising Edge
  321      =3  #define INTERRUPT_COMPARATOR1F   12    // Comparator1 Falling Edge
  322      =3  #define INTERRUPT_COMPARATOR1R   13    // Comparator1 Rising Edge
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 40  
+
  323      =3  #define INTERRUPT_TIMER3         14    // Timer3 Overflow
  324      =3  #define INTERRUPT_ADC0_EOC       15    // ADC0 End Of Conversion
  325      =3  #define INTERRUPT_TIMER4         16    // Timer4 Overflow
@@ -2530,12 +2524,12 @@ line level    source
  348      =3  //-----------------------------------------------------------------------------
  349      =3  // End Of File
  350      =3  //-----------------------------------------------------------------------------
- 121      =2  #endif
- 122      =2  #ifdef C8051F340
+ 115      =2  #endif
+ 116      =2  #ifdef C8051F340
            =2 #include "C8051F340_defs.h"
            =2 #endif
- 125      =2  /*****************************************************************************/
- 126      =2  #include <stdio.h>
+ 119      =2  /*****************************************************************************/
+ 120      =2  #include <stdio.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  STDIO.H
    3      =3  
@@ -2558,14 +2552,14 @@ line level    source
   20      =3  #ifndef _SIZE_T
   21      =3   #define _SIZE_T
   22      =3   typedef unsigned int size_t;
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 41  
-
   23      =3  #endif
   24      =3  
   25      =3  #pragma SAVE
   26      =3  #pragma REGPARMS
   27      =3  extern char _getkey (void);
   28      =3  extern char getchar (void);
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 41  
+
   29      =3  extern char ungetchar (char);
   30      =3  extern char putchar (char);
   31      =3  extern int printf   (const char *, ...);
@@ -2581,7 +2575,7 @@ line level    source
   41      =3  
   42      =3  #endif
   43      =3  
- 127      =2  #include <stdlib.h> 
+ 121      =2  #include <stdlib.h> 
    1      =3  /*--------------------------------------------------------------------------
    2      =3  STDLIB.H
    3      =3  
@@ -2622,14 +2616,14 @@ line level    source
            =3 #endif // _DIV_T_DEFINED
            =3 #endif // __CX2__
   40      =3  
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 42  
-
   41      =3  #ifndef RAND_MAX
   42      =3   #define RAND_MAX  32767u
   43      =3  #endif
   44      =3  
   45      =3  #if defined (__CX2__)
            =3 #pragma SAVE
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 42  
+
            =3 #pragma FUNCTIONS(STATIC)
            =3 /* intrinsic functions are reentrant, but need static attribute */
            =3 extern int    abs  (int   val);
@@ -2676,7 +2670,7 @@ line level    source
   90      =3  #pragma RESTORE
   91      =3  
   92      =3  #endif // __STDLIB_H__
- 128      =2  #include <string.h>
+ 122      =2  #include <string.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  STRING.H
    3      =3  
@@ -2686,14 +2680,14 @@ line level    source
    7      =3  All rights reserved.
    8      =3  --------------------------------------------------------------------------*/
    9      =3  
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 43  
-
   10      =3  #ifndef __STRING_H__
   11      =3  #define __STRING_H__
   12      =3  
   13      =3  #ifndef _SIZE_T
            =3  #define _SIZE_T
            =3  typedef unsigned int size_t;
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 43  
+
            =3 #endif
   17      =3  
   18      =3  #ifndef NULL
@@ -2734,7 +2728,7 @@ line level    source
   53      =3  #pragma RESTORE
   54      =3  
   55      =3  #endif
- 129      =2  #include <INTRINS.H>
+ 123      =2  #include <INTRINS.H>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  INTRINS.H
    3      =3  
@@ -2750,14 +2744,14 @@ line level    source
   13      =3  
   14      =3  #if defined (__CX2__)
            =3 #pragma FUNCTIONS(STATIC)
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 44  
-
            =3 /* intrinsic functions are reentrant, but need static attribute */
            =3 #endif
   18      =3  
   19      =3  extern void          _nop_     (void);
   20      =3  extern bit           _testbit_ (bit);
   21      =3  extern unsigned char _cror_    (unsigned char, unsigned char);
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 44  
+
   22      =3  extern unsigned int  _iror_    (unsigned int,  unsigned char);
   23      =3  extern unsigned long _lror_    (unsigned long, unsigned char);
   24      =3  extern unsigned char _crol_    (unsigned char, unsigned char);
@@ -2777,7 +2771,7 @@ line level    source
   38      =3  
   39      =3  #endif
   40      =3  
- 130      =2  #include <ctype.h>
+ 124      =2  #include <ctype.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  CTYPE.H
    3      =3  
@@ -2812,16 +2806,16 @@ line level    source
   32      =3  #pragma RESTORE
   33      =3  
   34      =3  #endif
- 131      =2  #include <LIMITS.H>
+ 125      =2  #include <LIMITS.H>
    1      =3  /*--------------------------------------------------------------------------
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 45  
-
    2      =3  LIMITS.H
    3      =3  
    4      =3  ANSI standard include file.
    5      =3  Copyright (c) 1988-2008 Keil Elektronik GmbH and Keil Software, Inc.
    6      =3  Copyright (c) 2009 ARM Germany GmbH
    7      =3  All rights reserved.
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 45  
+
    8      =3  --------------------------------------------------------------------------*/
    9      =3  
   10      =3  #ifndef __LIMITS_H__
@@ -2844,7 +2838,7 @@ line level    source
   27      =3  #define ULONG_MAX        0xFFFFFFFF     /* Max "unsigned"  "long" value */
   28      =3  
   29      =3  #endif
- 132      =2  #include <math.h>
+ 126      =2  #include <math.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  MATH.H
    3      =3  
@@ -2878,14 +2872,14 @@ line level    source
   31      =3  #if !defined (__CX2__)
   32      =3  extern char  cabs  (char  val);
   33      =3  extern int    abs  (int   val);
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 46  
-
   34      =3  extern long  labs  (long  val);
   35      =3  #endif
   36      =3  
   37      =3  extern float fabs  (float val);
   38      =3  extern float sqrt  (float val);
   39      =3  extern float exp   (float val);
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 46  
+
   40      =3  extern float log   (float val);
   41      =3  extern float log10 (float val);
   42      =3  extern float sin   (float val);
@@ -2913,7 +2907,7 @@ line level    source
   64      =3  #pragma RESTORE
   65      =3  
   66      =3  #endif
- 133      =2  #include "crc32.h"
+ 127      =2  #include "crc32.h"
    1      =3  #ifndef __CRC32_H__
    2      =3  #define __CRC32_H__
    3      =3  
@@ -2942,14 +2936,14 @@ line level    source
            =4 #define CONFIG_UART0_BAUDRATE                           57600//串口波特率
            =4 #define CONFIG_UART0_PARITY                                     NONE
            =4 #define CONFIG_UART0_STOPBIT                            1
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 47  
-
            =4 #define CONFIG_UART0_DATABIT                            8
            =4 
            =4 #define CONFIG_UART1_BAUDRATE                           115200//串口波特率
            =4 #define CONFIG_UART1_PARITY                                     NONE
            =4 #define CONFIG_UART1_STOPBIT                            1
            =4 #define CONFIG_UART1_DATABIT                            8
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 47  
+
            =4 /*****************************************************************************/
            =4 #define CONFIG_I2C0_FREQ                                        (100000L)               
            =4 #define CONFIG_I2C1_FREQ                                        (100000L)
@@ -2991,23 +2985,15 @@ line level    source
            =4 #define CONFIG_IPID_RUN_CYCLE                           40//IPID运行周期 默认 40 * 100mS
            =4 #define CONFIG_IPID_PWM_CYCLE                           20//IPID输出周期 默认 20 * 100mS
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_EPROM                 1
-           =4 #if CONFIG_SPLC_USING_EPROM == 1
-           =4 #endif
+           =4 #define CONFIG_SPLC_USING_EPROM                         0
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_ADC                           1//使能ADC模块
-           =4 #if CONFIG_SPLC_USING_ADC == 1
+           =4 #define CONFIG_SPLC_USING_ADC                           0//使能ADC模块
            =4 #define CONFIG_SPLC_ADC_FILTER_TAP                      48//ADC位移滤波次数
            =4 #define CONFIG_SPLC_ADC_CHANNLE                         9//ADC通道数
-           =4 #endif
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_DAC                           1//是能DAC模块
-           =4 #if CONFIG_SPLC_USING_DAC == 1
-           =4 #endif
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_MB_RTU_SLAVE          1//是能MODBUS RTU从站
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 48  
-
            =4 #if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1
            =4 #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
            =4 #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//从设备地址
@@ -3020,6 +3006,8 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define ID_ONLY_1_CHANNEL                                       4321
            =4 #define ID_ONLY_2_CHANNEL                                       8765
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 48  
+
            =4 #define ID_BOTH_CHANNEL                                         9431
            =4 #define ID_LASER_MODE_CW                                        7631
            =4 #define ID_LASER_MODE_SP                                        8934
@@ -3070,8 +3058,6 @@ line level    source
            =4 //#include "i2c2.h"
            =4 //#include "i2c3.h"
            =4 //#include "i2c4.h"
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 49  
-
            =4 //#include "i2c5.h"
            =4 //#include "i2c6.h"
            =4 #include "eprom.h"
@@ -3084,6 +3070,8 @@ line level    source
            =4 /*****************************************************************************/
            =4 #include "sPLC.h"
            =4 //#include "pidFuzzy.h"
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 49  
+
            =4 /*****************************************************************************/
            =4 //#include "AppMath.h"
            =4 //#include "chipAdc.h"
@@ -3105,9 +3093,9 @@ line level    source
   19      =3  
   20      =3  
   21      =3  
- 134      =2  /*****************************************************************************/
- 135      =2  #ifdef C8051F020
- 136      =2  #include "InitDeviceF020.h"
+ 128      =2  /*****************************************************************************/
+ 129      =2  #ifdef C8051F020
+ 130      =2  #include "InitDeviceF020.h"
    1      =3  #ifndef __INITDEVICEF020_H__
    2      =3  #define __INITDEVICEF020_H__
    3      =3  /*****************************************************************************/
@@ -3134,8 +3122,6 @@ line level    source
   20      =4    * You should have received a copy of the GNU Lesser General Public
   21      =4    * License along with this library; if not, write to the Free Software
   22      =4    * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 50  
-
   23      =4    *
   24      =4    * In other words, you are welcome to use, share and improve this program.
   25      =4    * You are forbidden to forbid anyone else to use, share and improve
@@ -3148,6 +3134,8 @@ line level    source
   32      =4  //
   33      =4  // Macro definitions to accomodate 8051 compiler differences in specifying
   34      =4  // special function registers and other 8051-specific features such as NOP
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 50  
+
   35      =4  // generation, and locating variables in memory-specific segments.  The
   36      =4  // compilers are identified by their unique predefined macros. See also:
   37      =4  // http://predef.sourceforge.net/precomp.html
@@ -3198,8 +3186,6 @@ line level    source
   82      =4  //    -Removed 'PATHINCLUDE' pragma from Raisonance section
   83      =4  // Release 2.1 - 16 JUL 2009 (ES)
   84      =4  //    -Added SEGMENT_POINTER macro definitions for SDCC, Keil, and Raisonance
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 51  
-
   85      =4  //    -Added LOCATED_VARIABLE_NO_INIT macro definitions for Raisonance
   86      =4  // Release 2.0 - 19 MAY 2009 (ES)
   87      =4  //    -Added LOCATED_VARIABLE_NO_INIT macro definitions for SDCC and Keil
@@ -3212,6 +3198,8 @@ line level    source
   94      =4  //    -Corrected Union definitions for Hi-Tech and added SFR16 macro defintion
   95      =4  // Release 1.7 - 11 SEP 2007 (BW)
   96      =4  //    -Added support for Raisonance EVAL 03.03.42 and Tasking Eval 7.2r1
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 51  
+
   97      =4  // Release 1.6 - 27 AUG 2007 (BW)
   98      =4  //    -Updated copyright notice per agreement with Maartin Brock
   99      =4  //    -Added SDCC 2.7.0 "compiler.h" bug fixes
@@ -3262,8 +3250,6 @@ line level    source
            =4 
            =4 #if (SDCC >= 300)
            =4 
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 52  
-
            =4 #define interrupt __interrupt
            =4 #define _asm __asm
            =4 #define _endasm __endasm
@@ -3276,6 +3262,8 @@ line level    source
            =4 # define SEG_GENERIC
            =4 # define SEG_FAR   __xdata
            =4 # define SEG_DATA  __data
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 52  
+
            =4 # define SEG_NEAR  __data
            =4 # define SEG_IDATA __idata
            =4 # define SEG_XDATA __xdata
@@ -3326,8 +3314,6 @@ line level    source
            =4 typedef unsigned long U32;
            =4 
            =4 typedef signed char S8;
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 53  
-
            =4 typedef signed int S16;
            =4 typedef signed long S32;
            =4 
@@ -3340,6 +3326,8 @@ line level    source
            =4 } UU16;
            =4 
            =4 typedef union UU32
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 53  
+
            =4 {
            =4    U32 U32;
            =4    S32 S32;
@@ -3390,8 +3378,6 @@ line level    source
            =4 # define SEG_XDATA xdata
            =4 # define SEG_PDATA pdata
            =4 # define SEG_CODE  code
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 54  
-
            =4 # define SEG_BDATA bdata
            =4 
            =4 # define SBIT(name, addr, bit)  at (addr+bit) sbit         name
@@ -3404,6 +3390,8 @@ line level    source
            =4 # define INTERRUPT(name, vector) void name (void) interrupt vector
            =4 # define INTERRUPT_USING(name, vector, regnum) void name (void) interrupt vector using regnum
            =4 # define INTERRUPT_PROTO(name, vector) void name (void)
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 54  
+
            =4 # define INTERRUPT_PROTO_USING(name, vector, regnum) void name (void)
            =4 
            =4 # define FUNCTION_USING(name, return_value, parameter, regnum) return_value name (parameter) using regnum
@@ -3454,8 +3442,6 @@ line level    source
            =4    S16 S16[2];
            =4    U8 U8[4];
            =4    S8 S8[4];
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 55  
-
            =4 } UU32;
            =4 
            =4 // NOP () macro support -- NOP is opcode 0x00
@@ -3468,6 +3454,8 @@ line level    source
            =4 #define SI_GPTR_MTYPE_BDATA      0x04
            =4 #define SI_GPTR_MTYPE_PDATA      0x03
            =4 #define SI_GPTR_MTYPE_XDATA      0x02
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 55  
+
            =4 #define SI_GPTR_MTYPE_CODE       0x05
            =4 
            =4 // generic pointer access struct
@@ -3518,8 +3506,6 @@ line level    source
            =4 # define FUNCTION_USING(name, return_value, parameter, regnum) return_value name (parameter) using regnum
            =4 # define FUNCTION_PROTO_USING(name, return_value, parameter, regnum) return_value name (parameter)
            =4 // Note: Parameter must be either 'void' or include a variable type and name. (Ex: char temp_variable)
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 56  
-
            =4 
            =4 # define SEGMENT_VARIABLE(name, vartype, locsegment) vartype locsegment name
            =4 # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype targsegment * name
@@ -3532,6 +3518,8 @@ line level    source
            =4 
            =4 # define INTERRUPT(name, vector) void name (void)
            =4 # define INTERRUPT_USING(name, vector, regnum) void name (void)
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 56  
+
            =4 # define INTERRUPT_PROTO(name, vector) void name (void)
            =4 # define INTERRUPT_PROTO_USING(name, vector, regnum) void name (void)
            =4 
@@ -3582,8 +3570,6 @@ line level    source
            =4    S16 S16[2];
            =4    U8 U8[4];
            =4    S8 S8[4];
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 57  
-
            =4 } UU32;
            =4 
            =4 // NOP () macro support
@@ -3596,6 +3582,8 @@ line level    source
            =4 #define SI_GPTR_MTYPE_IDATA     0x00
            =4 #define SI_GPTR_MTYPE_BDATA     0x00
            =4 #define SI_GPTR_MTYPE_PDATA     0xFE
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 57  
+
            =4 #define SI_GPTR_MTYPE_XDATA     0x01
            =4 #define SI_GPTR_MTYPE_CODE      0xFF
            =4 
@@ -3646,8 +3634,6 @@ line level    source
            =4 //       banks can only be specified in interrupts. If a function is called from
            =4 //       inside an interrupt, it will use the same register bank as the interrupt.
            =4 
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 58  
-
            =4 # define SEGMENT_VARIABLE(name, vartype, locsegment) locsegment vartype name
            =4 # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) targsegment vartype * name
            =4 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) targsegment vartype * lo
@@ -3660,6 +3646,8 @@ line level    source
            =4 
            =4 // used with UU32 (b0 is least-significant byte)
            =4 # define b0 0
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 58  
+
            =4 # define b1 1
            =4 # define b2 2
            =4 # define b3 3
@@ -3710,8 +3698,6 @@ line level    source
            =4 # define SEG_XDATA _xdat
            =4 # define SEG_PDATA _pdat
            =4 # define SEG_CODE  _rom
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 59  
-
            =4 # define SEG_BDATA _bdat
            =4 
            =4 # define SBIT(name, addr, bit)  _sfrbit  name _at(addr+bit)
@@ -3724,6 +3710,8 @@ line level    source
            =4 #endif
            =4 # define SFR16E(name, fulladdr) /* not supported */
            =4 # define SFR32(name, fulladdr)  /* not supported */
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 59  
+
            =4 # define SFR32E(name, fulladdr) /* not supported */
            =4 
            =4 # define INTERRUPT(name, vector) _interrupt (vector) void name (void)
@@ -3774,8 +3762,6 @@ line level    source
            =4 typedef union UU32
            =4 {
            =4    U32 U32;
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 60  
-
            =4    S32 S32;
            =4    UU16 UU16[2];
            =4    U16 U16[2];
@@ -3788,6 +3774,8 @@ line level    source
            =4 extern void _nop (void);
            =4 #define NOP() _nop()
            =4 
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 60  
+
            =4 //-----------------------------------------------------------------------------
            =4 
            =4 
@@ -3838,8 +3826,6 @@ line level    source
            =4 # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype targsegment  * name
            =4 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype targsegment * lo
              -csegment name
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 61  
-
            =4 
            =4 # define LOCATED_VARIABLE(name, vartype, locsegment, addr, init) locsegment __no_init vartype name @ addr
            =4 
@@ -3852,6 +3838,8 @@ line level    source
            =4 # define b1 1
            =4 # define b2 2
            =4 # define b3 3
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 61  
+
            =4 
            =4 typedef unsigned char U8;
            =4 typedef unsigned int U16;
@@ -3902,8 +3890,6 @@ line level    source
            =4         U8 MTYPE;
            =4     } GPTR;
            =4 } SI_GENERIC_PTR;
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 62  
-
            =4 
            =4 //-----------------------------------------------------------------------------
            =4 
@@ -3916,6 +3902,8 @@ line level    source
            =4 # define SFR16(name, addr)      _sfrword name = addr
            =4 # define SFR16E(name, fulladdr) /* not supported */
            =4 # define SFR32(name, fulladdr)  /* not supported */
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 62  
+
            =4 # define SFR32E(name, fulladdr) /* not supported */
            =4 
            =4 //-----------------------------------------------------------------------------
@@ -3966,8 +3954,6 @@ line level    source
    6      =4  //
    7      =4  // Program Description:
    8      =4  //
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 63  
-
    9      =4  // Register/bit definitions for the C8051F02x family.
   10      =4  // **Important Note**: The compiler_defs.h header file should be included
   11      =4  // before including this header file.
@@ -3980,6 +3966,8 @@ line level    source
   18      =4  //    -Added #define for _XPAGE to provide support for SDCC memory paging
   19      =4  //     (pdata)
   20      =4  // Release 1.3 - 07 AUG 2007 (PKC)
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 63  
+
   21      =4  //    -Removed #include <compiler_defs.h>. The C source file should include it.
   22      =4  // Release 1.2 - 09 JUL 2007 (PKC)
   23      =4  //    -Reformatted header file to enable portable SFR definitions
@@ -4030,8 +4018,6 @@ line level    source
            =4 SFR (EMI0TC, 0xA1);                    // EMIF Timing Control
            =4 SFR (EMI0CF, 0xA3);                    // EMIF Configuration
            =4 SFR (P0MDOUT, 0xA4);                   // Port 0 Output Mode Configuration
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 64  
-
            =4 SFR (P1MDOUT, 0xA5);                   // Port 1 Output Mode Configuration
            =4 SFR (P2MDOUT, 0xA6);                   // Port 2 Output Mode Configuration
            =4 SFR (P3MDOUT, 0xA7);                   // Port 3 Output Mode Configuration
@@ -4044,6 +4030,8 @@ line level    source
            =4 SFR (SADEN1, 0xAE);                    // Serial Port UART1 Slave Address Mask
            =4 SFR (EMI0CN, 0xAF);                    // EMIF Control
            =4 SFR (P3, 0xB0);                        // Port 3 Latch
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 64  
+
            =4 SFR (OSCXCN, 0xB1);                    // External Oscillator Control
            =4 SFR (OSCICN, 0xB2);                    // Internal Oscillator Control
            =4 SFR (P74OUT, 0xB5);                    // Ports 4 - 7 Output Mode
@@ -4094,8 +4082,6 @@ line level    source
            =4 SFR (RCAP4L, 0xE4);                    // Timer 4 Capture Register Low
            =4 SFR (RCAP4H, 0xE5);                    // Timer 4 Capture Register High
            =4 SFR (EIE1, 0xE6);                      // External Interrupt Enable 1
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 65  
-
            =4 SFR (EIE2, 0xE7);                      // External Interrupt Enable 2
            =4 SFR (ADC0CN, 0xE8);                    // ADC0 Control
            =4 SFR (PCA0L, 0xE9);                     // PCA0 Counter Low
@@ -4108,6 +4094,8 @@ line level    source
            =4 SFR (B, 0xF0);                         // B Register
            =4 SFR (SCON1, 0xF1);                     // Serial Port UART1 Control
            =4 SFR (SBUF1, 0xF2);                     // Serail Port UART1 Data
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 65  
+
            =4 SFR (SADDR1, 0xF3);                    // Serail Port UART1 Slave Address
            =4 SFR (TL4, 0xF4);                       // Timer/Counter 4 Low
            =4 SFR (TH4, 0xF5);                       // Timer/Counter 4 High
@@ -4158,8 +4146,6 @@ line level    source
            =4 #define SFR_SMB0CN   0xC0
            =4 #define SFR_T2CON    0xC8
            =4 #define SFR_PSW      0xD0
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 66  
-
            =4 #define SFR_PCA0CN   0xD8
            =4 #define SFR_ACC      0xE0
            =4 #define SFR_ADC0CN   0xE8
@@ -4172,6 +4158,8 @@ line level    source
            =4 
            =4 // TCON 0x88
            =4 SBIT (TF1, SFR_TCON, 7);               // Timer 1 Overflow Flag
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 66  
+
            =4 SBIT (TR1, SFR_TCON, 6);               // Timer 1 On/Off Control
            =4 SBIT (TF0, SFR_TCON, 5);               // Timer 0 Overflow Flag
            =4 SBIT (TR0, SFR_TCON, 4);               // Timer 0 On/Off Control
@@ -4222,8 +4210,6 @@ line level    source
            =4 
            =4 // T2CON 0xC8
            =4 SBIT (TF2, SFR_T2CON, 7);              // Timer 2 Overflow Flag
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 67  
-
            =4 SBIT (EXF2, SFR_T2CON, 6);             // External Flag
            =4 SBIT (RCLK0, SFR_T2CON, 5);            // Uart0 Rx Clock Source
            =4 SBIT (TCLK0, SFR_T2CON, 4);            // Uart0 Tx Clock Source
@@ -4236,6 +4222,8 @@ line level    source
            =4 SBIT (CY, SFR_PSW, 7);                 // Carry Flag
            =4 SBIT (AC, SFR_PSW, 6);                 // Auxiliary Carry Flag
            =4 SBIT (F0, SFR_PSW, 5);                 // User Flag 0
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 67  
+
            =4 SBIT (RS1, SFR_PSW, 4);                // Register Bank Select 1
            =4 SBIT (RS0, SFR_PSW, 3);                // Register Bank Select 0
            =4 SBIT (OV, SFR_PSW, 2);                 // Overflow Flag
@@ -4286,8 +4274,6 @@ line level    source
            =4 #define INTERRUPT_SMBUS0         7     // SMBus0 Interface
            =4 #define INTERRUPT_ADC0_WINDOW    8     // ADC0 Window Comparison
            =4 #define INTERRUPT_PCA0           9     // PCA0 Peripheral
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 68  
-
            =4 #define INTERRUPT_COMPARATOR0F   10    // Comparator0 Falling Edge
            =4 #define INTERRUPT_COMPARATOR0R   11    // Comparator0 Rising Edge
            =4 #define INTERRUPT_COMPARATOR1F   12    // Comparator1 Falling Edge
@@ -4300,6 +4286,8 @@ line level    source
            =4 #define INTERRUPT_INT7           19    // External Interrupt 7
            =4 #define INTERRUPT_UART1          20    // Serial Port UART1
            =4 #define INTERRUPT_XTAL_READY     21    // External Crystal Oscillator Ready
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 68  
+
            =4 
            =4 //-----------------------------------------------------------------------------
            =4 // SDCC PDATA External Memory Paging Support
@@ -4323,9 +4311,9 @@ line level    source
    6      =3  /*****************************************************************************/
    7      =3  void initDeviceF020(void);
    8      =3  #endif
- 137      =2  #endif
- 138      =2  
- 139      =2  #include "delay.h"
+ 131      =2  #endif
+ 132      =2  
+ 133      =2  #include "delay.h"
    1      =3  #ifndef __DELAY_H__
    2      =3  #define __DELAY_H__
    3      =3  /*****************************************************************************/
@@ -4350,8 +4338,6 @@ line level    source
            =2 /*****************************************************************************/
            =2 //#include "AppMath.h"
            =2 //#include "chipAdc.h"
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 69  
-
            =2 //#include "ad5621.h"
            =2 //#include "chipBeem.h"
            =2 
@@ -4364,6 +4350,8 @@ line level    source
    5      =3  /*****************************************************************************/
    6      =3  void delayMs(uint8_t ms) reentrant;
    7      =3  void delayUs(uint8_t us) reentrant;
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 69  
+
    8      =3  void hwDelayInit(uint8_t reload_h, uint8_t reload_l);
    9      =3  void hwDelay(uint8_t control, uint8_t reload_h, uint8_t reload_l);
   10      =3  /*****************************************************************************/
@@ -4414,8 +4402,6 @@ line level    source
    1      =3  #ifndef __MODBUS__H__
    2      =3  #define __MODBUS__H__
    3      =3  /*****************************************************************************/
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 70  
-
    4      =3  #include "appConfig.h"
    4      =3  #ifndef __MODBUS__H__
    4      =3  #define __MODBUS__H__
@@ -4428,6 +4414,8 @@ line level    source
    9      =3  /*****************************************************************************/
   10      =3  extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
   11      =3  extern void modbusPorcess(void);
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 70  
+
   12      =3  #endif
    1      =3  #ifndef __MODBUSPORT__H__
    2      =3  #define __MODBUSPORT__H__
@@ -4478,8 +4466,6 @@ line level    source
   27      =3  #define TD_10MS_START                                   352//16个10mS
   28      =3  #define TD_10MS_END                                             367
   29      =3  #define TD_100MS_START                                  368//16个100mS
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 71  
-
   30      =3  #define TD_100MS_END                                    383
   31      =3  //计数器
   32      =3  #define C_START                                                 384//16个计数器
@@ -4492,6 +4478,8 @@ line level    source
   39      =3  #define Y_END                                                   431//
   40      =3  //特殊寄存器 64个字
   41      =3  #define SPREG_START                                             432//
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 71  
+
   42      =3  #define SPREG_END                                               495//
   43      =3  /*****************************************************************************/
   44      =3  #define CONFIG_NVRAM_SIZE                               (SPREG_END + 1)
@@ -4542,8 +4530,6 @@ line level    source
   89      =3  extern uint16_t ModbusSlaveAsciiOverTimeCounter;//Modbus Slave通信超时计时器
   90      =3  extern xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
   91      =3  extern xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 72  
-
   92      =3  /*****************************************************************************/
   93      =3  void sPlcInit(void);//软逻辑初始化
   94      =3  void sPlcProcessStart(void);//sPLC轮询起始
@@ -4556,6 +4542,8 @@ line level    source
  101      =3  void clearDM(void);
  102      =3  void clearEM(void);
  103      =3  void clearR(void);
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 72  
+
  104      =3  void clearT(void);
  105      =3  void clearTD(void);
  106      =3  void clearC(void);
@@ -4606,8 +4594,6 @@ line level    source
   27      =1  //#define DM_LASER_GROUP_NUM                    7//激光群脉冲个数
   28      =1  //#define DM_LASER_GROUP_SPACE          8//激光群脉冲间隔
   29      =1  //#define DM_LASER_SELECT_CHANNEL               9//激光通道选择
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 73  
-
   30      =1  
   31      =1  
   32      =1  //#define DM_LASER_HTEMP//激光器高温保护
@@ -4620,6 +4606,8 @@ line level    source
   39      =1  //#define DM_EMVI_LTEMP//环境温度低温保护
   40      =1  
   41      =1  //#define EM_FAN_SET_SPEED_0//风扇0转速设置
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 73  
+
   42      =1  //#define EM_FAN_SET_SPEED_1//风扇1转速设置
   43      =1  //#define EM_FAN_SET_SPEED_2//风扇2转速设置
   44      =1  //#define EM_FAN_GET_SPEED_0//风扇0转速读取
@@ -4670,8 +4658,6 @@ line level    source
   89      =1  //      fp32_t pidOut;//IPID输出值
   90      =1  //      int16_t onTimerPid;//pid输出 开启时间  
   91      =1  //      int16_t offTimerPid;//pid输出 关闭时间
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 74  
-
   92      =1  //      
   93      =1  //      //int8_t  FlagStart;//发射触发
   94      =1  //      //int8_t        FlagReady;//准备标志
@@ -4684,6 +4670,8 @@ line level    source
  101      =1  //      //int8_t laserTrigger;//激光发射触发
  102      =1  //      //int8_t laserEmiting;//激光发射中标志
  103      =1  //      //int8_t laserEmitOver;//激光发射完毕   
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 74  
+
  104      =1  //      //int16_t checkCode;//HMI连接校验码 高8位校验码 低8位版本
  105      =1  //      //int8_t heartFlag;//心跳标志
  106      =1  //      //int8_t mcuReset;//单片机复位
@@ -4734,8 +4722,6 @@ line level    source
   34          #define STIMER_1MS_MP_LASER_OFF                 3//多脉冲OFF计时器
   35          #define STIMER_1MS_GP_LASER_ON                  4//可变脉冲ON计时器
   36          #define STIMER_IMS_GP_LASER_OFF                 5//可变脉冲OFF计时器
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 75  
-
   37          #define STIMER_1MS_GP_SPACE                             6//可变脉冲间隔计时器
   38          
   39          #define STIMER_1000MS_PID                               61//PID温度周期计时器
@@ -4748,6 +4734,8 @@ line level    source
   46          /*****************************************************************************/
   47          
   48          #define STEPNUM_FAULT                                   -1//故障
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 75  
+
   49          #define STEPNUM_INIT                                    0//初始化
   50          #define STEPNUM_STANDBY                                 1//待机
   51          #define STEPNUM_INTO_READY                              2//进入准备
@@ -4798,8 +4786,6 @@ line level    source
   96          //#define XR_1
   97          //#define XR_2
   98          //#define XR_3
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 76  
-
   99          //#define XR_4
  100          //#define XR_5
  101          //#define XR_6
@@ -4812,6 +4798,8 @@ line level    source
  108          #define MCP4768_DAC4            4
  109          
  110          /*****************************************************************************/
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 76  
+
  111          sbit loopFlag = P0^4;
  112          sbit epromBusyFlag = P0^5;
  113          void main(void){
@@ -4823,613 +4811,615 @@ line level    source
  119   1              //outPca9554Init();
  120   1              //mcp47x6Init();
  121   1              initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
- 122   1              ENABLE_INTERRUPT;
- 123   1              while(1){
- 124   2                      loopFlag = ~loopFlag;
- 125   2                      sPlcProcessStart();
- 126   2                      //SPLC代码插入此处
- 127   2      ////            SET(10);
- 128   2      ////            RESET(10);
+ 122   1              NVRAM0[0] = 0xA5;
+ 123   1              NVRAM0[1] = 0x5A;
+ 124   1              ENABLE_INTERRUPT;
+ 125   1              while(1){
+ 126   2                      loopFlag = ~loopFlag;
+ 127   2                      sPlcProcessStart();
+ 128   2                      //SPLC代码插入此处
  129   2      ////            SET(10);
  130   2      ////            RESET(10);
  131   2      ////            SET(10);
  132   2      ////            RESET(10);
  133   2      ////            SET(10);
  134   2      ////            RESET(10);
- 135   2      ////            FLIP(10);
- 136   2      ////            FLIP(10);
+ 135   2      ////            SET(10);
+ 136   2      ////            RESET(10);
  137   2      ////            FLIP(10);
  138   2      ////            FLIP(10);
- 139   2      ////            //读取IO
- 140   2      ////            //执行程序
- 141   2      ////            //输出IO
- 142   2      ////            T100MS(0, 1, 2);
- 143   2      ////            if(LD(TD_100MS_START * 16 + 0));
- 144   2      ////            {
- 145   2      ////                    SET(0); 
- 146   2      ////            }
- 147   2                      sPlcProcessEnd();
- 148   2              }
- 149   1      }
- 150          //void main(void)
- 151          //{
- 152          //      int8_t temp;
- 153          //      int16_t tecOnTime, tecOffTime;//制冷开关时间
- 154          ////    my_t *p = my;
- 155          ////    pidFuzzy_t pidFuzzy;
- 156          //      Init_Device();//初始化MCU
- 157          //#if CONFIG_USING_WDT == 1
- 158          //      if ((RSTSRC & 0x02) == 0x00)
- 159          //      {
- 160          //              if (RSTSRC == 0x08)
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 77  
+ 139   2      ////            FLIP(10);
+ 140   2      ////            FLIP(10);
+ 141   2      ////            //读取IO
+ 142   2      ////            //执行程序
+ 143   2      ////            //输出IO
+ 144   2      ////            T100MS(0, 1, 2);
+ 145   2      ////            if(LD(TD_100MS_START * 16 + 0));
+ 146   2      ////            {
+ 147   2      ////                    SET(0); 
+ 148   2      ////            }
+ 149   2                      sPlcProcessEnd();
+ 150   2              }
+ 151   1      }
+ 152          //void main(void)
+ 153          //{
+ 154          //      int8_t temp;
+ 155          //      int16_t tecOnTime, tecOffTime;//制冷开关时间
+ 156          ////    my_t *p = my;
+ 157          ////    pidFuzzy_t pidFuzzy;
+ 158          //      Init_Device();//初始化MCU
+ 159          //#if CONFIG_USING_WDT == 1
+ 160          //      if ((RSTSRC & 0x02) == 0x00)
+ 161          //      {
+ 162          //              if (RSTSRC == 0x08)
+ 163          //              {//检测WDT看门狗 看门狗复位后锁定
+ 164          //                      //所有IO ->LOW
+ 165          //                      //关闭DAC
+ 166          //                      //关闭
+ 167          //                      LED_MCU = true;
+ 168          //                      LED_LASER0 = false;
+ 169          //                      LED_LASER1 = true;
+ 170          //                      while(1);
+ 171          //              }
+ 172          //      }
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 77  
 
- 161          //              {//检测WDT看门狗 看门狗复位后锁定
- 162          //                      //所有IO ->LOW
- 163          //                      //关闭DAC
- 164          //                      //关闭
- 165          //                      LED_MCU = true;
- 166          //                      LED_LASER0 = false;
- 167          //                      LED_LASER1 = true;
- 168          //                      while(1);
- 169          //              }
- 170          //      }
- 171          //#endif
- 172          
- 173                  //pidFuzzyInit(&pidFuzzy, 2, 0.5, 0.1);
- 174          //      setModbusSlaveAddr(CONFIG_LOCAL_ADDRESS);//设置从机地址
- 175          //      InitModbusHardware(CONFIG_UART0_BAUDRATE);//初始化MODBUS从机串口
- 176          //      /**********************************************************************/
- 177          ////初始化my结构体
- 178          //      //my.stepNum = 0;
- 179          //      //my.checkCode = ((CONFIG_CHECK_CODE << 8) & 0xFF00);
- 180          //      //my.checkCode |= CONFIG_VERSION;
- 181          //      
- 182          ////使能看门狗
- 183          //#if CONFIG_USING_WDT == 1
- 184          //      Watchdog_Init();
- 185          //#endif        
- 186          //      EA = 1;
- 187          //      
- 188          //      while(1)
- 189          //      {//开始循环扫描周期
- 190          ////看门狗喂狗
- 191          //#if CONFIG_USING_WDT == 1
- 192          //               WDTCN = 0xA5;//喂狗
- 193          //#endif
- 194          ////上位机使能MCU软复位
- 195          //#if CONFIG_USING_RESET == 1
- 196          //              if(my.mcuReset)
- 197          //              {
- 198          //                      RSTSRC |= (1 << 1);//Forces a Power-On Reset. /RST is driven low.
- 199          //              }
- 200          //#endif
- 201          //              //数字滤波扫描输入IO
- 202          
- 203          //              p->flagConnectErr = 0;//每次扫描错误标志清零
- 204          //              //心跳->PLC
- 205          //              if(my.heartFlag)
- 206          //              {
- 207          //                      my.heatFlag = 0;
- 208          //              }
- 209          //              else
- 210          //              {
- 211          //                      my.heatFlag = 1;
- 212          //              }
- 213          //              
- 214          //              //获取过热状态
- 215          //              my.overTempFault = (my.overTempDiode && !my.overTempDiodeIgnore) ||
- 216          //                                                        (my.overTempAmplifier && !my.overTempAmplifierIgnore) ||
- 217          //                                (my.overTempEnvironment && !my.overTempEnvironmentIgnore) ||
- 218          //                                                        (my.overTempMcu && !my.overTempMcuIgnore);
- 219          //          my.overTempFault = my.overTempFault && !my.overTempIgnore;
- 220          //              //获取安全状态
- 221          //              my.safeFault = (my.safeInterlock && !my.safeInterlockIgnore) ||
- 222          //                                      (my.safeFiberDetect0 && my.safeFiberDetect0Ignore) ||
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 78  
+ 173          //#endif
+ 174          
+ 175                  //pidFuzzyInit(&pidFuzzy, 2, 0.5, 0.1);
+ 176          //      setModbusSlaveAddr(CONFIG_LOCAL_ADDRESS);//设置从机地址
+ 177          //      InitModbusHardware(CONFIG_UART0_BAUDRATE);//初始化MODBUS从机串口
+ 178          //      /**********************************************************************/
+ 179          ////初始化my结构体
+ 180          //      //my.stepNum = 0;
+ 181          //      //my.checkCode = ((CONFIG_CHECK_CODE << 8) & 0xFF00);
+ 182          //      //my.checkCode |= CONFIG_VERSION;
+ 183          //      
+ 184          ////使能看门狗
+ 185          //#if CONFIG_USING_WDT == 1
+ 186          //      Watchdog_Init();
+ 187          //#endif        
+ 188          //      EA = 1;
+ 189          //      
+ 190          //      while(1)
+ 191          //      {//开始循环扫描周期
+ 192          ////看门狗喂狗
+ 193          //#if CONFIG_USING_WDT == 1
+ 194          //               WDTCN = 0xA5;//喂狗
+ 195          //#endif
+ 196          ////上位机使能MCU软复位
+ 197          //#if CONFIG_USING_RESET == 1
+ 198          //              if(my.mcuReset)
+ 199          //              {
+ 200          //                      RSTSRC |= (1 << 1);//Forces a Power-On Reset. /RST is driven low.
+ 201          //              }
+ 202          //#endif
+ 203          //              //数字滤波扫描输入IO
+ 204          
+ 205          //              p->flagConnectErr = 0;//每次扫描错误标志清零
+ 206          //              //心跳->PLC
+ 207          //              if(my.heartFlag)
+ 208          //              {
+ 209          //                      my.heatFlag = 0;
+ 210          //              }
+ 211          //              else
+ 212          //              {
+ 213          //                      my.heatFlag = 1;
+ 214          //              }
+ 215          //              
+ 216          //              //获取过热状态
+ 217          //              my.overTempFault = (my.overTempDiode && !my.overTempDiodeIgnore) ||
+ 218          //                                                        (my.overTempAmplifier && !my.overTempAmplifierIgnore) ||
+ 219          //                                (my.overTempEnvironment && !my.overTempEnvironmentIgnore) ||
+ 220          //                                                        (my.overTempMcu && !my.overTempMcuIgnore);
+ 221          //          my.overTempFault = my.overTempFault && !my.overTempIgnore;
+ 222          //              //获取安全状态
+ 223          //              my.safeFault = (my.safeInterlock && !my.safeInterlockIgnore) ||
+ 224          //                                      (my.safeFiberDetect0 && my.safeFiberDetect0Ignore) ||
+ 225          //                                      (my.safeFiberDetect1 && my.safeFiberDetect1Ignore) ||
+ 226          //                                      (my.safeOpenCase && my.safeOpenCaseIgnore);
+ 227          //              my.safeFault = my.safeFault && !my.safeFaultIgnore;
+ 228          //              //模拟输入扫描
+ 229          //              STEP_LOOP_START:
+ 230          //              if(my.stepNum == STEPNUM_INIT)
+ 231          //              {//初始化
+ 232          //                      my.stepNum = STEPNUM_STANDBY;//Goto next step
+ 233          //                      goto STEP_LOOP_END;
+ 234          //              }
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 78  
 
- 223          //                                      (my.safeFiberDetect1 && my.safeFiberDetect1Ignore) ||
- 224          //                                      (my.safeOpenCase && my.safeOpenCaseIgnore);
- 225          //              my.safeFault = my.safeFault && !my.safeFaultIgnore;
- 226          //              //模拟输入扫描
- 227          //              STEP_LOOP_START:
- 228          //              if(my.stepNum == STEPNUM_INIT)
- 229          //              {//初始化
- 230          //                      my.stepNum = STEPNUM_STANDBY;//Goto next step
- 231          //                      goto STEP_LOOP_END;
- 232          //              }
- 233          //              if(my.stepNum == STEPNUM_STANDBY)
- 234          //              {//第一步 待机状态->蜂鸣器提示
- 235          //                      if(my.safeFault ||
- 236          //               my.overTempFault)
- 237          //                      {
- 238          //                              my.stepNum = STEPNUM_FAULT;
- 239          //                      }
- 240          //                      else if(my.readyFlag)
- 241          //                      {
- 242          //                              my.beemOn = true;
- 243          //                              my.stepNum = STEPNUM_INTO_READY;
- 244          //                      }
- 245          //                      else
- 246          //                      {
- 247          //                              my.stepNum = STEPNUM_STANDBY;
- 248          //                      }
- 249          //                      goto STEP_LOOP_END;
- 250          //              }
- 251          //              if(my.stepNum == STEPNUM_INTO_READY)
- 252          //              {//第二步 等待1秒后进入
- 253          //                      if(my.readyFlag)
- 254          //                      {
- 255          //                              my.beemOn = true;
- 256          //                              sTimerCtrl(STIMER_ON, STIMER_100MS_INTOREADY_BEEM, 10);
- 257          //                              if(sTimer[STIMER_100MS_INTOREADY_BEEM].status)
- 258          //                              {//计时达到进入READY步骤
- 259          //                                      sTimerCtrl(STIMER_OFF, STIMER_100MS_INTOREADY_BEEM, 10);
- 260          //                                      my.beemOn = false;
- 261          //                                      my.stepNum = STEPNUM_READY;
- 262          //                              }
- 263          //                      }
- 264          //                      goto STEP_LOOP_END;
- 265          //              }
- 266          //              if(my.stepNum == STEPNUM_READY)
- 267          //              {//第三步 准备状态 等待脚踏信号发射激光
- 268          //                      if(my.safeFault ||
- 269          //               my.overTempFault)
- 270          //                      {
- 271          //                              my.stepNum = STEPNUM_FAULT;
- 272          //                      }
- 273          //                      else if((my.footSwitch && 0x01) &&
- 274          //                                  !(my.footSwitch && 0x02))//检测footSwitch上升沿
- 275          //                      {//发射激光步骤
- 276          //                              //打开激光
- 277          //                              my.stepNum = STEPNUM_LASERON;
- 278          //                              my.laserEmitOver = 0x0;//发射完成标志清零
- 279          //                              switch(my.laserMode)
- 280          //                              {
- 281          //                                      case ENUM_MODE_CW:
- 282          //                                      {
- 283          //                                              my.laserEmiting |=  1 << ENUM_MODE_CW;
- 284          //                                              break;
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 79  
+ 235          //              if(my.stepNum == STEPNUM_STANDBY)
+ 236          //              {//第一步 待机状态->蜂鸣器提示
+ 237          //                      if(my.safeFault ||
+ 238          //               my.overTempFault)
+ 239          //                      {
+ 240          //                              my.stepNum = STEPNUM_FAULT;
+ 241          //                      }
+ 242          //                      else if(my.readyFlag)
+ 243          //                      {
+ 244          //                              my.beemOn = true;
+ 245          //                              my.stepNum = STEPNUM_INTO_READY;
+ 246          //                      }
+ 247          //                      else
+ 248          //                      {
+ 249          //                              my.stepNum = STEPNUM_STANDBY;
+ 250          //                      }
+ 251          //                      goto STEP_LOOP_END;
+ 252          //              }
+ 253          //              if(my.stepNum == STEPNUM_INTO_READY)
+ 254          //              {//第二步 等待1秒后进入
+ 255          //                      if(my.readyFlag)
+ 256          //                      {
+ 257          //                              my.beemOn = true;
+ 258          //                              sTimerCtrl(STIMER_ON, STIMER_100MS_INTOREADY_BEEM, 10);
+ 259          //                              if(sTimer[STIMER_100MS_INTOREADY_BEEM].status)
+ 260          //                              {//计时达到进入READY步骤
+ 261          //                                      sTimerCtrl(STIMER_OFF, STIMER_100MS_INTOREADY_BEEM, 10);
+ 262          //                                      my.beemOn = false;
+ 263          //                                      my.stepNum = STEPNUM_READY;
+ 264          //                              }
+ 265          //                      }
+ 266          //                      goto STEP_LOOP_END;
+ 267          //              }
+ 268          //              if(my.stepNum == STEPNUM_READY)
+ 269          //              {//第三步 准备状态 等待脚踏信号发射激光
+ 270          //                      if(my.safeFault ||
+ 271          //               my.overTempFault)
+ 272          //                      {
+ 273          //                              my.stepNum = STEPNUM_FAULT;
+ 274          //                      }
+ 275          //                      else if((my.footSwitch && 0x01) &&
+ 276          //                                  !(my.footSwitch && 0x02))//检测footSwitch上升沿
+ 277          //                      {//发射激光步骤
+ 278          //                              //打开激光
+ 279          //                              my.stepNum = STEPNUM_LASERON;
+ 280          //                              my.laserEmitOver = 0x0;//发射完成标志清零
+ 281          //                              switch(my.laserMode)
+ 282          //                              {
+ 283          //                                      case ENUM_MODE_CW:
+ 284          //                                      {
+ 285          //                                              my.laserEmiting |=  1 << ENUM_MODE_CW;
+ 286          //                                              break;
+ 287          //                                      }
+ 288          //                                      case ENUM_MODE_SP:
+ 289          //                                      {
+ 290          //                                              my.laserEmiting |=  1 << ENUM_MODE_SP;
+ 291          //                                              break;
+ 292          //                                      }
+ 293          //                                      case ENUM_MODE_MP:
+ 294          //                                      {
+ 295          //                                              my.laserEmiting |=  1 << ENUM_MODE_MP;
+ 296          //                                              break;
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 79  
 
- 285          //                                      }
- 286          //                                      case ENUM_MODE_SP:
- 287          //                                      {
- 288          //                                              my.laserEmiting |=  1 << ENUM_MODE_SP;
- 289          //                                              break;
- 290          //                                      }
- 291          //                                      case ENUM_MODE_MP:
- 292          //                                      {
- 293          //                                              my.laserEmiting |=  1 << ENUM_MODE_MP;
- 294          //                                              break;
- 295          //                                      }
- 296          //                                      case ENUM_MODE_GP:
- 297          //                                      {
- 298          //                                              my.laserEmiting |=  1 << ENUM_MODE_GP;
- 299          //                                              break;
- 300          //                                      }
- 301          //                                      case ENUM_MODE_CC:
- 302          //                                      {
- 303          //                                              my.laserEmiting |=  1 << ENUM_MODE_CC;
- 304          //                                              break;
- 305          //                                      }
- 306          //                                      default:break;
- 307          //                              }
- 308          //                      }
- 309          //                      goto STEP_LOOP_END;
- 310          //              }
- 311          //              if(my.stepNum == STEPNUM_LASERON)
- 312          //              {
- 313          //                      if(my.safeFault || my.overTempFault)
- 314          //                      {//故障:
- 315          //                              my.stepNum = STEPNUM_FAULT;
- 316          //                      }
- 317          //                      else if(!(my.footSwitch & 0x01))//脚踏复位
- 318          //                      {
- 319          //                              //关闭激光
- 320          //                              my.stepNum = STEPNUM_READY;//返回READY步骤
- 321          //                      }
- 322          //                      else
- 323          //                      {
- 324          //                              if( my.laserEmiting == ENUM_MODE_CW)
- 325          //                              {//连续模式
- 326          //                                      switch(my.selectChannel)
- 327          //                                      {
- 328          //                                              case ENUM_CHANNEL_BOTH:
- 329          //                                              {
- 330          //                                                      upDateDac0(laserCurrent[0]);
- 331          //                                                      upDateDac1(laserCurrent[1]);
- 332          //                                                      break;
- 333          //                                              }
- 334          //                                              case ENUM_CHANNEL1:
- 335          //                                              {
- 336          //                                                      upDateDac0(laserCurrent[0]);
- 337          //                                                      break;
- 338          //                                              }
- 339          //                                              case ENUM_CHANNEL2:
- 340          //                                              {
- 341          //                                                      upDateDac1(laserCurrent[1]);
- 342          //                                                      break;
- 343          //                                              }
- 344          //                                              default:break;
- 345          //                                      }
- 346          //                              }
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 80  
+ 297          //                                      }
+ 298          //                                      case ENUM_MODE_GP:
+ 299          //                                      {
+ 300          //                                              my.laserEmiting |=  1 << ENUM_MODE_GP;
+ 301          //                                              break;
+ 302          //                                      }
+ 303          //                                      case ENUM_MODE_CC:
+ 304          //                                      {
+ 305          //                                              my.laserEmiting |=  1 << ENUM_MODE_CC;
+ 306          //                                              break;
+ 307          //                                      }
+ 308          //                                      default:break;
+ 309          //                              }
+ 310          //                      }
+ 311          //                      goto STEP_LOOP_END;
+ 312          //              }
+ 313          //              if(my.stepNum == STEPNUM_LASERON)
+ 314          //              {
+ 315          //                      if(my.safeFault || my.overTempFault)
+ 316          //                      {//故障:
+ 317          //                              my.stepNum = STEPNUM_FAULT;
+ 318          //                      }
+ 319          //                      else if(!(my.footSwitch & 0x01))//脚踏复位
+ 320          //                      {
+ 321          //                              //关闭激光
+ 322          //                              my.stepNum = STEPNUM_READY;//返回READY步骤
+ 323          //                      }
+ 324          //                      else
+ 325          //                      {
+ 326          //                              if( my.laserEmiting == ENUM_MODE_CW)
+ 327          //                              {//连续模式
+ 328          //                                      switch(my.selectChannel)
+ 329          //                                      {
+ 330          //                                              case ENUM_CHANNEL_BOTH:
+ 331          //                                              {
+ 332          //                                                      upDateDac0(laserCurrent[0]);
+ 333          //                                                      upDateDac1(laserCurrent[1]);
+ 334          //                                                      break;
+ 335          //                                              }
+ 336          //                                              case ENUM_CHANNEL1:
+ 337          //                                              {
+ 338          //                                                      upDateDac0(laserCurrent[0]);
+ 339          //                                                      break;
+ 340          //                                              }
+ 341          //                                              case ENUM_CHANNEL2:
+ 342          //                                              {
+ 343          //                                                      upDateDac1(laserCurrent[1]);
+ 344          //                                                      break;
+ 345          //                                              }
+ 346          //                                              default:break;
+ 347          //                                      }
+ 348          //                              }
+ 349          //                              if( my.laserEmiting == ENUM_MODE_SP )
+ 350          //                              {//单脉冲模式
+ 351          //                                      if(selectChannel == ENUM_CHANNEL_BOTH)
+ 352          //                                      {
+ 353          //                                              upDateDac0(laserCurrent[0]);
+ 354          //                                              upDateDac1(laserCurrent[1]);
+ 355          //                                      }
+ 356          //                                      if(selectChannel == ENUM_CHANNEL1)
+ 357          //                                      {
+ 358          //                                              upDateDac0(laserCurrent[0]);
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 80  
 
- 347          //                              if( my.laserEmiting == ENUM_MODE_SP )
- 348          //                              {//单脉冲模式
- 349          //                                      if(selectChannel == ENUM_CHANNEL_BOTH)
- 350          //                                      {
- 351          //                                              upDateDac0(laserCurrent[0]);
- 352          //                                              upDateDac1(laserCurrent[1]);
- 353          //                                      }
- 354          //                                      if(selectChannel == ENUM_CHANNEL1)
- 355          //                                      {
- 356          //                                              upDateDac0(laserCurrent[0]);
- 357          //                                      }
- 358          //                                      if(selectChannel = ENUM_CHANNEL2)
- 359          //                                      {
- 360          //                                              upDateDac1(laserCurrent[1]);
- 361          //                                      }
- 362          //                                      sTimerCtrl(STIMER_ON, STIMER_1MS_SP_LASER_ON, my.posWidth);
- 363          //                                      if(sTimer[STIMER_1MS_LASER_ON].status)
- 364          //                                      {
- 365          //                                              upDateDac0(0x0);
- 366          //                                              upDateDac1(0x0);
- 367          //                                              my.laserEmiting &=  ~(1<< ENUM_MODE_CW);//发射完成清空正在发射标志位
- 368          //                                              my.laserEmitOver |= 1 << ENUM_MODE_CW;//发射完成标志位置位
- 369          //                                              sTimerCtrl(STIMER_OFF, STIMER_1MS_SP_LASER_ON, my.posWidth);
- 370          //                                      }
- 371          //                              }       
- 372          //                              if( my.laserEmiting == ENUM_MODE_MP )
- 373          //                              {//多脉冲模式
- 374          //                                      if(!sTimer[STIMER_1MS_LASER_ON].enable)
- 375          //                                      {//正脉宽计时
- 376          //                                      if(selectChannel == ENUM_CHANNEL_BOTH)
- 377          //                              {
- 378          //                                      DAC0 = laserCurrent[0];
- 379          //                                      DAC1 = laserCurrent[1];
- 380          //                              }
- 381          //                              if(selectChannel == ENUM_CHANNEL1)
- 382          //                              {
- 383          //                                      
- 384          //                              }
- 385          //                              if(selectChannel = ENUM_CHANNEL2)
- 386          //                              {
- 387          //                              }
- 388          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_ON, my.posWidth);
- 389          //                              if(sTimer[STIMER_1MS_LASER_ON].status)
- 390          //                              {
- 391          //                                      //关闭激光
- 392          //                                      //关闭计时器
- 393          //                                      my.laserOnFlag = 0;
- 394          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
- 395          //                              }       
- 396          //                      }
- 397          //                      else if(!my.laserOnFlag)
- 398          //                      {//负脉宽计时
- 399          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_OFF, my.negWidth);
- 400          //                              if(sTimer[STIMER_1MS_LASER_OFF].status)
- 401          //                              {
- 402          //                                      my.laserOnFlag = 1;
- 403          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
- 404          //                              }
- 405          //                      }
- 406          //              }
- 407          //              if( !my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || my.triggerCC)
- 408          //              {//校正模式
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 81  
+ 359          //                                      }
+ 360          //                                      if(selectChannel = ENUM_CHANNEL2)
+ 361          //                                      {
+ 362          //                                              upDateDac1(laserCurrent[1]);
+ 363          //                                      }
+ 364          //                                      sTimerCtrl(STIMER_ON, STIMER_1MS_SP_LASER_ON, my.posWidth);
+ 365          //                                      if(sTimer[STIMER_1MS_LASER_ON].status)
+ 366          //                                      {
+ 367          //                                              upDateDac0(0x0);
+ 368          //                                              upDateDac1(0x0);
+ 369          //                                              my.laserEmiting &=  ~(1<< ENUM_MODE_CW);//发射完成清空正在发射标志位
+ 370          //                                              my.laserEmitOver |= 1 << ENUM_MODE_CW;//发射完成标志位置位
+ 371          //                                              sTimerCtrl(STIMER_OFF, STIMER_1MS_SP_LASER_ON, my.posWidth);
+ 372          //                                      }
+ 373          //                              }       
+ 374          //                              if( my.laserEmiting == ENUM_MODE_MP )
+ 375          //                              {//多脉冲模式
+ 376          //                                      if(!sTimer[STIMER_1MS_LASER_ON].enable)
+ 377          //                                      {//正脉宽计时
+ 378          //                                      if(selectChannel == ENUM_CHANNEL_BOTH)
+ 379          //                              {
+ 380          //                                      DAC0 = laserCurrent[0];
+ 381          //                                      DAC1 = laserCurrent[1];
+ 382          //                              }
+ 383          //                              if(selectChannel == ENUM_CHANNEL1)
+ 384          //                              {
+ 385          //                                      
+ 386          //                              }
+ 387          //                              if(selectChannel = ENUM_CHANNEL2)
+ 388          //                              {
+ 389          //                              }
+ 390          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_ON, my.posWidth);
+ 391          //                              if(sTimer[STIMER_1MS_LASER_ON].status)
+ 392          //                              {
+ 393          //                                      //关闭激光
+ 394          //                                      //关闭计时器
+ 395          //                                      my.laserOnFlag = 0;
+ 396          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
+ 397          //                              }       
+ 398          //                      }
+ 399          //                      else if(!my.laserOnFlag)
+ 400          //                      {//负脉宽计时
+ 401          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_OFF, my.negWidth);
+ 402          //                              if(sTimer[STIMER_1MS_LASER_OFF].status)
+ 403          //                              {
+ 404          //                                      my.laserOnFlag = 1;
+ 405          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
+ 406          //                              }
+ 407          //                      }
+ 408          //              }
+ 409          //              if( !my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || my.triggerCC)
+ 410          //              {//校正模式
+ 411          //                      
+ 412          //              }
+ 413          //                      }
+ 414          //                      goto STEP_LOOP_END;
+ 415          //              }
+ 416          //              if(my.stepNum == STEPNUM_FAULT)
+ 417          //              {//错误状态
+ 418          //                      //关闭激光
+ 419          //                      if(!my.safeFault &&
+ 420          //               !my.overTempFault)
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 81  
 
- 409          //                      
- 410          //              }
- 411          //                      }
- 412          //                      goto STEP_LOOP_END;
- 413          //              }
- 414          //              if(my.stepNum == STEPNUM_FAULT)
- 415          //              {//错误状态
- 416          //                      //关闭激光
- 417          //                      if(!my.safeFault &&
- 418          //               !my.overTempFault)
- 419          //                      {//错误消除
- 420          //                              if(my.clearError)
- 421          //                              {//错误消除返回待机状态
- 422          //                                      my.clearError = 0;
- 423          //                                      my.stepNum = STEPNUM_STANDBY;
- 424          //                              }
- 425          //                      }
- 426          //                      else
- 427          //                      {
- 428          //                              my.stepNum = STEPNUM_FAULT;
- 429          //                      }
- 430          //                      goto STEP_LOOP_END;
- 431          //              }
- 432          //              STEP_LOOP_END:
- 433          //              if( my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || !my.triggerCC)
- 434          //              {//连续模式
- 435          //                      if(!my.laserOnFlag)
- 436          //                      {       
- 437          //                              switch(my.selectChannel)
- 438          //                              {
- 439          //                                      case ENUM_CHANNEL_BOTH:
- 440          //                                      {
- 441          //                                              DAC0 = laserCurrent[0];
- 442          //                                              DAC1 = laserCurrent[1];
- 443          //                                              break;
- 444          //                                      }
- 445          //                                      case ENUM_CHANNEL1:
- 446          //                                      {
- 447          //                                              DAC0 = laserCurrent[0]; 
- 448          //                                              break;
- 449          //                                      }
- 450          //                                      case ENUM_CHANNEL2:
- 451          //                                      {
- 452          //                                              DAC1 = laserCurrent[1];
- 453          //                                              break;
- 454          //                                      }
- 455          //                                      default:break;
- 456          //                              }
- 457          //                              my.laserOnFlag = 1;
- 458          //                      }
- 459          //                      
- 460          //              }
- 461          //              if( my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || !my.triggerCC)
- 462          //              {//单脉冲模式
- 463          //                      if(!my.laserOnFlag)
- 464          //                      {
- 465          //                              if(selectChannel == ENUM_CHANNEL_BOTH)
- 466          //                              {
- 467          //                                      DAC0 = laserCurrent[0];
- 468          //                                      DAC1 = laserCurrent[1];
- 469          //                              }
- 470          //                              if(selectChannel == ENUM_CHANNEL1)
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 82  
+ 421          //                      {//错误消除
+ 422          //                              if(my.clearError)
+ 423          //                              {//错误消除返回待机状态
+ 424          //                                      my.clearError = 0;
+ 425          //                                      my.stepNum = STEPNUM_STANDBY;
+ 426          //                              }
+ 427          //                      }
+ 428          //                      else
+ 429          //                      {
+ 430          //                              my.stepNum = STEPNUM_FAULT;
+ 431          //                      }
+ 432          //                      goto STEP_LOOP_END;
+ 433          //              }
+ 434          //              STEP_LOOP_END:
+ 435          //              if( my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || !my.triggerCC)
+ 436          //              {//连续模式
+ 437          //                      if(!my.laserOnFlag)
+ 438          //                      {       
+ 439          //                              switch(my.selectChannel)
+ 440          //                              {
+ 441          //                                      case ENUM_CHANNEL_BOTH:
+ 442          //                                      {
+ 443          //                                              DAC0 = laserCurrent[0];
+ 444          //                                              DAC1 = laserCurrent[1];
+ 445          //                                              break;
+ 446          //                                      }
+ 447          //                                      case ENUM_CHANNEL1:
+ 448          //                                      {
+ 449          //                                              DAC0 = laserCurrent[0]; 
+ 450          //                                              break;
+ 451          //                                      }
+ 452          //                                      case ENUM_CHANNEL2:
+ 453          //                                      {
+ 454          //                                              DAC1 = laserCurrent[1];
+ 455          //                                              break;
+ 456          //                                      }
+ 457          //                                      default:break;
+ 458          //                              }
+ 459          //                              my.laserOnFlag = 1;
+ 460          //                      }
+ 461          //                      
+ 462          //              }
+ 463          //              if( my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || !my.triggerCC)
+ 464          //              {//单脉冲模式
+ 465          //                      if(!my.laserOnFlag)
+ 466          //                      {
+ 467          //                              if(selectChannel == ENUM_CHANNEL_BOTH)
+ 468          //                              {
+ 469          //                                      DAC0 = laserCurrent[0];
+ 470          //                                      DAC1 = laserCurrent[1];
+ 471          //                              }
+ 472          //                              if(selectChannel == ENUM_CHANNEL1)
+ 473          //                              {
+ 474          //                                      DAC0 = laserCurrent[0];
+ 475          //                              }
+ 476          //                              if(selectChannel = ENUM_CHANNEL2)
+ 477          //                              {
+ 478          //                                      DAC1 = laserCurrent[1];
+ 479          //                              }
+ 480          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_SP_LASER_ON, my.posWidth);
+ 481          //                              if(sTimer[STIMER_1MS_LASER_ON].status)
+ 482          //                              {
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 82  
 
- 471          //                              {
- 472          //                                      DAC0 = laserCurrent[0];
- 473          //                              }
- 474          //                              if(selectChannel = ENUM_CHANNEL2)
- 475          //                              {
- 476          //                                      DAC1 = laserCurrent[1];
- 477          //                              }
- 478          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_SP_LASER_ON, my.posWidth);
- 479          //                              if(sTimer[STIMER_1MS_LASER_ON].status)
- 480          //                              {
- 481          //                                      DAC0 = 0x0;
- 482          //                                      DAC1 = 0x0;
- 483          //                                      my.laserOnFlag = 0;
- 484          //                                      my.triggerSP = 0;
- 485          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_SP_LASER_ON, my.posWidth);
- 486          //                              }
- 487          //                      }
- 488          //                      
- 489          //              }
- 490          //              if( !my.triggerCW || !my.triggerSP || my.triggerMP || !my.triggerGP || !my.triggerCC)
- 491          //              {//多脉冲模式
- 492          //                      if(my.laserOnFlag)
- 493          //                      {//正脉宽计时
- 494          //                              if(selectChannel == ENUM_CHANNEL_BOTH)
- 495          //                              {
- 496          //                                      DAC0 = laserCurrent[0];
- 497          //                                      DAC1 = laserCurrent[1];
- 498          //                              }
- 499          //                              if(selectChannel == ENUM_CHANNEL1)
- 500          //                              {
- 501          //                                      
- 502          //                              }
- 503          //                              if(selectChannel = ENUM_CHANNEL2)
- 504          //                              {
- 505          //                              }
- 506          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_ON, my.posWidth);
- 507          //                              if(sTimer[STIMER_1MS_LASER_ON].status)
- 508          //                              {
- 509          //                                      //关闭激光
- 510          //                                      //关闭计时器
- 511          //                                      my.laserOnFlag = 0;
- 512          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
- 513          //                              }       
- 514          //                      }
- 515          //                      else if(!my.laserOnFlag)
- 516          //                      {//负脉宽计时
- 517          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_OFF, my.negWidth);
- 518          //                              if(sTimer[STIMER_1MS_LASER_OFF].status)
- 519          //                              {
- 520          //                                      my.laserOnFlag = 1;
- 521          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
- 522          //                              }
- 523          //                      }
- 524          //              }
- 525          //              if( !my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || my.triggerCC)
- 526          //              {//校正模式
- 527          //                      
- 528          //              }
- 529          //              
- 530          //              //Debug LED闪烁
- 531          //              if(LED_MCU)
- 532          //              {
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 83  
+ 483          //                                      DAC0 = 0x0;
+ 484          //                                      DAC1 = 0x0;
+ 485          //                                      my.laserOnFlag = 0;
+ 486          //                                      my.triggerSP = 0;
+ 487          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_SP_LASER_ON, my.posWidth);
+ 488          //                              }
+ 489          //                      }
+ 490          //                      
+ 491          //              }
+ 492          //              if( !my.triggerCW || !my.triggerSP || my.triggerMP || !my.triggerGP || !my.triggerCC)
+ 493          //              {//多脉冲模式
+ 494          //                      if(my.laserOnFlag)
+ 495          //                      {//正脉宽计时
+ 496          //                              if(selectChannel == ENUM_CHANNEL_BOTH)
+ 497          //                              {
+ 498          //                                      DAC0 = laserCurrent[0];
+ 499          //                                      DAC1 = laserCurrent[1];
+ 500          //                              }
+ 501          //                              if(selectChannel == ENUM_CHANNEL1)
+ 502          //                              {
+ 503          //                                      
+ 504          //                              }
+ 505          //                              if(selectChannel = ENUM_CHANNEL2)
+ 506          //                              {
+ 507          //                              }
+ 508          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_ON, my.posWidth);
+ 509          //                              if(sTimer[STIMER_1MS_LASER_ON].status)
+ 510          //                              {
+ 511          //                                      //关闭激光
+ 512          //                                      //关闭计时器
+ 513          //                                      my.laserOnFlag = 0;
+ 514          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
+ 515          //                              }       
+ 516          //                      }
+ 517          //                      else if(!my.laserOnFlag)
+ 518          //                      {//负脉宽计时
+ 519          //                              sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_OFF, my.negWidth);
+ 520          //                              if(sTimer[STIMER_1MS_LASER_OFF].status)
+ 521          //                              {
+ 522          //                                      my.laserOnFlag = 1;
+ 523          //                                      sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
+ 524          //                              }
+ 525          //                      }
+ 526          //              }
+ 527          //              if( !my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || my.triggerCC)
+ 528          //              {//校正模式
+ 529          //                      
+ 530          //              }
+ 531          //              
+ 532          //              //Debug LED闪烁
+ 533          //              if(LED_MCU)
+ 534          //              {
+ 535          //                      if(sTimer[STIMER_1000MS_LED_ON].status)//等待时间A
+ 536          //                      {
+ 537          //                              LED_MCU = 0;
+ 538          //                              sTimerCtrl(STIMER_OFF, STIMER_1000MS_LED_ON, 1);
+ 539          //                      }
+ 540          //                      else
+ 541          //                              sTimerCtrl(STIMER_ON, STIMER_1000MS_LED_ON, 1);
+ 542          //              }
+ 543          //              if(!LED_MCU)
+ 544          //              {
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 83  
 
- 533          //                      if(sTimer[STIMER_1000MS_LED_ON].status)//等待时间A
- 534          //                      {
- 535          //                              LED_MCU = 0;
- 536          //                              sTimerCtrl(STIMER_OFF, STIMER_1000MS_LED_ON, 1);
- 537          //                      }
- 538          //                      else
- 539          //                              sTimerCtrl(STIMER_ON, STIMER_1000MS_LED_ON, 1);
- 540          //              }
- 541          //              if(!LED_MCU)
- 542          //              {
- 543          //                      if(sTimer[STIMER_1000MS_LED_OFF].status)//等待时间B
- 544          //                      {
- 545          //                              LED_MCU = 1;
- 546          //                              sTimerCtrl(STIMER_OFF, STIMER_1000MS_LED_OFF, 1);
- 547          //                      }
- 548          //                      else
- 549          //                              sTimerCtrl(STIMER_ON, STIMER_1000MS_LED_OFF, 1);
- 550          //              }
- 551          //              //PID 温控指令
- 552          //              if(sTimer[(CONFIG_STIMER_100MS_END - 3)].status)//等待A时间
- 553          //              {
- 554          //                      my.pidOut += pidFuzzyRealize(&pidFuzzy, 25.0, 26.0);
- 555          //                      if(my.pidOut > 1)
- 556          //                              my.pidOut = 1;
- 557          //                      if(my.pidOut < 0)
- 558          //                              my.pidOut = 0;
- 559          //                      //my.onTimerPid = (int16_t)(my.pidOut * CONFIG_PIDOUT_PWM);
- 560          //                      //my.offTimerPid = CONFIG_TECOUT_MAX_CYCLE - my.onTimerPid; 
- 561          //                      sTimerCtrl(STIMER_OFF, (CONFIG_STIMER_100MS_END - 3), 10);
- 562          //              }
- 563          //              else
- 564          //                      sTimerCtrl(STIMER_ON, (CONFIG_STIMER_100MS_END - 3), 10);
- 565          //              //PID结果输出
- 566          
- 567          //              if(sTimer[1].value >= CONFIG_TECOUT_CYCLE || sTimer[1].enable == 0)
- 568          //              {
- 569          //                      COOL_OUT = 1;
- 570          //                      //tecOnTime = (int16_t)(my.pidOut * CONFIG_TECOUT_CYCLE);
- 571          //                      tecOnTime = (int16_t)(0.25 * CONFIG_TECOUT_CYCLE);
- 572          //                      sTimerCtrl(STIMER_OFF, 1, tecOnTime);
- 573          //                      sTimerCtrl(STIMER_ON, 1, tecOnTime);
- 574          //              }
- 575          //              if(sTimer[1].value >= tecOnTime)
- 576          //              {
- 577          //                      COOL_OUT = 0;
- 578          //              }
- 579          //              modbusPoll();//执行MODBUS POLL
- 580          //              
- 581          //              //setOutput();//更新输出IO
- 582          //      
- 583          //      }               
- 584          //}
- 585          
- 586          //void startLaser(void)
- 587          //{//开始发射脉冲       
- 588          //      if(my.laserMode == ENUM_MODE_CW )
- 589          //      {
- 590          //              DAC0 = my.laserCurrent[0];
- 591          //              DAC1 = my.laserCurrent[1];
- 592          //      }
- 593          //      else if((my.LaserMode == ENUM_MODE_SP) | 
- 594          //                      (my.LaserMode == ENUM_MODE_MP) |
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 84  
+ 545          //                      if(sTimer[STIMER_1000MS_LED_OFF].status)//等待时间B
+ 546          //                      {
+ 547          //                              LED_MCU = 1;
+ 548          //                              sTimerCtrl(STIMER_OFF, STIMER_1000MS_LED_OFF, 1);
+ 549          //                      }
+ 550          //                      else
+ 551          //                              sTimerCtrl(STIMER_ON, STIMER_1000MS_LED_OFF, 1);
+ 552          //              }
+ 553          //              //PID 温控指令
+ 554          //              if(sTimer[(CONFIG_STIMER_100MS_END - 3)].status)//等待A时间
+ 555          //              {
+ 556          //                      my.pidOut += pidFuzzyRealize(&pidFuzzy, 25.0, 26.0);
+ 557          //                      if(my.pidOut > 1)
+ 558          //                              my.pidOut = 1;
+ 559          //                      if(my.pidOut < 0)
+ 560          //                              my.pidOut = 0;
+ 561          //                      //my.onTimerPid = (int16_t)(my.pidOut * CONFIG_PIDOUT_PWM);
+ 562          //                      //my.offTimerPid = CONFIG_TECOUT_MAX_CYCLE - my.onTimerPid; 
+ 563          //                      sTimerCtrl(STIMER_OFF, (CONFIG_STIMER_100MS_END - 3), 10);
+ 564          //              }
+ 565          //              else
+ 566          //                      sTimerCtrl(STIMER_ON, (CONFIG_STIMER_100MS_END - 3), 10);
+ 567          //              //PID结果输出
+ 568          
+ 569          //              if(sTimer[1].value >= CONFIG_TECOUT_CYCLE || sTimer[1].enable == 0)
+ 570          //              {
+ 571          //                      COOL_OUT = 1;
+ 572          //                      //tecOnTime = (int16_t)(my.pidOut * CONFIG_TECOUT_CYCLE);
+ 573          //                      tecOnTime = (int16_t)(0.25 * CONFIG_TECOUT_CYCLE);
+ 574          //                      sTimerCtrl(STIMER_OFF, 1, tecOnTime);
+ 575          //                      sTimerCtrl(STIMER_ON, 1, tecOnTime);
+ 576          //              }
+ 577          //              if(sTimer[1].value >= tecOnTime)
+ 578          //              {
+ 579          //                      COOL_OUT = 0;
+ 580          //              }
+ 581          //              modbusPoll();//执行MODBUS POLL
+ 582          //              
+ 583          //              //setOutput();//更新输出IO
+ 584          //      
+ 585          //      }               
+ 586          //}
+ 587          
+ 588          //void startLaser(void)
+ 589          //{//开始发射脉冲       
+ 590          //      if(my.laserMode == ENUM_MODE_CW )
+ 591          //      {
+ 592          //              DAC0 = my.laserCurrent[0];
+ 593          //              DAC1 = my.laserCurrent[1];
+ 594          //      }
+ 595          //      else if((my.LaserMode == ENUM_MODE_SP) | 
+ 596          //                      (my.LaserMode == ENUM_MODE_MP) |
+ 597          //                      (my.LaserMode == ENUM_MODE_GP))
+ 598          //      {
+ 599          //              my.laserTimer.tMate = my.PosWidth;//设置匹配值
+ 600          //              my.laserTimer.tOverflow = my.NegWidth + my.PosWidth;//设置溢出值
+ 601          //              my.laserTimer.tCounter = 0x0;   
+ 602          //              my.laserTimer.pMate = 0x0;//脉冲个数匹配值
+ 603          //              my.laserTimer.sMate = 0x0;//脉个数溢出值
+ 604          //              my.laserTimer.pCounter = 0x0;
+ 605          //              my.laserTimer.sCounter = 0x0;   
+ 606          //              TF2H = 0;//Timer 2 High Byte Overflow Flag.
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 84  
 
- 595          //                      (my.LaserMode == ENUM_MODE_GP))
- 596          //      {
- 597          //              my.laserTimer.tMate = my.PosWidth;//设置匹配值
- 598          //              my.laserTimer.tOverflow = my.NegWidth + my.PosWidth;//设置溢出值
- 599          //              my.laserTimer.tCounter = 0x0;   
- 600          //              my.laserTimer.pMate = 0x0;//脉冲个数匹配值
- 601          //              my.laserTimer.sMate = 0x0;//脉个数溢出值
- 602          //              my.laserTimer.pCounter = 0x0;
- 603          //              my.laserTimer.sCounter = 0x0;   
- 604          //              TF2H = 0;//Timer 2 High Byte Overflow Flag.
- 605          //              ET2 = 1;
- 606          //              TMR2L = 0xFF;
- 607          //              TMR2H = 0xFF;
- 608          //              TR2 = 1;//使能TIMER2计时器
- 609          //      }
- 610          //      else if(my.LaserMode == ENUM_MODE_CC)
- 611          //      {//校正模式
- 612          //              my.laserTimer.tMate = my.PosWidth;//设置匹配值
- 613          //              my.laserTimer.tOverflow = my.NegWidth + my.PosWidth;//设置溢出值
- 614          //              my.laserTimer.tCounter = 0x0;   
- 615          //              my.laserTimer.pMate = my.GroupNum;//脉冲个数匹配值
- 616          //              my.laserTimer.sMate = my.GroupSpace;//脉个数溢出值
- 617          //              my.laserTimer.pCounter = 0x0;
- 618          //              my.laserTimer.sCounter = 0x0;   
- 619          //              TF2H = 0;//Timer 2 High Byte Overflow Flag.
- 620          //              ET2 = 1;
- 621          //              TMR2L = 0xFF;
- 622          //              TMR2H = 0xFF;
- 623          //              TR2 = 1;//使能TIMER2计时器
- 624          //      }
- 625          //      my.FlagIndicate = 1;
- 626          //}
- 627          //void stopLaser(myDevice_t *p)
- 628          //{//停止发射脉冲
- 629          //      TR2 = 0;
- 630          //      ET2 = 0;
- 631          //      TF2H = 0;
- 632          //      DAC0 = 0;
- 633          //      DAC1 = 0;
- 634          //      my.FlagIndicate = 0;    
- 635          //}
- 636          
- 637          //void Timer0_ISR(void) interrupt INTERRUPT_TIMER0
- 638          //{//TIMER2 中断 激光发射
- 639          //      
- 640          //      TF2H = 0;
- 641          //      switch(my.LaserMode)
- 642          //      {
- 643          //              case ENUM_MODE_CC:
- 644          //              {//CC模式
- 645          //                      SetLaserCurrent(p);
- 646          //                      break;
- 647          //              }
- 648          //              case ENUM_MODE_SP:
- 649          //              {//SP模式
- 650          //                      break;
- 651          //              }
- 652          //              case ENUM_MODE_MP:
- 653          //              {//MP模式       
- 654          //                      if(p->softTimer.tCounter == p->softTimer.tMate)
- 655          //                      {//计时器匹配
- 656          //                              LaserMod_PIN = LASER_OFF;//翻转输出
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 85  
+ 607          //              ET2 = 1;
+ 608          //              TMR2L = 0xFF;
+ 609          //              TMR2H = 0xFF;
+ 610          //              TR2 = 1;//使能TIMER2计时器
+ 611          //      }
+ 612          //      else if(my.LaserMode == ENUM_MODE_CC)
+ 613          //      {//校正模式
+ 614          //              my.laserTimer.tMate = my.PosWidth;//设置匹配值
+ 615          //              my.laserTimer.tOverflow = my.NegWidth + my.PosWidth;//设置溢出值
+ 616          //              my.laserTimer.tCounter = 0x0;   
+ 617          //              my.laserTimer.pMate = my.GroupNum;//脉冲个数匹配值
+ 618          //              my.laserTimer.sMate = my.GroupSpace;//脉个数溢出值
+ 619          //              my.laserTimer.pCounter = 0x0;
+ 620          //              my.laserTimer.sCounter = 0x0;   
+ 621          //              TF2H = 0;//Timer 2 High Byte Overflow Flag.
+ 622          //              ET2 = 1;
+ 623          //              TMR2L = 0xFF;
+ 624          //              TMR2H = 0xFF;
+ 625          //              TR2 = 1;//使能TIMER2计时器
+ 626          //      }
+ 627          //      my.FlagIndicate = 1;
+ 628          //}
+ 629          //void stopLaser(myDevice_t *p)
+ 630          //{//停止发射脉冲
+ 631          //      TR2 = 0;
+ 632          //      ET2 = 0;
+ 633          //      TF2H = 0;
+ 634          //      DAC0 = 0;
+ 635          //      DAC1 = 0;
+ 636          //      my.FlagIndicate = 0;    
+ 637          //}
+ 638          
+ 639          //void Timer0_ISR(void) interrupt INTERRUPT_TIMER0
+ 640          //{//TIMER2 中断 激光发射
+ 641          //      
+ 642          //      TF2H = 0;
+ 643          //      switch(my.LaserMode)
+ 644          //      {
+ 645          //              case ENUM_MODE_CC:
+ 646          //              {//CC模式
+ 647          //                      SetLaserCurrent(p);
+ 648          //                      break;
+ 649          //              }
+ 650          //              case ENUM_MODE_SP:
+ 651          //              {//SP模式
+ 652          //                      break;
+ 653          //              }
+ 654          //              case ENUM_MODE_MP:
+ 655          //              {//MP模式       
+ 656          //                      if(p->softTimer.tCounter == p->softTimer.tMate)
+ 657          //                      {//计时器匹配
+ 658          //                              LaserMod_PIN = LASER_OFF;//翻转输出
+ 659          //                      }
+ 660          //                      if(p->softTimer.tCounter == p->softTimer.tOverflow)
+ 661          //                      {//计时器溢出
+ 662          //                              p->softTimer.tCounter = 0;//清零
+ 663          //                      }
+ 664          //                      if(p->softTimer.tCounter == 0)
+ 665          //                      {//翻转
+ 666          //                              LaserMod_PIN = LASER_ON;//翻转输出
+ 667          //                      }
+ 668          //                      p->softTimer.tCounter ++;
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 85  
 
- 657          //                      }
- 658          //                      if(p->softTimer.tCounter == p->softTimer.tOverflow)
- 659          //                      {//计时器溢出
- 660          //                              p->softTimer.tCounter = 0;//清零
- 661          //                      }
- 662          //                      if(p->softTimer.tCounter == 0)
- 663          //                      {//翻转
- 664          //                              LaserMod_PIN = LASER_ON;//翻转输出
- 665          //                      }
- 666          //                      p->softTimer.tCounter ++;
- 667          //                      break;
- 668          //              }
- 669          //              case ENUM_MODE_GP:
- 670          //              {//GP模式
- 671          //                      if(p->softTimer.pCounter < p->softTimer.pMate)
- 672          //                      {
- 673          //                              if(p->softTimer.tCounter == 0)
- 674          //                              {
- 675          //                                      if(p->softTimer.pCounter < p->softTimer.pMate)
- 676          //                                      {
- 677          //                                              LaserMod_PIN = LASER_ON;//翻转输出                                              
- 678          //                                      }
- 679          //                              }
- 680          //                              if(p->softTimer.tCounter == p->softTimer.tMate)
- 681          //                              {//计时器匹配
- 682          //                                      LaserMod_PIN = LASER_OFF;//翻转输出
- 683          //                              }
- 684          //                              if(p->softTimer.tCounter == (p->softTimer.tOverflow - 1))
- 685          //                              {//计时器溢出
- 686          //                                      p->softTimer.tCounter = 0xFFFF;//清零
- 687          //                                      p->softTimer.pCounter ++;//清零 
- 688          //                              }
- 689          //                              p->softTimer.tCounter ++;
- 690          //                      }
- 691          //                      if(p->softTimer.pCounter == p->softTimer.pMate && p->softTimer.tCounter == 0)
- 692          //                      {//脉冲个数发现匹配
- 693          //                              LaserMod_PIN = LASER_OFF;
- 694          //                              p->softTimer.pCounter = 0xFFFF;
- 695          //                              p->softTimer.sCounter = 0x0;
- 696          //                      }
- 697          //                      if(p->softTimer.pCounter == 0xFFFF)
- 698          //                      {               
- 699          //                              if(p->softTimer.sCounter == p->softTimer.sMate)
- 700          //                              {
- 701          //                                      p->softTimer.pCounter = 0;      
- 702          //                              }
- 703          //                              p->softTimer.sCounter ++;
- 704          //                      }
- 705          //                      break;
- 706          //              }
- 707          //              default:break;
- 708          //      }
- 709          //}
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 86  
+ 669          //                      break;
+ 670          //              }
+ 671          //              case ENUM_MODE_GP:
+ 672          //              {//GP模式
+ 673          //                      if(p->softTimer.pCounter < p->softTimer.pMate)
+ 674          //                      {
+ 675          //                              if(p->softTimer.tCounter == 0)
+ 676          //                              {
+ 677          //                                      if(p->softTimer.pCounter < p->softTimer.pMate)
+ 678          //                                      {
+ 679          //                                              LaserMod_PIN = LASER_ON;//翻转输出                                              
+ 680          //                                      }
+ 681          //                              }
+ 682          //                              if(p->softTimer.tCounter == p->softTimer.tMate)
+ 683          //                              {//计时器匹配
+ 684          //                                      LaserMod_PIN = LASER_OFF;//翻转输出
+ 685          //                              }
+ 686          //                              if(p->softTimer.tCounter == (p->softTimer.tOverflow - 1))
+ 687          //                              {//计时器溢出
+ 688          //                                      p->softTimer.tCounter = 0xFFFF;//清零
+ 689          //                                      p->softTimer.pCounter ++;//清零 
+ 690          //                              }
+ 691          //                              p->softTimer.tCounter ++;
+ 692          //                      }
+ 693          //                      if(p->softTimer.pCounter == p->softTimer.pMate && p->softTimer.tCounter == 0)
+ 694          //                      {//脉冲个数发现匹配
+ 695          //                              LaserMod_PIN = LASER_OFF;
+ 696          //                              p->softTimer.pCounter = 0xFFFF;
+ 697          //                              p->softTimer.sCounter = 0x0;
+ 698          //                      }
+ 699          //                      if(p->softTimer.pCounter == 0xFFFF)
+ 700          //                      {               
+ 701          //                              if(p->softTimer.sCounter == p->softTimer.sMate)
+ 702          //                              {
+ 703          //                                      p->softTimer.pCounter = 0;      
+ 704          //                              }
+ 705          //                              p->softTimer.sCounter ++;
+ 706          //                      }
+ 707          //                      break;
+ 708          //              }
+ 709          //              default:break;
+ 710          //      }
+ 711          //}
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 86  
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -5449,20 +5439,34 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0010 7F01              MOV     R7,#01H
 0012 120000      E     LCALL   _initModbus
                                            ; SOURCE LINE # 122
-0015 D2AF              SETB    EA
-0017         ?C0001:
+0015 900000      E     MOV     DPTR,#NVRAM0
+0018 E4                CLR     A
+0019 F0                MOVX    @DPTR,A
+001A A3                INC     DPTR
+001B 74A5              MOV     A,#0A5H
+001D F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 123
+001E A3                INC     DPTR
+001F E4                CLR     A
+0020 F0                MOVX    @DPTR,A
+0021 A3                INC     DPTR
+0022 745A              MOV     A,#05AH
+0024 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 124
-0017 B284              CPL     loopFlag
+0025 D2AF              SETB    EA
+0027         ?C0001:
                                            ; SOURCE LINE # 125
-0019 120000      E     LCALL   sPlcProcessStart
-                                           ; SOURCE LINE # 147
-001C 120000      E     LCALL   sPlcProcessEnd
-                                           ; SOURCE LINE # 148
-001F 80F6              SJMP    ?C0001
+                                           ; SOURCE LINE # 126
+0027 B284              CPL     loopFlag
+                                           ; SOURCE LINE # 127
+0029 120000      E     LCALL   sPlcProcessStart
+                                           ; SOURCE LINE # 149
+002C 120000      E     LCALL   sPlcProcessEnd
+                                           ; SOURCE LINE # 150
+002F 80F6              SJMP    ?C0001
              ; FUNCTION main (END)
 
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 87  
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 87  
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -5525,7 +5529,7 @@ S32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
 UU16 . . . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
   U16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
   S16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
-C51 COMPILER V9.59.0.0   MAINAPP                                                           12/25/2018 21:56:17 PAGE 88  
+C51 COMPILER V9.59.0.0   MAINAPP                                                           12/26/2018 20:47:44 PAGE 88  
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -5566,6 +5570,7 @@ size_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
 wchar_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
 initDeviceF020 . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 _initModbus. . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+NVRAM0 . . . . . . . . . . . . . . . .  EXTERN   XDATA  ARRAY    -----  992
 sPlcInit . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 sPlcProcessStart . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 sPlcProcessEnd . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
@@ -5574,7 +5579,7 @@ main . . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     33    ----
+   CODE SIZE        =     49    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

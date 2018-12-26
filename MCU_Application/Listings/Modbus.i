@@ -114,12 +114,6 @@
  
  
  
- 
- 
- 
- 
- 
- 
   
 #line 1 ".\Lib\stdint.h" /0
 
@@ -176,7 +170,7 @@
 #line 51 ".\Lib\stdint.h" /0
  
  
-#line 114 ".\MainApp\appConfig.h" /0
+#line 108 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\stdbool.h" /0
@@ -227,7 +221,7 @@
  
  
  
-#line 115 ".\MainApp\appConfig.h" /0
+#line 109 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\endian.h" /0
@@ -289,7 +283,7 @@
 #line 55 ".\Lib\endian.h" /0
  
  
-#line 116 ".\MainApp\appConfig.h" /0
+#line 110 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\si_toolchain.h" /0
@@ -1201,7 +1195,7 @@
  
  
  
-#line 117 ".\MainApp\appConfig.h" /0
+#line 111 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\compiler_defs.h" /0
@@ -2127,7 +2121,7 @@
  
  
  
-#line 118 ".\MainApp\appConfig.h" /0
+#line 112 ".\MainApp\appConfig.h" /0
  
  
   
@@ -2484,14 +2478,14 @@
  
  
  
-#line 120 ".\MainApp\appConfig.h" /0
+#line 114 ".\MainApp\appConfig.h" /0
  
  
  
-#line 123 ".\MainApp\appConfig.h" /1
+#line 117 ".\MainApp\appConfig.h" /1
   
  
-#line 125 ".\MainApp\appConfig.h" /0
+#line 119 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdio.h" /0
@@ -2540,7 +2534,7 @@
  
  
  
-#line 126 ".\MainApp\appConfig.h" /0
+#line 120 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2648,7 +2642,7 @@
  #pragma RESTORE
  
  
-#line 127 ".\MainApp\appConfig.h" /0
+#line 121 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2711,7 +2705,7 @@
  #pragma RESTORE
  
  
-#line 128 ".\MainApp\appConfig.h" /0
+#line 122 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -2759,7 +2753,7 @@
  
  
  
-#line 129 ".\MainApp\appConfig.h" /0
+#line 123 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -2797,7 +2791,7 @@
  #pragma RESTORE
  
  
-#line 130 ".\MainApp\appConfig.h" /0
+#line 124 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -2830,7 +2824,7 @@
  
  
  
-#line 131 ".\MainApp\appConfig.h" /0
+#line 125 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\math.h" /0
@@ -2904,7 +2898,7 @@
  #pragma RESTORE
  
  
-#line 132 ".\MainApp\appConfig.h" /0
+#line 126 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\crc32.h" /0
@@ -2987,17 +2981,11 @@
  
   
  
- 
- 
+  
+  
   
  
   
-  
- 
- 
-  
- 
- 
  
   
  
@@ -3098,7 +3086,7 @@
  
  
  
-#line 133 ".\MainApp\appConfig.h" /0
+#line 127 ".\MainApp\appConfig.h" /0
  
  
  
@@ -4279,7 +4267,7 @@
  
  void initDeviceF020(void);
  
-#line 136 ".\MainApp\appConfig.h" /0
+#line 130 ".\MainApp\appConfig.h" /0
  
  
  
@@ -4360,17 +4348,11 @@
  
   
  
- 
- 
+  
+  
   
  
   
-  
- 
- 
-  
- 
- 
  
   
  
@@ -4466,7 +4448,7 @@
  
  
  
-#line 139 ".\MainApp\appConfig.h" /0
+#line 133 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c0.h" /0
@@ -4545,17 +4527,11 @@
  
   
  
- 
- 
+  
+  
   
  
   
-  
- 
- 
-  
- 
- 
  
   
  
@@ -4658,7 +4634,7 @@
  
  
  
-#line 140 ".\MainApp\appConfig.h" /0
+#line 134 ".\MainApp\appConfig.h" /0
  
  
  
@@ -4743,17 +4719,11 @@
  
   
  
- 
- 
+  
+  
   
  
   
-  
- 
- 
-  
- 
- 
  
   
  
@@ -4852,7 +4822,7 @@
  void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
  void epromTest(void);
  
-#line 147 ".\MainApp\appConfig.h" /0
+#line 141 ".\MainApp\appConfig.h" /0
  
  
  
@@ -4873,8 +4843,8 @@
  
  
  
-#line 152 ".\MainApp\appConfig.h" /0
-#line 152 ".\MainApp\appConfig.h" /0
+#line 146 ".\MainApp\appConfig.h" /0
+#line 146 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Modbus\ModbusPort.h" /0
@@ -4953,17 +4923,11 @@
  
   
  
- 
- 
+  
+  
   
  
   
-  
- 
- 
-  
- 
- 
  
   
  
@@ -5059,7 +5023,7 @@
  extern void receiveInterrupt(uint8_t Data);
  
  
-#line 153 ".\MainApp\appConfig.h" /0
+#line 147 ".\MainApp\appConfig.h" /0
  
  
   
@@ -5139,17 +5103,11 @@
  
   
  
- 
- 
+  
+  
   
  
   
-  
- 
- 
-  
- 
- 
  
   
  
@@ -5362,7 +5320,7 @@
  void refreshDac(void);
  
  
-#line 155 ".\MainApp\appConfig.h" /0
+#line 149 ".\MainApp\appConfig.h" /0
  
  
  
@@ -5444,6 +5402,8 @@
  *CRC >>= 1;
  }
  }
+ 
+ 
  uint8_t DoSlaveTX(void){ 
  modBusUartString(Tx_Buf, Tx_Buf_Size);
  Tx_Buf_Size = 0;
@@ -5463,29 +5423,46 @@
  Tx_Data.dataLen = 0;
  SendMessage();
  }
+ 
  void HandleModbusReadCoils(void){ 
- data uint16_t startAddress, numberOfCoil, i, currentData;
+ uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
+ uint8_t tempData = 0;
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
- if((startAddress + numberOfCoil) > ((15 - 0 + 31 - 16) * 16)){ 
+ if((startAddress + numberOfCoil) > ((495 + 1) * 16)){ 
  HandleModbusError(0x02);
  }
  else{
+ byteCount = numberOfCoil / 8;
+ if((numberOfCoil % 8) != 0){
+ byteCount += 1;
+ }
  Tx_Data.function = 1;
  Tx_Data.address = ModbusSlaveAddress;
  Tx_Data.dataLen = 1;
- Tx_Data.dataBuf[0] = 0;
+ tempAddr = startAddress;
+ for(i = 0; i < byteCount; i ++){
+ Tx_Data.dataBuf[Tx_Data.dataLen] = 0;
+ for(j = 0; j < 8; j ++){
+ tempData = (NVRAM0[(tempAddr / 16)] >> (tempAddr % 16)) & 0x01;
+ Tx_Data.dataBuf[Tx_Data.dataLen] |= (uint8_t)(tempData << j);
+ tempAddr++;	
  
- for(i = startAddress;i <= numberOfCoil; i++){
+ 
+ 
  
  }
+ Tx_Data.dataLen ++;	
+ }
+ Tx_Data.dataBuf[0] = Tx_Data.dataLen - 1;
+ SendMessage();
  }
  }
  void HandleModbusReadInputCoil(void){ 
  }
  void HandleModbusReadHoldingRegisters(void){ 
- data uint16_t startAddress, numberOfRegisters, i, currentData;
+ uint16_t startAddress, numberOfRegisters, i, currentData;
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfRegisters = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
@@ -5507,10 +5484,37 @@
  SendMessage();
  }
  }
- void HandleModbusWriteCoil(void){ 
+ void HandleModbusWriteSingleCoil(void){ 
+ uint16_t startAddress, value;
+ 
+ startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
+ value = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
+ if((startAddress) > ((495 + 1) * 16)){ 
+ HandleModbusError(0x02);
+ }
+ else{
+ Tx_Data.function = 5;
+ Tx_Data.address = ModbusSlaveAddress;
+ Tx_Data.dataLen = 4;
+ Tx_Data.dataBuf[0] = Rx_Data.dataBuf[0];
+ Tx_Data.dataBuf[1] = Rx_Data.dataBuf[1];
+ if(value == 0x0000){ 
+ NVRAM0[(startAddress / 16)] &= ~((uint16_t)(1 << (startAddress % 16)));
+ Tx_Data.dataBuf[2] = 0x00;
+ Tx_Data.dataBuf[3] = 0x00;
+ }
+ else if(value == 0xFF00){ 
+ NVRAM0[(startAddress / 16)] |= (uint16_t)(1 << (startAddress % 16));
+ Tx_Data.dataBuf[2] = 0xFF;
+ Tx_Data.dataBuf[3] = 0x00;
+ }
+ else{		
+ }
+ SendMessage();
+ }
  }
  void HandleModbusWriteSingleRegister(void){ 
- data uint16_t address, value,i;
+ uint16_t address, value,i;
  
  address = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t)(Rx_Data.dataBuf[1]);
  value = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
@@ -5529,6 +5533,48 @@
  }
  }
  SendMessage();
+ }
+ void HandleModbusWriteMultipleCoils(void){ 
+ uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
+ uint8_t tempData = 0;
+ 
+ startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
+ numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
+ if((startAddress + numberOfCoil) > ((495 + 1) * 16)){ 
+ HandleModbusError(0x02);
+ }
+ else{
+ byteCount = numberOfCoil / 8;
+ if((numberOfCoil % 8) != 0){
+ byteCount += 1;
+ }
+ Tx_Data.function = 15;
+ Tx_Data.address = ModbusSlaveAddress;
+ Tx_Data.dataLen = 4;
+ Tx_Data.dataBuf[0] = Rx_Data.dataBuf[0];
+ Tx_Data.dataBuf[1] = Rx_Data.dataBuf[1];
+ Tx_Data.dataBuf[2] = Rx_Data.dataBuf[2];
+ Tx_Data.dataBuf[3] = Rx_Data.dataBuf[3];
+ tempAddr = startAddress;
+ for(i = 0;i < byteCount;i ++){
+ for(j = 0;j < 8;j ++){
+ tempData = (uint8_t)((Rx_Data.dataBuf[(5 + i)] >> j) & 0x01);
+ if(tempData){ 
+ NVRAM0[(tempAddr / 16)] |= (uint16_t)(1 << (tempAddr % 16));
+ }
+ else{ 
+ NVRAM0[(tempAddr / 16)] &= ~((uint16_t)(1 << (tempAddr % 16)));
+ }
+ tempAddr ++;
+ numberOfCoil --;
+ if(numberOfCoil == 0){
+ break;
+ }
+ }
+ 
+ }
+ SendMessage();
+ }
  }
  void HandleModbusWriteMultipleRegisters(void){ 
  
@@ -5678,15 +5724,23 @@
  HandleModbusReadCoils();
  break;
  }
- case 3:{
+ case 3:{ 
  HandleModbusReadHoldingRegisters();
  break;  
  }
- case 6:{
+ case 5:{ 
+ HandleModbusWriteSingleCoil();
+ break;
+ }
+ case 6:{ 
  HandleModbusWriteSingleRegister();
  break;
  }
- case 16:{
+ case 15:{ 
+ HandleModbusWriteMultipleCoils();
+ break;
+ }
+ case 16:{ 
  HandleModbusWriteMultipleRegisters();
  break;
  }
