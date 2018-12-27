@@ -40,8 +40,11 @@
 //特殊寄存器 64个字
 #define SPREG_START						432//
 #define SPREG_END						495//
+//特殊线圈	16 * 16 = 256个
+#define SPCOIL_START					496
+#define SPCOIL_END						511
 /*****************************************************************************/
-#define CONFIG_NVRAM_SIZE 				(SPREG_END + 1)
+#define CONFIG_NVRAM_SIZE 				(SPCOIL_END + 1)
 /*****************************************************************************/
 #define SPREG_ADC_0						(SPREG_START)
 #define SPREG_ADC_1						(SPREG_START + 1)
@@ -78,6 +81,11 @@
 
 #define SPREG_DAC_0						(SPREG_ADC_31 + 1)
 #define SPREG_DAC_1						(SPREG_DAC_0 + 1)
+
+#define SPCOIL_ON						0//长通线圈
+#define SPCOIL_PS1MS					1//1mS间隔 50%占空比脉冲
+#define SPCOIL_PS10MS					2//10mS
+#define SPCOIL_PS100MS					3//100mS
 /*****************************************************************************/
 #define SP_EM_MODBUS_SLAVE_ERR			300
 #define SP_R_ON							800//上电ON
@@ -90,6 +98,8 @@ extern uint16_t ModbusSlaveAsciiOverTimeCounter;//Modbus Slave通信超时计时器
 extern xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 extern xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 /*****************************************************************************/
+void wdtDisable(void);//看门狗屏蔽
+
 void sPlcInit(void);//软逻辑初始化
 void sPlcProcessStart(void);//sPLC轮询起始
 void sPlcProcessEnd(void);//sPLC轮询结束

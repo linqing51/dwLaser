@@ -25,10 +25,10 @@ typedef enum{
     RXTX_TIMEOUT
 }MODBUS_RXTX_STATE;
 typedef struct{
-  uint8_t address;
-  uint8_t function;
-  uint8_t dataBuf[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];
-  uint16_t dataLen;
+	uint8_t address;
+	uint8_t function;
+	uint8_t dataBuf[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];
+	uint16_t dataLen;
 }modbusRxTxData_t;
 /**********************Slave Transmit and Receive Variables********************/
 data uint8_t ModbusSlaveAddress = 1;

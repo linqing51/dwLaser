@@ -114,6 +114,14 @@
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
   
 #line 1 ".\Lib\stdint.h" /0
 
@@ -170,7 +178,7 @@
 #line 51 ".\Lib\stdint.h" /0
  
  
-#line 108 ".\MainApp\appConfig.h" /0
+#line 116 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\stdbool.h" /0
@@ -221,7 +229,7 @@
  
  
  
-#line 109 ".\MainApp\appConfig.h" /0
+#line 117 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\endian.h" /0
@@ -283,7 +291,7 @@
 #line 55 ".\Lib\endian.h" /0
  
  
-#line 110 ".\MainApp\appConfig.h" /0
+#line 118 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\si_toolchain.h" /0
@@ -1195,7 +1203,7 @@
  
  
  
-#line 111 ".\MainApp\appConfig.h" /0
+#line 119 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\compiler_defs.h" /0
@@ -2121,7 +2129,7 @@
  
  
  
-#line 112 ".\MainApp\appConfig.h" /0
+#line 120 ".\MainApp\appConfig.h" /0
  
  
   
@@ -2478,14 +2486,14 @@
  
  
  
-#line 114 ".\MainApp\appConfig.h" /0
+#line 122 ".\MainApp\appConfig.h" /0
  
  
  
-#line 117 ".\MainApp\appConfig.h" /1
+#line 125 ".\MainApp\appConfig.h" /1
   
  
-#line 119 ".\MainApp\appConfig.h" /0
+#line 127 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdio.h" /0
@@ -2534,7 +2542,7 @@
  
  
  
-#line 120 ".\MainApp\appConfig.h" /0
+#line 128 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2642,7 +2650,7 @@
  #pragma RESTORE
  
  
-#line 121 ".\MainApp\appConfig.h" /0
+#line 129 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2705,7 +2713,7 @@
  #pragma RESTORE
  
  
-#line 122 ".\MainApp\appConfig.h" /0
+#line 130 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -2753,7 +2761,7 @@
  
  
  
-#line 123 ".\MainApp\appConfig.h" /0
+#line 131 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -2791,7 +2799,7 @@
  #pragma RESTORE
  
  
-#line 124 ".\MainApp\appConfig.h" /0
+#line 132 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -2824,7 +2832,7 @@
  
  
  
-#line 125 ".\MainApp\appConfig.h" /0
+#line 133 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\math.h" /0
@@ -2898,7 +2906,7 @@
  #pragma RESTORE
  
  
-#line 126 ".\MainApp\appConfig.h" /0
+#line 134 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\crc32.h" /0
@@ -2982,8 +2990,6 @@
   
  
   
-  
-  
  
   
  
@@ -2994,29 +3000,9 @@
   
   
   
- 
- 
- 
- 
-  
-  
-  
-  
-  
   
   
  
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
   
  
   
@@ -3024,7 +3010,20 @@
   
   
   
+  
  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
   
  
  
@@ -3035,9 +3034,29 @@
   
   
   
+ 
   
   
   
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
   
  
  
@@ -3086,7 +3105,7 @@
  
  
  
-#line 127 ".\MainApp\appConfig.h" /0
+#line 135 ".\MainApp\appConfig.h" /0
  
  
  
@@ -4267,9 +4286,14 @@
  
  void initDeviceF020(void);
  
-#line 130 ".\MainApp\appConfig.h" /0
+#line 138 ".\MainApp\appConfig.h" /0
  
  
+ 
+#line 141 ".\MainApp\appConfig.h" /1
+  
+ 
+#line 143 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\delay.h" /0
@@ -4349,8 +4373,6 @@
   
  
   
-  
-  
  
   
  
@@ -4361,29 +4383,9 @@
   
   
   
- 
- 
- 
- 
-  
-  
-  
-  
-  
   
   
  
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
   
  
   
@@ -4391,7 +4393,20 @@
   
   
   
+  
  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
   
  
  
@@ -4402,9 +4417,29 @@
   
   
   
+ 
   
   
   
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
   
  
  
@@ -4448,7 +4483,7 @@
  
  
  
-#line 133 ".\MainApp\appConfig.h" /0
+#line 144 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c0.h" /0
@@ -4528,8 +4563,6 @@
   
  
   
-  
-  
  
   
  
@@ -4540,29 +4573,9 @@
   
   
   
- 
- 
- 
- 
-  
-  
-  
-  
-  
   
   
  
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
   
  
   
@@ -4570,7 +4583,20 @@
   
   
   
+  
  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
   
  
  
@@ -4581,9 +4607,29 @@
   
   
   
+ 
   
   
   
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
   
  
  
@@ -4634,7 +4680,7 @@
  
  
  
-#line 134 ".\MainApp\appConfig.h" /0
+#line 145 ".\MainApp\appConfig.h" /0
  
  
  
@@ -4720,8 +4766,6 @@
   
  
   
-  
-  
  
   
  
@@ -4732,29 +4776,9 @@
   
   
   
- 
- 
- 
- 
-  
-  
-  
-  
-  
   
   
  
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
   
  
   
@@ -4762,7 +4786,20 @@
   
   
   
+  
  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
   
  
  
@@ -4773,9 +4810,29 @@
   
   
   
+ 
   
   
   
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
   
  
  
@@ -4822,7 +4879,7 @@
  void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
  void epromTest(void);
  
-#line 141 ".\MainApp\appConfig.h" /0
+#line 152 ".\MainApp\appConfig.h" /0
  
  
  
@@ -4843,8 +4900,8 @@
  
  
  
-#line 146 ".\MainApp\appConfig.h" /0
-#line 146 ".\MainApp\appConfig.h" /0
+#line 157 ".\MainApp\appConfig.h" /0
+#line 157 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Modbus\ModbusPort.h" /0
@@ -4924,8 +4981,6 @@
   
  
   
-  
-  
  
   
  
@@ -4936,29 +4991,9 @@
   
   
   
- 
- 
- 
- 
-  
-  
-  
-  
-  
   
   
  
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
   
  
   
@@ -4966,7 +5001,20 @@
   
   
   
+  
  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
   
  
  
@@ -4977,9 +5025,29 @@
   
   
   
+ 
   
   
   
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
   
  
  
@@ -5023,7 +5091,7 @@
  extern void receiveInterrupt(uint8_t Data);
  
  
-#line 147 ".\MainApp\appConfig.h" /0
+#line 158 ".\MainApp\appConfig.h" /0
  
  
   
@@ -5104,8 +5172,6 @@
   
  
   
-  
-  
  
   
  
@@ -5116,29 +5182,9 @@
   
   
   
- 
- 
- 
- 
-  
-  
-  
-  
-  
   
   
  
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
   
  
   
@@ -5146,7 +5192,20 @@
   
   
   
+  
  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
   
  
  
@@ -5157,9 +5216,29 @@
   
   
   
+ 
   
   
   
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
   
  
  
@@ -5194,6 +5273,14 @@
  
 #line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
 #line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
@@ -5280,8 +5367,10 @@
  
  
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(495 + 1)]; 
- extern xdata int16_t NVRAM1[(495 + 1)]; 
+ extern xdata int16_t NVRAM0[(511 + 1)]; 
+ extern xdata int16_t NVRAM1[(511 + 1)]; 
+ 
+ void wdtDisable(void); 
  
  void sPlcInit(void); 
  void sPlcProcessStart(void); 
@@ -5320,7 +5409,7 @@
  void refreshDac(void);
  
  
-#line 149 ".\MainApp\appConfig.h" /0
+#line 160 ".\MainApp\appConfig.h" /0
  
  
  
@@ -5430,7 +5519,7 @@
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
- if((startAddress + numberOfCoil) > ((495 + 1) * 16)){ 
+ if((startAddress + numberOfCoil) > ((511 + 1) * 16)){ 
  HandleModbusError(0x02);
  }
  else{
@@ -5466,7 +5555,7 @@
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfRegisters = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
- if((startAddress + numberOfRegisters) > (495 + 1)){ 
+ if((startAddress + numberOfRegisters) > (511 + 1)){ 
  HandleModbusError(0x02);
  }
  else{ 
@@ -5489,7 +5578,7 @@
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  value = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
- if((startAddress) > ((495 + 1) * 16)){ 
+ if((startAddress) > ((511 + 1) * 16)){ 
  HandleModbusError(0x02);
  }
  else{
@@ -5522,7 +5611,7 @@
  Tx_Data.function = 6;
  Tx_Data.address = ModbusSlaveAddress;
  Tx_Data.dataLen = 4;
- if(address >= (495 + 1)){
+ if(address >= (511 + 1)){
  HandleModbusError(0x03);
  }
  else{
@@ -5540,7 +5629,7 @@
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
- if((startAddress + numberOfCoil) > ((495 + 1) * 16)){ 
+ if((startAddress + numberOfCoil) > ((511 + 1) * 16)){ 
  HandleModbusError(0x02);
  }
  else{
@@ -5585,7 +5674,7 @@
  numberOfRegisters = ((uint16_t)(Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
  byteCount = Rx_Data.dataBuf[4];
  
- if((startAddress+numberOfRegisters) > (495 + 1)){
+ if((startAddress+numberOfRegisters) > (511 + 1)){
  HandleModbusError(0x03);
  }
  else{

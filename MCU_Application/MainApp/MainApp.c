@@ -115,9 +115,6 @@ void main(void){
 	initDeviceF020();
 #endif
 	sPlcInit();//≥ı ºªØ»Ì¬ﬂº≠
-	//inPca9554Init();
-	//outPca9554Init();
-	//mcp47x6Init();
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 	NVRAM0[0] = 0xA5;
 	NVRAM0[1] = 0x5A;
