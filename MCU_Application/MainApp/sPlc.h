@@ -2,9 +2,10 @@
 #define __SPLC_H__
 /*****************************************************************************/
 #include "appConfig.h"
+/*****************************************************************************/
 //线圈 保持 16 * 16 = 256BIT
 #define MR_START						0
-#define MR_END							15
+#define MR_END   						15
 //线圈寄存器 非保持 16 * 16 = 256BIT
 #define R_START							16
 #define R_END							31
@@ -15,136 +16,52 @@
 #define EM_START						160
 #define EM_END							287
 //延时线圈
-#define T_1MS_START						288//16个1mS
-#define T_1MS_END						303
-#define T_10MS_START					304//16个10mS
-#define T_10MS_END						319
-#define T_100MS_START					320//16个100mS
-#define T_100MS_END						335
+//1MS 2 * 16 = 32BIT
+#define T_1MS_START						288
+#define T_1MS_END						289
+//10MS 2 * 16 = 32BIT
+#define T_10MS_START					290
+#define T_10MS_END						291
+//100MS 2 * 16 = 32BIT
+#define T_100MS_START					292
+#define T_100MS_END						293
 //延时计时器 
-#define TD_1MS_START					336//16个1mS
-#define TD_1MS_END						351
-#define TD_10MS_START					352//16个10mS
-#define TD_10MS_END						367
-#define TD_100MS_START					368//16个100mS
-#define TD_100MS_END					383
-//计数器
-#define C_START							384//16个计数器
-#define C_END							399//
+//1MS 32
+#define TD_1MS_START					294
+#define TD_1MS_END						325
+//10MS 32
+#define TD_10MS_START					326
+#define TD_10MS_END						357
+//100MS 32
+#define TD_100MS_START					358
+#define TD_100MS_END					389
+//计数器 32
+#define C_START							390
+#define C_END							421
 //输入位寄存器 16 * 16 = 256个
-#define X_START							400//
-#define X_END							415// 
+#define X_START							422
+#define X_END							437
 //输出位寄存器 16 * 16 = 256个
-#define Y_START							416// 
-#define Y_END							431//
+#define Y_START							438
+#define Y_END							453
 //特殊寄存器 128个字
-#define SPREG_START						432//
-#define SPREG_END						495//
+#define SPREG_START						454
+#define SPREG_END						581
 //特殊线圈	16 * 16 = 256个
-#define SPCOIL_START					496
-#define SPCOIL_END						511
+#define SPCOIL_START					582
+#define SPCOIL_END						597
+/*****************************************************************************/
+#define SPREG_ADC_0						(SPREG_START + 0)//ADC0->MLD0
+#define SPREG_ADC_24					(SPREG_START + 24)//ADC24->MLD24
+
+#define SPREG_ADC_32					(SPREG_START + 25)//ADC25->MPD0
+#define SPREG_ADC_63					(SPREG_START + 49)//ADC50->MPD24
+
+#define SPREG_DAC_0						(SPREG_START + 50)//DAC0
+#define SPREG_DAC_24					((SPREG_START + 74)//DAC24
 /*****************************************************************************/
 #define CONFIG_NVRAM_SIZE 				(SPCOIL_END + 1)
 /*****************************************************************************/
-#define SPREG_ADC_0						(SPREG_START)
-#define SPREG_ADC_1						(SPREG_START + 1)
-#define SPREG_ADC_2						(SPREG_START + 2)
-#define SPREG_ADC_3						(SPREG_START + 3)
-#define SPREG_ADC_4						(SPREG_START + 4)
-#define SPREG_ADC_5						(SPREG_START + 5)
-#define SPREG_ADC_6						(SPREG_START + 6)
-#define SPREG_ADC_7						(SPREG_START + 7)
-#define SPREG_ADC_8						(SPREG_START + 8)
-#define SPREG_ADC_9						(SPREG_START + 9)
-#define SPREG_ADC_10					(SPREG_START + 10)
-#define SPREG_ADC_11					(SPREG_START + 11)
-#define SPREG_ADC_12					(SPREG_START + 12)
-#define SPREG_ADC_13					(SPREG_START + 13)
-#define SPREG_ADC_14					(SPREG_START + 14)
-#define SPREG_ADC_15					(SPREG_START + 15)
-#define SPREG_ADC_16					(SPREG_START + 16)
-#define SPREG_ADC_17					(SPREG_START + 17)
-#define SPREG_ADC_18					(SPREG_START + 18)
-#define SPREG_ADC_19					(SPREG_START + 19)
-#define SPREG_ADC_20					(SPREG_START + 20)
-#define SPREG_ADC_21					(SPREG_START + 21)
-#define SPREG_ADC_22					(SPREG_START + 22)
-#define SPREG_ADC_23					(SPREG_START + 23)
-#define SPREG_ADC_24					(SPREG_START + 24)
-#define SPREG_ADC_25					(SPREG_START + 25)
-#define SPREG_ADC_26					(SPREG_START + 26)
-#define SPREG_ADC_27					(SPREG_START + 27)
-#define SPREG_ADC_28					(SPREG_START + 28)
-#define SPREG_ADC_29					(SPREG_START + 29)
-#define SPREG_ADC_30					(SPREG_START + 30)
-#define SPREG_ADC_31					(SPREG_START + 31)
-#define SPREG_ADC_32					(SPREG_START + 32)
-#define SPREG_ADC_33					(SPREG_START + 33)
-#define SPREG_ADC_34					(SPREG_START + 34)
-#define SPREG_ADC_35					(SPREG_START + 35)
-#define SPREG_ADC_36					(SPREG_START + 36)
-#define SPREG_ADC_37					(SPREG_START + 37)
-#define SPREG_ADC_38					(SPREG_START + 38)
-#define SPREG_ADC_39					(SPREG_START + 39)
-#define SPREG_ADC_40					(SPREG_START + 40)
-#define SPREG_ADC_41					(SPREG_START + 41)
-#define SPREG_ADC_42					(SPREG_START + 42)
-#define SPREG_ADC_43					(SPREG_START + 43)
-#define SPREG_ADC_44					(SPREG_START + 44)
-#define SPREG_ADC_45					(SPREG_START + 45)
-#define SPREG_ADC_46					(SPREG_START + 46)
-#define SPREG_ADC_47					(SPREG_START + 47)
-#define SPREG_ADC_48					(SPREG_START + 48)
-#define SPREG_ADC_49					(SPREG_START + 49)
-#define SPREG_ADC_50					(SPREG_START + 50)
-#define SPREG_ADC_51					(SPREG_START + 51)
-#define SPREG_ADC_52					(SPREG_START + 52)
-#define SPREG_ADC_53					(SPREG_START + 53)
-#define SPREG_ADC_54					(SPREG_START + 54)
-#define SPREG_ADC_55					(SPREG_START + 55)
-#define SPREG_ADC_56					(SPREG_START + 56)
-#define SPREG_ADC_57					(SPREG_START + 57)
-#define SPREG_ADC_58					(SPREG_START + 58)
-#define SPREG_ADC_59					(SPREG_START + 59)
-#define SPREG_ADC_60					(SPREG_START + 60)
-#define SPREG_ADC_61					(SPREG_START + 61)
-#define SPREG_ADC_62					(SPREG_START + 62)
-#define SPREG_ADC_63					(SPREG_START + 63)
-/*****************************************************************************/
-#define SPREG_DAC_0						(SPREG_START + 64)
-#define SPREG_DAC_1						(SPREG_START + 65)
-#define SPREG_DAC_2						(SPREG_START + 66)
-#define SPREG_DAC_3						(SPREG_START + 67)
-#define SPREG_DAC_4						(SPREG_START + 68)
-#define SPREG_DAC_5						(SPREG_START + 69)
-#define SPREG_DAC_6						(SPREG_START + 70)
-#define SPREG_DAC_7						(SPREG_START + 71)
-#define SPREG_DAC_8						(SPREG_START + 72)
-#define SPREG_DAC_9						(SPREG_START + 73)
-#define SPREG_DAC_10					(SPREG_START + 74)
-#define SPREG_DAC_11					(SPREG_START + 75)
-#define SPREG_DAC_12					(SPREG_START + 76)
-#define SPREG_DAC_13					(SPREG_START + 77)
-#define SPREG_DAC_14					(SPREG_START + 78)
-#define SPREG_DAC_15					(SPREG_START + 79)
-#define SPREG_DAC_16					(SPREG_START + 80)
-#define SPREG_DAC_17					(SPREG_START + 81)
-#define SPREG_DAC_18					(SPREG_START + 82)
-#define SPREG_DAC_19					(SPREG_START + 83)
-#define SPREG_DAC_20					(SPREG_START + 84)
-#define SPREG_DAC_21					(SPREG_START + 85)
-#define SPREG_DAC_22					(SPREG_START + 86)
-#define SPREG_DAC_23					(SPREG_START + 87)
-#define SPREG_DAC_24					(SPREG_START + 88)
-#define SPREG_DAC_25					(SPREG_START + 89)
-#define SPREG_DAC_26					(SPREG_START + 90)
-#define SPREG_DAC_27					(SPREG_START + 91)
-#define SPREG_DAC_28					(SPREG_START + 92)
-#define SPREG_DAC_29					(SPREG_START + 93)
-#define SPREG_DAC_30					(SPREG_START + 94)
-#define SPREG_DAC_31					(SPREG_START + 95)
-/*****************************************************************************/
-
 #define SPCOIL_ON						0//长通线圈
 #define SPCOIL_PS1MS					1//1mS间隔 50%占空比脉冲
 #define SPCOIL_PS10MS					2//10mS
@@ -162,7 +79,6 @@ extern xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 extern xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 /*****************************************************************************/
 void wdtDisable(void);//看门狗屏蔽
-
 void sPlcInit(void);//软逻辑初始化
 void sPlcProcessStart(void);//sPLC轮询起始
 void sPlcProcessEnd(void);//sPLC轮询结束

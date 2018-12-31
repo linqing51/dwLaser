@@ -22,7 +22,6 @@ static void initAdcData(adcTempDat_t *s);
 static void chipDacInit(void);
 static void chipAdcInit(void);
 /******************************************************************************/
-
 static void adcProcess(void){//循环采集ADC
 	uint16_t result = 0;
 #ifdef C8051F020
@@ -83,7 +82,7 @@ static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
 	s->out = 0;
 	s->wIndex = 0;
 }
-static void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值
+static void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值 
 	uint8_t i;
 	uint16_t temp;
 	uint32_t sum;
@@ -92,10 +91,13 @@ static void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值
 	if(s->wIndex >= CONFIG_SPLC_ADC_FILTER_TAP){
 		s->wIndex = 0;
 	}
+	//计算总和
 	sum = 0;
 	for(i = 0;i < CONFIG_SPLC_ADC_FILTER_TAP;i ++){
 		sum += s->dat[i];
 	}
+	//去掉一个最大值和一个最小值
+	
 	temp = (uint16_t)(sum / (uint32_t)CONFIG_SPLC_ADC_FILTER_TAP);
 	s->out = temp;
 }
@@ -248,6 +250,8 @@ static void nvramUpdata(void){//更新NVRAM->EPROM
 	}
 	memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
+/*****************************************************************************/
+//软逻辑指令
 void SET(uint16_t A){//置位
 	assertCoilAddress(A);//检查地址范围
 	NVRAM0[(A / 16)] |= 1 << (A % 16);
@@ -366,6 +370,29 @@ int16_t TENV(int16_t dat){//CODE转换为环境温度
 	temp = (int16_t)((temp - CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET) * 1000 / CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN);
 	return temp;
 }
+int16_t MAX(int16_t *s, uint8_t len){//找出长度为len的数据s中的最大值
+	int16_t max;
+	uint8_t i;
+	max = *s;
+	for(i = 0;i < len;i ++){
+		if(*(s +i) > max){
+			max = *(s + i);
+		}
+	}
+	return max;
+}
+int16_t MIN(int16_t *s, uint8_t len){//找出长度为len的数据s中的最小值
+	int16_t min;
+	uint8_t i;
+	min = *s;
+	for(i = 0;i < len;i ++){
+		if(*(s +i) < min){
+			min = *(s + i);
+		}
+	}
+	return min;
+}
+/*****************************************************************************/
 static void wdtInit(void){//看门狗初始化
 #ifdef C8051F020
 	WDTCN = 0;//47mS
@@ -594,12 +621,12 @@ void sPlcInit(void){//软逻辑初始化
 }
 static void refreshDac(void){//刷新DAC
 #ifdef C8051F020
-	if(DAC0 != NVRAM0[SPREG_DAC_0]){
-		DAC0 = NVRAM0[SPREG_DAC_0];
-	}
-	if(DAC1 != NVRAM0[SPREG_DAC_1]){
-		DAC1 = NVRAM0[SPREG_DAC_1];
-	}
+//	if(DAC0 != NVRAM0[SPREG_DAC_0]){
+//		DAC0 = NVRAM0[SPREG_DAC_0];
+//	}
+//	if(DAC1 != NVRAM0[SPREG_DAC_1]){
+//		DAC1 = NVRAM0[SPREG_DAC_1];
+//	}
 #endif
 }
 static void chipDacInit(void){//初始化DAC

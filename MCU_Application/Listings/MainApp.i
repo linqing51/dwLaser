@@ -3080,6 +3080,7 @@
   
   
  
+ 
   
  
  
@@ -4463,6 +4464,7 @@
   
   
  
+ 
   
  
  
@@ -4652,6 +4654,7 @@
  
   
   
+ 
  
   
  
@@ -4856,6 +4859,7 @@
   
   
  
+ 
   
  
  
@@ -5053,6 +5057,7 @@
   
   
  
+ 
   
  
  
@@ -5243,6 +5248,7 @@
   
   
  
+ 
   
  
  
@@ -5265,6 +5271,7 @@
  
  
 #line 158 "MainApp\appConfig.h" /0
+ 
  
  
   
@@ -5434,6 +5441,7 @@
   
   
  
+ 
   
  
  
@@ -5519,95 +5527,11 @@
  
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(511 + 1)]; 
- extern xdata int16_t NVRAM1[(511 + 1)]; 
+ extern xdata int16_t NVRAM0[(597 + 1)]; 
+ extern xdata int16_t NVRAM1[(597 + 1)]; 
  
  void wdtDisable(void); 
- 
  void sPlcInit(void); 
  void sPlcProcessStart(void); 
  void sPlcProcessEnd(void); 
@@ -5645,7 +5569,7 @@
  void refreshDac(void);
  
  
-#line 160 "MainApp\appConfig.h" /0
+#line 161 "MainApp\appConfig.h" /0
  
  
  
@@ -5793,10 +5717,8 @@
  
  
  
- 
- 
- 
  void main(void){
+ uint8_t i;
  
  initDeviceF020();
  
@@ -5807,38 +5729,12 @@
   EA = 1;;
  while(1){
  sPlcProcessStart();
- 
+ for(i = 0;i < 25;i ++){
  if(NVRAM0[(160 + 0)] <= 1000 && NVRAM0[(160 + 0)] >= 0){
- NVRAM0[(432 + (432 + 64))] = (int16_t)((int32_t)NVRAM0[(160 + 0)] * 100L * 4096L / 1000L);
- }
  
- if(NVRAM0[(160 + 1)] <= 1000 && NVRAM0[(160 + 1)] >= 0){
- NVRAM0[(432 + (432 + 65))] = (int16_t)((int32_t)NVRAM0[(160 + 1)] * 100L * 4096L / 1000L);
- }
- 
- if(NVRAM0[(160 + 2)] <= 1000 && NVRAM0[(160 + 2)] >= 0){
- NVRAM0[(432 + (432 + 66))] = (int16_t)((int32_t)NVRAM0[(160 + 2)] * 100L * 4096L / 1000L);
- }
- 
- if(NVRAM0[(160 + 3)] <= 1000 && NVRAM0[(160 + 3)] >= 0){
- NVRAM0[(432 + (432 + 67))] = (int16_t)((int32_t)NVRAM0[(160 + 3)] * 100L * 4096L / 1000L);
- }
- 
- if(NVRAM0[(160 + 4)] <= 1000 && NVRAM0[(160 + 4)] >= 0){
- NVRAM0[(432 + (432 + 68))] = (int16_t)((int32_t)NVRAM0[(160 + 4)] * 100L * 4096L / 1000L);
- }
- 
- if(NVRAM0[(160 + 4)] <= 1000 && NVRAM0[(160 + 4)] >= 0){
- NVRAM0[(432 + (432 + 69))] = (int16_t)((int32_t)NVRAM0[(160 + 4)] * 100L * 4096L / 1000L);
- }
- 
- if(NVRAM0[(160 + 4)] <= 1000 && NVRAM0[(160 + 4)] >= 0){
- NVRAM0[(432 + (432 + 70))] = (int16_t)((int32_t)NVRAM0[(160 + 4)] * 100L * 4096L / 1000L);
- }
- 
- if(NVRAM0[(160 + 4)] <= 1000 && NVRAM0[(160 + 4)] >= 0){
- NVRAM0[(432 + (432 + 71))] = (int16_t)((int32_t)NVRAM0[(160 + 4)] * 100L * 4096L / 1000L);
  }	
+ }
+ 
  
  
  

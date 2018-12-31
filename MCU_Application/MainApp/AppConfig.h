@@ -71,11 +71,11 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_OUTPUT			1//输出IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM				0//EPROM掉电存储启用
+#define CONFIG_SPLC_USING_EPROM				1//EPROM掉电存储启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ADC				0//使能ADC模块
-#define CONFIG_SPLC_ADC_FILTER_TAP			48//ADC位移滤波次数
-#define CONFIG_SPLC_ADC_CHANNLE				9//ADC通道数
+#define CONFIG_SPLC_USING_ADC				1//使能ADC模块
+#define CONFIG_SPLC_ADC_FILTER_TAP			8//ADC位移滤波次数
+#define CONFIG_SPLC_ADC_CHANNLE				50//ADC通道数
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
 #define CONFIG_SPLC_ADC_INTERNAL_VREF     	2200L// ADC Voltage Reference (mV)
@@ -157,6 +157,7 @@
 #include "Modbus.h"
 #include "ModbusPort.h"
 /*****************************************************************************/
+//#include "filter.h"
 #include "sPLC.h"
 //#include "pidFuzzy.h"
 /*****************************************************************************/

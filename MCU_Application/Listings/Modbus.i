@@ -3079,6 +3079,7 @@
   
   
  
+ 
   
  
  
@@ -4462,6 +4463,7 @@
   
   
  
+ 
   
  
  
@@ -4651,6 +4653,7 @@
  
   
   
+ 
  
   
  
@@ -4854,6 +4857,7 @@
  
   
   
+ 
  
   
  
@@ -5070,6 +5074,7 @@
   
   
  
+ 
   
  
  
@@ -5092,6 +5097,7 @@
  
  
 #line 158 ".\MainApp\appConfig.h" /0
+ 
  
  
   
@@ -5261,6 +5267,7 @@
   
   
  
+ 
   
  
  
@@ -5346,95 +5353,11 @@
  
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(511 + 1)]; 
- extern xdata int16_t NVRAM1[(511 + 1)]; 
+ extern xdata int16_t NVRAM0[(597 + 1)]; 
+ extern xdata int16_t NVRAM1[(597 + 1)]; 
  
  void wdtDisable(void); 
- 
  void sPlcInit(void); 
  void sPlcProcessStart(void); 
  void sPlcProcessEnd(void); 
@@ -5472,7 +5395,7 @@
  void refreshDac(void);
  
  
-#line 160 ".\MainApp\appConfig.h" /0
+#line 161 ".\MainApp\appConfig.h" /0
  
  
  
@@ -5582,7 +5505,7 @@
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
- if((startAddress + numberOfCoil) > ((511 + 1) * 16)){ 
+ if((startAddress + numberOfCoil) > ((597 + 1) * 16)){ 
  HandleModbusError(0x02);
  }
  else{
@@ -5618,7 +5541,7 @@
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfRegisters = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
- if((startAddress + numberOfRegisters) > (511 + 1)){ 
+ if((startAddress + numberOfRegisters) > (597 + 1)){ 
  HandleModbusError(0x02);
  }
  else{ 
@@ -5641,7 +5564,7 @@
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  value = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
- if((startAddress) > ((511 + 1) * 16)){ 
+ if((startAddress) > ((597 + 1) * 16)){ 
  HandleModbusError(0x02);
  }
  else{
@@ -5674,12 +5597,11 @@
  Tx_Data.function = 6;
  Tx_Data.address = ModbusSlaveAddress;
  Tx_Data.dataLen = 4;
- if(address >= (511 + 1)){
+ if(address >= (597 + 1)){
  HandleModbusError(0x03);
  }
  else{
  NVRAM0[address] = (int16_t)value;
- 
  for (i = 0; i < 4; ++i){
  Tx_Data.dataBuf[i] = Rx_Data.dataBuf[i];
  }
@@ -5692,7 +5614,7 @@
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
- if((startAddress + numberOfCoil) > ((511 + 1) * 16)){ 
+ if((startAddress + numberOfCoil) > ((597 + 1) * 16)){ 
  HandleModbusError(0x02);
  }
  else{
@@ -5737,7 +5659,7 @@
  numberOfRegisters = ((uint16_t)(Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
  byteCount = Rx_Data.dataBuf[4];
  
- if((startAddress+numberOfRegisters) > (511 + 1)){
+ if((startAddress+numberOfRegisters) > (597 + 1)){
  HandleModbusError(0x03);
  }
  else{

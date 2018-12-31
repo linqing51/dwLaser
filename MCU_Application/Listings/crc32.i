@@ -4297,6 +4297,7 @@
   
   
  
+ 
   
  
  
@@ -4486,6 +4487,7 @@
  
   
   
+ 
  
   
  
@@ -4690,6 +4692,7 @@
   
   
  
+ 
   
  
  
@@ -4887,6 +4890,7 @@
   
   
  
+ 
   
  
  
@@ -5077,6 +5081,7 @@
   
   
  
+ 
   
  
  
@@ -5099,6 +5104,7 @@
  
  
 #line 158 ".\MainApp\AppConfig.h" /0
+ 
  
  
   
@@ -5268,6 +5274,7 @@
   
   
  
+ 
   
  
  
@@ -5353,95 +5360,11 @@
  
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(511 + 1)]; 
- extern xdata int16_t NVRAM1[(511 + 1)]; 
+ extern xdata int16_t NVRAM0[(597 + 1)]; 
+ extern xdata int16_t NVRAM1[(597 + 1)]; 
  
  void wdtDisable(void); 
- 
  void sPlcInit(void); 
  void sPlcProcessStart(void); 
  void sPlcProcessEnd(void); 
@@ -5479,7 +5402,7 @@
  void refreshDac(void);
  
  
-#line 160 ".\MainApp\AppConfig.h" /0
+#line 161 ".\MainApp\AppConfig.h" /0
  
  
  

@@ -3079,6 +3079,7 @@
   
   
  
+ 
   
  
  
@@ -4462,6 +4463,7 @@
   
   
  
+ 
   
  
  
@@ -4651,6 +4653,7 @@
  
   
   
+ 
  
   
  
@@ -4855,6 +4858,7 @@
   
   
  
+ 
   
  
  
@@ -5052,6 +5056,7 @@
   
   
  
+ 
   
  
  
@@ -5242,6 +5247,7 @@
   
   
  
+ 
   
  
  
@@ -5266,6 +5272,7 @@
 #line 158 "MainApp\appConfig.h" /0
  
  
+ 
   
 #line 1 "MainApp\sPLC.h" /0
  
@@ -5274,6 +5281,39 @@
  
   
  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
   
   
  
@@ -5288,17 +5328,6 @@
  
   
   
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
  
   
   
@@ -5310,111 +5339,6 @@
   
  
   
-  
- 
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
  
   
   
@@ -5470,9 +5394,8 @@
  
  
  
- 
-#line 160 "MainApp\appConfig.h" /0
-#line 160 "MainApp\appConfig.h" /0
+#line 161 "MainApp\appConfig.h" /0
+#line 161 "MainApp\appConfig.h" /0
  
  
  
@@ -5557,95 +5480,11 @@
  
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(511 + 1)]; 
- extern xdata int16_t NVRAM1[(511 + 1)]; 
+ extern xdata int16_t NVRAM0[(597 + 1)]; 
+ extern xdata int16_t NVRAM1[(597 + 1)]; 
  
  void wdtDisable(void); 
- 
  void sPlcInit(void); 
  void sPlcProcessStart(void); 
  void sPlcProcessEnd(void); 
@@ -5687,27 +5526,26 @@
  
  
  
- xdata int16_t NVRAM0[(511 + 1)]; 
- xdata int16_t NVRAM1[(511 + 1)]; 
+ xdata int16_t NVRAM0[(597 + 1)]; 
+ xdata int16_t NVRAM1[(597 + 1)]; 
  static data uint8_t TimerCounter_1mS = 0;
  static data uint8_t TimerCounter_10mS = 0;
  static data uint8_t Timer0_L, Timer0_H;
  
  typedef struct{ 
- uint16_t dat[48];
+ uint16_t dat[8];
  uint16_t out;
  uint8_t wIndex; 
  }adcTempDat_t;
  
  static pdata int8_t inputFilter[16]; 
- static xdata adcTempDat_t adcTempDat[9];
+ static xdata adcTempDat_t adcTempDat[50];
  uint8_t adcSelect; 
  static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
  void adcProcess(void);
  static void initAdcData(adcTempDat_t *s);
  static void chipDacInit(void);
  static void chipAdcInit(void);
- 
  
  static void adcProcess(void){ 
  uint16_t result = 0;
@@ -5716,8 +5554,8 @@
  
  result = (uint16_t)(ADC0H << 8) + (uint16_t)(ADC0L);
  refreshAdcData(&adcTempDat[adcSelect], result);
- NVRAM0[(432) + adcSelect] = adcTempDat[adcSelect].out;
- if(adcSelect < (9 - 1)){
+ NVRAM0[(454 + 0) + adcSelect] = adcTempDat[adcSelect].out;
+ if(adcSelect < (50 - 1)){
  adcSelect ++;
  }
  else{
@@ -5763,7 +5601,7 @@
  }
  static void initAdcData(adcTempDat_t *s){ 
  uint8_t i;
- for(i = 0;i < 48; i++){
+ for(i = 0;i < 8; i++){
  s->dat[i] = 0x0;
  }
  s->out = 0;
@@ -5775,22 +5613,25 @@
  uint32_t sum;
  s->dat[s->wIndex] = dat;
  s->wIndex ++;
- if(s->wIndex >= 48){
+ if(s->wIndex >= 8){
  s->wIndex = 0;
  }
+ 
  sum = 0;
- for(i = 0;i < 48;i ++){
+ for(i = 0;i < 8;i ++){
  sum += s->dat[i];
  }
- temp = (uint16_t)(sum / (uint32_t)48);
+ 
+ 
+ temp = (uint16_t)(sum / (uint32_t)8);
  s->out = temp;
  }
  void assertCoilAddress(uint16_t adr){ 
- if(adr > (495 * 16))
+ if(adr > (581 * 16))
  while(1);
  }
  void assertRegisterAddress(uint16_t adr){ 
- if(adr >= 495)
+ if(adr >= 581)
  while(1);
  }
  void clearDM(void){ 
@@ -5827,17 +5668,17 @@
  }
  void clearT(void){ 
  uint16_t i;
- for(i = 288;i <= 303;i ++)
+ for(i = 288;i <= 289;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
- for(i = 304;i <= 319;i ++)
+ for(i = 290;i <= 291;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
- for(i = 320;i <= 335;i ++)
+ for(i = 292;i <= 293;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
@@ -5845,17 +5686,17 @@
  }
  void clearTD(void){ 
  uint16_t i;
- for(i = 336;i <= 351;i ++)
+ for(i = 294;i <= 325;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
- for(i = 352;i <= 367;i ++)
+ for(i = 326;i <= 357;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
- for(i = 368;i <= 383;i ++)
+ for(i = 358;i <= 389;i ++)
  {
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
@@ -5863,42 +5704,42 @@
  }
  void clearC(void){ 
  uint16_t i;
- for(i = 384;i <= 399;i ++){
+ for(i = 390;i <= 421;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
  void clearX(void){ 
  uint16_t i;
- for(i = 400;i <= 415;i ++){
+ for(i = 422;i <= 437;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
  void clearY(void){ 
  uint16_t i;
- for(i = 416;i <= 431;i ++){
+ for(i = 438;i <= 453;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
  void clearSPREG(void){
  uint16_t i;
- for(i = 432;i <= 495;i ++){
+ for(i = 454;i <= 581;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
  void clearSPCOIL(){
  uint16_t i;
- for(i = 496;i <= 511;i ++){
+ for(i = 582;i <= 597;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
  static void nvramLoad(void){ 
- memset(NVRAM0, 0x0, ((511 + 1) * 2)); 
- epromRead(0, (uint8_t*)NVRAM0, ((511 + 1) * 2)); 
+ memset(NVRAM0, 0x0, ((597 + 1) * 2)); 
+ epromRead(0, (uint8_t*)NVRAM0, ((597 + 1) * 2)); 
  clearEM();
  clearR();
  clearT();
@@ -5908,7 +5749,7 @@
  clearY();
  clearSPREG();
  clearSPCOIL();
- memcpy(NVRAM1, NVRAM0, (511 + 1));
+ memcpy(NVRAM1, NVRAM0, (597 + 1));
  }
  static void nvramSave(void){ 
   EA = 0; 
@@ -5932,8 +5773,10 @@
  epromWriteOneByte(i, *(sp0 + i));
  }
  }
- memcpy(NVRAM1, NVRAM0, ((511 + 1) * 2));
+ memcpy(NVRAM1, NVRAM0, ((597 + 1) * 2));
  }
+ 
+ 
  void SET(uint16_t A){ 
  assertCoilAddress(A); 
  NVRAM0[(A / 16)] |= 1 << (A % 16);
@@ -5977,13 +5820,13 @@
  }
  void T1MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 294 "MainApp\sPlc.c" /1
+#line 298 "MainApp\sPlc.c" /1
  
  
  
-#line 297 "MainApp\sPlc.c" /0
+#line 301 "MainApp\sPlc.c" /0
  if(start){
- if(NVRAM0[(336 + A)] >= value){
+ if(NVRAM0[(294 + A)] >= value){
  NVRAM0[(288 + (A / 16))] |= 1 << (A % 16);
  }
  else{
@@ -5993,47 +5836,47 @@
  }
  else{
  NVRAM0[(288 + (A / 16))] &= ~(1 << (A % 16));
- NVRAM0[(336 + A)] = 0x0;
+ NVRAM0[(294 + A)] = 0x0;
  }	
  }
  void T10MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 313 "MainApp\sPlc.c" /1
+#line 317 "MainApp\sPlc.c" /1
  
  
  
-#line 316 "MainApp\sPlc.c" /0
+#line 320 "MainApp\sPlc.c" /0
  if(start){
- if(NVRAM0[(352 + A)] >= value){
- NVRAM0[(304 + (A / 16))] |= 1 << (A % 16);
+ if(NVRAM0[(326 + A)] >= value){
+ NVRAM0[(290 + (A / 16))] |= 1 << (A % 16);
  }
  else{
- NVRAM0[(304 + (A / 16))] &= ~(1 << (A % 16));
+ NVRAM0[(290 + (A / 16))] &= ~(1 << (A % 16));
  }
  }
  else{
- NVRAM0[(304 + (A / 16))] &= ~(1 << (A % 16));
- NVRAM0[(352 + A)] = 0x0;
+ NVRAM0[(290 + (A / 16))] &= ~(1 << (A % 16));
+ NVRAM0[(326 + A)] = 0x0;
  }	
  }
  void T100MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 331 "MainApp\sPlc.c" /1
+#line 335 "MainApp\sPlc.c" /1
  
  
  
-#line 334 "MainApp\sPlc.c" /0
+#line 338 "MainApp\sPlc.c" /0
  if(start){
- if(NVRAM0[(368 + A)] >= value){
- NVRAM0[(320 + (A / 16))] |= 1 << (A % 16);
+ if(NVRAM0[(358 + A)] >= value){
+ NVRAM0[(292 + (A / 16))] |= 1 << (A % 16);
  }
  else{
- NVRAM0[(320 + (A / 16))] &= ~(1 << (A % 16));
+ NVRAM0[(292 + (A / 16))] &= ~(1 << (A % 16));
  }	
  }
  else{
- NVRAM0[(320 + (A / 16))] &= ~(1 << (A % 16));
- NVRAM0[(368 + A)] = 0x0;
+ NVRAM0[(292 + (A / 16))] &= ~(1 << (A % 16));
+ NVRAM0[(358 + A)] = 0x0;
  }
  }
  
@@ -6058,6 +5901,29 @@
  temp = (int16_t)((temp - 856L) * 1000 / 3330L);
  return temp;
  }
+ int16_t MAX(int16_t *s, uint8_t len){ 
+ int16_t max;
+ uint8_t i;
+ max = *s;
+ for(i = 0;i < len;i ++){
+ if(*(s +i) > max){
+ max = *(s + i);
+ }
+ }
+ return max;
+ }
+ int16_t MIN(int16_t *s, uint8_t len){ 
+ int16_t min;
+ uint8_t i;
+ min = *s;
+ for(i = 0;i < len;i ++){
+ if(*(s +i) < min){
+ min = *(s + i);
+ }
+ }
+ return min;
+ }
+ 
  static void wdtInit(void){ 
  
  WDTCN = 0; 
@@ -6068,9 +5934,9 @@
  WDTCN = 0xA5;
  
  
-#line 379 "MainApp\sPlc.c" /1
+#line 406 "MainApp\sPlc.c" /1
  
-#line 380 "MainApp\sPlc.c" /0
+#line 407 "MainApp\sPlc.c" /0
  }
  void wdtDisable(void){ 
  uint8_t flagEA;
@@ -6096,11 +5962,11 @@
  
  
  
-#line 405 "MainApp\sPlc.c" /1
+#line 432 "MainApp\sPlc.c" /1
  
  
  
-#line 408 "MainApp\sPlc.c" /0
+#line 435 "MainApp\sPlc.c" /0
  }
  
  static void timer0Init(void){ 
@@ -6127,26 +5993,26 @@
  TH0 = Timer0_H;
  TL0 = Timer0_L;
  TR0 = 1;
- if((NVRAM0[(496 + (1 / 16))] >> (1 % 16)) & 0x01){ 
- NVRAM0[(496 + (1 / 16))] &= ~(uint16_t)(1 << (1 % 16));
+ if((NVRAM0[(582 + (1 / 16))] >> (1 % 16)) & 0x01){ 
+ NVRAM0[(582 + (1 / 16))] &= ~(uint16_t)(1 << (1 % 16));
  }
  else{ 
- NVRAM0[(496 + (1 / 16))] |= (uint16_t)(1 << (1 % 16));
+ NVRAM0[(582 + (1 / 16))] |= (uint16_t)(1 << (1 % 16));
  }
  
- for(i = 336;i <= 351;i ++){ 
+ for(i = 294;i <= 325;i ++){ 
  if(NVRAM0[i] < 32767){
  NVRAM0[i] ++;
  }
  }
  if(TimerCounter_1mS >= 10){ 
- if((NVRAM0[(496 + (2 / 16))] >> (2 % 16)) & 0x01){ 
- NVRAM0[(496 + (2 / 16))] &= ~(uint16_t)(1 << (2 % 16));
+ if((NVRAM0[(582 + (2 / 16))] >> (2 % 16)) & 0x01){ 
+ NVRAM0[(582 + (2 / 16))] &= ~(uint16_t)(1 << (2 % 16));
  }
  else{ 
- NVRAM0[(496 + (2 / 16))] |= (uint16_t)(1 << (2 % 16));
+ NVRAM0[(582 + (2 / 16))] |= (uint16_t)(1 << (2 % 16));
  }
- for(i = 352;i <= 367;i ++){
+ for(i = 326;i <= 357;i ++){
  if(NVRAM0[i] < 32767){
  NVRAM0[i] ++;
  }
@@ -6155,13 +6021,13 @@
  TimerCounter_1mS = 0;
  }
  if(TimerCounter_10mS >= 10){ 
- if((NVRAM0[(496 + (3 / 16))] >> (3 % 16)) & 0x01){ 
- NVRAM0[(496 + (3 / 16))] &= ~(uint16_t)(1 << (3 % 16));
+ if((NVRAM0[(582 + (3 / 16))] >> (3 % 16)) & 0x01){ 
+ NVRAM0[(582 + (3 / 16))] &= ~(uint16_t)(1 << (3 % 16));
  }
  else{ 
- NVRAM0[(496 + (3 / 16))] |= (uint16_t)(1 << (3 % 16));
+ NVRAM0[(582 + (3 / 16))] |= (uint16_t)(1 << (3 % 16));
  }
- for(i = 368;i < 383;i ++){
+ for(i = 358;i < 389;i ++){
  if(NVRAM0[i] < 32767){
  NVRAM0[i] ++;
  }
@@ -6169,10 +6035,8 @@
  TimerCounter_10mS = 0;
  }
  
-#line 476 "MainApp\sPlc.c" /1
+ adcProcess(); 
  
- 
-#line 478 "MainApp\sPlc.c" /0
  TimerCounter_1mS ++;
  }
  
@@ -6181,19 +6045,19 @@
  
  
  
-#line 486 "MainApp\sPlc.c" /1
+#line 513 "MainApp\sPlc.c" /1
  
-#line 487 "MainApp\sPlc.c" /0
+#line 514 "MainApp\sPlc.c" /0
  }
  static void outputInit(void){
  
  
  
  
-#line 493 "MainApp\sPlc.c" /1
+#line 520 "MainApp\sPlc.c" /1
  
  
-#line 495 "MainApp\sPlc.c" /0
+#line 522 "MainApp\sPlc.c" /0
  }
  static void inputRefresh(void){ 
  uint8_t ctemp0,ctemp1, i;
@@ -6205,17 +6069,17 @@
  ctemp1 = P5;
  
  
-#line 506 "MainApp\sPlc.c" /1
+#line 533 "MainApp\sPlc.c" /1
  
  
-#line 508 "MainApp\sPlc.c" /0
+#line 535 "MainApp\sPlc.c" /0
  for(i = 0;i < 8;i ++){ 
  if((ctemp0 >> i) & 0x01){
  if(inputFilter[i] < 3){
  inputFilter[i] ++;
  }
  else{
- NVRAM0[400] |= (int16_t)(1 << i);
+ NVRAM0[422] |= (int16_t)(1 << i);
  }
  }
  else{
@@ -6223,7 +6087,7 @@
  inputFilter[i] --;
  }
  else{
- NVRAM0[400] &= ~(uint16_t)(1 << i);
+ NVRAM0[422] &= ~(uint16_t)(1 << i);
  }
  }
  }
@@ -6233,7 +6097,7 @@
  inputFilter[i] ++;
  }
  else{
- NVRAM0[400] |= (int16_t)(1 << i);
+ NVRAM0[422] |= (int16_t)(1 << i);
  }
  }
  else{
@@ -6241,7 +6105,7 @@
  inputFilter[i] --;
  }
  else{
- NVRAM0[400] &= ~(uint16_t)(1 << i);
+ NVRAM0[422] &= ~(uint16_t)(1 << i);
  }
  }
  }
@@ -6249,14 +6113,14 @@
  static void outputRefresh(void){ 
  
  
- P6 = (NVRAM0[416] & 0x00FF);
- P7 = ((NVRAM0[416] >> 8) & 0x00FF);
+ P6 = (NVRAM0[438] & 0x00FF);
+ P7 = ((NVRAM0[438] >> 8) & 0x00FF);
  
  
-#line 552 "MainApp\sPlc.c" /1
+#line 579 "MainApp\sPlc.c" /1
  
  
-#line 554 "MainApp\sPlc.c" /0
+#line 581 "MainApp\sPlc.c" /0
  }
  static void chipAdcInit(void){ 
  uint8_t i;
@@ -6272,7 +6136,7 @@
  AD0BUSY = 1; 
  
  adcSelect = 0;
- for(i = 0;i <= 9;i ++){
+ for(i = 0;i <= 50;i ++){
  initAdcData(&adcTempDat[i]);
  }
  }
@@ -6281,16 +6145,12 @@
  wdtDisable(); 
  
  
-#line 578 "MainApp\sPlc.c" /1
+ nvramLoad(); 
  
  
-#line 580 "MainApp\sPlc.c" /0
  
+ chipAdcInit(); 
  
-#line 582 "MainApp\sPlc.c" /1
- 
- 
-#line 584 "MainApp\sPlc.c" /0
  
  
  chipDacInit(); 
@@ -6300,16 +6160,16 @@
  initModbus(0x01, 57600);
  
  timer0Init(); 
- NVRAM0[(496 + (0 / 16))] |= (uint16_t)(1 << (0 % 16));
+ NVRAM0[(582 + (0 / 16))] |= (uint16_t)(1 << (0 % 16));
  }
  static void refreshDac(void){ 
  
- if(DAC0 != NVRAM0[(432 + 64)]){
- DAC0 = NVRAM0[(432 + 64)];
- }
- if(DAC1 != NVRAM0[(432 + 65)]){
- DAC1 = NVRAM0[(432 + 65)];
- }
+ 
+ 
+ 
+ 
+ 
+ 
  
  }
  static void chipDacInit(void){ 
@@ -6328,17 +6188,17 @@
  inputRefresh(); 
  
  
-#line 621 "MainApp\sPlc.c" /1
+#line 648 "MainApp\sPlc.c" /1
  
  
-#line 623 "MainApp\sPlc.c" /0
+#line 650 "MainApp\sPlc.c" /0
  }
  void sPlcProcessEnd(void){ 
  
-#line 626 "MainApp\sPlc.c" /1
+#line 653 "MainApp\sPlc.c" /1
  
  
-#line 628 "MainApp\sPlc.c" /0
+#line 655 "MainApp\sPlc.c" /0
  
  outputRefresh(); 
  
@@ -6346,8 +6206,6 @@
  refreshDac(); 
  
  
-#line 635 "MainApp\sPlc.c" /1
+ nvramUpdata(); 
  
- 
-#line 637 "MainApp\sPlc.c" /0
  }

@@ -183,7 +183,6 @@ void HandleModbusWriteSingleRegister(void){//Modbus function 06 - Write single r
 	}
     else{
 		NVRAM0[address] = (int16_t)value;
-        // Output data buffer is exact copy of input buffer
         for (i = 0; i < 4; ++i){
             Tx_Data.dataBuf[i] = Rx_Data.dataBuf[i];
 		}
