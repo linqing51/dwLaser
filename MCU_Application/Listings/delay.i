@@ -3072,6 +3072,11 @@
  
  
   
+  
+  
+  
+  
+ 
  
  
  
@@ -4474,6 +4479,11 @@
  
  
   
+  
+  
+  
+  
+ 
  
  
  
@@ -4678,6 +4688,11 @@
  
  
   
+  
+  
+  
+  
+ 
  
  
  
@@ -4711,6 +4726,775 @@
  void epromTest(void);
  
 #line 152 ".\MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\dac8568_0.h" /0
+  
+#line 1 ".\MainApp\appConfig.h" /0
+ 
+#line 2 ".\MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+  
+  
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 1 ".\Driver\dac8568_0.h" /0
+#line 1 ".\Driver\dac8568_0.h" /0
+ 
+ 
+ void dac8568_0_Init(void);
+ void dac8568_0_Update(uint8_t ch);
+ void dac8568_0_WriteInputRegister(uint8_t ch, uint16_t dat);
+ void dac8568_0_WriteDacRegister(uint8_t ch, uint16_t dat);
+ void dac8568_0_Clear(void);
+ void dac8568_0_Reset(void);
+#line 153 ".\MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\dac8568_1.h" /0
+  
+#line 1 ".\MainApp\appConfig.h" /0
+ 
+#line 2 ".\MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+  
+  
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 1 ".\Driver\dac8568_1.h" /0
+#line 1 ".\Driver\dac8568_1.h" /0
+ 
+ 
+ void dac8568_1_Init(void);
+ void dac8568_1_Update(uint8_t ch);
+ void dac8568_1_WriteInputRegister(uint8_t ch, uint16_t dat);
+ void dac8568_1_WriteDacRegister(uint8_t ch, uint16_t dat);
+ void dac8568_1_Clear(void);
+ void dac8568_1_Reset(void);
+#line 154 ".\MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\dac8568_2.h" /0
+  
+#line 1 ".\MainApp\appConfig.h" /0
+ 
+#line 2 ".\MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+  
+  
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 1 ".\Driver\dac8568_2.h" /0
+#line 1 ".\Driver\dac8568_2.h" /0
+ 
+ 
+ void dac8568_2_Init(void);
+ void dac8568_2_Update(uint8_t ch);
+ void dac8568_2_WriteInputRegister(uint8_t ch, uint16_t dat);
+ void dac8568_2_WriteDacRegister(uint8_t ch, uint16_t dat);
+ void dac8568_2_Clear(void);
+ void dac8568_2_Reset(void);
+#line 155 ".\MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\dac8568_3.h" /0
+  
+#line 1 ".\MainApp\appConfig.h" /0
+ 
+#line 2 ".\MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+  
+  
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 1 ".\Driver\dac8568_3.h" /0
+#line 1 ".\Driver\dac8568_3.h" /0
+ 
+ 
+ void dac8568_3_Init(void);
+ void dac8568_3_Update(uint8_t ch);
+ void dac8568_3_WriteInputRegister(uint8_t ch, uint16_t dat);
+ void dac8568_3_WriteDacRegister(uint8_t ch, uint16_t dat);
+ void dac8568_3_Clear(void);
+ void dac8568_3_Reset(void);
+#line 156 ".\MainApp\appConfig.h" /0
+ 
  
  
  
@@ -4876,6 +5660,11 @@
  
  
   
+  
+  
+  
+  
+ 
  
  
  
@@ -4905,7 +5694,7 @@
  extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
  extern void modbusPorcess(void);
  
-#line 157 ".\MainApp\appConfig.h" /0
+#line 162 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Modbus\ModbusPort.h" /0
@@ -5067,6 +5856,11 @@
  
  
   
+  
+  
+  
+  
+ 
  
  
  
@@ -5096,7 +5890,7 @@
  extern void receiveInterrupt(uint8_t Data);
  
  
-#line 158 ".\MainApp\appConfig.h" /0
+#line 163 ".\MainApp\appConfig.h" /0
  
  
  
@@ -5260,6 +6054,11 @@
  
  
   
+  
+  
+  
+  
+ 
  
  
  
@@ -5352,10 +6151,104 @@
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ typedef struct{ 
+ uint16_t dat[18];
+ uint16_t out;
+ uint8_t wIndex; 
+ }adcTempDat_t;
  
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(597 + 1)]; 
- extern xdata int16_t NVRAM1[(597 + 1)]; 
+ extern xdata int16_t NVRAM0[(219 + 1)]; 
+ extern xdata int16_t NVRAM1[(219 + 1)]; 
  
  void wdtDisable(void); 
  void sPlcInit(void); 
@@ -5395,7 +6288,7 @@
  void refreshDac(void);
  
  
-#line 161 ".\MainApp\appConfig.h" /0
+#line 166 ".\MainApp\appConfig.h" /0
  
  
  

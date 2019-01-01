@@ -74,7 +74,7 @@
 #define CONFIG_SPLC_USING_EPROM				1//EPROM掉电存储启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ADC				1//使能ADC模块
-#define CONFIG_SPLC_ADC_FILTER_TAP			8//ADC位移滤波次数
+#define CONFIG_SPLC_ADC_FILTER_TAP			18//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE				50//ADC通道数
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
@@ -150,6 +150,11 @@
 //#include "i2c5.h"
 //#include "i2c6.h"
 #include "eprom.h"
+#include "dac8568_0.h"
+#include "dac8568_1.h"
+#include "dac8568_2.h"
+#include "dac8568_3.h"
+
 //#include "mcp47x6.h"
 //#include "inPca9554.h"
 //#include "outPca9554.h"

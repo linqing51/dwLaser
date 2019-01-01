@@ -7,17 +7,11 @@
 //TIMER3 ->
 //TIMER4 ->UART1 Buadrate
 /*****************************************************************************/
-//sbit LED_MCU = P2^3;//处理器指示LED
+sbit LED_RUN = P1^7;
 //sbit LED_LASER0 = P1^7;//激光发射指示LED0 980nM
 //sbit LED_LASER1 = P1^6;//激光发射指示LED1 1470nM
 //sbit TP0, TP1, TP2, TP3;
 /*****************************************************************************/
-#define EM_SLD_0								0//LD设置寄存器
-#define EM_SLD_31								31
-#define EM_MPD_0								32//PD读取寄存器
-#define EM_MPD_31								63
-#define EM_MLD_0								64//LD读取寄存器
-#define EM_MLD_31								95
 /*****************************************************************************/
 void main(void){
 	uint8_t i;
@@ -31,12 +25,6 @@ void main(void){
 	ENABLE_INTERRUPT;
 	while(1){
 		sPlcProcessStart();
-		for(i = 0;i < 25;i ++){
-			if(NVRAM0[(EM_START + EM_SLD_0)] <= 1000 && NVRAM0[(EM_START + EM_SLD_0)] >= 0){
-				//NVRAM0[(SPREG_START + SPREG_DAC_0)] = (int16_t)((int32_t)NVRAM0[(EM_START + EM_LD_0)] * 100L * 4096L / 1000L);
-			}	
-		}
-	
 		//SPLC代码插入此处
 ////		SET(10);
 ////		RESET(10);

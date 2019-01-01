@@ -31,18 +31,18 @@ typedef struct{
 	uint16_t dataLen;
 }modbusRxTxData_t;
 /**********************Slave Transmit and Receive Variables********************/
-data uint8_t ModbusSlaveAddress = 1;
+pdata uint8_t ModbusSlaveAddress = 1;
 xdata modbusRxTxData_t Tx_Data;
-data uint32_t Tx_Current = 0;
-data uint32_t Tx_CRC16 = 0xFFFF;
-data MODBUS_RXTX_STATE Tx_State = RXTX_IDLE;
+pdata uint32_t Tx_Current = 0;
+pdata uint32_t Tx_CRC16 = 0xFFFF;
+pdata MODBUS_RXTX_STATE Tx_State = RXTX_IDLE;
 xdata uint8_t Tx_Buf[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];
-data uint32_t Tx_Buf_Size = 0;
+pdata uint32_t Tx_Buf_Size = 0;
 /*****************************************************************************/
 xdata modbusRxTxData_t Rx_Data;
-data uint32_t Rx_CRC16 = 0xFFFF;
-data MODBUS_RXTX_STATE Rx_State = RXTX_IDLE;
-data uint8_t Rx_Data_Available = false;
+pdata uint32_t Rx_CRC16 = 0xFFFF;
+pdata MODBUS_RXTX_STATE Rx_State = RXTX_IDLE;
+pdata uint8_t Rx_Data_Available = false;
 /*****************************************************************************/
 volatile uint16_t modbusTimerValue = 0;
 volatile uint8_t modbusReceiveCounter = 0;// Collected data number
