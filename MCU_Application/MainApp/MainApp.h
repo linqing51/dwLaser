@@ -89,7 +89,9 @@
 //	fp32_t pidOut;//IPID输出值
 //	int16_t onTimerPid;//pid输出 开启时间  
 //	int16_t offTimerPid;//pid输出 关闭时间
-//	
+#define R_OPER_LASER_START
+#define R_OPER_LASER_READY
+#define R_OPER_
 //	//int8_t  FlagStart;//发射触发
 //	//int8_t	FlagReady;//准备标志
 //	//int8_t	FiberSensor[2];//光纤检测

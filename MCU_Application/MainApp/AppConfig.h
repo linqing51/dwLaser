@@ -124,6 +124,9 @@
 #ifdef C8051F340
 #include "C8051F340_defs.h"
 #endif
+#ifdef C8051F580
+#include "C8051F580_defs.h"
+#endif
 /*****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h> 

@@ -7,20 +7,20 @@
 
   <Targets>
     <Target>
-      <TargetName>C8051F020</TargetName>
+      <TargetName>C8051F0580</TargetName>
       <ToolsetNumber>0x0</ToolsetNumber>
       <ToolsetName>MCS-51</ToolsetName>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>C8051F020</Device>
+          <Device>C8051F580</Device>
           <Vendor>Silicon Labs</Vendor>
-          <Cpu>IRAM(0-0xFF) XRAM(0-0xFFF) IROM(0-0xFFFF) CLOCK(25000000)</Cpu>
+          <Cpu>IRAM(0-0xFF) XRAM(0x0-0x1FFF)  IROM(0-0x1FFFF) CLOCK(50000000)</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"LIB\STARTUP.A51" ("Standard 8051 Startup Code")</StartupFile>
           <FlashDriverDll></FlashDriverDll>
-          <DeviceId>3312</DeviceId>
-          <RegisterFile>C8051F020.H</RegisterFile>
+          <DeviceId>4933</DeviceId>
+          <RegisterFile>C8051F580.H</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -110,11 +110,11 @@
           <SimDllName>S8051.DLL</SimDllName>
           <SimDllArguments></SimDllArguments>
           <SimDlgDll>DCYG.DLL</SimDlgDll>
-          <SimDlgDllArguments>-pCYGF020</SimDlgDllArguments>
+          <SimDlgDllArguments>-pCYGF580</SimDlgDllArguments>
           <TargetDllName>S8051.DLL</TargetDllName>
           <TargetDllArguments></TargetDllArguments>
           <TargetDlgDll>TCYG.DLL</TargetDlgDll>
-          <TargetDlgDllArguments>-pCYGF020</TargetDlgDllArguments>
+          <TargetDlgDllArguments>-pCYGF580</TargetDlgDllArguments>
         </DllOption>
         <DebugOption>
           <OPTHX>
@@ -177,7 +177,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\SiC8051F.dll</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -191,10 +191,10 @@
             <RomSize>2</RomSize>
             <DataHold>0</DataHold>
             <XDataHold>0</XDataHold>
-            <UseOnchipRom>1</UseOnchipRom>
+            <UseOnchipRom>0</UseOnchipRom>
             <UseOnchipArithmetic>0</UseOnchipArithmetic>
             <UseMultipleDPTR>0</UseMultipleDPTR>
-            <UseOnchipXram>1</UseOnchipXram>
+            <UseOnchipXram>0</UseOnchipXram>
             <HadIRAM>1</HadIRAM>
             <HadXRAM>1</HadXRAM>
             <HadIROM>1</HadIROM>
@@ -273,7 +273,7 @@
               <IRO>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x10000</Size>
+                <Size>0x20000</Size>
               </IRO>
               <IRA>
                 <Type>0</Type>
@@ -283,7 +283,7 @@
               <XRA>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x1000</Size>
+                <Size>0x2000</Size>
               </XRA>
               <XRA512>
                 <Type>0</Type>
@@ -314,7 +314,7 @@
             <uAregs>0</uAregs>
             <UseInterruptVector>1</UseInterruptVector>
             <Fuzzy>3</Fuzzy>
-            <Optimize>9</Optimize>
+            <Optimize>8</Optimize>
             <WarningLevel>2</WarningLevel>
             <SizeSpeed>1</SizeSpeed>
             <ObjectExtend>1</ObjectExtend>
@@ -322,7 +322,7 @@
             <InterruptVectorAddress>0</InterruptVectorAddress>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>C8051F020</Define>
+              <Define>C8051F580</Define>
               <Undefine></Undefine>
               <IncludePath>.\Lib;.\Driver;.\MainApp;.\Modbus</IncludePath>
             </VariousControls>
@@ -435,6 +435,11 @@
               <FileName>InitDeviceF020.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\MainApp\InitDeviceF020.c</FilePath>
+            </File>
+            <File>
+              <FileName>InitDeviceF580.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainApp\InitDeviceF580.c</FilePath>
             </File>
           </Files>
         </Group>
