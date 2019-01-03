@@ -16,13 +16,13 @@
 #define EM_START						16
 #define EM_END							143
 //延时线圈
-//1MS 1 * 16 = 32BIT
+//1MS 1 * 16 = 16BIT
 #define T_1MS_START						144
 #define T_1MS_END						144
-//10MS 2 * 16 = 32BIT
+//10MS 1 * 16 = 16BIT
 #define T_10MS_START					145
 #define T_10MS_END						145
-//100MS 1 * 16 = 32BIT
+//100MS 1 * 16 = 16BIT
 #define T_100MS_START					146
 #define T_100MS_END						146
 //延时计时器 
@@ -38,18 +38,18 @@
 //计数器 1
 #define C_START							195
 #define C_END							195
-//输入位寄存器 8 * 16 = 128个
+//输入位寄存器 1 * 16 = 128个
 #define X_START							196
-#define X_END							203			
-//输出位寄存器 8 * 16 = 128个
-#define Y_START							204
-#define Y_END							211
+#define X_END							196			
+//输出位寄存器 1 * 16 = 128个
+#define Y_START							197
+#define Y_END							197
 //特殊寄存器 4个字
-#define SPREG_START						212
-#define SPREG_END						215
+#define SPREG_START						198
+#define SPREG_END						201
 //特殊线圈	4 * 16 = 64个
-#define SPCOIL_START					216
-#define SPCOIL_END						219
+#define SPCOIL_START					202
+#define SPCOIL_END						205
 /*****************************************************************************/
 #define EM_ADC_0						(EM_START + 0)//ADC0->MLD0
 #define EM_ADC_1						(EM_START + 1)//ADC1->MLD1

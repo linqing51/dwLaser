@@ -1,5 +1,40 @@
 #include "sPlc.h"
-/*****************************************************************************/			
+/*****************************************************************************/
+//ADC MUX3253 CH0-CH3
+sbit ADCMUX_0_3_S0 = P1^4;
+sbit ADCMUX_0_3_S1	= P1^7;
+sbit ADCMUX_0_3_OE1 = P1^6;
+sbit ADCMUX_0_3_OE2 = P1^5;
+//ADC MUX3253 CH4-CH7
+sbit ADCMUX_4_7_S0 = P1^2;
+sbit ADCMUX_4_7_S1 = P1^1;
+sbit ADCMUC_4_7_OE1 = P1^0;
+sbit ADCMUC_4_7_OE2 = P1^3;
+//ADC MUX3253 CH8-CH11
+sbit ADCMUX_8_11_S0 = P2^4;
+sbit ADCMUX_8_11_S1 = P2^6;
+sbit ADCMUX_8_11_OE1 = P2^7;
+sbit ADCMUX_8_11_OE2 = P2^5;
+//ADC MUX3253 CH12-CH15
+sbit ADCMUX_12_15_S0 = P2^0;
+sbit ADCMUX_12_15_S1 = P2^2;
+sbit ADCMUX_12_15_OE1 = P2^3;
+sbit ADCMUX_12_15_OE2 = P2^1;
+//ADC MUX3253 CH16-CH19
+sbit ADCMUX_16_19_S0 = P3^5;
+sbit ADCMUX_16_19_S1 = P3^7;
+sbit ADCMUX_16_19_OE1 = P3^6;
+sbit ADCMUX_16_19_OE2 = P3^4;
+//ADC MUX3253 CH20-CH23
+sbit ADCMUX_20_23_S0 = P3^1;
+sbit ADCMUX_20_23_S1 = P3^3;
+sbit ADCMUX_20_23_OE1 = P3^2;
+sbit ADCMUX_20_23_OE2 = P3^0;
+//ADC MUX3253 CH24-CH27
+sbit ADCMUX_24_27_S0 = P0^5;
+sbit ADCMUX_24_27_S1 = P0^7;
+sbit ADCMUX_24_27_OE1 = P0^6;
+sbit ADCMUX_24_27_OE2 = P0^4;
 /*****************************************************************************/
 xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
@@ -7,7 +42,7 @@ static data uint8_t TimerCounter_1mS = 0;
 static data uint8_t TimerCounter_10mS = 0;
 static data uint8_t Timer0_L, Timer0_H;
 /*****************************************************************************/
-static pdata int8_t inputFilter[CONFIG_SPLC_IO_INPUT_NUM];//IO输入滤波器缓冲区
+static pdata int8_t inputFilter[(X_END - X_START + 1) * 16];//IO输入滤波器缓冲区
 static xdata adcTempDat_t adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
 static uint8_t adcSelect;//ADC通道选择
 static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
@@ -16,21 +51,49 @@ static void initAdcData(adcTempDat_t *s);
 static void chipDacInit(void);
 static void chipAdcInit(void);
 /******************************************************************************/
-static void setLedRun(uint8_t st) reentrant{
+static void setLedRun(uint8_t st) reentrant{//LED RUN P7_0
+	if(st){
+		P7 |= (uint8_t)(1 << 0);
+	}
+	else{
+		P7 &= ~(uint8_t)(1 << 0);
+	}
 }
-static uint8_t getLedRun(void) reentrant{
+static uint8_t getLedRun(void) reentrant{//LED RUN P7_0
+	return (uint8_t)((P7 >> 0) & 0x01);
 }
-static void setLedEprom(uint8_t st) reentrant{
+static void setLedEprom(uint8_t st) reentrant{//LED EPROM P7_1
+	if(st){
+		P7 |= (uint8_t)(1 << 1);
+	}
+	else{
+		P7 &= ~(uint8_t)(1 << 1);
+	}
 }
-static uint8_t getLedEprom(void) reentrant{
+static uint8_t getLedEprom(void) reentrant{//LED EPROM P7_1
+	return (uint8_t)((P7 >> 1) & 0x01);
 }
-static void setLedDac(uint8_t st) reentrant{
+static void setLedDac(uint8_t st) reentrant{//LED DAC P7_2
+	if(st){
+		P7 |= (uint8_t)(1 << 2);
+	}
+	else{
+		P7 &= ~(uint8_t)(1 << 2);
+	}
 }
-static uint8_t getLedDac(void) reentrant{
+static uint8_t getLedDac(void) reentrant{//LED DAC P7_2
+	return (uint8_t)((P7 >> 2) & 0x01);
 }
-static void setLedError(uint8_t st) reentrant{
+static void setLedError(uint8_t st) reentrant{//LED ERROR P7_3
+	if(st){
+		P7 |= (uint8_t)(1 << 3);
+	}
+	else{
+		P7 &= ~(uint8_t)(1 << 3);
+	}
 }
 static uint8_t getLedError(void) reentrant{
+	return (uint8_t)((P7 >> 3) & 0x01);
 }
 static void adcProcess(void){//循环采集ADC
 	uint16_t result = 0;
@@ -47,155 +110,1573 @@ static void adcProcess(void){//循环采集ADC
 		adcSelect = 0;
 	}
 	switch(adcSelect){
-		case 0:{
-			
-			AMX0SL = 0x00;break;
-		}
-		case 1:{
-			AMX0SL = 0x01;break;
-		}
-		case 2:{
-			AMX0SL = 0x02;break;
-		}
-		case 3:{
-			AMX0SL = 0x03;break;
-		}
-		case 4:{
-			AMX0SL = 0x04;break;
-		}
-		case 5:{
-			AMX0SL = 0x05;break;
-		}
-		case 6:{
-			AMX0SL = 0x06;break;
-		}
-		case 7:{
-			AMX0SL = 0x07;  break;
-		}
-		case 8:{
-			AMX0SL = 0x08;break;
-		}
-		case 9:{
+		case 0:{//MLD0
+			//ADC MUX
+			AMX0SL = 0x00;
+			//CHIP0
+			ADCMUX_0_3_OE1 = false;
+			ADCMUX_0_3_OE2 = true;
+			ADCMUX_0_3_S1 = false;
+			ADCMUX_0_3_S0 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 10:{
+		case 1:{//MLD1
+			//ADC MUX
+			AMX0SL = 0x00;
+			//CHIP0
+			ADCMUX_0_3_OE1 = false;
+			ADCMUX_0_3_OE2 = true;
+			ADCMUX_0_3_S1 = true;
+			ADCMUX_0_3_S0 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 11:{
+		case 2:{//MLD2
+			//ADC MUX
+			AMX0SL = 0x00;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = false;
+			ADCMUX_0_3_S1 = false;
+			ADCMUX_0_3_S0 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 12:{
+		case 3:{//MLD3
+			//ADC MUX
+			AMX0SL = 0x00;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = false;
+			ADCMUX_0_3_S1 = true;
+			ADCMUX_0_3_S0 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 13:{
+		case 4:{//MLD4
+			//ADC MUX
+			AMX0SL = 0x01;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = false;
+			ADCMUC_4_7_OE2 = true;
+			ADCMUX_4_7_S1 = false;
+			ADCMUX_4_7_S0 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 14:{
+		case 5:{//MLD5
+			//ADC MUX
+			AMX0SL = 0x01;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = false;
+			ADCMUC_4_7_OE2 = true;
+			ADCMUX_0_3_S1 = true;
+			ADCMUX_0_3_S0 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 15:{
+		case 6:{//MLD6
+			//ADC MUX
+			AMX0SL = 0x01;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = false;
+			ADCMUX_4_7_S1 = true;
+			ADCMUX_4_7_S0 = false;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 16:{
+		case 7:{//MLD7
+			//ADC MUX
+			AMX0SL = 0x01;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = false;
+			ADCMUX_4_7_S1 = true;
+			ADCMUX_4_7_S0 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 17:{
+		case 8:{//MLD8
+			//ADC MUX
+			AMX0SL = 0x02;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE2 = true;
+			ADCMUX_8_11_S1 = false;
+			ADCMUX_8_11_S0 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 18:{
+		case 9:{//MLD9
+			//ADC MUX
+			AMX0SL = 0x02;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE2 = true;
+			ADCMUX_8_11_S1 = true;
+			ADCMUX_8_11_S0 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 19:{
+		case 10:{//MLD10
+			//ADC MUX
+			AMX0SL = 0x02;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = false;
+			ADCMUX_8_11_S1 = false;
+			ADCMUX_8_11_S0 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 20:{
+		case 11:{//MLD11
+			//ADC MUX
+			AMX0SL = 0x02;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = false;
+			ADCMUX_8_11_S1 = true;
+			ADCMUX_8_11_S0 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 21:{
+		case 12:{//MLD12
+			//ADC MUX
+			AMX0SL = 0x03;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = false;
+			ADCMUX_12_15_OE2 = true;
+			ADCMUX_12_15_S1 = false;
+			ADCMUX_12_15_S0 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 22:{
+		case 13:{//MLD13
+			//ADC MUX
+			AMX0SL = 0x03;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = false;
+			ADCMUX_12_15_OE2 = true;
+			ADCMUX_12_15_S1 = true;
+			ADCMUX_12_15_S0 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 23:{
+		case 14:{//MLD14
+			//ADC MUX
+			AMX0SL = 0x03;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = false;
+			ADCMUX_12_15_S1 = false;
+			ADCMUX_12_15_S0 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 24:{
+		case 15:{//MLD15
+			//ADC MUX
+			AMX0SL = 0x03;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = false;
+			ADCMUX_12_15_S1 = true;
+			ADCMUX_12_15_S0 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 32:{
+		case 16:{//MLD16
+			//ADC MUX
+			AMX0SL = 0x04;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = false;
+			ADCMUX_16_19_OE2 = true;
+			ADCMUX_16_19_S1 = false;
+			ADCMUX_16_19_S0 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 33:{
+		case 17:{//MLD17
+			//ADC MUX
+			AMX0SL = 0x04;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = false;
+			ADCMUX_16_19_OE2 = true;
+			ADCMUX_16_19_S1 = true;
+			ADCMUX_16_19_S0 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 34:{
+		case 18:{//MLD18
+			//ADC MUX
+			AMX0SL = 0x04;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = false;
+			ADCMUX_16_19_S1 = false;
+			ADCMUX_16_19_S0 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 35:{
+		case 19:{//MLD19
+			//ADC MUX
+			AMX0SL = 0x04;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = false;
+			ADCMUX_16_19_S1 = true;
+			ADCMUX_16_19_S0 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 36:{
+		case 20:{//MLD20
+			//ADC MUX
+			AMX0SL = 0x04;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = false;
+			ADCMUX_20_23_OE2 = true;
+			ADCMUX_20_23_S1 = false;
+			ADCMUX_20_23_S0 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 37:{
+		case 21:{//MLD21
+			//ADC MUX
+			AMX0SL = 0x05;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = false;
+			ADCMUX_20_23_OE2 = true;
+			ADCMUX_20_23_S1 = true;
+			ADCMUX_20_23_S0 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE2 = true;
+			ADCMUX_24_27_S1 = false;
+			ADCMUX_24_27_S0 = true;
 			break;
 		}
-		case 38:{
+		case 22:{//MLD22
+			//ADC MUX
+			AMX0SL = 0x05;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = false;
+			ADCMUX_20_23_S1 = false;
+			ADCMUX_20_23_S0 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 39:{
+		case 23:{//MLD23
+			//ADC MUX
+			AMX0SL = 0x05;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = false;
+			ADCMUX_20_23_S1 = true;
+			ADCMUX_20_23_S0 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 40:{
+		case 24:{//MLD24
+			//ADC MUX
+			AMX0SL = 0x06;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE2 = true;
+			ADCMUX_24_27_S1 = false;
+			ADCMUX_24_27_S0 = true;
 			break;
 		}
-		case 41:{
+		case 25:{//MLD25
+			//ADC MUX
+			AMX0SL = 0x06;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE2 = true;
+			ADCMUX_24_27_S1 = true;
+			ADCMUX_24_27_S0 = true;
 			break;
 		}
-		case 42:{
+		case 26:{//MLD26
+			//ADC MUX
+			AMX0SL = 0x06;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = false;
+			ADCMUX_24_27_S1 = false;
+			ADCMUX_24_27_S0 = true;
 			break;
 		}
-		case 43:{
+		case 27:{//MLD27
+			//ADC MUX
+			AMX0SL = 0x06;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = false;
+			ADCMUX_24_27_S1 = true;
+			ADCMUX_24_27_S0 = true;
 			break;
 		}
-		case 44:{
+		case 32:{//MPD0
+			//ADC MUX
+			AMX0SL = 0x00;
+			//CHIP0
+			ADCMUX_0_3_OE1 = false;
+			ADCMUX_0_3_OE2 = true;
+			ADCMUX_0_3_S1 = false;
+			ADCMUX_0_3_S0 = false;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 45:{
+		case 33:{//MPD1
+			//ADC MUX
+			AMX0SL = 0x00;
+			//CHIP0
+			ADCMUX_0_3_OE1 = false;
+			ADCMUX_0_3_OE2 = true;
+			ADCMUX_0_3_S1 = true;
+			ADCMUX_0_3_S0 = false;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
+		}
+		case 34:{//MPD2
+			//ADC MUX
+			AMX0SL = 0x00;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = false;
+			ADCMUX_0_3_S1 = false;
+			ADCMUX_0_3_S0 = false;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 46:{
+		case 35:{//MPD3
+			//ADC MUX
+			AMX0SL = 0x00;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = false;
+			ADCMUX_0_3_S1 = true;
+			ADCMUX_0_3_S0 = false;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 47:{
+		case 36:{//MPD4
+			//ADC MUX
+			AMX0SL = 0x01;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = false;
+			ADCMUC_4_7_OE2 = true;
+			ADCMUX_4_7_S1 = false;
+			ADCMUX_4_7_S0 = false;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 48:{
+		case 37:{//MPD5
+			//ADC MUX
+			AMX0SL = 0x01;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = false;
+			ADCMUC_4_7_OE2 = true;
+			ADCMUX_4_7_S1 = true;
+			ADCMUX_4_7_S0 = false;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 49:{
+		case 38:{//MPD6
+			//ADC MUX
+			AMX0SL = 0x01;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = false;
+			ADCMUX_4_7_S1 = false;
+			ADCMUX_4_7_S0 = false;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 50:{
+		case 39:{//MPD7
+			//ADC MUX
+			AMX0SL = 0x01;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = false;
+			ADCMUX_4_7_S1 = true;
+			ADCMUX_4_7_S0 = false;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 51:{
+		case 40:{//MPD8
+			//ADC MUX
+			AMX0SL = 0x02;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE2 = true;
+			ADCMUX_8_11_S1 = false;
+			ADCMUX_8_11_S0 = false;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 52:{
+		case 41:{//MPD9
+			//ADC MUX
+			AMX0SL = 0x02;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE2 = true;
+			ADCMUX_8_11_S1 = true;
+			ADCMUX_8_11_S0 = false;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 53:{
+		case 42:{//MPD10
+			//ADC MUX
+			AMX0SL = 0x02;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE2 = true;
+			ADCMUX_8_11_S1 = false;
+			ADCMUX_8_11_S0 = false;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 54:{
+		case 43:{//MPD11
+			//ADC MUX
+			AMX0SL = 0x02;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE2 = false;
+			ADCMUX_8_11_S1 = true;
+			ADCMUX_8_11_S0 = false;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 55:{
+		case 44:{//MPD12
+			//ADC MUX
+			AMX0SL = 0x03;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = false;
+			ADCMUX_12_15_OE2 = true;
+			ADCMUX_12_15_S1 = false;
+			ADCMUX_12_15_S0 = false;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 56:{
+		case 45:{//MPD13
+			//ADC MUX
+			AMX0SL = 0x03;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = false;
+			ADCMUX_12_15_OE2 = true;
+			ADCMUX_12_15_S1 = true;
+			ADCMUX_12_15_S0 = false;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
+			break;
+		}
+		case 46:{//MPD14
+			//ADC MUX
+			AMX0SL = 0x03;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = false;
+			ADCMUX_12_15_S1 = false;
+			ADCMUX_12_15_S0 = false;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
+			break;
+		}
+		case 47:{//MPD15
+			//ADC MUX
+			AMX0SL = 0x03;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = false;
+			ADCMUX_12_15_S1 = true;
+			ADCMUX_12_15_S0 = false;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
+			break;
+		}
+		case 48:{//MPD16
+			//ADC MUX
+			AMX0SL = 0x04;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = false;
+			ADCMUX_16_19_OE2 = true;
+			ADCMUX_16_19_S1 = false;
+			ADCMUX_16_19_S0 = false;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
+			break;
+		}
+		case 49:{//MPD17
+			//ADC MUX
+			AMX0SL = 0x04;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = false;
+			ADCMUX_16_19_OE2 = true;
+			ADCMUX_16_19_S1 = true;
+			ADCMUX_16_19_S0 = false;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
+			break;
+		}
+		case 50:{//MPD18
+			//ADC MUX
+			AMX0SL = 0x04;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = false;
+			ADCMUX_16_19_S1 = true;
+			ADCMUX_16_19_S0 = false;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
+			break;
+		}
+		case 51:{//MPD19
+			//ADC MUX
+			AMX0SL = 0x04;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = false;
+			ADCMUX_16_19_S1 = true;
+			ADCMUX_16_19_S0 = false;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
+			break;
+		}
+		case 52:{//MPD20
+			//ADC MUX
+			AMX0SL = 0x05;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = false;
+			ADCMUX_20_23_OE2 = true;
+			ADCMUX_20_23_S1 = false;
+			ADCMUX_20_23_S0 = false;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
+			break;
+		}
+		case 53:{//MPD21
+			//ADC MUX
+			AMX0SL = 0x05;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = false;
+			ADCMUX_20_23_OE2 = true;
+			ADCMUX_20_23_S1 = true;
+			ADCMUX_20_23_S0 = false;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
+			break;
+		}
+		case 54:{//MPD22
+			//ADC MUX
+			AMX0SL = 0x05;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = false;
+			ADCMUX_20_23_S1 = false;
+			ADCMUX_20_23_S0 = false;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
+			break;
+		}
+		case 55:{//MPD23
+			//ADC MUX
+			AMX0SL = 0x06;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = false;
+			ADCMUX_20_23_S1 = true;
+			ADCMUX_20_23_S0 = false;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
+			break;
+		}
+		case 56:{//MPD24
+			//ADC MUX
+			AMX0SL = 0x06;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE2 = true;
+			ADCMUX_24_27_S1 = false;
+			ADCMUX_24_27_S0 = false;
+			break;
+		}
+		case 57:{//MPD25
+			//ADC MUX
+			AMX0SL = 0x06;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE2 = true;
+			ADCMUX_20_23_S1 = true;
+			ADCMUX_20_23_S0 = false;
+			break;
+		}
+		case 58:{//MPD26
+			//ADC MUX
+			AMX0SL = 0x06;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = false;
+			ADCMUX_24_27_S1 = false;
+			ADCMUX_24_27_S0 = false;
+			break;
+		}
+		case 59:{//MPD27
+			//ADC MUX
+			AMX0SL = 0x06;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = false;
+			ADCMUX_24_27_S1 = true;
+			ADCMUX_24_27_S0 = false;
 			break;
 		}
 		default:{
@@ -483,7 +1964,6 @@ void T100MS(uint8_t A, uint8_t start, uint16_t value){//100MS延时器
 		NVRAM0[(TD_100MS_START + A)] = 0x0;
 	}
 }
-
 int16_t TNTC(int16_t dat){//CODE转换为NTC测量温度温度
 	uint16_t temp;
 	fp32_t ftemp;
@@ -537,8 +2017,6 @@ static void wdtEnable(void){//使能看门狗
 #ifdef C8051F020
 	WDTCN = 0xA5;
 #endif
-#ifdef C8051F580
-#endif
 }
 static void wdtDisable(void){//关闭看门狗(未锁定)
 	uint8_t flagEA;
@@ -559,15 +2037,7 @@ static void wdtFeed(void){//喂狗
 }
 
 static void pcaInit(void){//硬件PCA初始化
-#ifdef C8051F020
-
-#endif
-#ifdef C8051F580
-//F580 CEX6,7,8 PWM OUT
-//F680 CEX9,10,11 PULSE IN
-#endif
 }
-
 static void timer0Init(void){//硬件sTimer计时器初始化
 	data uint16_t temp;
 	TimerCounter_1mS = 0;
@@ -645,82 +2115,88 @@ static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1m
 	TimerCounter_1mS ++;
 }
 
-static void inputInit(void){
-	memset(inputFilter, 0x0, CONFIG_SPLC_IO_INPUT_NUM);
-#ifdef C8051F020
-#endif
-#ifdef C8051F580
-#endif
+static void inputInit(void){//IO输入滤波器初始化
+	memset(inputFilter, 0x0, (X_END - X_START + 1) * 16);
 }
 static void outputInit(void){
 #ifdef C8051F020
 	
 #endif
-#ifdef C8051F580
-	
-#endif
 }
 static void inputRefresh(void){//获取输入IO
-	uint8_t ctemp0,ctemp1, i;
-	ctemp0 = 0;
-	ctemp0 = 0;
-#ifdef C8051F020
-	//P4,P5输入
-	ctemp0 = P4;
-	ctemp1 = P5;
-#endif
-#ifdef C8051F580
-	ctemp0 = inPca9554Read() ;
-#endif
-	for(i = 0;i < 8;i ++){//X0-X7
-		if((ctemp0 >> i) & 0x01){
-			if(inputFilter[i] < CONFIG_INPUT_FILTER_TIME){
-				inputFilter[i] ++;
-			}
-			else{
-				NVRAM0[X_START] |= (int16_t)(1 << i);
-			}
+	uint8_t ctemp0;
+	ctemp0 = ((P6 >> 7) & 0x01);
+	if(ctemp0){
+		if(inputFilter[0] < CONFIG_INPUT_FILTER_TIME){
+			inputFilter[0] ++;
 		}
 		else{
-			if(inputFilter[i] > (CONFIG_INPUT_FILTER_TIME * -1)){
-				inputFilter[i] --;
-			}
-			else{
-				NVRAM0[X_START] &= ~(uint16_t)(1 << i);
-			}
+			NVRAM0[X_START] |= (int16_t)(1 << 0);
 		}
 	}
-	for(i = 8;i < 16;i ++){//X8-X15
-		if((ctemp1 >> (i - 8)) & 0x01){
-			if(inputFilter[i] < CONFIG_INPUT_FILTER_TIME){
-				inputFilter[i] ++;
-			}
-			else{
-				NVRAM0[X_START] |= (int16_t)(1 << i);
-			}
+	else{
+		if(inputFilter[0] > (CONFIG_INPUT_FILTER_TIME * -1)){
+			inputFilter[0] --;
 		}
 		else{
-			if(inputFilter[i] > (CONFIG_INPUT_FILTER_TIME * -1)){
-				inputFilter[i] --;
-			}
-			else{
-				NVRAM0[X_START] &= ~(uint16_t)(1 << i);
-			}
+			NVRAM0[X_START] &= ~(uint16_t)(1 << 0);
+		}
+	}
+	ctemp0 = ((P6 >> 6) & 0x01);
+	if(ctemp0){
+		if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
+			inputFilter[1] ++;
+		}
+		else{
+			NVRAM0[X_START] |= (int16_t)(1 << 1);
+		}
+	}
+	else{
+		if(inputFilter[1] > (CONFIG_INPUT_FILTER_TIME * -1)){
+			inputFilter[1] --;
+		}
+		else{
+			NVRAM0[X_START] &= ~(uint16_t)(1 << 1);
 		}
 	}
 }
 static void outputRefresh(void){//设置输出IO
-#ifdef C8051F020
-	//P6,P7输出IO
-	P6 = (NVRAM0[Y_START] & 0x00FF);
-	P7 = ((NVRAM0[Y_START] >> 8) & 0x00FF);
-#endif
-#ifdef C8051F580
-	outPca9554Write(NVRAM0[Y_START]);
-#endif
+	if((NVRAM0[Y_START] >> 0) & 0x01){//P6_5
+		P6 |= (uint8_t)(1 << 5);
+	}
+	else{
+		P6 &= ~(uint8_t)(1 << 5);
+	}
+	if((NVRAM0[Y_START] >> 1) & 0x01){//P6_4
+		P6 |= (uint8_t)(1 << 4);
+	}
+	else{
+		P6 &= ~(uint8_t)(1 << 4);
+	}
 }
 static void chipAdcInit(void){//ADC模块初始化
 	uint8_t i;
+	//CHIP0
+	ADCMUX_0_3_OE1 = true;
+	ADCMUX_0_3_OE2 = true;
+	//CHIP1
+	ADCMUC_4_7_OE1 = true;
+	ADCMUC_4_7_OE2 = true;
+	//CHIP2
+	ADCMUX_8_11_OE1 = true;
+	ADCMUX_8_11_OE2 = true;
+	//CHIP3
+	ADCMUX_12_15_OE1 = true;
+	ADCMUX_12_15_OE2 = true;
+	//CHIP4
+	ADCMUX_16_19_OE1 = true;
+	ADCMUX_16_19_OE2 = true;
+	//CHIP5
+	ADCMUX_20_23_OE1 = true;
+	ADCMUX_20_23_OE2 = true;
+	//CHIP6
+	ADCMUX_24_27_OE1 = true;
+	ADCMUX_24_27_OE2 = true;
 #ifdef C8051F020
 	ADC0CN = 0x0;//软件触发
 	ADC0CN |= (1 << 6);//AD0TM = 1 启用跟踪
@@ -741,134 +2217,165 @@ static void refreshDac(void){//刷新DAC
 	//LD板0
 	if(NVRAM0[EM_DAC_0] != NVRAM1[EM_DAC_0]){//CH0
 		setLedDac(true);
-		dac8568_0_WriteDacRegister(0x0, NVRAM0[EM_DAC_0]);
+		dac8568_0_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_0]);
 		setLedDac(false);
 	}
 	if(NVRAM0[EM_DAC_1] != NVRAM1[EM_DAC_1]){//CH1
-		dac8568_0_WriteDacRegister(0x1, NVRAM0[EM_DAC_1]);
+		setLedDac(true);
+		dac8568_0_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_1]);
 		setLedDac(false);
 	}
 	if(NVRAM0[EM_DAC_2] != NVRAM1[EM_DAC_2]){//CH2
-		dac8568_0_WriteDacRegister(0x2, NVRAM0[EM_DAC_2]);
+		setLedDac(true);
+		dac8568_0_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_2]);
 		setLedDac(false);
 	}
 	if(NVRAM0[EM_DAC_3] != NVRAM1[EM_DAC_3]){//CH3
-		dac8568_0_WriteDacRegister(0x3, NVRAM0[EM_DAC_3]);
+		setLedDac(true);
+		dac8568_0_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_3]);
 		setLedDac(false);
 	}
 	if(NVRAM0[EM_DAC_4] != NVRAM1[EM_DAC_4]){//CH4
-		dac8568_0_WriteDacRegister(0x4, NVRAM0[EM_DAC_4]);
+		setLedDac(true);
+		dac8568_0_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_4]);
 		setLedDac(false);
 	}
 	if(NVRAM0[EM_DAC_5] != NVRAM1[EM_DAC_5]){//CH5
-		dac8568_0_WriteDacRegister(0x5, NVRAM0[EM_DAC_5]);
+		setLedDac(true);
+		dac8568_0_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_5]);
 		setLedDac(false);
 	}
 	if(NVRAM0[EM_DAC_6] != NVRAM1[EM_DAC_6]){//CH6
-		dac8568_0_WriteDacRegister(0x6, NVRAM0[EM_DAC_6]);
+		setLedDac(true);
+		dac8568_0_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_6]);
 		setLedDac(false);
 	}
 	if(NVRAM0[EM_DAC_7] != NVRAM1[EM_DAC_7]){//CH7
-		dac8568_0_WriteDacRegister(0x7, NVRAM0[EM_DAC_7]);
+		setLedDac(true);
+		dac8568_0_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_7]);
 		setLedDac(false);
 	}
 	//LD板1
 	if(NVRAM0[EM_DAC_8] != NVRAM1[EM_DAC_8]){//CH8
-		dac8568_1_WriteDacRegister(0x0, NVRAM0[EM_DAC_8]);
+		setLedDac(true);
+		dac8568_1_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_8]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_9] != NVRAM1[EM_DAC_9]){
-		dac8568_1_WriteDacRegister(0x1, NVRAM0[EM_DAC_9]);
+	if(NVRAM0[EM_DAC_9] != NVRAM1[EM_DAC_9]){//CH9
+		setLedDac(true);
+		dac8568_1_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_9]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_10] != NVRAM1[EM_DAC_10]){
-		dac8568_1_WriteDacRegister(0x2, NVRAM0[EM_DAC_10]);
+	if(NVRAM0[EM_DAC_10] != NVRAM1[EM_DAC_10]){//CH10
+		setLedDac(true);
+		dac8568_1_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_10]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_11] != NVRAM1[EM_DAC_11]){
-		dac8568_1_WriteDacRegister(0x3, NVRAM0[EM_DAC_11]);
+	if(NVRAM0[EM_DAC_11] != NVRAM1[EM_DAC_11]){//CH11
+		setLedDac(true);
+		dac8568_1_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_11]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_12] != NVRAM1[EM_DAC_12]){
-		dac8568_1_WriteDacRegister(0x4, NVRAM0[EM_DAC_12]);
+	if(NVRAM0[EM_DAC_12] != NVRAM1[EM_DAC_12]){//CH12
+		setLedDac(true);
+		dac8568_1_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_12]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_13] != NVRAM1[EM_DAC_13]){
-		dac8568_1_WriteDacRegister(0x5, NVRAM0[EM_DAC_13]);
+	if(NVRAM0[EM_DAC_13] != NVRAM1[EM_DAC_13]){//CH13
+		setLedDac(true);
+		dac8568_1_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_13]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_14] != NVRAM1[EM_DAC_14]){
-		dac8568_1_WriteDacRegister(0x6, NVRAM0[EM_DAC_14]);
+	if(NVRAM0[EM_DAC_14] != NVRAM1[EM_DAC_14]){//CH14
+		setLedDac(true);
+		dac8568_1_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_14]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_15] != NVRAM1[EM_DAC_15]){
-		dac8568_1_WriteDacRegister(0x7, NVRAM0[EM_DAC_15]);
+	if(NVRAM0[EM_DAC_15] != NVRAM1[EM_DAC_15]){//CH15
+		setLedDac(true);
+		dac8568_1_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_15]);
 		setLedDac(false);
 	}
 	//LD板2
-	if(NVRAM0[EM_DAC_16] != NVRAM1[EM_DAC_16]){
-		dac8568_2_WriteDacRegister(0x0, NVRAM0[EM_DAC_16]);
+	if(NVRAM0[EM_DAC_16] != NVRAM1[EM_DAC_16]){//CH16
+		setLedDac(true);
+		dac8568_2_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_16]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_17] != NVRAM1[EM_DAC_17]){
-		dac8568_2_WriteDacRegister(0x1, NVRAM0[EM_DAC_17]);
+	if(NVRAM0[EM_DAC_17] != NVRAM1[EM_DAC_17]){//CH17
+		setLedDac(true);
+		dac8568_2_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_17]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_18] != NVRAM1[EM_DAC_18]){
-		dac8568_2_WriteDacRegister(0x2, NVRAM0[EM_DAC_18]);
+	if(NVRAM0[EM_DAC_18] != NVRAM1[EM_DAC_18]){//CH18
+		setLedDac(true);
+		dac8568_2_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_18]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_19] != NVRAM1[EM_DAC_19]){
-		dac8568_2_WriteDacRegister(0x3, NVRAM0[EM_DAC_19]);
+	if(NVRAM0[EM_DAC_19] != NVRAM1[EM_DAC_19]){//CH19
+		setLedDac(true);
+		dac8568_2_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_19]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_20] != NVRAM1[EM_DAC_20]){
-		dac8568_2_WriteDacRegister(0x4, NVRAM0[EM_DAC_20]);
+	if(NVRAM0[EM_DAC_20] != NVRAM1[EM_DAC_20]){//CH20
+		setLedDac(true);
+		dac8568_2_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_20]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_21] != NVRAM1[EM_DAC_21]){
-		dac8568_2_WriteDacRegister(0x5, NVRAM0[EM_DAC_21]);
+	if(NVRAM0[EM_DAC_21] != NVRAM1[EM_DAC_21]){//CH21
+		setLedDac(true);
+		dac8568_2_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_21]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_22] != NVRAM1[EM_DAC_22]){
-		dac8568_2_WriteDacRegister(0x6, NVRAM0[EM_DAC_22]);
+	if(NVRAM0[EM_DAC_22] != NVRAM1[EM_DAC_22]){//CH22
+		setLedDac(true);
+		dac8568_2_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_22]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_23] != NVRAM1[EM_DAC_23]){
-		dac8568_2_WriteDacRegister(0x7, NVRAM0[EM_DAC_23]);
+	if(NVRAM0[EM_DAC_23] != NVRAM1[EM_DAC_23]){//CH23
+		setLedDac(true);
+		dac8568_2_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_23]);
 		setLedDac(false);
 	}
 	//板4
-	if(NVRAM0[EM_DAC_24] != NVRAM1[EM_DAC_24]){
-		dac8568_3_WriteDacRegister(0x0, NVRAM0[EM_DAC_24]);
+	if(NVRAM0[EM_DAC_24] != NVRAM1[EM_DAC_24]){//CH24
+		setLedDac(true);
+		dac8568_3_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_24]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_25] != NVRAM1[EM_DAC_25]){
-		dac8568_3_WriteDacRegister(0x1, NVRAM0[EM_DAC_26]);
+	if(NVRAM0[EM_DAC_25] != NVRAM1[EM_DAC_25]){//CH25
+		setLedDac(true);
+		dac8568_3_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_26]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_26] != NVRAM1[EM_DAC_26]){
-		dac8568_3_WriteDacRegister(0x2, NVRAM0[EM_DAC_26]);
+	if(NVRAM0[EM_DAC_26] != NVRAM1[EM_DAC_26]){//CH26
+		setLedDac(true);
+		dac8568_3_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_26]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_27] != NVRAM1[EM_DAC_27]){
-		dac8568_3_WriteDacRegister(0x3, NVRAM0[EM_DAC_27]);
+	if(NVRAM0[EM_DAC_27] != NVRAM1[EM_DAC_27]){//CH27
+		setLedDac(true);
+		dac8568_3_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_27]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_28] != NVRAM1[EM_DAC_28]){
-		dac8568_3_WriteDacRegister(0x4, NVRAM0[EM_DAC_28]);
+	if(NVRAM0[EM_DAC_28] != NVRAM1[EM_DAC_28]){//CH28
+		setLedDac(true);
+		dac8568_3_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_28]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_29] != NVRAM1[EM_DAC_29]){
-		dac8568_3_WriteDacRegister(0x5, NVRAM0[EM_DAC_29]);
+	if(NVRAM0[EM_DAC_29] != NVRAM1[EM_DAC_29]){//CH29
+		setLedDac(true);
+		dac8568_3_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_29]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_30] != NVRAM1[EM_DAC_30]){
-		dac8568_3_WriteDacRegister(0x6, NVRAM0[EM_DAC_30]);
+	if(NVRAM0[EM_DAC_30] != NVRAM1[EM_DAC_30]){//CH30
+		setLedDac(true);
+		dac8568_3_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_30]);
 		setLedDac(false);
 	}
-	if(NVRAM0[EM_DAC_31] != NVRAM1[EM_DAC_31]){
-		dac8568_3_WriteDacRegister(0x7, NVRAM0[EM_DAC_31]);
+	if(NVRAM0[EM_DAC_31] != NVRAM1[EM_DAC_31]){//CH31
+		setLedDac(true);
+		dac8568_3_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_31]);
 		setLedDac(false);
 	}
 }
@@ -879,6 +2386,7 @@ static void chipDacInit(void){//初始化DAC
 	dac8568_3_Init();
 }
 void sPlcInit(void){//软逻辑初始化
+	setLedError(true);
 	setLedRun(false);
 	wdtInit();//看门狗使能
 	wdtDisable();//屏蔽看门狗	
@@ -899,6 +2407,7 @@ void sPlcInit(void){//软逻辑初始化
 #endif
 	timer0Init();//初始化硬件计时器模块
 	NVRAM0[(SPCOIL_START + (SPCOIL_ON / 16))] |= (uint16_t)(1 << (SPCOIL_ON % 16));
+	setLedError(false);
 }
 void sPlcProcessStart(void){//sPLC轮询起始
 #if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1

@@ -1,7 +1,7 @@
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 1   
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 1   
 
 
-C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MODBUS
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE MODBUS
 OBJECT MODULE PLACED IN .\Objects\Modbus.obj
 COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\Modbus.c OPTIMIZE(9,SPEED) REGFILE(.\Objects\dwLaser_F020.ORC) BR
                     -OWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PRINT
@@ -29,111 +29,77 @@ line level    source
   13      =2  #define CONFIG_LASERTIMER_OVERFLOW_US           1000L//定时器周期 1mS
   14      =2  #define CONFIG_VERSION                                          0x0001
   15      =2  #define CONFIG_CHECK_CODE                                       0x5A00
-  16      =2  
-  17      =2  /*****************************************************************************/
-  18      =2  #define CONFIG_UART0_BAUDRATE                           57600//串口波特率
-  19      =2  #define CONFIG_UART0_PARITY                                     NONE
-  20      =2  #define CONFIG_UART0_STOPBIT                            1
-  21      =2  #define CONFIG_UART0_DATABIT                            8
-  22      =2  
-  23      =2  #define CONFIG_UART1_BAUDRATE                           115200//串口波特率
-  24      =2  #define CONFIG_UART1_PARITY                                     NONE
-  25      =2  #define CONFIG_UART1_STOPBIT                            1
-  26      =2  #define CONFIG_UART1_DATABIT                            8
-  27      =2  /*****************************************************************************/
-  28      =2  #define CONFIG_I2C0_FREQ                                        (100000L)               
-  29      =2  #define CONFIG_I2C1_FREQ                                        (100000L)
-  30      =2  #define CONFIG_I2C2_FREQ                                        (100000L)
-  31      =2  #define CONFIG_I2C3_FREQ                                        (100000L)
-  32      =2  #define CONFIG_I2C4_FREQ                                        (100000L)
-  33      =2  /*****************************************************************************/
-  34      =2  #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
-  35      =2  #define CONFIG_AT24C02_SIZE                             256
-  36      =2  #define CONFIG_AT24C04_SIZE                             512
-  37      =2  #define CONFIG_AT24C08_SIZE                             1024
-  38      =2  #define CONFIG_AT24C16_SIZE                             2048
-  39      =2  #define CONFIG_AT24C32_SIZE                             4096
-  40      =2  #define CONFIG_AT24C64_SIZE                                     8192
-  41      =2  #define CONFIG_AT24C128_SIZE                            16384
-  42      =2  #define CONFIG_AT24C256_SIZE                            32768
-  43      =2  #define CONFIG_EPROM_ADDRESS                            0x50
-  44      =2  #define CONFIG_EPROM_FRAM                                       0//铁电存储体无写入等待
-  45      =2  #define CONFIG_EPROM_FREQ                                       1//
-  46      =2  /*****************************************************************************/
-  47      =2  #define CONFIG_USE_IPID                                         1//使能IPID温度控制
-  48      =2  /*****************************************************************************/
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 2   
+  16      =2  /*****************************************************************************/
+  17      =2  #define CONFIG_UART0_BAUDRATE                           57600//串口波特率
+  18      =2  #define CONFIG_UART0_PARITY                                     NONE
+  19      =2  #define CONFIG_UART0_STOPBIT                            1
+  20      =2  #define CONFIG_UART0_DATABIT                            8
+  21      =2  
+  22      =2  #define CONFIG_UART1_BAUDRATE                           9600//串口波特率
+  23      =2  #define CONFIG_UART1_PARITY                                     NONE
+  24      =2  #define CONFIG_UART1_STOPBIT                            1
+  25      =2  #define CONFIG_UART1_DATABIT                            8
+  26      =2  /*****************************************************************************/
+  27      =2  #define CONFIG_I2C0_FREQ                                        (100000L)               
+  28      =2  #define CONFIG_I2C1_FREQ                                        (100000L)
+  29      =2  #define CONFIG_I2C2_FREQ                                        (100000L)
+  30      =2  #define CONFIG_I2C3_FREQ                                        (100000L)
+  31      =2  #define CONFIG_I2C4_FREQ                                        (100000L)
+  32      =2  /*****************************************************************************/
+  33      =2  #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
+  34      =2  #define CONFIG_AT24C02_SIZE                             256
+  35      =2  #define CONFIG_AT24C04_SIZE                             512
+  36      =2  #define CONFIG_AT24C08_SIZE                             1024
+  37      =2  #define CONFIG_AT24C16_SIZE                             2048
+  38      =2  #define CONFIG_AT24C32_SIZE                             4096
+  39      =2  #define CONFIG_AT24C64_SIZE                                     8192
+  40      =2  #define CONFIG_AT24C128_SIZE                            16384
+  41      =2  #define CONFIG_AT24C256_SIZE                            32768
+  42      =2  #define CONFIG_EPROM_ADDRESS                            0x50
+  43      =2  #define CONFIG_EPROM_FRAM                                       0//铁电存储体无写入等待
+  44      =2  #define CONFIG_EPROM_FREQ                                       1//
+  45      =2  /*****************************************************************************/
+  46      =2  //SPLC设置
+  47      =2  #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
+  48      =2  #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 2   
 
-  49      =2  #define CONFIG_USE_HWVER_SHOW                           1//使能固件版本显示
-  50      =2  #define CONFIG_USE_MPD1_SHOW                            1//使能MPD1测量显示
-  51      =2  #define CONFIG_USE_MPD2_SHOW                            1//使能MPD2测量显示
-  52      =2  #define CONFIG_USE_FBS1                                         1//使能FBS1检测
-  53      =2  #define CONFIG_USE_FBS2                                         1//使能FBS2检测
-  54      =2  #define CONFIG_USE_LASER_TEMP                           1//使能激光器温度显示
-  55      =2  #define CONFIG_USE_RADIATOR_TEMP                        1//使能散热器温度显示
-  56      =2  #define CONFIG_USE_ENVI_TEMP                            1//使能环境温度显示
-  57      =2  #define CONFIG_USE_IPID_UPDATE                          1//使能IPID参数更新功能
-  58      =2  #define CONFIG_USE_IPID_OUTSHOW                         1//使能IPID输出显示
-  59      =2  /*****************************************************************************/
-  60      =2  //SPLC设置
-  61      =2  #define CONFIG_SPLC_IO_INPUT_NUM                        16//硬件输入点数
-  62      =2  #define CONFIG_SPLC_IO_OUTPUT_NUM                       16//硬件输出点数
-  63      =2  #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
-  64      =2  #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
-  65      =2  #define CONFIG_IPID_RUN_CYCLE                           40//IPID运行周期 默认 40 * 100mS
-  66      =2  #define CONFIG_IPID_PWM_CYCLE                           20//IPID输出周期 默认 20 * 100mS
+  49      =2  /*****************************************************************************/
+  50      =2  #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
+  51      =2  /*****************************************************************************/
+  52      =2  #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
+  53      =2  /*****************************************************************************/
+  54      =2  #define CONFIG_SPLC_USING_IO_OUTPUT                     1//输出IO刷新启用
+  55      =2  /*****************************************************************************/
+  56      =2  #define CONFIG_SPLC_USING_EPROM                         1//EPROM掉电存储启用
+  57      =2  /*****************************************************************************/
+  58      =2  #define CONFIG_SPLC_USING_ADC                           1//使能ADC模块
+  59      =2  #define CONFIG_SPLC_ADC_FILTER_TAP                      14//ADC位移滤波次数
+  60      =2  #define CONFIG_SPLC_ADC_CHANNLE                         64//ADC通道数
+  61      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
+  62      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
+  63      =2  #define CONFIG_SPLC_ADC_INTERNAL_VREF           2200L// ADC Voltage Reference (mV)
+  64      =2  #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
+  65      =2  /*****************************************************************************/
+  66      =2  #define CONFIG_SPLC_USING_DAC                           1//是能DAC模块
   67      =2  /*****************************************************************************/
-  68      =2  #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
-  69      =2  /*****************************************************************************/
-  70      =2  #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
-  71      =2  /*****************************************************************************/
-  72      =2  #define CONFIG_SPLC_USING_IO_OUTPUT                     1//输出IO刷新启用
-  73      =2  /*****************************************************************************/
-  74      =2  #define CONFIG_SPLC_USING_EPROM                         1//EPROM掉电存储启用
+  68      =2  #define CONFIG_SPLC_USING_MB_RTU_SLAVE          1//是能MODBUS RTU从站
+  69      =2  #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
+  70      =2  #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//从设备地址
+  71      =2  #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//发送接收缓冲区
+  72      =2  #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//接收通讯超时 10mS
+  73      =2  #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TX切换延时
+  74      =2  /*****************************************************************************/
   75      =2  /*****************************************************************************/
-  76      =2  #define CONFIG_SPLC_USING_ADC                           1//使能ADC模块
-  77      =2  #define CONFIG_SPLC_ADC_FILTER_TAP                      18//ADC位移滤波次数
-  78      =2  #define CONFIG_SPLC_ADC_CHANNLE                         50//ADC通道数
-  79      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
-  80      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
-  81      =2  #define CONFIG_SPLC_ADC_INTERNAL_VREF           2200L// ADC Voltage Reference (mV)
-  82      =2  #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
+  76      =2  #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
+  77      =2  #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
+  78      =2  #define DISABLE_INTERRUPT                                       EA = 0;
+  79      =2  #define ENABLE_INTERRUPT                                        EA = 1;
+  80      =2  /*****************************************************************************/
+  81      =2  #define BOX_CMD_STX                                                     0x81
+  82      =2  #define BOX_CMD_ETX                                                     0x84
   83      =2  /*****************************************************************************/
-  84      =2  #define CONFIG_SPLC_USING_DAC                           1//是能DAC模块
-  85      =2  /*****************************************************************************/
-  86      =2  #define CONFIG_SPLC_USING_MB_RTU_SLAVE          1//是能MODBUS RTU从站
-  87      =2  #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
-  88      =2  #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//从设备地址
-  89      =2  #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//发送接收缓冲区
-  90      =2  #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//接收通讯超时 10mS
-  91      =2  #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TX切换延时
-  92      =2  /*****************************************************************************/
-  93      =2  
-  94      =2  /*****************************************************************************/
-  95      =2  #define ID_ONLY_1_CHANNEL                                       4321
-  96      =2  #define ID_ONLY_2_CHANNEL                                       8765
-  97      =2  #define ID_BOTH_CHANNEL                                         9431
-  98      =2  #define ID_LASER_MODE_CW                                        7631
-  99      =2  #define ID_LASER_MODE_SP                                        8934
- 100      =2  #define ID_LASER_MODE_MP                                        2453
- 101      =2  #define ID_LASER_MODE_GP                                        3876
- 102      =2  /*****************************************************************************/
- 103      =2  #define FBS1_IN_PORT                                            3
- 104      =2  #define FBS2_IN_PORT                                            2
- 105      =2  #define COOLON_OUT_PORT                                         (1 * 8 + 3)
- 106      =2  /*****************************************************************************/
- 107      =2  //PID FUZZY 模糊PID配置
- 108      =2  #define CONFIG_TECOUT_CYCLE                                     4000//PID输出转PWM周期
- 109      =2  /*****************************************************************************/
- 110      =2  /*****************************************************************************/
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 3   
-
- 111      =2  #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
- 112      =2  #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
- 113      =2  #define DISABLE_INTERRUPT                                       EA = 0;
- 114      =2  #define ENABLE_INTERRUPT                                        EA = 1;
- 115      =2  /*****************************************************************************/
- 116      =2  #include "stdint.h"
+  84      =2  #include "stdint.h"
    1      =3  /**************************************************************************//**
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
@@ -160,6 +126,8 @@ line level    source
   24      =3  #elif defined __ICC8051__
            =3 
            =3 /* Fixed size types. These are all optional. */
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 3   
+
            =3 #ifdef __INT8_T_TYPE__
            =3   typedef __INT8_T_TYPE__   int8_t;
            =3   typedef __UINT8_T_TYPE__ uint8_t;
@@ -186,12 +154,10 @@ line level    source
            =3 #endif
   51      =3  
   52      =3  #endif
- 117      =2  #include "stdbool.h"
+  85      =2  #include "stdbool.h"
    1      =3  /**************************************************************************//**
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 4   
-
    4      =3   * http://developer.silabs.com/legal/version/v11/Silicon_Labs_Software_License_Agreement.txt
    5      =3   *****************************************************************************/
    6      =3  
@@ -224,6 +190,8 @@ line level    source
            =3 
            =3 #else  // __SLS_IDE__ : Macros defined to remove syntax errors within Simplicity Studio
            =3 
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 4   
+
            =3 typedef bit bool;
            =3 enum{
            =3   false = 0,
@@ -234,7 +202,7 @@ line level    source
   43      =3  
   44      =3  #endif //STDBOOL_H
   45      =3  
- 118      =2  #include "endian.h"
+  86      =2  #include "endian.h"
    1      =3  /**************************************************************************//**
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
@@ -254,8 +222,6 @@ line level    source
   17      =3  // Big Endian Compilers
   18      =3  #if ((defined __C51__) || (defined __RC51__) || (defined _CC51))
   19      =3  
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 5   
-
   20      =3  #define htobe16(x) (x)
   21      =3  #define htobe32(x) (x)
   22      =3  #define be16toh(x) (x)
@@ -288,12 +254,14 @@ line level    source
            =3 #define htole16(x) (x)
            =3 #define htole32(x) (x)
            =3 #define le16toh(x) (x)
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 5   
+
            =3 #define le32toh(x) (x)
            =3 
            =3 #endif  // Compiler Definitions
   55      =3  
   56      =3  #endif  // __ENDIAN_H__
- 119      =2  #include "si_toolchain.h"
+  87      =2  #include "si_toolchain.h"
    1      =3  /******************************************************************************
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
@@ -318,8 +286,6 @@ line level    source
            =4 typedef unsigned char uint8_t;
            =4 typedef unsigned short uint16_t;
            =4 typedef unsigned long uint32_t;
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 6   
-
            =4 typedef uint32_t uint64_t[2];
            =4 
            =4 typedef signed char int8_t;
@@ -352,6 +318,8 @@ line level    source
            =4   #pragma language=extended
            =4   typedef __INT64_T_TYPE__   int64_t;
            =4   typedef __UINT64_T_TYPE__ uint64_t;
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 6   
+
            =4   #pragma language=restore
            =4 #endif /* __INT64_T_TYPE__ */
            =4 
@@ -382,8 +350,6 @@ line level    source
            =4   #pragma system_include
            =4 #endif
            =4 
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 7   
-
            =4 #ifndef __cplusplus
            =4 
            =4 #define bool _Bool
@@ -416,6 +382,8 @@ line level    source
   19      =3   * # Introduction #
   20      =3   *
   21      =3   * This header file contains macros that are used to provide an abstraction
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 7   
+
   22      =3   * for toolchain use in source code.  The 8051 compiler requires C-language
   23      =3   * extensions in order to fully use features of the 8051 architecture.  All
   24      =3   * compilers for 8051 implement a set of extensions but use different names
@@ -446,8 +414,6 @@ line level    source
   49      =3   * |default        |specific      |@ref SI_VARIABLE_SEGMENT_POINTER        |
   50      =3   * |specific       |generic       |@ref SI_SEGMENT_POINTER                 |
   51      =3   * |specific       |specific      |@ref SI_SEGMENT_VARIABLE_SEGMENT_POINTER|
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 8   
-
   52      =3   *
   53      =3   * ## Prior Toolchain Abstraction Header File ##
   54      =3   *
@@ -480,6 +446,8 @@ line level    source
   81      =3  
   82      =3  /// Declares a variable to be located in 8051 DATA space.
   83      =3  #define SI_SEG_DATA data
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 8   
+
   84      =3  
   85      =3  /// Declares a variable to be located in 8051 IDATA space.
   86      =3  #define SI_SEG_IDATA idata
@@ -510,8 +478,6 @@ line level    source
  111      =3   * @param address The address of the byte containing the bit.
  112      =3   * @param bitnum The bit number (0-7) within the byte.
  113      =3   *
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 9   
-
  114      =3   * This cannot be used to make any arbitrary SFR or variable into
  115      =3   * a bit variable.  The underlying memory must support bit-addressability.
  116      =3   *****************************************************************************/
@@ -544,6 +510,8 @@ line level    source
  143      =3  #define SI_SFR16(name, address) sfr16 name = address
  144      =3  
  145      =3  #ifndef __SLS_IDE__
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 9   
+
  146      =3  /**************************************************************************//**
  147      =3   * Define an interrupt handler function for an interrupt vector.
  148      =3   *
@@ -574,8 +542,6 @@ line level    source
  173      =3   * for the instructions in the compiled code.  Using dedicated register banks
  174      =3   * for interrupt handlers allows the prolog code to just switch banks instead
  175      =3   * of saving and restoring all the general purpose registers.  This can make
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 10  
-
  176      =3   * interrupt entry/exit faster but requires dedicating a register bank for
  177      =3   * the interrupt handler.
  178      =3   *
@@ -608,6 +574,8 @@ line level    source
  205      =3   * @param name The name of the interrupt handler function.
  206      =3   * @param vector The interrupt vector number.
  207      =3   * @param regnum The register bank number (0-3).
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 10  
+
  208      =3   *
  209      =3   * This macro declares a function prototype for an interrupt handler, for a
  210      =3   * function that uses a specific register bank for the interrupt code.  The
@@ -638,8 +606,6 @@ line level    source
  235      =3   * is the list of function parameters.  It can be `void` or else it must be
  236      =3   * a parameter data type and name.  It can also be multiple parameters but
  237      =3   * they must be enclosed in parentheses and separated by commas.
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 11  
-
  238      =3   *
  239      =3   * __Example__
  240      =3   *
@@ -672,6 +638,8 @@ line level    source
  267      =3   * See the documentation for @ref SI_REENTRANT_FUNCTION for an explanation of
  268      =3   * the macro arguments.  This is an advanced feature.
  269      =3   *
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 11  
+
  270      =3   * @note This macro is used to declare a prototype for the function.  To
  271      =3   * define the function implementation, use @ref SI_REENTRANT_FUNCTION.
  272      =3   *****************************************************************************/
@@ -702,8 +670,6 @@ line level    source
  297      =3   * they must be enclosed in parentheses and separated by commas.
  298      =3   *
  299      =3   * __Example__
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 12  
-
  300      =3   *
  301      =3   * ~~~~~~~~.c
  302      =3   * // The following is used to implement a function with the following
@@ -736,6 +702,8 @@ line level    source
  329      =3   * @ref SI_FUNCTION_USING for an explanation of the macro arguments.  This is
  330      =3   * an advanced feature.
  331      =3   *
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 12  
+
  332      =3   * @note This macro is used to declare a prototype for the function.  To
  333      =3   * define the function implementation, use @ref SI_FUNCTION_USING.
  334      =3   *****************************************************************************/
@@ -766,8 +734,6 @@ line level    source
  359      =3   * ~~~~~~~~.c
  360      =3   * // The following macro can be used to create a variable located in
  361      =3   * // XDATA with the following signature:
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 13  
-
  362      =3   * uint8_t myVar;
  363      =3   *
  364      =3   * SI_SEGMENT_VARIABLE(myVar, uint8_t, SEG_XDATA);
@@ -800,6 +766,8 @@ line level    source
  391      =3   * // a location in XDATA with the following signature:
  392      =3   * uint8_t *pVar; // where pVar is pointing at XDATA
  393      =3   *
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 13  
+
  394      =3   * SI_VARIABLE_SEGMENT_POINTER(pVar, uint8_t, SEG_XDATA);
  395      =3   * ~~~~~~~~
  396      =3   *****************************************************************************/
@@ -830,8 +798,6 @@ line level    source
  421      =3   *
  422      =3   * ~~~~~~~~.c
  423      =3   * // The following macro can be used to create a pointer that points to
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 14  
-
  424      =3   * // a location in XDATA while the pointer itself is located in DATA, with
  425      =3   * // the following signature:
  426      =3   * uint8_t *pVar; // where pVar is located in DATA and is pointing at XDATA
@@ -864,6 +830,8 @@ line level    source
  453      =3   * __Example__
  454      =3   *
  455      =3   * ~~~~~~~~.c
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 14  
+
  456      =3   * // The following macro can be used to create a generic pointer that
  457      =3   * // is located in DATA and points at any memory type, with the
  458      =3   * // following signature:
@@ -894,8 +862,6 @@ line level    source
  483      =3   * - @ref SI_SEG_XDATA
  484      =3   * - @ref SI_SEG_CODE
  485      =3   *
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 15  
-
  486      =3   * __Example__
  487      =3   *
  488      =3   * ~~~~~~~~.c
@@ -928,6 +894,8 @@ line level    source
            =3 #define SI_SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype * name
            =3 #define SI_SEGMENT_POINTER(name, vartype, locsegment) vartype * name
            =3 #define SI_LOCATED_VARIABLE_NO_INIT(name, vartype, locsegment, addr) vartype name
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 15  
+
            =3 #endif // __SLS_IDE__
  519      =3  
  520      =3  // The following are used for byte ordering when referring to individual
@@ -958,8 +926,6 @@ line level    source
  545      =3    uint32_t u32;       ///< The 4-byte value as a 32-bit unsigned integer.
  546      =3    int32_t s32;        ///< The 4-byte value as a 32-bit signed integer.
  547      =3    SI_UU16_t uu16[2];  ///< The 4-byte value as a SI_UU16_t.
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 16  
-
  548      =3    uint16_t u16[2];    ///< The 4-byte value as two unsigned 16-bit integers.
  549      =3    int16_t s16[2];     ///< The 4-byte value as two signed 16-bit integers.
  550      =3    uint8_t u8[4];      ///< The 4-byte value as 4 unsigned 8-bit integers.
@@ -992,6 +958,8 @@ line level    source
  577      =3  } SI_GEN_PTR_t;
  578      =3  
  579      =3  // Declaration of Keil intrinisc
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 16  
+
  580      =3  extern void _nop_(void);
  581      =3  /// Macro to insert a no-operation (NOP) instruction.
  582      =3  #define NOP() _nop_()
@@ -1022,8 +990,6 @@ line level    source
            =3 // the following create function and variable names of the specified types
            =3 // but the 8051-specific aspects (like memory segment) are ignored
            =3 #define SI_INTERRUPT(name, vector) void name (void)
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 17  
-
            =3 #define SI_INTERRUPT_USING(name, vector, regnum) void name (void)
            =3 #define SI_INTERRUPT_PROTO(name, vector) void name (void)
            =3 #define SI_INTERRUPT_PROTO_USING(name, vector, regnum) void name (void)
@@ -1056,6 +1022,8 @@ line level    source
            =3 
            =3 typedef union SI_UU32
            =3 {
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 17  
+
            =3   uint32_t u32;
            =3   int32_t s32;
            =3   SI_UU16_t uu16[2];
@@ -1086,8 +1054,6 @@ line level    source
            =3 #include <intrinsics.h>
            =3 
            =3 #define SI_BIT(name)              __no_init bool __bit name
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 18  
-
            =3 #define SI_SBIT(name, addr, bit)  __bit __no_init volatile bool name @ (addr+bit)
            =3 #define SI_SFR(name, addr)        __sfr __no_init volatile unsigned char name @ addr
            =3 #define SI_SFR16(name, addr)      __sfr __no_init volatile unsigned int  name @ addr
@@ -1120,6 +1086,8 @@ line level    source
            =3 #elif (__DATA_MODEL__ == 2) /* LARGE */ || \
            =3       (__DATA_MODEL__ == 3) /* GENERIC */ || \
            =3       (__DATA_MODEL__ == 4) /* FAR */
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 18  
+
            =3 #define SI_REENTRANT_FUNCTION(name, return_type, parameter) \
            =3   __xdata_reentrant return_type name parameter
            =3 #define SI_REENTRANT_FUNCTION_PROTO(name, return_type, parameter) \
@@ -1150,8 +1118,6 @@ line level    source
              -ddr
            =3 
            =3 // The following are used for byte ordering when referring to individual
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 19  
-
            =3 // bytes within a SI_UU32_t.  B0 is the least significant byte.
            =3 #define B0 0 ///< Least significant byte of a 4 byte word
            =3 #define B1 1 ///< Byte 1 of a 4-byte word, where byte 0 is LSB
@@ -1184,6 +1150,8 @@ line level    source
            =3   uint8_t u8[4];      ///< The 4-byte value as 4 unsigned 8-bit integers.
            =3   int8_t s8[4];       ///< The 4-byte value as 4 signed 8-bit integers.
            =3 } SI_UU32_t;
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 19  
+
            =3 
            =3 // Generic pointer memory segment constants.
            =3 #define SI_GPTR                   ///< Generic pointer indeterminate type.
@@ -1214,15 +1182,13 @@ line level    source
            =3 #define NOP() __no_operation()
            =3 
            =3 #else // unknown toolchain
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 20  
-
            =3 #error Unrecognized toolchain in si_toolchain.h
            =3 #endif
  794      =3  
  795      =3  /** @} */
  796      =3  
  797      =3  #endif
- 120      =2  #include "compiler_defs.h"
+  88      =2  #include "compiler_defs.h"
    1      =3  //-----------------------------------------------------------------------------
    2      =3  // compiler_defs.h
    3      =3  //-----------------------------------------------------------------------------
@@ -1248,6 +1214,8 @@ line level    source
   23      =3    *
   24      =3    * In other words, you are welcome to use, share and improve this program.
   25      =3    * You are forbidden to forbid anyone else to use, share and improve
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 20  
+
   26      =3    * what you give them. Help stamp out software-hoarding!
   27      =3  **/
   28      =3  // Program Description:
@@ -1278,8 +1246,6 @@ line level    source
   53      =3  //
   54      =3  // SBIT  (P0_1, 0x80, 1);      // Port 0 pin 1
   55      =3  // SFR   (P0, 0x80);           // Port 0
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 21  
-
   56      =3  // SFRX  (CPUCS, 0xE600);      // Cypress FX2 Control and Status register in
   57      =3  //                             // xdata memory at 0xE600
   58      =3  // SFR16 (TMR2, 0xCC);         // Timer 2, lsb at 0xCC, msb at 0xCD
@@ -1312,6 +1278,8 @@ line level    source
   85      =3  //    -Added LOCATED_VARIABLE_NO_INIT macro definitions for Raisonance
   86      =3  // Release 2.0 - 19 MAY 2009 (ES)
   87      =3  //    -Added LOCATED_VARIABLE_NO_INIT macro definitions for SDCC and Keil
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 21  
+
   88      =3  // Release 1.9 - 23 OCT 2008 (ES)
   89      =3  //    -Updated Hi-Tech INTERRUPT and INTERRUPT_USING macro definitions
   90      =3  //    -Added SFR16 macro defintion for Hi-Tech
@@ -1342,8 +1310,6 @@ line level    source
  115      =3  // Release 1.0 - 29 SEP 2006 (PKC)
  116      =3  //    -Initial revision
  117      =3  
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 22  
-
  118      =3  //-----------------------------------------------------------------------------
  119      =3  // Header File Preprocessor Directive
  120      =3  //-----------------------------------------------------------------------------
@@ -1376,6 +1342,8 @@ line level    source
            =4 #endif
            =4 
            =4 #ifndef __cplusplus
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 22  
+
            =4 
            =4 #define bool _Bool
            =4 #define true 1
@@ -1406,8 +1374,6 @@ line level    source
    6      =4  
    7      =4  #ifndef STDINT_H
            =4 #define STDINT_H
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 23  
-
            =4 
            =4 #if defined __C51__
            =4 
@@ -1440,6 +1406,8 @@ line level    source
            =4   typedef __INT32_T_TYPE__   int32_t;
            =4   typedef __UINT32_T_TYPE__ uint32_t;
            =4 #endif /* __INT32_T_TYPE__ */
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 23  
+
            =4 
            =4 #ifdef __INT64_T_TYPE__
            =4   #pragma language=save
@@ -1470,8 +1438,6 @@ line level    source
  142      =3  
  143      =3  #if defined SDCC
            =3 
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 24  
-
            =3 #if (SDCC >= 300)
            =3 
            =3 #define interrupt __interrupt
@@ -1504,6 +1470,8 @@ line level    source
            =3 
            =3 # define INTERRUPT(name, vector) void name (void) interrupt (vector)
            =3 # define INTERRUPT_USING(name, vector, regnum) void name (void) interrupt (vector) using (regnum)
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 24  
+
            =3 # define INTERRUPT_PROTO(name, vector) void name (void) interrupt (vector)
            =3 # define INTERRUPT_PROTO_USING(name, vector, regnum) void name (void) interrupt (vector) using (regnum)
            =3 
@@ -1534,8 +1502,6 @@ line level    source
            =3 typedef unsigned char U8;
            =3 typedef unsigned int U16;
            =3 typedef unsigned long U32;
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 25  
-
            =3 
            =3 typedef signed char S8;
            =3 typedef signed int S16;
@@ -1568,6 +1534,8 @@ line level    source
            =3 #define SI_GPTR_MTYPE_DATA       0x40
            =3 #define SI_GPTR_MTYPE_IDATA      0x40
            =3 #define SI_GPTR_MTYPE_BDATA      0x40
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 25  
+
            =3 #define SI_GPTR_MTYPE_PDATA      0x60
            =3 #define SI_GPTR_MTYPE_XDATA      0x00
            =3 #define SI_GPTR_MTYPE_CODE       0x80
@@ -1598,8 +1566,6 @@ line level    source
            =3 # define SEG_NEAR  data
            =3 # define SEG_IDATA idata
            =3 # define SEG_XDATA xdata
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 26  
-
            =3 # define SEG_PDATA pdata
            =3 # define SEG_CODE  code
            =3 # define SEG_BDATA bdata
@@ -1632,6 +1598,8 @@ line level    source
            =3 // used with UU16
            =3 # define LSB 1
            =3 # define MSB 0
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 26  
+
            =3 
            =3 // used with UU32 (b0 is least-significant byte)
            =3 # define b0 3
@@ -1662,8 +1630,6 @@ line level    source
            =3    UU16 UU16[2];
            =3    U16 U16[2];
            =3    S16 S16[2];
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 27  
-
            =3    U8 U8[4];
            =3    S8 S8[4];
            =3 } UU32;
@@ -1696,6 +1662,8 @@ line level    source
            =3 
            =3 // Keil C51
            =3 // http://www.keil.com
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 27  
+
            =3 
            =3 #elif defined __C51__
  360      =3  
@@ -1726,8 +1694,6 @@ line level    source
  385      =3  # define INTERRUPT_PROTO_USING(name, vector, regnum) void name (void)
  386      =3  
  387      =3  # define FUNCTION_USING(name, return_value, parameter, regnum) return_value name (parameter) using regnum
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 28  
-
  388      =3  # define FUNCTION_PROTO_USING(name, return_value, parameter, regnum) return_value name (parameter)
  389      =3  // Note: Parameter must be either 'void' or include a variable type and name. (Ex: char temp_variable)
  390      =3  
@@ -1760,6 +1726,8 @@ line level    source
  416      =3  // used with UU16
  417      =3  # define LSB 1
  418      =3  # define MSB 0
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 28  
+
  419      =3  
  420      =3  // used with UU32 (b0 is least-significant byte)
  421      =3  # define b0 3
@@ -1790,8 +1758,6 @@ line level    source
  446      =3     UU16 UU16[2];
  447      =3     U16 U16[2];
  448      =3     S16 S16[2];
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 29  
-
  449      =3     U8 U8[4];
  450      =3     S8 S8[4];
  451      =3  } UU32;
@@ -1824,6 +1790,8 @@ line level    source
  478      =3  
  479      =3  // Hi-Tech 8051
  480      =3  // http://www.htsoft.com
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 29  
+
  481      =3  
  482      =3  #elif defined HI_TECH_C
            =3 
@@ -1854,8 +1822,6 @@ line level    source
            =3 # define FUNCTION_PROTO_USING(name, return_value, parameter, regnum) /* not supported */
            =3 // Note: Hi-Tech does not support functions using different register banks. Register
            =3 //       banks can only be specified in interrupts. If a function is called from
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 30  
-
            =3 //       inside an interrupt, it will use the same register bank as the interrupt.
            =3 
            =3 # define SEGMENT_VARIABLE(name, vartype, locsegment) locsegment vartype name
@@ -1888,6 +1854,8 @@ line level    source
            =3    S16 S16;
            =3    U8 U8[2];
            =3    S8 S8[2];
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 30  
+
            =3 } UU16;
            =3 
            =3 typedef union UU32
@@ -1918,8 +1886,6 @@ line level    source
            =3 # define SEG_NEAR  _data
            =3 # define SEG_IDATA _idat
            =3 # define SEG_XDATA _xdat
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 31  
-
            =3 # define SEG_PDATA _pdat
            =3 # define SEG_CODE  _rom
            =3 # define SEG_BDATA _bdat
@@ -1952,6 +1918,8 @@ line level    source
            =3 # define SEGMENT_VARIABLE(name, vartype, locsegment) vartype locsegment name
            =3 # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype targsegment * name
            =3 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype targsegment * lo
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 31  
+
              -csegment name
            =3 # define LOCATED_VARIABLE(name, vartype, locsegment, addr, init) vartype locsegment name _at( addr )
            =3 
@@ -1982,8 +1950,6 @@ line level    source
            =3 } UU16;
            =3 
            =3 typedef union UU32
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 32  
-
            =3 {
            =3    U32 U32;
            =3    S32 S32;
@@ -2016,6 +1982,8 @@ line level    source
            =3 # define SFR16E(name, fulladdr) /* not supported */
            =3 # define SFR32(name, fulladdr) /* not supported */
            =3 # define SFR32E(name, fulladdr) /* not supported */
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 32  
+
            =3 
            =3 # define SEG_GENERIC __generic
            =3 # define SEG_FAR  __xdata
@@ -2046,8 +2014,6 @@ line level    source
            =3 
            =3 # define SEGMENT_VARIABLE(name, vartype, locsegment)  locsegment vartype name
            =3 # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype targsegment  * name
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 33  
-
            =3 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype targsegment * lo
              -csegment name
            =3 
@@ -2080,6 +2046,8 @@ line level    source
            =3 } UU16;
            =3 
            =3 typedef union UU32
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 33  
+
            =3 {
            =3    U32 U32;
            =3    S32 S32;
@@ -2110,8 +2078,6 @@ line level    source
            =3     {
            =3         UU16 ADDR;
            =3         U8 MTYPE;
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 34  
-
            =3     } GPTR;
            =3 } SI_GENERIC_PTR;
            =3 
@@ -2144,6 +2110,8 @@ line level    source
            =3 //-----------------------------------------------------------------------------
            =3 
            =3 // Default
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 34  
+
            =3 // Unknown compiler
            =3 
            =3 #else
@@ -2167,15 +2135,12 @@ line level    source
  805      =3  //-----------------------------------------------------------------------------
  806      =3  // End Of File
  807      =3  //-----------------------------------------------------------------------------
- 121      =2  #ifdef C8051F020
- 122      =2  #include "C8051F020_defs.h"
+  89      =2  #include "C8051F020_defs.h"
    1      =3  //-----------------------------------------------------------------------------
    2      =3  // C8051F020_defs.h
    3      =3  //-----------------------------------------------------------------------------
    4      =3  // Copyright 2007, Silicon Laboratories, Inc.
    5      =3  // http://www.silabs.com
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 35  
-
    6      =3  //
    7      =3  // Program Description:
    8      =3  //
@@ -2209,6 +2174,8 @@ line level    source
   36      =3  SFR (P0, 0x80);                        // Port 0 Latch
   37      =3  SFR (SP, 0x81);                        // Stack Pointer
   38      =3  SFR (DPL, 0x82);                       // Data Pointer Low
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 35  
+
   39      =3  SFR (DPH, 0x83);                       // Data Pointer High
   40      =3  SFR (P4, 0x84);                        // Port 4 Latch
   41      =3  SFR (P5, 0x85);                        // Port 5 Latch
@@ -2238,8 +2205,6 @@ line level    source
   65      =3  SFR (CPT0CN, 0x9E);                    // Comparator 0 Control
   66      =3  SFR (CPT1CN, 0x9F);                    // Comparator 1 Control
   67      =3  SFR (P2, 0xA0);                        // Port 2 Latch
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 36  
-
   68      =3  SFR (EMI0TC, 0xA1);                    // EMIF Timing Control
   69      =3  SFR (EMI0CF, 0xA3);                    // EMIF Configuration
   70      =3  SFR (P0MDOUT, 0xA4);                   // Port 0 Output Mode Configuration
@@ -2273,6 +2238,8 @@ line level    source
   98      =3  SFR (SMB0DAT, 0xC2);                   // SMBus0 Data
   99      =3  SFR (SMB0ADR, 0xC3);                   // SMBus0 Slave Address
  100      =3  SFR (ADC0GTL, 0xC4);                   // ADC0 Greater-Than Register Low
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 36  
+
  101      =3  SFR (ADC0GTH, 0xC5);                   // ADC0 Greater-Than Register High
  102      =3  SFR (ADC0LTL, 0xC6);                   // ADC0 Less-Than Register Low
  103      =3  SFR (ADC0LTH, 0xC7);                   // ADC0 Less-Than Register High
@@ -2302,8 +2269,6 @@ line level    source
  127      =3  SFR (XBR0, 0xE1);                      // Port I/O Crossbar Control 0
  128      =3  SFR (XBR1, 0xE2);                      // Port I/O Crossbar Control 1
  129      =3  SFR (XBR2, 0xE3);                      // Port I/O Crossbar Control 2
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 37  
-
  130      =3  SFR (RCAP4L, 0xE4);                    // Timer 4 Capture Register Low
  131      =3  SFR (RCAP4H, 0xE5);                    // Timer 4 Capture Register High
  132      =3  SFR (EIE1, 0xE6);                      // External Interrupt Enable 1
@@ -2337,6 +2302,8 @@ line level    source
  160      =3  // 16-bit Register Definitions (might not be supported by all compilers)
  161      =3  //-----------------------------------------------------------------------------
  162      =3  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 37  
+
  163      =3  SFR16 (DP, 0x82);                      // Data Pointer
  164      =3  SFR16 (TMR3RL, 0x92);                  // Timer3 Reload Value
  165      =3  SFR16 (TMR3, 0x94);                    // Timer3 Counter
@@ -2366,8 +2333,6 @@ line level    source
  189      =3  #define SFR_IE       0xA8
  190      =3  #define SFR_P3       0xB0
  191      =3  #define SFR_IP       0xB8
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 38  
-
  192      =3  #define SFR_SMB0CN   0xC0
  193      =3  #define SFR_T2CON    0xC8
  194      =3  #define SFR_PSW      0xD0
@@ -2401,6 +2366,8 @@ line level    source
  222      =3  SBIT (TI0, SFR_SCON0, 1);              // Transmit Interrupt Flag
  223      =3  SBIT (RI0, SFR_SCON0, 0);              // Receive Interrupt Flag
  224      =3  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 38  
+
  225      =3  // IE 0xA8
  226      =3  SBIT (EA, SFR_IE, 7);                  // Global Interrupt Enable
  227      =3  SBIT (IEGF0, SFR_IE, 6);               // General Purpose Flag 0
@@ -2430,8 +2397,6 @@ line level    source
  251      =3  SBIT (AA, SFR_SMB0CN, 2);              // SMBus 0 Assert/Acknowledge Flag
  252      =3  SBIT (SMBFTE, SFR_SMB0CN, 1);          // SMBus 0 Free Timer Enable
  253      =3  SBIT (SMBTOE, SFR_SMB0CN, 0);          // SMBus 0 Timeout Enable
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 39  
-
  254      =3  
  255      =3  // T2CON 0xC8
  256      =3  SBIT (TF2, SFR_T2CON, 7);              // Timer 2 Overflow Flag
@@ -2465,6 +2430,8 @@ line level    source
  284      =3  
  285      =3  // ADC0CN 0xE8
  286      =3  SBIT (AD0EN, SFR_ADC0CN, 7);           // ADC 0 Enable
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 39  
+
  287      =3  SBIT (AD0TM, SFR_ADC0CN, 6);           // ADC 0 Track Mode
  288      =3  SBIT (AD0INT, SFR_ADC0CN, 5);          // ADC 0 Converision Complete Interrupt Flag
  289      =3  SBIT (AD0BUSY, SFR_ADC0CN, 4);         // ADC 0 Busy Flag
@@ -2494,8 +2461,6 @@ line level    source
  313      =3  #define INTERRUPT_UART0          4     // Serial Port UART0
  314      =3  #define INTERRUPT_TIMER2         5     // Timer2 Overflow
  315      =3  #define INTERRUPT_SPI0           6     // SPI0 Interface
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 40  
-
  316      =3  #define INTERRUPT_SMBUS0         7     // SMBus0 Interface
  317      =3  #define INTERRUPT_ADC0_WINDOW    8     // ADC0 Window Comparison
  318      =3  #define INTERRUPT_PCA0           9     // PCA0 Peripheral
@@ -2529,14 +2494,12 @@ line level    source
  346      =3  #endif                                 // #define C8051F020_DEFS_H
  347      =3  
  348      =3  //-----------------------------------------------------------------------------
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 40  
+
  349      =3  // End Of File
  350      =3  //-----------------------------------------------------------------------------
- 123      =2  #endif
- 124      =2  #ifdef C8051F340
-           =2 #include "C8051F340_defs.h"
-           =2 #endif
- 127      =2  /*****************************************************************************/
- 128      =2  #include <stdio.h>
+  90      =2  /*****************************************************************************/
+  91      =2  #include <stdio.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  STDIO.H
    3      =3  
@@ -2558,8 +2521,6 @@ line level    source
   19      =3  
   20      =3  #ifndef _SIZE_T
   21      =3   #define _SIZE_T
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 41  
-
   22      =3   typedef unsigned int size_t;
   23      =3  #endif
   24      =3  
@@ -2582,7 +2543,7 @@ line level    source
   41      =3  
   42      =3  #endif
   43      =3  
- 129      =2  #include <stdlib.h> 
+  92      =2  #include <stdlib.h> 
    1      =3  /*--------------------------------------------------------------------------
    2      =3  STDLIB.H
    3      =3  
@@ -2597,6 +2558,8 @@ line level    source
   12      =3  
   13      =3  #ifndef _SIZE_T
            =3  #define _SIZE_T
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 41  
+
            =3  typedef unsigned int size_t;
            =3 #endif
   17      =3  
@@ -2622,8 +2585,6 @@ line level    source
            =3 #define _DIV_T_DEFINED
            =3 #endif // _DIV_T_DEFINED
            =3 #endif // __CX2__
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 42  
-
   40      =3  
   41      =3  #ifndef RAND_MAX
   42      =3   #define RAND_MAX  32767u
@@ -2661,6 +2622,8 @@ line level    source
   74      =3  extern float         strtod  (const char *nptr, char **endptr);
   75      =3  extern long          strtol  (const char *nptr, char **endptr, unsigned char base);
   76      =3  extern unsigned long strtoul (const char *nptr, char **endptr, unsigned char base);
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 42  
+
   77      =3  
   78      =3  #define _MALLOC_MEM_    xdata
   79      =3  
@@ -2677,7 +2640,7 @@ line level    source
   90      =3  #pragma RESTORE
   91      =3  
   92      =3  #endif // __STDLIB_H__
- 130      =2  #include <string.h>
+  93      =2  #include <string.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  STRING.H
    3      =3  
@@ -2686,8 +2649,6 @@ line level    source
    6      =3  Copyright (c) 2008-2016 ARM Germany GmbH
    7      =3  All rights reserved.
    8      =3  --------------------------------------------------------------------------*/
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 43  
-
    9      =3  
   10      =3  #ifndef __STRING_H__
   11      =3  #define __STRING_H__
@@ -2725,6 +2686,8 @@ line level    source
   43      =3  extern char  *strrpbrk(const char *s, const char *set);
   44      =3  extern char  *strstr  (const char *s, const char *sub);
   45      =3  extern char  *strtok  (char *str, const char *set);
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 43  
+
   46      =3  
   47      =3  extern char   memcmp  (const void *s1, const void *s2, size_t n);
   48      =3  extern void  *memcpy  (void *s1, const void *s2, size_t n);
@@ -2735,7 +2698,7 @@ line level    source
   53      =3  #pragma RESTORE
   54      =3  
   55      =3  #endif
- 131      =2  #include <INTRINS.H>
+  94      =2  #include <INTRINS.H>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  INTRINS.H
    3      =3  
@@ -2750,8 +2713,6 @@ line level    source
   12      =3  #pragma SAVE
   13      =3  
   14      =3  #if defined (__CX2__)
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 44  
-
            =3 #pragma FUNCTIONS(STATIC)
            =3 /* intrinsic functions are reentrant, but need static attribute */
            =3 #endif
@@ -2778,7 +2739,7 @@ line level    source
   38      =3  
   39      =3  #endif
   40      =3  
- 132      =2  #include <ctype.h>
+  95      =2  #include <ctype.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  CTYPE.H
    3      =3  
@@ -2789,6 +2750,8 @@ line level    source
    8      =3  
    9      =3  #ifndef __CTYPE_H__
   10      =3  #define __CTYPE_H__
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 44  
+
   11      =3  
   12      =3  #pragma SAVE
   13      =3  #pragma REGPARMS
@@ -2813,9 +2776,7 @@ line level    source
   32      =3  #pragma RESTORE
   33      =3  
   34      =3  #endif
- 133      =2  #include <LIMITS.H>
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 45  
-
+  96      =2  #include <LIMITS.H>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  LIMITS.H
    3      =3  
@@ -2845,7 +2806,7 @@ line level    source
   27      =3  #define ULONG_MAX        0xFFFFFFFF     /* Max "unsigned"  "long" value */
   28      =3  
   29      =3  #endif
- 134      =2  #include <math.h>
+  97      =2  #include <math.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  MATH.H
    3      =3  
@@ -2853,6 +2814,8 @@ line level    source
    5      =3  Copyright (c) 1988-2008 Keil Elektronik GmbH and Keil Software, Inc.
    6      =3  Copyright (c) 2008-2016 ARM Germany GmbH
    7      =3  All rights reserved.
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 45  
+
    8      =3  --------------------------------------------------------------------------*/
    9      =3  
   10      =3  #ifndef __MATH_H__
@@ -2878,8 +2841,6 @@ line level    source
   30      =3  #pragma REGPARMS
   31      =3  #if !defined (__CX2__)
   32      =3  extern char  cabs  (char  val);
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 46  
-
   33      =3  extern int    abs  (int   val);
   34      =3  extern long  labs  (long  val);
   35      =3  #endif
@@ -2914,9 +2875,11 @@ line level    source
   64      =3  #pragma RESTORE
   65      =3  
   66      =3  #endif
- 135      =2  #include "crc32.h"
+  98      =2  #include "crc32.h"
    1      =3  #ifndef __CRC32_H__
    2      =3  #define __CRC32_H__
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 46  
+
    3      =3  
    4      =3  //#ifdef __cplusplus
    5      =3  //extern "C" {
@@ -2938,16 +2901,13 @@ line level    source
            =4 #define CONFIG_LASERTIMER_OVERFLOW_US           1000L//定时器周期 1mS
            =4 #define CONFIG_VERSION                                          0x0001
            =4 #define CONFIG_CHECK_CODE                                       0x5A00
-           =4 
            =4 /*****************************************************************************/
            =4 #define CONFIG_UART0_BAUDRATE                           57600//串口波特率
            =4 #define CONFIG_UART0_PARITY                                     NONE
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 47  
-
            =4 #define CONFIG_UART0_STOPBIT                            1
            =4 #define CONFIG_UART0_DATABIT                            8
            =4 
-           =4 #define CONFIG_UART1_BAUDRATE                           115200//串口波特率
+           =4 #define CONFIG_UART1_BAUDRATE                           9600//串口波特率
            =4 #define CONFIG_UART1_PARITY                                     NONE
            =4 #define CONFIG_UART1_STOPBIT                            1
            =4 #define CONFIG_UART1_DATABIT                            8
@@ -2971,26 +2931,9 @@ line level    source
            =4 #define CONFIG_EPROM_FRAM                                       0//铁电存储体无写入等待
            =4 #define CONFIG_EPROM_FREQ                                       1//
            =4 /*****************************************************************************/
-           =4 #define CONFIG_USE_IPID                                         1//使能IPID温度控制
-           =4 /*****************************************************************************/
-           =4 #define CONFIG_USE_HWVER_SHOW                           1//使能固件版本显示
-           =4 #define CONFIG_USE_MPD1_SHOW                            1//使能MPD1测量显示
-           =4 #define CONFIG_USE_MPD2_SHOW                            1//使能MPD2测量显示
-           =4 #define CONFIG_USE_FBS1                                         1//使能FBS1检测
-           =4 #define CONFIG_USE_FBS2                                         1//使能FBS2检测
-           =4 #define CONFIG_USE_LASER_TEMP                           1//使能激光器温度显示
-           =4 #define CONFIG_USE_RADIATOR_TEMP                        1//使能散热器温度显示
-           =4 #define CONFIG_USE_ENVI_TEMP                            1//使能环境温度显示
-           =4 #define CONFIG_USE_IPID_UPDATE                          1//使能IPID参数更新功能
-           =4 #define CONFIG_USE_IPID_OUTSHOW                         1//使能IPID输出显示
-           =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_IO_INPUT_NUM                        16//硬件输入点数
-           =4 #define CONFIG_SPLC_IO_OUTPUT_NUM                       16//硬件输出点数
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
-           =4 #define CONFIG_IPID_RUN_CYCLE                           40//IPID运行周期 默认 40 * 100mS
-           =4 #define CONFIG_IPID_PWM_CYCLE                           20//IPID输出周期 默认 20 * 100mS
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
@@ -2999,15 +2942,15 @@ line level    source
            =4 #define CONFIG_SPLC_USING_IO_OUTPUT                     1//输出IO刷新启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_EPROM                         1//EPROM掉电存储启用
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 47  
+
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_ADC                           1//使能ADC模块
-           =4 #define CONFIG_SPLC_ADC_FILTER_TAP                      18//ADC位移滤波次数
-           =4 #define CONFIG_SPLC_ADC_CHANNLE                         50//ADC通道数
+           =4 #define CONFIG_SPLC_ADC_FILTER_TAP                      14//ADC位移滤波次数
+           =4 #define CONFIG_SPLC_ADC_CHANNLE                         64//ADC通道数
            =4 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
            =4 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
            =4 #define CONFIG_SPLC_ADC_INTERNAL_VREF           2200L// ADC Voltage Reference (mV)
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 48  
-
            =4 #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_DAC                           1//是能DAC模块
@@ -3019,40 +2962,21 @@ line level    source
            =4 #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//接收通讯超时 10mS
            =4 #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TX切换延时
            =4 /*****************************************************************************/
-           =4 
-           =4 /*****************************************************************************/
-           =4 #define ID_ONLY_1_CHANNEL                                       4321
-           =4 #define ID_ONLY_2_CHANNEL                                       8765
-           =4 #define ID_BOTH_CHANNEL                                         9431
-           =4 #define ID_LASER_MODE_CW                                        7631
-           =4 #define ID_LASER_MODE_SP                                        8934
-           =4 #define ID_LASER_MODE_MP                                        2453
-           =4 #define ID_LASER_MODE_GP                                        3876
-           =4 /*****************************************************************************/
-           =4 #define FBS1_IN_PORT                                            3
-           =4 #define FBS2_IN_PORT                                            2
-           =4 #define COOLON_OUT_PORT                                         (1 * 8 + 3)
-           =4 /*****************************************************************************/
-           =4 //PID FUZZY 模糊PID配置
-           =4 #define CONFIG_TECOUT_CYCLE                                     4000//PID输出转PWM周期
-           =4 /*****************************************************************************/
            =4 /*****************************************************************************/
            =4 #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
            =4 #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
            =4 #define DISABLE_INTERRUPT                                       EA = 0;
            =4 #define ENABLE_INTERRUPT                                        EA = 1;
            =4 /*****************************************************************************/
+           =4 #define BOX_CMD_STX                                                     0x81
+           =4 #define BOX_CMD_ETX                                                     0x84
+           =4 /*****************************************************************************/
            =4 #include "stdint.h"
            =4 #include "stdbool.h"
            =4 #include "endian.h"
            =4 #include "si_toolchain.h"
            =4 #include "compiler_defs.h"
-           =4 #ifdef C8051F020
            =4 #include "C8051F020_defs.h"
-           =4 #endif
-           =4 #ifdef C8051F340
-           =4 #include "C8051F340_defs.h"
-           =4 #endif
            =4 /*****************************************************************************/
            =4 #include <stdio.h>
            =4 #include <stdlib.h> 
@@ -3063,50 +2987,27 @@ line level    source
            =4 #include <math.h>
            =4 #include "crc32.h"
            =4 /*****************************************************************************/
-           =4 #ifdef C8051F020
            =4 #include "InitDeviceF020.h"
-           =4 #endif
-           =4 #ifdef C8051F580
-           =4 #include "InitDeviceF580.h"
-           =4 #endif
-           =4 
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 49  
-
            =4 #include "delay.h"
            =4 #include "i2c0.h"
-           =4 //#include "i2c1.h"
-           =4 //#include "i2c2.h"
-           =4 //#include "i2c3.h"
-           =4 //#include "i2c4.h"
-           =4 //#include "i2c5.h"
-           =4 //#include "i2c6.h"
            =4 #include "eprom.h"
            =4 #include "dac8568_0.h"
            =4 #include "dac8568_1.h"
            =4 #include "dac8568_2.h"
            =4 #include "dac8568_3.h"
-           =4 
-           =4 //#include "mcp47x6.h"
-           =4 //#include "inPca9554.h"
-           =4 //#include "outPca9554.h"
+           =4 #include "boxCmd.h"
            =4 /*****************************************************************************/
            =4 #include "Modbus.h"
            =4 #include "ModbusPort.h"
            =4 /*****************************************************************************/
-           =4 //#include "filter.h"
            =4 #include "sPLC.h"
-           =4 //#include "pidFuzzy.h"
-           =4 /*****************************************************************************/
-           =4 //#include "AppMath.h"
-           =4 //#include "chipAdc.h"
-           =4 //#include "ad5621.h"
-           =4 //#include "chipBeem.h"
-           =4 
            =4 /*****************************************************************************/
            =4 #endif
    9      =3  /*****************************************************************************/
   10      =3  uint32_t crc32Calculate(uint8_t *buf, uint32_t len);//CRC32 计算数组
   11      =3  uint32_t crc32CalculateAdd(uint8_t dat);//CRC32 计算连续字节
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 48  
+
   12      =3  void crc32Clear(void);//清空旧CRC32结果
   13      =3  void crc32SetCrcOld(uint32_t old);
   14      =3  /*****************************************************************************/
@@ -3117,9 +3018,8 @@ line level    source
   19      =3  
   20      =3  
   21      =3  
- 136      =2  /*****************************************************************************/
- 137      =2  #ifdef C8051F020
- 138      =2  #include "InitDeviceF020.h"
+  99      =2  /*****************************************************************************/
+ 100      =2  #include "InitDeviceF020.h"
    1      =3  #ifndef __INITDEVICEF020_H__
    2      =3  #define __INITDEVICEF020_H__
    3      =3  /*****************************************************************************/
@@ -3134,8 +3034,6 @@ line level    source
    8      =4  //
    9      =4  // GNU LGPL boilerplate:
   10      =4  /** This library is free software; you can redistribute it and/or
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 50  
-
   11      =4    * modify it under the terms of the GNU Lesser General Public
   12      =4    * License as published by the Free Software Foundation; either
   13      =4    * version 2.1 of the License, or (at your option) any later version.
@@ -3172,6 +3070,8 @@ line level    source
   44      =4  // or written.
   45      =4  //
   46      =4  // SFR16X and SFR32X for 16 bit and 32 bit xdata registers are not defined
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 49  
+
   47      =4  // to avoid portability issues because of compiler endianness.
   48      =4  //
   49      =4  // Example:
@@ -3198,8 +3098,6 @@ line level    source
   70      =4  //    -Added SI_GENERIC_PTR struct for accessing generic pointers
   71      =4  //    -Added SI_GPTR_MTYPE_XXXX definitions for determining the memory type
   72      =4  //     pointed at by a generic poitner
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 51  
-
   73      =4  // Release 2.6 - 14 DEC 2012 (GO)
   74      =4  //        -Added define for deprecated SDCC keyword 'at'
   75      =4  // Release 2.5 - 12 SEP 2012 (TP)
@@ -3236,6 +3134,8 @@ line level    source
  106      =4  // Release 1.3 - 30 SEP 2007 (TP)
  107      =4  //    -Added INTERRUPT_PROTO_USING to properly support ISR context switching
  108      =4  //     under SDCC.
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 50  
+
  109      =4  // Release 1.2 - (BW)
  110      =4  //    -Added support for U8,U16,U32,S8,S16,S32,UU16,UU32 data types
  111      =4  // Release 1.1 - (BW)
@@ -3262,8 +3162,6 @@ line level    source
            =4 //SDK Version
            =4 #define SDK_VERSION   2
            =4 
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 52  
-
            =4 #ifndef NULL
            =4 #define NULL ((void*) 0)
            =4 #endif
@@ -3300,6 +3198,8 @@ line level    source
            =4 # define SFRX(name, addr)       xdata volatile unsigned char __at(addr) name
            =4 # define SFR16(name, addr)      __sfr16 __at(((addr+1U)<<8) | addr)     name
            =4 # define SFR16E(name, fulladdr) __sfr16 __at(fulladdr)                  name
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 51  
+
            =4 # define SFR32(name, addr)      __sfr32 __at(((addr+3UL)<<24) | ((addr+2UL)<<16) | ((addr+1UL)<<8) | addr)
              - name
            =4 # define SFR32E(name, fulladdr) __sfr32 __at(fulladdr)                  name
@@ -3326,8 +3226,6 @@ line level    source
            =4 // used with UU16
            =4 # define LSB 0
            =4 # define MSB 1
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 53  
-
            =4 
            =4 // used with UU32 (b0 is least-significant byte)
            =4 # define b0 0
@@ -3364,6 +3262,8 @@ line level    source
            =4 
            =4 // NOP () macro support
            =4 #define NOP() _asm NOP _endasm
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 52  
+
            =4 
            =4 // generic pointer memory type specifiers
            =4 #define SI_GPTR
@@ -3390,8 +3290,6 @@ line level    source
            =4 // Raisonance (must be placed before Keil C51)
            =4 // http://www.raisonance.com
            =4 
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 54  
-
            =4 #elif defined __RC51__
            =4 
            =4 //#error Raisonance C51 detected.
@@ -3428,6 +3326,8 @@ line level    source
              -csegment name
            =4 # define SEGMENT_POINTER(name, vartype, locsegment) vartype * locsegment name
            =4 # define LOCATED_VARIABLE(name, vartype, locsegment, addr, init) at addr locsegment vartype name
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 53  
+
            =4 # define LOCATED_VARIABLE_NO_INIT(name, vartype, locsegment, addr) at addr locsegment vartype name
            =4 
            =4 
@@ -3454,8 +3354,6 @@ line level    source
            =4    U16 U16;
            =4    S16 S16;
            =4    U8 U8[2];
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 55  
-
            =4    S8 S8[2];
            =4 } UU16;
            =4 
@@ -3492,6 +3390,8 @@ line level    source
            =4         UU16 ADDR;
            =4     } GPTR;
            =4 } SI_GENERIC_PTR;
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 54  
+
            =4 
            =4 //-----------------------------------------------------------------------------
            =4 
@@ -3518,8 +3418,6 @@ line level    source
            =4 # define SFR16(name, addr)      sfr16 name = addr
            =4 # define SFR16E(name, fulladdr) /* not supported */
            =4 # define SFR32(name, fulladdr)  /* not supported */
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 56  
-
            =4 # define SFR32E(name, fulladdr) /* not supported */
            =4 
            =4 # ifndef __SLS_IDE__
@@ -3556,6 +3454,8 @@ line level    source
            =4 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype * name
            =4 # define SEGMENT_POINTER(name, vartype, locsegment) vartype * name
            =4 # define LOCATED_VARIABLE_NO_INIT(name, vartype, locsegment, addr) vartype name
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 55  
+
            =4 
            =4 # endif // __SLS_IDE__
            =4 
@@ -3582,8 +3482,6 @@ line level    source
            =4    U16 U16;
            =4    S16 S16;
            =4    U8 U8[2];
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 57  
-
            =4    S8 S8[2];
            =4 } UU16;
            =4 
@@ -3620,6 +3518,8 @@ line level    source
            =4         U8 MTYPE;
            =4         UU16 ADDR;
            =4     } GPTR;
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 56  
+
            =4 } SI_GENERIC_PTR;
            =4 
            =4 //-----------------------------------------------------------------------------
@@ -3646,8 +3546,6 @@ line level    source
            =4 # define SFR16E(name, fulladdr) /* not supported */
            =4 # define SFR32(name, fulladdr)  /* not supported */
            =4 # define SFR32E(name, fulladdr) /* not supported */
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 58  
-
            =4 
            =4 # define INTERRUPT(name, vector)       void name (void) interrupt vector
            =4 # define INTERRUPT_PROTO(name, vector)
@@ -3684,6 +3582,8 @@ line level    source
            =4 typedef signed int S16;
            =4 typedef signed long S32;
            =4 
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 57  
+
            =4 typedef union UU16
            =4 {
            =4    U16 U16;
@@ -3710,8 +3610,6 @@ line level    source
            =4 
            =4 // Tasking / Altium
            =4 // http://www.altium.com/tasking
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 59  
-
            =4 
            =4 
            =4 #elif defined _CC51
@@ -3748,6 +3646,8 @@ line level    source
            =4 # define FUNCTION_USING(name, return_value, parameter, regnum) _using(regnum) return_value name (parameter
              -)
            =4 # define FUNCTION_PROTO_USING(name, return_value, parameter, regnum) _using(regnum) return_value name (par
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 58  
+
              -ameter)
            =4 // Note: Parameter must be either 'void' or include a variable type and name. (Ex: char temp_variable)
            =4 
@@ -3774,8 +3674,6 @@ line level    source
            =4 typedef signed char S8;
            =4 typedef signed int S16;
            =4 typedef signed long S32;
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 60  
-
            =4 
            =4 typedef union UU16
            =4 {
@@ -3812,6 +3710,8 @@ line level    source
            =4 #include <intrinsics.h>
            =4 
            =4 # define SBIT(name, addr, bit)  __bit __no_init volatile bool name @ (addr+bit)
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 59  
+
            =4 # define SFR(name, addr)        __sfr __no_init volatile unsigned char name @ addr
            =4 # define SFRX(name, addr)       __xdata __no_init volatile unsigned char name @ addr
            =4 # define SFR16(name, addr)      __sfr __no_init volatile unsigned int  name @ addr
@@ -3838,8 +3738,6 @@ line level    source
            =4 # define INTERRUPT_PROTO(name, vector)  __interrupt void name(void)
            =4 # define INTERRUPT_USING(name, vector, regnum) _Pragma(_PPARAM2_(regnum)) _Pragma(_PPARAM_(vector)) __inte
              -rrupt void name(void)
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 61  
-
            =4 # define INTERRUPT_PROTO_USING(name, vector, regnum) __interrupt void name(void)
            =4 
            =4 # define FUNCTION_USING(name, return_value, parameter, regnum) /* not supported */
@@ -3876,6 +3774,8 @@ line level    source
            =4 typedef union UU16
            =4 {
            =4    U16 U16;
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 60  
+
            =4    S16 S16;
            =4    U8 U8[2];
            =4    S8 S8[2];
@@ -3902,8 +3802,6 @@ line level    source
            =4 #define SI_GPTR_MTYPE_BDATA      0x01
            =4 #define SI_GPTR_MTYPE_PDATA      0x00
            =4 #define SI_GPTR_MTYPE_XDATA      0x00
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 62  
-
            =4 #define SI_GPTR_MTYPE_CODE       0x80
            =4 
            =4 // generic pointer access struct
@@ -3940,6 +3838,8 @@ line level    source
            =4 # define SFR(name, addr)        near unsigned char name @ addr
            =4 # define SFR16(name, addr)      /* not supported */
            =4 # define SFR16E(name, fulladdr) /* not supported */
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 61  
+
            =4 # define SFR32(name, fulladdr)  /* not supported */
            =4 # define SFR32E(name, fulladdr) /* not supported */
            =4 
@@ -3966,8 +3866,6 @@ line level    source
            =4 
            =4 #endif                                 // #define COMPILER_DEFS_H
  804      =4  
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 63  
-
  805      =4  //-----------------------------------------------------------------------------
  806      =4  // End Of File
  807      =4  //-----------------------------------------------------------------------------
@@ -4004,6 +3902,8 @@ line level    source
            =4 #define C8051F020_DEFS_H
            =4 
            =4 //-----------------------------------------------------------------------------
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 62  
+
            =4 // Byte Registers
            =4 //-----------------------------------------------------------------------------
            =4 
@@ -4030,8 +3930,6 @@ line level    source
            =4 SFR (TMR3L, 0x94);                     // Timer/Counter 3 Low
            =4 SFR (TMR3H, 0x95);                     // Timer/Counter 3 High
            =4 SFR (P7, 0x96);                        // Port 7 Latch
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 64  
-
            =4 SFR (SCON0, 0x98);                     // Serial Port UART0 Control
            =4 SFR (SBUF0, 0x99);                     // Serial Port UART0 Data Buffer
            =4 SFR (SPI0CFG, 0x9A);                   // SPI0 Configuration
@@ -4068,6 +3966,8 @@ line level    source
            =4 SFR (ADC0CF, 0xBC);                    // ADC0 Configuration
            =4 SFR (P1MDIN, 0xBD);                    // Port 1 Input Mode
            =4 SFR (ADC0L, 0xBE);                     // ADC0 Data Low
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 63  
+
            =4 SFR (ADC0H, 0xBF);                     // ADC0 Data High
            =4 SFR (SMB0CN, 0xC0);                    // SMBus0 Control
            =4 SFR (SMB0STA, 0xC1);                   // SMBus0 Status
@@ -4094,8 +3994,6 @@ line level    source
            =4 SFR (DAC1CN, 0xD7);                    // DAC1 Control
            =4 SFR (PCA0CN, 0xD8);                    // PCA0 Control
            =4 SFR (PCA0MD, 0xD9);                    // PCA0 Mode
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 65  
-
            =4 SFR (PCA0CPM0, 0xDA);                  // PCA0 Module 0 Mode Register
            =4 SFR (PCA0CPM1, 0xDB);                  // PCA0 Module 1 Mode Register
            =4 SFR (PCA0CPM2, 0xDC);                  // PCA0 Module 2 Mode Register
@@ -4132,6 +4030,8 @@ line level    source
            =4 SFR (PCA0CPH2, 0xFC);                  // PCA0 Capture 2 High
            =4 SFR (PCA0CPH3, 0xFD);                  // PCA0 Capture 3 High
            =4 SFR (PCA0CPH4, 0xFE);                  // PCA0 Capture 4 High
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 64  
+
            =4 SFR (WDTCN, 0xFF);                     // Watchdog Timer Control
            =4 
            =4 //-----------------------------------------------------------------------------
@@ -4158,8 +4058,6 @@ line level    source
            =4 //-----------------------------------------------------------------------------
            =4 // Address Definitions for bit-addressable SFRs
            =4 //-----------------------------------------------------------------------------
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 66  
-
            =4 
            =4 #define SFR_P0       0x80
            =4 #define SFR_TCON     0x88
@@ -4196,6 +4094,8 @@ line level    source
            =4 SBIT (SM00, SFR_SCON0, 7);             // Serial Mode Control Bit 0
            =4 SBIT (SM10, SFR_SCON0, 6);             // Serial Mode Control Bit 1
            =4 SBIT (SM20, SFR_SCON0, 5);             // Multiprocessor Communication Enable
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 65  
+
            =4 SBIT (REN0, SFR_SCON0, 4);             // Receive Enable
            =4 SBIT (TB80, SFR_SCON0, 3);             // Transmit Bit 8
            =4 SBIT (RB80, SFR_SCON0, 2);             // Receive Bit 8
@@ -4222,8 +4122,6 @@ line level    source
            =4 SBIT (PT0, SFR_IP, 1);                 // Timer 0 Priority
            =4 SBIT (PX0, SFR_IP, 0);                 // External Interrupt 0 Priority
            =4 
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 67  
-
            =4 // SMB0CN 0xC0
            =4 SBIT (BUSY, SFR_SMB0CN, 7);            // SMBus 0 Busy
            =4 SBIT (ENSMB, SFR_SMB0CN, 6);           // SMBus 0 Enable
@@ -4260,6 +4158,8 @@ line level    source
            =4                                        // Bit5 UNUSED
            =4 SBIT (CCF4, SFR_PCA0CN, 4);            // PCA 0 Module 4 Interrupt Flag
            =4 SBIT (CCF3, SFR_PCA0CN, 3);            // PCA 0 Module 3 Interrupt Flag
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 66  
+
            =4 SBIT (CCF2, SFR_PCA0CN, 2);            // PCA 0 Module 2 Interrupt Flag
            =4 SBIT (CCF1, SFR_PCA0CN, 1);            // PCA 0 Module 1 Interrupt Flag
            =4 SBIT (CCF0, SFR_PCA0CN, 0);            // PCA 0 Module 0 Interrupt Flag
@@ -4286,8 +4186,6 @@ line level    source
            =4 
            =4 //-----------------------------------------------------------------------------
            =4 // Interrupt Priorities
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 68  
-
            =4 //-----------------------------------------------------------------------------
            =4 
            =4 #define INTERRUPT_INT0           0     // External Interrupt 0
@@ -4324,6 +4222,8 @@ line level    source
            =4 #endif
            =4 
            =4 //-----------------------------------------------------------------------------
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 67  
+
            =4 // Header File PreProcessor Directive
            =4 //-----------------------------------------------------------------------------
            =4 
@@ -4335,47 +4235,23 @@ line level    source
    6      =3  /*****************************************************************************/
    7      =3  void initDeviceF020(void);
    8      =3  #endif
- 139      =2  #endif
- 140      =2  #ifdef C8051F580
-           =2 #include "InitDeviceF580.h"
-           =2 #endif
- 143      =2  
- 144      =2  #include "delay.h"
+ 101      =2  #include "delay.h"
    1      =3  #ifndef __DELAY_H__
    2      =3  #define __DELAY_H__
    3      =3  /*****************************************************************************/
    4      =3  #include "appConfig.h"
            =2 #include "i2c0.h"
-           =2 //#include "i2c1.h"
-           =2 //#include "i2c2.h"
-           =2 //#include "i2c3.h"
-           =2 //#include "i2c4.h"
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 69  
-
-           =2 //#include "i2c5.h"
-           =2 //#include "i2c6.h"
            =2 #include "eprom.h"
            =2 #include "dac8568_0.h"
            =2 #include "dac8568_1.h"
            =2 #include "dac8568_2.h"
            =2 #include "dac8568_3.h"
-           =2 
-           =2 //#include "mcp47x6.h"
-           =2 //#include "inPca9554.h"
-           =2 //#include "outPca9554.h"
+           =2 #include "boxCmd.h"
            =2 /*****************************************************************************/
            =2 #include "Modbus.h"
            =2 #include "ModbusPort.h"
            =2 /*****************************************************************************/
-           =2 //#include "filter.h"
            =2 #include "sPLC.h"
-           =2 //#include "pidFuzzy.h"
-           =2 /*****************************************************************************/
-           =2 //#include "AppMath.h"
-           =2 //#include "chipAdc.h"
-           =2 //#include "ad5621.h"
-           =2 //#include "chipBeem.h"
-           =2 
            =2 /*****************************************************************************/
            =2 #endif
    4      =3  #ifndef __DELAY_H__
@@ -4410,12 +4286,12 @@ line level    source
   14      =3  void iic0SendByte(uint8_t txd);
   15      =3  uint8_t iic0ReadByte(uint8_t ack);
   16      =3  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 68  
+
   17      =3  #endif
   18      =3  
   19      =3  
    1      =3  #ifndef __EPROM_H__
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 70  
-
    2      =3  #define __EPROM_H__
    3      =3  /*****************************************************************************/
    4      =3  #include "appConfig.h"
@@ -4470,16 +4346,144 @@ line level    source
    6      =3  void dac8568_3_WriteDacRegister(uint8_t ch, uint16_t dat);
    7      =3  void dac8568_3_Clear(void);
    8      =3  void dac8568_3_Reset(void);
+   1      =3  #ifndef __BOXCMD_H__
+   2      =3  #define __BOXCMD_H__
+   3      =3  /*****************************************************************************/
+   4      =3  #include "appConfig.h"
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 69  
+
+   1      =4  #ifndef __APPCONFIG_H__
+           =4 #define __APPCONFIG_H__
+           =4 /*****************************************************************************/
+           =4 #define CONFIG_SYSCLK                       (22118400L)
+           =4 #ifdef C8051F020
+           =4 #define SAR_CLK                                                 2000000L//ADC0时钟 <2.5MHz
+           =4 #endif
+           =4 #define CONFIG_DEBUG                        0//调试功能
+           =4 #define CONFIG_USING_WDT                                        0//使能看门狗
+           =4 #define CONFIG_USING_RESET                                      0//使能PLC复位MCU功能
+           =4 #define CONFIG_LADDER_SECTORS_START                     64//指令起始地址
+           =4 #define CONFIG_LADDER_SECTORS_END                       128//指令结束地址
+           =4 #define CONFIG_LASERTIMER_OVERFLOW_US           1000L//定时器周期 1mS
+           =4 #define CONFIG_VERSION                                          0x0001
+           =4 #define CONFIG_CHECK_CODE                                       0x5A00
+           =4 /*****************************************************************************/
+           =4 #define CONFIG_UART0_BAUDRATE                           57600//串口波特率
+           =4 #define CONFIG_UART0_PARITY                                     NONE
+           =4 #define CONFIG_UART0_STOPBIT                            1
+           =4 #define CONFIG_UART0_DATABIT                            8
+           =4 
+           =4 #define CONFIG_UART1_BAUDRATE                           9600//串口波特率
+           =4 #define CONFIG_UART1_PARITY                                     NONE
+           =4 #define CONFIG_UART1_STOPBIT                            1
+           =4 #define CONFIG_UART1_DATABIT                            8
+           =4 /*****************************************************************************/
+           =4 #define CONFIG_I2C0_FREQ                                        (100000L)               
+           =4 #define CONFIG_I2C1_FREQ                                        (100000L)
+           =4 #define CONFIG_I2C2_FREQ                                        (100000L)
+           =4 #define CONFIG_I2C3_FREQ                                        (100000L)
+           =4 #define CONFIG_I2C4_FREQ                                        (100000L)
+           =4 /*****************************************************************************/
+           =4 #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
+           =4 #define CONFIG_AT24C02_SIZE                             256
+           =4 #define CONFIG_AT24C04_SIZE                             512
+           =4 #define CONFIG_AT24C08_SIZE                             1024
+           =4 #define CONFIG_AT24C16_SIZE                             2048
+           =4 #define CONFIG_AT24C32_SIZE                             4096
+           =4 #define CONFIG_AT24C64_SIZE                                     8192
+           =4 #define CONFIG_AT24C128_SIZE                            16384
+           =4 #define CONFIG_AT24C256_SIZE                            32768
+           =4 #define CONFIG_EPROM_ADDRESS                            0x50
+           =4 #define CONFIG_EPROM_FRAM                                       0//铁电存储体无写入等待
+           =4 #define CONFIG_EPROM_FREQ                                       1//
+           =4 /*****************************************************************************/
+           =4 //SPLC设置
+           =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
+           =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
+           =4 /*****************************************************************************/
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
+           =4 /*****************************************************************************/
+           =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
+           =4 /*****************************************************************************/
+           =4 #define CONFIG_SPLC_USING_IO_OUTPUT                     1//输出IO刷新启用
+           =4 /*****************************************************************************/
+           =4 #define CONFIG_SPLC_USING_EPROM                         1//EPROM掉电存储启用
+           =4 /*****************************************************************************/
+           =4 #define CONFIG_SPLC_USING_ADC                           1//使能ADC模块
+           =4 #define CONFIG_SPLC_ADC_FILTER_TAP                      14//ADC位移滤波次数
+           =4 #define CONFIG_SPLC_ADC_CHANNLE                         64//ADC通道数
+           =4 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
+           =4 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 70  
+
+           =4 #define CONFIG_SPLC_ADC_INTERNAL_VREF           2200L// ADC Voltage Reference (mV)
+           =4 #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
+           =4 /*****************************************************************************/
+           =4 #define CONFIG_SPLC_USING_DAC                           1//是能DAC模块
+           =4 /*****************************************************************************/
+           =4 #define CONFIG_SPLC_USING_MB_RTU_SLAVE          1//是能MODBUS RTU从站
+           =4 #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
+           =4 #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//从设备地址
+           =4 #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//发送接收缓冲区
+           =4 #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//接收通讯超时 10mS
+           =4 #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TX切换延时
+           =4 /*****************************************************************************/
+           =4 /*****************************************************************************/
+           =4 #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
+           =4 #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
+           =4 #define DISABLE_INTERRUPT                                       EA = 0;
+           =4 #define ENABLE_INTERRUPT                                        EA = 1;
+           =4 /*****************************************************************************/
+           =4 #define BOX_CMD_STX                                                     0x81
+           =4 #define BOX_CMD_ETX                                                     0x84
+           =4 /*****************************************************************************/
+           =4 #include "stdint.h"
+           =4 #include "stdbool.h"
+           =4 #include "endian.h"
+           =4 #include "si_toolchain.h"
+           =4 #include "compiler_defs.h"
+           =4 #include "C8051F020_defs.h"
+           =4 /*****************************************************************************/
+           =4 #include <stdio.h>
+           =4 #include <stdlib.h> 
+           =4 #include <string.h>
+           =4 #include <INTRINS.H>
+           =4 #include <ctype.h>
+           =4 #include <LIMITS.H>
+           =4 #include <math.h>
+           =4 #include "crc32.h"
+           =4 /*****************************************************************************/
+           =4 #include "InitDeviceF020.h"
+           =4 #include "delay.h"
+           =4 #include "i2c0.h"
+           =4 #include "eprom.h"
+           =4 #include "dac8568_0.h"
+           =4 #include "dac8568_1.h"
+           =4 #include "dac8568_2.h"
+           =4 #include "dac8568_3.h"
+           =4 #include "boxCmd.h"
+           =4 /*****************************************************************************/
+           =4 #include "Modbus.h"
+           =4 #include "ModbusPort.h"
+           =4 /*****************************************************************************/
+           =4 #include "sPLC.h"
+           =4 /*****************************************************************************/
+           =4 #endif
+   5      =3  /*****************************************************************************/
+   6      =3  void initboxSerial(uint32_t baudrate);
+   7      =3  void boxRedLedRefresh(void);
+   8      =3  void boxGreenLedRefresh(void);
+   9      =3  #endif
    1      =3  #ifndef __MODBUS__H__
            =3 #define __MODBUS__H__
            =3 /*****************************************************************************/
            =3 #include "appConfig.h"
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 71  
+
            =3 /*****************************************************************************/
            =3 extern volatile uint16_t modbusTimerValue;
            =3 extern volatile uint8_t modbusReceiveCounter;// Collected data number
            =3 extern xdata volatile uint8_t modbusReceiveBuffer[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 71  
-
            =3 /*****************************************************************************/
            =3 extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
            =3 extern void modbusPorcess(void);
@@ -4519,14 +4523,13 @@ line level    source
            =4 #define CONFIG_LASERTIMER_OVERFLOW_US           1000L//定时器周期 1mS
            =4 #define CONFIG_VERSION                                          0x0001
            =4 #define CONFIG_CHECK_CODE                                       0x5A00
-           =4 
            =4 /*****************************************************************************/
            =4 #define CONFIG_UART0_BAUDRATE                           57600//串口波特率
            =4 #define CONFIG_UART0_PARITY                                     NONE
            =4 #define CONFIG_UART0_STOPBIT                            1
            =4 #define CONFIG_UART0_DATABIT                            8
            =4 
-           =4 #define CONFIG_UART1_BAUDRATE                           115200//串口波特率
+           =4 #define CONFIG_UART1_BAUDRATE                           9600//串口波特率
            =4 #define CONFIG_UART1_PARITY                                     NONE
            =4 #define CONFIG_UART1_STOPBIT                            1
            =4 #define CONFIG_UART1_DATABIT                            8
@@ -4539,11 +4542,11 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
            =4 #define CONFIG_AT24C02_SIZE                             256
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 72  
+
            =4 #define CONFIG_AT24C04_SIZE                             512
            =4 #define CONFIG_AT24C08_SIZE                             1024
            =4 #define CONFIG_AT24C16_SIZE                             2048
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 72  
-
            =4 #define CONFIG_AT24C32_SIZE                             4096
            =4 #define CONFIG_AT24C64_SIZE                                     8192
            =4 #define CONFIG_AT24C128_SIZE                            16384
@@ -4552,26 +4555,9 @@ line level    source
            =4 #define CONFIG_EPROM_FRAM                                       0//铁电存储体无写入等待
            =4 #define CONFIG_EPROM_FREQ                                       1//
            =4 /*****************************************************************************/
-           =4 #define CONFIG_USE_IPID                                         1//使能IPID温度控制
-           =4 /*****************************************************************************/
-           =4 #define CONFIG_USE_HWVER_SHOW                           1//使能固件版本显示
-           =4 #define CONFIG_USE_MPD1_SHOW                            1//使能MPD1测量显示
-           =4 #define CONFIG_USE_MPD2_SHOW                            1//使能MPD2测量显示
-           =4 #define CONFIG_USE_FBS1                                         1//使能FBS1检测
-           =4 #define CONFIG_USE_FBS2                                         1//使能FBS2检测
-           =4 #define CONFIG_USE_LASER_TEMP                           1//使能激光器温度显示
-           =4 #define CONFIG_USE_RADIATOR_TEMP                        1//使能散热器温度显示
-           =4 #define CONFIG_USE_ENVI_TEMP                            1//使能环境温度显示
-           =4 #define CONFIG_USE_IPID_UPDATE                          1//使能IPID参数更新功能
-           =4 #define CONFIG_USE_IPID_OUTSHOW                         1//使能IPID输出显示
-           =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_IO_INPUT_NUM                        16//硬件输入点数
-           =4 #define CONFIG_SPLC_IO_OUTPUT_NUM                       16//硬件输出点数
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
-           =4 #define CONFIG_IPID_RUN_CYCLE                           40//IPID运行周期 默认 40 * 100mS
-           =4 #define CONFIG_IPID_PWM_CYCLE                           20//IPID输出周期 默认 20 * 100mS
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
@@ -4582,8 +4568,8 @@ line level    source
            =4 #define CONFIG_SPLC_USING_EPROM                         1//EPROM掉电存储启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_ADC                           1//使能ADC模块
-           =4 #define CONFIG_SPLC_ADC_FILTER_TAP                      18//ADC位移滤波次数
-           =4 #define CONFIG_SPLC_ADC_CHANNLE                         50//ADC通道数
+           =4 #define CONFIG_SPLC_ADC_FILTER_TAP                      14//ADC位移滤波次数
+           =4 #define CONFIG_SPLC_ADC_CHANNLE                         64//ADC通道数
            =4 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
            =4 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
            =4 #define CONFIG_SPLC_ADC_INTERNAL_VREF           2200L// ADC Voltage Reference (mV)
@@ -4598,42 +4584,21 @@ line level    source
            =4 #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//接收通讯超时 10mS
            =4 #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TX切换延时
            =4 /*****************************************************************************/
-           =4 
-           =4 /*****************************************************************************/
-           =4 #define ID_ONLY_1_CHANNEL                                       4321
-           =4 #define ID_ONLY_2_CHANNEL                                       8765
-           =4 #define ID_BOTH_CHANNEL                                         9431
-           =4 #define ID_LASER_MODE_CW                                        7631
-           =4 #define ID_LASER_MODE_SP                                        8934
-           =4 #define ID_LASER_MODE_MP                                        2453
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 73  
-
-           =4 #define ID_LASER_MODE_GP                                        3876
-           =4 /*****************************************************************************/
-           =4 #define FBS1_IN_PORT                                            3
-           =4 #define FBS2_IN_PORT                                            2
-           =4 #define COOLON_OUT_PORT                                         (1 * 8 + 3)
-           =4 /*****************************************************************************/
-           =4 //PID FUZZY 模糊PID配置
-           =4 #define CONFIG_TECOUT_CYCLE                                     4000//PID输出转PWM周期
-           =4 /*****************************************************************************/
            =4 /*****************************************************************************/
            =4 #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
            =4 #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
            =4 #define DISABLE_INTERRUPT                                       EA = 0;
            =4 #define ENABLE_INTERRUPT                                        EA = 1;
            =4 /*****************************************************************************/
+           =4 #define BOX_CMD_STX                                                     0x81
+           =4 #define BOX_CMD_ETX                                                     0x84
+           =4 /*****************************************************************************/
            =4 #include "stdint.h"
            =4 #include "stdbool.h"
            =4 #include "endian.h"
            =4 #include "si_toolchain.h"
            =4 #include "compiler_defs.h"
-           =4 #ifdef C8051F020
            =4 #include "C8051F020_defs.h"
-           =4 #endif
-           =4 #ifdef C8051F340
-           =4 #include "C8051F340_defs.h"
-           =4 #endif
            =4 /*****************************************************************************/
            =4 #include <stdio.h>
            =4 #include <stdlib.h> 
@@ -4641,48 +4606,25 @@ line level    source
            =4 #include <INTRINS.H>
            =4 #include <ctype.h>
            =4 #include <LIMITS.H>
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 73  
+
            =4 #include <math.h>
            =4 #include "crc32.h"
            =4 /*****************************************************************************/
-           =4 #ifdef C8051F020
            =4 #include "InitDeviceF020.h"
-           =4 #endif
-           =4 #ifdef C8051F580
-           =4 #include "InitDeviceF580.h"
-           =4 #endif
-           =4 
            =4 #include "delay.h"
            =4 #include "i2c0.h"
-           =4 //#include "i2c1.h"
-           =4 //#include "i2c2.h"
-           =4 //#include "i2c3.h"
-           =4 //#include "i2c4.h"
-           =4 //#include "i2c5.h"
-           =4 //#include "i2c6.h"
            =4 #include "eprom.h"
            =4 #include "dac8568_0.h"
            =4 #include "dac8568_1.h"
            =4 #include "dac8568_2.h"
            =4 #include "dac8568_3.h"
-           =4 
-           =4 //#include "mcp47x6.h"
-           =4 //#include "inPca9554.h"
-           =4 //#include "outPca9554.h"
+           =4 #include "boxCmd.h"
            =4 /*****************************************************************************/
            =4 #include "Modbus.h"
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 74  
-
            =4 #include "ModbusPort.h"
            =4 /*****************************************************************************/
-           =4 //#include "filter.h"
            =4 #include "sPLC.h"
-           =4 //#include "pidFuzzy.h"
-           =4 /*****************************************************************************/
-           =4 //#include "AppMath.h"
-           =4 //#include "chipAdc.h"
-           =4 //#include "ad5621.h"
-           =4 //#include "chipBeem.h"
-           =4 
            =4 /*****************************************************************************/
            =4 #endif
    5      =3  /*****************************************************************************/
@@ -4699,13 +4641,13 @@ line level    source
   16      =3  #define EM_START                                                16
   17      =3  #define EM_END                                                  143
   18      =3  //延时线圈
-  19      =3  //1MS 1 * 16 = 32BIT
+  19      =3  //1MS 1 * 16 = 16BIT
   20      =3  #define T_1MS_START                                             144
   21      =3  #define T_1MS_END                                               144
-  22      =3  //10MS 2 * 16 = 32BIT
+  22      =3  //10MS 1 * 16 = 16BIT
   23      =3  #define T_10MS_START                                    145
   24      =3  #define T_10MS_END                                              145
-  25      =3  //100MS 1 * 16 = 32BIT
+  25      =3  //100MS 1 * 16 = 16BIT
   26      =3  #define T_100MS_START                                   146
   27      =3  #define T_100MS_END                                             146
   28      =3  //延时计时器 
@@ -4721,21 +4663,21 @@ line level    source
   38      =3  //计数器 1
   39      =3  #define C_START                                                 195
   40      =3  #define C_END                                                   195
-  41      =3  //输入位寄存器 8 * 16 = 128个
+  41      =3  //输入位寄存器 1 * 16 = 128个
   42      =3  #define X_START                                                 196
-  43      =3  #define X_END                                                   203                     
-  44      =3  //输出位寄存器 8 * 16 = 128个
-  45      =3  #define Y_START                                                 204
-  46      =3  #define Y_END                                                   211
+  43      =3  #define X_END                                                   196                     
+  44      =3  //输出位寄存器 1 * 16 = 128个
+  45      =3  #define Y_START                                                 197
+  46      =3  #define Y_END                                                   197
   47      =3  //特殊寄存器 4个字
-  48      =3  #define SPREG_START                                             212
-  49      =3  #define SPREG_END                                               215
-  50      =3  //特殊线圈      4 * 16 = 64个
-  51      =3  #define SPCOIL_START                                    216
-  52      =3  #define SPCOIL_END                                              219
-  53      =3  /*****************************************************************************/
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 75  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 74  
 
+  48      =3  #define SPREG_START                                             198
+  49      =3  #define SPREG_END                                               201
+  50      =3  //特殊线圈      4 * 16 = 64个
+  51      =3  #define SPCOIL_START                                    202
+  52      =3  #define SPCOIL_END                                              205
+  53      =3  /*****************************************************************************/
   54      =3  #define EM_ADC_0                                                (EM_START + 0)//ADC0->MLD0
   55      =3  #define EM_ADC_1                                                (EM_START + 1)//ADC1->MLD1
   56      =3  #define EM_ADC_2                                                (EM_START + 2)//ADC2->MLD2
@@ -4792,14 +4734,14 @@ line level    source
  107      =3  #define EM_ADC_53                                               (EM_START + 53)//ADC43->MPD21
  108      =3  #define EM_ADC_54                                               (EM_START + 54)//ADC44->MPD22
  109      =3  #define EM_ADC_55                                               (EM_START + 55)//ADC45->MPD23
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 75  
+
  110      =3  #define EM_ADC_56                                               (EM_START + 56)//ADC46->MPD24
  111      =3  #define EM_ADC_57                                               (EM_START + 57)//ADC47->MPD25
  112      =3  #define EM_ADC_58                                               (EM_START + 58)//ADC48->MPD26
  113      =3  #define EM_ADC_59                                               (EM_START + 59)//ADC49->MPD27
  114      =3  #define EM_ADC_60                                               (EM_START + 60)//ADC50->MPD28
  115      =3  #define EM_ADC_61                                               (EM_START + 61)//ADC50->MPD29
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 76  
-
  116      =3  #define EM_ADC_62                                               (EM_START + 62)//ADC50->MPD30
  117      =3  #define EM_ADC_63                                               (EM_START + 63)//ADC50->MPD31
  118      =3  #define EM_DAC_0                                                (EM_START + 64)//DAC0
@@ -4856,14 +4798,14 @@ line level    source
  169      =3  }adcTempDat_t;
  170      =3  /*****************************************************************************/
  171      =3  extern uint16_t ModbusSlaveAsciiOverTimeCounter;//Modbus Slave通信超时计时器
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 76  
+
  172      =3  extern xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
  173      =3  extern xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
  174      =3  /*****************************************************************************/
  175      =3  void wdtDisable(void);//看门狗屏蔽
  176      =3  void sPlcInit(void);//软逻辑初始化
  177      =3  void sPlcProcessStart(void);//sPLC轮询起始
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 77  
-
  178      =3  void sPlcProcessEnd(void);//sPLC轮询结束
  179      =3  /*****************************************************************************/
  180      =3  void assertCoilAddress(uint16_t adr);
@@ -4920,14 +4862,14 @@ line level    source
   12          #define FALSE_FUNCTION                                                  0
   13          #define FALSE_SLAVE_ADDRESS                                             1
   14          #define DATA_NOT_READY                                                  2
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 77  
+
   15          #define DATA_READY                                                      3
   16          #define ERROR_CODE_01                                                   0x01// function code is not supported
   17          #define ERROR_CODE_02                                                   0x02// Register address is not allowed or write-protected
   18          #define ERROR_CODE_03                                                   0x03//Some data values are out of range, invalid number of r
              -egister
   19          /*****************************************************************************/
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 78  
-
   20          typedef enum{
   21              RXTX_IDLE,
   22              RXTX_START,
@@ -4984,14 +4926,14 @@ line level    source
   72   1          Tx_Current  =0;
   73   1          Tx_State    =RXTX_START;
   74   1          return true;
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 78  
+
   75   1      }
   76          void HandleModbusError(char ErrorCode){// Initialise the output buffer. The first byte in the buffer says 
              -how many registers we have read
   77   1          Tx_Data.function = ErrorCode | 0x80;
   78   1          Tx_Data.address = ModbusSlaveAddress;
   79   1          Tx_Data.dataLen = 0;
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 79  
-
   80   1          SendMessage();
   81   1      }
   82          
@@ -5048,14 +4990,14 @@ line level    source
  131   2              Tx_Data.dataLen = 1;
  132   2              Tx_Data.dataBuf[0] = 0;
  133   2              for (i = 0;i < numberOfRegisters;i ++){
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 79  
+
  134   3                  currentData = (uint16_t)NVRAM0[startAddress + i];
  135   3                  Tx_Data.dataBuf[Tx_Data.dataLen] = (uint8_t)((currentData & 0xFF00) >> 8);
  136   3                  Tx_Data.dataBuf[Tx_Data.dataLen + 1] = (uint8_t)(currentData & 0x00FF);
  137   3                  Tx_Data.dataLen += 2;
  138   3                  Tx_Data.dataBuf[0] = Tx_Data.dataLen - 1;
  139   3              }
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 80  
-
  140   2              SendMessage();
  141   2          }
  142   1      }
@@ -5112,14 +5054,14 @@ line level    source
  192          void HandleModbusWriteMultipleCoils(void){//Modbus function 15 - Write multiple coils
  193   1              uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
  194   1              uint8_t tempData = 0;
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 80  
+
  195   1              // The message contains the requested start address and number of registers
  196   1          startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  197   1          numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
  198   1              if((startAddress + numberOfCoil) > (CONFIG_NVRAM_SIZE * 16)){//If it is bigger than RegisterNumber return
              - error to Modbus Master
  199   2              HandleModbusError(ERROR_CODE_02);
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 81  
-
  200   2              }
  201   1              else{
  202   2                      byteCount = numberOfCoil / 8;
@@ -5176,14 +5118,14 @@ line level    source
  253   2              Tx_Data.dataBuf[2] = Rx_Data.dataBuf[2];
  254   2              Tx_Data.dataBuf[3] = Rx_Data.dataBuf[3];
  255   2              // Output data buffer is exact copy of input buffer
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 81  
+
  256   2              for (i = 0;i < numberOfRegisters;i ++){
  257   3                  value = (uint16_t)((Rx_Data.dataBuf[5 + 2 * i] << 8) & 0xFF00) + (uint16_t)((Rx_Data.dataBuf[6
              - + 2 * i]) & 0x00FF);
  258   3                  NVRAM0[startAddress + i] = (int16_t)value;
  259   3              }
  260   2              SendMessage();
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 82  
-
  261   2          }
  262   1      }
  263          uint8_t RxDataAvailable(void){//RxDataAvailable
@@ -5240,14 +5182,14 @@ line level    source
  313   1          uint8_t i;
  314   1          uint8_t receiveBufferControl=0;
  315   1          receiveBufferControl = checkModbusBufferComplete();
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 82  
+
  316   1          if(receiveBufferControl == DATA_READY){
  317   2              Rx_Data.address               =modbusReceiveBuffer[0];
  318   2              Rx_CRC16                      = 0xffff;
  319   2              modbusCrc16(Rx_Data.address, &Rx_CRC16);
  320   2              Rx_Data.function              =modbusReceiveBuffer[1];
  321   2              modbusCrc16(Rx_Data.function, &Rx_CRC16);
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 83  
-
  322   2      
  323   2              Rx_Data.dataLen=0;
  324   2      
@@ -5304,14 +5246,14 @@ line level    source
              -e
  374   1          if (RxDataAvailable()){
  375   2              if (Rx_Data.address == ModbusSlaveAddress){
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 83  
+
  376   3                  switch (Rx_Data.function)                                     // Data is for us but which func
              -tion?
  377   3                  {
  378   4                                      case MODBUS_READ_COILS:{//FUN 01
  379   5                                              HandleModbusReadCoils();
  380   5                                              break;
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 84  
-
  381   5                                      }
  382   4                      case MODBUS_READ_HOLDING_REGISTERS:{//FUN 03
  383   5                                              HandleModbusReadHoldingRegisters();
@@ -5346,7 +5288,7 @@ line level    source
  412   1          modBusUartInitialise(baudrate);
  413   1          modBusTimerInitialise();
  414   1      }
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 85  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 84  
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -5410,7 +5352,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0044 900000      R     MOV     DPTR,#Rx_Data+02H
 0047 7C00              MOV     R4,#00H
 0049         L?0145:
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 86  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 85  
 
 0049 E0                MOVX    A,@DPTR
 004A FE                MOV     R6,A
@@ -5441,8 +5383,8 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 006B         L?0149:
 006B 540F              ANL     A,#0FH
 006D FF                MOV     R7,A
-006E 7E00              MOV     R6,#00H
-0070 7401              MOV     A,#01H
+006E 7401              MOV     A,#01H
+0070 7E00              MOV     R6,#00H
 0072 A807              MOV     R0,AR7
 0074 08                INC     R0
 0075 22                RET     
@@ -5474,7 +5416,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0092 F8                MOV     R0,A
 0093 C3                CLR     C
 0094 020000      E     LJMP    ?C?ULCMP
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 87  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 86  
 
 0097         L?0155:
 0097 E500        R     MOV     A,tempAddr
@@ -5511,9 +5453,9 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00B4 FE                MOV     R6,A
 00B5 D3                SETB    C
 00B6 EF                MOV     A,R7
-00B7 94C0              SUBB    A,#0C0H
+00B7 94E0              SUBB    A,#0E0H
 00B9 EE                MOV     A,R6
-00BA 940D              SUBB    A,#0DH
+00BA 940C              SUBB    A,#0CH
 00BC 22                RET     
 00BD         L?0161:
 00BD 3E                ADDC    A,R6
@@ -5538,7 +5480,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0007 FC                MOV     R4,A
 0008 FD                MOV     R5,A
 0009 FE                MOV     R6,A
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 88  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 87  
 
 000A 120000      E     LCALL   ?C?LLDPTR0
 000D EF                MOV     A,R7
@@ -5602,7 +5544,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0063         ?C0004:
                                            ; SOURCE LINE # 58
 0063 120000      E     LCALL   ?C?LLDPTR
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 89  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 88  
 
 0066 7801              MOV     R0,#01H
 0068 120000      E     LCALL   ?C?ULSHR
@@ -5654,6 +5596,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 66
 001D 7F01              MOV     R7,#01H
                                            ; SOURCE LINE # 67
+001F         ?C0007:
 001F 22                RET     
              ; FUNCTION DoSlaveTX (END)
 
@@ -5665,9 +5608,9 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0003 6003              JZ      ?C0008
                                            ; SOURCE LINE # 70
 0005 7F00              MOV     R7,#00H
-0007 22                RET     
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 90  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 89  
 
+0007 22                RET     
                                            ; SOURCE LINE # 71
 0008         ?C0008:
                                            ; SOURCE LINE # 72
@@ -5729,9 +5672,9 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 ;---- Variable 'numberOfCoil' assigned to Register 'R4/R5' ----
 000F 120000      R     LCALL   L?0158
                                            ; SOURCE LINE # 89
-0012 E500        R     MOV     A,startAddress+01H
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 91  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 90  
 
+0012 E500        R     MOV     A,startAddress+01H
 0014 2D                ADD     A,R5
 0015 FF                MOV     R7,A
 0016 E500        R     MOV     A,startAddress
@@ -5744,8 +5687,8 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0022         ?C0011:
                                            ; SOURCE LINE # 92
                                            ; SOURCE LINE # 93
-0022 AE04              MOV     R6,AR4
-0024 ED                MOV     A,R5
+0022 ED                MOV     A,R5
+0023 AE04              MOV     R6,AR4
 0025 7803              MOV     R0,#03H
 0027         ?C0102:
 0027 CE                XCH     A,R6
@@ -5793,9 +5736,9 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 005C 120000      R     LCALL   L?0150
 005F E4                CLR     A
 0060 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 103
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 92  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 91  
 
+                                           ; SOURCE LINE # 103
 ;---- Variable 'j' assigned to Register 'R4/R5' ----
 0061 FD                MOV     R5,A
 0062 FC                MOV     R4,A
@@ -5832,8 +5775,8 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 008B E0                MOVX    A,@DPTR
 008C FF                MOV     R7,A
 008D AE05              MOV     R6,AR5
-008F A806              MOV     R0,AR6
-0091 E9                MOV     A,R1
+008F E9                MOV     A,R1
+0090 A806              MOV     R0,AR6
 0092 08                INC     R0
 0093 8002              SJMP    ?C0107
 0095         ?C0106:
@@ -5857,9 +5800,9 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00A8 ED                MOV     A,R5
 00A9 6408              XRL     A,#08H
 00AB 4C                ORL     A,R4
-00AC 70B5              JNZ     ?C0017
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 93  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 92  
 
+00AC 70B5              JNZ     ?C0017
 00AE         ?C0018:
                                            ; SOURCE LINE # 112
 00AE 900000      R     MOV     DPTR,#Tx_Data+0103H
@@ -5921,13 +5864,13 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0015 2500        R     ADD     A,numberOfRegisters+01H
 0017 FF                MOV     R7,A
 0018 E500        R     MOV     A,startAddress
-001A 3500        R     ADDC    A,numberOfRegisters
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 94  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 93  
 
+001A 3500        R     ADDC    A,numberOfRegisters
 001C FE                MOV     R6,A
 001D D3                SETB    C
 001E EF                MOV     A,R7
-001F 94DC              SUBB    A,#0DCH
+001F 94CE              SUBB    A,#0CEH
 0021 EE                MOV     A,R6
 0022 9400              SUBB    A,#00H
 0024 4005              JC      ?C0022
@@ -5985,9 +5928,9 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 005F FB                MOV     R3,A
 0060 2400        R     ADD     A,#LOW Tx_Data+02H
 0062 F582              MOV     DPL,A
-0064 7400        R     MOV     A,#HIGH Tx_Data+02H
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 95  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 94  
 
+0064 7400        R     MOV     A,#HIGH Tx_Data+02H
 0066 3A                ADDC    A,R2
 0067 F583              MOV     DPH,A
 0069 EF                MOV     A,R7
@@ -6049,11 +5992,11 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 148
 0013 D3                SETB    C
 0014 E500        R     MOV     A,startAddress+01H
-0016 94C0              SUBB    A,#0C0H
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 96  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 95  
 
+0016 94E0              SUBB    A,#0E0H
 0018 E500        R     MOV     A,startAddress
-001A 940D              SUBB    A,#0DH
+001A 940C              SUBB    A,#0CH
 001C 4005              JC      ?C0028
                                            ; SOURCE LINE # 149
 001E 7F02              MOV     R7,#02H
@@ -6113,9 +6056,9 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 005F F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 161
 0060 8035              SJMP    ?C0031
-0062         ?C0030:
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 97  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 96  
 
+0062         ?C0030:
                                            ; SOURCE LINE # 162
 0062 E4                CLR     A
 0063 B50031      R     CJNE    A,value+01H,?C0031
@@ -6177,9 +6120,9 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0003 120000      R     LCALL   L?0158
                                            ; SOURCE LINE # 176
 0006 A3                INC     DPTR
-0007 7A00              MOV     R2,#00H
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 98  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 97  
 
+0007 7A00              MOV     R2,#00H
 0009 120000      R     LCALL   L?0145
 000C F500        R     MOV     value+01H,A
 000E EA                MOV     A,R2
@@ -6196,7 +6139,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 181
 001D C3                CLR     C
 001E ED                MOV     A,R5
-001F 94DC              SUBB    A,#0DCH
+001F 94CE              SUBB    A,#0CEH
 0021 EC                MOV     A,R4
 0022 9400              SUBB    A,#00H
 0024 4007              JC      ?C0035
@@ -6241,9 +6184,9 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 188
 0053 0F                INC     R7
 0054 BF0001            CJNE    R7,#00H,?C0118
-0057 0E                INC     R6
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 99  
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 98  
 
+0057 0E                INC     R6
 0058         ?C0118:
 0058 EF                MOV     A,R7
 0059 6404              XRL     A,#04H
@@ -6291,8 +6234,8 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0029         ?C0041:
                                            ; SOURCE LINE # 201
                                            ; SOURCE LINE # 202
-0029 AE00        R     MOV     R6,numberOfCoil
-002B E500        R     MOV     A,numberOfCoil+01H
+0029 E500        R     MOV     A,numberOfCoil+01H
+002B AE00        R     MOV     R6,numberOfCoil
 002D 7803              MOV     R0,#03H
 002F         ?C0119:
 002F CE                XCH     A,R6
@@ -6305,9 +6248,9 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0038 8E00        R     MOV     byteCount,R6
                                            ; SOURCE LINE # 203
 003A E500        R     MOV     A,numberOfCoil+01H
-003C 5407              ANL     A,#07H
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 100 
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 99  
 
+003C 5407              ANL     A,#07H
 003E 6008              JZ      ?C0043
                                            ; SOURCE LINE # 204
 0040 0500        R     INC     byteCount+01H
@@ -6369,9 +6312,9 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 008C 08                INC     R0
 008D 8002              SJMP    ?C0122
 008F         ?C0121:
-008F C3                CLR     C
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 101 
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 100 
 
+008F C3                CLR     C
 0090 13                RRC     A
 0091         ?C0122:
 0091 D8FC              DJNZ    R0,?C0121
@@ -6433,9 +6376,9 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00DC CE                XCH     A,R6
 00DD         ?C0126:
 00DD D8F9              DJNZ    R0,?C0125
-00DF F4                CPL     A
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 102 
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 101 
 
+00DF F4                CPL     A
 00E0 FF                MOV     R7,A
 00E1 EE                MOV     A,R6
 00E2 F4                CPL     A
@@ -6472,7 +6415,9 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0105 6011              JZ      ?C0046
                                            ; SOURCE LINE # 226
                                            ; SOURCE LINE # 227
+0107         ?C0052:
                                            ; SOURCE LINE # 228
+0107         ?C0049:
 0107 0500        R     INC     j+01H
 0109 E500        R     MOV     A,j+01H
 010B 7002              JNZ     ?C0129
@@ -6495,11 +6440,11 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0123 120000      R     LCALL   SendMessage
                                            ; SOURCE LINE # 232
                                            ; SOURCE LINE # 233
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 102 
+
 0126         ?C0053:
 0126 22                RET     
              ; FUNCTION HandleModbusWriteMultipleCoils (END)
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 103 
-
 
              ; FUNCTION HandleModbusWriteMultipleRegisters (BEGIN)
                                            ; SOURCE LINE # 234
@@ -6535,7 +6480,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0025 FE                MOV     R6,A
 0026 D3                SETB    C
 0027 EF                MOV     A,R7
-0028 94DC              SUBB    A,#0DCH
+0028 94CE              SUBB    A,#0CEH
 002A EE                MOV     A,R6
 002B 9400              SUBB    A,#00H
 002D 4005              JC      ?C0054
@@ -6559,11 +6504,11 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0040 E9                MOV     A,R1
 0041 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 254
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 103 
+
 0042 A3                INC     DPTR
 0043 EB                MOV     A,R3
 0044 F0                MOVX    @DPTR,A
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 104 
-
                                            ; SOURCE LINE # 256
 ;---- Variable 'i' assigned to Register 'R5' ----
 0045 E4                CLR     A
@@ -6623,11 +6568,11 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0093         ?C0057:
                                            ; SOURCE LINE # 260
 0093 120000      R     LCALL   SendMessage
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 104 
+
                                            ; SOURCE LINE # 261
                                            ; SOURCE LINE # 262
 0096         ?C0059:
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 105 
-
 0096 22                RET     
              ; FUNCTION HandleModbusWriteMultipleRegisters (END)
 
@@ -6643,6 +6588,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0005 F2                MOVX    @R0,A
                                            ; SOURCE LINE # 266
                                            ; SOURCE LINE # 267
+0006         ?C0060:
 0006 22                RET     
              ; FUNCTION RxDataAvailable (END)
 
@@ -6680,132 +6626,126 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0005 F500        R     MOV     expectedReceiveCount+01H,A
 0007 F500        R     MOV     expectedReceiveCount,A
                                            ; SOURCE LINE # 279
-0009 AF00        R     MOV     R7,modbusReceiveCounter
+0009 E500        R     MOV     A,modbusReceiveCounter
 000B D3                SETB    C
-000C EF                MOV     A,R7
-000D 9404              SUBB    A,#04H
-000F 7480              MOV     A,#080H
-0011 9480              SUBB    A,#080H
-0013 4061              JC      ?C0063
+000C 9404              SUBB    A,#04H
+000E 405D              JC      ?C0063
                                            ; SOURCE LINE # 280
                                            ; SOURCE LINE # 281
-0015 7800        R     MOV     R0,#LOW ModbusSlaveAddress
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 106 
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 105 
 
-0017 E2                MOVX    A,@R0
-0018 FF                MOV     R7,A
-0019 900000      R     MOV     DPTR,#modbusReceiveBuffer
-001C E0                MOVX    A,@DPTR
-001D 6F                XRL     A,R7
-001E 7050              JNZ     ?C0064
+0010 7800        R     MOV     R0,#LOW ModbusSlaveAddress
+0012 E2                MOVX    A,@R0
+0013 FF                MOV     R7,A
+0014 900000      R     MOV     DPTR,#modbusReceiveBuffer
+0017 E0                MOVX    A,@DPTR
+0018 6F                XRL     A,R7
+0019 704C              JNZ     ?C0064
                                            ; SOURCE LINE # 282
                                            ; SOURCE LINE # 283
-0020 A3                INC     DPTR
+001B A3                INC     DPTR
+001C E0                MOVX    A,@DPTR
+001D 6401              XRL     A,#01H
+001F 6018              JZ      ?C0066
 0021 E0                MOVX    A,@DPTR
-0022 6401              XRL     A,#01H
-0024 6019              JZ      ?C0066
+0022 6402              XRL     A,#02H
+0024 6013              JZ      ?C0066
 0026 E0                MOVX    A,@DPTR
-0027 6402              XRL     A,#02H
-0029 6014              JZ      ?C0066
+0027 6403              XRL     A,#03H
+0029 600E              JZ      ?C0066
 002B E0                MOVX    A,@DPTR
-002C 6403              XRL     A,#03H
-002E 600F              JZ      ?C0066
+002C 6404              XRL     A,#04H
+002E 6009              JZ      ?C0066
 0030 E0                MOVX    A,@DPTR
-0031 6404              XRL     A,#04H
-0033 600A              JZ      ?C0066
+0031 6405              XRL     A,#05H
+0033 6004              JZ      ?C0066
 0035 E0                MOVX    A,@DPTR
-0036 6405              XRL     A,#05H
-0038 6005              JZ      ?C0066
-003A E0                MOVX    A,@DPTR
-003B 6406              XRL     A,#06H
-003D 7008              JNZ     ?C0065
-003F         ?C0066:
+0036 B40608            CJNE    A,#06H,?C0065
+0039         ?C0066:
                                            ; SOURCE LINE # 284
                                            ; SOURCE LINE # 285
-003F E4                CLR     A
-0040 750008      R     MOV     expectedReceiveCount+03H,#08H
-0043 F500        R     MOV     expectedReceiveCount+02H,A
+0039 E4                CLR     A
+003A 750008      R     MOV     expectedReceiveCount+03H,#08H
+003D F500        R     MOV     expectedReceiveCount+02H,A
                                            ; SOURCE LINE # 286
-0045 801E              SJMP    ?C0133
-0047         ?C0065:
+003F 801B              SJMP    ?C0133
+0041         ?C0065:
                                            ; SOURCE LINE # 287
-0047 900000      R     MOV     DPTR,#modbusReceiveBuffer+01H
-004A E0                MOVX    A,@DPTR
-004B 640F              XRL     A,#0FH
-004D 6005              JZ      ?C0069
-004F E0                MOVX    A,@DPTR
-0050 6410              XRL     A,#010H
-0052 7017              JNZ     ?C0068
-0054         ?C0069:
+0041 900000      R     MOV     DPTR,#modbusReceiveBuffer+01H
+0044 E0                MOVX    A,@DPTR
+0045 640F              XRL     A,#0FH
+0047 6004              JZ      ?C0069
+0049 E0                MOVX    A,@DPTR
+004A B41015            CJNE    A,#010H,?C0068
+004D         ?C0069:
                                            ; SOURCE LINE # 288
                                            ; SOURCE LINE # 289
-0054 900000      R     MOV     DPTR,#modbusReceiveBuffer+06H
-0057 E0                MOVX    A,@DPTR
-0058 2409              ADD     A,#09H
-005A FF                MOV     R7,A
-005B E4                CLR     A
-005C 33                RLC     A
-005D FE                MOV     R6,A
-005E 33                RLC     A
-005F 95E0              SUBB    A,ACC
-0061 8F00        R     MOV     expectedReceiveCount+03H,R7
-0063 8E00        R     MOV     expectedReceiveCount+02H,R6
-0065         ?C0133:
-0065 F500        R     MOV     expectedReceiveCount+01H,A
-0067 F500        R     MOV     expectedReceiveCount,A
+004D 900000      R     MOV     DPTR,#modbusReceiveBuffer+06H
+0050 E0                MOVX    A,@DPTR
+0051 2409              ADD     A,#09H
+0053 FF                MOV     R7,A
+0054 E4                CLR     A
+0055 33                RLC     A
+0056 FE                MOV     R6,A
+0057 E4                CLR     A
+0058 8F00        R     MOV     expectedReceiveCount+03H,R7
+005A 8E00        R     MOV     expectedReceiveCount+02H,R6
+005C         ?C0133:
+005C F500        R     MOV     expectedReceiveCount+01H,A
+005E F500        R     MOV     expectedReceiveCount,A
                                            ; SOURCE LINE # 290
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 107 
+0060 800E              SJMP    ?C0073
+0062         ?C0068:
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 106 
 
-0069 800E              SJMP    ?C0073
-006B         ?C0068:
                                            ; SOURCE LINE # 291
                                            ; SOURCE LINE # 292
-006B E4                CLR     A
-006C F500        R     MOV     modbusReceiveCounter,A
+0062 E4                CLR     A
+0063 F500        R     MOV     modbusReceiveCounter,A
                                            ; SOURCE LINE # 293
-006E FF                MOV     R7,A
-006F 22                RET     
+0065 FF                MOV     R7,A
+0066 22                RET     
                                            ; SOURCE LINE # 294
                                            ; SOURCE LINE # 295
-0070         ?C0064:
+0067         ?C0064:
                                            ; SOURCE LINE # 297
                                            ; SOURCE LINE # 298
-0070 E4                CLR     A
-0071 F500        R     MOV     modbusReceiveCounter,A
+0067 E4                CLR     A
+0068 F500        R     MOV     modbusReceiveCounter,A
                                            ; SOURCE LINE # 299
-0073 7F01              MOV     R7,#01H
-0075 22                RET     
+006A 7F01              MOV     R7,#01H
+006C 22                RET     
                                            ; SOURCE LINE # 300
                                            ; SOURCE LINE # 301
-0076         ?C0063:
+006D         ?C0063:
                                            ; SOURCE LINE # 303
-0076 7F02              MOV     R7,#02H
-0078 22                RET     
-0079         ?C0073:
+006D 7F02              MOV     R7,#02H
+006F 22                RET     
+0070         ?C0073:
                                            ; SOURCE LINE # 305
-0079 AF00        R     MOV     R7,modbusReceiveCounter
-007B E4                CLR     A
-007C FC                MOV     R4,A
-007D FD                MOV     R5,A
-007E FE                MOV     R6,A
-007F AB00        R     MOV     R3,expectedReceiveCount+03H
-0081 AA00        R     MOV     R2,expectedReceiveCount+02H
-0083 A900        R     MOV     R1,expectedReceiveCount+01H
-0085 A800        R     MOV     R0,expectedReceiveCount
-0087 C3                CLR     C
-0088 120000      E     LCALL   ?C?SLCMP
-008B 7003              JNZ     ?C0074
+0070 AF00        R     MOV     R7,modbusReceiveCounter
+0072 E4                CLR     A
+0073 FC                MOV     R4,A
+0074 FD                MOV     R5,A
+0075 FE                MOV     R6,A
+0076 AB00        R     MOV     R3,expectedReceiveCount+03H
+0078 AA00        R     MOV     R2,expectedReceiveCount+02H
+007A A900        R     MOV     R1,expectedReceiveCount+01H
+007C A800        R     MOV     R0,expectedReceiveCount
+007E C3                CLR     C
+007F 120000      E     LCALL   ?C?SLCMP
+0082 7003              JNZ     ?C0074
                                            ; SOURCE LINE # 306
                                            ; SOURCE LINE # 307
-008D 7F03              MOV     R7,#03H
-008F 22                RET     
+0084 7F03              MOV     R7,#03H
+0086 22                RET     
                                            ; SOURCE LINE # 308
-0090         ?C0074:
+0087         ?C0074:
                                            ; SOURCE LINE # 310
-0090 7F02              MOV     R7,#02H
+0087 7F02              MOV     R7,#02H
                                            ; SOURCE LINE # 311
-0092         ?C0071:
-0092 22                RET     
+0089         ?C0071:
+0089 22                RET     
              ; FUNCTION checkModbusBufferComplete (END)
 
              ; FUNCTION RxRTU (BEGIN)
@@ -6818,10 +6758,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0002 120000      R     LCALL   checkModbusBufferComplete
                                            ; SOURCE LINE # 316
 0005 EF                MOV     A,R7
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 108 
-
 0006 6403              XRL     A,#03H
 0008 7064              JNZ     ?C0075
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 107 
+
                                            ; SOURCE LINE # 317
 000A 900000      R     MOV     DPTR,#modbusReceiveBuffer
 000D E0                MOVX    A,@DPTR
@@ -6882,10 +6822,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0062 0500        R     INC     i
 0064 80D0              SJMP    ?C0076
 0066         ?C0077:
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 109 
-
                                            ; SOURCE LINE # 328
 0066 7800        R     MOV     R0,#LOW Rx_State
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 108 
+
 0068 7402              MOV     A,#02H
 006A F2                MOVX    @R0,A
                                            ; SOURCE LINE # 330
@@ -6946,10 +6886,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00BA 7A00        R     MOV     R2,#HIGH Rx_CRC16
 00BC 7900        R     MOV     R1,#LOW Rx_CRC16
 00BE 120000      R     LCALL   _modbusCrc16
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 110 
-
                                            ; SOURCE LINE # 342
 00C1 0500        R     INC     i
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 109 
+
 00C3 80D7              SJMP    ?C0080
 00C5         ?C0081:
                                            ; SOURCE LINE # 344
@@ -7010,10 +6950,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 010E         L?0152:
 010E E0                MOVX    A,@DPTR
 010F FF                MOV     R7,A
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 111 
-
 0110 7BFE              MOV     R3,#0FEH
 0112 7A00        R     MOV     R2,#HIGH Rx_CRC16
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 110 
+
 0114 7900        R     MOV     R1,#LOW Rx_CRC16
 0116 120000      R     LCALL   _modbusCrc16
 0119 22                RET     
@@ -7074,10 +7014,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0045 FB                MOV     R3,A
 0046 2400        R     ADD     A,#LOW Tx_Data+02H
 0048 F582              MOV     DPL,A
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 112 
-
 004A E4                CLR     A
 004B 3400        R     ADDC    A,#HIGH Tx_Data+02H
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 111 
+
 004D F583              MOV     DPH,A
 004F E0                MOVX    A,@DPTR
 0050 FA                MOV     R2,A
@@ -7138,10 +7078,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 009C 7808              MOV     R0,#08H
 009E 120000      E     LCALL   ?C?ULSHR
 00A1 AB07              MOV     R3,AR7
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 113 
-
 00A3 120000      R     LCALL   L?0142
 00A6 EB                MOV     A,R3
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 112 
+
 00A7 F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 366
 00A8 120000      R     LCALL   DoSlaveTX
@@ -7202,10 +7142,10 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0030 240F              ADD     A,#0FH
 0032 7012              JNZ     ?C0099
                                            ; SOURCE LINE # 377
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 114 
-
                                            ; SOURCE LINE # 378
 0034         ?C0093:
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 113 
+
                                            ; SOURCE LINE # 379
 0034 020000      R     LJMP    HandleModbusReadCoils
                                            ; SOURCE LINE # 380
@@ -7266,15 +7206,15 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0004 AF00        R     MOV     R7,baudrate+03H
 0006 AE00        R     MOV     R6,baudrate+02H
 0008 AD00        R     MOV     R5,baudrate+01H
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 115 
-
 000A AC00        R     MOV     R4,baudrate
 000C 120000      E     LCALL   _modBusUartInitialise
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 114 
+
                                            ; SOURCE LINE # 413
 000F 020000      E     LJMP    modBusTimerInitialise
              ; FUNCTION _InitModbus (END)
 
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 116 
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 115 
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -7337,7 +7277,7 @@ S32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
 UU16 . . . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
   U16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
   S16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 117 
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 116 
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -7377,11 +7317,11 @@ wchar_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
 _modBusUartInitialise. . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 modBusTimerInitialise. . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 _modBusUartString. . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-adcTempDat_t . . . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  39
-  dat. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  36
-  out. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0024H  2
-  wIndex . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0026H  1
-NVRAM0 . . . . . . . . . . . . . . . .  EXTERN   XDATA  ARRAY    -----  440
+adcTempDat_t . . . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  31
+  dat. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  28
+  out. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    001CH  2
+  wIndex . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   001EH  1
+NVRAM0 . . . . . . . . . . . . . . . .  EXTERN   XDATA  ARRAY    -----  412
 modbusTimerValue . . . . . . . . . . .  PUBLIC   DATA   U_INT    0000H  2
 modbusReceiveCounter . . . . . . . . .  PUBLIC   DATA   U_CHAR   0002H  1
 modbusReceiveBuffer. . . . . . . . . .  PUBLIC   XDATA  ARRAY    0000H  256
@@ -7400,7 +7340,7 @@ modbusRxTxData_t . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  260
 ModbusSlaveAddress . . . . . . . . . .  PUBLIC   PDATA  U_CHAR   0000H  1
 Tx_Data. . . . . . . . . . . . . . . .  PUBLIC   XDATA  STRUCT   0100H  260
 Tx_Current . . . . . . . . . . . . . .  PUBLIC   PDATA  U_LONG   0001H  4
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 118 
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 117 
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -7463,7 +7403,7 @@ CheckRxTimeout . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
 checkModbusBufferComplete. . . . . . .  PUBLIC   CODE   PROC     0000H  -----
   expectedReceiveCount . . . . . . . .  AUTO     DATA   LONG     0000H  4
 RxRTU. . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-C51 COMPILER V9.59.0.0   MODBUS                                                            01/01/2019 23:40:45 PAGE 119 
+C51 COMPILER V9.56.0.0   MODBUS                                                            01/03/2019 15:11:31 PAGE 118 
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -7478,7 +7418,7 @@ _InitModbus. . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   2219    ----
+   CODE SIZE        =   2210    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   1032    ----
    PDATA SIZE       =     20    ----
