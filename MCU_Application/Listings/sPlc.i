@@ -3335,12 +3335,12 @@
  
   
   
- 
- 
- 
- 
- 
- 
+  
+  
+  
+  
+  
+  
   
  
  
@@ -4981,12 +4981,12 @@
  
   
   
- 
- 
- 
- 
- 
- 
+  
+  
+  
+  
+  
+  
   
  
  
@@ -5174,12 +5174,12 @@
  
   
   
- 
- 
- 
- 
- 
- 
+  
+  
+  
+  
+  
+  
   
  
  
@@ -5218,11 +5218,1205 @@
  
 #line 148 "MainApp\appConfig.h" /0
  
+  
+#line 1 ".\Driver\i2c1.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
  
  
  
  
  
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\i2c1.h" /0
+#line 4 ".\Driver\i2c1.h" /0
+ 
+ 
+ 
+ 
+ void iic1Init(void);
+ void iic1Start(void);
+ void iic1Stop(void);
+ uint8_t iic1WaitAck(void);
+ void iic1Ack(void);
+ void iic1NAck(void);
+ void iic1SendByte(uint8_t txd);
+ uint8_t iic1ReadByte(uint8_t ack);
+ 
+ 
+ 
+ 
+#line 149 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\i2c2.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\i2c2.h" /0
+#line 4 ".\Driver\i2c2.h" /0
+ 
+ 
+ 
+ 
+ void iic2Init(void);
+ void iic2Start(void);
+ void iic2Stop(void);
+ uint8_t iic2WaitAck(void);
+ void iic2Ack(void);
+ void iic2NAck(void);
+ void iic2SendByte(uint8_t txd);
+ uint8_t iic2ReadByte(uint8_t ack);
+ 
+ 
+ 
+ 
+#line 150 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\i2c3.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\i2c3.h" /0
+#line 4 ".\Driver\i2c3.h" /0
+ 
+ 
+ 
+ 
+ void iic3Init(void);
+ void iic3Start(void);
+ void iic3Stop(void);
+ uint8_t iic3WaitAck(void);
+ void iic3Ack(void);
+ void iic3NAck(void);
+ void iic3SendByte(uint8_t txd);
+ uint8_t iic3ReadByte(uint8_t ack);
+ 
+ 
+ 
+ 
+#line 151 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\i2c4.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\i2c4.h" /0
+#line 4 ".\Driver\i2c4.h" /0
+ 
+ 
+ 
+ 
+ void iic4Init(void);
+ void iic4Start(void);
+ void iic4Stop(void);
+ uint8_t iic4WaitAck(void);
+ void iic4Ack(void);
+ void iic4NAck(void);
+ void iic4SendByte(uint8_t txd);
+ uint8_t iic4ReadByte(uint8_t ack);
+ 
+ 
+ 
+ 
+#line 152 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\i2c5.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\i2c5.h" /0
+#line 4 ".\Driver\i2c5.h" /0
+ 
+ 
+ 
+ 
+ void iic5Init(void);
+ void iic5Start(void);
+ void iic5Stop(void);
+ uint8_t iic5WaitAck(void);
+ void iic5Ack(void);
+ void iic5NAck(void);
+ void iic5SendByte(uint8_t txd);
+ uint8_t iic5ReadByte(uint8_t ack);
+ 
+ 
+ 
+ 
+#line 153 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\i2c6.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\i2c6.h" /0
+#line 4 ".\Driver\i2c6.h" /0
+ 
+ 
+ 
+ 
+ void iic6Init(void);
+ void iic6Start(void);
+ void iic6Stop(void);
+ uint8_t iic6WaitAck(void);
+ void iic6Ack(void);
+ void iic6NAck(void);
+ void iic6SendByte(uint8_t txd);
+ uint8_t iic6ReadByte(uint8_t ack);
+ 
+ 
+ 
+ 
+#line 154 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\eprom.h" /0
@@ -5380,12 +6574,12 @@
  
   
   
- 
- 
- 
- 
- 
- 
+  
+  
+  
+  
+  
+  
   
  
  
@@ -5580,12 +6774,12 @@
  
   
   
- 
- 
- 
- 
- 
- 
+  
+  
+  
+  
+  
+  
   
  
  
@@ -5773,12 +6967,12 @@
  
   
   
- 
- 
- 
- 
- 
- 
+  
+  
+  
+  
+  
+  
   
  
  
@@ -5819,31 +7013,6 @@
  
   
  
-  
-  
- 
-  
-  
- 
-  
-  
- 
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
  
   
   
@@ -5859,6 +7028,32 @@
  
   
   
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
  
   
  
@@ -5868,33 +7063,6 @@
   
   
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
   
   
  
@@ -5966,32 +7134,6 @@
  
  
 #line 4 "MainApp\sPlc.h" /0
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
  
  
@@ -6137,7 +7279,7 @@
 #line 31 "MainApp\sPlc.c" /0
  result = (uint16_t)(ADC0H << 8) + (uint16_t)(ADC0L);
  refreshAdcData(&adcTempDat[adcSelect], result);
- NVRAM0[(432) + adcSelect] = adcTempDat[adcSelect].out;
+ NVRAM0[(432 + 0) + adcSelect] = adcTempDat[adcSelect].out;
  if(adcSelect < (9 - 1)){
  adcSelect ++;
  }
@@ -6146,33 +7288,23 @@
  }
  switch(adcSelect){
  case 0:{
- AMX0SL = 0x00;break;
+ 
+ break;
  }
  case 1:{
- AMX0SL = 0x01;break;
+ 
+ break;
  }
  case 2:{
- AMX0SL = 0x02;break;
+ 
+ break;
  }
  case 3:{
- AMX0SL = 0x03;break;
+ 
+ break;
  }
  case 4:{
- AMX0SL = 0x04;break;
- }
- case 5:{
- AMX0SL = 0x05;break;
- }
- case 6:{
- AMX0SL = 0x06;break;
- }
- case 7:{
- AMX0SL = 0x07;  break;
- }
- case 8:{
- AMX0SL = 0x08;break;
- }
- case 9:{
+ 
  break;
  }
  default:{
@@ -6398,11 +7530,11 @@
  }
  void T1MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 294 "MainApp\sPlc.c" /1
+#line 284 "MainApp\sPlc.c" /1
  
  
  
-#line 297 "MainApp\sPlc.c" /0
+#line 287 "MainApp\sPlc.c" /0
  if(start){
  if(NVRAM0[(336 + A)] >= value){
  NVRAM0[(288 + (A / 16))] |= 1 << (A % 16);
@@ -6419,11 +7551,11 @@
  }
  void T10MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 313 "MainApp\sPlc.c" /1
+#line 303 "MainApp\sPlc.c" /1
  
  
  
-#line 316 "MainApp\sPlc.c" /0
+#line 306 "MainApp\sPlc.c" /0
  if(start){
  if(NVRAM0[(352 + A)] >= value){
  NVRAM0[(304 + (A / 16))] |= 1 << (A % 16);
@@ -6439,11 +7571,11 @@
  }
  void T100MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 331 "MainApp\sPlc.c" /1
+#line 321 "MainApp\sPlc.c" /1
  
  
  
-#line 334 "MainApp\sPlc.c" /0
+#line 324 "MainApp\sPlc.c" /0
  if(start){
  if(NVRAM0[(368 + A)] >= value){
  NVRAM0[(320 + (A / 16))] |= 1 << (A % 16);
@@ -6481,17 +7613,17 @@
  }
  static void wdtInit(void){ 
  
-#line 371 "MainApp\sPlc.c" /1
+#line 361 "MainApp\sPlc.c" /1
  
  
-#line 373 "MainApp\sPlc.c" /0
+#line 363 "MainApp\sPlc.c" /0
  }
  static void wdtEnable(void){ 
  
-#line 376 "MainApp\sPlc.c" /1
+#line 366 "MainApp\sPlc.c" /1
  
  
-#line 378 "MainApp\sPlc.c" /0
+#line 368 "MainApp\sPlc.c" /0
  
  
  }
@@ -6500,32 +7632,32 @@
  flagEA = EA;
  EA = 0;
  
-#line 386 "MainApp\sPlc.c" /1
+#line 376 "MainApp\sPlc.c" /1
  
  
  
-#line 389 "MainApp\sPlc.c" /0
+#line 379 "MainApp\sPlc.c" /0
  
-#line 390 "MainApp\sPlc.c" /1
+#line 380 "MainApp\sPlc.c" /1
  
-#line 391 "MainApp\sPlc.c" /0
+#line 381 "MainApp\sPlc.c" /0
  EA = flagEA;
  
  }
  static void wdtFeed(void){ 
  
-#line 396 "MainApp\sPlc.c" /1
+#line 386 "MainApp\sPlc.c" /1
  
  
-#line 398 "MainApp\sPlc.c" /0
+#line 388 "MainApp\sPlc.c" /0
  }
  
  static void pcaInit(void){ 
  
-#line 402 "MainApp\sPlc.c" /1
+#line 392 "MainApp\sPlc.c" /1
  
  
-#line 404 "MainApp\sPlc.c" /0
+#line 394 "MainApp\sPlc.c" /0
  
  
  
@@ -6537,7 +7669,7 @@
  TimerCounter_1mS = 0;
  TimerCounter_10mS = 0;
  
-#line 415 "MainApp\sPlc.c" /1
+#line 405 "MainApp\sPlc.c" /1
  
  
  
@@ -6549,7 +7681,7 @@
  
  
  
-#line 426 "MainApp\sPlc.c" /0
+#line 416 "MainApp\sPlc.c" /0
  }
  static void timer0Isr(void) interrupt 1{ 
  uint16_t i;
@@ -6600,28 +7732,28 @@
  TimerCounter_10mS = 0;
  }
  
-#line 476 "MainApp\sPlc.c" /1
+#line 466 "MainApp\sPlc.c" /1
  
  
-#line 478 "MainApp\sPlc.c" /0
+#line 468 "MainApp\sPlc.c" /0
  TimerCounter_1mS ++;
  }
  
  static void inputInit(void){
  memset(inputFilter, 0x0, 16);
  
-#line 484 "MainApp\sPlc.c" /1
+#line 474 "MainApp\sPlc.c" /1
  
-#line 485 "MainApp\sPlc.c" /0
+#line 475 "MainApp\sPlc.c" /0
  
  
  }
  static void outputInit(void){
  
-#line 490 "MainApp\sPlc.c" /1
+#line 480 "MainApp\sPlc.c" /1
  
  
-#line 492 "MainApp\sPlc.c" /0
+#line 482 "MainApp\sPlc.c" /0
  
  
  
@@ -6631,12 +7763,12 @@
  ctemp0 = 0;
  ctemp0 = 0;
  
-#line 501 "MainApp\sPlc.c" /1
+#line 491 "MainApp\sPlc.c" /1
  
  
  
  
-#line 505 "MainApp\sPlc.c" /0
+#line 495 "MainApp\sPlc.c" /0
  
  ctemp0 = inPca9554Read() ;
  
@@ -6679,12 +7811,12 @@
  }
  static void outputRefresh(void){ 
  
-#line 547 "MainApp\sPlc.c" /1
+#line 537 "MainApp\sPlc.c" /1
  
  
  
  
-#line 551 "MainApp\sPlc.c" /0
+#line 541 "MainApp\sPlc.c" /0
  
  outPca9554Write(NVRAM0[416]);
  
@@ -6692,7 +7824,7 @@
  static void chipAdcInit(void){ 
  uint8_t i;
  
-#line 558 "MainApp\sPlc.c" /1
+#line 548 "MainApp\sPlc.c" /1
  
  
  
@@ -6703,7 +7835,7 @@
  
  
  
-#line 568 "MainApp\sPlc.c" /0
+#line 558 "MainApp\sPlc.c" /0
  adcSelect = 0;
  for(i = 0;i <= 9;i ++){
  initAdcData(&adcTempDat[i]);
@@ -6714,16 +7846,16 @@
  wdtDisable(); 
  
  
-#line 578 "MainApp\sPlc.c" /1
+#line 568 "MainApp\sPlc.c" /1
  
  
-#line 580 "MainApp\sPlc.c" /0
+#line 570 "MainApp\sPlc.c" /0
  
  
-#line 582 "MainApp\sPlc.c" /1
+#line 572 "MainApp\sPlc.c" /1
  
  
-#line 584 "MainApp\sPlc.c" /0
+#line 574 "MainApp\sPlc.c" /0
  
  
  chipDacInit(); 
@@ -6737,25 +7869,25 @@
  }
  static void refreshDac(void){ 
  
+#line 587 "MainApp\sPlc.c" /1
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 594 "MainApp\sPlc.c" /0
+ }
+ static void chipDacInit(void){ 
+ 
 #line 597 "MainApp\sPlc.c" /1
  
  
  
  
  
- 
- 
-#line 604 "MainApp\sPlc.c" /0
- }
- static void chipDacInit(void){ 
- 
-#line 607 "MainApp\sPlc.c" /1
- 
- 
- 
- 
- 
-#line 612 "MainApp\sPlc.c" /0
+#line 602 "MainApp\sPlc.c" /0
  }
  void sPlcProcessStart(void){ 
  
@@ -6765,17 +7897,17 @@
  inputRefresh(); 
  
  
-#line 621 "MainApp\sPlc.c" /1
+#line 611 "MainApp\sPlc.c" /1
  
  
-#line 623 "MainApp\sPlc.c" /0
+#line 613 "MainApp\sPlc.c" /0
  }
  void sPlcProcessEnd(void){ 
  
-#line 626 "MainApp\sPlc.c" /1
+#line 616 "MainApp\sPlc.c" /1
  
  
-#line 628 "MainApp\sPlc.c" /0
+#line 618 "MainApp\sPlc.c" /0
  
  outputRefresh(); 
  
@@ -6783,8 +7915,8 @@
  refreshDac(); 
  
  
-#line 635 "MainApp\sPlc.c" /1
+#line 625 "MainApp\sPlc.c" /1
  
  
-#line 637 "MainApp\sPlc.c" /0
+#line 627 "MainApp\sPlc.c" /0
  }

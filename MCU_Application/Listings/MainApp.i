@@ -3336,12 +3336,12 @@
  
   
   
- 
- 
- 
- 
- 
- 
+  
+  
+  
+  
+  
+  
   
  
  
@@ -4982,12 +4982,12 @@
  
   
   
- 
- 
- 
- 
- 
- 
+  
+  
+  
+  
+  
+  
   
  
  
@@ -5175,12 +5175,12 @@
  
   
   
- 
- 
- 
- 
- 
- 
+  
+  
+  
+  
+  
+  
   
  
  
@@ -5219,11 +5219,1205 @@
  
 #line 148 "MainApp\appConfig.h" /0
  
+  
+#line 1 ".\Driver\i2c1.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
  
  
  
  
  
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\i2c1.h" /0
+#line 4 ".\Driver\i2c1.h" /0
+ 
+ 
+ 
+ 
+ void iic1Init(void);
+ void iic1Start(void);
+ void iic1Stop(void);
+ uint8_t iic1WaitAck(void);
+ void iic1Ack(void);
+ void iic1NAck(void);
+ void iic1SendByte(uint8_t txd);
+ uint8_t iic1ReadByte(uint8_t ack);
+ 
+ 
+ 
+ 
+#line 149 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\i2c2.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\i2c2.h" /0
+#line 4 ".\Driver\i2c2.h" /0
+ 
+ 
+ 
+ 
+ void iic2Init(void);
+ void iic2Start(void);
+ void iic2Stop(void);
+ uint8_t iic2WaitAck(void);
+ void iic2Ack(void);
+ void iic2NAck(void);
+ void iic2SendByte(uint8_t txd);
+ uint8_t iic2ReadByte(uint8_t ack);
+ 
+ 
+ 
+ 
+#line 150 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\i2c3.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\i2c3.h" /0
+#line 4 ".\Driver\i2c3.h" /0
+ 
+ 
+ 
+ 
+ void iic3Init(void);
+ void iic3Start(void);
+ void iic3Stop(void);
+ uint8_t iic3WaitAck(void);
+ void iic3Ack(void);
+ void iic3NAck(void);
+ void iic3SendByte(uint8_t txd);
+ uint8_t iic3ReadByte(uint8_t ack);
+ 
+ 
+ 
+ 
+#line 151 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\i2c4.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\i2c4.h" /0
+#line 4 ".\Driver\i2c4.h" /0
+ 
+ 
+ 
+ 
+ void iic4Init(void);
+ void iic4Start(void);
+ void iic4Stop(void);
+ uint8_t iic4WaitAck(void);
+ void iic4Ack(void);
+ void iic4NAck(void);
+ void iic4SendByte(uint8_t txd);
+ uint8_t iic4ReadByte(uint8_t ack);
+ 
+ 
+ 
+ 
+#line 152 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\i2c5.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\i2c5.h" /0
+#line 4 ".\Driver\i2c5.h" /0
+ 
+ 
+ 
+ 
+ void iic5Init(void);
+ void iic5Start(void);
+ void iic5Stop(void);
+ uint8_t iic5WaitAck(void);
+ void iic5Ack(void);
+ void iic5NAck(void);
+ void iic5SendByte(uint8_t txd);
+ uint8_t iic5ReadByte(uint8_t ack);
+ 
+ 
+ 
+ 
+#line 153 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\i2c6.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\i2c6.h" /0
+#line 4 ".\Driver\i2c6.h" /0
+ 
+ 
+ 
+ 
+ void iic6Init(void);
+ void iic6Start(void);
+ void iic6Stop(void);
+ uint8_t iic6WaitAck(void);
+ void iic6Ack(void);
+ void iic6NAck(void);
+ void iic6SendByte(uint8_t txd);
+ uint8_t iic6ReadByte(uint8_t ack);
+ 
+ 
+ 
+ 
+#line 154 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\eprom.h" /0
@@ -5381,12 +6575,12 @@
  
   
   
- 
- 
- 
- 
- 
- 
+  
+  
+  
+  
+  
+  
   
  
  
@@ -5581,12 +6775,12 @@
  
   
   
- 
- 
- 
- 
- 
- 
+  
+  
+  
+  
+  
+  
   
  
  
@@ -5774,12 +6968,12 @@
  
   
   
- 
- 
- 
- 
- 
- 
+  
+  
+  
+  
+  
+  
   
  
  
@@ -5968,12 +7162,12 @@
  
   
   
- 
- 
- 
- 
- 
- 
+  
+  
+  
+  
+  
+  
   
  
  
@@ -5994,32 +7188,6 @@
  
 #line 4 "MainApp\sPLC.h" /0
 #line 4 "MainApp\sPLC.h" /0
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
  
  
@@ -6160,140 +7328,7 @@
  
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
 #line 1 "MainApp\MainApp.c" /0
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
  
  
@@ -6371,13 +7406,10 @@
  sbit epromBusyFlag = P0^5;
  void main(void){
  
-#line 115 "MainApp\MainApp.c" /1
+#line 78 "MainApp\MainApp.c" /1
  
  
-#line 117 "MainApp\MainApp.c" /0
- 
- initDeviceF580();
- 
+#line 80 "MainApp\MainApp.c" /0
  sPlcInit(); 
  initModbus(0x01, 57600);
  NVRAM0[0] = 0xA5;
@@ -6411,561 +7443,3 @@
  }
  }
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- void timer3Isr(void) interrupt 13{ 
- 
- TF2H = 0;
- switch(my.LaserMode)
- {
- case 4:
- { 
- SetLaserCurrent(p);
- break;
- }
- case 1:
- { 
- break;
- }
- case 2:
- { 
- if(p->softTimer.tCounter == p->softTimer.tMate)
- { 
- LaserMod_PIN = LASER_OFF; 
- }
- if(p->softTimer.tCounter == p->softTimer.tOverflow)
- { 
- p->softTimer.tCounter = 0; 
- }
- if(p->softTimer.tCounter == 0)
- { 
- LaserMod_PIN = LASER_ON; 
- }
- p->softTimer.tCounter ++;
- break;
- }
- case 3:
- { 
- if(p->softTimer.pCounter < p->softTimer.pMate)
- {
- if(p->softTimer.tCounter == 0)
- {
- if(p->softTimer.pCounter < p->softTimer.pMate)
- {
- LaserMod_PIN = LASER_ON; 
- }
- }
- if(p->softTimer.tCounter == p->softTimer.tMate)
- { 
- LaserMod_PIN = LASER_OFF; 
- }
- if(p->softTimer.tCounter == (p->softTimer.tOverflow - 1))
- { 
- p->softTimer.tCounter = 0xFFFF; 
- p->softTimer.pCounter ++; 
- }
- p->softTimer.tCounter ++;
- }
- if(p->softTimer.pCounter == p->softTimer.pMate && p->softTimer.tCounter == 0)
- { 
- LaserMod_PIN = LASER_OFF;
- p->softTimer.pCounter = 0xFFFF;
- p->softTimer.sCounter = 0x0;
- }
- if(p->softTimer.pCounter == 0xFFFF)
- {		
- if(p->softTimer.sCounter == p->softTimer.sMate)
- {
- p->softTimer.pCounter = 0;	
- }
- p->softTimer.sCounter ++;
- }
- break;
- }
- default:break;
- }
- }

@@ -17,16 +17,15 @@
 #define	POWERED_DOWN_100K  							(2 << 1)//100K电阻下拉
 #define	POWERED_DOWN_500K 	 						(3 << 1)//500K电阻下拉
 /*****************************************************************************/
-static uint16_t Mcp47x6Data[4];
 /*****************************************************************************/
 uint8_t mcp47x6Init(void)
 {//MCP47x6初始化
 	uint8_t temp, flag;
 	//配置位
-	Mcp47x6Data[0] = 0;
-	Mcp47x6Data[1] = 0;
-	Mcp47x6Data[2] = 0;
-	Mcp47x6Data[3] = 0;
+	NVRAM0[SPREG_START + SPREG_DAC_0] = 0;
+	NVRAM0[SPREG_START + SPREG_DAC_1] = 0;
+	NVRAM0[SPREG_START + SPREG_DAC_2] = 0;
+	NVRAM0[SPREG_START + SPREG_DAC_3] = 0;
 	temp = 	WRITE_VOLATILE_MEMORY |//Command
 			REF_VDD 				|//REF
 			NOT_POWERED_DOWN      |//PowerDown
@@ -97,13 +96,13 @@ uint8_t mcp47x6Init(void)
 	iic2Stop();
 	return flag;
 }
-void mcp47x6_write(uint8_t channel, uint16_t dat)
+void mcp47x6Write(uint8_t channel, uint16_t dat)
 {//设置指示激光电压CODE
 	uint8_t temp, flag;
 	temp = 0x0;
 	switch(channel){
 		case 1:{
-			if(Mcp47x6Data[0] != dat)
+			if(NVRAM0[SPREG_START + SPREG_DAC_0] != dat)
 			{
 				iic4Start();
 				
@@ -117,12 +116,12 @@ void mcp47x6_write(uint8_t channel, uint16_t dat)
 				flag = iic4WaitAck();
 				
 				iic4Stop();
-				Mcp47x6Data[0] = dat;
+				NVRAM0[SPREG_START + SPREG_DAC_0] = dat;
 			}
 			break;
 		}
 		case 2:{
-			if(Mcp47x6Data[1] != dat)
+			if(NVRAM0[SPREG_START + SPREG_DAC_1] != dat)
 			{
 				iic3Start();
 				
@@ -136,12 +135,12 @@ void mcp47x6_write(uint8_t channel, uint16_t dat)
 				flag = iic3WaitAck();
 				
 				iic3Stop();
-				Mcp47x6Data[1] = dat;
+				NVRAM0[SPREG_START + SPREG_DAC_1] = dat;
 			}
 			break;
 		}
 		case 3:{
-			if(Mcp47x6Data[2] != dat)
+			if(NVRAM0[SPREG_START + SPREG_DAC_2] != dat)
 			{
 				iic1Start();
 				
@@ -155,12 +154,12 @@ void mcp47x6_write(uint8_t channel, uint16_t dat)
 				flag = iic1WaitAck();
 				
 				iic1Stop();
-				Mcp47x6Data[2] = dat;
+				NVRAM0[SPREG_START + SPREG_DAC_2] = dat;
 			}
 			break;
 		}
 		case 4:{
-			if(Mcp47x6Data[3] != dat)
+			if(NVRAM0[SPREG_START + SPREG_DAC_3] != dat)
 			{
 				iic2Start();
 				
@@ -174,28 +173,8 @@ void mcp47x6_write(uint8_t channel, uint16_t dat)
 				flag = iic2WaitAck();
 				
 				iic2Stop();
-				Mcp47x6Data[3] = dat;
+				NVRAM0[SPREG_START + SPREG_DAC_3] = dat;
 			}
-			break;
-		}
-		default:break;
-	}
-}
-
-uint16_t mcp47x6_read(uint8_t channel)
-{//获取指示激光电压CODE
-	switch(channel){
-		case 1:{
-			
-			break;
-		}
-		case 2:{
-			break;
-		}
-		case 3:{
-			break;
-		}
-		case 4:{
 			break;
 		}
 		default:break;

@@ -39,33 +39,23 @@ static void adcProcess(void){//Ñ­»·²É¼¯ADC
 	}
 	switch(adcSelect){
 		case 0:{
-			AMX0SL = 0x00;break;
+			//AMX0SL = 0x00;
+			break;
 		}
 		case 1:{
-			AMX0SL = 0x01;break;
+			//AMX0SL = 0x01;
+			break;
 		}
 		case 2:{
-			AMX0SL = 0x02;break;
+			//AMX0SL = 0x02;
+			break;
 		}
 		case 3:{
-			AMX0SL = 0x03;break;
+			//AMX0SL = 0x03;
+			break;
 		}
 		case 4:{
-			AMX0SL = 0x04;break;
-		}
-		case 5:{
-			AMX0SL = 0x05;break;
-		}
-		case 6:{
-			AMX0SL = 0x06;break;
-		}
-		case 7:{
-			AMX0SL = 0x07;  break;
-		}
-		case 8:{
-			AMX0SL = 0x08;break;
-		}
-		case 9:{
+			//AMX0SL = 0x04;
 			break;
 		}
 		default:{
