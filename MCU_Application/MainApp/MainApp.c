@@ -77,6 +77,18 @@ void main(void){
 #ifdef C8051F020
 	initDeviceF020();
 #endif
+#ifdef C8051F580
+	initDeviceF580();
+#endif
+#if CONFIG_USING_WDT == 1
+	if ((RSTSRC & 0x02) == 0x00)
+	{
+		if (RSTSRC == 0x08)
+		{//检测WDT看门狗 看门狗复位后锁定
+			while(1);
+		}
+	}
+#endif
 	sPlcInit();//初始化软逻辑
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 	NVRAM0[0] = 0xA5;
@@ -85,6 +97,10 @@ void main(void){
 	while(1){
 		loopFlag = ~loopFlag;
 		sPlcProcessStart();
+		NVRAM0[EM_START + EM_MCU_CHECKCODE] = CONFIG_CHECK_CODE;//写入板卡校验码
+		if(LD(R_START + R_KEY_MCU_RESET)){
+			REBOOT();
+		}
 		//SPLC代码插入此处
 ////		SET(10);
 ////		RESET(10);

@@ -238,6 +238,15 @@ static void nvramUpdata(void){//更新NVRAM->EPROM
 	}
 	memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
+int16_t ADD(int16_t A, int16_t B){//加法指令
+	int32_t tmp;
+	tmp = (int32_t)A + (int32_t)B;
+	if(tmp >= INT_MAX)
+		tmp = INT_MAX;
+	if(tmp <= INT_MIN)
+		tmp = INT_MIN;
+	return (int16_t)tmp;
+}
 void SET(uint16_t A){//置位
 	assertCoilAddress(A);//检查地址范围
 	NVRAM0[(A / 16)] |= 1 << (A % 16);
@@ -355,6 +364,42 @@ int16_t TENV(int16_t dat){//CODE转换为环境温度
 	temp = (int16_t)(CONFIG_SPLC_ADC_INTERNAL_VREF * dat / 4096);//单位mV
 	temp = (int16_t)((temp - CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET) * 1000 / CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN);
 	return temp;
+}
+void UPDAC(uint16_t dat){//立即更新DAC输出
+	switch(dat){
+		case 0:{
+			mcp47x6Write(0, NVRAM0[SPREG_START + SPREG_DAC_0]);
+			break;
+		}
+		case 1:{
+			mcp47x6Write(1, NVRAM0[SPREG_START + SPREG_DAC_1]);
+			break;
+		}
+		case 2:{
+			mcp47x6Write(2, NVRAM0[SPREG_START + SPREG_DAC_2]);
+			break;
+		}
+		case 3:{
+			mcp47x6Write(3, NVRAM0[SPREG_START + SPREG_DAC_3]);
+			break;
+		}
+		default:break;
+	}
+}
+void REBOOT(void){//MCU复位
+#ifdef C8051F580	
+	uint8_t SFRPAGE_save;
+#endif
+#ifdef C8051F020
+	RSTSRC |= (1 << 1);//Forces a Power-On Reset. /RST is driven low.
+#endif
+#ifdef C8051F580
+	SFRPAGE_save = SFRPAGE;
+	SFRPAGE = ACTIVE_PAGE;
+	RSTSRC |= (1 << 1);//Forces a Power-On Reset. /RST is driven low.
+	SFRPAGE = SFRPAGE_save;
+#endif
+	
 }
 static void wdtInit(void){//看门狗初始化
 #ifdef C8051F020

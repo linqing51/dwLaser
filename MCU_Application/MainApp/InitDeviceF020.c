@@ -1,7 +1,7 @@
 /////////////////////////////////////
 //  Generated Initialization File  //
 /////////////////////////////////////
-
+#ifdef C8051F020
 #include "InitDeviceF020.h"
 
 // Peripheral specific initialization functions,
@@ -89,3 +89,4 @@ void initDeviceF020(void)
     Oscillator_Init();
     Interrupts_Init();
 }
+#endif

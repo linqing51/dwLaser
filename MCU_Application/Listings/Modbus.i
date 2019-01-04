@@ -3342,13 +3342,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -4988,13 +4989,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -5181,13 +5183,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -5381,13 +5384,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -5581,13 +5585,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -5781,13 +5786,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -5981,13 +5987,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -6181,13 +6188,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -6381,13 +6389,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -6581,13 +6590,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -6614,8 +6624,591 @@
  
 #line 155 ".\MainApp\appConfig.h" /0
  
+  
+#line 1 ".\Driver\mcp47x6.h" /0
  
  
+ 
+  
+#line 1 ".\MainApp\appConfig.h" /0
+ 
+#line 2 ".\MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\mcp47x6.h" /0
+#line 4 ".\Driver\mcp47x6.h" /0
+ 
+ 
+ uint8_t mcp47x6Init(void);
+ void mcp47x6Write(uint8_t channel, uint16_t dat);
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 156 ".\MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\inPca9554.h" /0
+ 
+ 
+ 
+  
+#line 1 ".\MainApp\appConfig.h" /0
+ 
+#line 2 ".\MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\inPca9554.h" /0
+#line 4 ".\Driver\inPca9554.h" /0
+ 
+ 
+ void inPca9554Init(void);
+ uint8_t inPca9554Read(void);
+ void inPca9554Write(uint8_t wdata);
+ 
+ 
+#line 157 ".\MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\outPca9554.h" /0
+ 
+ 
+ 
+  
+#line 1 ".\MainApp\appConfig.h" /0
+ 
+#line 2 ".\MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\outPca9554.h" /0
+#line 4 ".\Driver\outPca9554.h" /0
+ 
+ 
+ void outPca9554Init(void);
+ uint8_t outPca9554Read(void);
+ void outPca9554Write(uint8_t wdata);
+ 
+ 
+#line 158 ".\MainApp\appConfig.h" /0
  
  
   
@@ -6799,13 +7392,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -6831,7 +7425,7 @@
  
  
   
-#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\sPlc.h" /0
  
  
  
@@ -6993,14 +7587,15 @@
   
   
   
- 
- 
- 
- 
+  
   
   
  
   
+  
+ 
+  
+  
  
  
  
@@ -7010,8 +7605,8 @@
  
  
  
-#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
-#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlc.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlc.h" /0
  
  
  
@@ -7103,16 +7698,19 @@
  void nvramSave(void);
  void nvramUpdata(void);
  
+ int16_t ADD(int16_t A, int16_t B); 
  void SET(uint16_t A); 
  void RESET(uint16_t A); 
  void FLIP(uint16_t A); 
  uint8_t LD(uint16_t A); 
  uint8_t LDP(uint16_t A); 
  uint8_t LDN(uint16_t A); 
- void T100US(uint8_t A, uint8_t start, uint16_t value);
- void T1MS(uint8_t A, uint8_t start, uint16_t value);
- void T10MS(uint8_t A, uint8_t start, uint16_t value);
- void T100MS(uint8_t A, uint8_t start, uint16_t value);
+ 
+ void T1MS(uint8_t A, uint8_t start, uint16_t value); 
+ void T10MS(uint8_t A, uint8_t start, uint16_t value); 
+ void T100MS(uint8_t A, uint8_t start, uint16_t value); 
+ void UPDAC(uint16_t dat); 
+ void REBOOT(void); 
  
  void chipDacInit(void);
  void chipAdcInit(void);
@@ -7123,6 +7721,288 @@
  
  
 #line 163 ".\MainApp\appConfig.h" /0
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcLaser.h" /0
+ 
+ 
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /0
+ 
+#line 2 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcLaser.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcLaser.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 164 ".\MainApp\appConfig.h" /0
  
  
  

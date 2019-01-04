@@ -12,7 +12,7 @@
 #define CONFIG_LADDER_SECTORS_END			128//指令结束地址
 #define CONFIG_LASERTIMER_OVERFLOW_US		1000L//定时器周期 1mS
 #define CONFIG_VERSION  					0x0001
-#define CONFIG_CHECK_CODE 					0x5A00
+#define CONFIG_CHECK_CODE 					0x5A7E
 
 /*****************************************************************************/
 #define CONFIG_UART0_BAUDRATE				57600//串口波特率
@@ -153,14 +153,15 @@
 #include "i2c5.h"
 #include "i2c6.h"
 #include "eprom.h"
-//#include "mcp47x6.h"
-//#include "inPca9554.h"
-//#include "outPca9554.h"
+#include "mcp47x6.h"
+#include "inPca9554.h"
+#include "outPca9554.h"
 /*****************************************************************************/
 #include "Modbus.h"
 #include "ModbusPort.h"
 /*****************************************************************************/
-#include "sPLC.h"
+#include "sPlc.h"
+#include "sPlcLaser.h"
 //#include "pidFuzzy.h"
 /*****************************************************************************/
 //#include "AppMath.h"

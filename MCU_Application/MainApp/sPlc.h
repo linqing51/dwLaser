@@ -92,16 +92,19 @@ void nvramLoad(void);
 void nvramSave(void);
 void nvramUpdata(void);
 /*****************************************************************************/
+int16_t ADD(int16_t A, int16_t B);//加法指令
 void SET(uint16_t A);//置位
 void RESET(uint16_t A);//复位
 void FLIP(uint16_t A);//翻转
 uint8_t LD(uint16_t A);//载入
 uint8_t LDP(uint16_t A);//脉冲上升沿
 uint8_t LDN(uint16_t A);//脉冲下降沿
-void T100US(uint8_t A, uint8_t start, uint16_t value);
-void T1MS(uint8_t A, uint8_t start, uint16_t value);
-void T10MS(uint8_t A, uint8_t start, uint16_t value);
-void T100MS(uint8_t A, uint8_t start, uint16_t value);
+//void T100US(uint8_t A, uint8_t start, uint16_t value);
+void T1MS(uint8_t A, uint8_t start, uint16_t value);//1mS延时器启动
+void T10MS(uint8_t A, uint8_t start, uint16_t value);//10mS延时器启动
+void T100MS(uint8_t A, uint8_t start, uint16_t value);//100mS延时器启动
+void UPDAC(uint16_t dat);//立即更新DAC输出
+void REBOOT(void);//SPLC复位指令
 /*****************************************************************************/
 void chipDacInit(void);
 void chipAdcInit(void);

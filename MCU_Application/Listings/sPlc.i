@@ -3342,13 +3342,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -4988,13 +4989,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -5181,13 +5183,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -5381,13 +5384,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -5581,13 +5585,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -5781,13 +5786,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -5981,13 +5987,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -6181,13 +6188,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -6381,13 +6389,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -6581,13 +6590,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -6614,8 +6624,591 @@
  
 #line 155 "MainApp\appConfig.h" /0
  
+  
+#line 1 ".\Driver\mcp47x6.h" /0
  
  
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\mcp47x6.h" /0
+#line 4 ".\Driver\mcp47x6.h" /0
+ 
+ 
+ uint8_t mcp47x6Init(void);
+ void mcp47x6Write(uint8_t channel, uint16_t dat);
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 156 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\inPca9554.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\inPca9554.h" /0
+#line 4 ".\Driver\inPca9554.h" /0
+ 
+ 
+ void inPca9554Init(void);
+ uint8_t inPca9554Read(void);
+ void inPca9554Write(uint8_t wdata);
+ 
+ 
+#line 157 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 ".\Driver\outPca9554.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\Driver\outPca9554.h" /0
+#line 4 ".\Driver\outPca9554.h" /0
+ 
+ 
+ void outPca9554Init(void);
+ uint8_t outPca9554Read(void);
+ void outPca9554Write(uint8_t wdata);
+ 
+ 
+#line 158 "MainApp\appConfig.h" /0
  
  
   
@@ -6781,13 +7374,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -6974,13 +7568,14 @@
   
   
   
- 
- 
- 
+  
+  
+  
  
   
   
  
+  
   
  
  
@@ -7006,16 +7601,13 @@
  
  
   
-#line 1 "MainApp\sPLC.h" /0
+#line 1 "MainApp\sPlc.h" /0
  
-#line 2 "MainApp\sPLC.h" /1
+#line 2 "MainApp\sPlc.h" /1
   
  
   
  
- 
-  
-  
  
   
   
@@ -7028,10 +7620,6 @@
  
   
   
-  
-  
-  
-  
  
   
   
@@ -7040,6 +7628,10 @@
   
   
  
+  
+  
+  
+  
   
   
  
@@ -7056,6 +7648,9 @@
   
  
   
+  
+ 
+  
  
   
   
@@ -7077,6 +7672,9 @@
   
   
   
+ 
+ 
+ 
  
  
  
@@ -7123,6 +7721,288 @@
  
 #line 163 "MainApp\appConfig.h" /0
 #line 163 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 "MainApp\sPlcLaser.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 "MainApp\sPlcLaser.h" /0
+#line 4 "MainApp\sPlcLaser.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 164 "MainApp\appConfig.h" /0
  
  
  
@@ -7225,16 +8105,19 @@
  void nvramSave(void);
  void nvramUpdata(void);
  
+ int16_t ADD(int16_t A, int16_t B); 
  void SET(uint16_t A); 
  void RESET(uint16_t A); 
  void FLIP(uint16_t A); 
  uint8_t LD(uint16_t A); 
  uint8_t LDP(uint16_t A); 
  uint8_t LDN(uint16_t A); 
- void T100US(uint8_t A, uint8_t start, uint16_t value);
- void T1MS(uint8_t A, uint8_t start, uint16_t value);
- void T10MS(uint8_t A, uint8_t start, uint16_t value);
- void T100MS(uint8_t A, uint8_t start, uint16_t value);
+ 
+ void T1MS(uint8_t A, uint8_t start, uint16_t value); 
+ void T10MS(uint8_t A, uint8_t start, uint16_t value); 
+ void T100MS(uint8_t A, uint8_t start, uint16_t value); 
+ void UPDAC(uint16_t dat); 
+ void REBOOT(void); 
  
  void chipDacInit(void);
  void chipAdcInit(void);
@@ -7487,6 +8370,15 @@
  }
  memcpy(NVRAM1, NVRAM0, ((511 + 1) * 2));
  }
+ int16_t ADD(int16_t A, int16_t B){ 
+ int32_t tmp;
+ tmp = (int32_t)A + (int32_t)B;
+ if(tmp >= 32767)
+ tmp = 32767;
+ if(tmp <= (-32767-1))
+ tmp = (-32767-1);
+ return (int16_t)tmp;
+ }
  void SET(uint16_t A){ 
  assertCoilAddress(A); 
  NVRAM0[(A / 16)] |= 1 << (A % 16);
@@ -7530,11 +8422,11 @@
  }
  void T1MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 284 "MainApp\sPlc.c" /1
+#line 293 "MainApp\sPlc.c" /1
  
  
  
-#line 287 "MainApp\sPlc.c" /0
+#line 296 "MainApp\sPlc.c" /0
  if(start){
  if(NVRAM0[(336 + A)] >= value){
  NVRAM0[(288 + (A / 16))] |= 1 << (A % 16);
@@ -7551,11 +8443,11 @@
  }
  void T10MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 303 "MainApp\sPlc.c" /1
+#line 312 "MainApp\sPlc.c" /1
  
  
  
-#line 306 "MainApp\sPlc.c" /0
+#line 315 "MainApp\sPlc.c" /0
  if(start){
  if(NVRAM0[(352 + A)] >= value){
  NVRAM0[(304 + (A / 16))] |= 1 << (A % 16);
@@ -7571,11 +8463,11 @@
  }
  void T100MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 321 "MainApp\sPlc.c" /1
+#line 330 "MainApp\sPlc.c" /1
  
  
  
-#line 324 "MainApp\sPlc.c" /0
+#line 333 "MainApp\sPlc.c" /0
  if(start){
  if(NVRAM0[(368 + A)] >= value){
  NVRAM0[(320 + (A / 16))] |= 1 << (A % 16);
@@ -7611,19 +8503,57 @@
  temp = (int16_t)((temp - 856L) * 1000 / 3330L);
  return temp;
  }
+ void UPDAC(uint16_t dat){ 
+ switch(dat){
+ case 0:{
+ mcp47x6Write(0, NVRAM0[432 + (432 + 4)]);
+ break;
+ }
+ case 1:{
+ mcp47x6Write(1, NVRAM0[432 + (432 + 5)]);
+ break;
+ }
+ case 2:{
+ mcp47x6Write(2, NVRAM0[432 + (432 + 6)]);
+ break;
+ }
+ case 3:{
+ mcp47x6Write(3, NVRAM0[432 + (432 + 7)]);
+ break;
+ }
+ default:break;
+ }
+ }
+ void REBOOT(void){ 
+ 
+ uint8_t SFRPAGE_save;
+ 
+ 
+#line 394 "MainApp\sPlc.c" /1
+ 
+ 
+#line 396 "MainApp\sPlc.c" /0
+ 
+ SFRPAGE_save = SFRPAGE;
+ SFRPAGE = 0x00;
+ RSTSRC |= (1 << 1); 
+ SFRPAGE = SFRPAGE_save;
+ 
+ 
+ }
  static void wdtInit(void){ 
  
-#line 361 "MainApp\sPlc.c" /1
+#line 406 "MainApp\sPlc.c" /1
  
  
-#line 363 "MainApp\sPlc.c" /0
+#line 408 "MainApp\sPlc.c" /0
  }
  static void wdtEnable(void){ 
  
-#line 366 "MainApp\sPlc.c" /1
+#line 411 "MainApp\sPlc.c" /1
  
  
-#line 368 "MainApp\sPlc.c" /0
+#line 413 "MainApp\sPlc.c" /0
  
  
  }
@@ -7632,32 +8562,32 @@
  flagEA = EA;
  EA = 0;
  
-#line 376 "MainApp\sPlc.c" /1
+#line 421 "MainApp\sPlc.c" /1
  
  
  
-#line 379 "MainApp\sPlc.c" /0
+#line 424 "MainApp\sPlc.c" /0
  
-#line 380 "MainApp\sPlc.c" /1
+#line 425 "MainApp\sPlc.c" /1
  
-#line 381 "MainApp\sPlc.c" /0
+#line 426 "MainApp\sPlc.c" /0
  EA = flagEA;
  
  }
  static void wdtFeed(void){ 
  
-#line 386 "MainApp\sPlc.c" /1
+#line 431 "MainApp\sPlc.c" /1
  
  
-#line 388 "MainApp\sPlc.c" /0
+#line 433 "MainApp\sPlc.c" /0
  }
  
  static void pcaInit(void){ 
  
-#line 392 "MainApp\sPlc.c" /1
+#line 437 "MainApp\sPlc.c" /1
  
  
-#line 394 "MainApp\sPlc.c" /0
+#line 439 "MainApp\sPlc.c" /0
  
  
  
@@ -7669,7 +8599,7 @@
  TimerCounter_1mS = 0;
  TimerCounter_10mS = 0;
  
-#line 405 "MainApp\sPlc.c" /1
+#line 450 "MainApp\sPlc.c" /1
  
  
  
@@ -7681,7 +8611,7 @@
  
  
  
-#line 416 "MainApp\sPlc.c" /0
+#line 461 "MainApp\sPlc.c" /0
  }
  static void timer0Isr(void) interrupt 1{ 
  uint16_t i;
@@ -7732,28 +8662,28 @@
  TimerCounter_10mS = 0;
  }
  
-#line 466 "MainApp\sPlc.c" /1
+#line 511 "MainApp\sPlc.c" /1
  
  
-#line 468 "MainApp\sPlc.c" /0
+#line 513 "MainApp\sPlc.c" /0
  TimerCounter_1mS ++;
  }
  
  static void inputInit(void){
  memset(inputFilter, 0x0, 16);
  
-#line 474 "MainApp\sPlc.c" /1
+#line 519 "MainApp\sPlc.c" /1
  
-#line 475 "MainApp\sPlc.c" /0
+#line 520 "MainApp\sPlc.c" /0
  
  
  }
  static void outputInit(void){
  
-#line 480 "MainApp\sPlc.c" /1
+#line 525 "MainApp\sPlc.c" /1
  
  
-#line 482 "MainApp\sPlc.c" /0
+#line 527 "MainApp\sPlc.c" /0
  
  
  
@@ -7763,12 +8693,12 @@
  ctemp0 = 0;
  ctemp0 = 0;
  
-#line 491 "MainApp\sPlc.c" /1
+#line 536 "MainApp\sPlc.c" /1
  
  
  
  
-#line 495 "MainApp\sPlc.c" /0
+#line 540 "MainApp\sPlc.c" /0
  
  ctemp0 = inPca9554Read() ;
  
@@ -7811,12 +8741,12 @@
  }
  static void outputRefresh(void){ 
  
-#line 537 "MainApp\sPlc.c" /1
+#line 582 "MainApp\sPlc.c" /1
  
  
  
  
-#line 541 "MainApp\sPlc.c" /0
+#line 586 "MainApp\sPlc.c" /0
  
  outPca9554Write(NVRAM0[416]);
  
@@ -7824,7 +8754,7 @@
  static void chipAdcInit(void){ 
  uint8_t i;
  
-#line 548 "MainApp\sPlc.c" /1
+#line 593 "MainApp\sPlc.c" /1
  
  
  
@@ -7835,7 +8765,7 @@
  
  
  
-#line 558 "MainApp\sPlc.c" /0
+#line 603 "MainApp\sPlc.c" /0
  adcSelect = 0;
  for(i = 0;i <= 9;i ++){
  initAdcData(&adcTempDat[i]);
@@ -7846,16 +8776,16 @@
  wdtDisable(); 
  
  
-#line 568 "MainApp\sPlc.c" /1
+#line 613 "MainApp\sPlc.c" /1
  
  
-#line 570 "MainApp\sPlc.c" /0
+#line 615 "MainApp\sPlc.c" /0
  
  
-#line 572 "MainApp\sPlc.c" /1
+#line 617 "MainApp\sPlc.c" /1
  
  
-#line 574 "MainApp\sPlc.c" /0
+#line 619 "MainApp\sPlc.c" /0
  
  
  chipDacInit(); 
@@ -7869,7 +8799,7 @@
  }
  static void refreshDac(void){ 
  
-#line 587 "MainApp\sPlc.c" /1
+#line 632 "MainApp\sPlc.c" /1
  
  
  
@@ -7877,17 +8807,17 @@
  
  
  
-#line 594 "MainApp\sPlc.c" /0
+#line 639 "MainApp\sPlc.c" /0
  }
  static void chipDacInit(void){ 
  
-#line 597 "MainApp\sPlc.c" /1
+#line 642 "MainApp\sPlc.c" /1
  
  
  
  
  
-#line 602 "MainApp\sPlc.c" /0
+#line 647 "MainApp\sPlc.c" /0
  }
  void sPlcProcessStart(void){ 
  
@@ -7897,17 +8827,17 @@
  inputRefresh(); 
  
  
-#line 611 "MainApp\sPlc.c" /1
+#line 656 "MainApp\sPlc.c" /1
  
  
-#line 613 "MainApp\sPlc.c" /0
+#line 658 "MainApp\sPlc.c" /0
  }
  void sPlcProcessEnd(void){ 
  
-#line 616 "MainApp\sPlc.c" /1
+#line 661 "MainApp\sPlc.c" /1
  
  
-#line 618 "MainApp\sPlc.c" /0
+#line 663 "MainApp\sPlc.c" /0
  
  outputRefresh(); 
  
@@ -7915,8 +8845,8 @@
  refreshDac(); 
  
  
-#line 625 "MainApp\sPlc.c" /1
+#line 670 "MainApp\sPlc.c" /1
  
  
-#line 627 "MainApp\sPlc.c" /0
+#line 672 "MainApp\sPlc.c" /0
  }

@@ -22,8 +22,23 @@ void initModbusSerial(int32_t baudrate)
 	TI0 = 0;//清除发送完成   		
 	RI0 = 0;//清除接收完成
 #endif
-#ifdef C8051F340
-	
+#ifdef C8051F580
+	CKCON |= (1 << 5);//Timer2 uses the system clock
+	T2CON &= ~(1 << 0);//当定时器2 溢出或T2EX 上发生负跳变时将自动重装载（EXEN2=1）
+	T2CON &= ~(1 << 1);//定时器功能：定时器2 由T2M（CKCON.5）定义的时钟加1
+	T2CON |= (1 << 4);//Timer 2 overflows used for transmit clock.
+	T2CON |= (1 << 5);//Timer 2 overflows used for receive clock.	
+	RCAP2  = - ((long) ((uint32_t)CONFIG_SYSCLK / baudrate) / 32L);
+	TMR2 = RCAP2;
+	TR2= 1;                             // Start Timer2
+	SCON0 = 0x0;
+	SCON0 |= (1 << 4);//接收允许
+	SCON0 |= (1 << 6);//方式1：8 位UART，可变波特率
+	//RS485_DIRECTION_RXD;//接收状态
+	ES0 = 1;
+	IP |= (1 << 4);//UART0 中断高优先级
+	TI0 = 0;//清除发送完成   		
+	RI0 = 0;//清除接收完成
 #endif	
 }
 void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER1

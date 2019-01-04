@@ -8,50 +8,10 @@
 #define LASER_MODE_MP					2//多脉冲模式
 #define LASER_MODE_GP					3//群脉冲模式
 #define LASER_MODE_CC					4//校正模式
-//void main(void)
-//{
-//	int8_t temp;
-//	int16_t tecOnTime, tecOffTime;//制冷开关时间
-////	my_t *p = my;
-////	pidFuzzy_t pidFuzzy;
-//	Init_Device();//初始化MCU
-//#if CONFIG_USING_WDT == 1
-//	if ((RSTSRC & 0x02) == 0x00)
-//	{
-//		if (RSTSRC == 0x08)
-//		{//检测WDT看门狗 看门狗复位后锁定
-//			//所有IO ->LOW
-//			//关闭DAC
-//			//关闭
-//			LED_MCU = true;
-//			LED_LASER0 = false;
-//			LED_LASER1 = true;
-//			while(1);
-//		}
-//	}
-//#endif
 
-	//pidFuzzyInit(&pidFuzzy, 2, 0.5, 0.1);
-//	setModbusSlaveAddr(CONFIG_LOCAL_ADDRESS);//设置从机地址
-//	InitModbusHardware(CONFIG_UART0_BAUDRATE);//初始化MODBUS从机串口
-//	/**********************************************************************/
-////初始化my结构体
-//	//my.stepNum = 0;
-//	//my.checkCode = ((CONFIG_CHECK_CODE << 8) & 0xFF00);
-//	//my.checkCode |= CONFIG_VERSION;
-//	
-////使能看门狗
-//#if CONFIG_USING_WDT == 1
-//	Watchdog_Init();
-//#endif	
-//	EA = 1;
-//	
-//	while(1)
-//	{//开始循环扫描周期
-////看门狗喂狗
-//#if CONFIG_USING_WDT == 1
-//		 WDTCN = 0xA5;//喂狗
-//#endif
+
+
+
 ////上位机使能MCU软复位
 //#if CONFIG_USING_RESET == 1
 //		if(my.mcuReset)
@@ -409,92 +369,125 @@
 //			else
 //				sTimerCtrl(STIMER_ON, STIMER_1000MS_LED_OFF, 1);
 //		}
-//		//PID 温控指令
-//		if(sTimer[(CONFIG_STIMER_100MS_END - 3)].status)//等待A时间
-//		{
-//			my.pidOut += pidFuzzyRealize(&pidFuzzy, 25.0, 26.0);
-//			if(my.pidOut > 1)
-//				my.pidOut = 1;
-//			if(my.pidOut < 0)
-//				my.pidOut = 0;
-//			//my.onTimerPid = (int16_t)(my.pidOut * CONFIG_PIDOUT_PWM);
-//			//my.offTimerPid = CONFIG_TECOUT_MAX_CYCLE - my.onTimerPid; 
-//			sTimerCtrl(STIMER_OFF, (CONFIG_STIMER_100MS_END - 3), 10);
-//		}
-//		else
-//			sTimerCtrl(STIMER_ON, (CONFIG_STIMER_100MS_END - 3), 10);
-//		//PID结果输出
 
-//		if(sTimer[1].value >= CONFIG_TECOUT_CYCLE || sTimer[1].enable == 0)
-//		{
-//			COOL_OUT = 1;
-//			//tecOnTime = (int16_t)(my.pidOut * CONFIG_TECOUT_CYCLE);
-//			tecOnTime = (int16_t)(0.25 * CONFIG_TECOUT_CYCLE);
-//			sTimerCtrl(STIMER_OFF, 1, tecOnTime);
-//			sTimerCtrl(STIMER_ON, 1, tecOnTime);
-//		}
-//		if(sTimer[1].value >= tecOnTime)
-//		{
-//			COOL_OUT = 0;
-//		}
-//		modbusPoll();//执行MODBUS POLL
-//		
-//		//setOutput();//更新输出IO
-//	
-//	}		
-//}
 
-//void startLaser(void)
-//{//开始发射脉冲	
-//	if(my.laserMode == ENUM_MODE_CW )
-//	{
-//		DAC0 = my.laserCurrent[0];
-//		DAC1 = my.laserCurrent[1];
-//	}
-//	else if((my.LaserMode == ENUM_MODE_SP) | 
-//			(my.LaserMode == ENUM_MODE_MP) |
-//			(my.LaserMode == ENUM_MODE_GP))
-//	{
-//		my.laserTimer.tMate = my.PosWidth;//设置匹配值
-//		my.laserTimer.tOverflow = my.NegWidth + my.PosWidth;//设置溢出值
-//		my.laserTimer.tCounter = 0x0;	
-//		my.laserTimer.pMate = 0x0;//脉冲个数匹配值
-//		my.laserTimer.sMate = 0x0;//脉个数溢出值
-//		my.laserTimer.pCounter = 0x0;
-//		my.laserTimer.sCounter = 0x0;	
-//		TF2H = 0;//Timer 2 High Byte Overflow Flag.
-//		ET2 = 1;
-//		TMR2L = 0xFF;
-//		TMR2H = 0xFF;
-//		TR2 = 1;//使能TIMER2计时器
-//	}
-//	else if(my.LaserMode == ENUM_MODE_CC)
-//	{//校正模式
-//		my.laserTimer.tMate = my.PosWidth;//设置匹配值
-//		my.laserTimer.tOverflow = my.NegWidth + my.PosWidth;//设置溢出值
-//		my.laserTimer.tCounter = 0x0;	
-//		my.laserTimer.pMate = my.GroupNum;//脉冲个数匹配值
-//		my.laserTimer.sMate = my.GroupSpace;//脉个数溢出值
-//		my.laserTimer.pCounter = 0x0;
-//		my.laserTimer.sCounter = 0x0;	
-//		TF2H = 0;//Timer 2 High Byte Overflow Flag.
-//		ET2 = 1;
-//		TMR2L = 0xFF;
-//		TMR2H = 0xFF;
-//		TR2 = 1;//使能TIMER2计时器
-//	}
-//	my.FlagIndicate = 1;
-//}
-//void stopLaser(myDevice_t *p)
-//{//停止发射脉冲
-//	TR2 = 0;
-//	ET2 = 0;
-//	TF2H = 0;
-//	DAC0 = 0;
-//	DAC1 = 0;
-//	my.FlagIndicate = 0;	
-//}
-void setLaserCurrent(void){
+
+
+void startLaser(void){//开始发射脉冲
+#ifdef C8051F580	
+	uint8_t SFRPAGE_save;
+#endif
+	if(NVRAM0[EM_START + EM_LASER_MODE] == LASER_MODE_CW ){
+		NVRAM0[SPREG_START + SPREG_DAC_0] = NVRAM0[EM_START + EM_LASER_CURRENT_CH1];
+		NVRAM0[SPREG_START + SPREG_DAC_1] = NVRAM0[EM_START + EM_LASER_CURRENT_CH2];
+		UPDAC(0);UPDAC(1);//立即更新DAC
+	}
+	else if((NVRAM0[EM_START + EM_LASER_MODE] == LASER_MODE_SP) | 
+			(NVRAM0[EM_START + EM_LASER_MODE] == LASER_MODE_MP) |
+			(NVRAM0[EM_START + EM_LASER_MODE] == LASER_MODE_GP)){
+		NVRAM0[EM_START + EM_LASER_TMATE] = NVRAM0[EM_LASER_POSWIDTH];//设置匹配值
+		NVRAM0[EM_START + EM_LASER_TOVERFLOW] = ADD(NVRAM0[EM_LASER_POSWIDTH], NVRAM0[EM_LASER_POSWIDTH]);//设置溢出值
+		NVRAM0[EM_START + EM_LASER_TCOUNTER] = 0X00;	
+		NVRAM0[EM_START + EM_LASER_PMATE] = 0x00;//脉冲个数匹配值
+		NVRAM0[EM_START + EM_LASER_SMATE] = 0x0;//脉个数溢出值
+		NVRAM0[EM_START + EM_LASER_PCOUNTER] = 0X0;
+		NVRAM0[EM_START + EM_LASER_SCOUNTER] = 0X0;
+#ifdef C8051F580
+		SFRPAGE_save = SFRPAGE;
+		SFRPAGE = ACTIVE_PAGE;
+		TMR3CN &= ~(uint8_t)(1 << 7);//T3中断标志清零
+		EIE1 |= (1 << 6);//T3 ET3中断使能
+		TMR3L = 0xFF;
+		TMR3H = 0xFF;
+		TMR3CN |= (1 << 2);//TR3 使能TIMER3计时器
+		SFRPAGE = SFRPAGE_save;
+#endif
+#ifdef C8051F020
+		TMR3CN &= ~(uint8_t)(1 << 7);//TF3 溢出标志清零
+		EIE2 |= (1 << 0);//T3 ET3中断使能
+		TMR3L = 0xFF;
+		TMR3H = 0xFF;
+		TMR3CN |= (1 << 2);//TR3 使能TIMER3计时器
+#endif
+	}
+	else if(NVRAM0[EM_START + EM_LASER_MODE] == LASER_MODE_CC)
+	{//校正模式
+		NVRAM0[EM_START + EM_LASER_TMATE] = NVRAM0[EM_LASER_POSWIDTH];//设置匹配值
+		NVRAM0[EM_START + EM_LASER_TOVERFLOW] = ADD(NVRAM0[EM_LASER_POSWIDTH], NVRAM0[EM_LASER_POSWIDTH]);//设置溢出值
+		NVRAM0[EM_START + EM_LASER_TCOUNTER] = 0X00;	
+		NVRAM0[EM_START + EM_LASER_PMATE] = NVRAM0[EM_START + EM_LASER_GROUP_NUM];//脉冲个数匹配值
+		NVRAM0[EM_START + EM_LASER_SMATE] = NVRAM0[EM_START + EM_LASER_GROUP_SPACE];//脉个数溢出值
+		NVRAM0[EM_START + EM_LASER_PCOUNTER] = 0X0;
+		NVRAM0[EM_START + EM_LASER_SCOUNTER] = 0X0;	
+#ifdef C8051F580
+		SFRPAGE_save = SFRPAGE;
+		SFRPAGE = ACTIVE_PAGE;
+		TMR3CN &= ~(uint8_t)(1 << 7);//TF3 溢出标志清零
+		EIE2 |= (1 << 0);//T3 ET3中断使能
+		TMR3L = 0xFF;
+		TMR3L = 0xFF;
+		TMR3CN |= (1 << 2);//TR3 使能TIMER3计时器
+		SFRPAGE = SFRPAGE_save;
+#endif
+#ifdef C8051F020
+		TMR3CN &= ~(uint8_t)(1 << 7);//TF3 溢出标志清零
+		EIE2 |= (1 << 0);//T3 ET3中断使能
+		TMR3L = 0xFF;
+		TMR3H = 0xFF;
+		TMR3CN |= (1 << 2);//TR3 使能TIMER3计时器
+#endif
+	}
+	SET(R_START * 16+ R_FLAG_LASER_EMITING);//发射标志置位
+}
+static void stopLaser(void){//停止发射脉冲
+#ifdef C8051F020
+	TMR3CN &= ~(uint8_t)(1 << 2);//Stop Timer 3
+	TMR3CN &= ~(uint8_t)(1 << 7);//Clear Timer 3 High Byte Overflow Flag.
+	EIE1 &= ~(uint8_t)(1 << 6);//关闭Timer3中断
+#endif
+#ifdef C8051F580
+	uint8_t SFRPAGE_save;
+	SFRPAGE_save = SFRPAGE;
+	SFRPAGE = ACTIVE_PAGE;
+	TMR3CN &= ~(uint8_t)(1 << 2);//Stop Timer 3
+	TMR3CN &= ~(uint8_t)(1 << 7);//Clear Timer 3 High Byte Overflow Flag.
+	EIE1 &= ~(uint8_t)(1 << 6);//关闭Timer3中断
+	SFRPAGE = SFRPAGE_save;
+#endif
+	//关闭DAC输出
+	NVRAM0[SPREG_START + SPREG_DAC_0] = 0;
+	NVRAM0[SPREG_START + SPREG_DAC_1] = 1;
+	UPDAC(MCP47X6_LASER_CHANNEL_CH1);
+	UPDAC(MCP47X6_LASER_CHANNEL_CH2);
+	RESET(R_START * 16+ R_FLAG_LASER_EMITING);//发射标志置位
+}
+static void setLaserModCh1(uint8_t st){//CH1调制控制
+	if(st){
+		P4 |= (uint8_t)(1 << 6);
+	}
+	else{
+		P4 &= ~(uint8_t)(1 << 6);
+	}
+}
+static void setLaserModCh2(uint8_t st){//CH2调制控制
+	if(st){
+		P4 |= (uint8_t)(1 << 1);
+	}
+	else{
+		P4 &= ~(uint8_t)(1 << 1);
+	}
+}
+static void setLaserModBoth(uint8_t st){////CH1+CH2调制控制
+	if(st){
+		P4 |= (uint8_t)(1 << 6);
+		P4 |= (uint8_t)(1 << 1);
+	}
+	else{
+		P4 &= ~(uint8_t)(1 << 6);
+		P4 &= ~(uint8_t)(1 << 1);
+	}
+}
+static void setLaserCurrent(void){//设置DAC输出
 	if(LD(R_START * 16 + R_LASER_SELECT_CH1)){
 		mcp47x6Write(MCP47X6_LASER_CHANNEL_CH1, NVRAM0[EM_START + EM_LASER_CURRENT_CH1]);
 	}
@@ -509,74 +502,62 @@ void setLaserCurrent(void){
 	}
 }
 
-
-
+void initTimer3(void){//TIMER3初始化
+	
+}
 void timer3Isr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射
-	uint8_t SFRPAGE_save;
 #ifdef C8051F580
+	uint8_t SFRPAGE_save;
 	SFRPAGE_save = SFRPAGE;
 	TMR3CN &= ~(uint8_t)(1 << 7);//Clear Timer 3 High Byte Overflow Flag
 	SFRPAGE = SFRPAGE_save;
 #endif
+#ifdef C8051F020
+#endif
 	switch(NVRAM0[EM_START + EM_LASER_MODE){
-		case LASER_MODE_CC:
-		{//CC模式
-			SetLaserCurrent(p);
+		case LASER_MODE_CW:{//CW连续模式
+			SetLaserCurrent();
 			break;
 		}
-		case LASER_MODE_SP:
-		{//SP模式
+		case LASER_MODE_SP:{//SP单脉冲模式
 			break;
 		}
-		case LASER_MODE_MP:
-		{//MP模式	
-			if(p->softTimer.tCounter == p->softTimer.tMate)
-			{//计时器匹配
-				LaserMod_PIN = LASER_OFF;//翻转输出
+		case LASER_MODE_MP:{//MP多脉冲模式	
+			if(p->softTimer.tCounter == p->softTimer.tMate){//计时器匹配
+				setLaserModBoth(LASER_OFF);//翻转输出
 			}
-			if(p->softTimer.tCounter == p->softTimer.tOverflow)
-			{//计时器溢出
+			if(p->softTimer.tCounter == p->softTimer.tOverflow){//计时器溢出
 				p->softTimer.tCounter = 0;//清零
 			}
-			if(p->softTimer.tCounter == 0)
-			{//翻转
-				LaserMod_PIN = LASER_ON;//翻转输出
+			if(p->softTimer.tCounter == 0){//翻转
+				setLaserModBoth(LASER_ON);//翻转输出
 			}
 			p->softTimer.tCounter ++;
 			break;
 		}
-		case ENUM_MODE_GP:
-		{//GP模式
-			if(p->softTimer.pCounter < p->softTimer.pMate)
-			{
-				if(p->softTimer.tCounter == 0)
-				{
-					if(p->softTimer.pCounter < p->softTimer.pMate)
-					{
-						LaserMod_PIN = LASER_ON;//翻转输出						
+		case LASER_MODE_GP:{//GP可编程脉冲模式
+			if(p->softTimer.pCounter < p->softTimer.pMate){
+				if(p->softTimer.tCounter == 0){
+					if(p->softTimer.pCounter < p->softTimer.pMate){
+						setLaserModBoth(LASER_ON);//翻转输出						
 					}
 				}
-				if(p->softTimer.tCounter == p->softTimer.tMate)
-				{//计时器匹配
-					LaserMod_PIN = LASER_OFF;//翻转输出
+				if(p->softTimer.tCounter == p->softTimer.tMate){//计时器匹配
+					setLaserModBoth(LASER_OFF);//翻转输出
 				}
-				if(p->softTimer.tCounter == (p->softTimer.tOverflow - 1))
-				{//计时器溢出
+				if(p->softTimer.tCounter == (p->softTimer.tOverflow - 1)){//计时器溢出
 					p->softTimer.tCounter = 0xFFFF;//清零
 					p->softTimer.pCounter ++;//清零	
 				}
 				p->softTimer.tCounter ++;
 			}
-			if(p->softTimer.pCounter == p->softTimer.pMate && p->softTimer.tCounter == 0)
-			{//脉冲个数发现匹配
+			if(p->softTimer.pCounter == p->softTimer.pMate && p->softTimer.tCounter == 0){//脉冲个数发现匹配
 				LaserMod_PIN = LASER_OFF;
 				p->softTimer.pCounter = 0xFFFF;
 				p->softTimer.sCounter = 0x0;
 			}
-			if(p->softTimer.pCounter == 0xFFFF)
-			{		
-				if(p->softTimer.sCounter == p->softTimer.sMate)
-				{
+			if(p->softTimer.pCounter == 0xFFFF){		
+				if(p->softTimer.sCounter == p->softTimer.sMate){
 					p->softTimer.pCounter = 0;	
 				}
 				p->softTimer.sCounter ++;
