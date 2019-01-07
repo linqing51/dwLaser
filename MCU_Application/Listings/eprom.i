@@ -7670,13 +7670,9 @@
  
  
  
- 
- 
- 
- 
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(511 + 1)]; 
- extern xdata int16_t NVRAM1[(511 + 1)]; 
+ extern xdata int16_t NVRAM0[(773 + 1)]; 
+ extern xdata int16_t NVRAM1[(773 + 1)]; 
  
  void wdtDisable(void); 
  
@@ -7700,11 +7696,12 @@
  
  int16_t ADD(int16_t A, int16_t B); 
  void SET(uint16_t A); 
- void RESET(uint16_t A); 
+ void RES(uint16_t A); 
  void FLIP(uint16_t A); 
  uint8_t LD(uint16_t A); 
  uint8_t LDP(uint16_t A); 
- uint8_t LDN(uint16_t A); 
+ uint8_t LDF(uint16_t A); 
+ uint8_t LDB(uint16_t A); 
  
  void T1MS(uint8_t A, uint8_t start, uint16_t value); 
  void T10MS(uint8_t A, uint8_t start, uint16_t value); 
@@ -8001,6 +7998,12 @@
  
  
  
+ 
+ 
+ 
+ 
+ 
+ void sPlcLaserStep(void);
  
 #line 164 ".\MainApp\appConfig.h" /0
  

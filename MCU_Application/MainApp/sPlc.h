@@ -3,47 +3,48 @@
 /*****************************************************************************/
 #include "appConfig.h"
 /*****************************************************************************/
+/*****************************************************************************/
 //线圈 保持 16 * 16 = 256BIT
 #define MR_START						0
 #define MR_END							15
 //线圈寄存器 非保持 16 * 16 = 256BIT
 #define R_START							16
 #define R_END							31
-//数据寄存器 保持 128
+//数据寄存器 保持 256
 #define DM_START						32
-#define DM_END							159
-//数据寄存器 非保持 128个字
-#define EM_START						160
-#define EM_END							287
+#define DM_END							287
+//数据寄存器 非保持 256个字
+#define EM_START						288
+#define EM_END							543
 //延时线圈
-#define T_1MS_START						288//16个1mS
-#define T_1MS_END						303
-#define T_10MS_START					304//16个10mS
-#define T_10MS_END						319
-#define T_100MS_START					320//16个100mS
-#define T_100MS_END						335
+#define T_1MS_START						544//32个1mS
+#define T_1MS_END						545
+#define T_10MS_START					546//32个10mS
+#define T_10MS_END						547
+#define T_100MS_START					548//32个100mS
+#define T_100MS_END						549
 //延时计时器 
-#define TD_1MS_START					336//16个1mS
-#define TD_1MS_END						351
-#define TD_10MS_START					352//16个10mS
-#define TD_10MS_END						367
-#define TD_100MS_START					368//16个100mS
-#define TD_100MS_END					383
+#define TD_1MS_START					550//32个1mS
+#define TD_1MS_END						581
+#define TD_10MS_START					582//32个10mS
+#define TD_10MS_END						613
+#define TD_100MS_START					614//32个100mS
+#define TD_100MS_END					645
 //计数器
-#define C_START							384//16个计数器
-#define C_END							399//
+#define C_START							646//16个计数器
+#define C_END							661//
 //输入位寄存器 16 * 16 = 256个
-#define X_START							400//
-#define X_END							415// 
+#define X_START							662//
+#define X_END							677// 
 //输出位寄存器 16 * 16 = 256个
-#define Y_START							416// 
-#define Y_END							431//
+#define Y_START							678// 
+#define Y_END							693//
 //特殊寄存器 64个字
-#define SPREG_START						432//
-#define SPREG_END						495//
+#define SPREG_START						694//
+#define SPREG_END						757//
 //特殊线圈	16 * 16 = 256个
-#define SPCOIL_START					496
-#define SPCOIL_END						511
+#define SPCOIL_START					758
+#define SPCOIL_END						773
 /*****************************************************************************/
 #define CONFIG_NVRAM_SIZE 				(SPCOIL_END + 1)
 /*****************************************************************************/
@@ -56,17 +57,12 @@
 #define SPREG_DAC_2						(SPREG_START + 6)
 #define SPREG_DAC_3						(SPREG_START + 7)
 
-#define SPCOIL_ON						0//长通线圈
-#define SPCOIL_PS1MS					1//1mS间隔 50%占空比脉冲
-#define SPCOIL_PS10MS					2//10mS
-#define SPCOIL_PS100MS					3//100mS
+#define SPCOIL_ON						(SPCOIL_START + 0)//长通线圈
+#define SPCOIL_PS1MS					(SPCOIL_START + 1)//1mS间隔 50%占空比脉冲
+#define SPCOIL_PS10MS					(SPCOIL_START + 2)//10mS 50%占空比脉冲
+#define SPCOIL_PS100MS					(SPCOIL_START + 3)//100mS 50%占空比脉冲
 /*****************************************************************************/
-#define SP_EM_MODBUS_SLAVE_ERR			300
-#define SP_R_ON							800//上电ON
-#define SP_R_TICK_1MS					801//
-#define SP_R_TICK_10MS					802//
-#define SP_R_TICK_100MS					803//
-#define SP_R_TICK_1S					804//
+
 /*****************************************************************************/
 extern uint16_t ModbusSlaveAsciiOverTimeCounter;//Modbus Slave通信超时计时器
 extern xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
@@ -94,11 +90,12 @@ void nvramUpdata(void);
 /*****************************************************************************/
 int16_t ADD(int16_t A, int16_t B);//加法指令
 void SET(uint16_t A);//置位
-void RESET(uint16_t A);//复位
+void RES(uint16_t A);//复位
 void FLIP(uint16_t A);//翻转
 uint8_t LD(uint16_t A);//载入
 uint8_t LDP(uint16_t A);//脉冲上升沿
-uint8_t LDN(uint16_t A);//脉冲下降沿
+uint8_t LDF(uint16_t A);//脉冲下降沿
+uint8_t LDB(uint16_t A);//取反载入
 //void T100US(uint8_t A, uint8_t start, uint16_t value);
 void T1MS(uint8_t A, uint8_t start, uint16_t value);//1mS延时器启动
 void T10MS(uint8_t A, uint8_t start, uint16_t value);//10mS延时器启动

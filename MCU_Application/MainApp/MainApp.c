@@ -2,10 +2,17 @@
 /*****************************************************************************/
 //C8051F020 计时器功能定义
 //TIMER0 ->SPLC_FRAME
-//TIMER1 ->Modbus RTU
+//TIMER1 ->Modbus RTU TIMER
 //TIMER2 ->UART0 Buadrate
-//TIMER3 ->SPLC_LASER
+//TIMER3 ->NC
 //TIMER4 ->UART1 Buadrate
+//C8051F580 计时器功能定义
+//TIMER0 ->SPLC_FRAME
+//TIMER1 ->UART1 Baud Rate Generator
+//TIMER2 ->MODBUS RTU TIMER
+//TIMER3 ->SPLC_LASER
+//TIMER4 ->EXT TIMER OUT
+//TIMER5 ->EXT TIMER OUT
 /*****************************************************************************/
 //sbit LED_MCU = P2^3;//处理器指示LED
 //sbit LED_LASER0 = P1^7;//激光发射指示LED0 980nM
@@ -98,9 +105,10 @@ void main(void){
 		loopFlag = ~loopFlag;
 		sPlcProcessStart();
 		NVRAM0[EM_START + EM_MCU_CHECKCODE] = CONFIG_CHECK_CODE;//写入板卡校验码
-		if(LD(R_START + R_KEY_MCU_RESET)){
+		if(LD(R_START + R_MCU_RESET)){
 			REBOOT();
 		}
+		sPlcLaserStep();
 		//SPLC代码插入此处
 ////		SET(10);
 ////		RESET(10);

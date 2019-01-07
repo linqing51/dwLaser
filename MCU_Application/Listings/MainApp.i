@@ -7847,13 +7847,9 @@
  
  
  
- 
- 
- 
- 
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(511 + 1)]; 
- extern xdata int16_t NVRAM1[(511 + 1)]; 
+ extern xdata int16_t NVRAM0[(773 + 1)]; 
+ extern xdata int16_t NVRAM1[(773 + 1)]; 
  
  void wdtDisable(void); 
  
@@ -7877,11 +7873,12 @@
  
  int16_t ADD(int16_t A, int16_t B); 
  void SET(uint16_t A); 
- void RESET(uint16_t A); 
+ void RES(uint16_t A); 
  void FLIP(uint16_t A); 
  uint8_t LD(uint16_t A); 
  uint8_t LDP(uint16_t A); 
- uint8_t LDN(uint16_t A); 
+ uint8_t LDF(uint16_t A); 
+ uint8_t LDB(uint16_t A); 
  
  void T1MS(uint8_t A, uint8_t start, uint16_t value); 
  void T10MS(uint8_t A, uint8_t start, uint16_t value); 
@@ -8179,6 +8176,12 @@
  
  
  
+ 
+ 
+ 
+ 
+ void sPlcLaserStep(void);
+ 
 #line 164 "MainApp\appConfig.h" /0
  
  
@@ -8272,19 +8275,26 @@
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  sbit loopFlag = P0^4;
  sbit epromBusyFlag = P0^5;
  void main(void){
  
-#line 78 "MainApp\MainApp.c" /1
+#line 85 "MainApp\MainApp.c" /1
  
  
-#line 80 "MainApp\MainApp.c" /0
+#line 87 "MainApp\MainApp.c" /0
  
  initDeviceF580();
  
  
-#line 84 "MainApp\MainApp.c" /1
+#line 91 "MainApp\MainApp.c" /1
  
  
  
@@ -8293,7 +8303,7 @@
  
  
  
-#line 92 "MainApp\MainApp.c" /0
+#line 99 "MainApp\MainApp.c" /0
  sPlcInit(); 
  initModbus(0x01, 57600);
  NVRAM0[0] = 0xA5;
@@ -8302,10 +8312,11 @@
  while(1){
  loopFlag = ~loopFlag;
  sPlcProcessStart();
- NVRAM0[160 + 0] = 0x5A7E; 
- if(LD(16 + 0)){
+ NVRAM0[288 + (288 + 0)] = 0x5A7E; 
+ if(LD(16 + (16 * 16 + 0))){
  REBOOT();
  }
+ sPlcLaserStep();
  
  
  

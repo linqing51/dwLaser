@@ -251,7 +251,7 @@ void SET(uint16_t A){//置位
 	assertCoilAddress(A);//检查地址范围
 	NVRAM0[(A / 16)] |= 1 << (A % 16);
 }
-void RESET(uint16_t A){//置零
+void RES(uint16_t A){//置零
 	assertCoilAddress(A);//检查地址范围
 	NVRAM0[(A / 16)] &= ~(1 << (A % 16));
 }
@@ -260,13 +260,15 @@ void FLIP(uint16_t A){//翻转
 	assertCoilAddress(A);//检查地址范围
 	temp= NVRAM0[(A / 16)] & (1 << (A % 16));
 	if(temp)
-		RESET(A);
+		RES(A);
 	else
 		SET(A);
 }
 uint8_t LD(uint16_t A){//载入
 	assertCoilAddress(A);//检查地址范围
 	return (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
+}
+uint8_t LDB(uint16_t A){//取反载入
 }
 uint8_t LDP(uint16_t A){//脉冲上升沿
 	uint8_t temp0, temp1;
@@ -278,7 +280,7 @@ uint8_t LDP(uint16_t A){//脉冲上升沿
 	else
 		return 0;
 }
-uint8_t LDN(uint16_t A){//脉冲下降沿
+uint8_t LDF(uint16_t A){//脉冲下降沿
 	uint8_t temp0, temp1;
 	assertCoilAddress(A);
 	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
@@ -364,6 +366,11 @@ int16_t TENV(int16_t dat){//CODE转换为环境温度
 	temp = (int16_t)(CONFIG_SPLC_ADC_INTERNAL_VREF * dat / 4096);//单位mV
 	temp = (int16_t)((temp - CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET) * 1000 / CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN);
 	return temp;
+}
+int16_t XTAB(,uint16_t tab, uint16_t len){//输入X线性查表
+	//从tab 0->len 为表X走
+}
+int16_t YTAB(uint16_t tab, uint16_t len){//输入Y线性查表
 }
 void UPDAC(uint16_t dat){//立即更新DAC输出
 	switch(dat){
@@ -457,6 +464,8 @@ static void timer0Init(void){//硬件sTimer计时器初始化
 	TMOD |= (1 << 0);// T0 in 16-bit mode
 	ET0 = 1;// T0 interrupt enabled
 	TR0 = 1;// T0 ON
+#endif
+#ifdef C8051F580
 #endif
 }
 static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS

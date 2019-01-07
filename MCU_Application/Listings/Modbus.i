@@ -7670,13 +7670,9 @@
  
  
  
- 
- 
- 
- 
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(511 + 1)]; 
- extern xdata int16_t NVRAM1[(511 + 1)]; 
+ extern xdata int16_t NVRAM0[(773 + 1)]; 
+ extern xdata int16_t NVRAM1[(773 + 1)]; 
  
  void wdtDisable(void); 
  
@@ -7700,11 +7696,12 @@
  
  int16_t ADD(int16_t A, int16_t B); 
  void SET(uint16_t A); 
- void RESET(uint16_t A); 
+ void RES(uint16_t A); 
  void FLIP(uint16_t A); 
  uint8_t LD(uint16_t A); 
  uint8_t LDP(uint16_t A); 
- uint8_t LDN(uint16_t A); 
+ uint8_t LDF(uint16_t A); 
+ uint8_t LDB(uint16_t A); 
  
  void T1MS(uint8_t A, uint8_t start, uint16_t value); 
  void T10MS(uint8_t A, uint8_t start, uint16_t value); 
@@ -8002,6 +7999,12 @@
  
  
  
+ 
+ 
+ 
+ 
+ void sPlcLaserStep(void);
+ 
 #line 164 ".\MainApp\appConfig.h" /0
  
  
@@ -8110,7 +8113,7 @@
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
- if((startAddress + numberOfCoil) > ((511 + 1) * 16)){ 
+ if((startAddress + numberOfCoil) > ((773 + 1) * 16)){ 
  HandleModbusError(0x02);
  }
  else{
@@ -8146,7 +8149,7 @@
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfRegisters = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
- if((startAddress + numberOfRegisters) > (511 + 1)){ 
+ if((startAddress + numberOfRegisters) > (773 + 1)){ 
  HandleModbusError(0x02);
  }
  else{ 
@@ -8169,7 +8172,7 @@
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  value = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
- if((startAddress) > ((511 + 1) * 16)){ 
+ if((startAddress) > ((773 + 1) * 16)){ 
  HandleModbusError(0x02);
  }
  else{
@@ -8202,7 +8205,7 @@
  Tx_Data.function = 6;
  Tx_Data.address = ModbusSlaveAddress;
  Tx_Data.dataLen = 4;
- if(address >= (511 + 1)){
+ if(address >= (773 + 1)){
  HandleModbusError(0x03);
  }
  else{
@@ -8220,7 +8223,7 @@
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
- if((startAddress + numberOfCoil) > ((511 + 1) * 16)){ 
+ if((startAddress + numberOfCoil) > ((773 + 1) * 16)){ 
  HandleModbusError(0x02);
  }
  else{
@@ -8265,7 +8268,7 @@
  numberOfRegisters = ((uint16_t)(Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
  byteCount = Rx_Data.dataBuf[4];
  
- if((startAddress+numberOfRegisters) > (511 + 1)){
+ if((startAddress+numberOfRegisters) > (773 + 1)){
  HandleModbusError(0x03);
  }
  else{

@@ -17,15 +17,13 @@
 #define	POWERED_DOWN_100K  							(2 << 1)//100K电阻下拉
 #define	POWERED_DOWN_500K 	 						(3 << 1)//500K电阻下拉
 /*****************************************************************************/
+static pdata uint16_t dacCode[3];
 /*****************************************************************************/
 uint8_t mcp47x6Init(void)
 {//MCP47x6初始化
 	uint8_t temp, flag;
 	//配置位
-	NVRAM0[SPREG_START + SPREG_DAC_0] = 0;
-	NVRAM0[SPREG_START + SPREG_DAC_1] = 0;
-	NVRAM0[SPREG_START + SPREG_DAC_2] = 0;
-	NVRAM0[SPREG_START + SPREG_DAC_3] = 0;
+	dacCode[0] = 0;dacCode[1] = 0;dacCode[2] = 0;dacCode[3] = 0;
 	temp = 	WRITE_VOLATILE_MEMORY |//Command
 			REF_VDD 				|//REF
 			NOT_POWERED_DOWN      |//PowerDown
@@ -102,7 +100,7 @@ void mcp47x6Write(uint8_t channel, uint16_t dat)
 	temp = 0x0;
 	switch(channel){
 		case 1:{
-			if(NVRAM0[SPREG_START + SPREG_DAC_0] != dat)
+			if(dacCode[0] != dat)
 			{
 				iic4Start();
 				
@@ -116,12 +114,12 @@ void mcp47x6Write(uint8_t channel, uint16_t dat)
 				flag = iic4WaitAck();
 				
 				iic4Stop();
-				NVRAM0[SPREG_START + SPREG_DAC_0] = dat;
+				dacCode[0] = dat;
 			}
 			break;
 		}
 		case 2:{
-			if(NVRAM0[SPREG_START + SPREG_DAC_1] != dat)
+			if(dacCode[1] != dat)
 			{
 				iic3Start();
 				
@@ -135,12 +133,12 @@ void mcp47x6Write(uint8_t channel, uint16_t dat)
 				flag = iic3WaitAck();
 				
 				iic3Stop();
-				NVRAM0[SPREG_START + SPREG_DAC_1] = dat;
+				dacCode[1]  = dat;
 			}
 			break;
 		}
 		case 3:{
-			if(NVRAM0[SPREG_START + SPREG_DAC_2] != dat)
+			if(dacCode[2] != dat)
 			{
 				iic1Start();
 				
@@ -154,12 +152,12 @@ void mcp47x6Write(uint8_t channel, uint16_t dat)
 				flag = iic1WaitAck();
 				
 				iic1Stop();
-				NVRAM0[SPREG_START + SPREG_DAC_2] = dat;
+				dacCode[2] = dat;
 			}
 			break;
 		}
 		case 4:{
-			if(NVRAM0[SPREG_START + SPREG_DAC_3] != dat)
+			if(dacCode[3] != dat)
 			{
 				iic2Start();
 				
@@ -173,13 +171,11 @@ void mcp47x6Write(uint8_t channel, uint16_t dat)
 				flag = iic2WaitAck();
 				
 				iic2Stop();
-				NVRAM0[SPREG_START + SPREG_DAC_3] = dat;
+				dacCode[3] = dat;
 			}
 			break;
 		}
 		default:break;
 	}
 }
-
-
 

@@ -7670,13 +7670,9 @@
  
  
  
- 
- 
- 
- 
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(511 + 1)]; 
- extern xdata int16_t NVRAM1[(511 + 1)]; 
+ extern xdata int16_t NVRAM0[(773 + 1)]; 
+ extern xdata int16_t NVRAM1[(773 + 1)]; 
  
  void wdtDisable(void); 
  
@@ -7700,11 +7696,12 @@
  
  int16_t ADD(int16_t A, int16_t B); 
  void SET(uint16_t A); 
- void RESET(uint16_t A); 
+ void RES(uint16_t A); 
  void FLIP(uint16_t A); 
  uint8_t LD(uint16_t A); 
  uint8_t LDP(uint16_t A); 
- uint8_t LDN(uint16_t A); 
+ uint8_t LDF(uint16_t A); 
+ uint8_t LDB(uint16_t A); 
  
  void T1MS(uint8_t A, uint8_t start, uint16_t value); 
  void T10MS(uint8_t A, uint8_t start, uint16_t value); 
@@ -8002,6 +7999,12 @@
  
  
  
+ 
+ 
+ 
+ 
+ void sPlcLaserStep(void);
+ 
 #line 164 ".\MainApp\appConfig.h" /0
  
  
@@ -8051,28 +8054,30 @@
  
 #line 25 "Modbus\ModbusPort.c" /0
  
- CKCON |= (1 << 5); 
- T2CON &= ~(1 << 0); 
- T2CON &= ~(1 << 1); 
- T2CON |= (1 << 4); 
- T2CON |= (1 << 5); 
- RCAP2  = - ((long) ((uint32_t)(22118400L) / baudrate) / 32L);
- TMR2 = RCAP2;
- TR2= 1;                              
+ uint8_t SFRPAGE_save;
+ uint16_t tmp;
+ SFRPAGE_save = SFRPAGE;	
+ SFRPAGE = 0x00;
  SCON0 = 0x0;
  SCON0 |= (1 << 4); 
- SCON0 |= (1 << 6); 
+ SFRPAGE   = 0x0F;
+ tmp = (uint16_t)(65536L - ((long) ((uint32_t)(22118400L) / baudrate) / 2L));
+ SBRLL0    = (tmp & 0xFF);
+ SBRLH0    = (tmp >> 8) & 0xFF;
+ SBCON0 = 0x0;
+ SBCON0 |= 1 << 0;
+ SBCON0 |= 1 << 1; 
+ SBCON0 |= 1 << 6; 
+ SFRPAGE = SFRPAGE_save;
  
  ES0 = 1;
  IP |= (1 << 4); 
- TI0 = 0; 
- RI0 = 0; 
  
  }
  void initModbusTimer(void){ 
  uint16_t temp;
  
-#line 47 "Modbus\ModbusPort.c" /1
+#line 49 "Modbus\ModbusPort.c" /1
  
  
  
@@ -8085,15 +8090,47 @@
  
  
  
-#line 59 "Modbus\ModbusPort.c" /0
+#line 61 "Modbus\ModbusPort.c" /0
+ 
+ uint8_t SFRPAGE_save;
+ SFRPAGE_save = SFRPAGE;
+ temp = (uint16_t)(65536L - (int32_t)((22118400L) / 12L / 1000L));
+ Timer1_L = (uint8_t)(temp & 0xFF);
+ Timer1_H = (uint8_t)((temp >> 8) & 0xFF);
+ SFRPAGE = 0x00;
+ TMR2H = Timer1_H;
+ TMR2L = Timer1_L;	
+ TMR2CN =0x0;
+ TMR2CN = ~(uint8_t)(1 << 0); 
+ TMR2CN = ~(uint8_t)(1 << 3); 
+ TMR2CN |= (1 << 2); 
+ SFRPAGE = SFRPAGE_save;
+ ET1 = 1;  
+ 
  }
  static void modbusSerialSendbyte(uint8_t *dt){ 
+ 
+#line 80 "Modbus\ModbusPort.c" /1
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 87 "Modbus\ModbusPort.c" /0
+ 
+ uint8_t SFRPAGE_save;
+ SFRPAGE_save = SFRPAGE;
+ SFRPAGE = 0x00;
  ES0 = 0;
  TI0 = 0;
  SBUF0 = *dt;
  while( !TI0 );
  TI0 = 0;
  ES0 = 1;
+ SFRPAGE = SFRPAGE_save;
+ 
  }
  void modBusUartInitialise(uint32_t baudrate){ 
  initModbusSerial(baudrate);
@@ -8120,18 +8157,42 @@
  modbusTimerValue = 0;
  }
  
- static void modbusHandle() interrupt 3
- { 
- TF1 = 0;
- TR1 = 0;
- TH1 = Timer1_H;
- TL1 = Timer1_L;
- TR1 = 1;
- modbusTimerValue ++;
- } 
+ static void modbusHandle() interrupt 5 { 
  
+#line 127 "Modbus\ModbusPort.c" /1
+ 
+ 
+ 
+ 
+ 
+ 
+#line 133 "Modbus\ModbusPort.c" /0
+ 
+ uint8_t SFRPAGE_save;
+ SFRPAGE_save = SFRPAGE;
+ SFRPAGE = 0x00;
+ TF2H = 0;
+ SFRPAGE = SFRPAGE_save;
+ 
+ modbusTimerValue ++;
+ }
  static void serialHandle() interrupt 4
  { 
+ 
+#line 145 "Modbus\ModbusPort.c" /1
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 153 "Modbus\ModbusPort.c" /0
+ 
+ uint8_t SFRPAGE_save;
+ SFRPAGE_save = SFRPAGE;
+ SFRPAGE = 0x00;
  if(RI0){
  RI0 = 0;	
  receiveInterrupt(SBUF0);
@@ -8142,6 +8203,7 @@
  }
  if(TI0){
  TI0 = 0;
- 
  }
+ SFRPAGE = SFRPAGE_save;
+ 
  } 
