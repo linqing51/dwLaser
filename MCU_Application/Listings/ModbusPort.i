@@ -8003,7 +8003,12 @@
  
  
  
- void sPlcLaserStep(void);
+ 
+ 
+ 
+ 
+ 
+ void sPlcLaser(void); 
  
 #line 164 ".\MainApp\appConfig.h" /0
  

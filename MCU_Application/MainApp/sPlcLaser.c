@@ -20,6 +20,7 @@
 #define LASER_CH2_MODPIN_OFF	(P4 &= ~(uint8_t)(1 << 1))
 #define SPLC_100MS_INTOREADY_BEEM				1
 /*****************************************************************************/
+
 static void STLAR(void);
 static void EDLAR(void);
 ////上位机使能MCU软复位
@@ -56,7 +57,72 @@ static void EDLAR(void);
 //		my.safeFault = my.safeFault && !my.safeFaultIgnore;
 //		//模拟输入扫描
 
-void sPlcLaserStep(void){
+void sPlcLaser(void){
+	if(NVRAM0[EM_DRIVER_TEMPERATURE] > NVRAM0[DM_DRIVE_PROTECT_HTEMP]){
+		SET(R_FLAG_DRIVER_HTEMP_FAULT);
+	}
+	else{
+		RES(R_FLAG_DRIVER_HTEMP_FAULT);
+	}
+	if(NVRAM0[EM_DRIVER_TEMPERATURE] < NVRAM0[DM_DRIVE_PROTECT_LTEMP]){
+		SET(R_FLAG_DRIVER_LTEMP_FAULT);
+	}
+	else{
+		RES(R_FLAG_DRIVER_LTEMP_FAULT);
+	}
+	if(NVRAM0[EM_MCHIP_TEMPERATURE] > NVRAM0[DM_MCHIP_PROTECT_HTEMP]){
+		SET(R_FLAG_MCHIP_HTEMP_FAULT);
+	}
+	else{
+		RES(R_FLAG_MCHIP_HTEMP_FAULT);
+	}
+	if(NVRAM0[EM_MCHIP_TEMPERATURE] < NVRAM0[DM_MCHIP_PROTECT_LTEMP]){
+		SET(R_FLAG_MCHIP_HTEMP_FAULT);
+	}
+	else{
+		RES(R_FLAG_MCHIP_HTEMP_FAULT);
+	}
+	if(NVRAM0[EM_LASER_TEMPERATURE] > NVRAM0[DM_LASER_PROTECT_HTEMP]){
+		SET(R_FLAG_LASER_HTEMP_FAULT);
+	}
+	else{
+		RES(R_FLAG_LASER_HTEMP_FAULT);
+	}
+	if(NVRAM0[EM_LASER_TEMPERATURE] < NVRAM0[DM_LASER_PROTCET_LTEMP]){
+		SET(R_FLAG_LASER_LTEMP_FAULT);
+	}
+	else{
+		RES(R_FLAG_LASER_LTEMP_FAULT);
+	}
+		
+	if(LD(R_FLAG_DRIVER_LTEMP_FAULT) || 
+	   LD(R_FLAG_DRIVER_HTEMP_FAULT) || 
+	   LD(R_FLAG_MCHIP_LTEMP_FAULT) ||
+	   LD(R_FLAG_MCHIP_HTEMP_FAULT) || 
+	   LD(R_FLAG_LASER_LTEMP_FAULT) ||
+	   LD(R_FLAG_LASER_HTEMP_FAULT)){
+		SET(R_FLAG_TEMP_FAULT);
+	}
+	else{
+		RES(R_FLAG_TEMP_FAULT);
+	}
+	if(LDF(X_INTERLOCK)){
+		SET(R_FLAG_FIBER_MECH_DETECT);
+	}
+	else{
+		RES(R_FLAG_FIBER_MECH_DETECT);
+	}
+	//		my.overTempFault = (my.overTempDiode && !my.overTempDiodeIgnore) ||
+//							  (my.overTempAmplifier && !my.overTempAmplifierIgnore) ||
+//	                          (my.overTempEnvironment && !my.overTempEnvironmentIgnore) ||
+//							  (my.overTempMcu && !my.overTempMcuIgnore);
+//	    my.overTempFault = my.overTempFault && !my.overTempIgnore;
+//		//获取安全状态
+//		my.safeFault = (my.safeInterlock && !my.safeInterlockIgnore) ||
+//					(my.safeFiberDetect0 && my.safeFiberDetect0Ignore) ||
+//					(my.safeFiberDetect1 && my.safeFiberDetect1Ignore) ||
+//					(my.safeOpenCase && my.safeOpenCaseIgnore);
+	
 //STEP_LOOP_START:
 		if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_INIT){//初始化
 			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_STANDBY;//Goto next step
@@ -127,126 +193,6 @@ STEP_LOOP_END:
 		{}
 }
 		
-//		if( my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || !my.triggerCC)
-//		{//连续模式
-//			if(!my.laserOnFlag)
-//			{	
-//				switch(my.selectChannel)
-//				{
-//					case ENUM_CHANNEL_BOTH:
-//					{
-//						DAC0 = laserCurrent[0];
-//						DAC1 = laserCurrent[1];
-//						break;
-//					}
-//					case ENUM_CHANNEL1:
-//					{
-//						DAC0 = laserCurrent[0];	
-//						break;
-//					}
-//					case ENUM_CHANNEL2:
-//					{
-//						DAC1 = laserCurrent[1];
-//						break;
-//					}
-//					default:break;
-//				}
-//				my.laserOnFlag = 1;
-//			}
-//			
-//		}
-//		if( my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || !my.triggerCC)
-//		{//单脉冲模式
-//			if(!my.laserOnFlag)
-//			{
-//				if(selectChannel == ENUM_CHANNEL_BOTH)
-//				{
-//					DAC0 = laserCurrent[0];
-//					DAC1 = laserCurrent[1];
-//				}
-//				if(selectChannel == ENUM_CHANNEL1)
-//				{
-//					DAC0 = laserCurrent[0];
-//				}
-//				if(selectChannel = ENUM_CHANNEL2)
-//				{
-//					DAC1 = laserCurrent[1];
-//				}
-//				sTimerCtrl(STIMER_ON, STIMER_1MS_SP_LASER_ON, my.posWidth);
-//				if(sTimer[STIMER_1MS_LASER_ON].status)
-//				{
-//					DAC0 = 0x0;
-//					DAC1 = 0x0;
-//					my.laserOnFlag = 0;
-//					my.triggerSP = 0;
-//					sTimerCtrl(STIMER_OFF, STIMER_1MS_SP_LASER_ON, my.posWidth);
-//				}
-//			}
-//			
-//		}
-//		if( !my.triggerCW || !my.triggerSP || my.triggerMP || !my.triggerGP || !my.triggerCC)
-//		{//多脉冲模式
-//			if(my.laserOnFlag)
-//			{//正脉宽计时
-//				if(selectChannel == ENUM_CHANNEL_BOTH)
-//				{
-//					DAC0 = laserCurrent[0];
-//					DAC1 = laserCurrent[1];
-//				}
-//				if(selectChannel == ENUM_CHANNEL1)
-//				{
-//					
-//				}
-//				if(selectChannel = ENUM_CHANNEL2)
-//				{
-//				}
-//				sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_ON, my.posWidth);
-//				if(sTimer[STIMER_1MS_LASER_ON].status)
-//				{
-//					//关闭激光
-//					//关闭计时器
-//					my.laserOnFlag = 0;
-//					sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
-//				}	
-//			}
-//			else if(!my.laserOnFlag)
-//			{//负脉宽计时
-//				sTimerCtrl(STIMER_ON, STIMER_1MS_LASER_OFF, my.negWidth);
-//				if(sTimer[STIMER_1MS_LASER_OFF].status)
-//				{
-//					my.laserOnFlag = 1;
-//					sTimerCtrl(STIMER_OFF, STIMER_1MS_LASER_ON, my.posWidth);
-//				}
-//			}
-//		}
-//		if( !my.triggerCW || !my.triggerSP || !my.triggerMP || !my.triggerGP || my.triggerCC)
-//		{//校正模式
-//			
-//		}
-//		
-//		//Debug LED闪烁
-//		if(LED_MCU)
-//		{
-//			if(sTimer[STIMER_1000MS_LED_ON].status)//等待时间A
-//			{
-//				LED_MCU = 0;
-//				sTimerCtrl(STIMER_OFF, STIMER_1000MS_LED_ON, 1);
-//			}
-//			else
-//				sTimerCtrl(STIMER_ON, STIMER_1000MS_LED_ON, 1);
-//		}
-//		if(!LED_MCU)
-//		{
-//			if(sTimer[STIMER_1000MS_LED_OFF].status)//等待时间B
-//			{
-//				LED_MCU = 1;
-//				sTimerCtrl(STIMER_OFF, STIMER_1000MS_LED_OFF, 1);
-//			}
-//			else
-//				sTimerCtrl(STIMER_ON, STIMER_1000MS_LED_OFF, 1);
-//		}
-
-
 
 
 static void STLAR(void){//开始发射脉冲
@@ -259,21 +205,21 @@ static void STLAR(void){//开始发射脉冲
 	NVRAM0[EM_LASER_PCOUNTER] = 0X0;
 	NVRAM0[EM_LASER_SCOUNTER] = 0X0;
 #ifdef C8051F580
-		SFRPAGE_save = SFRPAGE;
-		SFRPAGE = ACTIVE_PAGE;
-		TMR3CN &= ~(uint8_t)(1 << 7);//T3中断标志清零
-		EIE1 |= (1 << 6);//T3 ET3中断使能
-		TMR3L = 0xFF;
-		TMR3H = 0xFF;
-		TMR3CN |= (1 << 2);//TR3 使能TIMER3计时器
-		SFRPAGE = SFRPAGE_save;
+	SFRPAGE_save = SFRPAGE;
+	SFRPAGE = ACTIVE_PAGE;
+	TMR3CN &= ~(uint8_t)(1 << 7);//T3中断标志清零
+	EIE1 |= (1 << 6);//T3 ET3中断使能
+	TMR3L = 0xFF;
+	TMR3H = 0xFF;
+	TMR3CN |= (1 << 2);//TR3 使能TIMER3计时器
+	SFRPAGE = SFRPAGE_save;
 #endif
 #ifdef C8051F020
-		TMR3CN &= ~(uint8_t)(1 << 7);//TF3 溢出标志清零
-		EIE2 |= (1 << 0);//T3 ET3中断使能
-		TMR3L = 0xFF;
-		TMR3H = 0xFF;
-		TMR3CN |= (1 << 2);//TR3 使能TIMER3计时器
+	TMR3CN &= ~(uint8_t)(1 << 7);//TF3 溢出标志清零
+	EIE2 |= (1 << 0);//T3 ET3中断使能
+	TMR3L = 0xFF;
+	TMR3H = 0xFF;
+	TMR3CN |= (1 << 2);//TR3 使能TIMER3计时器
 #endif
 	SET(R_FLAG_LASER_EMITING);//发射标志置位
 	RES(R_FLAG_LASER_EMITOVER);

@@ -41,7 +41,12 @@
 #define R_FLAG_BEEM									(R_START * 16 + 26)//蜂鸣器状态
 #define R_FLAG_SAFE_FAULT							(R_START * 16 + 27)//安全故障
 #define R_FLAG_TEMP_FAULT							(R_START * 16 + 28)//温度故障
-              
+#define R_FLAG_DRIVER_LTEMP_FAULT					(R_START * 16 + 29)
+#define R_FLAG_DRIVER_HTEMP_FAULT					(R_START * 16 + 30)
+#define R_FLAG_MCHIP_LTEMP_FAULT					(R_START * 16 + 31)
+#define R_FLAG_MCHIP_HTEMP_FAULT					(R_START * 16 + 32)
+#define R_FLAG_LASER_LTEMP_FAULT					(R_START * 16 + 33)
+#define R_FLAG_LASER_HTEMP_FAULT					(R_START * 16 + 34)
 //MR 线圈定义
 #define MR_FIBER_MECH_DETECT_IGNORE					(MR_START + 0)//光纤探测机械忽略
 #define MR_FIBER_NFC_DETCET_IGNORE					(MR_START + 1)//光纤探测NFC忽略
@@ -102,5 +107,8 @@
 #define DM_MCHIP_PROTECT_HTEMP						(DM_START + 16)//芯片高温保护
 #define DM_MCHIP_PROTECT_LTEMP						(DM_START + 17)//芯片低温保护
 /*****************************************************************************/
-void sPlcLaserStep(void);
+#define X_FOOTSWITCH
+#define X_OPENCASE_DETECT
+#define X_INTERLOCK
+void sPlcLaser(void);//
 #endif

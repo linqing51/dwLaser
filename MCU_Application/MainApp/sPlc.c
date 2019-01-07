@@ -13,7 +13,7 @@ typedef struct{//ADC滤波器
 	uint8_t wIndex;//写入指针
 }adcTempDat_t;
 
-static pdata int8_t inputFilter[CONFIG_SPLC_IO_INPUT_NUM];//IO输入滤波器缓冲区
+static xdata int8_t inputFilter[CONFIG_SPLC_IO_INPUT_NUM];//IO输入滤波器缓冲区
 static xdata adcTempDat_t adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
 uint8_t adcSelect;//ADC通道选择
 static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
@@ -367,10 +367,10 @@ int16_t TENV(int16_t dat){//CODE转换为环境温度
 	temp = (int16_t)((temp - CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET) * 1000 / CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN);
 	return temp;
 }
-int16_t XTAB(,uint16_t tab, uint16_t len){//输入X线性查表
+int16_t XTAB(int16_t x, uint16_t tab, uint16_t len){//输入X线性查表
 	//从tab 0->len 为表X走
 }
-int16_t YTAB(uint16_t tab, uint16_t len){//输入Y线性查表
+int16_t YTAB(int16_t y, uint16_t tab, uint16_t len){//输入Y线性查表
 }
 void UPDAC(uint16_t dat){//立即更新DAC输出
 	switch(dat){

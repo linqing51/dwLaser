@@ -8180,7 +8180,12 @@
  
  
  
- void sPlcLaserStep(void);
+ 
+ 
+ 
+ 
+ 
+ void sPlcLaser(void); 
  
 #line 164 "MainApp\appConfig.h" /0
  
@@ -8241,60 +8246,19 @@
  
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  sbit loopFlag = P0^4;
  sbit epromBusyFlag = P0^5;
  void main(void){
  
-#line 85 "MainApp\MainApp.c" /1
+#line 44 "MainApp\MainApp.c" /1
  
  
-#line 87 "MainApp\MainApp.c" /0
+#line 46 "MainApp\MainApp.c" /0
  
  initDeviceF580();
  
  
-#line 91 "MainApp\MainApp.c" /1
+#line 50 "MainApp\MainApp.c" /1
  
  
  
@@ -8303,7 +8267,7 @@
  
  
  
-#line 99 "MainApp\MainApp.c" /0
+#line 58 "MainApp\MainApp.c" /0
  sPlcInit(); 
  initModbus(0x01, 57600);
  NVRAM0[0] = 0xA5;
@@ -8316,7 +8280,7 @@
  if(LD(16 + (16 * 16 + 0))){
  REBOOT();
  }
- sPlcLaserStep();
+ sPlcLaser();
  
  
  
