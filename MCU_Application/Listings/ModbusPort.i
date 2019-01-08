@@ -8008,6 +8008,15 @@
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  void sPlcLaser(void); 
  
 #line 164 ".\MainApp\appConfig.h" /0
@@ -8034,7 +8043,7 @@
 #line 1 "Modbus\ModbusPort.c" /0
  
  
- static uint8_t Timer1_L,Timer1_H;
+ static pdata uint8_t Timer1_L,Timer1_H;
  
  void initModbusSerial(int32_t baudrate)
  { 

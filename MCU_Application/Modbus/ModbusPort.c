@@ -1,6 +1,6 @@
 #include "modbusPort.h"
 /*****************************************************************************/
-static uint8_t Timer1_L,Timer1_H;
+static pdata uint8_t Timer1_L,Timer1_H;
 /*****************************************************************************/
 void initModbusSerial(int32_t baudrate)
 {//初始化MODBUS串口

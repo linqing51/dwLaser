@@ -37,8 +37,6 @@
 #define STEPNUM_LASERON					4//激光开始
 
 /*****************************************************************************/
-sbit loopFlag = P0^4;
-sbit epromBusyFlag = P0^5;
 void main(void){
 #ifdef C8051F020
 	initDeviceF020();
@@ -61,7 +59,6 @@ void main(void){
 	NVRAM0[1] = 0x5A;
 	ENABLE_INTERRUPT;
 	while(1){
-		loopFlag = ~loopFlag;
 		sPlcProcessStart();
 		NVRAM0[EM_START + EM_MCU_CHECKCODE] = CONFIG_CHECK_CODE;//写入板卡校验码
 		if(LD(R_START + R_MCU_RESET)){

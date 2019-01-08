@@ -32,7 +32,9 @@
 #define R_FLAG_READY								(R_START * 16 + 17)//准备状态
 #define R_FLAG_STANDBY								(R_START * 16 + 18)//待机状态
 #define	R_FLAG_FIBER_MECH_DETECT					(R_START * 16 + 19)//光纤机械传感器
+#define R_FLAG_FIBER_MECH_DETECT_IGNORE 			(R_START * 16 + 20)//光纤机械传感器忽略
 #define R_FLAG_FIBER_NFC_DETECT						(R_START * 16 + 20)//光纤NFC传感器
+#define R_FLAG_FIBER_NFC_DETECT_IGNORE				(R_START * 16 + 21)//光纤NFC传感器忽略
 #define R_FLAG_OPENCASE_DETECT						(R_START * 16 + 21)//开箱检测
 #define R_FLAG_FOOTSWITCH							(R_START * 16 + 22)//脚踏状态
 #define R_FLAG_WIRE_FOOTSWITCH						(R_START * 16 + 23)//有线脚踏状态
@@ -43,10 +45,13 @@
 #define R_FLAG_TEMP_FAULT							(R_START * 16 + 28)//温度故障
 #define R_FLAG_DRIVER_LTEMP_FAULT					(R_START * 16 + 29)
 #define R_FLAG_DRIVER_HTEMP_FAULT					(R_START * 16 + 30)
+#define R_FLAG_DRIVER_TEMP_FAULT_IGNORE				(R_START * 16 + 30)
 #define R_FLAG_MCHIP_LTEMP_FAULT					(R_START * 16 + 31)
 #define R_FLAG_MCHIP_HTEMP_FAULT					(R_START * 16 + 32)
+#define R_FLAG_MCHIP_TEMP_FAULT_IGNORE				(R_START * 16 + 30)
 #define R_FLAG_LASER_LTEMP_FAULT					(R_START * 16 + 33)
 #define R_FLAG_LASER_HTEMP_FAULT					(R_START * 16 + 34)
+#define R_FLAG_LASER_TEMP_FAULT_IGNORE				(R_START * 16 + 30)
 //MR 线圈定义
 #define MR_FIBER_MECH_DETECT_IGNORE					(MR_START + 0)//光纤探测机械忽略
 #define MR_FIBER_NFC_DETCET_IGNORE					(MR_START + 1)//光纤探测NFC忽略
@@ -107,8 +112,9 @@
 #define DM_MCHIP_PROTECT_HTEMP						(DM_START + 16)//芯片高温保护
 #define DM_MCHIP_PROTECT_LTEMP						(DM_START + 17)//芯片低温保护
 /*****************************************************************************/
-#define X_FOOTSWITCH
-#define X_OPENCASE_DETECT
-#define X_INTERLOCK
+#define X_FOOTSWITCH								(X_START * 16 + 0)
+#define X_OPENCASE_DETECT							(X_START * 16 + 1)
+#define X_INTERLOCK									(X_START * 16 + 2)
+#define X_MECH_FIBER_DETECT							(X_START * 16 + 2)
 void sPlcLaser(void);//
 #endif

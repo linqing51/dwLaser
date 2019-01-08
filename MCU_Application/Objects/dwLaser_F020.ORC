@@ -26,7 +26,7 @@ $180008E1  _iic5SendByte
 $180008F1  _iic6ReadByte
 $180008E1  _iic6SendByte
 $1E0008F9  _LD
-$80000000  _LDB
+$08000080  _LDB
 $1E0008FD  _LDF
 $1E0008FD  _LDP
 $180008EF  _mcp47x6Write
@@ -40,8 +40,8 @@ $1E0008C1  _T100MS
 $1E0008C1  _T10MS
 $1E0008C1  _T1MS
 $1E0008FF  _UPDAC
-$80000000  _XTAB
-$80000000  _YTAB
+$080008C0  _XTAB
+$080008C0  _YTAB
 $18000880  CheckRxTimeout
 $1E0008F0  clearC
 $1E0008F0  clearDM
@@ -107,12 +107,12 @@ $08000881  iic6Start
 $08000881  iic6Stop
 $180008C1  iic6WaitAck
 $08000800  initDeviceF580
-$08000860  initModbusTimer
+$08000861  initModbusTimer
 $80000000  initTimer3
 $180008E1  inPca9554Init
 $180008F1  inPca9554Read
 $180008F1  mcp47x6Init
-$08000860  modBusTimerInitialise
+$08000861  modBusTimerInitialise
 $180008C0  Oscillator_Init
 $180008E1  outPca9554Init
 $180008F1  outPca9554Read

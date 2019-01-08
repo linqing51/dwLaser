@@ -8008,6 +8008,15 @@
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  void sPlcLaser(void); 
  
 #line 164 "MainApp\appConfig.h" /0
@@ -8150,7 +8159,7 @@
  
  static xdata int8_t inputFilter[16]; 
  static xdata adcTempDat_t adcTempDat[9];
- uint8_t adcSelect; 
+ static pdata uint8_t adcSelect; 
  static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
  void adcProcess(void);
  static void initAdcData(adcTempDat_t *s);
@@ -8406,6 +8415,7 @@
  return (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
  }
  uint8_t LDB(uint16_t A){ 
+ return false;
  }
  uint8_t LDP(uint16_t A){ 
  uint8_t temp0, temp1;
@@ -8413,9 +8423,9 @@
  temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
  temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
  if(temp0 && !temp1)
- return 1;
+ return true;
  else
- return 0;
+ return false;
  }
  uint8_t LDF(uint16_t A){ 
  uint8_t temp0, temp1;
@@ -8429,11 +8439,11 @@
  }
  void T1MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 295 "MainApp\sPlc.c" /1
+#line 296 "MainApp\sPlc.c" /1
  
  
  
-#line 298 "MainApp\sPlc.c" /0
+#line 299 "MainApp\sPlc.c" /0
  if(start){
  if(NVRAM0[(550 + A)] >= value){
  NVRAM0[(544 + (A / 16))] |= 1 << (A % 16);
@@ -8450,11 +8460,11 @@
  }
  void T10MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 314 "MainApp\sPlc.c" /1
+#line 315 "MainApp\sPlc.c" /1
  
  
  
-#line 317 "MainApp\sPlc.c" /0
+#line 318 "MainApp\sPlc.c" /0
  if(start){
  if(NVRAM0[(582 + A)] >= value){
  NVRAM0[(546 + (A / 16))] |= 1 << (A % 16);
@@ -8470,11 +8480,11 @@
  }
  void T100MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 332 "MainApp\sPlc.c" /1
+#line 333 "MainApp\sPlc.c" /1
  
  
  
-#line 335 "MainApp\sPlc.c" /0
+#line 336 "MainApp\sPlc.c" /0
  if(start){
  if(NVRAM0[(614 + A)] >= value){
  NVRAM0[(548 + (A / 16))] |= 1 << (A % 16);
@@ -8512,8 +8522,10 @@
  }
  int16_t XTAB(int16_t x, uint16_t tab, uint16_t len){ 
  
+ return 0;
  }
  int16_t YTAB(int16_t y, uint16_t tab, uint16_t len){ 
+ return 0;
  }
  void UPDAC(uint16_t dat){ 
  switch(dat){
@@ -8541,10 +8553,10 @@
  uint8_t SFRPAGE_save;
  
  
-#line 401 "MainApp\sPlc.c" /1
+#line 404 "MainApp\sPlc.c" /1
  
  
-#line 403 "MainApp\sPlc.c" /0
+#line 406 "MainApp\sPlc.c" /0
  
  SFRPAGE_save = SFRPAGE;
  SFRPAGE = 0x00;
@@ -8555,17 +8567,17 @@
  }
  static void wdtInit(void){ 
  
-#line 413 "MainApp\sPlc.c" /1
+#line 416 "MainApp\sPlc.c" /1
  
  
-#line 415 "MainApp\sPlc.c" /0
+#line 418 "MainApp\sPlc.c" /0
  }
  static void wdtEnable(void){ 
  
-#line 418 "MainApp\sPlc.c" /1
+#line 421 "MainApp\sPlc.c" /1
  
  
-#line 420 "MainApp\sPlc.c" /0
+#line 423 "MainApp\sPlc.c" /0
  
  
  }
@@ -8574,32 +8586,32 @@
  flagEA = EA;
  EA = 0;
  
-#line 428 "MainApp\sPlc.c" /1
+#line 431 "MainApp\sPlc.c" /1
  
  
  
-#line 431 "MainApp\sPlc.c" /0
+#line 434 "MainApp\sPlc.c" /0
  
-#line 432 "MainApp\sPlc.c" /1
+#line 435 "MainApp\sPlc.c" /1
  
-#line 433 "MainApp\sPlc.c" /0
+#line 436 "MainApp\sPlc.c" /0
  EA = flagEA;
  
  }
  static void wdtFeed(void){ 
  
-#line 438 "MainApp\sPlc.c" /1
+#line 441 "MainApp\sPlc.c" /1
  
  
-#line 440 "MainApp\sPlc.c" /0
+#line 443 "MainApp\sPlc.c" /0
  }
  
  static void pcaInit(void){ 
  
-#line 444 "MainApp\sPlc.c" /1
+#line 447 "MainApp\sPlc.c" /1
  
  
-#line 446 "MainApp\sPlc.c" /0
+#line 449 "MainApp\sPlc.c" /0
  
  
  
@@ -8611,7 +8623,7 @@
  TimerCounter_1mS = 0;
  TimerCounter_10mS = 0;
  
-#line 457 "MainApp\sPlc.c" /1
+#line 460 "MainApp\sPlc.c" /1
  
  
  
@@ -8623,7 +8635,7 @@
  
  
  
-#line 468 "MainApp\sPlc.c" /0
+#line 471 "MainApp\sPlc.c" /0
  
  
  }
@@ -8676,28 +8688,28 @@
  TimerCounter_10mS = 0;
  }
  
-#line 520 "MainApp\sPlc.c" /1
+#line 523 "MainApp\sPlc.c" /1
  
  
-#line 522 "MainApp\sPlc.c" /0
+#line 525 "MainApp\sPlc.c" /0
  TimerCounter_1mS ++;
  }
  
  static void inputInit(void){
  memset(inputFilter, 0x0, 16);
  
-#line 528 "MainApp\sPlc.c" /1
+#line 531 "MainApp\sPlc.c" /1
  
-#line 529 "MainApp\sPlc.c" /0
+#line 532 "MainApp\sPlc.c" /0
  
  
  }
  static void outputInit(void){
  
-#line 534 "MainApp\sPlc.c" /1
+#line 537 "MainApp\sPlc.c" /1
  
  
-#line 536 "MainApp\sPlc.c" /0
+#line 539 "MainApp\sPlc.c" /0
  
  
  
@@ -8707,12 +8719,12 @@
  ctemp0 = 0;
  ctemp0 = 0;
  
-#line 545 "MainApp\sPlc.c" /1
+#line 548 "MainApp\sPlc.c" /1
  
  
  
  
-#line 549 "MainApp\sPlc.c" /0
+#line 552 "MainApp\sPlc.c" /0
  
  ctemp0 = inPca9554Read() ;
  
@@ -8755,12 +8767,12 @@
  }
  static void outputRefresh(void){ 
  
-#line 591 "MainApp\sPlc.c" /1
+#line 594 "MainApp\sPlc.c" /1
  
  
  
  
-#line 595 "MainApp\sPlc.c" /0
+#line 598 "MainApp\sPlc.c" /0
  
  outPca9554Write(NVRAM0[678]);
  
@@ -8768,7 +8780,7 @@
  static void chipAdcInit(void){ 
  uint8_t i;
  
-#line 602 "MainApp\sPlc.c" /1
+#line 605 "MainApp\sPlc.c" /1
  
  
  
@@ -8779,7 +8791,7 @@
  
  
  
-#line 612 "MainApp\sPlc.c" /0
+#line 615 "MainApp\sPlc.c" /0
  adcSelect = 0;
  for(i = 0;i <= 9;i ++){
  initAdcData(&adcTempDat[i]);
@@ -8790,16 +8802,16 @@
  wdtDisable(); 
  
  
-#line 622 "MainApp\sPlc.c" /1
+#line 625 "MainApp\sPlc.c" /1
  
  
-#line 624 "MainApp\sPlc.c" /0
+#line 627 "MainApp\sPlc.c" /0
  
  
-#line 626 "MainApp\sPlc.c" /1
+#line 629 "MainApp\sPlc.c" /1
  
  
-#line 628 "MainApp\sPlc.c" /0
+#line 631 "MainApp\sPlc.c" /0
  
  
  chipDacInit(); 
@@ -8813,7 +8825,7 @@
  }
  static void refreshDac(void){ 
  
-#line 641 "MainApp\sPlc.c" /1
+#line 644 "MainApp\sPlc.c" /1
  
  
  
@@ -8821,17 +8833,17 @@
  
  
  
-#line 648 "MainApp\sPlc.c" /0
+#line 651 "MainApp\sPlc.c" /0
  }
  static void chipDacInit(void){ 
  
-#line 651 "MainApp\sPlc.c" /1
+#line 654 "MainApp\sPlc.c" /1
  
  
  
  
  
-#line 656 "MainApp\sPlc.c" /0
+#line 659 "MainApp\sPlc.c" /0
  }
  void sPlcProcessStart(void){ 
  
@@ -8841,17 +8853,17 @@
  inputRefresh(); 
  
  
-#line 665 "MainApp\sPlc.c" /1
+#line 668 "MainApp\sPlc.c" /1
  
  
-#line 667 "MainApp\sPlc.c" /0
+#line 670 "MainApp\sPlc.c" /0
  }
  void sPlcProcessEnd(void){ 
  
-#line 670 "MainApp\sPlc.c" /1
+#line 673 "MainApp\sPlc.c" /1
  
  
-#line 672 "MainApp\sPlc.c" /0
+#line 675 "MainApp\sPlc.c" /0
  
  outputRefresh(); 
  
@@ -8859,8 +8871,8 @@
  refreshDac(); 
  
  
-#line 679 "MainApp\sPlc.c" /1
+#line 682 "MainApp\sPlc.c" /1
  
  
-#line 681 "MainApp\sPlc.c" /0
+#line 684 "MainApp\sPlc.c" /0
  }

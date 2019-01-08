@@ -58,37 +58,37 @@ static void EDLAR(void);
 //		//模拟输入扫描
 
 void sPlcLaser(void){
-	if(NVRAM0[EM_DRIVER_TEMPERATURE] > NVRAM0[DM_DRIVE_PROTECT_HTEMP]){
+	if((NVRAM0[EM_DRIVER_TEMPERATURE] > NVRAM0[DM_DRIVE_PROTECT_HTEMP]) && LDF(R_FLAG_DRIVER_TEMP_FAULT_IGNORE)){
 		SET(R_FLAG_DRIVER_HTEMP_FAULT);
 	}
 	else{
 		RES(R_FLAG_DRIVER_HTEMP_FAULT);
 	}
-	if(NVRAM0[EM_DRIVER_TEMPERATURE] < NVRAM0[DM_DRIVE_PROTECT_LTEMP]){
+	if((NVRAM0[EM_DRIVER_TEMPERATURE] < NVRAM0[DM_DRIVE_PROTECT_LTEMP]) && LDF(R_FLAG_DRIVER_TEMP_FAULT_IGNORE)){
 		SET(R_FLAG_DRIVER_LTEMP_FAULT);
 	}
 	else{
 		RES(R_FLAG_DRIVER_LTEMP_FAULT);
 	}
-	if(NVRAM0[EM_MCHIP_TEMPERATURE] > NVRAM0[DM_MCHIP_PROTECT_HTEMP]){
+	if((NVRAM0[EM_MCHIP_TEMPERATURE] > NVRAM0[DM_MCHIP_PROTECT_HTEMP]) && LDF(R_FLAG_MCHIP_TEMP_FAULT_IGNORE)){
 		SET(R_FLAG_MCHIP_HTEMP_FAULT);
 	}
 	else{
 		RES(R_FLAG_MCHIP_HTEMP_FAULT);
 	}
-	if(NVRAM0[EM_MCHIP_TEMPERATURE] < NVRAM0[DM_MCHIP_PROTECT_LTEMP]){
+	if((NVRAM0[EM_MCHIP_TEMPERATURE] < NVRAM0[DM_MCHIP_PROTECT_LTEMP]) && LDF(R_FLAG_MCHIP_TEMP_FAULT_IGNORE)){
 		SET(R_FLAG_MCHIP_HTEMP_FAULT);
 	}
 	else{
 		RES(R_FLAG_MCHIP_HTEMP_FAULT);
 	}
-	if(NVRAM0[EM_LASER_TEMPERATURE] > NVRAM0[DM_LASER_PROTECT_HTEMP]){
+	if((NVRAM0[EM_LASER_TEMPERATURE] > NVRAM0[DM_LASER_PROTECT_HTEMP]) && LDF(R_FLAG_LASER_TEMP_FAULT_IGNORE)){
 		SET(R_FLAG_LASER_HTEMP_FAULT);
 	}
 	else{
 		RES(R_FLAG_LASER_HTEMP_FAULT);
 	}
-	if(NVRAM0[EM_LASER_TEMPERATURE] < NVRAM0[DM_LASER_PROTCET_LTEMP]){
+	if((NVRAM0[EM_LASER_TEMPERATURE] < NVRAM0[DM_LASER_PROTCET_LTEMP]) && LDF(R_FLAG_LASER_TEMP_FAULT_IGNORE)){
 		SET(R_FLAG_LASER_LTEMP_FAULT);
 	}
 	else{
@@ -106,23 +106,19 @@ void sPlcLaser(void){
 	else{
 		RES(R_FLAG_TEMP_FAULT);
 	}
-	if(LDF(X_INTERLOCK)){
+	if(LDF(X_MECH_FIBER_DETECT)){
 		SET(R_FLAG_FIBER_MECH_DETECT);
 	}
 	else{
 		RES(R_FLAG_FIBER_MECH_DETECT);
 	}
-	//		my.overTempFault = (my.overTempDiode && !my.overTempDiodeIgnore) ||
-//							  (my.overTempAmplifier && !my.overTempAmplifierIgnore) ||
-//	                          (my.overTempEnvironment && !my.overTempEnvironmentIgnore) ||
-//							  (my.overTempMcu && !my.overTempMcuIgnore);
-//	    my.overTempFault = my.overTempFault && !my.overTempIgnore;
-//		//获取安全状态
-//		my.safeFault = (my.safeInterlock && !my.safeInterlockIgnore) ||
-//					(my.safeFiberDetect0 && my.safeFiberDetect0Ignore) ||
-//					(my.safeFiberDetect1 && my.safeFiberDetect1Ignore) ||
-//					(my.safeOpenCase && my.safeOpenCaseIgnore);
-	
+	if(LD(R_FLAG_FIBER_MECH_DETECT) && LDF(R_FLAG_FIBER_MECH_DETECT)){
+		SET(R_FLAG_SAFE_FAULT);
+	}
+	else{
+		RES(R_FLAG_SAFE_FAULT);
+	}
+
 //STEP_LOOP_START:
 		if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_INIT){//初始化
 			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_STANDBY;//Goto next step

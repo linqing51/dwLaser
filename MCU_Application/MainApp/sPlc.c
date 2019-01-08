@@ -15,7 +15,7 @@ typedef struct{//ADC滤波器
 
 static xdata int8_t inputFilter[CONFIG_SPLC_IO_INPUT_NUM];//IO输入滤波器缓冲区
 static xdata adcTempDat_t adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
-uint8_t adcSelect;//ADC通道选择
+static pdata uint8_t adcSelect;//ADC通道选择
 static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
 void adcProcess(void);
 static void initAdcData(adcTempDat_t *s);
@@ -269,6 +269,7 @@ uint8_t LD(uint16_t A){//载入
 	return (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
 }
 uint8_t LDB(uint16_t A){//取反载入
+	return false;
 }
 uint8_t LDP(uint16_t A){//脉冲上升沿
 	uint8_t temp0, temp1;
@@ -276,9 +277,9 @@ uint8_t LDP(uint16_t A){//脉冲上升沿
 	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
 	temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
 	if(temp0 && !temp1)
-		return 1;
+		return true;
 	else
-		return 0;
+		return false;
 }
 uint8_t LDF(uint16_t A){//脉冲下降沿
 	uint8_t temp0, temp1;
@@ -369,8 +370,10 @@ int16_t TENV(int16_t dat){//CODE转换为环境温度
 }
 int16_t XTAB(int16_t x, uint16_t tab, uint16_t len){//输入X线性查表
 	//从tab 0->len 为表X走
+	return 0;
 }
 int16_t YTAB(int16_t y, uint16_t tab, uint16_t len){//输入Y线性查表
+	return 0;
 }
 void UPDAC(uint16_t dat){//立即更新DAC输出
 	switch(dat){
