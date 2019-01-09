@@ -6811,7 +6811,7 @@
  
  
  uint8_t mcp47x6Init(void);
- void mcp47x6Write(uint8_t channel, uint16_t dat);
+ void mcp47x6Write(uint8_t channel, uint16_t dat) reentrant;
  
  
  
@@ -7847,6 +7847,8 @@
  
  
  
+ 
+ 
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
  extern xdata int16_t NVRAM0[(773 + 1)]; 
  extern xdata int16_t NVRAM1[(773 + 1)]; 
@@ -8252,20 +8254,17 @@
  
  
  
- 
- 
- 
  void main(void){
  
-#line 42 "MainApp\MainApp.c" /1
+#line 39 "MainApp\MainApp.c" /1
  
  
-#line 44 "MainApp\MainApp.c" /0
+#line 41 "MainApp\MainApp.c" /0
  
  initDeviceF580();
  
  
-#line 48 "MainApp\MainApp.c" /1
+#line 45 "MainApp\MainApp.c" /1
  
  
  
@@ -8274,16 +8273,16 @@
  
  
  
-#line 56 "MainApp\MainApp.c" /0
+#line 53 "MainApp\MainApp.c" /0
  sPlcInit(); 
  initModbus(0x01, 57600);
- NVRAM0[0] = 0xA5;
- NVRAM0[1] = 0x5A;
+ *((uint32_t*)(&NVRAM0[(757 - 1)])) = 0xA5A5;
+ 
   EA = 1;;
  while(1){
  sPlcProcessStart();
- NVRAM0[288 + (288 + 0)] = 0x5A7E; 
- if(LD(16 + (16 * 16 + 0))){
+ NVRAM0[(288 + 0)] = 0x5A7E; 
+ if(LD((16 * 16 + 0))){
  REBOOT();
  }
  sPlcLaser();

@@ -1,8 +1,8 @@
 #include "MainApp.h"
 /*****************************************************************************/
-//C8051F020 计时器功能定义
+//C8051F020 仿真计时器功能定义
 //TIMER0 ->SPLC_FRAME
-//TIMER1 ->NC
+//TIMER1 ->
 //TIMER2 ->UART0 Buadrate
 //TIMER3 ->Modbus RTU TIMER
 //TIMER4 ->UART1 Buadrate
@@ -19,9 +19,6 @@
 //sbit LED_LASER1 = P1^6;//激光发射指示LED1 1470nM
 //bit  TP0, TP1, TP2, TP3;
 /*****************************************************************************/
-#define ENUM_CHANNEL1					4321
-#define ENUM_CHANNEL2					8765
-#define ENUM_CHANNEL_BOTH				9431
 #define ENUM_MODE_CW					0//连续模式
 #define ENUM_MODE_SP					1//单脉冲模式
 #define ENUM_MODE_MP					2//多脉冲模式
@@ -55,13 +52,13 @@ void main(void){
 #endif
 	sPlcInit();//初始化软逻辑
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
-	NVRAM0[0] = 0xA5;
-	NVRAM0[1] = 0x5A;
+	*((uint32_t*)(&NVRAM0[SPREG_CHECKCODE_L])) = 0xA5A5;
+	
 	ENABLE_INTERRUPT;
 	while(1){
 		sPlcProcessStart();
-		NVRAM0[EM_START + EM_MCU_CHECKCODE] = CONFIG_CHECK_CODE;//写入板卡校验码
-		if(LD(R_START + R_MCU_RESET)){
+		NVRAM0[EM_MCU_CHECKCODE] = CONFIG_CHECK_CODE;//写入板卡校验码
+		if(LD(R_MCU_RESET)){
 			REBOOT();
 		}
 		sPlcLaser();

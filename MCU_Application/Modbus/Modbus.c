@@ -31,25 +31,25 @@ typedef struct{
 	uint16_t dataLen;
 }modbusRxTxData_t;
 /**********************Slave Transmit and Receive Variables********************/
-data uint8_t ModbusSlaveAddress = 1;
+idata uint8_t ModbusSlaveAddress = 1;
 xdata modbusRxTxData_t Tx_Data;
-data uint32_t Tx_Current = 0;
-data uint32_t Tx_CRC16 = 0xFFFF;
-data MODBUS_RXTX_STATE Tx_State = RXTX_IDLE;
+idata uint32_t Tx_Current = 0;
+idata uint32_t Tx_CRC16 = 0xFFFF;
+idata MODBUS_RXTX_STATE Tx_State = RXTX_IDLE;
 xdata uint8_t Tx_Buf[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];
-data uint32_t Tx_Buf_Size = 0;
+idata uint32_t Tx_Buf_Size = 0;
 /*****************************************************************************/
 xdata modbusRxTxData_t Rx_Data;
-data uint32_t Rx_CRC16 = 0xFFFF;
-data MODBUS_RXTX_STATE Rx_State = RXTX_IDLE;
-data uint8_t Rx_Data_Available = false;
+idata uint32_t Rx_CRC16 = 0xFFFF;
+idata MODBUS_RXTX_STATE Rx_State = RXTX_IDLE;
+idata uint8_t Rx_Data_Available = false;
 /*****************************************************************************/
 volatile uint16_t modbusTimerValue = 0;
 volatile uint8_t modbusReceiveCounter = 0;// Collected data number
 xdata volatile uint8_t modbusReceiveBuffer[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];// Buffer to collect data from hardware
 /*****************************************************************************/
 void modbusCrc16(const uint8_t Data, uint32_t* CRC){
-    data uint32_t i;
+    idata uint32_t i;
     *CRC = *CRC ^(uint32_t) Data;
     for (i = 8; i > 0; i--){
         if (*CRC & 0x0001)
@@ -79,8 +79,8 @@ void HandleModbusError(char ErrorCode){// Initialise the output buffer. The firs
 }
 
 void HandleModbusReadCoils(void){//Modbus function 01 - ¶ÁÈ¡ÏßÈ¦×´Ì¬
-	uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
-	uint8_t tempData = 0;
+	idata uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
+	idata uint8_t tempData = 0;
 	// The message contains the requested start address and number of registers
     startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
     numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
@@ -116,7 +116,7 @@ void HandleModbusReadCoils(void){//Modbus function 01 - ¶ÁÈ¡ÏßÈ¦×´Ì¬
 void HandleModbusReadInputCoil(void){//Modbus function 02 - ¶ÁÈ¡ÊäÈëÏßÈ¦×´Ì¬
 }
 void HandleModbusReadHoldingRegisters(void){//Modbus function 03 - Read holding registers
-    uint16_t startAddress, numberOfRegisters, i, currentData;
+    idata uint16_t startAddress, numberOfRegisters, i, currentData;
 	// The message contains the requested start address and number of registers
     startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
     numberOfRegisters = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);

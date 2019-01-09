@@ -43,20 +43,16 @@ void initModbusSerial(int32_t baudrate)
 	IP |= (1 << 4);//UART0 中断高优先级
 #endif	
 }
-void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER1
+void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER3
 	uint16_t temp;
 #ifdef C8051F020
 	temp = (uint16_t)(65536L - (int32_t)(CONFIG_SYSCLK / 12L / CONFIG_MB_RTU_SLAVE_TIMER));
 	Timer1_L = (uint8_t)(temp & 0xFF);
 	Timer1_H = (uint8_t)((temp >> 8) & 0xFF);
-	CKCON &= ~(1 << 4);//TIMER1 SYSCLK / 12
-	TMOD &= 0x0F;
-	TMOD |= (1 << 4);//方式1：16 位计数器/定时器
-	TH1 = Timer1_H;
-	TL1 = Timer1_L;	
-	TF1 = 0;
-	TR1 = 1;        
-	ET1 = 1; //开中断T1
+	TMR3CN = 0x0;//T3 SYSCLK / 12	
+	TMR3RLH = Timer1_H;
+	TMR3RLL = Timer1_L;	
+	TMR3CN |= (1 << 2);
 #endif
 #ifdef C8051F580
 	uint8_t SFRPAGE_save;
@@ -65,15 +61,13 @@ void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER1
 	Timer1_L = (uint8_t)(temp & 0xFF);
 	Timer1_H = (uint8_t)((temp >> 8) & 0xFF);
 	SFRPAGE = ACTIVE_PAGE;
-	TMR2H = Timer1_H;
-	TMR2L = Timer1_L;	
-	TMR2CN =0x0;
-	TMR2CN = ~(uint8_t)(1 << 0);//T2 SYSCLK /12
-	TMR2CN = ~(uint8_t)(1 << 3);//T2 16bit autoreload
-	TMR2CN |= (1 << 2);//T2 使能
+	TMR3CN = 0x0;//T3 SYSCLK / 12	
+	TMR3RLH = Timer1_H;
+	TMR3RLL = Timer1_L;	
+	TMR3CN |= (1 << 2);
 	SFRPAGE = SFRPAGE_save;
-	ET1 = 1; //开中断T1
 #endif
+	EIE1 |= (1 << 6);
 }
 static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
 #ifdef C8051F020
@@ -122,19 +116,15 @@ void receiveInterrupt(uint8_t Data){//Call this function into your UART Interrup
     modbusTimerValue = 0;
 }
 /******************************************************************************/
-static void modbusHandle() interrupt INTERRUPT_TIMER2 {//硬件计时器T2中断函数 1mS
+static void modbusHandle() interrupt INTERRUPT_TIMER3 {//硬件计时器T3中断函数 1mS
 #ifdef C8051F020
-	TF1 = 0;
-	TR1 = 0;
-	TH1 = Timer1_H;
-	TL1 = Timer1_L;
-	TR1 = 1;
+	TMR3CN = ~((uint8_t)(1 << 7));
 #endif
 #ifdef C8051F580
 	uint8_t SFRPAGE_save;
 	SFRPAGE_save = SFRPAGE;
 	SFRPAGE = ACTIVE_PAGE;
-	TF2H = 0;
+	TMR3CN = ~((uint8_t)(1 << 7));
 	SFRPAGE = SFRPAGE_save;
 #endif
 	modbusTimerValue ++;

@@ -3,9 +3,9 @@
 /*****************************************************************************/
 xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
-static data uint8_t TimerCounter_1mS = 0;
-static data uint8_t TimerCounter_10mS = 0;
-static data uint8_t Timer0_L, Timer0_H;
+static idata uint8_t TimerCounter_1mS = 0;
+static idata uint8_t TimerCounter_10mS = 0;
+static idata uint8_t Timer0_L, Timer0_H;
 /*****************************************************************************/
 typedef struct{//ADC滤波器
 	uint16_t dat[CONFIG_SPLC_ADC_FILTER_TAP];
@@ -15,7 +15,7 @@ typedef struct{//ADC滤波器
 
 static xdata int8_t inputFilter[CONFIG_SPLC_IO_INPUT_NUM];//IO输入滤波器缓冲区
 static xdata adcTempDat_t adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
-static pdata uint8_t adcSelect;//ADC通道选择
+static idata uint8_t adcSelect;//ADC通道选择
 static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
 void adcProcess(void);
 static void initAdcData(adcTempDat_t *s);
@@ -238,9 +238,10 @@ static void nvramUpdata(void){//更新NVRAM->EPROM
 	}
 	memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
+/*****************************************************************************/
 int16_t ADD(int16_t A, int16_t B){//加法指令
 	int32_t tmp;
-	tmp = (int32_t)A + (int32_t)B;
+	tmp = (int32_t)(A) + (int32_t)(B);
 	if(tmp >= INT_MAX)
 		tmp = INT_MAX;
 	if(tmp <= INT_MIN)
@@ -269,10 +270,17 @@ uint8_t LD(uint16_t A){//载入
 	return (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
 }
 uint8_t LDB(uint16_t A){//取反载入
-	return false;
+	assertCoilAddress(A);//检查地址范围
+	if((uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)])){
+		return false;
+	}
+	else{
+		return true;
+	}
+
 }
 uint8_t LDP(uint16_t A){//脉冲上升沿
-	uint8_t temp0, temp1;
+	pdata uint8_t temp0, temp1;
 	assertCoilAddress(A);//检查地址范围
 	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
 	temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
@@ -347,33 +355,67 @@ void T100MS(uint8_t A, uint8_t start, uint16_t value){//100MS延时器
 	}
 }
 
-int16_t TNTC(int16_t dat){//CODE转换为NTC测量温度温度
-	uint16_t temp;
-	fp32_t ftemp;
+int16_t TNTC(uint16_t A){//CODE转换为NTC测量温度温度
+	idata uint16_t temp, dat;
+	idata fp32_t ftemp;
+	dat = NVRAM0[A];
 	if(dat >= CONFIG_SPLC_ADC_INTERNAL_VREF) dat = CONFIG_SPLC_ADC_INTERNAL_VREF;//限制输入最大值
 	if(dat < 0) dat = 0;
-	
 	temp = (int16_t)(CONFIG_SPLC_ADC_INTERNAL_VREF * dat / 4096);//单位mV
 	temp = 10000 * 5000 / (5000 - temp);//电源5V 分压电阻10K
-	
 	ftemp = ((1.0 / 3477)*log((fp32_t)(temp) / 10000)) + (1 / (25+273.0));//limo R25=10740,B=3450	 uniquemode 3988
 	ftemp = ( 1.0 / ftemp ) - 273.0;
 	if(ftemp >= 100) ftemp = 100;
 	if(ftemp <= -100) ftemp = -100;
 	return (int16_t)(ftemp * 10);
 }
-int16_t TENV(int16_t dat){//CODE转换为环境温度
+int16_t TENV(uint16_t A){//CODE转换为环境温度
 	uint16_t temp;
-	temp = (int16_t)(CONFIG_SPLC_ADC_INTERNAL_VREF * dat / 4096);//单位mV
+	temp = (int16_t)(CONFIG_SPLC_ADC_INTERNAL_VREF * NVRAM0[A] / 4096);//单位mV
 	temp = (int16_t)((temp - CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET) * 1000 / CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN);
 	return temp;
 }
-int16_t XTAB(int16_t x, uint16_t tab, uint16_t len){//输入X线性查表
-	//从tab 0->len 为表X走
-	return 0;
+int16_t YTAB(uint16_t X, uint16_t tab, uint16_t len){//输入X线性查表
+	//从tab 0->len 输入X找Y轴
+	idata uint16_t x1, x2, y1, y2, i;
+	idata fp32_t k, b, y;
+	for(i = 0;i < (len - 1);i ++){
+		if(NVRAM0[X] == NVRAM0[tab + i]){
+			return NVRAM0[(tab + i + len)];
+		}
+		else if(NVRAM0[X] > NVRAM0[(tab + i + 1)]){
+			x1 = NVRAM0[(tab + i)];
+			y1 = NVRAM0[(tab + len + i)];
+			x2 = NVRAM0[(tab + i + 1)];
+			y2 = NVRAM0[(tab + len + i + 1)];
+			k = (y2 - y1) / (x2 - x1);
+			b = y1 - (k * x1);
+			y = k * NVRAM0[X] + b;
+			return (int16_t)y;
+		}
+	}
+	return NVRAM0[(tab + len + len)];
 }
-int16_t YTAB(int16_t y, uint16_t tab, uint16_t len){//输入Y线性查表
-	return 0;
+int16_t XTAB(uint16_t Y, uint16_t tab, uint16_t len){//输入Y线性查表
+	//从tab 0->len 输入X轴找Y轴
+	idata uint16_t x1, x2, y1, y2, i;
+	idata fp32_t k, b, x;
+	for(i = 0;i < (len - 1);i ++){
+		if(NVRAM0[Y] = NVRAM0[tab + i + len]){
+			return NVRAM0[(tab + i)];
+		}
+		else if(NVRAM0[Y] > NVRAM0[(tab + i + 1 + len)]){
+			x1 = NVRAM0[(tab + i)];
+			y1 = NVRAM0[(tab + len + i)];
+			x2 = NVRAM0[(tab + i + 1)];
+			y2 = NVRAM0[(tab + len + i + 1)];
+			k = (y2 - y1) / (x2 - x1);
+			b = y1 - (k * x1);
+			x = (NVRAM0[Y] - b) / k;
+			return (int16_t)x;
+		}
+	}
+	return NVRAM0[(tab + len)];
 }
 void UPDAC(uint16_t dat){//立即更新DAC输出
 	switch(dat){
@@ -453,7 +495,7 @@ static void pcaInit(void){//硬件PCA初始化
 }
 
 static void timer0Init(void){//硬件sTimer计时器初始化
-	data uint16_t temp;
+	idata uint16_t temp;
 	TimerCounter_1mS = 0;
 	TimerCounter_10mS = 0;
 #ifdef C8051F020

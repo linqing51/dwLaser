@@ -6634,7 +6634,7 @@
  
  
  uint8_t mcp47x6Init(void);
- void mcp47x6Write(uint8_t channel, uint16_t dat);
+ void mcp47x6Write(uint8_t channel, uint16_t dat) reentrant;
  
  
  
@@ -7607,6 +7607,8 @@
  
 #line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlc.h" /0
 #line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlc.h" /0
+ 
+ 
  
  
  

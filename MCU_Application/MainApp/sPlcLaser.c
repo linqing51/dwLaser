@@ -23,41 +23,10 @@
 
 static void STLAR(void);
 static void EDLAR(void);
-////上位机使能MCU软复位
-//#if CONFIG_USING_RESET == 1
-//		if(my.mcuReset)
-//		{
-//			RSTSRC |= (1 << 1);//Forces a Power-On Reset. /RST is driven low.
-//		}
-//#endif
-//		//数字滤波扫描输入IO
-
-//		p->flagConnectErr = 0;//每次扫描错误标志清零
-//		//心跳->PLC
-//		if(my.heartFlag)
-//		{
-//			my.heatFlag = 0;
-//		}
-//		else
-//		{
-//			my.heatFlag = 1;
-//		}
-//		
-//		//获取过热状态
-//		my.overTempFault = (my.overTempDiode && !my.overTempDiodeIgnore) ||
-//							  (my.overTempAmplifier && !my.overTempAmplifierIgnore) ||
-//	                          (my.overTempEnvironment && !my.overTempEnvironmentIgnore) ||
-//							  (my.overTempMcu && !my.overTempMcuIgnore);
-//	    my.overTempFault = my.overTempFault && !my.overTempIgnore;
-//		//获取安全状态
-//		my.safeFault = (my.safeInterlock && !my.safeInterlockIgnore) ||
-//					(my.safeFiberDetect0 && my.safeFiberDetect0Ignore) ||
-//					(my.safeFiberDetect1 && my.safeFiberDetect1Ignore) ||
-//					(my.safeOpenCase && my.safeOpenCaseIgnore);
-//		my.safeFault = my.safeFault && !my.safeFaultIgnore;
-//		//模拟输入扫描
-
 void sPlcLaser(void){
+	if(LD(SPCOIL_PSST)){//上电初始化STEPNUM
+		NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_INIT;
+	}
 	if((NVRAM0[EM_DRIVER_TEMPERATURE] > NVRAM0[DM_DRIVE_PROTECT_HTEMP]) && LDF(R_FLAG_DRIVER_TEMP_FAULT_IGNORE)){
 		SET(R_FLAG_DRIVER_HTEMP_FAULT);
 	}
@@ -120,62 +89,62 @@ void sPlcLaser(void){
 	}
 
 //STEP_LOOP_START:
-		if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_INIT){//初始化
-			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_STANDBY;//Goto next step
+	if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_INIT){//初始化
+		NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_STANDBY;//Goto next step
+		goto STEP_LOOP_END;
+	}
+	if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_STANDBY){//第一步 待机状态->蜂鸣器提示
+		if(LD(R_FLAG_SAFE_FAULT) || LD(R_FLAG_TEMP_FAULT)){
+			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_FAULT;
 			goto STEP_LOOP_END;
 		}
-		if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_STANDBY){//第一步 待机状态->蜂鸣器提示
-			if(LD(R_FLAG_SAFE_FAULT) || LD(R_FLAG_TEMP_FAULT)){
-				NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_FAULT;
-				goto STEP_LOOP_END;
-			}
-			if(LD(R_FLAG_READY)){//检测准备状态
-				SET(R_FLAG_BEEM);
-				NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_INTO_READY;//进入准备状态
-				goto STEP_LOOP_END;
-			}
+		if(LD(R_FLAG_READY)){//检测准备状态
+			SET(R_FLAG_BEEM);
+			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_INTO_READY;//进入准备状态
 			goto STEP_LOOP_END;
 		}
-		if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_INTO_READY){//第二步 等待1秒后进入
-			T100MS(SPLC_100MS_INTOREADY_BEEM, true, 10);//启动1秒延时器	
-			if(LD(T_100MS_START * 16 + SPLC_100MS_INTOREADY_BEEM)){//计时达到进入READY步骤
-				SET(R_FLAG_BEEM);
-				NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_READY;
-				T100MS(SPLC_100MS_INTOREADY_BEEM, false, 10);//停止延时器
-				goto STEP_LOOP_END;
-			}
+		goto STEP_LOOP_END;
+	}
+	if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_INTO_READY){//第二步 等待1秒后进入
+		T100MS(SPLC_100MS_INTOREADY_BEEM, true, 10);//启动1秒延时器	
+		if(LD(T_100MS_START * 16 + SPLC_100MS_INTOREADY_BEEM)){//计时达到进入READY步骤
+			SET(R_FLAG_BEEM);
+			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_READY;
+			T100MS(SPLC_100MS_INTOREADY_BEEM, false, 10);//停止延时器
 			goto STEP_LOOP_END;
 		}
-		if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_READY){//第三步 准备状态 等待脚踏信号发射激光
-			if(LD(R_FLAG_SAFE_FAULT) || LD(R_FLAG_TEMP_FAULT)){
-				NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_FAULT;
-				goto STEP_LOOP_END;
-			}
-			if(LDP(R_FLAG_FOOTSWITCH)){//检测footSwitch上升沿
-				NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_LASERON;
-				RES(R_FLAG_LASER_EMITOVER);//发射完成标志清零
-				SET(R_FLAG_LASER_EMITING);//发射中标志置位
-				//将激光功率值转换为电流值
-				STLAR();//开始发射激光
-				goto STEP_LOOP_END;
-			}
+		goto STEP_LOOP_END;
+	}
+	if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_READY){//第三步 准备状态 等待脚踏信号发射激光
+		if(LD(R_FLAG_SAFE_FAULT) || LD(R_FLAG_TEMP_FAULT)){
+			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_FAULT;
 			goto STEP_LOOP_END;
 		}
-		if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_LASERON){
-			if(LD(R_FLAG_SAFE_FAULT) || LD(R_FLAG_TEMP_FAULT)){
-				NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_FAULT;
-				goto STEP_LOOP_END;
-			}
-			if(LDB(R_FLAG_FOOTSWITCH)){//检测到脚踏复位
-				EDLAR();//关闭激光
-				SET(R_FLAG_LASER_EMITOVER);//发射完成标志清零
-				RES(R_FLAG_LASER_EMITING);//发射中标志置位
-				NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_FAULT;//返回READY步骤
-				goto STEP_LOOP_END;
-			}
+		if(LDP(R_FLAG_FOOTSWITCH)){//检测footSwitch上升沿
+			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_LASERON;
+			RES(R_FLAG_LASER_EMITOVER);//发射完成标志清零
+			SET(R_FLAG_LASER_EMITING);//发射中标志置位
+			//将激光功率值转换为电流值
+			STLAR();//开始发射激光
 			goto STEP_LOOP_END;
 		}
-		if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_FAULT){//错误状态
+		goto STEP_LOOP_END;
+	}
+	if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_LASERON){
+		if(LD(R_FLAG_SAFE_FAULT) || LD(R_FLAG_TEMP_FAULT)){
+			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_FAULT;
+			goto STEP_LOOP_END;
+		}
+		if(LDB(R_FLAG_FOOTSWITCH)){//检测到脚踏复位
+			EDLAR();//关闭激光
+			SET(R_FLAG_LASER_EMITOVER);//发射完成标志清零
+			RES(R_FLAG_LASER_EMITING);//发射中标志置位
+			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_FAULT;//返回READY步骤
+			goto STEP_LOOP_END;
+		}
+		goto STEP_LOOP_END;
+	}
+	if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_FAULT){//错误状态
 			if(LDB(R_FLAG_SAFE_FAULT) && LDB(R_FLAG_TEMP_FAULT)){//错误已消除
 				if(LD(R_LASER_ERROR_CLEAR)){//错误消除返回待机状态
 					RES(R_LASER_ERROR_CLEAR);
@@ -186,7 +155,7 @@ void sPlcLaser(void){
 			goto STEP_LOOP_END;
 		}
 STEP_LOOP_END:
-		{}
+	{}
 }
 		
 

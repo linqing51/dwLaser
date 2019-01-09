@@ -6810,7 +6810,7 @@
  
  
  uint8_t mcp47x6Init(void);
- void mcp47x6Write(uint8_t channel, uint16_t dat);
+ void mcp47x6Write(uint8_t channel, uint16_t dat) reentrant;
  
  
  
@@ -7670,6 +7670,8 @@
  
  
  
+ 
+ 
  extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
  extern xdata int16_t NVRAM0[(773 + 1)]; 
  extern xdata int16_t NVRAM1[(773 + 1)]; 
@@ -8074,25 +8076,25 @@
  uint16_t dataLen;
  }modbusRxTxData_t;
  
- data uint8_t ModbusSlaveAddress = 1;
+ idata uint8_t ModbusSlaveAddress = 1;
  xdata modbusRxTxData_t Tx_Data;
- data uint32_t Tx_Current = 0;
- data uint32_t Tx_CRC16 = 0xFFFF;
- data MODBUS_RXTX_STATE Tx_State = RXTX_IDLE;
+ idata uint32_t Tx_Current = 0;
+ idata uint32_t Tx_CRC16 = 0xFFFF;
+ idata MODBUS_RXTX_STATE Tx_State = RXTX_IDLE;
  xdata uint8_t Tx_Buf[256];
- data uint32_t Tx_Buf_Size = 0;
+ idata uint32_t Tx_Buf_Size = 0;
  
  xdata modbusRxTxData_t Rx_Data;
- data uint32_t Rx_CRC16 = 0xFFFF;
- data MODBUS_RXTX_STATE Rx_State = RXTX_IDLE;
- data uint8_t Rx_Data_Available = false;
+ idata uint32_t Rx_CRC16 = 0xFFFF;
+ idata MODBUS_RXTX_STATE Rx_State = RXTX_IDLE;
+ idata uint8_t Rx_Data_Available = false;
  
  volatile uint16_t modbusTimerValue = 0;
  volatile uint8_t modbusReceiveCounter = 0; 
  xdata volatile uint8_t modbusReceiveBuffer[256]; 
  
  void modbusCrc16(const uint8_t Data, uint32_t* CRC){
- data uint32_t i;
+ idata uint32_t i;
  *CRC = *CRC ^(uint32_t) Data;
  for (i = 8; i > 0; i--){
  if (*CRC & 0x0001)
@@ -8122,8 +8124,8 @@
  }
  
  void HandleModbusReadCoils(void){ 
- uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
- uint8_t tempData = 0;
+ idata uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
+ idata uint8_t tempData = 0;
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
@@ -8159,7 +8161,7 @@
  void HandleModbusReadInputCoil(void){ 
  }
  void HandleModbusReadHoldingRegisters(void){ 
- uint16_t startAddress, numberOfRegisters, i, currentData;
+ idata uint16_t startAddress, numberOfRegisters, i, currentData;
  
  startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
  numberOfRegisters = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);

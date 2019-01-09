@@ -89,12 +89,13 @@ void PCA0_Init()
 // Call Init_Device() from your main program
 void initDeviceF580(void)
 {
-    //Reset_Sources_Init();
-    //DAC_Init();
-    //Voltage_Reference_Init();
-    //Port_IO_Init();
-    //Oscillator_Init();
-    //Interrupts_Init();
+	//Reset_Sources_Init();
+	//Voltage_Reference_Init();
+	
+
+	//Interrupts_Init();
 	PCA0_Init();
+	Oscillator_Init();
+	Port_IO_Init();
 }
 #endif
