@@ -1,9 +1,13 @@
 #ifndef __APPCONFIG_H__
 #define __APPCONFIG_H__
 /*****************************************************************************/
-#define CONFIG_SYSCLK                       (22118400L)
+
 #ifdef C8051F020
+#define CONFIG_SYSCLK                       (22118400L)
 #define SAR_CLK      						2000000L//ADC0时钟 <2.5MHz
+#endif
+#ifdef C8051F580
+#define CONFIG_SYSCLK                       (48000000L)//F580内部48M
 #endif
 #define CONFIG_DEBUG                        0//调试功能
 #define CONFIG_USING_WDT					0//使能看门狗
@@ -15,7 +19,7 @@
 #define CONFIG_CHECK_CODE 					0x5A7E
 
 /*****************************************************************************/
-#define CONFIG_UART0_BAUDRATE				57600//串口波特率
+#define CONFIG_UART0_BAUDRATE				115200//串口波特率
 #define CONFIG_UART0_PARITY					NONE
 #define CONFIG_UART0_STOPBIT				1
 #define CONFIG_UART0_DATABIT				8

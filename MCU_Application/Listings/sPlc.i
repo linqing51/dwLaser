@@ -14,8 +14,12 @@
  
 #line 6 "MainApp\appConfig.h" /1
   
+  
  
-#line 8 "MainApp\appConfig.h" /0
+#line 9 "MainApp\appConfig.h" /0
+ 
+ 
+ 
  
  
  
@@ -180,7 +184,7 @@
 #line 51 ".\Lib\stdint.h" /0
  
  
-#line 116 "MainApp\appConfig.h" /0
+#line 120 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\stdbool.h" /0
@@ -231,7 +235,7 @@
  
  
  
-#line 117 "MainApp\appConfig.h" /0
+#line 121 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\endian.h" /0
@@ -293,7 +297,7 @@
 #line 55 ".\Lib\endian.h" /0
  
  
-#line 118 "MainApp\appConfig.h" /0
+#line 122 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\si_toolchain.h" /0
@@ -1205,7 +1209,7 @@
  
  
  
-#line 119 "MainApp\appConfig.h" /0
+#line 123 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\compiler_defs.h" /0
@@ -2131,18 +2135,18 @@
  
  
  
-#line 120 "MainApp\appConfig.h" /0
- 
- 
-#line 122 "MainApp\appConfig.h" /1
-  
- 
 #line 124 "MainApp\appConfig.h" /0
  
-#line 125 "MainApp\appConfig.h" /1
+ 
+#line 126 "MainApp\appConfig.h" /1
   
  
-#line 127 "MainApp\appConfig.h" /0
+#line 128 "MainApp\appConfig.h" /0
+ 
+#line 129 "MainApp\appConfig.h" /1
+  
+ 
+#line 131 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\C8051F580_defs.h" /0
@@ -2758,7 +2762,7 @@
  
  
  
-#line 128 "MainApp\appConfig.h" /0
+#line 132 "MainApp\appConfig.h" /0
  
  
  
@@ -2809,7 +2813,7 @@
  
  
  
-#line 131 "MainApp\appConfig.h" /0
+#line 135 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2917,7 +2921,7 @@
  #pragma RESTORE
  
  
-#line 132 "MainApp\appConfig.h" /0
+#line 136 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2980,7 +2984,7 @@
  #pragma RESTORE
  
  
-#line 133 "MainApp\appConfig.h" /0
+#line 137 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -3028,7 +3032,7 @@
  
  
  
-#line 134 "MainApp\appConfig.h" /0
+#line 138 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -3066,7 +3070,7 @@
  #pragma RESTORE
  
  
-#line 135 "MainApp\appConfig.h" /0
+#line 139 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -3099,7 +3103,7 @@
  
  
  
-#line 136 "MainApp\appConfig.h" /0
+#line 140 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\math.h" /0
@@ -3173,7 +3177,7 @@
  #pragma RESTORE
  
  
-#line 137 "MainApp\appConfig.h" /0
+#line 141 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\crc32.h" /0
@@ -3190,7 +3194,11 @@
 #line 2 "MainApp\AppConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -3376,14 +3384,14 @@
  
  
  
-#line 138 "MainApp\appConfig.h" /0
+#line 142 "MainApp\appConfig.h" /0
  
  
  
-#line 141 "MainApp\appConfig.h" /1
+#line 145 "MainApp\appConfig.h" /1
   
  
-#line 143 "MainApp\appConfig.h" /0
+#line 147 "MainApp\appConfig.h" /0
  
   
 #line 1 "MainApp\InitDeviceF580.h" /0
@@ -4822,7 +4830,7 @@
  
  void initDeviceF580(void);
  
-#line 144 "MainApp\appConfig.h" /0
+#line 148 "MainApp\appConfig.h" /0
  
  
  
@@ -4837,7 +4845,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -5018,7 +5030,7 @@
  
  
  
-#line 147 "MainApp\appConfig.h" /0
+#line 151 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c0.h" /0
@@ -5031,7 +5043,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -5219,7 +5235,7 @@
  
  
  
-#line 148 "MainApp\appConfig.h" /0
+#line 152 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c1.h" /0
@@ -5232,7 +5248,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -5420,7 +5440,7 @@
  
  
  
-#line 149 "MainApp\appConfig.h" /0
+#line 153 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c2.h" /0
@@ -5433,7 +5453,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -5621,7 +5645,7 @@
  
  
  
-#line 150 "MainApp\appConfig.h" /0
+#line 154 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c3.h" /0
@@ -5634,7 +5658,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -5822,7 +5850,7 @@
  
  
  
-#line 151 "MainApp\appConfig.h" /0
+#line 155 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c4.h" /0
@@ -5835,7 +5863,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -6023,7 +6055,7 @@
  
  
  
-#line 152 "MainApp\appConfig.h" /0
+#line 156 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c5.h" /0
@@ -6036,7 +6068,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -6224,7 +6260,7 @@
  
  
  
-#line 153 "MainApp\appConfig.h" /0
+#line 157 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c6.h" /0
@@ -6237,7 +6273,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -6425,7 +6465,7 @@
  
  
  
-#line 154 "MainApp\appConfig.h" /0
+#line 158 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\eprom.h" /0
@@ -6438,7 +6478,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -6622,7 +6666,7 @@
  void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
  void epromTest(void);
  
-#line 155 "MainApp\appConfig.h" /0
+#line 159 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\mcp47x6.h" /0
@@ -6635,7 +6679,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -6824,7 +6872,7 @@
  
  
  
-#line 156 "MainApp\appConfig.h" /0
+#line 160 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\inPca9554.h" /0
@@ -6837,7 +6885,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -7016,7 +7068,7 @@
  void inPca9554Write(uint8_t wdata);
  
  
-#line 157 "MainApp\appConfig.h" /0
+#line 161 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\outPca9554.h" /0
@@ -7029,7 +7081,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -7208,7 +7264,7 @@
  void outPca9554Write(uint8_t wdata);
  
  
-#line 158 "MainApp\appConfig.h" /0
+#line 162 "MainApp\appConfig.h" /0
  
  
   
@@ -7222,7 +7278,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -7403,7 +7463,7 @@
  extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
  extern void modbusPorcess(void);
  
-#line 160 "MainApp\appConfig.h" /0
+#line 164 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Modbus\ModbusPort.h" /0
@@ -7416,7 +7476,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -7597,7 +7661,7 @@
  extern void receiveInterrupt(uint8_t Data);
  
  
-#line 161 "MainApp\appConfig.h" /0
+#line 165 "MainApp\appConfig.h" /0
  
  
   
@@ -7667,7 +7731,6 @@
   
   
   
-  
  
  
  
@@ -7718,8 +7781,8 @@
  
  
  
-#line 163 "MainApp\appConfig.h" /0
-#line 163 "MainApp\appConfig.h" /0
+#line 167 "MainApp\appConfig.h" /0
+#line 167 "MainApp\appConfig.h" /0
  
   
 #line 1 "MainApp\sPlcLaser.h" /0
@@ -7732,7 +7795,11 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
+ 
+ 
   
+  
+ 
  
   
  
@@ -8021,7 +8088,7 @@
  
  void sPlcLaser(void); 
  
-#line 164 "MainApp\appConfig.h" /0
+#line 168 "MainApp\appConfig.h" /0
  
  
  
@@ -8033,7 +8100,6 @@
  
  
 #line 4 "MainApp\sPlc.h" /0
- 
  
  
  
@@ -8665,25 +8731,19 @@
  }
  
  static void timer0Init(void){ 
- idata uint16_t temp;
+ uint16_t tmp;
  TimerCounter_1mS = 0;
  TimerCounter_10mS = 0;
- 
-#line 502 "MainApp\sPlc.c" /1
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 513 "MainApp\sPlc.c" /0
- 
- 
+ tmp = (uint16_t)(65536 - ((48000000L) / 12 /1000L));
+ Timer0_L = tmp & 0xFF;
+ Timer0_H = (tmp >> 8) & 0xFF;
+ TH0 = Timer0_H; 
+ TL0 = Timer0_L; 
+ CKCON &= ~(1 << 3); 
+ TMOD &= 0xF0;
+ TMOD |= (1 << 0); 
+ ET0 = 1; 
+ TR0 = 1; 
  }
  static void timer0Isr(void) interrupt 1{ 
  uint16_t i;
@@ -8734,28 +8794,28 @@
  TimerCounter_10mS = 0;
  }
  
-#line 565 "MainApp\sPlc.c" /1
+#line 561 "MainApp\sPlc.c" /1
  
  
-#line 567 "MainApp\sPlc.c" /0
+#line 563 "MainApp\sPlc.c" /0
  TimerCounter_1mS ++;
  }
  
  static void inputInit(void){
  memset(inputFilter, 0x0, 16);
  
-#line 573 "MainApp\sPlc.c" /1
+#line 569 "MainApp\sPlc.c" /1
  
-#line 574 "MainApp\sPlc.c" /0
+#line 570 "MainApp\sPlc.c" /0
  
  
  }
  static void outputInit(void){
  
-#line 579 "MainApp\sPlc.c" /1
+#line 575 "MainApp\sPlc.c" /1
  
  
-#line 581 "MainApp\sPlc.c" /0
+#line 577 "MainApp\sPlc.c" /0
  
  
  
@@ -8765,12 +8825,12 @@
  ctemp0 = 0;
  ctemp0 = 0;
  
-#line 590 "MainApp\sPlc.c" /1
+#line 586 "MainApp\sPlc.c" /1
  
  
  
  
-#line 594 "MainApp\sPlc.c" /0
+#line 590 "MainApp\sPlc.c" /0
  
  ctemp0 = inPca9554Read() ;
  
@@ -8813,12 +8873,12 @@
  }
  static void outputRefresh(void){ 
  
-#line 636 "MainApp\sPlc.c" /1
+#line 632 "MainApp\sPlc.c" /1
  
  
  
  
-#line 640 "MainApp\sPlc.c" /0
+#line 636 "MainApp\sPlc.c" /0
  
  outPca9554Write(NVRAM0[678]);
  
@@ -8826,7 +8886,7 @@
  static void chipAdcInit(void){ 
  uint8_t i;
  
-#line 647 "MainApp\sPlc.c" /1
+#line 643 "MainApp\sPlc.c" /1
  
  
  
@@ -8837,7 +8897,7 @@
  
  
  
-#line 657 "MainApp\sPlc.c" /0
+#line 653 "MainApp\sPlc.c" /0
  adcSelect = 0;
  for(i = 0;i <= 9;i ++){
  initAdcData(&adcTempDat[i]);
@@ -8848,30 +8908,30 @@
  wdtDisable(); 
  
  
+#line 663 "MainApp\sPlc.c" /1
+ 
+ 
+#line 665 "MainApp\sPlc.c" /0
+ 
+ 
 #line 667 "MainApp\sPlc.c" /1
  
  
 #line 669 "MainApp\sPlc.c" /0
  
  
-#line 671 "MainApp\sPlc.c" /1
- 
- 
-#line 673 "MainApp\sPlc.c" /0
- 
- 
  chipDacInit(); 
  
  
  
- initModbus(0x01, 57600);
+ initModbus(0x01, 115200);
  
  timer0Init(); 
  NVRAM0[(758 + ((758 + 0) / 16))] |= (uint16_t)(1 << ((758 + 0) % 16));
  }
  static void refreshDac(void){ 
  
-#line 686 "MainApp\sPlc.c" /1
+#line 682 "MainApp\sPlc.c" /1
  
  
  
@@ -8879,17 +8939,17 @@
  
  
  
-#line 693 "MainApp\sPlc.c" /0
+#line 689 "MainApp\sPlc.c" /0
  }
  static void chipDacInit(void){ 
  
-#line 696 "MainApp\sPlc.c" /1
+#line 692 "MainApp\sPlc.c" /1
  
  
  
  
  
-#line 701 "MainApp\sPlc.c" /0
+#line 697 "MainApp\sPlc.c" /0
  }
  void sPlcProcessStart(void){ 
  
@@ -8899,17 +8959,17 @@
  inputRefresh(); 
  
  
-#line 710 "MainApp\sPlc.c" /1
+#line 706 "MainApp\sPlc.c" /1
  
  
-#line 712 "MainApp\sPlc.c" /0
+#line 708 "MainApp\sPlc.c" /0
  }
  void sPlcProcessEnd(void){ 
  
-#line 715 "MainApp\sPlc.c" /1
+#line 711 "MainApp\sPlc.c" /1
  
  
-#line 717 "MainApp\sPlc.c" /0
+#line 713 "MainApp\sPlc.c" /0
  
  outputRefresh(); 
  
@@ -8917,8 +8977,8 @@
  refreshDac(); 
  
  
-#line 724 "MainApp\sPlc.c" /1
+#line 720 "MainApp\sPlc.c" /1
  
  
-#line 726 "MainApp\sPlc.c" /0
+#line 722 "MainApp\sPlc.c" /0
  }

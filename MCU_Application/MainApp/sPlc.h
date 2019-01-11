@@ -56,8 +56,7 @@
 #define SPREG_DAC_1						(SPREG_START + 5)
 #define SPREG_DAC_2						(SPREG_START + 6)
 #define SPREG_DAC_3						(SPREG_START + 7)
-#define SPREG_CHECKCODE_L				(SPREG_END - 1)
-#define SPREG_CHECKCODE_H				(SPREG_END)
+#define SPREG_CHECKCODE					(SPREG_END)
 #define SPCOIL_ON						(SPCOIL_START + 0)//长通线圈
 #define SPCOIL_PSST						(SPCOIL_START + 1)//首次启动
 #define SPCOIL_PS1MS					(SPCOIL_START + 2)//1mS间隔 50%占空比脉冲

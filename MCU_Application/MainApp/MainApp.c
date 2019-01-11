@@ -9,7 +9,7 @@
 //C8051F580 计时器功能定义
 //TIMER0 ->SPLC_FRAME
 //TIMER1 ->UART1 Baud Rate Generator
-//TIMER2 ->
+//TIMER2 ->SPLC_LASER
 //TIMER3 ->MODBUS RTU TIMER
 //TIMER4 ->EXT TIMER OUT
 //TIMER5 ->BEEM
@@ -35,11 +35,29 @@
 
 /*****************************************************************************/
 void main(void){
+	uint8_t tmp;
 #ifdef C8051F020
 	initDeviceF020();
 #endif
 #ifdef C8051F580
 	initDeviceF580();
+	inPca9554Init();
+	epromTest();
+	tmp = inPca9554Read();
+	tmp &= 0x0;
+	tmp = inPca9554Read();
+	tmp &= 0x0;
+	tmp = inPca9554Read();
+	tmp &= 0x0;
+	tmp = inPca9554Read();
+	tmp &= 0x0;
+	tmp = inPca9554Read();
+	tmp &= 0x0;
+	tmp = inPca9554Read();
+	tmp &= 0x0;
+	tmp = inPca9554Read();
+	tmp &= 0x0;
+	//while(1);
 #endif
 #if CONFIG_USING_WDT == 1
 	if ((RSTSRC & 0x02) == 0x00)
@@ -52,8 +70,7 @@ void main(void){
 #endif
 	sPlcInit();//初始化软逻辑
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
-	*((uint32_t*)(&NVRAM0[SPREG_CHECKCODE_L])) = 0xA5A5;
-	
+	NVRAM0[SPREG_CHECKCODE] = CONFIG_CHECK_CODE;
 	ENABLE_INTERRUPT;
 	while(1){
 		sPlcProcessStart();

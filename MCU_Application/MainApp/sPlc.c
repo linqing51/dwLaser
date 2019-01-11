@@ -495,13 +495,12 @@ static void pcaInit(void){//硬件PCA初始化
 }
 
 static void timer0Init(void){//硬件sTimer计时器初始化
-	idata uint16_t temp;
+	uint16_t tmp;
 	TimerCounter_1mS = 0;
 	TimerCounter_10mS = 0;
-#ifdef C8051F020
-	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 /CONFIG_SOFTPLC_HWTIME));
-	Timer0_L = temp & 0xFF;
-	Timer0_H = (temp >> 8) & 0xFF;
+	tmp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 /CONFIG_SOFTPLC_HWTIME));
+	Timer0_L = tmp & 0xFF;
+	Timer0_H = (tmp >> 8) & 0xFF;
 	TH0 = Timer0_H;// Init T0 High register
 	TL0 = Timer0_L;// Init T0 Low register
 	CKCON &= ~(1 << 3);//SYSCLK / 12	
@@ -509,9 +508,6 @@ static void timer0Init(void){//硬件sTimer计时器初始化
 	TMOD |= (1 << 0);// T0 in 16-bit mode
 	ET0 = 1;// T0 interrupt enabled
 	TR0 = 1;// T0 ON
-#endif
-#ifdef C8051F580
-#endif
 }
 static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
 	uint16_t i;

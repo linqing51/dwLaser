@@ -8,7 +8,16 @@
 #define CONFIG_PCA9554_CMD_RW_CONFIG	0x03
 /*****************************************************************************/
 void outPca9554Init(void){
-	//配置输入
+	//输出寄存器清零
+	iic6Start();  
+	iic6SendByte((CONFIG_PCA9554_ADDRESS << 1) & 0xFE);	    //发送写命令
+	iic6WaitAck();
+	iic6SendByte(CONFIG_PCA9554_CMD_RW_OUTPUT);//发送CMD
+	iic6WaitAck();
+	iic6SendByte(0x0);
+	iic6WaitAck();
+	iic6Stop();
+	//配置输出
 	iic6Start();  
 	iic6SendByte((CONFIG_PCA9554_ADDRESS << 1) & 0xFE);	    //发送写命令
 	iic6WaitAck();
@@ -39,7 +48,7 @@ void outPca9554Write(uint8_t wdata){
 	iic6WaitAck();
 	iic6SendByte(CONFIG_PCA9554_CMD_RW_OUTPUT);//发送CMD
 	iic6WaitAck();
-	iic6SendByte(wdata);//config output
+	iic6SendByte(wdata);
 	iic6WaitAck();
 	iic6Stop();
 }

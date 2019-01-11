@@ -1,9 +1,7 @@
 #include "modbusPort.h"
 /*****************************************************************************/
-static pdata uint8_t Timer1_L,Timer1_H;
 /*****************************************************************************/
-void initModbusSerial(int32_t baudrate)
-{//初始化MODBUS串口
+void initModbusSerial(int32_t baudrate){//初始化MODBUS串口
 #ifdef C8051F020
 	CKCON |= (1 << 5);//Timer2 uses the system clock
 	T2CON &= ~(1 << 0);//当定时器2 溢出或T2EX 上发生负跳变时将自动重装载（EXEN2=1）
@@ -44,30 +42,26 @@ void initModbusSerial(int32_t baudrate)
 #endif	
 }
 void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER3
-	uint16_t temp;
+	uint16_t tmp;	
 #ifdef C8051F020
-	temp = (uint16_t)(65536L - (int32_t)(CONFIG_SYSCLK / 12L / CONFIG_MB_RTU_SLAVE_TIMER));
-	Timer1_L = (uint8_t)(temp & 0xFF);
-	Timer1_H = (uint8_t)((temp >> 8) & 0xFF);
+	tmp = (uint16_t)(65536L - (int32_t)(CONFIG_SYSCLK / 12L / CONFIG_MB_RTU_SLAVE_TIMER));
 	TMR3CN = 0x0;//T3 SYSCLK / 12	
-	TMR3RLH = Timer1_H;
-	TMR3RLL = Timer1_L;	
+	TMR3RLH = (uint8_t)((tmp >> 8) & 0xFF);
+	TMR3RLL = (uint8_t)(tmp & 0xFF);
 	TMR3CN |= (1 << 2);
 #endif
 #ifdef C8051F580
 	uint8_t SFRPAGE_save;
 	SFRPAGE_save = SFRPAGE;
-	temp = (uint16_t)(65536L - (int32_t)(CONFIG_SYSCLK / 12L / CONFIG_MB_RTU_SLAVE_TIMER));
-	Timer1_L = (uint8_t)(temp & 0xFF);
-	Timer1_H = (uint8_t)((temp >> 8) & 0xFF);
+	tmp = (uint16_t)(65536L - (int32_t)(CONFIG_SYSCLK / 12L / CONFIG_MB_RTU_SLAVE_TIMER));
 	SFRPAGE = ACTIVE_PAGE;
 	TMR3CN = 0x0;//T3 SYSCLK / 12	
-	TMR3RLH = Timer1_H;
-	TMR3RLL = Timer1_L;	
+	TMR3RLH = (uint8_t)((tmp >> 8) & 0xFF);
+	TMR3RLL = (uint8_t)(tmp & 0xFF);
 	TMR3CN |= (1 << 2);
 	SFRPAGE = SFRPAGE_save;
 #endif
-	EIE1 |= (1 << 6);
+	EIE1 |= (1 << 6);//使能T3中断
 }
 static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
 #ifdef C8051F020
@@ -129,8 +123,7 @@ static void modbusHandle() interrupt INTERRUPT_TIMER3 {//硬件计时器T3中断
 #endif
 	modbusTimerValue ++;
 }
-static void serialHandle() interrupt INTERRUPT_UART0
-{//UART0 串口中断程序
+static void serialHandle() interrupt INTERRUPT_UART0 {//UART0 串口中断程序
 #ifdef C8051F202
 	if(RI0){
 		RI0 = 0;	

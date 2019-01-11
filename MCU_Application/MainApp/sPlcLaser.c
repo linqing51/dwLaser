@@ -211,10 +211,10 @@ static void EDLAR(void){//停止发射脉冲
 	UPDAC(MCP47X6_LASER_CHANNEL_CH2);
 	RES(R_FLAG_LASER_EMITING);//发射标志置位
 }
-void initTimer3(void){//TIMER3初始化
+void initTimer2(void){//TIMER3初始化
 	
 }
-void timer3Isr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射
+void timer2Isr(void) interrupt INTERRUPT_TIMER2{//TIMER3 中断 激光发射
 	uint8_t SFRPAGE_save;
 #ifdef C8051F580	
 	SFRPAGE_save = SFRPAGE;
