@@ -51,7 +51,10 @@ static void initAdcData(adcTempDat_t *s);
 static void chipDacInit(void);
 static void chipAdcInit(void);
 /******************************************************************************/
-static void setLedRun(uint8_t st) reentrant{//LED RUN P7_0
+static uint8_t getGlobalInterrupt(void){
+	return EA;
+}
+static void setLedRun(uint8_t st){//LED RUN P7_0
 	if(st){
 		P7 |= (uint8_t)(1 << 0);
 	}
@@ -59,10 +62,10 @@ static void setLedRun(uint8_t st) reentrant{//LED RUN P7_0
 		P7 &= ~(uint8_t)(1 << 0);
 	}
 }
-static uint8_t getLedRun(void) reentrant{//LED RUN P7_0
+static uint8_t getLedRun(void){//LED RUN P7_0
 	return (uint8_t)((P7 >> 0) & 0x01);
 }
-static void setLedEprom(uint8_t st) reentrant{//LED EPROM P7_1
+static void setLedEprom(uint8_t st){//LED EPROM P7_1
 	if(st){
 		P7 |= (uint8_t)(1 << 1);
 	}
@@ -70,10 +73,10 @@ static void setLedEprom(uint8_t st) reentrant{//LED EPROM P7_1
 		P7 &= ~(uint8_t)(1 << 1);
 	}
 }
-static uint8_t getLedEprom(void) reentrant{//LED EPROM P7_1
+static uint8_t getLedEprom(void){//LED EPROM P7_1
 	return (uint8_t)((P7 >> 1) & 0x01);
 }
-static void setLedDac(uint8_t st) reentrant{//LED DAC P7_2
+static void setLedDac(uint8_t st){//LED DAC P7_2
 	if(st){
 		P7 |= (uint8_t)(1 << 2);
 	}
@@ -81,10 +84,10 @@ static void setLedDac(uint8_t st) reentrant{//LED DAC P7_2
 		P7 &= ~(uint8_t)(1 << 2);
 	}
 }
-static uint8_t getLedDac(void) reentrant{//LED DAC P7_2
+static uint8_t getLedDac(void){//LED DAC P7_2
 	return (uint8_t)((P7 >> 2) & 0x01);
 }
-static void setLedError(uint8_t st) reentrant{//LED ERROR P7_3
+static void setLedError(uint8_t st){//LED ERROR P7_3
 	if(st){
 		P7 |= (uint8_t)(1 << 3);
 	}
@@ -98,9 +101,9 @@ static uint8_t getLedError(void) reentrant{
 static void adcProcess(void){//循环采集ADC
 	uint16_t result = 0;
 #ifdef C8051F020
-	while(!AD0INT);
+	//while(!AD0INT);
 #endif
-	result = (uint16_t)(ADC0H << 8) + (uint16_t)(ADC0L);
+	result = (ADC0 & 0xFFF);
 	refreshAdcData(&adcTempDat[adcSelect], result);
 	NVRAM0[EM_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
 	if(adcSelect < (CONFIG_SPLC_ADC_CHANNLE - 1)){
@@ -114,7 +117,7 @@ static void adcProcess(void){//循环采集ADC
 			//ADC MUX
 			AMX0SL = 0x00;
 			//CHIP0
-			ADCMUX_0_3_OE1 = false;
+			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = true;
 			ADCMUX_0_3_S1 = false;
 			ADCMUX_0_3_S0 = true;
@@ -136,13 +139,16 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_0_3_OE1 = false;
+			ADCMUX_0_3_OE2 = true;
 			break;
 		}
 		case 1:{//MLD1
 			//ADC MUX
 			AMX0SL = 0x00;
 			//CHIP0
-			ADCMUX_0_3_OE1 = false;
+			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = true;
 			ADCMUX_0_3_S1 = true;
 			ADCMUX_0_3_S0 = true;
@@ -164,6 +170,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_0_3_OE1 = false;
+			ADCMUX_0_3_OE2 = true;
 			break;
 		}
 		case 2:{//MLD2
@@ -171,7 +180,7 @@ static void adcProcess(void){//循环采集ADC
 			AMX0SL = 0x00;
 			//CHIP0
 			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = false;
+			ADCMUX_0_3_OE2 = true;
 			ADCMUX_0_3_S1 = false;
 			ADCMUX_0_3_S0 = true;
 			//CHIP1
@@ -192,6 +201,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = false;
 			break;
 		}
 		case 3:{//MLD3
@@ -199,7 +211,7 @@ static void adcProcess(void){//循环采集ADC
 			AMX0SL = 0x00;
 			//CHIP0
 			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = false;
+			ADCMUX_0_3_OE2 = true;
 			ADCMUX_0_3_S1 = true;
 			ADCMUX_0_3_S0 = true;
 			//CHIP1
@@ -220,6 +232,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = false;
 			break;
 		}
 		case 4:{//MLD4
@@ -229,7 +244,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = true;
 			//CHIP1
-			ADCMUC_4_7_OE1 = false;
+			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = true;
 			ADCMUX_4_7_S1 = false;
 			ADCMUX_4_7_S0 = true;
@@ -248,6 +263,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUC_4_7_OE1 = false;
+			ADCMUC_4_7_OE2 = true;
 			break;
 		}
 		case 5:{//MLD5
@@ -257,7 +275,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = true;
 			//CHIP1
-			ADCMUC_4_7_OE1 = false;
+			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = true;
 			ADCMUX_0_3_S1 = true;
 			ADCMUX_0_3_S0 = true;
@@ -276,6 +294,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUC_4_7_OE1 = false;
+			ADCMUC_4_7_OE2 = true;
 			break;
 		}
 		case 6:{//MLD6
@@ -286,35 +307,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_0_3_OE2 = true;
 			//CHIP1
 			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = false;
-			ADCMUX_4_7_S1 = true;
-			ADCMUX_4_7_S0 = false;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			break;
-		}
-		case 7:{//MLD7
-			//ADC MUX
-			AMX0SL = 0x01;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = false;
+			ADCMUC_4_7_OE2 = true;
 			ADCMUX_4_7_S1 = true;
 			ADCMUX_4_7_S0 = true;
 			//CHIP2
@@ -332,6 +325,40 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = false;
+			break;
+		}
+		case 7:{//MLD7
+			//ADC MUX
+			AMX0SL = 0x01;
+			//CHIP0
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = true;
+			//CHIP1
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = true;
+			ADCMUX_4_7_S1 = true;
+			ADCMUX_4_7_S0 = true;
+			//CHIP2
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
+			//CHIP3
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = true;
+			//CHIP4
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = true;
+			//CHIP5
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = true;
+			//CHIP6
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = false;
 			break;
 		}
 		case 8:{//MLD8
@@ -344,7 +371,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = true;
 			//CHIP2
-			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = true;
 			ADCMUX_8_11_S1 = false;
 			ADCMUX_8_11_S0 = true;
@@ -360,6 +387,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE2 = true;
 			break;
 		}
 		case 9:{//MLD9
@@ -372,7 +402,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = true;
 			//CHIP2
-			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = true;
 			ADCMUX_8_11_S1 = true;
 			ADCMUX_8_11_S0 = true;
@@ -388,6 +418,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE2 = true;
 			break;
 		}
 		case 10:{//MLD10
@@ -401,7 +434,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUC_4_7_OE2 = true;
 			//CHIP2
 			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = false;
+			ADCMUX_8_11_OE2 = true;
 			ADCMUX_8_11_S1 = false;
 			ADCMUX_8_11_S0 = true;
 			//CHIP3
@@ -416,6 +449,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = false;
 			break;
 		}
 		case 11:{//MLD11
@@ -429,7 +465,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUC_4_7_OE2 = true;
 			//CHIP2
 			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = false;
+			ADCMUX_8_11_OE2 = true;
 			ADCMUX_8_11_S1 = true;
 			ADCMUX_8_11_S0 = true;
 			//CHIP3
@@ -444,6 +480,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = false;
 			break;
 		}
 		case 12:{//MLD12
@@ -459,7 +498,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = true;
 			//CHIP3
-			ADCMUX_12_15_OE1 = false;
+			ADCMUX_12_15_OE1 = true;
 			ADCMUX_12_15_OE2 = true;
 			ADCMUX_12_15_S1 = false;
 			ADCMUX_12_15_S0 = true;
@@ -472,6 +511,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_12_15_OE1 = false;
+			ADCMUX_12_15_OE2 = true;
 			break;
 		}
 		case 13:{//MLD13
@@ -487,7 +529,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = true;
 			//CHIP3
-			ADCMUX_12_15_OE1 = false;
+			ADCMUX_12_15_OE1 = true;
 			ADCMUX_12_15_OE2 = true;
 			ADCMUX_12_15_S1 = true;
 			ADCMUX_12_15_S0 = true;
@@ -500,6 +542,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_12_15_OE1 = false;
+			ADCMUX_12_15_OE2 = true;
 			break;
 		}
 		case 14:{//MLD14
@@ -516,7 +561,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_8_11_OE2 = true;
 			//CHIP3
 			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = false;
+			ADCMUX_12_15_OE2 = true;
 			ADCMUX_12_15_S1 = false;
 			ADCMUX_12_15_S0 = true;
 			//CHIP4
@@ -528,6 +573,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = false;
 			break;
 		}
 		case 15:{//MLD15
@@ -544,7 +592,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_8_11_OE2 = true;
 			//CHIP3
 			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = false;
+			ADCMUX_12_15_OE2 = true;
 			ADCMUX_12_15_S1 = true;
 			ADCMUX_12_15_S0 = true;
 			//CHIP4
@@ -556,6 +604,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = false;
 			break;
 		}
 		case 16:{//MLD16
@@ -574,7 +625,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_12_15_OE1 = true;
 			ADCMUX_12_15_OE2 = true;
 			//CHIP4
-			ADCMUX_16_19_OE1 = false;
+			ADCMUX_16_19_OE1 = true;
 			ADCMUX_16_19_OE2 = true;
 			ADCMUX_16_19_S1 = false;
 			ADCMUX_16_19_S0 = true;
@@ -584,6 +635,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_16_19_OE1 = false;
+			ADCMUX_16_19_OE2 = true;
 			break;
 		}
 		case 17:{//MLD17
@@ -602,7 +656,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_12_15_OE1 = true;
 			ADCMUX_12_15_OE2 = true;
 			//CHIP4
-			ADCMUX_16_19_OE1 = false;
+			ADCMUX_16_19_OE1 = true;
 			ADCMUX_16_19_OE2 = true;
 			ADCMUX_16_19_S1 = true;
 			ADCMUX_16_19_S0 = true;
@@ -612,6 +666,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_16_19_OE1 = false;
+			ADCMUX_16_19_OE2 = true;
 			break;
 		}
 		case 18:{//MLD18
@@ -631,7 +688,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_12_15_OE2 = true;
 			//CHIP4
 			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = false;
+			ADCMUX_16_19_OE2 = true;
 			ADCMUX_16_19_S1 = false;
 			ADCMUX_16_19_S0 = true;
 			//CHIP5
@@ -640,6 +697,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = false;
 			break;
 		}
 		case 19:{//MLD19
@@ -659,7 +719,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_12_15_OE2 = true;
 			//CHIP4
 			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = false;
+			ADCMUX_16_19_OE2 = true;
 			ADCMUX_16_19_S1 = true;
 			ADCMUX_16_19_S0 = true;
 			//CHIP5
@@ -668,6 +728,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = false;
 			break;
 		}
 		case 20:{//MLD20
@@ -689,13 +752,16 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_16_19_OE1 = true;
 			ADCMUX_16_19_OE2 = true;
 			//CHIP5
-			ADCMUX_20_23_OE1 = false;
+			ADCMUX_20_23_OE1 = true;
 			ADCMUX_20_23_OE2 = true;
 			ADCMUX_20_23_S1 = false;
 			ADCMUX_20_23_S0 = true;
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_20_23_OE1 = false;
+			ADCMUX_20_23_OE2 = true;
 			break;
 		}
 		case 21:{//MLD21
@@ -722,10 +788,13 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_20_23_S1 = true;
 			ADCMUX_20_23_S0 = true;
 			//CHIP6
-			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = false;
 			ADCMUX_24_27_S0 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
 		case 22:{//MLD22
@@ -748,12 +817,15 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_16_19_OE2 = true;
 			//CHIP5
 			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = false;
+			ADCMUX_20_23_OE2 = true;
 			ADCMUX_20_23_S1 = false;
 			ADCMUX_20_23_S0 = true;
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
+			ADCMUX_24_27_OE2 = true;	
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = false;
 			break;
 		}
 		case 23:{//MLD23
@@ -776,12 +848,15 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_16_19_OE2 = true;
 			//CHIP5
 			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = false;
+			ADCMUX_20_23_OE2 = true;
 			ADCMUX_20_23_S1 = true;
 			ADCMUX_20_23_S0 = true;
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = false;
 			break;
 		}
 		case 24:{//MLD24
@@ -806,10 +881,13 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_20_23_OE1 = true;
 			ADCMUX_20_23_OE2 = true;
 			//CHIP6
-			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = false;
 			ADCMUX_24_27_S0 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
 		case 25:{//MLD25
@@ -834,10 +912,13 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_20_23_OE1 = true;
 			ADCMUX_20_23_OE2 = true;
 			//CHIP6
-			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = true;
 			ADCMUX_24_27_S0 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE2 = true;
 			break;
 		}
 		case 26:{//MLD26
@@ -863,9 +944,12 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_20_23_OE2 = true;
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = false;
+			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = false;
 			ADCMUX_24_27_S0 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = false;
 			break;
 		}
 		case 27:{//MLD27
@@ -891,16 +975,19 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_20_23_OE2 = true;
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = false;
+			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = true;
 			ADCMUX_24_27_S0 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = false;
 			break;
 		}
 		case 32:{//MPD0
 			//ADC MUX
 			AMX0SL = 0x00;
 			//CHIP0
-			ADCMUX_0_3_OE1 = false;
+			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = true;
 			ADCMUX_0_3_S1 = false;
 			ADCMUX_0_3_S0 = false;
@@ -922,13 +1009,16 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_0_3_OE1 = false;
+			ADCMUX_0_3_OE2 = true;
 			break;
 		}
 		case 33:{//MPD1
 			//ADC MUX
 			AMX0SL = 0x00;
 			//CHIP0
-			ADCMUX_0_3_OE1 = false;
+			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = true;
 			ADCMUX_0_3_S1 = true;
 			ADCMUX_0_3_S0 = false;
@@ -950,13 +1040,17 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_0_3_OE1 = false;
+			ADCMUX_0_3_OE2 = true;
+			break;
 		}
 		case 34:{//MPD2
 			//ADC MUX
 			AMX0SL = 0x00;
 			//CHIP0
 			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = false;
+			ADCMUX_0_3_OE2 = true;
 			ADCMUX_0_3_S1 = false;
 			ADCMUX_0_3_S0 = false;
 			//CHIP1
@@ -977,6 +1071,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = false;
 			break;
 		}
 		case 35:{//MPD3
@@ -984,7 +1081,7 @@ static void adcProcess(void){//循环采集ADC
 			AMX0SL = 0x00;
 			//CHIP0
 			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = false;
+			ADCMUX_0_3_OE2 = true;
 			ADCMUX_0_3_S1 = true;
 			ADCMUX_0_3_S0 = false;
 			//CHIP1
@@ -1005,6 +1102,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_0_3_OE1 = true;
+			ADCMUX_0_3_OE2 = false;
 			break;
 		}
 		case 36:{//MPD4
@@ -1014,7 +1114,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = true;
 			//CHIP1
-			ADCMUC_4_7_OE1 = false;
+			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = true;
 			ADCMUX_4_7_S1 = false;
 			ADCMUX_4_7_S0 = false;
@@ -1033,6 +1133,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUC_4_7_OE1 = false;
+			ADCMUC_4_7_OE2 = true;
 			break;
 		}
 		case 37:{//MPD5
@@ -1042,7 +1145,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = true;
 			//CHIP1
-			ADCMUC_4_7_OE1 = false;
+			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = true;
 			ADCMUX_4_7_S1 = true;
 			ADCMUX_4_7_S0 = false;
@@ -1061,6 +1164,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUC_4_7_OE1 = false;
+			ADCMUC_4_7_OE2 = true;
 			break;
 		}
 		case 38:{//MPD6
@@ -1071,7 +1177,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_0_3_OE2 = true;
 			//CHIP1
 			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = false;
+			ADCMUC_4_7_OE2 = true;
 			ADCMUX_4_7_S1 = false;
 			ADCMUX_4_7_S0 = false;
 			//CHIP2
@@ -1089,6 +1195,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = false;
 			break;
 		}
 		case 39:{//MPD7
@@ -1099,7 +1208,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_0_3_OE2 = true;
 			//CHIP1
 			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = false;
+			ADCMUC_4_7_OE2 = true;
 			ADCMUX_4_7_S1 = true;
 			ADCMUX_4_7_S0 = false;
 			//CHIP2
@@ -1117,6 +1226,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUC_4_7_OE1 = true;
+			ADCMUC_4_7_OE2 = false;
 			break;
 		}
 		case 40:{//MPD8
@@ -1129,7 +1241,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = true;
 			//CHIP2
-			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = true;
 			ADCMUX_8_11_S1 = false;
 			ADCMUX_8_11_S0 = false;
@@ -1145,6 +1257,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE2 = true;
 			break;
 		}
 		case 41:{//MPD9
@@ -1157,7 +1272,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = true;
 			//CHIP2
-			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = true;
 			ADCMUX_8_11_S1 = true;
 			ADCMUX_8_11_S0 = false;
@@ -1173,6 +1288,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE2 = true;
 			break;
 		}
 		case 42:{//MPD10
@@ -1185,7 +1303,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = true;
 			//CHIP2
-			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = true;
 			ADCMUX_8_11_S1 = false;
 			ADCMUX_8_11_S0 = false;
@@ -1201,6 +1319,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_8_11_OE1 = false;
+			ADCMUX_8_11_OE2 = true;
 			break;
 		}
 		case 43:{//MPD11
@@ -1213,8 +1334,8 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = true;
 			//CHIP2
-			ADCMUX_8_11_OE1 = false;
-			ADCMUX_8_11_OE2 = false;
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = true;
 			ADCMUX_8_11_S1 = true;
 			ADCMUX_8_11_S0 = false;
 			//CHIP3
@@ -1229,6 +1350,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = false;
 			break;
 		}
 		case 44:{//MPD12
@@ -1244,7 +1368,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = true;
 			//CHIP3
-			ADCMUX_12_15_OE1 = false;
+			ADCMUX_12_15_OE1 = true;
 			ADCMUX_12_15_OE2 = true;
 			ADCMUX_12_15_S1 = false;
 			ADCMUX_12_15_S0 = false;
@@ -1257,6 +1381,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_12_15_OE1 = false;
+			ADCMUX_12_15_OE2 = true;
 			break;
 		}
 		case 45:{//MPD13
@@ -1272,7 +1399,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = true;
 			//CHIP3
-			ADCMUX_12_15_OE1 = false;
+			ADCMUX_12_15_OE1 = true;
 			ADCMUX_12_15_OE2 = true;
 			ADCMUX_12_15_S1 = true;
 			ADCMUX_12_15_S0 = false;
@@ -1285,6 +1412,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_12_15_OE1 = false;
+			ADCMUX_12_15_OE2 = true;
 			break;
 		}
 		case 46:{//MPD14
@@ -1301,7 +1431,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_8_11_OE2 = true;
 			//CHIP3
 			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = false;
+			ADCMUX_12_15_OE2 = true;
 			ADCMUX_12_15_S1 = false;
 			ADCMUX_12_15_S0 = false;
 			//CHIP4
@@ -1313,6 +1443,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = false;
 			break;
 		}
 		case 47:{//MPD15
@@ -1329,7 +1462,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_8_11_OE2 = true;
 			//CHIP3
 			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = false;
+			ADCMUX_12_15_OE2 = true;
 			ADCMUX_12_15_S1 = true;
 			ADCMUX_12_15_S0 = false;
 			//CHIP4
@@ -1341,6 +1474,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_12_15_OE1 = true;
+			ADCMUX_12_15_OE2 = false;
 			break;
 		}
 		case 48:{//MPD16
@@ -1359,7 +1495,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_12_15_OE1 = true;
 			ADCMUX_12_15_OE2 = true;
 			//CHIP4
-			ADCMUX_16_19_OE1 = false;
+			ADCMUX_16_19_OE1 = true;
 			ADCMUX_16_19_OE2 = true;
 			ADCMUX_16_19_S1 = false;
 			ADCMUX_16_19_S0 = false;
@@ -1369,6 +1505,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_16_19_OE1 = false;
+			ADCMUX_16_19_OE2 = true;
 			break;
 		}
 		case 49:{//MPD17
@@ -1387,7 +1526,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_12_15_OE1 = true;
 			ADCMUX_12_15_OE2 = true;
 			//CHIP4
-			ADCMUX_16_19_OE1 = false;
+			ADCMUX_16_19_OE1 = true;
 			ADCMUX_16_19_OE2 = true;
 			ADCMUX_16_19_S1 = true;
 			ADCMUX_16_19_S0 = false;
@@ -1397,6 +1536,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_16_19_OE1 = false;
+			ADCMUX_16_19_OE2 = true;
 			break;
 		}
 		case 50:{//MPD18
@@ -1416,7 +1558,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_12_15_OE2 = true;
 			//CHIP4
 			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = false;
+			ADCMUX_16_19_OE2 = true;
 			ADCMUX_16_19_S1 = true;
 			ADCMUX_16_19_S0 = false;
 			//CHIP5
@@ -1425,6 +1567,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = false;
 			break;
 		}
 		case 51:{//MPD19
@@ -1444,7 +1589,7 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_12_15_OE2 = true;
 			//CHIP4
 			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = false;
+			ADCMUX_16_19_OE2 = true;
 			ADCMUX_16_19_S1 = true;
 			ADCMUX_16_19_S0 = false;
 			//CHIP5
@@ -1453,6 +1598,9 @@ static void adcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_16_19_OE1 = true;
+			ADCMUX_16_19_OE2 = false;
 			break;
 		}
 		case 52:{//MPD20
@@ -1474,13 +1622,16 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_16_19_OE1 = true;
 			ADCMUX_16_19_OE2 = true;
 			//CHIP5
-			ADCMUX_20_23_OE1 = false;
+			ADCMUX_20_23_OE1 = true;
 			ADCMUX_20_23_OE2 = true;
 			ADCMUX_20_23_S1 = false;
 			ADCMUX_20_23_S0 = false;
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_20_23_OE1 = false;
+			ADCMUX_20_23_OE2 = true;
 			break;
 		}
 		case 53:{//MPD21
@@ -1502,13 +1653,16 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_16_19_OE1 = true;
 			ADCMUX_16_19_OE2 = true;
 			//CHIP5
-			ADCMUX_20_23_OE1 = false;
+			ADCMUX_20_23_OE1 = true;
 			ADCMUX_20_23_OE2 = true;
 			ADCMUX_20_23_S1 = true;
 			ADCMUX_20_23_S0 = false;
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_20_23_OE1 = false;
+			ADCMUX_20_23_OE2 = true;
 			break;
 		}
 		case 54:{//MPD22
@@ -1531,12 +1685,15 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_16_19_OE2 = true;
 			//CHIP5
 			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = false;
+			ADCMUX_20_23_OE2 = true;
 			ADCMUX_20_23_S1 = false;
 			ADCMUX_20_23_S0 = false;
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = false;
 			break;
 		}
 		case 55:{//MPD23
@@ -1559,12 +1716,15 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_16_19_OE2 = true;
 			//CHIP5
 			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = false;
+			ADCMUX_20_23_OE2 = true;
 			ADCMUX_20_23_S1 = true;
 			ADCMUX_20_23_S0 = false;
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_20_23_OE1 = true;
+			ADCMUX_20_23_OE2 = false;
 			break;
 		}
 		case 56:{//MPD24
@@ -1589,10 +1749,13 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_20_23_OE1 = true;
 			ADCMUX_20_23_OE2 = true;
 			//CHIP6
-			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = false;
 			ADCMUX_24_27_S0 = false;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE2 = true;	
 			break;
 		}
 		case 57:{//MPD25
@@ -1617,10 +1780,13 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_20_23_OE1 = true;
 			ADCMUX_20_23_OE2 = true;
 			//CHIP6
-			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_20_23_S1 = true;
 			ADCMUX_20_23_S0 = false;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_24_27_OE1 = false;
+			ADCMUX_24_27_OE2 = true;	
 			break;
 		}
 		case 58:{//MPD26
@@ -1646,9 +1812,12 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_20_23_OE2 = true;
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = false;
+			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = false;
 			ADCMUX_24_27_S0 = false;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = false;
 			break;
 		}
 		case 59:{//MPD27
@@ -1674,9 +1843,12 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_20_23_OE2 = true;
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = false;
+			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = true;
 			ADCMUX_24_27_S0 = false;
+			_nop_();_nop_();_nop_();_nop_();_nop_();
+			ADCMUX_24_27_OE1 = true;
+			ADCMUX_24_27_OE2 = false;
 			break;
 		}
 		default:{
@@ -1839,9 +2011,9 @@ static void nvramLoad(void){//从EPROM中载入NVRAM
 	memcpy(NVRAM1, NVRAM0, CONFIG_NVRAM_SIZE);
 }
 static void nvramSave(void){//强制将NVRAM存入EPROM
-	DISABLE_INTERRUPT//关闭中断
+	DISABLE_INTERRUPT;
 	epromWrite(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));
-	ENABLE_INTERRUPT
+	ENABLE_INTERRUPT;
 }
 static void nvramUpdata(void){//更新NVRAM->EPROM
 	uint8_t *sp0, *sp1;
@@ -1850,18 +2022,14 @@ static void nvramUpdata(void){//更新NVRAM->EPROM
 	sp1 = (uint8_t*)(NVRAM1 + (MR_START * 2));
 	for(i = MR_START;i < ((MR_END + 1) * 2);i ++){//储存MR
 		if(*(sp0 + i) != *(sp1 + i)){
-			setLedEprom(true);
 			epromWriteOneByte(i, *(sp0 + i));
-			setLedEprom(false);
 		}
 	}
 	sp0 = (uint8_t*)(NVRAM0 + (DM_START * 2));
 	sp1 = (uint8_t*)(NVRAM1 + (DM_START * 2));
 	for(i = DM_START;i < ((DM_END + 1) * 2);i ++){//储存DM
 		if(*(sp0 + i) != *(sp1 + i)){
-			setLedEprom(true);
 			epromWriteOneByte(i, *(sp0 + i));
-			setLedEprom(false);
 		}
 	}
 	memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));

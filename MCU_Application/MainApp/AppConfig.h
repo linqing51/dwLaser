@@ -8,11 +8,9 @@
 #define CONFIG_DEBUG                        0//调试功能
 #define CONFIG_USING_WDT					0//使能看门狗
 #define CONFIG_USING_RESET					0//使能PLC复位MCU功能
-#define CONFIG_LADDER_SECTORS_START			64//指令起始地址
-#define CONFIG_LADDER_SECTORS_END			128//指令结束地址
-#define CONFIG_LASERTIMER_OVERFLOW_US		1000L//定时器周期 1mS
 #define CONFIG_VERSION  					0x0001
 #define CONFIG_CHECK_CODE 					0x5A00
+#define CONFIG_USING_SIMULATION				1
 /*****************************************************************************/
 #define CONFIG_UART0_BAUDRATE				57600//串口波特率
 #define CONFIG_UART0_PARITY					NONE
@@ -24,11 +22,7 @@
 #define CONFIG_UART1_STOPBIT				1
 #define CONFIG_UART1_DATABIT				8
 /*****************************************************************************/
-#define CONFIG_I2C0_FREQ 					(100000L)               
-#define CONFIG_I2C1_FREQ 					(100000L)
-#define CONFIG_I2C2_FREQ 					(100000L)
-#define CONFIG_I2C3_FREQ 					(100000L)
-#define CONFIG_I2C4_FREQ 					(100000L)
+#define CONFIG_I2C0_FREQ 					1               
 /*****************************************************************************/
 #define CONFIG_EPROM_SIZE 					CONFIG_AT24C64_SIZE
 #define	CONFIG_AT24C02_SIZE 				256
@@ -41,7 +35,7 @@
 #define	CONFIG_AT24C256_SIZE 				32768
 #define CONFIG_EPROM_ADDRESS				0x50
 #define CONFIG_EPROM_FRAM					0//铁电存储体无写入等待
-#define CONFIG_EPROM_FREQ					1//
+#define CONFIG_EPROM_PAGEWRITE				0//页写入
 /*****************************************************************************/
 //SPLC设置
 #define CONFIG_SOFTPLC_HWTIME				1000L//1mS

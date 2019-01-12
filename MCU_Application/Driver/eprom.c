@@ -51,7 +51,7 @@ void epromWriteOneByte(uint16_t WriteAddr, uint8_t DataToWrite){//ÔÚAT24CXXÖ¸¶¨µ
 	iic0WaitAck();  		    	   
 	iic0Stop();//²úÉúÒ»¸öÍ£Ö¹Ìõ¼ş 
 #if CONFIG_EPROM_FRAM != 1
-	delayMs(10);	 
+	delayMs(10);	
 #endif
 	epromBusyFlag = 1;
 }
@@ -101,6 +101,11 @@ void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite){//ÔÚA
 		pBuffer ++;
 	}
 }
+#if CONFIG_EPROM_PAGEWRITE == 1
+void epromWritePage(uint16_t pageAddr, uint8_t *pBuffer,uint8_t NumToWrite){//24C32ÒÔÉÏÈİÁ¿°´Ò³ÃæĞ´Èë
+
+}
+#endif
 #if CONFIG_DEBUG == 1
 void epromTest(void){//EPROM ¶ÁĞ´×Ô²âÊÔ
 	uint8_t temp;

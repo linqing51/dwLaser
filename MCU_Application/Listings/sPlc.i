@@ -84,12 +84,6 @@
  
  
  
- 
- 
- 
- 
- 
- 
   
 #line 1 ".\Lib\stdint.h" /0
 
@@ -146,7 +140,7 @@
 #line 51 ".\Lib\stdint.h" /0
  
  
-#line 84 "MainApp\appConfig.h" /0
+#line 78 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\stdbool.h" /0
@@ -197,7 +191,7 @@
  
  
  
-#line 85 "MainApp\appConfig.h" /0
+#line 79 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\endian.h" /0
@@ -259,7 +253,7 @@
 #line 55 ".\Lib\endian.h" /0
  
  
-#line 86 "MainApp\appConfig.h" /0
+#line 80 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\si_toolchain.h" /0
@@ -1171,7 +1165,7 @@
  
  
  
-#line 87 "MainApp\appConfig.h" /0
+#line 81 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\compiler_defs.h" /0
@@ -2097,7 +2091,7 @@
  
  
  
-#line 88 "MainApp\appConfig.h" /0
+#line 82 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\C8051F020_defs.h" /0
@@ -2453,7 +2447,7 @@
  
  
  
-#line 89 "MainApp\appConfig.h" /0
+#line 83 "MainApp\appConfig.h" /0
  
  
   
@@ -2503,7 +2497,7 @@
  
  
  
-#line 91 "MainApp\appConfig.h" /0
+#line 85 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2611,7 +2605,7 @@
  #pragma RESTORE
  
  
-#line 92 "MainApp\appConfig.h" /0
+#line 86 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2674,7 +2668,7 @@
  #pragma RESTORE
  
  
-#line 93 "MainApp\appConfig.h" /0
+#line 87 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -2722,7 +2716,7 @@
  
  
  
-#line 94 "MainApp\appConfig.h" /0
+#line 88 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -2760,7 +2754,7 @@
  #pragma RESTORE
  
  
-#line 95 "MainApp\appConfig.h" /0
+#line 89 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -2793,7 +2787,7 @@
  
  
  
-#line 96 "MainApp\appConfig.h" /0
+#line 90 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\math.h" /0
@@ -2867,7 +2861,7 @@
  #pragma RESTORE
  
  
-#line 97 "MainApp\appConfig.h" /0
+#line 91 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\crc32.h" /0
@@ -2894,8 +2888,6 @@
   
   
   
-  
-  
  
   
   
@@ -2907,10 +2899,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -3012,7 +3000,7 @@
  
  
  
-#line 98 "MainApp\appConfig.h" /0
+#line 92 "MainApp\appConfig.h" /0
  
  
   
@@ -3021,572 +3009,33 @@
  
  
   
-#line 1 ".\Lib\compiler_defs.h" /0
+#line 1 "MainApp\appConfig.h" /0
  
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 123 ".\Lib\compiler_defs.h" /1
-  
- 
-  
-  
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
- 
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
+#line 2 "MainApp\appConfig.h" /1
   
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
- 
- 
- 
- 
- 
-  
-  
-  
   
-  
-  
-  
-  
-  
- 
  
-  
-  
   
-  
-  
-  
  
   
   
   
   
- 
   
   
  
- 
- 
- 
-  
   
   
   
- 
- 
   
-  
- 
  
   
   
   
   
- 
- 
- 
- 
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
   
- 
- 
- 
- 
- 
- 
- 
- 
  
   
   
@@ -3597,168 +3046,56 @@
   
   
   
- 
-  
   
   
- 
   
  
-  
  
   
   
-  
  
-  
-  
-  
   
  
- 
- 
   
-  
- 
  
   
-  
-  
-  
- 
  
   
-  
- 
  
   
   
   
   
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
   
- 
- 
- 
- 
- 
- 
- 
- 
- 
   
   
  
-  
-  
-  
   
-  
-  
-  
  
-  
   
   
   
   
   
   
-  
-  
  
-  
  
-  
-  
-  
-  
-  
   
   
- 
   
   
- 
- 
- 
  
   
   
-  
- 
-  
- 
  
   
   
- 
- 
   
   
   
   
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
   
- 
- 
   
   
   
@@ -3766,433 +3103,30 @@
   
   
   
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
- 
-  
-  
-  
   
   
   
- 
- 
- 
- 
- 
- 
- 
   
   
   
   
   
   
- 
- 
- 
- 
- 
  
- 
- 
-  
-  
   
   
-  
-  
-  
- 
  
- 
- 
- 
- 
- 
- 
-#line 804 ".\Lib\compiler_defs.h" /0
- 
- 
+  
  
  
 #line 4 "MainApp\InitDeviceF020.h" /0
- 
-  
-#line 1 ".\Lib\C8051F020_defs.h" /0
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 30 ".\Lib\C8051F020_defs.h" /1
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 347 ".\Lib\C8051F020_defs.h" /0
- 
- 
- 
- 
-#line 5 "MainApp\InitDeviceF020.h" /0
+#line 4 "MainApp\InitDeviceF020.h" /0
  
  
  void initDeviceF020(void);
  
-#line 100 "MainApp\appConfig.h" /0
+#line 94 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\delay.h" /0
@@ -4215,8 +3149,6 @@
   
   
   
-  
-  
  
   
   
@@ -4228,10 +3160,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -4328,7 +3256,7 @@
  
  
  
-#line 101 "MainApp\appConfig.h" /0
+#line 95 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c0.h" /0
@@ -4351,8 +3279,6 @@
   
   
   
-  
-  
  
   
   
@@ -4364,10 +3290,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -4471,7 +3393,7 @@
  
  
  
-#line 102 "MainApp\appConfig.h" /0
+#line 96 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\eprom.h" /0
@@ -4494,8 +3416,6 @@
   
   
   
-  
-  
  
   
   
@@ -4507,10 +3427,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -4610,7 +3526,7 @@
  void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
  void epromTest(void);
  
-#line 103 "MainApp\appConfig.h" /0
+#line 97 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\dac8568_0.h" /0
@@ -4630,8 +3546,6 @@
   
   
   
-  
-  
  
   
   
@@ -4643,10 +3557,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -4742,7 +3652,7 @@
  void dac8568_0_WriteDacRegister(uint8_t ch, uint16_t dat);
  void dac8568_0_Clear(void);
  void dac8568_0_Reset(void);
-#line 104 "MainApp\appConfig.h" /0
+#line 98 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\dac8568_1.h" /0
@@ -4762,8 +3672,6 @@
   
   
   
-  
-  
  
   
   
@@ -4775,10 +3683,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -4874,7 +3778,7 @@
  void dac8568_1_WriteDacRegister(uint8_t ch, uint16_t dat);
  void dac8568_1_Clear(void);
  void dac8568_1_Reset(void);
-#line 105 "MainApp\appConfig.h" /0
+#line 99 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\dac8568_2.h" /0
@@ -4894,8 +3798,6 @@
   
   
   
-  
-  
  
   
   
@@ -4907,10 +3809,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -5006,7 +3904,7 @@
  void dac8568_2_WriteDacRegister(uint8_t ch, uint16_t dat);
  void dac8568_2_Clear(void);
  void dac8568_2_Reset(void);
-#line 106 "MainApp\appConfig.h" /0
+#line 100 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\dac8568_3.h" /0
@@ -5026,8 +3924,6 @@
   
   
   
-  
-  
  
   
   
@@ -5039,10 +3935,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -5138,7 +4030,7 @@
  void dac8568_3_WriteDacRegister(uint8_t ch, uint16_t dat);
  void dac8568_3_Clear(void);
  void dac8568_3_Reset(void);
-#line 107 "MainApp\appConfig.h" /0
+#line 101 "MainApp\appConfig.h" /0
  
   
 #line 1 "MainApp\boxCmd.h" /0
@@ -5161,8 +4053,6 @@
   
   
   
-  
-  
  
   
   
@@ -5174,10 +4064,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -5271,7 +4157,7 @@
  void boxRedLedRefresh(void);
  void boxGreenLedRefresh(void);
  
-#line 108 "MainApp\appConfig.h" /0
+#line 102 "MainApp\appConfig.h" /0
  
  
   
@@ -5295,8 +4181,6 @@
   
   
   
-  
-  
  
   
   
@@ -5308,10 +4192,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -5408,7 +4288,7 @@
  extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
  extern void modbusPorcess(void);
  
-#line 110 "MainApp\appConfig.h" /0
+#line 104 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Modbus\ModbusPort.h" /0
@@ -5431,8 +4311,6 @@
   
   
   
-  
-  
  
   
   
@@ -5444,10 +4322,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -5544,7 +4418,7 @@
  extern void receiveInterrupt(uint8_t Data);
  
  
-#line 111 "MainApp\appConfig.h" /0
+#line 105 "MainApp\appConfig.h" /0
  
  
   
@@ -5762,8 +4636,8 @@
  
  
  
-#line 113 "MainApp\appConfig.h" /0
-#line 113 "MainApp\appConfig.h" /0
+#line 107 "MainApp\appConfig.h" /0
+#line 107 "MainApp\appConfig.h" /0
  
  
  
@@ -6031,7 +4905,10 @@
  static void chipDacInit(void);
  static void chipAdcInit(void);
  
- static void setLedRun(uint8_t st) reentrant{ 
+ static uint8_t getGlobalInterrupt(void){
+ return EA;
+ }
+ static void setLedRun(uint8_t st){ 
  if(st){
  P7 |= (uint8_t)(1 << 0);
  }
@@ -6039,10 +4916,10 @@
  P7 &= ~(uint8_t)(1 << 0);
  }
  }
- static uint8_t getLedRun(void) reentrant{ 
+ static uint8_t getLedRun(void){ 
  return (uint8_t)((P7 >> 0) & 0x01);
  }
- static void setLedEprom(uint8_t st) reentrant{ 
+ static void setLedEprom(uint8_t st){ 
  if(st){
  P7 |= (uint8_t)(1 << 1);
  }
@@ -6050,10 +4927,10 @@
  P7 &= ~(uint8_t)(1 << 1);
  }
  }
- static uint8_t getLedEprom(void) reentrant{ 
+ static uint8_t getLedEprom(void){ 
  return (uint8_t)((P7 >> 1) & 0x01);
  }
- static void setLedDac(uint8_t st) reentrant{ 
+ static void setLedDac(uint8_t st){ 
  if(st){
  P7 |= (uint8_t)(1 << 2);
  }
@@ -6061,10 +4938,10 @@
  P7 &= ~(uint8_t)(1 << 2);
  }
  }
- static uint8_t getLedDac(void) reentrant{ 
+ static uint8_t getLedDac(void){ 
  return (uint8_t)((P7 >> 2) & 0x01);
  }
- static void setLedError(uint8_t st) reentrant{ 
+ static void setLedError(uint8_t st){ 
  if(st){
  P7 |= (uint8_t)(1 << 3);
  }
@@ -6078,9 +4955,9 @@
  static void adcProcess(void){ 
  uint16_t result = 0;
  
- while(!AD0INT);
  
- result = (uint16_t)(ADC0H << 8) + (uint16_t)(ADC0L);
+ 
+ result = (ADC0 & 0xFFF);
  refreshAdcData(&adcTempDat[adcSelect], result);
  NVRAM0[(16 + 0) + adcSelect] = adcTempDat[adcSelect].out;
  if(adcSelect < (64 - 1)){
@@ -6094,7 +4971,7 @@
  
  AMX0SL = 0x00;
  
- ADCMUX_0_3_OE1 = false;
+ ADCMUX_0_3_OE1 = true;
  ADCMUX_0_3_OE2 = true;
  ADCMUX_0_3_S1 = false;
  ADCMUX_0_3_S0 = true;
@@ -6116,13 +4993,16 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_0_3_OE1 = false;
+ ADCMUX_0_3_OE2 = true;
  break;
  }
  case 1:{ 
  
  AMX0SL = 0x00;
  
- ADCMUX_0_3_OE1 = false;
+ ADCMUX_0_3_OE1 = true;
  ADCMUX_0_3_OE2 = true;
  ADCMUX_0_3_S1 = true;
  ADCMUX_0_3_S0 = true;
@@ -6144,6 +5024,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_0_3_OE1 = false;
+ ADCMUX_0_3_OE2 = true;
  break;
  }
  case 2:{ 
@@ -6151,7 +5034,7 @@
  AMX0SL = 0x00;
  
  ADCMUX_0_3_OE1 = true;
- ADCMUX_0_3_OE2 = false;
+ ADCMUX_0_3_OE2 = true;
  ADCMUX_0_3_S1 = false;
  ADCMUX_0_3_S0 = true;
  
@@ -6172,6 +5055,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_0_3_OE1 = true;
+ ADCMUX_0_3_OE2 = false;
  break;
  }
  case 3:{ 
@@ -6179,7 +5065,7 @@
  AMX0SL = 0x00;
  
  ADCMUX_0_3_OE1 = true;
- ADCMUX_0_3_OE2 = false;
+ ADCMUX_0_3_OE2 = true;
  ADCMUX_0_3_S1 = true;
  ADCMUX_0_3_S0 = true;
  
@@ -6200,6 +5086,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_0_3_OE1 = true;
+ ADCMUX_0_3_OE2 = false;
  break;
  }
  case 4:{ 
@@ -6209,7 +5098,7 @@
  ADCMUX_0_3_OE1 = true;
  ADCMUX_0_3_OE2 = true;
  
- ADCMUC_4_7_OE1 = false;
+ ADCMUC_4_7_OE1 = true;
  ADCMUC_4_7_OE2 = true;
  ADCMUX_4_7_S1 = false;
  ADCMUX_4_7_S0 = true;
@@ -6228,6 +5117,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUC_4_7_OE1 = false;
+ ADCMUC_4_7_OE2 = true;
  break;
  }
  case 5:{ 
@@ -6237,7 +5129,7 @@
  ADCMUX_0_3_OE1 = true;
  ADCMUX_0_3_OE2 = true;
  
- ADCMUC_4_7_OE1 = false;
+ ADCMUC_4_7_OE1 = true;
  ADCMUC_4_7_OE2 = true;
  ADCMUX_0_3_S1 = true;
  ADCMUX_0_3_S0 = true;
@@ -6256,6 +5148,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUC_4_7_OE1 = false;
+ ADCMUC_4_7_OE2 = true;
  break;
  }
  case 6:{ 
@@ -6266,35 +5161,7 @@
  ADCMUX_0_3_OE2 = true;
  
  ADCMUC_4_7_OE1 = true;
- ADCMUC_4_7_OE2 = false;
- ADCMUX_4_7_S1 = true;
- ADCMUX_4_7_S0 = false;
- 
- ADCMUX_8_11_OE1 = true;
- ADCMUX_8_11_OE2 = true;
- 
- ADCMUX_12_15_OE1 = true;
- ADCMUX_12_15_OE2 = true;
- 
- ADCMUX_16_19_OE1 = true;
- ADCMUX_16_19_OE2 = true;
- 
- ADCMUX_20_23_OE1 = true;
- ADCMUX_20_23_OE2 = true;
- 
- ADCMUX_24_27_OE1 = true;
- ADCMUX_24_27_OE2 = true;
- break;
- }
- case 7:{ 
- 
- AMX0SL = 0x01;
- 
- ADCMUX_0_3_OE1 = true;
- ADCMUX_0_3_OE2 = true;
- 
- ADCMUC_4_7_OE1 = true;
- ADCMUC_4_7_OE2 = false;
+ ADCMUC_4_7_OE2 = true;
  ADCMUX_4_7_S1 = true;
  ADCMUX_4_7_S0 = true;
  
@@ -6312,6 +5179,40 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUC_4_7_OE1 = true;
+ ADCMUC_4_7_OE2 = false;
+ break;
+ }
+ case 7:{ 
+ 
+ AMX0SL = 0x01;
+ 
+ ADCMUX_0_3_OE1 = true;
+ ADCMUX_0_3_OE2 = true;
+ 
+ ADCMUC_4_7_OE1 = true;
+ ADCMUC_4_7_OE2 = true;
+ ADCMUX_4_7_S1 = true;
+ ADCMUX_4_7_S0 = true;
+ 
+ ADCMUX_8_11_OE1 = true;
+ ADCMUX_8_11_OE2 = true;
+ 
+ ADCMUX_12_15_OE1 = true;
+ ADCMUX_12_15_OE2 = true;
+ 
+ ADCMUX_16_19_OE1 = true;
+ ADCMUX_16_19_OE2 = true;
+ 
+ ADCMUX_20_23_OE1 = true;
+ ADCMUX_20_23_OE2 = true;
+ 
+ ADCMUX_24_27_OE1 = true;
+ ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUC_4_7_OE1 = true;
+ ADCMUC_4_7_OE2 = false;
  break;
  }
  case 8:{ 
@@ -6324,7 +5225,7 @@
  ADCMUC_4_7_OE1 = true;
  ADCMUC_4_7_OE2 = true;
  
- ADCMUX_8_11_OE1 = false;
+ ADCMUX_8_11_OE1 = true;
  ADCMUX_8_11_OE2 = true;
  ADCMUX_8_11_S1 = false;
  ADCMUX_8_11_S0 = true;
@@ -6340,6 +5241,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_8_11_OE1 = false;
+ ADCMUX_8_11_OE2 = true;
  break;
  }
  case 9:{ 
@@ -6352,7 +5256,7 @@
  ADCMUC_4_7_OE1 = true;
  ADCMUC_4_7_OE2 = true;
  
- ADCMUX_8_11_OE1 = false;
+ ADCMUX_8_11_OE1 = true;
  ADCMUX_8_11_OE2 = true;
  ADCMUX_8_11_S1 = true;
  ADCMUX_8_11_S0 = true;
@@ -6368,6 +5272,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_8_11_OE1 = false;
+ ADCMUX_8_11_OE2 = true;
  break;
  }
  case 10:{ 
@@ -6381,7 +5288,7 @@
  ADCMUC_4_7_OE2 = true;
  
  ADCMUX_8_11_OE1 = true;
- ADCMUX_8_11_OE2 = false;
+ ADCMUX_8_11_OE2 = true;
  ADCMUX_8_11_S1 = false;
  ADCMUX_8_11_S0 = true;
  
@@ -6396,6 +5303,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_8_11_OE1 = true;
+ ADCMUX_8_11_OE2 = false;
  break;
  }
  case 11:{ 
@@ -6409,7 +5319,7 @@
  ADCMUC_4_7_OE2 = true;
  
  ADCMUX_8_11_OE1 = true;
- ADCMUX_8_11_OE2 = false;
+ ADCMUX_8_11_OE2 = true;
  ADCMUX_8_11_S1 = true;
  ADCMUX_8_11_S0 = true;
  
@@ -6424,6 +5334,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_8_11_OE1 = true;
+ ADCMUX_8_11_OE2 = false;
  break;
  }
  case 12:{ 
@@ -6439,7 +5352,7 @@
  ADCMUX_8_11_OE1 = true;
  ADCMUX_8_11_OE2 = true;
  
- ADCMUX_12_15_OE1 = false;
+ ADCMUX_12_15_OE1 = true;
  ADCMUX_12_15_OE2 = true;
  ADCMUX_12_15_S1 = false;
  ADCMUX_12_15_S0 = true;
@@ -6452,6 +5365,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_12_15_OE1 = false;
+ ADCMUX_12_15_OE2 = true;
  break;
  }
  case 13:{ 
@@ -6467,7 +5383,7 @@
  ADCMUX_8_11_OE1 = true;
  ADCMUX_8_11_OE2 = true;
  
- ADCMUX_12_15_OE1 = false;
+ ADCMUX_12_15_OE1 = true;
  ADCMUX_12_15_OE2 = true;
  ADCMUX_12_15_S1 = true;
  ADCMUX_12_15_S0 = true;
@@ -6480,6 +5396,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_12_15_OE1 = false;
+ ADCMUX_12_15_OE2 = true;
  break;
  }
  case 14:{ 
@@ -6496,7 +5415,7 @@
  ADCMUX_8_11_OE2 = true;
  
  ADCMUX_12_15_OE1 = true;
- ADCMUX_12_15_OE2 = false;
+ ADCMUX_12_15_OE2 = true;
  ADCMUX_12_15_S1 = false;
  ADCMUX_12_15_S0 = true;
  
@@ -6508,6 +5427,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_12_15_OE1 = true;
+ ADCMUX_12_15_OE2 = false;
  break;
  }
  case 15:{ 
@@ -6524,7 +5446,7 @@
  ADCMUX_8_11_OE2 = true;
  
  ADCMUX_12_15_OE1 = true;
- ADCMUX_12_15_OE2 = false;
+ ADCMUX_12_15_OE2 = true;
  ADCMUX_12_15_S1 = true;
  ADCMUX_12_15_S0 = true;
  
@@ -6536,6 +5458,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_12_15_OE1 = true;
+ ADCMUX_12_15_OE2 = false;
  break;
  }
  case 16:{ 
@@ -6554,7 +5479,7 @@
  ADCMUX_12_15_OE1 = true;
  ADCMUX_12_15_OE2 = true;
  
- ADCMUX_16_19_OE1 = false;
+ ADCMUX_16_19_OE1 = true;
  ADCMUX_16_19_OE2 = true;
  ADCMUX_16_19_S1 = false;
  ADCMUX_16_19_S0 = true;
@@ -6564,6 +5489,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_16_19_OE1 = false;
+ ADCMUX_16_19_OE2 = true;
  break;
  }
  case 17:{ 
@@ -6582,7 +5510,7 @@
  ADCMUX_12_15_OE1 = true;
  ADCMUX_12_15_OE2 = true;
  
- ADCMUX_16_19_OE1 = false;
+ ADCMUX_16_19_OE1 = true;
  ADCMUX_16_19_OE2 = true;
  ADCMUX_16_19_S1 = true;
  ADCMUX_16_19_S0 = true;
@@ -6592,6 +5520,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_16_19_OE1 = false;
+ ADCMUX_16_19_OE2 = true;
  break;
  }
  case 18:{ 
@@ -6611,7 +5542,7 @@
  ADCMUX_12_15_OE2 = true;
  
  ADCMUX_16_19_OE1 = true;
- ADCMUX_16_19_OE2 = false;
+ ADCMUX_16_19_OE2 = true;
  ADCMUX_16_19_S1 = false;
  ADCMUX_16_19_S0 = true;
  
@@ -6620,6 +5551,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_16_19_OE1 = true;
+ ADCMUX_16_19_OE2 = false;
  break;
  }
  case 19:{ 
@@ -6639,7 +5573,7 @@
  ADCMUX_12_15_OE2 = true;
  
  ADCMUX_16_19_OE1 = true;
- ADCMUX_16_19_OE2 = false;
+ ADCMUX_16_19_OE2 = true;
  ADCMUX_16_19_S1 = true;
  ADCMUX_16_19_S0 = true;
  
@@ -6648,6 +5582,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_16_19_OE1 = true;
+ ADCMUX_16_19_OE2 = false;
  break;
  }
  case 20:{ 
@@ -6669,13 +5606,16 @@
  ADCMUX_16_19_OE1 = true;
  ADCMUX_16_19_OE2 = true;
  
- ADCMUX_20_23_OE1 = false;
+ ADCMUX_20_23_OE1 = true;
  ADCMUX_20_23_OE2 = true;
  ADCMUX_20_23_S1 = false;
  ADCMUX_20_23_S0 = true;
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_20_23_OE1 = false;
+ ADCMUX_20_23_OE2 = true;
  break;
  }
  case 21:{ 
@@ -6702,10 +5642,13 @@
  ADCMUX_20_23_S1 = true;
  ADCMUX_20_23_S0 = true;
  
- ADCMUX_24_27_OE1 = false;
+ ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
  ADCMUX_24_27_S1 = false;
  ADCMUX_24_27_S0 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_24_27_OE1 = false;
+ ADCMUX_24_27_OE2 = true;
  break;
  }
  case 22:{ 
@@ -6728,12 +5671,15 @@
  ADCMUX_16_19_OE2 = true;
  
  ADCMUX_20_23_OE1 = true;
- ADCMUX_20_23_OE2 = false;
+ ADCMUX_20_23_OE2 = true;
  ADCMUX_20_23_S1 = false;
  ADCMUX_20_23_S0 = true;
  
  ADCMUX_24_27_OE1 = true;
- ADCMUX_24_27_OE2 = true;
+ ADCMUX_24_27_OE2 = true;	
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_20_23_OE1 = true;
+ ADCMUX_20_23_OE2 = false;
  break;
  }
  case 23:{ 
@@ -6756,12 +5702,15 @@
  ADCMUX_16_19_OE2 = true;
  
  ADCMUX_20_23_OE1 = true;
- ADCMUX_20_23_OE2 = false;
+ ADCMUX_20_23_OE2 = true;
  ADCMUX_20_23_S1 = true;
  ADCMUX_20_23_S0 = true;
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_20_23_OE1 = true;
+ ADCMUX_20_23_OE2 = false;
  break;
  }
  case 24:{ 
@@ -6786,10 +5735,13 @@
  ADCMUX_20_23_OE1 = true;
  ADCMUX_20_23_OE2 = true;
  
- ADCMUX_24_27_OE1 = false;
+ ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
  ADCMUX_24_27_S1 = false;
  ADCMUX_24_27_S0 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_24_27_OE1 = false;
+ ADCMUX_24_27_OE2 = true;
  break;
  }
  case 25:{ 
@@ -6814,10 +5766,13 @@
  ADCMUX_20_23_OE1 = true;
  ADCMUX_20_23_OE2 = true;
  
- ADCMUX_24_27_OE1 = false;
+ ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
  ADCMUX_24_27_S1 = true;
  ADCMUX_24_27_S0 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_24_27_OE1 = false;
+ ADCMUX_24_27_OE2 = true;
  break;
  }
  case 26:{ 
@@ -6843,9 +5798,12 @@
  ADCMUX_20_23_OE2 = true;
  
  ADCMUX_24_27_OE1 = true;
- ADCMUX_24_27_OE2 = false;
+ ADCMUX_24_27_OE2 = true;
  ADCMUX_24_27_S1 = false;
  ADCMUX_24_27_S0 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_24_27_OE1 = true;
+ ADCMUX_24_27_OE2 = false;
  break;
  }
  case 27:{ 
@@ -6871,16 +5829,19 @@
  ADCMUX_20_23_OE2 = true;
  
  ADCMUX_24_27_OE1 = true;
- ADCMUX_24_27_OE2 = false;
+ ADCMUX_24_27_OE2 = true;
  ADCMUX_24_27_S1 = true;
  ADCMUX_24_27_S0 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_24_27_OE1 = true;
+ ADCMUX_24_27_OE2 = false;
  break;
  }
  case 32:{ 
  
  AMX0SL = 0x00;
  
- ADCMUX_0_3_OE1 = false;
+ ADCMUX_0_3_OE1 = true;
  ADCMUX_0_3_OE2 = true;
  ADCMUX_0_3_S1 = false;
  ADCMUX_0_3_S0 = false;
@@ -6902,13 +5863,16 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_0_3_OE1 = false;
+ ADCMUX_0_3_OE2 = true;
  break;
  }
  case 33:{ 
  
  AMX0SL = 0x00;
  
- ADCMUX_0_3_OE1 = false;
+ ADCMUX_0_3_OE1 = true;
  ADCMUX_0_3_OE2 = true;
  ADCMUX_0_3_S1 = true;
  ADCMUX_0_3_S0 = false;
@@ -6930,13 +5894,17 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_0_3_OE1 = false;
+ ADCMUX_0_3_OE2 = true;
+ break;
  }
  case 34:{ 
  
  AMX0SL = 0x00;
  
  ADCMUX_0_3_OE1 = true;
- ADCMUX_0_3_OE2 = false;
+ ADCMUX_0_3_OE2 = true;
  ADCMUX_0_3_S1 = false;
  ADCMUX_0_3_S0 = false;
  
@@ -6957,6 +5925,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_0_3_OE1 = true;
+ ADCMUX_0_3_OE2 = false;
  break;
  }
  case 35:{ 
@@ -6964,7 +5935,7 @@
  AMX0SL = 0x00;
  
  ADCMUX_0_3_OE1 = true;
- ADCMUX_0_3_OE2 = false;
+ ADCMUX_0_3_OE2 = true;
  ADCMUX_0_3_S1 = true;
  ADCMUX_0_3_S0 = false;
  
@@ -6985,6 +5956,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_0_3_OE1 = true;
+ ADCMUX_0_3_OE2 = false;
  break;
  }
  case 36:{ 
@@ -6994,7 +5968,7 @@
  ADCMUX_0_3_OE1 = true;
  ADCMUX_0_3_OE2 = true;
  
- ADCMUC_4_7_OE1 = false;
+ ADCMUC_4_7_OE1 = true;
  ADCMUC_4_7_OE2 = true;
  ADCMUX_4_7_S1 = false;
  ADCMUX_4_7_S0 = false;
@@ -7013,6 +5987,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUC_4_7_OE1 = false;
+ ADCMUC_4_7_OE2 = true;
  break;
  }
  case 37:{ 
@@ -7022,7 +5999,7 @@
  ADCMUX_0_3_OE1 = true;
  ADCMUX_0_3_OE2 = true;
  
- ADCMUC_4_7_OE1 = false;
+ ADCMUC_4_7_OE1 = true;
  ADCMUC_4_7_OE2 = true;
  ADCMUX_4_7_S1 = true;
  ADCMUX_4_7_S0 = false;
@@ -7041,6 +6018,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUC_4_7_OE1 = false;
+ ADCMUC_4_7_OE2 = true;
  break;
  }
  case 38:{ 
@@ -7051,7 +6031,7 @@
  ADCMUX_0_3_OE2 = true;
  
  ADCMUC_4_7_OE1 = true;
- ADCMUC_4_7_OE2 = false;
+ ADCMUC_4_7_OE2 = true;
  ADCMUX_4_7_S1 = false;
  ADCMUX_4_7_S0 = false;
  
@@ -7069,6 +6049,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUC_4_7_OE1 = true;
+ ADCMUC_4_7_OE2 = false;
  break;
  }
  case 39:{ 
@@ -7079,7 +6062,7 @@
  ADCMUX_0_3_OE2 = true;
  
  ADCMUC_4_7_OE1 = true;
- ADCMUC_4_7_OE2 = false;
+ ADCMUC_4_7_OE2 = true;
  ADCMUX_4_7_S1 = true;
  ADCMUX_4_7_S0 = false;
  
@@ -7097,6 +6080,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUC_4_7_OE1 = true;
+ ADCMUC_4_7_OE2 = false;
  break;
  }
  case 40:{ 
@@ -7109,7 +6095,7 @@
  ADCMUC_4_7_OE1 = true;
  ADCMUC_4_7_OE2 = true;
  
- ADCMUX_8_11_OE1 = false;
+ ADCMUX_8_11_OE1 = true;
  ADCMUX_8_11_OE2 = true;
  ADCMUX_8_11_S1 = false;
  ADCMUX_8_11_S0 = false;
@@ -7125,6 +6111,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_8_11_OE1 = false;
+ ADCMUX_8_11_OE2 = true;
  break;
  }
  case 41:{ 
@@ -7137,7 +6126,7 @@
  ADCMUC_4_7_OE1 = true;
  ADCMUC_4_7_OE2 = true;
  
- ADCMUX_8_11_OE1 = false;
+ ADCMUX_8_11_OE1 = true;
  ADCMUX_8_11_OE2 = true;
  ADCMUX_8_11_S1 = true;
  ADCMUX_8_11_S0 = false;
@@ -7153,6 +6142,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_8_11_OE1 = false;
+ ADCMUX_8_11_OE2 = true;
  break;
  }
  case 42:{ 
@@ -7165,7 +6157,7 @@
  ADCMUC_4_7_OE1 = true;
  ADCMUC_4_7_OE2 = true;
  
- ADCMUX_8_11_OE1 = false;
+ ADCMUX_8_11_OE1 = true;
  ADCMUX_8_11_OE2 = true;
  ADCMUX_8_11_S1 = false;
  ADCMUX_8_11_S0 = false;
@@ -7181,6 +6173,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_8_11_OE1 = false;
+ ADCMUX_8_11_OE2 = true;
  break;
  }
  case 43:{ 
@@ -7193,8 +6188,8 @@
  ADCMUC_4_7_OE1 = true;
  ADCMUC_4_7_OE2 = true;
  
- ADCMUX_8_11_OE1 = false;
- ADCMUX_8_11_OE2 = false;
+ ADCMUX_8_11_OE1 = true;
+ ADCMUX_8_11_OE2 = true;
  ADCMUX_8_11_S1 = true;
  ADCMUX_8_11_S0 = false;
  
@@ -7209,6 +6204,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_8_11_OE1 = true;
+ ADCMUX_8_11_OE2 = false;
  break;
  }
  case 44:{ 
@@ -7224,7 +6222,7 @@
  ADCMUX_8_11_OE1 = true;
  ADCMUX_8_11_OE2 = true;
  
- ADCMUX_12_15_OE1 = false;
+ ADCMUX_12_15_OE1 = true;
  ADCMUX_12_15_OE2 = true;
  ADCMUX_12_15_S1 = false;
  ADCMUX_12_15_S0 = false;
@@ -7237,6 +6235,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_12_15_OE1 = false;
+ ADCMUX_12_15_OE2 = true;
  break;
  }
  case 45:{ 
@@ -7252,7 +6253,7 @@
  ADCMUX_8_11_OE1 = true;
  ADCMUX_8_11_OE2 = true;
  
- ADCMUX_12_15_OE1 = false;
+ ADCMUX_12_15_OE1 = true;
  ADCMUX_12_15_OE2 = true;
  ADCMUX_12_15_S1 = true;
  ADCMUX_12_15_S0 = false;
@@ -7265,6 +6266,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_12_15_OE1 = false;
+ ADCMUX_12_15_OE2 = true;
  break;
  }
  case 46:{ 
@@ -7281,7 +6285,7 @@
  ADCMUX_8_11_OE2 = true;
  
  ADCMUX_12_15_OE1 = true;
- ADCMUX_12_15_OE2 = false;
+ ADCMUX_12_15_OE2 = true;
  ADCMUX_12_15_S1 = false;
  ADCMUX_12_15_S0 = false;
  
@@ -7293,6 +6297,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_12_15_OE1 = true;
+ ADCMUX_12_15_OE2 = false;
  break;
  }
  case 47:{ 
@@ -7309,7 +6316,7 @@
  ADCMUX_8_11_OE2 = true;
  
  ADCMUX_12_15_OE1 = true;
- ADCMUX_12_15_OE2 = false;
+ ADCMUX_12_15_OE2 = true;
  ADCMUX_12_15_S1 = true;
  ADCMUX_12_15_S0 = false;
  
@@ -7321,6 +6328,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_12_15_OE1 = true;
+ ADCMUX_12_15_OE2 = false;
  break;
  }
  case 48:{ 
@@ -7339,7 +6349,7 @@
  ADCMUX_12_15_OE1 = true;
  ADCMUX_12_15_OE2 = true;
  
- ADCMUX_16_19_OE1 = false;
+ ADCMUX_16_19_OE1 = true;
  ADCMUX_16_19_OE2 = true;
  ADCMUX_16_19_S1 = false;
  ADCMUX_16_19_S0 = false;
@@ -7349,6 +6359,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_16_19_OE1 = false;
+ ADCMUX_16_19_OE2 = true;
  break;
  }
  case 49:{ 
@@ -7367,7 +6380,7 @@
  ADCMUX_12_15_OE1 = true;
  ADCMUX_12_15_OE2 = true;
  
- ADCMUX_16_19_OE1 = false;
+ ADCMUX_16_19_OE1 = true;
  ADCMUX_16_19_OE2 = true;
  ADCMUX_16_19_S1 = true;
  ADCMUX_16_19_S0 = false;
@@ -7377,6 +6390,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_16_19_OE1 = false;
+ ADCMUX_16_19_OE2 = true;
  break;
  }
  case 50:{ 
@@ -7396,7 +6412,7 @@
  ADCMUX_12_15_OE2 = true;
  
  ADCMUX_16_19_OE1 = true;
- ADCMUX_16_19_OE2 = false;
+ ADCMUX_16_19_OE2 = true;
  ADCMUX_16_19_S1 = true;
  ADCMUX_16_19_S0 = false;
  
@@ -7405,6 +6421,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_16_19_OE1 = true;
+ ADCMUX_16_19_OE2 = false;
  break;
  }
  case 51:{ 
@@ -7424,7 +6443,7 @@
  ADCMUX_12_15_OE2 = true;
  
  ADCMUX_16_19_OE1 = true;
- ADCMUX_16_19_OE2 = false;
+ ADCMUX_16_19_OE2 = true;
  ADCMUX_16_19_S1 = true;
  ADCMUX_16_19_S0 = false;
  
@@ -7433,6 +6452,9 @@
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_16_19_OE1 = true;
+ ADCMUX_16_19_OE2 = false;
  break;
  }
  case 52:{ 
@@ -7454,13 +6476,16 @@
  ADCMUX_16_19_OE1 = true;
  ADCMUX_16_19_OE2 = true;
  
- ADCMUX_20_23_OE1 = false;
+ ADCMUX_20_23_OE1 = true;
  ADCMUX_20_23_OE2 = true;
  ADCMUX_20_23_S1 = false;
  ADCMUX_20_23_S0 = false;
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_20_23_OE1 = false;
+ ADCMUX_20_23_OE2 = true;
  break;
  }
  case 53:{ 
@@ -7482,13 +6507,16 @@
  ADCMUX_16_19_OE1 = true;
  ADCMUX_16_19_OE2 = true;
  
- ADCMUX_20_23_OE1 = false;
+ ADCMUX_20_23_OE1 = true;
  ADCMUX_20_23_OE2 = true;
  ADCMUX_20_23_S1 = true;
  ADCMUX_20_23_S0 = false;
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_20_23_OE1 = false;
+ ADCMUX_20_23_OE2 = true;
  break;
  }
  case 54:{ 
@@ -7511,12 +6539,15 @@
  ADCMUX_16_19_OE2 = true;
  
  ADCMUX_20_23_OE1 = true;
- ADCMUX_20_23_OE2 = false;
+ ADCMUX_20_23_OE2 = true;
  ADCMUX_20_23_S1 = false;
  ADCMUX_20_23_S0 = false;
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_20_23_OE1 = true;
+ ADCMUX_20_23_OE2 = false;
  break;
  }
  case 55:{ 
@@ -7539,12 +6570,15 @@
  ADCMUX_16_19_OE2 = true;
  
  ADCMUX_20_23_OE1 = true;
- ADCMUX_20_23_OE2 = false;
+ ADCMUX_20_23_OE2 = true;
  ADCMUX_20_23_S1 = true;
  ADCMUX_20_23_S0 = false;
  
  ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_20_23_OE1 = true;
+ ADCMUX_20_23_OE2 = false;
  break;
  }
  case 56:{ 
@@ -7569,10 +6603,13 @@
  ADCMUX_20_23_OE1 = true;
  ADCMUX_20_23_OE2 = true;
  
- ADCMUX_24_27_OE1 = false;
+ ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
  ADCMUX_24_27_S1 = false;
  ADCMUX_24_27_S0 = false;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_24_27_OE1 = false;
+ ADCMUX_24_27_OE2 = true;	
  break;
  }
  case 57:{ 
@@ -7597,10 +6634,13 @@
  ADCMUX_20_23_OE1 = true;
  ADCMUX_20_23_OE2 = true;
  
- ADCMUX_24_27_OE1 = false;
+ ADCMUX_24_27_OE1 = true;
  ADCMUX_24_27_OE2 = true;
  ADCMUX_20_23_S1 = true;
  ADCMUX_20_23_S0 = false;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_24_27_OE1 = false;
+ ADCMUX_24_27_OE2 = true;	
  break;
  }
  case 58:{ 
@@ -7626,9 +6666,12 @@
  ADCMUX_20_23_OE2 = true;
  
  ADCMUX_24_27_OE1 = true;
- ADCMUX_24_27_OE2 = false;
+ ADCMUX_24_27_OE2 = true;
  ADCMUX_24_27_S1 = false;
  ADCMUX_24_27_S0 = false;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_24_27_OE1 = true;
+ ADCMUX_24_27_OE2 = false;
  break;
  }
  case 59:{ 
@@ -7654,9 +6697,12 @@
  ADCMUX_20_23_OE2 = true;
  
  ADCMUX_24_27_OE1 = true;
- ADCMUX_24_27_OE2 = false;
+ ADCMUX_24_27_OE2 = true;
  ADCMUX_24_27_S1 = true;
  ADCMUX_24_27_S0 = false;
+ _nop_();_nop_();_nop_();_nop_();_nop_();
+ ADCMUX_24_27_OE1 = true;
+ ADCMUX_24_27_OE2 = false;
  break;
  }
  default:{
@@ -7819,9 +6865,9 @@
  memcpy(NVRAM1, NVRAM0, (205 + 1));
  }
  static void nvramSave(void){ 
-  EA = 0; 
+  EA = 0;;
  epromWrite(0x0, (uint8_t*)NVRAM0, ((3 + 1) * 2));
-  EA = 1;
+  EA = 1;;
  }
  static void nvramUpdata(void){ 
  uint8_t *sp0, *sp1;
@@ -7830,18 +6876,14 @@
  sp1 = (uint8_t*)(NVRAM1 + (0 * 2));
  for(i = 0;i < ((3 + 1) * 2);i ++){ 
  if(*(sp0 + i) != *(sp1 + i)){
- setLedEprom(true);
  epromWriteOneByte(i, *(sp0 + i));
- setLedEprom(false);
  }
  }
  sp0 = (uint8_t*)(NVRAM0 + (8 * 2));
  sp1 = (uint8_t*)(NVRAM1 + (8 * 2));
  for(i = 8;i < ((15 + 1) * 2);i ++){ 
  if(*(sp0 + i) != *(sp1 + i)){
- setLedEprom(true);
  epromWriteOneByte(i, *(sp0 + i));
- setLedEprom(false);
  }
  }
  memcpy(NVRAM1, NVRAM0, ((205 + 1) * 2));
@@ -7891,11 +6933,11 @@
  }
  void T1MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 1914 "MainApp\sPlc.c" /1
+#line 2082 "MainApp\sPlc.c" /1
  
  
  
-#line 1917 "MainApp\sPlc.c" /0
+#line 2085 "MainApp\sPlc.c" /0
  if(start){
  if(NVRAM0[(147 + A)] >= value){
  NVRAM0[(144 + (A / 16))] |= 1 << (A % 16);
@@ -7912,11 +6954,11 @@
  }
  void T10MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 1933 "MainApp\sPlc.c" /1
+#line 2101 "MainApp\sPlc.c" /1
  
  
  
-#line 1936 "MainApp\sPlc.c" /0
+#line 2104 "MainApp\sPlc.c" /0
  if(start){
  if(NVRAM0[(163 + A)] >= value){
  NVRAM0[(145 + (A / 16))] |= 1 << (A % 16);
@@ -7932,11 +6974,11 @@
  }
  void T100MS(uint8_t A, uint8_t start, uint16_t value){ 
  
-#line 1951 "MainApp\sPlc.c" /1
+#line 2119 "MainApp\sPlc.c" /1
  
  
  
-#line 1954 "MainApp\sPlc.c" /0
+#line 2122 "MainApp\sPlc.c" /0
  if(start){
  if(NVRAM0[(179 + A)] >= value){
  NVRAM0[(146 + (A / 16))] |= 1 << (A % 16);
@@ -8403,17 +7445,17 @@
  inputRefresh(); 
  
  
-#line 2420 "MainApp\sPlc.c" /1
+#line 2588 "MainApp\sPlc.c" /1
  
  
-#line 2422 "MainApp\sPlc.c" /0
+#line 2590 "MainApp\sPlc.c" /0
  }
  void sPlcProcessEnd(void){ 
  
-#line 2425 "MainApp\sPlc.c" /1
+#line 2593 "MainApp\sPlc.c" /1
  
  
-#line 2427 "MainApp\sPlc.c" /0
+#line 2595 "MainApp\sPlc.c" /0
  
  outputRefresh(); 
  

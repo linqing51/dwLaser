@@ -91,12 +91,6 @@
  
  
  
- 
- 
- 
- 
- 
- 
   
 #line 1 "Lib\stdint.h" /0
 
@@ -153,7 +147,7 @@
 #line 51 "Lib\stdint.h" /0
  
  
-#line 84 ".\MainApp\AppConfig.h" /0
+#line 78 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "Lib\stdbool.h" /0
@@ -204,7 +198,7 @@
  
  
  
-#line 85 ".\MainApp\AppConfig.h" /0
+#line 79 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "Lib\endian.h" /0
@@ -266,7 +260,7 @@
 #line 55 "Lib\endian.h" /0
  
  
-#line 86 ".\MainApp\AppConfig.h" /0
+#line 80 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "Lib\si_toolchain.h" /0
@@ -1178,7 +1172,7 @@
  
  
  
-#line 87 ".\MainApp\AppConfig.h" /0
+#line 81 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "Lib\compiler_defs.h" /0
@@ -2104,7 +2098,7 @@
  
  
  
-#line 88 ".\MainApp\AppConfig.h" /0
+#line 82 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "Lib\C8051F020_defs.h" /0
@@ -2460,7 +2454,7 @@
  
  
  
-#line 89 ".\MainApp\AppConfig.h" /0
+#line 83 ".\MainApp\AppConfig.h" /0
  
  
   
@@ -2510,7 +2504,7 @@
  
  
  
-#line 91 ".\MainApp\AppConfig.h" /0
+#line 85 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2618,7 +2612,7 @@
  #pragma RESTORE
  
  
-#line 92 ".\MainApp\AppConfig.h" /0
+#line 86 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2681,7 +2675,7 @@
  #pragma RESTORE
  
  
-#line 93 ".\MainApp\AppConfig.h" /0
+#line 87 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -2729,7 +2723,7 @@
  
  
  
-#line 94 ".\MainApp\AppConfig.h" /0
+#line 88 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -2767,7 +2761,7 @@
  #pragma RESTORE
  
  
-#line 95 ".\MainApp\AppConfig.h" /0
+#line 89 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -2800,7 +2794,7 @@
  
  
  
-#line 96 ".\MainApp\AppConfig.h" /0
+#line 90 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\math.h" /0
@@ -2874,7 +2868,7 @@
  #pragma RESTORE
  
  
-#line 97 ".\MainApp\AppConfig.h" /0
+#line 91 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "Lib\crc32.h" /0
@@ -2901,7 +2895,7 @@
  
  
  
-#line 98 ".\MainApp\AppConfig.h" /0
+#line 92 ".\MainApp\AppConfig.h" /0
  
  
   
@@ -2910,572 +2904,33 @@
  
  
   
-#line 1 "Lib\compiler_defs.h" /0
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /0
  
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 123 "Lib\compiler_defs.h" /1
-  
- 
-  
-  
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
- 
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
+#line 2 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /1
   
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
- 
- 
- 
- 
- 
-  
-  
-  
   
-  
-  
-  
-  
-  
- 
  
-  
-  
   
-  
-  
-  
  
   
   
   
   
- 
   
   
  
- 
- 
- 
-  
   
   
   
- 
- 
   
-  
- 
  
   
   
   
   
- 
- 
- 
- 
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
   
- 
- 
- 
- 
- 
- 
- 
- 
  
   
   
@@ -3486,168 +2941,56 @@
   
   
   
- 
-  
   
   
- 
   
  
-  
  
   
   
-  
  
-  
-  
-  
   
  
- 
- 
   
-  
- 
  
   
-  
-  
-  
- 
  
   
-  
- 
  
   
   
   
   
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
   
- 
- 
- 
- 
- 
- 
- 
- 
- 
   
   
  
-  
-  
-  
   
-  
-  
-  
  
-  
   
   
   
   
   
   
-  
-  
  
-  
  
-  
-  
-  
-  
-  
   
   
- 
   
   
- 
- 
- 
  
   
   
-  
- 
-  
- 
  
   
   
- 
- 
   
   
   
   
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
   
- 
- 
   
   
   
@@ -3655,433 +2998,30 @@
   
   
   
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
  
- 
-  
-  
-  
   
   
   
- 
- 
- 
- 
- 
- 
- 
   
   
   
   
   
   
- 
- 
- 
- 
- 
  
- 
- 
-  
-  
   
   
-  
-  
-  
- 
  
- 
- 
- 
- 
- 
- 
-#line 804 "Lib\compiler_defs.h" /0
- 
- 
+  
  
  
 #line 4 "\GitHub\dwLaser\MCU_Application\MainApp\InitDeviceF020.h" /0
- 
-  
-#line 1 "Lib\C8051F020_defs.h" /0
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 30 "Lib\C8051F020_defs.h" /1
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 347 "Lib\C8051F020_defs.h" /0
- 
- 
- 
- 
-#line 5 "\GitHub\dwLaser\MCU_Application\MainApp\InitDeviceF020.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\InitDeviceF020.h" /0
  
  
  void initDeviceF020(void);
  
-#line 100 ".\MainApp\AppConfig.h" /0
+#line 94 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "Lib\delay.h" /0
@@ -4104,8 +3044,6 @@
   
   
   
-  
-  
  
   
   
@@ -4117,10 +3055,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -4217,7 +3151,7 @@
  
  
  
-#line 101 ".\MainApp\AppConfig.h" /0
+#line 95 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\i2c0.h" /0
@@ -4240,8 +3174,6 @@
   
   
   
-  
-  
  
   
   
@@ -4253,10 +3185,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -4360,7 +3288,7 @@
  
  
  
-#line 102 ".\MainApp\AppConfig.h" /0
+#line 96 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\eprom.h" /0
@@ -4383,8 +3311,6 @@
   
   
   
-  
-  
  
   
   
@@ -4396,10 +3322,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -4499,7 +3421,7 @@
  void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
  void epromTest(void);
  
-#line 103 ".\MainApp\AppConfig.h" /0
+#line 97 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\dac8568_0.h" /0
@@ -4519,8 +3441,6 @@
   
   
   
-  
-  
  
   
   
@@ -4532,10 +3452,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -4631,7 +3547,7 @@
  void dac8568_0_WriteDacRegister(uint8_t ch, uint16_t dat);
  void dac8568_0_Clear(void);
  void dac8568_0_Reset(void);
-#line 104 ".\MainApp\AppConfig.h" /0
+#line 98 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\dac8568_1.h" /0
@@ -4651,8 +3567,6 @@
   
   
   
-  
-  
  
   
   
@@ -4664,10 +3578,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -4763,7 +3673,7 @@
  void dac8568_1_WriteDacRegister(uint8_t ch, uint16_t dat);
  void dac8568_1_Clear(void);
  void dac8568_1_Reset(void);
-#line 105 ".\MainApp\AppConfig.h" /0
+#line 99 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\dac8568_2.h" /0
@@ -4783,8 +3693,6 @@
   
   
   
-  
-  
  
   
   
@@ -4796,10 +3704,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -4895,7 +3799,7 @@
  void dac8568_2_WriteDacRegister(uint8_t ch, uint16_t dat);
  void dac8568_2_Clear(void);
  void dac8568_2_Reset(void);
-#line 106 ".\MainApp\AppConfig.h" /0
+#line 100 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\dac8568_3.h" /0
@@ -4915,8 +3819,6 @@
   
   
   
-  
-  
  
   
   
@@ -4928,10 +3830,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -5027,7 +3925,7 @@
  void dac8568_3_WriteDacRegister(uint8_t ch, uint16_t dat);
  void dac8568_3_Clear(void);
  void dac8568_3_Reset(void);
-#line 107 ".\MainApp\AppConfig.h" /0
+#line 101 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "\GitHub\dwLaser\MCU_Application\MainApp\boxCmd.h" /0
@@ -5050,8 +3948,6 @@
   
   
   
-  
-  
  
   
   
@@ -5063,10 +3959,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -5160,7 +4052,7 @@
  void boxRedLedRefresh(void);
  void boxGreenLedRefresh(void);
  
-#line 108 ".\MainApp\AppConfig.h" /0
+#line 102 ".\MainApp\AppConfig.h" /0
  
  
   
@@ -5184,8 +4076,6 @@
   
   
   
-  
-  
  
   
   
@@ -5197,10 +4087,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -5297,7 +4183,7 @@
  extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
  extern void modbusPorcess(void);
  
-#line 110 ".\MainApp\AppConfig.h" /0
+#line 104 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Modbus\ModbusPort.h" /0
@@ -5320,8 +4206,6 @@
   
   
   
-  
-  
  
   
   
@@ -5333,10 +4217,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -5433,7 +4313,7 @@
  extern void receiveInterrupt(uint8_t Data);
  
  
-#line 111 ".\MainApp\AppConfig.h" /0
+#line 105 ".\MainApp\AppConfig.h" /0
  
  
   
@@ -5457,8 +4337,6 @@
   
   
   
-  
-  
  
   
   
@@ -5470,10 +4348,6 @@
   
   
  
-  
-  
-  
-  
   
  
   
@@ -5770,7 +4644,7 @@
  void refreshDac(void);
  
  
-#line 113 ".\MainApp\AppConfig.h" /0
+#line 107 ".\MainApp\AppConfig.h" /0
  
  
  
