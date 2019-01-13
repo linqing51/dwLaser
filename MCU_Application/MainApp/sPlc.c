@@ -1886,8 +1886,10 @@ static void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值
 	s->out = temp;
 }
 static void assertCoilAddress(uint16_t adr){//检查线圈地址
+#if CONFIG_SPLC_ASSERT == 1
 	if(adr > (SPREG_END * 16))
 		while(1);
+#endif
 }
 static void assertRegisterAddress(uint16_t adr){//检查寄存器地址
 	if(adr >= SPREG_END)
@@ -2055,17 +2057,21 @@ void FLIP(uint16_t A){//翻转
 }
 uint8_t LD(uint16_t A){//载入
 	assertCoilAddress(A);//检查地址范围
-	return (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
+	return (uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
+}
+uint8_t LDB(uint16_t A){//方向载入
+	assertCoilAddress(A);//检查地址范围
+	return !((uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01);
 }
 uint8_t LDP(uint16_t A){//脉冲上升沿
 	uint8_t temp0, temp1;
 	assertCoilAddress(A);//检查地址范围
-	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
-	temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
-	if(temp0 && !temp1)
-		return 1;
+	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
+	temp1 = (uint8_t)(NVRAM1[(A / 16)] >> (A % 16)) & 0x01;
+	if(temp0 == 1 && temp1 != 1)
+		return true;
 	else
-		return 0;
+		return false;
 }
 uint8_t LDN(uint16_t A){//脉冲下降沿
 	uint8_t temp0, temp1;

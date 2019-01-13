@@ -85,7 +85,7 @@ static void modbusHandle() interrupt INTERRUPT_TIMER1
 	modbusTimerValue ++;
 } 
 
-static void serialHandle() interrupt INTERRUPT_UART0
+static void serial0Handle() interrupt INTERRUPT_UART0
 {//UART0 串口中断程序
 	if(RI0){
 		RI0 = 0;	

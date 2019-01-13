@@ -40,7 +40,7 @@
 #define C_END							195
 //输入位寄存器 1 * 16 = 128个
 #define X_START							196
-#define X_END							196			
+#define X_END							196		
 //输出位寄存器 1 * 16 = 128个
 #define Y_START							197
 #define Y_END							197
@@ -154,13 +154,16 @@
 #define SPCOIL_PS1MS					1//1mS间隔 50%占空比脉冲
 #define SPCOIL_PS10MS					2//10mS
 #define SPCOIL_PS100MS					3//100mS
+#define SPCOIL_UART1_BUSY				10//忙
+#define SPCOIL_UART1_SEND_DONE			11//发送完成
+#define SPCOIL_UART1_RECV_DONE			12//接收完成
 /*****************************************************************************/
-#define SP_EM_MODBUS_SLAVE_ERR			300
-#define SP_R_ON							800//上电ON
-#define SP_R_TICK_1MS					801//
-#define SP_R_TICK_10MS					802//
-#define SP_R_TICK_100MS					803//
-#define SP_R_TICK_1S					804//
+#define SPREG_MODBUS_SLAVE_ERR			300
+#define SPREG_UART1_SEND_LENGTH			301//UART1 发送数据长度
+#edfine SPREG_UART1_SEND_NUM			303//UART1 已经发送数据长度
+#define SPREG_UART1_RECV_LENGTH			302//UART1 接收数据长度
+#define SPREG_UART1_RECV_NUM			304//UART1 已经接收数据长度
+
 /*****************************************************************************/
 typedef struct{//ADC滤波器
 	uint16_t dat[CONFIG_SPLC_ADC_FILTER_TAP];
@@ -195,6 +198,7 @@ void SET(uint16_t A);//置位
 void RESET(uint16_t A);//复位
 void FLIP(uint16_t A);//翻转
 uint8_t LD(uint16_t A);//载入
+uint8_t LDB(uint16_t A);//方向载入
 uint8_t LDP(uint16_t A);//脉冲上升沿
 uint8_t LDN(uint16_t A);//脉冲下降沿
 void T100US(uint8_t A, uint8_t start, uint16_t value);

@@ -12,7 +12,7 @@
 #define CONFIG_CHECK_CODE 					0x5A00
 #define CONFIG_USING_SIMULATION				1
 /*****************************************************************************/
-#define CONFIG_UART0_BAUDRATE				57600//串口波特率
+#define CONFIG_UART0_BAUDRATE				115200//串口波特率
 #define CONFIG_UART0_PARITY					NONE
 #define CONFIG_UART0_STOPBIT				1
 #define CONFIG_UART0_DATABIT				8
@@ -38,6 +38,7 @@
 #define CONFIG_EPROM_PAGEWRITE				0//页写入
 /*****************************************************************************/
 //SPLC设置
+#define CONFIG_SPLC_ASSERT					0//检查地址范围
 #define CONFIG_SOFTPLC_HWTIME				1000L//1mS
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期 1mS * N
 /*****************************************************************************/
