@@ -38,13 +38,13 @@ sbit ADCMUX_24_27_OE2 = P0^4;
 /*****************************************************************************/
 xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
-static data uint8_t TimerCounter_1mS = 0;
-static data uint8_t TimerCounter_10mS = 0;
-static data uint8_t Timer0_L, Timer0_H;
+static idata uint8_t TimerCounter_1mS = 0;
+static idata uint8_t TimerCounter_10mS = 0;
+static idata uint8_t Timer0_L, Timer0_H;
 /*****************************************************************************/
 static pdata int8_t inputFilter[(X_END - X_START + 1) * 16];//IO输入滤波器缓冲区
 static xdata adcTempDat_t adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
-static uint8_t adcSelect;//ADC通道选择
+static idata uint8_t adcSelect;//ADC通道选择
 static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
 static void adcProcess(void);
 static void initAdcData(adcTempDat_t *s);
@@ -1859,7 +1859,7 @@ static void adcProcess(void){//循环采集ADC
 	AD0BUSY = 1;//AD0BUSY写入1
 }
 static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
-	uint8_t i;
+	xdata uint8_t i;
 	for(i = 0;i < CONFIG_SPLC_ADC_FILTER_TAP; i++){
 		s->dat[i] = 0x0;
 	}
@@ -1885,114 +1885,106 @@ static void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值
 	temp = (uint16_t)(sum / (uint32_t)CONFIG_SPLC_ADC_FILTER_TAP);
 	s->out = temp;
 }
-static void assertCoilAddress(uint16_t adr){//检查线圈地址
+static void assertCoilAddress(uint16_t adr) reentrant{//检查线圈地址
 #if CONFIG_SPLC_ASSERT == 1
 	if(adr > (SPREG_END * 16))
 		while(1);
 #endif
 }
-static void assertRegisterAddress(uint16_t adr){//检查寄存器地址
+static void assertRegisterAddress(uint16_t adr) reentrant{//检查寄存器地址
+#if CONFIG_SPLC_ASSERT == 1
 	if(adr >= SPREG_END)
 		while(1);
+#endif
 }
 static void clearDM(void){//清除DM寄存器
-	uint16_t i;
-	for(i = 0;i <= DM_END;i ++)
-	{
+	xdata uint16_t i;
+	for(i = 0;i <= DM_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearMR(void){//清除MR寄存器
-	uint16_t i;
-	for(i = MR_START;i <= MR_END;i ++)
-	{
+	xdata uint16_t i;
+	for(i = MR_START;i <= MR_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearEM(void){//清除EM寄存器
-	uint16_t i;
-	for(i = EM_START;i <= EM_END;i ++)
-	{
+	xdata uint16_t i;
+	for(i = EM_START;i <= EM_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearR(void){//清除R寄存器
-	uint16_t i;
-	for(i = R_START;i <= R_END;i ++)
-	{
+	xdata uint16_t i;
+	for(i = R_START;i <= R_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearT(void){//清除T寄存器
-	uint16_t i;
-	for(i = T_1MS_START;i <= T_1MS_END;i ++)
-	{
+	xdata uint16_t i;
+	for(i = T_1MS_START;i <= T_1MS_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
-	for(i = T_10MS_START;i <= T_10MS_END;i ++)
-	{
+	for(i = T_10MS_START;i <= T_10MS_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
-	for(i = T_100MS_START;i <= T_100MS_END;i ++)
-	{
+	for(i = T_100MS_START;i <= T_100MS_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearTD(void){//清除TD寄存器
-	uint16_t i;
-	for(i = TD_1MS_START;i <= TD_1MS_END;i ++)
-	{
+	xdata uint16_t i;
+	for(i = TD_1MS_START;i <= TD_1MS_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
-	for(i = TD_10MS_START;i <= TD_10MS_END;i ++)
-	{
+	for(i = TD_10MS_START;i <= TD_10MS_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
-	for(i = TD_100MS_START;i <= TD_100MS_END;i ++)
-	{
+	for(i = TD_100MS_START;i <= TD_100MS_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearC(void){//清除C寄存器
-	uint16_t i;
+	xdata uint16_t i;
 	for(i = C_START;i <= C_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearX(void){//清除X寄存器
-	uint16_t i;
+	xdata uint16_t i;
 	for(i = X_START;i <= X_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearY(void){//清除Y寄存器
-	uint16_t i;
+	xdata uint16_t i;
 	for(i = Y_START;i <= Y_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearSPREG(void){
-	uint16_t i;
+	xdata uint16_t i;
 	for(i = SPREG_START;i <= SPREG_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearSPCOIL(){
-	uint16_t i;
+	xdata uint16_t i;
 	for(i = SPCOIL_START;i <= SPCOIL_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
@@ -2010,7 +2002,7 @@ static void nvramLoad(void){//从EPROM中载入NVRAM
 	clearY();
 	clearSPREG();
 	clearSPCOIL();
-	memcpy(NVRAM1, NVRAM0, CONFIG_NVRAM_SIZE);
+	memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
 static void nvramSave(void){//强制将NVRAM存入EPROM
 	DISABLE_INTERRUPT;
@@ -2018,14 +2010,15 @@ static void nvramSave(void){//强制将NVRAM存入EPROM
 	ENABLE_INTERRUPT;
 }
 static void nvramUpdata(void){//更新NVRAM->EPROM
-	uint8_t *sp0, *sp1;
-	uint16_t i;
+	data uint8_t *sp0, *sp1;
+	data uint16_t i;
 	sp0 = (uint8_t*)(NVRAM0 + (MR_START * 2));
 	sp1 = (uint8_t*)(NVRAM1 + (MR_START * 2));
 	for(i = MR_START;i < ((MR_END + 1) * 2);i ++){//储存MR
 		if(*(sp0 + i) != *(sp1 + i)){
 			epromWriteOneByte(i, *(sp0 + i));
 		}
+		
 	}
 	sp0 = (uint8_t*)(NVRAM0 + (DM_START * 2));
 	sp1 = (uint8_t*)(NVRAM1 + (DM_START * 2));
@@ -2038,32 +2031,32 @@ static void nvramUpdata(void){//更新NVRAM->EPROM
 }
 /*****************************************************************************/
 //软逻辑指令
-void SET(uint16_t A){//置位
+void SET(uint16_t A) reentrant{//线圈置位
 	assertCoilAddress(A);//检查地址范围
 	NVRAM0[(A / 16)] |= 1 << (A % 16);
 }
-void RESET(uint16_t A){//置零
+void RES(uint16_t A) reentrant{//线圈置零
 	assertCoilAddress(A);//检查地址范围
 	NVRAM0[(A / 16)] &= ~(1 << (A % 16));
 }
-void FLIP(uint16_t A){//翻转
+void FLIP(uint16_t A) reentrant{//翻转
 	uint16_t temp;
 	assertCoilAddress(A);//检查地址范围
 	temp= NVRAM0[(A / 16)] & (1 << (A % 16));
 	if(temp)
-		RESET(A);
+		RES(A);
 	else
 		SET(A);
 }
-uint8_t LD(uint16_t A){//载入
+uint8_t LD(uint16_t A) reentrant{//载入
 	assertCoilAddress(A);//检查地址范围
 	return (uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
 }
-uint8_t LDB(uint16_t A){//方向载入
+uint8_t LDB(uint16_t A) reentrant{//方向载入
 	assertCoilAddress(A);//检查地址范围
 	return !((uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01);
 }
-uint8_t LDP(uint16_t A){//脉冲上升沿
+uint8_t LDP(uint16_t A) reentrant{//脉冲上升沿
 	uint8_t temp0, temp1;
 	assertCoilAddress(A);//检查地址范围
 	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
@@ -2073,7 +2066,7 @@ uint8_t LDP(uint16_t A){//脉冲上升沿
 	else
 		return false;
 }
-uint8_t LDN(uint16_t A){//脉冲下降沿
+uint8_t LDN(uint16_t A) reentrant{//脉冲下降沿
 	uint8_t temp0, temp1;
 	assertCoilAddress(A);
 	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
@@ -2184,7 +2177,7 @@ int16_t MIN(int16_t *s, uint8_t len){//找出长度为len的数据s中的最小值
 /*****************************************************************************/
 static void wdtInit(void){//看门狗初始化
 #ifdef C8051F020
-	WDTCN = 0;//47mS
+	WDTCN = 0x07;//47mS
 #endif
 }
 static void wdtEnable(void){//使能看门狗
@@ -2204,7 +2197,7 @@ static void wdtDisable(void){//关闭看门狗(未锁定)
 #endif
 	EA = flagEA;
 }
-static void wdtFeed(void){//喂狗
+static void wdtFeed(void) reentrant{//喂狗
 #ifdef C8051F020
 	WDTCN = 0xA5;
 #endif
@@ -2242,7 +2235,6 @@ static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1m
 	else{//OFF
 		NVRAM0[(SPCOIL_START + (SPCOIL_PS1MS / 16))] |= (uint16_t)(1 << (SPCOIL_PS1MS % 16));
 	}
-	
 	for(i = TD_1MS_START;i <= TD_1MS_END;i ++){//1mS计时
 		if(NVRAM0[i] < SHRT_MAX){
 			NVRAM0[i] ++;
@@ -2563,19 +2555,19 @@ void sPlcInit(void){//软逻辑初始化
 	setLedError(true);
 	setLedRun(false);
 	wdtInit();//看门狗使能
-	wdtDisable();//屏蔽看门狗	
+	wdtDisable();//屏蔽看门狗
+#if CONFIG_SPLC_USING_UART1 == 1
+	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化
+#endif	
 #if CONFIG_SPLC_USING_EPROM == 1
 	nvramLoad();//上电恢复NVRAM
 #endif
-	
 #if CONFIG_SPLC_USING_ADC == 1
 	chipAdcInit();//初始化ADC模块
 #endif
-	
 #if CONFIG_SPLC_USING_DAC == 1
 	chipDacInit();//初始化DAC模块
 #endif
-	
 #if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 #endif
@@ -2584,6 +2576,9 @@ void sPlcInit(void){//软逻辑初始化
 	setLedError(false);
 }
 void sPlcProcessStart(void){//sPLC轮询起始
+#if CONFIG_SPLC_USING_WDT == 1
+	wdtFeed();//喂狗
+#endif
 #if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1
 	modbusPorcess();//处理MODBUS
 #endif
@@ -2606,5 +2601,8 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 #endif
 #if CONFIG_SPLC_USING_EPROM == 1
 	nvramUpdata();//更新NVRAM
+#endif
+#if CONFIG_SPLC_USING_WDT == 1
+	wdtFeed();//喂狗
 #endif
 }

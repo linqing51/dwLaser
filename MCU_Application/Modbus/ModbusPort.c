@@ -4,7 +4,6 @@ static uint8_t Timer1_L,Timer1_H;
 /*****************************************************************************/
 void initModbusSerial(int32_t baudrate)
 {//初始化MODBUS串口
-#ifdef C8051F020
 	CKCON |= (1 << 5);//Timer2 uses the system clock
 	T2CON &= ~(1 << 0);//当定时器2 溢出或T2EX 上发生负跳变时将自动重装载（EXEN2=1）
 	T2CON &= ~(1 << 1);//定时器功能：定时器2 由T2M（CKCON.5）定义的时钟加1
@@ -21,14 +20,9 @@ void initModbusSerial(int32_t baudrate)
 	IP |= (1 << 4);//UART0 中断高优先级
 	TI0 = 0;//清除发送完成   		
 	RI0 = 0;//清除接收完成
-#endif
-#ifdef C8051F340
-	
-#endif	
 }
 void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER1
 	uint16_t temp;
-#ifdef C8051F020
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_MB_RTU_SLAVE_TIMER));
 	Timer1_L = (uint8_t)(temp & 0xFF);
 	Timer1_H = (uint8_t)((temp >> 8) & 0xFF);
@@ -40,7 +34,6 @@ void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER1
 	TF1 = 0;
 	TR1 = 1;        
 	ET1 = 1; //开中断T1
-#endif
 }
 static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
 	ES0 = 0;
@@ -85,7 +78,7 @@ static void modbusHandle() interrupt INTERRUPT_TIMER1
 	modbusTimerValue ++;
 } 
 
-static void serial0Handle() interrupt INTERRUPT_UART0
+static void uart0Isr() interrupt INTERRUPT_UART0
 {//UART0 串口中断程序
 	if(RI0){
 		RI0 = 0;	

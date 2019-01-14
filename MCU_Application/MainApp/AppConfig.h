@@ -34,7 +34,7 @@
 #define	CONFIG_AT24C128_SIZE 				16384
 #define	CONFIG_AT24C256_SIZE 				32768
 #define CONFIG_EPROM_ADDRESS				0x50
-#define CONFIG_EPROM_FRAM					0//铁电存储体无写入等待
+#define CONFIG_EPROM_FRAM					1//铁电存储体无写入等待
 #define CONFIG_EPROM_PAGEWRITE				0//页写入
 /*****************************************************************************/
 //SPLC设置
@@ -42,13 +42,18 @@
 #define CONFIG_SOFTPLC_HWTIME				1000L//1mS
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期 1mS * N
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_WDT				0//看门狗启用
+#define CONFIG_SPLC_USING_WDT				1//看门狗启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_INPUT			1//输入IO刷新启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_OUTPUT			1//输出IO刷新启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_EPROM				1//EPROM掉电存储启用
+/*****************************************************************************/
+#define CONFIG_SPLC_USING_UART1				1//UART1串口启用
+#if CONFIG_SPLC_USING_UART1 == 1
+#define SPLC_UART1							1
+#endif
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ADC				1//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			14//ADC位移滤波次数
@@ -73,8 +78,13 @@
 #define DISABLE_INTERRUPT					EA = 0;
 #define ENABLE_INTERRUPT					EA = 1;
 /*****************************************************************************/
+//指示盒子
+#define R_BOX_RED_SENDED					(R_START + 55)
+#define R_BOX_GREEN_SENDED					(R_START + 56)
 #define BOX_CMD_STX							0x81
 #define BOX_CMD_ETX							0x84
+#define BOX_SEND_BFADDR						(EM_START + 95)//发送缓冲区位置
+#define BOX_SEND_LENGTH						29//发送数据量
 /*****************************************************************************/
 #include "stdint.h"
 #include "stdbool.h"
@@ -100,7 +110,9 @@
 #include "dac8568_1.h"
 #include "dac8568_2.h"
 #include "dac8568_3.h"
-#include "boxCmd.h"
+#if CONFIG_SPLC_USING_UART1 == 1
+#include "sPlcUart.h"
+#endif
 /*****************************************************************************/
 #include "Modbus.h"
 #include "ModbusPort.h"

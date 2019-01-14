@@ -44,12 +44,12 @@
 //输出位寄存器 1 * 16 = 128个
 #define Y_START							197
 #define Y_END							197
-//特殊寄存器 4个字
+//特殊寄存器 24个字
 #define SPREG_START						198
-#define SPREG_END						201
+#define SPREG_END						221
 //特殊线圈	4 * 16 = 64个
-#define SPCOIL_START					202
-#define SPCOIL_END						205
+#define SPCOIL_START					222
+#define SPCOIL_END						225
 /*****************************************************************************/
 #define EM_ADC_0						(EM_START + 0)//ADC0->MLD0
 #define EM_ADC_1						(EM_START + 1)//ADC1->MLD1
@@ -150,20 +150,33 @@
 /*****************************************************************************/
 #define CONFIG_NVRAM_SIZE 				(SPCOIL_END + 1)
 /*****************************************************************************/
-#define SPCOIL_ON						0//长通线圈
-#define SPCOIL_PS1MS					1//1mS间隔 50%占空比脉冲
-#define SPCOIL_PS10MS					2//10mS
-#define SPCOIL_PS100MS					3//100mS
-#define SPCOIL_UART1_BUSY				10//忙
-#define SPCOIL_UART1_SEND_DONE			11//发送完成
-#define SPCOIL_UART1_RECV_DONE			12//接收完成
+#define SPCOIL_ON						(SPCOIL_START * 16 + 0)//长通线圈
+#define SPCOIL_PS1MS					(SPCOIL_START * 16 + 1)//1mS间隔 50%占空比脉冲
+#define SPCOIL_PS10MS					(SPCOIL_START * 16 + 2)//10mS
+#define SPCOIL_PS100MS					(SPCOIL_START * 16 + 3)//100mS
+#define SPCOIL_UART0_SEND_BUSY			(SPCOIL_START * 16 + 10)//UART1发送忙
+#define SPCOIL_UART0_RECV_BUSY			(SPCOIL_START * 16 + 11)//UART1接收忙
+#define SPCOIL_UART0_SEND_DONE			(SPCOIL_START * 16 + 12)//发送完成
+#define SPCOIL_UART0_RECV_DONE			(SPCOIL_START * 16 + 13)//接收完成
+#define SPCOIL_UART1_SEND_BUSY			(SPCOIL_START * 16 + 14)//UART1发送忙
+#define SPCOIL_UART1_RECV_BUSY			(SPCOIL_START * 16 + 15)//UART1接收忙
+#define SPCOIL_UART1_SEND_DONE			(SPCOIL_START * 16 + 16)//发送完成
+#define SPCOIL_UART1_RECV_DONE			(SPCOIL_START * 16 + 17)//接收完成
 /*****************************************************************************/
-#define SPREG_MODBUS_SLAVE_ERR			300
-#define SPREG_UART1_SEND_LENGTH			301//UART1 发送数据长度
-#edfine SPREG_UART1_SEND_NUM			303//UART1 已经发送数据长度
-#define SPREG_UART1_RECV_LENGTH			302//UART1 接收数据长度
-#define SPREG_UART1_RECV_NUM			304//UART1 已经接收数据长度
-
+#define SPREG_MODBUS_SLAVE_ERR			(SPREG_START + 0)//MODBUS SLAVE 错误码
+#define SPREG_UART0_SEND_BUFFER_ADR		(SPREG_START + 4)//UART0 发送缓冲NVRAM地址		
+#define SPREG_UART0_SEND_LENGTH			(SPREG_START + 5)//UART0 发送数据长度
+#define SPREG_UART0_SEND_NUM			(SPREG_START + 6)//UART0 已经发送数据长度
+#define SPREG_UART0_RECV_BUFFER_ADR		(SPREG_START + 7)//UART0 接收缓冲NVRAM地址
+#define SPREG_UART0_RECV_LENGTH			(SPREG_START + 8)//UART0 接收数据长度
+#define SPREG_UART0_RECV_NUM			(SPREG_START + 9)//UART0 已经接收数据长度
+/*****************************************************************************/
+#define SPREG_UART1_SEND_BUFFER_ADR		(SPREG_START + 10)//UART1 发送缓冲NVRAM地址		
+#define SPREG_UART1_SEND_LENGTH			(SPREG_START + 11)//UART1 发送数据长度
+#define SPREG_UART1_SEND_NUM			(SPREG_START + 12)//UART1 已经发送数据长度
+#define SPREG_UART1_RECV_BUFFER_ADR		(SPREG_START + 13)//UART1 接收缓冲NVRAM地址
+#define SPREG_UART1_RECV_LENGTH			(SPREG_START + 14)//UART1 接收数据长度
+#define SPREG_UART1_RECV_NUM			(SPREG_START + 15)//UART1 已经接收数据长度
 /*****************************************************************************/
 typedef struct{//ADC滤波器
 	uint16_t dat[CONFIG_SPLC_ADC_FILTER_TAP];
@@ -180,8 +193,8 @@ void sPlcInit(void);//软逻辑初始化
 void sPlcProcessStart(void);//sPLC轮询起始
 void sPlcProcessEnd(void);//sPLC轮询结束
 /*****************************************************************************/
-void assertCoilAddress(uint16_t adr);
-void assertRegisterAddress(uint16_t adr);
+void assertCoilAddress(uint16_t adr) reentrant;
+void assertRegisterAddress(uint16_t adr) reentrant;
 /*****************************************************************************/
 void nvramUpdata(void);
 void clearDM(void);
@@ -194,13 +207,13 @@ void nvramLoad(void);
 void nvramSave(void);
 void nvramUpdata(void);
 /*****************************************************************************/
-void SET(uint16_t A);//置位
-void RESET(uint16_t A);//复位
-void FLIP(uint16_t A);//翻转
-uint8_t LD(uint16_t A);//载入
-uint8_t LDB(uint16_t A);//方向载入
-uint8_t LDP(uint16_t A);//脉冲上升沿
-uint8_t LDN(uint16_t A);//脉冲下降沿
+void SET(uint16_t A) reentrant;//线圈置位
+void RES(uint16_t A) reentrant;//线圈复位
+void FLIP(uint16_t A) reentrant;//翻转
+uint8_t LD(uint16_t A) reentrant;//载入
+uint8_t LDB(uint16_t A) reentrant;//方向载入
+uint8_t LDP(uint16_t A) reentrant;//脉冲上升沿
+uint8_t LDN(uint16_t A) reentrant;//脉冲下降沿
 void T100US(uint8_t A, uint8_t start, uint16_t value);
 void T1MS(uint8_t A, uint8_t start, uint16_t value);
 void T10MS(uint8_t A, uint8_t start, uint16_t value);
