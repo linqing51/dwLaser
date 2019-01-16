@@ -1,6 +1,5 @@
 #include "eprom.h"
 /*****************************************************************************/
-sbit epromBusyFlag = P0^5;
 /*****************************************************************************/
 void epromInit(void){//³õÊ¼»¯IIC½Ó¿Ú
 	iic0Init();
@@ -10,7 +9,6 @@ uint8_t epromReadOneByte(uint16_t ReadAddr){//ÔÚAT24CXXÖ¸¶¨µØÖ·¶Á³öÒ»¸öÊý¾Ý
 //ReadAddr:¿ªÊ¼¶ÁÊýµÄµØÖ·  
 //·µ»ØÖµ  :¶Áµ½µÄÊý¾Ý				  
 	uint8_t temp=0;		  	    																 
-	epromBusyFlag = 0;
 	iic0Start();  
 #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
 //¼æÈÝ24CxxÖÐÆäËûµÄ°æ±¾
@@ -28,14 +26,12 @@ uint8_t epromReadOneByte(uint16_t ReadAddr){//ÔÚAT24CXXÖ¸¶¨µØÖ·¶Á³öÒ»¸öÊý¾Ý
 	iic0WaitAck();	 
 	temp = iic0ReadByte(0);//¶ÁÒ»¸ö×Ö½Ú£¬·ÇÓ¦´ðÐÅºÅÐÅºÅ	   
 	iic0Stop();        //²úÉúÒ»¸öÍ£Ö¹Ìõ¼þ
-	epromBusyFlag = 1;	
 	return temp;
 }
 
 void epromWriteOneByte(uint16_t WriteAddr, uint8_t DataToWrite){//ÔÚAT24CXXÖ¸¶¨µØÖ·Ð´ÈëÒ»¸öÊý¾Ý
 //WriteAddr  :Ð´ÈëÊý¾ÝµÄÄ¿µÄµØÖ·    
 //DataToWrite:ÒªÐ´ÈëµÄÊý¾Ý				   	  	    																 
-	epromBusyFlag = 0;
 	iic0Start();  
 #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
 	iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) & 0xFE));	    //·¢ËÍÐ´ÃüÁî
@@ -53,7 +49,6 @@ void epromWriteOneByte(uint16_t WriteAddr, uint8_t DataToWrite){//ÔÚAT24CXXÖ¸¶¨µ
 #if CONFIG_EPROM_FRAM != 1
 	delayMs(10);	
 #endif
-	epromBusyFlag = 1;
 }
 
 void epromWriteLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ¼Ð´Èë³¤¶ÈÎªLenµÄÊý¾Ý
@@ -106,10 +101,10 @@ void epromWritePage(uint16_t pageAddr, uint8_t *pBuffer,uint8_t NumToWrite){//24
 
 }
 #endif
-#if CONFIG_DEBUG == 1
+#if CONFIG_EPROM_DEBUG == 1
 void epromTest(void){//EPROM ¶ÁÐ´×Ô²âÊÔ
-	uint8_t temp;
-	uint32_t i, j, crc32Src, crc32Dist;	
+	idata uint8_t temp;
+	idata uint32_t i, j, crc32Src, crc32Dist;	
 	crc32Clear();
 	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
 		temp = rand() % 255;

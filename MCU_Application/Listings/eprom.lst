@@ -1,11 +1,11 @@
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 1   
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE EPROM
 OBJECT MODULE PLACED IN .\Objects\eprom.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Driver\eprom.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Lib;.\Driver;.\MainApp;
-                    -.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PRINT(.\Listings\eprom.lst) OBJECT(.\Objects\epr
-                    -om.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Driver\eprom.c OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.ORC) BRO
+                    -WSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PRINT(
+                    -.\Listings\eprom.lst) OBJECT(.\Objects\eprom.obj)
 
 line level    source
 
@@ -17,94 +17,97 @@ line level    source
    1      =2  #ifndef __APPCONFIG_H__
    2      =2  #define __APPCONFIG_H__
    3      =2  /*****************************************************************************/
-   4      =2  #define CONFIG_SYSCLK                       (22118400L)
-   5      =2  #ifdef C8051F020
-   6      =2  #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
-   7      =2  #endif
-   8      =2  #define CONFIG_DEBUG                        0//µ÷ÊÔ¹¦ÄÜ
-   9      =2  #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
-  10      =2  #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
-  11      =2  #define CONFIG_VERSION                                          0x0001
-  12      =2  #define CONFIG_CHECK_CODE                                       0x5A00
-  13      =2  #define CONFIG_USING_SIMULATION                         1
-  14      =2  /*****************************************************************************/
-  15      =2  #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
-  16      =2  #define CONFIG_UART0_PARITY                                     NONE
-  17      =2  #define CONFIG_UART0_STOPBIT                            1
-  18      =2  #define CONFIG_UART0_DATABIT                            8
-  19      =2  
-  20      =2  #define CONFIG_UART1_BAUDRATE                           9600//´®¿Ú²¨ÌØÂÊ
-  21      =2  #define CONFIG_UART1_PARITY                                     NONE
-  22      =2  #define CONFIG_UART1_STOPBIT                            1
-  23      =2  #define CONFIG_UART1_DATABIT                            8
-  24      =2  /*****************************************************************************/
-  25      =2  #define CONFIG_I2C0_FREQ                                        1               
+   4      =2  #define DEBUG_LED_ON                                            0
+   5      =2  #define DEBUG_LED_OFF                                           1
+   6      =2  #define CONFIG_SYSCLK                       (22118400L)
+   7      =2  #ifdef C8051F020
+   8      =2  #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
+   9      =2  #endif
+  10      =2  #define CONFIG_DEBUG                        0//µ÷ÊÔ¹¦ÄÜ
+  11      =2  #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
+  12      =2  #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
+  13      =2  #define CONFIG_VERSION                                          0x0001
+  14      =2  #define CONFIG_CHECK_CODE                                       0x5AC1
+  15      =2  #define CONFIG_USING_SIMULATION                         1
+  16      =2  /*****************************************************************************/
+  17      =2  #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
+  18      =2  #define CONFIG_UART0_PARITY                                     NONE
+  19      =2  #define CONFIG_UART0_STOPBIT                            1
+  20      =2  #define CONFIG_UART0_DATABIT                            8
+  21      =2  
+  22      =2  #define CONFIG_UART1_BAUDRATE                           9600//´®¿Ú²¨ÌØÂÊ
+  23      =2  #define CONFIG_UART1_PARITY                                     NONE
+  24      =2  #define CONFIG_UART1_STOPBIT                            1
+  25      =2  #define CONFIG_UART1_DATABIT                            8
   26      =2  /*****************************************************************************/
-  27      =2  #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
-  28      =2  #define CONFIG_AT24C02_SIZE                             256
-  29      =2  #define CONFIG_AT24C04_SIZE                             512
-  30      =2  #define CONFIG_AT24C08_SIZE                             1024
-  31      =2  #define CONFIG_AT24C16_SIZE                             2048
-  32      =2  #define CONFIG_AT24C32_SIZE                             4096
-  33      =2  #define CONFIG_AT24C64_SIZE                                     8192
-  34      =2  #define CONFIG_AT24C128_SIZE                            16384
-  35      =2  #define CONFIG_AT24C256_SIZE                            32768
-  36      =2  #define CONFIG_EPROM_ADDRESS                            0x50
-  37      =2  #define CONFIG_EPROM_FRAM                                       1//Ìúµç´æ´¢ÌåÎÞÐ´ÈëµÈ´ý
-  38      =2  #define CONFIG_EPROM_PAGEWRITE                          0//Ò³Ð´Èë
-  39      =2  /*****************************************************************************/
-  40      =2  //SPLCÉèÖÃ
-  41      =2  #define CONFIG_SPLC_ASSERT                                      0//¼ì²éµØÖ··¶Î§
-  42      =2  #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
-  43      =2  #define CONFIG_INPUT_FILTER_TIME                        3//ÊäÈëÊý×ÖÂË²¨É¨ÃèÖÜÆÚ 1mS * N
-  44      =2  /*****************************************************************************/
-  45      =2  #define CONFIG_SPLC_USING_WDT                           1//¿´ÃÅ¹·ÆôÓÃ
-  46      =2  /*****************************************************************************/
-  47      =2  #define CONFIG_SPLC_USING_IO_INPUT                      1//ÊäÈëIOË¢ÐÂÆôÓÃ
-  48      =2  /*****************************************************************************/
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 2   
+  27      =2  #define CONFIG_I2C0_FREQ                                        1               
+  28      =2  /*****************************************************************************/
+  29      =2  #define CONFIG_EPROM_DEBUG                                      0
+  30      =2  #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
+  31      =2  #define CONFIG_AT24C02_SIZE                             256
+  32      =2  #define CONFIG_AT24C04_SIZE                             512
+  33      =2  #define CONFIG_AT24C08_SIZE                             1024
+  34      =2  #define CONFIG_AT24C16_SIZE                             2048
+  35      =2  #define CONFIG_AT24C32_SIZE                             4096
+  36      =2  #define CONFIG_AT24C64_SIZE                                     8192
+  37      =2  #define CONFIG_AT24C128_SIZE                            16384
+  38      =2  #define CONFIG_AT24C256_SIZE                            32768
+  39      =2  #define CONFIG_EPROM_ADDRESS                            0x50
+  40      =2  #define CONFIG_EPROM_FRAM                                       1//Ìúµç´æ´¢ÌåÎÞÐ´ÈëµÈ´ý
+  41      =2  #define CONFIG_EPROM_PAGEWRITE                          0//Ò³Ð´Èë
+  42      =2  /*****************************************************************************/
+  43      =2  //SPLCÉèÖÃ
+  44      =2  #define CONFIG_SPLC_ASSERT                                      0//¼ì²éµØÖ··¶Î§
+  45      =2  #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
+  46      =2  #define CONFIG_INPUT_FILTER_TIME                        3//ÊäÈëÊý×ÖÂË²¨É¨ÃèÖÜÆÚ 1mS * N
+  47      =2  /*****************************************************************************/
+  48      =2  #define CONFIG_SPLC_USING_WDT                           1//¿´ÃÅ¹·ÆôÓÃ
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 2   
 
-  49      =2  #define CONFIG_SPLC_USING_IO_OUTPUT                     1//Êä³öIOË¢ÐÂÆôÓÃ
-  50      =2  /*****************************************************************************/
-  51      =2  #define CONFIG_SPLC_USING_EPROM                         1//EPROMµôµç´æ´¢ÆôÓÃ
-  52      =2  /*****************************************************************************/
-  53      =2  #define CONFIG_SPLC_USING_UART1                         1//UART1´®¿ÚÆôÓÃ
-  54      =2  #if CONFIG_SPLC_USING_UART1 == 1
-  55      =2  #define SPLC_UART1                                                      1
-  56      =2  #endif
-  57      =2  /*****************************************************************************/
-  58      =2  #define CONFIG_SPLC_USING_ADC                           1//Ê¹ÄÜADCÄ£¿é
-  59      =2  #define CONFIG_SPLC_ADC_FILTER_TAP                      14//ADCÎ»ÒÆÂË²¨´ÎÊý
-  60      =2  #define CONFIG_SPLC_ADC_CHANNLE                         64//ADCÍ¨µÀÊý
-  61      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
-  62      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
-  63      =2  #define CONFIG_SPLC_ADC_INTERNAL_VREF           2200L// ADC Voltage Reference (mV)
-  64      =2  #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
-  65      =2  /*****************************************************************************/
-  66      =2  #define CONFIG_SPLC_USING_DAC                           1//ÊÇÄÜDACÄ£¿é
-  67      =2  /*****************************************************************************/
-  68      =2  #define CONFIG_SPLC_USING_MB_RTU_SLAVE          1//ÊÇÄÜMODBUS RTU´ÓÕ¾
-  69      =2  #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
-  70      =2  #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//´ÓÉè±¸µØÖ·
-  71      =2  #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//·¢ËÍ½ÓÊÕ»º³åÇø
-  72      =2  #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//½ÓÊÕÍ¨Ñ¶³¬Ê± 10mS
-  73      =2  #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TXÇÐ»»ÑÓÊ±
-  74      =2  /*****************************************************************************/
-  75      =2  /*****************************************************************************/
-  76      =2  #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
-  77      =2  #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
-  78      =2  #define DISABLE_INTERRUPT                                       EA = 0;
-  79      =2  #define ENABLE_INTERRUPT                                        EA = 1;
-  80      =2  /*****************************************************************************/
-  81      =2  //Ö¸Ê¾ºÐ×Ó
-  82      =2  #define R_BOX_RED_SENDED                                        (R_START + 55)
-  83      =2  #define R_BOX_GREEN_SENDED                                      (R_START + 56)
-  84      =2  #define BOX_CMD_STX                                                     0x81
-  85      =2  #define BOX_CMD_ETX                                                     0x84
-  86      =2  #define BOX_SEND_BFADDR                                         (EM_START + 95)//·¢ËÍ»º³åÇøÎ»ÖÃ
-  87      =2  #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
-  88      =2  /*****************************************************************************/
-  89      =2  #include "stdint.h"
+  49      =2  /*****************************************************************************/
+  50      =2  #define CONFIG_SPLC_USING_IO_INPUT                      1//ÊäÈëIOË¢ÐÂÆôÓÃ
+  51      =2  /*****************************************************************************/
+  52      =2  #define CONFIG_SPLC_USING_IO_OUTPUT                     1//Êä³öIOË¢ÐÂÆôÓÃ
+  53      =2  /*****************************************************************************/
+  54      =2  #define CONFIG_SPLC_USING_EPROM                         1//EPROMµôµç´æ´¢ÆôÓÃ
+  55      =2  /*****************************************************************************/
+  56      =2  #define CONFIG_SPLC_USING_UART1                         1//UART1´®¿ÚÆôÓÃ
+  57      =2  #if CONFIG_SPLC_USING_UART1 == 1
+  58      =2  #define SPLC_UART1                                                      1
+  59      =2  #endif
+  60      =2  /*****************************************************************************/
+  61      =2  #define CONFIG_SPLC_USING_ADC                           1//Ê¹ÄÜADCÄ£¿é
+  62      =2  #define CONFIG_SPLC_ADC_FILTER_TAP                      14//ADCÎ»ÒÆÂË²¨´ÎÊý
+  63      =2  #define CONFIG_SPLC_ADC_CHANNLE                         64//ADCÍ¨µÀÊý
+  64      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
+  65      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
+  66      =2  #define CONFIG_SPLC_ADC_INTERNAL_VREF           2200L// ADC Voltage Reference (mV)
+  67      =2  #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
+  68      =2  /*****************************************************************************/
+  69      =2  #define CONFIG_SPLC_USING_DAC                           1//ÊÇÄÜDACÄ£¿é
+  70      =2  /*****************************************************************************/
+  71      =2  #define CONFIG_SPLC_USING_MB_RTU_SLAVE          1//ÊÇÄÜMODBUS RTU´ÓÕ¾
+  72      =2  #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
+  73      =2  #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//´ÓÉè±¸µØÖ·
+  74      =2  #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//·¢ËÍ½ÓÊÕ»º³åÇø
+  75      =2  #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//½ÓÊÕÍ¨Ñ¶³¬Ê± 10mS
+  76      =2  #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TXÇÐ»»ÑÓÊ±
+  77      =2  /*****************************************************************************/
+  78      =2  /*****************************************************************************/
+  79      =2  #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
+  80      =2  #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
+  81      =2  #define DISABLE_INTERRUPT                                       EA = 0;
+  82      =2  #define ENABLE_INTERRUPT                                        EA = 1;
+  83      =2  /*****************************************************************************/
+  84      =2  //Ö¸Ê¾ºÐ×Ó
+  85      =2  #define R_BOX_RED_SENDED                                        (R_START * 16 + 126)
+  86      =2  #define R_BOX_GREEN_SENDED                                      (R_START * 16 + 127)
+  87      =2  #define BOX_CMD_STX                                                     0x81
+  88      =2  #define BOX_CMD_ETX                                                     0x84
+  89      =2  #define BOX_SEND_BFADDR                                         (EM_START + 100)//·¢ËÍ»º³åÇøÎ»ÖÃ
+  90      =2  #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
+  91      =2  /*****************************************************************************/
+  92      =2  #include "stdint.h"
    1      =3  /**************************************************************************//**
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
@@ -123,11 +126,11 @@ line level    source
   16      =3  
   17      =3  typedef signed char int8_t;
   18      =3  typedef short int16_t;
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 3   
+
   19      =3  typedef long int32_t;
   20      =3  typedef int32_t int64_t[2];
   21      =3  typedef float fp32_t;
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 3   
-
   22      =3  typedef double fp64_t;
   23      =3  
   24      =3  #elif defined __ICC8051__
@@ -159,7 +162,7 @@ line level    source
            =3 #endif
   51      =3  
   52      =3  #endif
-  90      =2  #include "stdbool.h"
+  93      =2  #include "stdbool.h"
    1      =3  /**************************************************************************//**
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
@@ -187,11 +190,11 @@ line level    source
            =3 
            =3 #define bool _Bool
            =3 #define true 1
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 4   
+
            =3 #define false 0
            =3 
            =3 #define __bool_true_false_are_defined 1
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 4   
-
            =3 
            =3 #endif /* !__cplusplus */
            =3 
@@ -207,7 +210,7 @@ line level    source
   43      =3  
   44      =3  #endif //STDBOOL_H
   45      =3  
-  91      =2  #include "endian.h"
+  94      =2  #include "endian.h"
    1      =3  /**************************************************************************//**
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
@@ -251,11 +254,11 @@ line level    source
            =3 
            =3 #else
            =3 
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 5   
+
            =3 #define htobe16(x) (x)
            =3 #define htobe32(x) (x)
            =3 #define be16toh(x) (x)
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 5   
-
            =3 #define be32toh(x) (x)
            =3 
            =3 #define htole16(x) (x)
@@ -266,7 +269,7 @@ line level    source
            =3 #endif  // Compiler Definitions
   55      =3  
   56      =3  #endif  // __ENDIAN_H__
-  92      =2  #include "si_toolchain.h"
+  95      =2  #include "si_toolchain.h"
    1      =3  /******************************************************************************
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
@@ -315,11 +318,11 @@ line level    source
            =4 
            =4 #ifdef __INT32_T_TYPE__
            =4   typedef __INT32_T_TYPE__   int32_t;
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 6   
+
            =4   typedef __UINT32_T_TYPE__ uint32_t;
            =4 #endif /* __INT32_T_TYPE__ */
            =4 
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 6   
-
            =4 #ifdef __INT64_T_TYPE__
            =4   #pragma language=save
            =4   #pragma language=extended
@@ -379,11 +382,11 @@ line level    source
   45      =4  
   12      =3  
   13      =3  /**************************************************************************//**
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 7   
+
   14      =3   *
   15      =3   * @addtogroup toolchain_group Toolchain Abstraction
   16      =3   *
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 7   
-
   17      =3   * @brief Macros for toolchain abstraction.
   18      =3   *
   19      =3   * # Introduction #
@@ -443,11 +446,11 @@ line level    source
   73      =3  // -------------------------------
   74      =3  // Keil/ARM C51
   75      =3  //
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 8   
+
   76      =3  #if defined(__C51__)
   77      =3  
   78      =3  /// Used with pointers, declares a generic pointer.  Generic pointers
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 8   
-
   79      =3  /// work with any memory space but are inefficient.
   80      =3  #define SI_SEG_GENERIC
   81      =3  
@@ -507,11 +510,11 @@ line level    source
  135      =3   * @param name The name of the SFR variable.
  136      =3   * @param address The address of the 16-bit SFR.
  137      =3   *
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 9   
+
  138      =3   * This creates a C variable (16-bit) that maps to a physical special function
  139      =3   * register of the 8051.  This cannot be used to make any arbitrary memory
  140      =3   * location into an SFR.  The _address_ must map to a real 16-bit SFR in the
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 9   
-
  141      =3   * memory map.
  142      =3   *****************************************************************************/
  143      =3  #define SI_SFR16(name, address) sfr16 name = address
@@ -571,11 +574,11 @@ line level    source
  197      =3   * @note This macro is used to declare a prototype for the interrupt function.
  198      =3   * To define the interrupt function implementation, use @ref SI_INTERRUPT.
  199      =3   *****************************************************************************/
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 10  
+
  200      =3  #define SI_INTERRUPT_PROTO(name, vector) void name (void)
  201      =3  
  202      =3  /**************************************************************************//**
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 10  
-
  203      =3   * Declare an interrupt handler prototype using a specific register bank.
  204      =3   *
  205      =3   * @param name The name of the interrupt handler function.
@@ -635,11 +638,11 @@ line level    source
  259      =3   * Declare a function to be reentrant (store local variables on the stack).
  260      =3   *
  261      =3   * @param name The name of the function.
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 11  
+
  262      =3   * @param return_type The data type of the function return value
  263      =3   * (void, int, etc).
  264      =3   * @param parameter One C function parameter (or "void") (type and name).
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 11  
-
  265      =3   *
  266      =3   * This macro declares a function prototype for a C function that is reentrant.
  267      =3   * See the documentation for @ref SI_REENTRANT_FUNCTION for an explanation of
@@ -699,11 +702,11 @@ line level    source
  321      =3   * @param name The name of the function.
  322      =3   * @param return_value The data type of the function return value
  323      =3   * (void, int, etc).
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 12  
+
  324      =3   * @param parameter One C function parameter (or "void") (type and name).
  325      =3   * @param regnum The register bank number (0-3).
  326      =3   *
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 12  
-
  327      =3   * This macro declares a function prototype for a C function that uses a
  328      =3   * specific register its working registers.  See the documentation for
  329      =3   * @ref SI_FUNCTION_USING for an explanation of the macro arguments.  This is
@@ -763,11 +766,11 @@ line level    source
  383      =3   * - @ref SI_SEG_PDATA
  384      =3   * - @ref SI_SEG_XDATA
  385      =3   * - @ref SI_SEG_CODE
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 13  
+
  386      =3   *
  387      =3   * __Example__
  388      =3   *
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 13  
-
  389      =3   * ~~~~~~~~.c
  390      =3   * // The following macro can be used to create a pointer that points to
  391      =3   * // a location in XDATA with the following signature:
@@ -827,11 +830,11 @@ line level    source
  445      =3   *
  446      =3   * - @ref SI_SEG_DATA
  447      =3   * - @ref SI_SEG_IDATA
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 14  
+
  448      =3   * - @ref SI_SEG_BDATA
  449      =3   * - @ref SI_SEG_PDATA
  450      =3   * - @ref SI_SEG_XDATA
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 14  
-
  451      =3   * - @ref SI_SEG_CODE
  452      =3   *
  453      =3   * __Example__
@@ -891,11 +894,11 @@ line level    source
            =3 #define SI_REENTRANT_FUNCTION_PROTO(name, return_value, parameter, regnum) return_value name (parameter)
            =3 
            =3 #define SI_FUNCTION_USING(name, return_value, parameter, regnum) return_value name (parameter)
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 15  
+
            =3 #define SI_FUNCTION_PROTO_USING(name, return_value, parameter, regnum) return_value name (parameter)
            =3 // Note: Parameter must be either 'void' or include a variable type and name. (Ex: char temp_variable)
            =3 
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 15  
-
            =3 #define SI_SEGMENT_VARIABLE(name, vartype, locsegment) vartype name
            =3 #define SI_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype * name
            =3 #define SI_SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype * name
@@ -955,11 +958,11 @@ line level    source
  569      =3  
  570      =3  /// A union type to allow access to the fields of a generic pointer.
  571      =3  /// A generic pointer has a field indicating the type of memory and an
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 16  
+
  572      =3  /// address within the memory.
  573      =3  typedef union SI_GEN_PTR
  574      =3  {
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 16  
-
  575      =3    uint8_t u8[3];    ///< 3-byte generic pointer as 3 unsigned 8-bit integers.
  576      =3    GPTR_t gptr;      ///< 3-byte generic pointer as pointer structure
  577      =3  } SI_GEN_PTR_t;
@@ -1019,11 +1022,11 @@ line level    source
            =3 #define MSB 1
            =3 typedef union SI_UU16
            =3 {
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 17  
+
            =3   uint16_t u16;
            =3   int16_t s16;
            =3   uint8_t u8[2];
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 17  
-
            =3   int8_t s8[2];
            =3 } SI_UU16_t;
            =3 
@@ -1083,11 +1086,11 @@ line level    source
            =3 #define SI_INTERRUPT_PROTO_USING(name, vector, regnum) __interrupt void name(void)
            =3 
            =3 #if (__DATA_MODEL__ == 0) /* TINY */ || \
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 18  
+
            =3     (__DATA_MODEL__ == 1) /* SMALL */
            =3 #define SI_REENTRANT_FUNCTION(name, return_type, parameter) \
            =3   __idata_reentrant return_type name parameter
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 18  
-
            =3 #define SI_REENTRANT_FUNCTION_PROTO(name, return_type, parameter) \
            =3   __idata_reentrant return_type name parameter
            =3 #elif (__DATA_MODEL__ == 2) /* LARGE */ || \
@@ -1147,11 +1150,11 @@ line level    source
            =3 /// use as signed or unsigned type.
            =3 typedef union SI_UU32
            =3 {
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 19  
+
            =3   uint32_t u32;       ///< The 4-byte value as a 32-bit unsigned integer.
            =3   int32_t s32;        ///< The 4-byte value as a 32-bit signed integer.
            =3   SI_UU16_t uu16[2];  ///< The 4-byte value as a SI_UU16_t.
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 19  
-
            =3   uint16_t u16[2];    ///< The 4-byte value as two unsigned 16-bit integers.
            =3   int16_t s16[2];     ///< The 4-byte value as two signed 16-bit integers.
            =3   uint8_t u8[4];      ///< The 4-byte value as 4 unsigned 8-bit integers.
@@ -1193,7 +1196,7 @@ line level    source
  795      =3  /** @} */
  796      =3  
  797      =3  #endif
-  93      =2  #include "compiler_defs.h"
+  96      =2  #include "compiler_defs.h"
    1      =3  //-----------------------------------------------------------------------------
    2      =3  // compiler_defs.h
    3      =3  //-----------------------------------------------------------------------------
@@ -1211,11 +1214,11 @@ line level    source
   15      =3    * This library is distributed in the hope that it will be useful,
   16      =3    * but WITHOUT ANY WARRANTY; without even the implied warranty of
   17      =3    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 20  
+
   18      =3    * Lesser General Public License for more details.
   19      =3    *
   20      =3    * You should have received a copy of the GNU Lesser General Public
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 20  
-
   21      =3    * License along with this library; if not, write to the Free Software
   22      =3    * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
   23      =3    *
@@ -1275,11 +1278,11 @@ line level    source
   77      =3  // Release 2.4 - 27 AUG 2012 (TP)
   78      =3  //    -Added defines for deprecated SDCC keywords interrupt, _asm, and _endasm
   79      =3  // Release 2.3 - 27 MAY 2010 (DM)
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 21  
+
   80      =3  //    -Removed 'LOCATED_VARIABLE' pragma from Keil because it is not supported
   81      =3  // Release 2.2 - 06 APR 2010 (ES)
   82      =3  //    -Removed 'PATHINCLUDE' pragma from Raisonance section
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 21  
-
   83      =3  // Release 2.1 - 16 JUL 2009 (ES)
   84      =3  //    -Added SEGMENT_POINTER macro definitions for SDCC, Keil, and Raisonance
   85      =3  //    -Added LOCATED_VARIABLE_NO_INIT macro definitions for Raisonance
@@ -1339,11 +1342,11 @@ line level    source
            =4   false = 0,
            =4   true = 1,
            =4 };
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 22  
+
            =4 
            =4 #elif defined __ICC8051__
            =4 
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 22  
-
            =4 #ifndef _SYSTEM_BUILD
            =4   #pragma system_include
            =4 #endif
@@ -1403,11 +1406,11 @@ line level    source
            =4 #endif /* __INT8_T_TYPE__ */
            =4 
            =4 #ifdef __INT16_T_TYPE__
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 23  
+
            =4   typedef __INT16_T_TYPE__   int16_t;
            =4   typedef __UINT16_T_TYPE__ uint16_t;
            =4 #endif /* __INT16_T_TYPE__ */
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 23  
-
            =4 
            =4 #ifdef __INT32_T_TYPE__
            =4   typedef __INT32_T_TYPE__   int32_t;
@@ -1467,11 +1470,11 @@ line level    source
            =3 # define SBIT(name, addr, bit)  __sbit  __at(addr+bit)                  name
            =3 # define SFR(name, addr)        __sfr   __at(addr)                      name
            =3 # define SFRX(name, addr)       xdata volatile unsigned char __at(addr) name
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 24  
+
            =3 # define SFR16(name, addr)      __sfr16 __at(((addr+1U)<<8) | addr)     name
            =3 # define SFR16E(name, fulladdr) __sfr16 __at(fulladdr)                  name
            =3 # define SFR32(name, addr)      __sfr32 __at(((addr+3UL)<<24) | ((addr+2UL)<<16) | ((addr+1UL)<<8) | addr)
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 24  
-
              - name
            =3 # define SFR32E(name, fulladdr) __sfr32 __at(fulladdr)                  name
            =3 
@@ -1531,11 +1534,11 @@ line level    source
            =3    S8 S8[4];
            =3 } UU32;
            =3 
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 25  
+
            =3 // NOP () macro support
            =3 #define NOP() _asm NOP _endasm
            =3 
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 25  
-
            =3 // generic pointer memory type specifiers
            =3 #define SI_GPTR
            =3 #define SI_GPTR_MTYPE_DATA       0x40
@@ -1595,11 +1598,11 @@ line level    source
            =3 # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype targsegment * name
            =3 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype targsegment * lo
              -csegment name
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 26  
+
            =3 # define SEGMENT_POINTER(name, vartype, locsegment) vartype * locsegment name
            =3 # define LOCATED_VARIABLE(name, vartype, locsegment, addr, init) at addr locsegment vartype name
            =3 # define LOCATED_VARIABLE_NO_INIT(name, vartype, locsegment, addr) at addr locsegment vartype name
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 26  
-
            =3 
            =3 
            =3 // used with UU16
@@ -1659,11 +1662,11 @@ line level    source
            =3     {
            =3         U8 MTYPE;
            =3         UU16 ADDR;
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 27  
+
            =3     } GPTR;
            =3 } SI_GENERIC_PTR;
            =3 
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 27  
-
            =3 //-----------------------------------------------------------------------------
            =3 
            =3 
@@ -1723,11 +1726,11 @@ line level    source
            =3 # define SEGMENT_VARIABLE(name, vartype, locsegment) vartype name
            =3 # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype * name
            =3 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype * name
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 28  
+
            =3 # define SEGMENT_POINTER(name, vartype, locsegment) vartype * name
            =3 # define LOCATED_VARIABLE_NO_INIT(name, vartype, locsegment, addr) vartype name
            =3 
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 28  
-
            =3 # endif // __SLS_IDE__
  415      =3  
  416      =3  // used with UU16
@@ -1787,11 +1790,11 @@ line level    source
  470      =3      struct
  471      =3      {
  472      =3          U8 MTYPE;
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 29  
+
  473      =3          UU16 ADDR;
  474      =3      } GPTR;
  475      =3  } SI_GENERIC_PTR;
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 29  
-
  476      =3  
  477      =3  //-----------------------------------------------------------------------------
  478      =3  
@@ -1851,11 +1854,11 @@ line level    source
            =3 
            =3 typedef signed char S8;
            =3 typedef signed int S16;
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 30  
+
            =3 typedef signed long S32;
            =3 
            =3 typedef union UU16
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 30  
-
            =3 {
            =3    U16 U16;
            =3    S16 S16;
@@ -1915,11 +1918,11 @@ line level    source
            =3 // When calling FUNCTION_USING in Tasking, the function must be called from an interrupt or Main which
            =3 // is also using the same register bank. If not, the compiler will generate an error.
            =3 # define FUNCTION_USING(name, return_value, parameter, regnum) _using(regnum) return_value name (parameter
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 31  
+
              -)
            =3 # define FUNCTION_PROTO_USING(name, return_value, parameter, regnum) _using(regnum) return_value name (par
              -ameter)
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 31  
-
            =3 // Note: Parameter must be either 'void' or include a variable type and name. (Ex: char temp_variable)
            =3 
            =3 # define SEGMENT_VARIABLE(name, vartype, locsegment) vartype locsegment name
@@ -1979,11 +1982,11 @@ line level    source
            =3 
            =3 #include <stdbool.h>
            =3 #include <intrinsics.h>
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 32  
+
            =3 
            =3 # define SBIT(name, addr, bit)  __bit __no_init volatile bool name @ (addr+bit)
            =3 # define SFR(name, addr)        __sfr __no_init volatile unsigned char name @ addr
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 32  
-
            =3 # define SFRX(name, addr)       __xdata __no_init volatile unsigned char name @ addr
            =3 # define SFR16(name, addr)      __sfr __no_init volatile unsigned int  name @ addr
            =3 # define SFR16E(name, fulladdr) /* not supported */
@@ -2043,11 +2046,11 @@ line level    source
            =3 typedef signed long S32;
            =3 
            =3 typedef union UU16
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 33  
+
            =3 {
            =3    U16 U16;
            =3    S16 S16;
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 33  
-
            =3    U8 U8[2];
            =3    S8 S8[2];
            =3 } UU16;
@@ -2107,11 +2110,11 @@ line level    source
            =3 #elif defined __UC__
            =3 # define SBIT(name, addr, bit)  unsigned char bit  name @ (addr+bit)
            =3 # define SFR(name, addr)        near unsigned char name @ addr
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 34  
+
            =3 # define SFR16(name, addr)      /* not supported */
            =3 # define SFR16E(name, fulladdr) /* not supported */
            =3 # define SFR32(name, fulladdr)  /* not supported */
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 34  
-
            =3 # define SFR32E(name, fulladdr) /* not supported */
            =3 
            =3 //-----------------------------------------------------------------------------
@@ -2140,7 +2143,7 @@ line level    source
  805      =3  //-----------------------------------------------------------------------------
  806      =3  // End Of File
  807      =3  //-----------------------------------------------------------------------------
-  94      =2  #include "C8051F020_defs.h"
+  97      =2  #include "C8051F020_defs.h"
    1      =3  //-----------------------------------------------------------------------------
    2      =3  // C8051F020_defs.h
    3      =3  //-----------------------------------------------------------------------------
@@ -2171,11 +2174,11 @@ line level    source
   28      =3  
   29      =3  #ifndef C8051F020_DEFS_H
   30      =3  #define C8051F020_DEFS_H
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 35  
+
   31      =3  
   32      =3  //-----------------------------------------------------------------------------
   33      =3  // Byte Registers
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 35  
-
   34      =3  //-----------------------------------------------------------------------------
   35      =3  
   36      =3  SFR (P0, 0x80);                        // Port 0 Latch
@@ -2235,11 +2238,11 @@ line level    source
   90      =3  SFR (AMX0CF, 0xBA);                    // ADC0 Mux Configuration
   91      =3  SFR (AMX0SL, 0xBB);                    // ADC0 Mux Channel Selection
   92      =3  SFR (ADC0CF, 0xBC);                    // ADC0 Configuration
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 36  
+
   93      =3  SFR (P1MDIN, 0xBD);                    // Port 1 Input Mode
   94      =3  SFR (ADC0L, 0xBE);                     // ADC0 Data Low
   95      =3  SFR (ADC0H, 0xBF);                     // ADC0 Data High
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 36  
-
   96      =3  SFR (SMB0CN, 0xC0);                    // SMBus0 Control
   97      =3  SFR (SMB0STA, 0xC1);                   // SMBus0 Status
   98      =3  SFR (SMB0DAT, 0xC2);                   // SMBus0 Data
@@ -2299,11 +2302,11 @@ line level    source
  152      =3  SFR (PCA0CPH0, 0xFA);                  // PCA0 Capture 0 High
  153      =3  SFR (PCA0CPH1, 0xFB);                  // PCA0 Capture 1 High
  154      =3  SFR (PCA0CPH2, 0xFC);                  // PCA0 Capture 2 High
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 37  
+
  155      =3  SFR (PCA0CPH3, 0xFD);                  // PCA0 Capture 3 High
  156      =3  SFR (PCA0CPH4, 0xFE);                  // PCA0 Capture 4 High
  157      =3  SFR (WDTCN, 0xFF);                     // Watchdog Timer Control
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 37  
-
  158      =3  
  159      =3  //-----------------------------------------------------------------------------
  160      =3  // 16-bit Register Definitions (might not be supported by all compilers)
@@ -2363,11 +2366,11 @@ line level    source
  214      =3  
  215      =3  // SCON0 0x98
  216      =3  SBIT (SM00, SFR_SCON0, 7);             // Serial Mode Control Bit 0
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 38  
+
  217      =3  SBIT (SM10, SFR_SCON0, 6);             // Serial Mode Control Bit 1
  218      =3  SBIT (SM20, SFR_SCON0, 5);             // Multiprocessor Communication Enable
  219      =3  SBIT (REN0, SFR_SCON0, 4);             // Receive Enable
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 38  
-
  220      =3  SBIT (TB80, SFR_SCON0, 3);             // Transmit Bit 8
  221      =3  SBIT (RB80, SFR_SCON0, 2);             // Receive Bit 8
  222      =3  SBIT (TI0, SFR_SCON0, 1);              // Transmit Interrupt Flag
@@ -2427,11 +2430,11 @@ line level    source
  276      =3  SBIT (CF, SFR_PCA0CN, 7);              // PCA 0 Counter Overflow Flag
  277      =3  SBIT (CR, SFR_PCA0CN, 6);              // PCA 0 Counter Run Control Bit
  278      =3                                         // Bit5 UNUSED
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 39  
+
  279      =3  SBIT (CCF4, SFR_PCA0CN, 4);            // PCA 0 Module 4 Interrupt Flag
  280      =3  SBIT (CCF3, SFR_PCA0CN, 3);            // PCA 0 Module 3 Interrupt Flag
  281      =3  SBIT (CCF2, SFR_PCA0CN, 2);            // PCA 0 Module 2 Interrupt Flag
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 39  
-
  282      =3  SBIT (CCF1, SFR_PCA0CN, 1);            // PCA 0 Module 1 Interrupt Flag
  283      =3  SBIT (CCF0, SFR_PCA0CN, 0);            // PCA 0 Module 0 Interrupt Flag
  284      =3  
@@ -2491,11 +2494,11 @@ line level    source
            =3 SFR(_XPAGE, 0xAF); // Point to the EMI0CN register
            =3 
            =3 #endif
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 40  
+
  341      =3  
  342      =3  //-----------------------------------------------------------------------------
  343      =3  // Header File PreProcessor Directive
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 40  
-
  344      =3  //-----------------------------------------------------------------------------
  345      =3  
  346      =3  #endif                                 // #define C8051F020_DEFS_H
@@ -2503,8 +2506,8 @@ line level    source
  348      =3  //-----------------------------------------------------------------------------
  349      =3  // End Of File
  350      =3  //-----------------------------------------------------------------------------
-  95      =2  /*****************************************************************************/
-  96      =2  #include <stdio.h>
+  98      =2  /*****************************************************************************/
+  99      =2  #include <stdio.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  STDIO.H
    3      =3  
@@ -2548,18 +2551,18 @@ line level    source
   41      =3  
   42      =3  #endif
   43      =3  
-  97      =2  #include <stdlib.h> 
+ 100      =2  #include <stdlib.h> 
    1      =3  /*--------------------------------------------------------------------------
    2      =3  STDLIB.H
    3      =3  
    4      =3  Standard functions.
    5      =3  Copyright (c) 1988-2008 Keil Elektronik GmbH and Keil Software, Inc.
    6      =3  Copyright (c) 2008-2016 ARM Germany GmbH
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 41  
+
    7      =3  All rights reserved.
    8      =3  --------------------------------------------------------------------------*/
    9      =3  
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 41  
-
   10      =3  #ifndef __STDLIB_H__
   11      =3  #define __STDLIB_H__
   12      =3  
@@ -2619,11 +2622,11 @@ line level    source
   66      =3  extern void   srand (unsigned int seed);
   67      =3  
   68      =3  #ifdef _DIV_T_DEFINED
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 42  
+
            =3 extern div_t  __div (int numer, int denom);
            =3 #define div(numer,denom)  __div((numer),(denom));
            =3 extern ldiv_t ldiv (long numer, long denom);
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 42  
-
            =3 #endif // _DIV_T_DEFINED
   73      =3  
   74      =3  extern float         strtod  (const char *nptr, char **endptr);
@@ -2645,7 +2648,7 @@ line level    source
   90      =3  #pragma RESTORE
   91      =3  
   92      =3  #endif // __STDLIB_H__
-  98      =2  #include <string.h>
+ 101      =2  #include <string.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  STRING.H
    3      =3  
@@ -2683,11 +2686,11 @@ line level    source
   35      =3  extern char  *strchr  (const char *s, char c);
   36      =3  extern int    strpos  (const char *s, char c);
   37      =3  extern char  *strrchr (const char *s, char c);
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 43  
+
   38      =3  extern int    strrpos (const char *s, char c);
   39      =3  
   40      =3  extern size_t strspn  (const char *s, const char *set);
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 43  
-
   41      =3  extern size_t strcspn (const char *s, const char *set);
   42      =3  extern char  *strpbrk (const char *s, const char *set);
   43      =3  extern char  *strrpbrk(const char *s, const char *set);
@@ -2703,7 +2706,7 @@ line level    source
   53      =3  #pragma RESTORE
   54      =3  
   55      =3  #endif
-  99      =2  #include <INTRINS.H>
+ 102      =2  #include <INTRINS.H>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  INTRINS.H
    3      =3  
@@ -2744,14 +2747,14 @@ line level    source
   38      =3  
   39      =3  #endif
   40      =3  
- 100      =2  #include <ctype.h>
+ 103      =2  #include <ctype.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  CTYPE.H
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 44  
+
    3      =3  
    4      =3  Prototypes for character functions.
    5      =3  Copyright (c) 1988-2002 Keil Elektronik GmbH and Keil Software, Inc.
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 44  
-
    6      =3  All rights reserved.
    7      =3  --------------------------------------------------------------------------*/
    8      =3  
@@ -2781,7 +2784,7 @@ line level    source
   32      =3  #pragma RESTORE
   33      =3  
   34      =3  #endif
- 101      =2  #include <LIMITS.H>
+ 104      =2  #include <LIMITS.H>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  LIMITS.H
    3      =3  
@@ -2811,11 +2814,11 @@ line level    source
   27      =3  #define ULONG_MAX        0xFFFFFFFF     /* Max "unsigned"  "long" value */
   28      =3  
   29      =3  #endif
- 102      =2  #include <math.h>
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 45  
+
+ 105      =2  #include <math.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  MATH.H
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 45  
-
    3      =3  
    4      =3  Prototypes for mathematic functions.
    5      =3  Copyright (c) 1988-2008 Keil Elektronik GmbH and Keil Software, Inc.
@@ -2875,14 +2878,14 @@ line level    source
   59      =3  #if defined (__CX2__)
            =3 extern float frexp (float val, int *exp);
            =3 extern float ldexp (float val, int exp);
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 46  
+
            =3 #endif
   63      =3  
   64      =3  #pragma RESTORE
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 46  
-
   65      =3  
   66      =3  #endif
- 103      =2  #include "crc32.h"
+ 106      =2  #include "crc32.h"
    1      =3  #ifndef __CRC32_H__
    2      =3  #define __CRC32_H__
    3      =3  
@@ -2894,6 +2897,8 @@ line level    source
    1      =4  #ifndef __APPCONFIG_H__
            =4 #define __APPCONFIG_H__
            =4 /*****************************************************************************/
+           =4 #define DEBUG_LED_ON                                            0
+           =4 #define DEBUG_LED_OFF                                           1
            =4 #define CONFIG_SYSCLK                       (22118400L)
            =4 #ifdef C8051F020
            =4 #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
@@ -2902,7 +2907,7 @@ line level    source
            =4 #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
            =4 #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
            =4 #define CONFIG_VERSION                                          0x0001
-           =4 #define CONFIG_CHECK_CODE                                       0x5A00
+           =4 #define CONFIG_CHECK_CODE                                       0x5AC1
            =4 #define CONFIG_USING_SIMULATION                         1
            =4 /*****************************************************************************/
            =4 #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
@@ -2917,6 +2922,7 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define CONFIG_I2C0_FREQ                                        1               
            =4 /*****************************************************************************/
+           =4 #define CONFIG_EPROM_DEBUG                                      0
            =4 #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
            =4 #define CONFIG_AT24C02_SIZE                             256
            =4 #define CONFIG_AT24C04_SIZE                             512
@@ -2936,14 +2942,14 @@ line level    source
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//ÊäÈëÊý×ÖÂË²¨É¨ÃèÖÜÆÚ 1mS * N
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_WDT                           1//¿´ÃÅ¹·ÆôÓÃ
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 47  
+
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//ÊäÈëIOË¢ÐÂÆôÓÃ
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_OUTPUT                     1//Êä³öIOË¢ÐÂÆôÓÃ
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_EPROM                         1//EPROMµôµç´æ´¢ÆôÓÃ
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 47  
-
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_UART1                         1//UART1´®¿ÚÆôÓÃ
            =4 #if CONFIG_SPLC_USING_UART1 == 1
@@ -2974,11 +2980,11 @@ line level    source
            =4 #define ENABLE_INTERRUPT                                        EA = 1;
            =4 /*****************************************************************************/
            =4 //Ö¸Ê¾ºÐ×Ó
-           =4 #define R_BOX_RED_SENDED                                        (R_START + 55)
-           =4 #define R_BOX_GREEN_SENDED                                      (R_START + 56)
+           =4 #define R_BOX_RED_SENDED                                        (R_START * 16 + 126)
+           =4 #define R_BOX_GREEN_SENDED                                      (R_START * 16 + 127)
            =4 #define BOX_CMD_STX                                                     0x81
            =4 #define BOX_CMD_ETX                                                     0x84
-           =4 #define BOX_SEND_BFADDR                                         (EM_START + 95)//·¢ËÍ»º³åÇøÎ»ÖÃ
+           =4 #define BOX_SEND_BFADDR                                         (EM_START + 100)//·¢ËÍ»º³åÇøÎ»ÖÃ
            =4 #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
            =4 /*****************************************************************************/
            =4 #include "stdint.h"
@@ -3000,14 +3006,14 @@ line level    source
            =4 #include "InitDeviceF020.h"
            =4 #include "delay.h"
            =4 #include "i2c0.h"
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 48  
+
            =4 #include "eprom.h"
            =4 #include "dac8568_0.h"
            =4 #include "dac8568_1.h"
            =4 #include "dac8568_2.h"
            =4 #include "dac8568_3.h"
            =4 #if CONFIG_SPLC_USING_UART1 == 1
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 48  
-
            =4 #include "sPlcUart.h"
            =4 #endif
            =4 /*****************************************************************************/
@@ -3030,8 +3036,8 @@ line level    source
   19      =3  
   20      =3  
   21      =3  
- 104      =2  /*****************************************************************************/
- 105      =2  #include "InitDeviceF020.h"
+ 107      =2  /*****************************************************************************/
+ 108      =2  #include "InitDeviceF020.h"
    1      =3  #ifndef __INITDEVICEF020_H__
    2      =3  #define __INITDEVICEF020_H__
    3      =3  /*****************************************************************************/
@@ -3039,6 +3045,8 @@ line level    source
    1      =4  #ifndef __APPCONFIG_H__
            =4 #define __APPCONFIG_H__
            =4 /*****************************************************************************/
+           =4 #define DEBUG_LED_ON                                            0
+           =4 #define DEBUG_LED_OFF                                           1
            =4 #define CONFIG_SYSCLK                       (22118400L)
            =4 #ifdef C8051F020
            =4 #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
@@ -3047,7 +3055,7 @@ line level    source
            =4 #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
            =4 #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
            =4 #define CONFIG_VERSION                                          0x0001
-           =4 #define CONFIG_CHECK_CODE                                       0x5A00
+           =4 #define CONFIG_CHECK_CODE                                       0x5AC1
            =4 #define CONFIG_USING_SIMULATION                         1
            =4 /*****************************************************************************/
            =4 #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
@@ -3062,6 +3070,9 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define CONFIG_I2C0_FREQ                                        1               
            =4 /*****************************************************************************/
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 49  
+
+           =4 #define CONFIG_EPROM_DEBUG                                      0
            =4 #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
            =4 #define CONFIG_AT24C02_SIZE                             256
            =4 #define CONFIG_AT24C04_SIZE                             512
@@ -3070,8 +3081,6 @@ line level    source
            =4 #define CONFIG_AT24C32_SIZE                             4096
            =4 #define CONFIG_AT24C64_SIZE                                     8192
            =4 #define CONFIG_AT24C128_SIZE                            16384
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 49  
-
            =4 #define CONFIG_AT24C256_SIZE                            32768
            =4 #define CONFIG_EPROM_ADDRESS                            0x50
            =4 #define CONFIG_EPROM_FRAM                                       1//Ìúµç´æ´¢ÌåÎÞÐ´ÈëµÈ´ý
@@ -3119,12 +3128,14 @@ line level    source
            =4 #define ENABLE_INTERRUPT                                        EA = 1;
            =4 /*****************************************************************************/
            =4 //Ö¸Ê¾ºÐ×Ó
-           =4 #define R_BOX_RED_SENDED                                        (R_START + 55)
-           =4 #define R_BOX_GREEN_SENDED                                      (R_START + 56)
+           =4 #define R_BOX_RED_SENDED                                        (R_START * 16 + 126)
+           =4 #define R_BOX_GREEN_SENDED                                      (R_START * 16 + 127)
            =4 #define BOX_CMD_STX                                                     0x81
            =4 #define BOX_CMD_ETX                                                     0x84
-           =4 #define BOX_SEND_BFADDR                                         (EM_START + 95)//·¢ËÍ»º³åÇøÎ»ÖÃ
+           =4 #define BOX_SEND_BFADDR                                         (EM_START + 100)//·¢ËÍ»º³åÇøÎ»ÖÃ
            =4 #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 50  
+
            =4 /*****************************************************************************/
            =4 #include "stdint.h"
            =4 #include "stdbool.h"
@@ -3134,8 +3145,6 @@ line level    source
            =4 #include "C8051F020_defs.h"
            =4 /*****************************************************************************/
            =4 #include <stdio.h>
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 50  
-
            =4 #include <stdlib.h> 
            =4 #include <string.h>
            =4 #include <INTRINS.H>
@@ -3165,7 +3174,7 @@ line level    source
    5      =3  /*****************************************************************************/
    6      =3  void initDeviceF020(void);
    7      =3  #endif
- 106      =2  #include "delay.h"
+ 109      =2  #include "delay.h"
    1      =3  #ifndef __DELAY_H__
    2      =3  #define __DELAY_H__
    3      =3  /*****************************************************************************/
@@ -3189,6 +3198,8 @@ line level    source
    4      =3  #ifndef __DELAY_H__
    4      =3  #define __DELAY_H__
    4      =3  /*****************************************************************************/
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 51  
+
    4      =3  #include "appConfig.h"
    5      =3  /*****************************************************************************/
    6      =3  void delayMs(uint8_t ms) reentrant;
@@ -3198,8 +3209,6 @@ line level    source
   10      =3  /*****************************************************************************/
   11      =3  #endif
   12      =3  
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 51  
-
    1      =3  #ifndef __I2C0_H__
    2      =3  #define __I2C0_H__
    3      =3  /*****************************************************************************/
@@ -3234,119 +3243,122 @@ line level    source
            =1 void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
            =1 void epromTest(void);
            =1 #endif
- 108      =2  #ifndef __APPCONFIG_H__
- 108      =2  #define __APPCONFIG_H__
- 108      =2  /*****************************************************************************/
- 108      =2  #define CONFIG_SYSCLK                       (22118400L)
- 108      =2  #ifdef C8051F020
- 108      =2  #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
- 108      =2  #endif
- 108      =2  #define CONFIG_DEBUG                        0//µ÷ÊÔ¹¦ÄÜ
- 108      =2  #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
- 108      =2  #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
- 108      =2  #define CONFIG_VERSION                                          0x0001
- 108      =2  #define CONFIG_CHECK_CODE                                       0x5A00
- 108      =2  #define CONFIG_USING_SIMULATION                         1
- 108      =2  /*****************************************************************************/
- 108      =2  #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
- 108      =2  #define CONFIG_UART0_PARITY                                     NONE
- 108      =2  #define CONFIG_UART0_STOPBIT                            1
- 108      =2  #define CONFIG_UART0_DATABIT                            8
- 108      =2  
- 108      =2  #define CONFIG_UART1_BAUDRATE                           9600//´®¿Ú²¨ÌØÂÊ
- 108      =2  #define CONFIG_UART1_PARITY                                     NONE
- 108      =2  #define CONFIG_UART1_STOPBIT                            1
- 108      =2  #define CONFIG_UART1_DATABIT                            8
- 108      =2  /*****************************************************************************/
- 108      =2  #define CONFIG_I2C0_FREQ                                        1               
- 108      =2  /*****************************************************************************/
- 108      =2  #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
- 108      =2  #define CONFIG_AT24C02_SIZE                             256
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 52  
+ 111      =2  #ifndef __APPCONFIG_H__
+ 111      =2  #define __APPCONFIG_H__
+ 111      =2  /*****************************************************************************/
+ 111      =2  #define DEBUG_LED_ON                                            0
+ 111      =2  #define DEBUG_LED_OFF                                           1
+ 111      =2  #define CONFIG_SYSCLK                       (22118400L)
+ 111      =2  #ifdef C8051F020
+ 111      =2  #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
+ 111      =2  #endif
+ 111      =2  #define CONFIG_DEBUG                        0//µ÷ÊÔ¹¦ÄÜ
+ 111      =2  #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
+ 111      =2  #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
+ 111      =2  #define CONFIG_VERSION                                          0x0001
+ 111      =2  #define CONFIG_CHECK_CODE                                       0x5AC1
+ 111      =2  #define CONFIG_USING_SIMULATION                         1
+ 111      =2  /*****************************************************************************/
+ 111      =2  #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
+ 111      =2  #define CONFIG_UART0_PARITY                                     NONE
+ 111      =2  #define CONFIG_UART0_STOPBIT                            1
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 52  
 
- 108      =2  #define CONFIG_AT24C04_SIZE                             512
- 108      =2  #define CONFIG_AT24C08_SIZE                             1024
- 108      =2  #define CONFIG_AT24C16_SIZE                             2048
- 108      =2  #define CONFIG_AT24C32_SIZE                             4096
- 108      =2  #define CONFIG_AT24C64_SIZE                                     8192
- 108      =2  #define CONFIG_AT24C128_SIZE                            16384
- 108      =2  #define CONFIG_AT24C256_SIZE                            32768
- 108      =2  #define CONFIG_EPROM_ADDRESS                            0x50
- 108      =2  #define CONFIG_EPROM_FRAM                                       1//Ìúµç´æ´¢ÌåÎÞÐ´ÈëµÈ´ý
- 108      =2  #define CONFIG_EPROM_PAGEWRITE                          0//Ò³Ð´Èë
- 108      =2  /*****************************************************************************/
- 108      =2  //SPLCÉèÖÃ
- 108      =2  #define CONFIG_SPLC_ASSERT                                      0//¼ì²éµØÖ··¶Î§
- 108      =2  #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
- 108      =2  #define CONFIG_INPUT_FILTER_TIME                        3//ÊäÈëÊý×ÖÂË²¨É¨ÃèÖÜÆÚ 1mS * N
- 108      =2  /*****************************************************************************/
- 108      =2  #define CONFIG_SPLC_USING_WDT                           1//¿´ÃÅ¹·ÆôÓÃ
- 108      =2  /*****************************************************************************/
- 108      =2  #define CONFIG_SPLC_USING_IO_INPUT                      1//ÊäÈëIOË¢ÐÂÆôÓÃ
- 108      =2  /*****************************************************************************/
- 108      =2  #define CONFIG_SPLC_USING_IO_OUTPUT                     1//Êä³öIOË¢ÐÂÆôÓÃ
- 108      =2  /*****************************************************************************/
- 108      =2  #define CONFIG_SPLC_USING_EPROM                         1//EPROMµôµç´æ´¢ÆôÓÃ
- 108      =2  /*****************************************************************************/
- 108      =2  #define CONFIG_SPLC_USING_UART1                         1//UART1´®¿ÚÆôÓÃ
- 108      =2  #if CONFIG_SPLC_USING_UART1 == 1
- 108      =2  #define SPLC_UART1                                                      1
- 108      =2  #endif
- 108      =2  /*****************************************************************************/
- 108      =2  #define CONFIG_SPLC_USING_ADC                           1//Ê¹ÄÜADCÄ£¿é
- 108      =2  #define CONFIG_SPLC_ADC_FILTER_TAP                      14//ADCÎ»ÒÆÂË²¨´ÎÊý
- 108      =2  #define CONFIG_SPLC_ADC_CHANNLE                         64//ADCÍ¨µÀÊý
- 108      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
- 108      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
- 108      =2  #define CONFIG_SPLC_ADC_INTERNAL_VREF           2200L// ADC Voltage Reference (mV)
- 108      =2  #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
- 108      =2  /*****************************************************************************/
- 108      =2  #define CONFIG_SPLC_USING_DAC                           1//ÊÇÄÜDACÄ£¿é
- 108      =2  /*****************************************************************************/
- 108      =2  #define CONFIG_SPLC_USING_MB_RTU_SLAVE          1//ÊÇÄÜMODBUS RTU´ÓÕ¾
- 108      =2  #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
- 108      =2  #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//´ÓÉè±¸µØÖ·
- 108      =2  #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//·¢ËÍ½ÓÊÕ»º³åÇø
- 108      =2  #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//½ÓÊÕÍ¨Ñ¶³¬Ê± 10mS
- 108      =2  #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TXÇÐ»»ÑÓÊ±
- 108      =2  /*****************************************************************************/
- 108      =2  /*****************************************************************************/
- 108      =2  #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
- 108      =2  #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
- 108      =2  #define DISABLE_INTERRUPT                                       EA = 0;
- 108      =2  #define ENABLE_INTERRUPT                                        EA = 1;
- 108      =2  /*****************************************************************************/
- 108      =2  //Ö¸Ê¾ºÐ×Ó
- 108      =2  #define R_BOX_RED_SENDED                                        (R_START + 55)
- 108      =2  #define R_BOX_GREEN_SENDED                                      (R_START + 56)
- 108      =2  #define BOX_CMD_STX                                                     0x81
- 108      =2  #define BOX_CMD_ETX                                                     0x84
- 108      =2  #define BOX_SEND_BFADDR                                         (EM_START + 95)//·¢ËÍ»º³åÇøÎ»ÖÃ
- 108      =2  #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
- 108      =2  /*****************************************************************************/
- 108      =2  #include "stdint.h"
- 108      =2  #include "stdbool.h"
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 53  
+ 111      =2  #define CONFIG_UART0_DATABIT                            8
+ 111      =2  
+ 111      =2  #define CONFIG_UART1_BAUDRATE                           9600//´®¿Ú²¨ÌØÂÊ
+ 111      =2  #define CONFIG_UART1_PARITY                                     NONE
+ 111      =2  #define CONFIG_UART1_STOPBIT                            1
+ 111      =2  #define CONFIG_UART1_DATABIT                            8
+ 111      =2  /*****************************************************************************/
+ 111      =2  #define CONFIG_I2C0_FREQ                                        1               
+ 111      =2  /*****************************************************************************/
+ 111      =2  #define CONFIG_EPROM_DEBUG                                      0
+ 111      =2  #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
+ 111      =2  #define CONFIG_AT24C02_SIZE                             256
+ 111      =2  #define CONFIG_AT24C04_SIZE                             512
+ 111      =2  #define CONFIG_AT24C08_SIZE                             1024
+ 111      =2  #define CONFIG_AT24C16_SIZE                             2048
+ 111      =2  #define CONFIG_AT24C32_SIZE                             4096
+ 111      =2  #define CONFIG_AT24C64_SIZE                                     8192
+ 111      =2  #define CONFIG_AT24C128_SIZE                            16384
+ 111      =2  #define CONFIG_AT24C256_SIZE                            32768
+ 111      =2  #define CONFIG_EPROM_ADDRESS                            0x50
+ 111      =2  #define CONFIG_EPROM_FRAM                                       1//Ìúµç´æ´¢ÌåÎÞÐ´ÈëµÈ´ý
+ 111      =2  #define CONFIG_EPROM_PAGEWRITE                          0//Ò³Ð´Èë
+ 111      =2  /*****************************************************************************/
+ 111      =2  //SPLCÉèÖÃ
+ 111      =2  #define CONFIG_SPLC_ASSERT                                      0//¼ì²éµØÖ··¶Î§
+ 111      =2  #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
+ 111      =2  #define CONFIG_INPUT_FILTER_TIME                        3//ÊäÈëÊý×ÖÂË²¨É¨ÃèÖÜÆÚ 1mS * N
+ 111      =2  /*****************************************************************************/
+ 111      =2  #define CONFIG_SPLC_USING_WDT                           1//¿´ÃÅ¹·ÆôÓÃ
+ 111      =2  /*****************************************************************************/
+ 111      =2  #define CONFIG_SPLC_USING_IO_INPUT                      1//ÊäÈëIOË¢ÐÂÆôÓÃ
+ 111      =2  /*****************************************************************************/
+ 111      =2  #define CONFIG_SPLC_USING_IO_OUTPUT                     1//Êä³öIOË¢ÐÂÆôÓÃ
+ 111      =2  /*****************************************************************************/
+ 111      =2  #define CONFIG_SPLC_USING_EPROM                         1//EPROMµôµç´æ´¢ÆôÓÃ
+ 111      =2  /*****************************************************************************/
+ 111      =2  #define CONFIG_SPLC_USING_UART1                         1//UART1´®¿ÚÆôÓÃ
+ 111      =2  #if CONFIG_SPLC_USING_UART1 == 1
+ 111      =2  #define SPLC_UART1                                                      1
+ 111      =2  #endif
+ 111      =2  /*****************************************************************************/
+ 111      =2  #define CONFIG_SPLC_USING_ADC                           1//Ê¹ÄÜADCÄ£¿é
+ 111      =2  #define CONFIG_SPLC_ADC_FILTER_TAP                      14//ADCÎ»ÒÆÂË²¨´ÎÊý
+ 111      =2  #define CONFIG_SPLC_ADC_CHANNLE                         64//ADCÍ¨µÀÊý
+ 111      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
+ 111      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
+ 111      =2  #define CONFIG_SPLC_ADC_INTERNAL_VREF           2200L// ADC Voltage Reference (mV)
+ 111      =2  #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
+ 111      =2  /*****************************************************************************/
+ 111      =2  #define CONFIG_SPLC_USING_DAC                           1//ÊÇÄÜDACÄ£¿é
+ 111      =2  /*****************************************************************************/
+ 111      =2  #define CONFIG_SPLC_USING_MB_RTU_SLAVE          1//ÊÇÄÜMODBUS RTU´ÓÕ¾
+ 111      =2  #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
+ 111      =2  #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//´ÓÉè±¸µØÖ·
+ 111      =2  #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//·¢ËÍ½ÓÊÕ»º³åÇø
+ 111      =2  #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//½ÓÊÕÍ¨Ñ¶³¬Ê± 10mS
+ 111      =2  #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TXÇÐ»»ÑÓÊ±
+ 111      =2  /*****************************************************************************/
+ 111      =2  /*****************************************************************************/
+ 111      =2  #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
+ 111      =2  #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
+ 111      =2  #define DISABLE_INTERRUPT                                       EA = 0;
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 53  
 
- 108      =2  #include "endian.h"
- 108      =2  #include "si_toolchain.h"
- 108      =2  #include "compiler_defs.h"
- 108      =2  #include "C8051F020_defs.h"
- 108      =2  /*****************************************************************************/
- 108      =2  #include <stdio.h>
- 108      =2  #include <stdlib.h> 
- 108      =2  #include <string.h>
- 108      =2  #include <INTRINS.H>
- 108      =2  #include <ctype.h>
- 108      =2  #include <LIMITS.H>
- 108      =2  #include <math.h>
- 108      =2  #include "crc32.h"
- 108      =2  /*****************************************************************************/
- 108      =2  #include "InitDeviceF020.h"
- 108      =2  #include "delay.h"
- 108      =2  #include "i2c0.h"
- 108      =2  #include "eprom.h"
- 109      =2  #include "dac8568_0.h"
+ 111      =2  #define ENABLE_INTERRUPT                                        EA = 1;
+ 111      =2  /*****************************************************************************/
+ 111      =2  //Ö¸Ê¾ºÐ×Ó
+ 111      =2  #define R_BOX_RED_SENDED                                        (R_START * 16 + 126)
+ 111      =2  #define R_BOX_GREEN_SENDED                                      (R_START * 16 + 127)
+ 111      =2  #define BOX_CMD_STX                                                     0x81
+ 111      =2  #define BOX_CMD_ETX                                                     0x84
+ 111      =2  #define BOX_SEND_BFADDR                                         (EM_START + 100)//·¢ËÍ»º³åÇøÎ»ÖÃ
+ 111      =2  #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
+ 111      =2  /*****************************************************************************/
+ 111      =2  #include "stdint.h"
+ 111      =2  #include "stdbool.h"
+ 111      =2  #include "endian.h"
+ 111      =2  #include "si_toolchain.h"
+ 111      =2  #include "compiler_defs.h"
+ 111      =2  #include "C8051F020_defs.h"
+ 111      =2  /*****************************************************************************/
+ 111      =2  #include <stdio.h>
+ 111      =2  #include <stdlib.h> 
+ 111      =2  #include <string.h>
+ 111      =2  #include <INTRINS.H>
+ 111      =2  #include <ctype.h>
+ 111      =2  #include <LIMITS.H>
+ 111      =2  #include <math.h>
+ 111      =2  #include "crc32.h"
+ 111      =2  /*****************************************************************************/
+ 111      =2  #include "InitDeviceF020.h"
+ 111      =2  #include "delay.h"
+ 111      =2  #include "i2c0.h"
+ 111      =2  #include "eprom.h"
+ 112      =2  #include "dac8568_0.h"
    1      =3  #include "appConfig.h"
            =2 #include "dac8568_1.h"
            =2 #include "dac8568_2.h"
@@ -3378,6 +3390,8 @@ line level    source
    6      =3  void dac8568_1_WriteDacRegister(uint8_t ch, uint16_t dat);
    7      =3  void dac8568_1_Clear(void);
    8      =3  void dac8568_1_Reset(void);
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 54  
+
    1      =3  #include "appConfig.h"
    1      =3  #include "appConfig.h"
    2      =3  /*****************************************************************************/
@@ -3390,8 +3404,6 @@ line level    source
    1      =3  #include "appConfig.h"
    1      =3  #include "appConfig.h"
    2      =3  /*****************************************************************************/
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 54  
-
    3      =3  void dac8568_3_Init(void);
    4      =3  void dac8568_3_Update(uint8_t ch);
    5      =3  void dac8568_3_WriteInputRegister(uint8_t ch, uint16_t dat);
@@ -3405,6 +3417,8 @@ line level    source
    1      =4  #ifndef __APPCONFIG_H__
            =4 #define __APPCONFIG_H__
            =4 /*****************************************************************************/
+           =4 #define DEBUG_LED_ON                                            0
+           =4 #define DEBUG_LED_OFF                                           1
            =4 #define CONFIG_SYSCLK                       (22118400L)
            =4 #ifdef C8051F020
            =4 #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
@@ -3413,7 +3427,7 @@ line level    source
            =4 #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
            =4 #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
            =4 #define CONFIG_VERSION                                          0x0001
-           =4 #define CONFIG_CHECK_CODE                                       0x5A00
+           =4 #define CONFIG_CHECK_CODE                                       0x5AC1
            =4 #define CONFIG_USING_SIMULATION                         1
            =4 /*****************************************************************************/
            =4 #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
@@ -3428,6 +3442,7 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define CONFIG_I2C0_FREQ                                        1               
            =4 /*****************************************************************************/
+           =4 #define CONFIG_EPROM_DEBUG                                      0
            =4 #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
            =4 #define CONFIG_AT24C02_SIZE                             256
            =4 #define CONFIG_AT24C04_SIZE                             512
@@ -3439,6 +3454,8 @@ line level    source
            =4 #define CONFIG_AT24C256_SIZE                            32768
            =4 #define CONFIG_EPROM_ADDRESS                            0x50
            =4 #define CONFIG_EPROM_FRAM                                       1//Ìúµç´æ´¢ÌåÎÞÐ´ÈëµÈ´ý
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 55  
+
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//Ò³Ð´Èë
            =4 /*****************************************************************************/
            =4 //SPLCÉèÖÃ
@@ -3454,8 +3471,6 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_EPROM                         1//EPROMµôµç´æ´¢ÆôÓÃ
            =4 /*****************************************************************************/
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 55  
-
            =4 #define CONFIG_SPLC_USING_UART1                         1//UART1´®¿ÚÆôÓÃ
            =4 #if CONFIG_SPLC_USING_UART1 == 1
            =4 #define SPLC_UART1                                                      1
@@ -3485,11 +3500,11 @@ line level    source
            =4 #define ENABLE_INTERRUPT                                        EA = 1;
            =4 /*****************************************************************************/
            =4 //Ö¸Ê¾ºÐ×Ó
-           =4 #define R_BOX_RED_SENDED                                        (R_START + 55)
-           =4 #define R_BOX_GREEN_SENDED                                      (R_START + 56)
+           =4 #define R_BOX_RED_SENDED                                        (R_START * 16 + 126)
+           =4 #define R_BOX_GREEN_SENDED                                      (R_START * 16 + 127)
            =4 #define BOX_CMD_STX                                                     0x81
            =4 #define BOX_CMD_ETX                                                     0x84
-           =4 #define BOX_SEND_BFADDR                                         (EM_START + 95)//·¢ËÍ»º³åÇøÎ»ÖÃ
+           =4 #define BOX_SEND_BFADDR                                         (EM_START + 100)//·¢ËÍ»º³åÇøÎ»ÖÃ
            =4 #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
            =4 /*****************************************************************************/
            =4 #include "stdint.h"
@@ -3503,6 +3518,8 @@ line level    source
            =4 #include <stdlib.h> 
            =4 #include <string.h>
            =4 #include <INTRINS.H>
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 56  
+
            =4 #include <ctype.h>
            =4 #include <LIMITS.H>
            =4 #include <math.h>
@@ -3518,8 +3535,6 @@ line level    source
            =4 #include "dac8568_3.h"
            =4 #if CONFIG_SPLC_USING_UART1 == 1
            =4 #include "sPlcUart.h"
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 56  
-
            =4 #endif
            =4 /*****************************************************************************/
            =4 #include "Modbus.h"
@@ -3567,11 +3582,15 @@ line level    source
   12      =3  #endif
    1      =3  #ifndef __SPLC_H__
    2      =3  #define __SPLC_H__
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 57  
+
    3      =3  /*****************************************************************************/
    4      =3  #include "appConfig.h"
    1      =4  #ifndef __APPCONFIG_H__
            =4 #define __APPCONFIG_H__
            =4 /*****************************************************************************/
+           =4 #define DEBUG_LED_ON                                            0
+           =4 #define DEBUG_LED_OFF                                           1
            =4 #define CONFIG_SYSCLK                       (22118400L)
            =4 #ifdef C8051F020
            =4 #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
@@ -3580,10 +3599,8 @@ line level    source
            =4 #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
            =4 #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
            =4 #define CONFIG_VERSION                                          0x0001
-           =4 #define CONFIG_CHECK_CODE                                       0x5A00
+           =4 #define CONFIG_CHECK_CODE                                       0x5AC1
            =4 #define CONFIG_USING_SIMULATION                         1
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 57  
-
            =4 /*****************************************************************************/
            =4 #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
            =4 #define CONFIG_UART0_PARITY                                     NONE
@@ -3597,6 +3614,7 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define CONFIG_I2C0_FREQ                                        1               
            =4 /*****************************************************************************/
+           =4 #define CONFIG_EPROM_DEBUG                                      0
            =4 #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
            =4 #define CONFIG_AT24C02_SIZE                             256
            =4 #define CONFIG_AT24C04_SIZE                             512
@@ -3628,6 +3646,8 @@ line level    source
            =4 #define SPLC_UART1                                                      1
            =4 #endif
            =4 /*****************************************************************************/
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 58  
+
            =4 #define CONFIG_SPLC_USING_ADC                           1//Ê¹ÄÜADCÄ£¿é
            =4 #define CONFIG_SPLC_ADC_FILTER_TAP                      14//ADCÎ»ÒÆÂË²¨´ÎÊý
            =4 #define CONFIG_SPLC_ADC_CHANNLE                         64//ADCÍ¨µÀÊý
@@ -3646,19 +3666,17 @@ line level    source
            =4 #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TXÇÐ»»ÑÓÊ±
            =4 /*****************************************************************************/
            =4 /*****************************************************************************/
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 58  
-
            =4 #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
            =4 #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
            =4 #define DISABLE_INTERRUPT                                       EA = 0;
            =4 #define ENABLE_INTERRUPT                                        EA = 1;
            =4 /*****************************************************************************/
            =4 //Ö¸Ê¾ºÐ×Ó
-           =4 #define R_BOX_RED_SENDED                                        (R_START + 55)
-           =4 #define R_BOX_GREEN_SENDED                                      (R_START + 56)
+           =4 #define R_BOX_RED_SENDED                                        (R_START * 16 + 126)
+           =4 #define R_BOX_GREEN_SENDED                                      (R_START * 16 + 127)
            =4 #define BOX_CMD_STX                                                     0x81
            =4 #define BOX_CMD_ETX                                                     0x84
-           =4 #define BOX_SEND_BFADDR                                         (EM_START + 95)//·¢ËÍ»º³åÇøÎ»ÖÃ
+           =4 #define BOX_SEND_BFADDR                                         (EM_START + 100)//·¢ËÍ»º³åÇøÎ»ÖÃ
            =4 #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
            =4 /*****************************************************************************/
            =4 #include "stdint.h"
@@ -3692,59 +3710,59 @@ line level    source
            =4 #include "Modbus.h"
            =4 #include "ModbusPort.h"
            =4 /*****************************************************************************/
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 59  
+
            =4 #include "sPLC.h"
            =4 /*****************************************************************************/
            =4 #endif
    5      =3  /*****************************************************************************/
-   6      =3  //ÏßÈ¦ ±£³Ö 4 * 16 = 64BIT
+   6      =3  //ÏßÈ¦ ±£³Ö 8 * 16 = 128BIT
    7      =3  #define MR_START                                                0
    8      =3  #define MR_END                                                  3
-   9      =3  //ÏßÈ¦¼Ä´æÆ÷ ·Ç±£³Ö 4 * 16 = 64BIT
+   9      =3  //ÏßÈ¦¼Ä´æÆ÷ ·Ç±£³Ö 8 * 16 = 128BIT
   10      =3  #define R_START                                                 4
-  11      =3  #define R_END                                                   7
+  11      =3  #define R_END                                                   11
   12      =3  //Êý¾Ý¼Ä´æÆ÷ ±£³Ö 8
-  13      =3  #define DM_START                                                8
-  14      =3  #define DM_END                                                  15
-  15      =3  //Êý¾Ý¼Ä´æÆ÷ ·Ç±£³Ö 128¸ö×Ö
-  16      =3  #define EM_START                                                16
-  17      =3  #define EM_END                                                  143
+  13      =3  #define DM_START                                                12
+  14      =3  #define DM_END                                                  19
+  15      =3  //Êý¾Ý¼Ä´æÆ÷ ·Ç±£³Ö 140¸ö×Ö
+  16      =3  #define EM_START                                                20
+  17      =3  #define EM_END                                                  159
   18      =3  //ÑÓÊ±ÏßÈ¦
   19      =3  //1MS 1 * 16 = 16BIT
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 59  
-
-  20      =3  #define T_1MS_START                                             144
-  21      =3  #define T_1MS_END                                               144
+  20      =3  #define T_1MS_START                                             160
+  21      =3  #define T_1MS_END                                               160
   22      =3  //10MS 1 * 16 = 16BIT
-  23      =3  #define T_10MS_START                                    145
-  24      =3  #define T_10MS_END                                              145
+  23      =3  #define T_10MS_START                                    161
+  24      =3  #define T_10MS_END                                              161
   25      =3  //100MS 1 * 16 = 16BIT
-  26      =3  #define T_100MS_START                                   146
-  27      =3  #define T_100MS_END                                             146
+  26      =3  #define T_100MS_START                                   162
+  27      =3  #define T_100MS_END                                             162
   28      =3  //ÑÓÊ±¼ÆÊ±Æ÷ 
-  29      =3  //1MS 32
-  30      =3  #define TD_1MS_START                                    147
-  31      =3  #define TD_1MS_END                                              162
-  32      =3  //10MS 32
-  33      =3  #define TD_10MS_START                                   163
-  34      =3  #define TD_10MS_END                                             178
-  35      =3  //100MS 32
-  36      =3  #define TD_100MS_START                                  179
-  37      =3  #define TD_100MS_END                                    194
+  29      =3  //1MS 16
+  30      =3  #define TD_1MS_START                                    163
+  31      =3  #define TD_1MS_END                                              178
+  32      =3  //10MS 16
+  33      =3  #define TD_10MS_START                                   179
+  34      =3  #define TD_10MS_END                                             194
+  35      =3  //100MS 16
+  36      =3  #define TD_100MS_START                                  195
+  37      =3  #define TD_100MS_END                                    210
   38      =3  //¼ÆÊýÆ÷ 1
-  39      =3  #define C_START                                                 195
-  40      =3  #define C_END                                                   195
-  41      =3  //ÊäÈëÎ»¼Ä´æÆ÷ 1 * 16 = 128¸ö
-  42      =3  #define X_START                                                 196
-  43      =3  #define X_END                                                   196             
-  44      =3  //Êä³öÎ»¼Ä´æÆ÷ 1 * 16 = 128¸ö
-  45      =3  #define Y_START                                                 197
-  46      =3  #define Y_END                                                   197
+  39      =3  #define C_START                                                 211
+  40      =3  #define C_END                                                   211
+  41      =3  //ÊäÈëÎ»¼Ä´æÆ÷ 1 * 16 = 16¸ö
+  42      =3  #define X_START                                                 212
+  43      =3  #define X_END                                                   212             
+  44      =3  //Êä³öÎ»¼Ä´æÆ÷ 1 * 16 = 16¸ö
+  45      =3  #define Y_START                                                 213
+  46      =3  #define Y_END                                                   213
   47      =3  //ÌØÊâ¼Ä´æÆ÷ 24¸ö×Ö
-  48      =3  #define SPREG_START                                             198
-  49      =3  #define SPREG_END                                               221
+  48      =3  #define SPREG_START                                             214
+  49      =3  #define SPREG_END                                               237
   50      =3  //ÌØÊâÏßÈ¦      4 * 16 = 64¸ö
-  51      =3  #define SPCOIL_START                                    222
-  52      =3  #define SPCOIL_END                                              225
+  51      =3  #define SPCOIL_START                                    238
+  52      =3  #define SPCOIL_END                                              241
   53      =3  /*****************************************************************************/
   54      =3  #define EM_ADC_0                                                (EM_START + 0)//ADC0->MLD0
   55      =3  #define EM_ADC_1                                                (EM_START + 1)//ADC1->MLD1
@@ -3756,6 +3774,8 @@ line level    source
   61      =3  #define EM_ADC_7                                                (EM_START + 7)//ADC7->MLD7
   62      =3  #define EM_ADC_8                                                (EM_START + 8)//ADC8->MLD8
   63      =3  #define EM_ADC_9                                                (EM_START + 9)//ADC9->MLD9
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 60  
+
   64      =3  #define EM_ADC_10                                               (EM_START + 10)//ADC10->MLD10
   65      =3  #define EM_ADC_11                                               (EM_START + 11)//ADC11->MLD11
   66      =3  #define EM_ADC_12                                               (EM_START + 12)//ADC12->MLD12
@@ -3774,8 +3794,6 @@ line level    source
   79      =3  #define EM_ADC_25                                               (EM_START + 25)//ADC25->MLD25
   80      =3  #define EM_ADC_26                                               (EM_START + 26)//ADC26->MLD26
   81      =3  #define EM_ADC_27                                               (EM_START + 27)//ADC27->MLD27
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 60  
-
   82      =3  #define EM_ADC_28                                               (EM_START + 28)//ADC28->MLD28
   83      =3  #define EM_ADC_29                                               (EM_START + 29)//ADC29->MLD29
   84      =3  #define EM_ADC_30                                               (EM_START + 30)//ADC30->MLD30
@@ -3820,6 +3838,8 @@ line level    source
  123      =3  #define EM_DAC_5                                                (EM_START + 69)//DAC5
  124      =3  #define EM_DAC_6                                                (EM_START + 70)//DAC6
  125      =3  #define EM_DAC_7                                                (EM_START + 71)//DAC7
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 61  
+
  126      =3  #define EM_DAC_8                                                (EM_START + 72)//DAC8
  127      =3  #define EM_DAC_9                                                (EM_START + 73)//DAC9
  128      =3  #define EM_DAC_10                                               (EM_START + 74)//DAC10
@@ -3838,8 +3858,6 @@ line level    source
  141      =3  #define EM_DAC_23                                               (EM_START + 87)//DAC23
  142      =3  #define EM_DAC_24                                               (EM_START + 88)//DAC24
  143      =3  #define EM_DAC_25                                               (EM_START + 89)//DAC25
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 61  
-
  144      =3  #define EM_DAC_26                                               (EM_START + 90)//DAC26
  145      =3  #define EM_DAC_27                                               (EM_START + 91)//DAC27
  146      =3  #define EM_DAC_28                                               (EM_START + 92)//DAC28
@@ -3884,6 +3902,8 @@ line level    source
  185      =3  }adcTempDat_t;
  186      =3  /*****************************************************************************/
  187      =3  extern uint16_t ModbusSlaveAsciiOverTimeCounter;//Modbus SlaveÍ¨ÐÅ³¬Ê±¼ÆÊ±Æ÷
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 62  
+
  188      =3  extern xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//µôµç±£³Ö¼Ä´æÆ÷ µ±Ç°
  189      =3  extern xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//µôµç±£³Ö¼Ä´æÆ÷ ÉÏÒ»´Î
  190      =3  /*****************************************************************************/
@@ -3902,8 +3922,6 @@ line level    source
  203      =3  void clearT(void);
  204      =3  void clearTD(void);
  205      =3  void clearC(void);
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 62  
-
  206      =3  void nvramLoad(void);
  207      =3  void nvramSave(void);
  208      =3  void nvramUpdata(void);
@@ -3929,123 +3947,118 @@ line level    source
  228      =3  /*****************************************************************************/
  229      =3  #endif
    2          /*****************************************************************************/
-   3          sbit epromBusyFlag = P0^5;
-   4          /*****************************************************************************/
-   5          void epromInit(void){//³õÊ¼»¯IIC½Ó¿Ú
-   6   1              iic0Init();
-   7   1      }
-   8          
-   9          uint8_t epromReadOneByte(uint16_t ReadAddr){//ÔÚAT24CXXÖ¸¶¨µØÖ·¶Á³öÒ»¸öÊý¾Ý
-  10   1      //ReadAddr:¿ªÊ¼¶ÁÊýµÄµØÖ·  
-  11   1      //·µ»ØÖµ  :¶Áµ½µÄÊý¾Ý                             
-  12   1              uint8_t temp=0;                                                                                                                                                  
-  13   1              epromBusyFlag = 0;
-  14   1              iic0Start();  
-  15   1      #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
-  16   1      //¼æÈÝ24CxxÖÐÆäËûµÄ°æ±¾
-  17   1              iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) & 0xFE));//·¢ËÍÐ´ÃüÁî
-  18   1              iic0WaitAck();
-  19   1              iic0SendByte(ReadAddr >> 8);//·¢ËÍ¸ßµØÖ·                 
-  20   1      #else 
+   3          /*****************************************************************************/
+   4          void epromInit(void){//³õÊ¼»¯IIC½Ó¿Ú
+   5   1              iic0Init();
+   6   1      }
+   7          
+   8          uint8_t epromReadOneByte(uint16_t ReadAddr){//ÔÚAT24CXXÖ¸¶¨µØÖ·¶Á³öÒ»¸öÊý¾Ý
+   9   1      //ReadAddr:¿ªÊ¼¶ÁÊýµÄµØÖ·  
+  10   1      //·µ»ØÖµ  :¶Áµ½µÄÊý¾Ý                             
+  11   1              uint8_t temp=0;                                                                                                                                                  
+  12   1              iic0Start();  
+  13   1      #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
+  14   1      //¼æÈÝ24CxxÖÐÆäËûµÄ°æ±¾
+  15   1              iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) & 0xFE));//·¢ËÍÐ´ÃüÁî
+  16   1              iic0WaitAck();
+  17   1              iic0SendByte(ReadAddr >> 8);//·¢ËÍ¸ßµØÖ·                 
+  18   1      #else 
                       iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) & 0xFE) + ((ReadAddr / 256) << 1));//·¢ËÍÆ÷¼þµØÖ·0XA0,Ð´Êý¾Ý   
               #endif
-  23   1              iic0WaitAck(); 
-  24   1              iic0SendByte(ReadAddr % 256);   //·¢ËÍµÍµØÖ·
-  25   1              iic0WaitAck();      
-  26   1              iic0Start();               
-  27   1              iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) | 0x01));//½øÈë½ÓÊÕÄ£Ê½                          
-  28   1              iic0WaitAck();   
-  29   1              temp = iic0ReadByte(0);//¶ÁÒ»¸ö×Ö½Ú£¬·ÇÓ¦´ðÐÅºÅÐÅºÅ        
-  30   1              iic0Stop();        //²úÉúÒ»¸öÍ£Ö¹Ìõ¼þ
-  31   1              epromBusyFlag = 1;      
-  32   1              return temp;
-  33   1      }
-  34          
-  35          void epromWriteOneByte(uint16_t WriteAddr, uint8_t DataToWrite){//ÔÚAT24CXXÖ¸¶¨µØÖ·Ð´ÈëÒ»¸öÊý¾Ý
-  36   1      //WriteAddr  :Ð´ÈëÊý¾ÝµÄÄ¿µÄµØÖ·    
-  37   1      //DataToWrite:ÒªÐ´ÈëµÄÊý¾Ý                                                                                                                                                                               
-  38   1              epromBusyFlag = 0;
-  39   1              iic0Start();  
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 63  
+  21   1              iic0WaitAck(); 
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 63  
 
-  40   1      #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
-  41   1              iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) & 0xFE));         //·¢ËÍÐ´ÃüÁî
-  42   1              iic0WaitAck();
-  43   1              iic0SendByte(WriteAddr >> 8);    //·¢ËÍ¸ßµØÖ·
-  44   1      #else
+  22   1              iic0SendByte(ReadAddr % 256);   //·¢ËÍµÍµØÖ·
+  23   1              iic0WaitAck();      
+  24   1              iic0Start();               
+  25   1              iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) | 0x01));//½øÈë½ÓÊÕÄ£Ê½                          
+  26   1              iic0WaitAck();   
+  27   1              temp = iic0ReadByte(0);//¶ÁÒ»¸ö×Ö½Ú£¬·ÇÓ¦´ðÐÅºÅÐÅºÅ        
+  28   1              iic0Stop();        //²úÉúÒ»¸öÍ£Ö¹Ìõ¼þ
+  29   1              return temp;
+  30   1      }
+  31          
+  32          void epromWriteOneByte(uint16_t WriteAddr, uint8_t DataToWrite){//ÔÚAT24CXXÖ¸¶¨µØÖ·Ð´ÈëÒ»¸öÊý¾Ý
+  33   1      //WriteAddr  :Ð´ÈëÊý¾ÝµÄÄ¿µÄµØÖ·    
+  34   1      //DataToWrite:ÒªÐ´ÈëµÄÊý¾Ý                                                                                                                                                                               
+  35   1              iic0Start();  
+  36   1      #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
+  37   1              iic0SendByte(((CONFIG_EPROM_ADDRESS << 1) & 0xFE));         //·¢ËÍÐ´ÃüÁî
+  38   1              iic0WaitAck();
+  39   1              iic0SendByte(WriteAddr >> 8);    //·¢ËÍ¸ßµØÖ·
+  40   1      #else
                       iic0SendByte(((CONFIG_EPROM_ADDR << 1) & 0xFE) +( (WriteAddr / 256) << 1));   //·¢ËÍÆ÷¼þµØÖ·0XA0,Ð´Êý¾Ý 
               #endif 
-  47   1              iic0WaitAck();     
-  48   1              iic0SendByte(WriteAddr % 256);   //·¢ËÍµÍµØÖ·
-  49   1              iic0WaitAck();                                                                                                     
-  50   1              iic0SendByte(DataToWrite);     //·¢ËÍ×Ö½Ú                                                          
-  51   1              iic0WaitAck();                             
-  52   1              iic0Stop();//²úÉúÒ»¸öÍ£Ö¹Ìõ¼þ 
-  53   1      #if CONFIG_EPROM_FRAM != 1
+  43   1              iic0WaitAck();     
+  44   1              iic0SendByte(WriteAddr % 256);   //·¢ËÍµÍµØÖ·
+  45   1              iic0WaitAck();                                                                                                     
+  46   1              iic0SendByte(DataToWrite);     //·¢ËÍ×Ö½Ú                                                          
+  47   1              iic0WaitAck();                             
+  48   1              iic0Stop();//²úÉúÒ»¸öÍ£Ö¹Ìõ¼þ 
+  49   1      #if CONFIG_EPROM_FRAM != 1
                       delayMs(10);    
               #endif
-  56   1              epromBusyFlag = 1;
-  57   1      }
-  58          
-  59          void epromWriteLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ
+  52   1      }
+  53          
+  54          void epromWriteLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ
              -¼Ð´Èë³¤¶ÈÎªLenµÄÊý¾Ý
-  60   1      //¸Ãº¯ÊýÓÃÓÚÐ´Èë16bit»òÕß32bitµÄÊý¾Ý.
-  61   1      //WriteAddr  :¿ªÊ¼Ð´ÈëµÄµØÖ·  
-  62   1      //DataToWrite:Êý¾ÝÊý×éÊ×µØÖ·
-  63   1      //Len        :ÒªÐ´ÈëÊý¾ÝµÄ³¤¶È2,4       
-  64   1              uint8_t t;
-  65   1              for(t = 0;t < Len;t ++){
-  66   2                      epromWriteOneByte(WriteAddr + t, (DataToWrite >> (8 * t)) & 0xff);
-  67   2              }                                                                                                   
-  68   1      }
-  69          uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ¼¶Á³ö³¤¶ÈÎªLenµÄÊý¾Ý
-  70   1      //¸Ãº¯ÊýÓÃÓÚ¶Á³ö16bit»òÕß32bitµÄÊý¾Ý.
-  71   1      //ReadAddr   :¿ªÊ¼¶Á³öµÄµØÖ· 
-  72   1      //·µ»ØÖµ     :Êý¾Ý
-  73   1      //Len        :Òª¶Á³öÊý¾ÝµÄ³¤¶È2,4       
-  74   1              uint8_t t;
-  75   1              uint32_t temp=0;
-  76   1              for(t = 0;t < Len;t ++){
-  77   2                      temp <<= 8;
-  78   2                      temp += epromReadOneByte(ReadAddr + Len - t - 1);                                          
-  79   2              }
-  80   1              return temp;                                                                                                
-  81   1      }
-  82               
-  83          void epromRead(uint16_t ReadAddr,uint8_t *pBuffer,uint16_t NumToRead){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ¼¶Á³öÖ¸¶
+  55   1      //¸Ãº¯ÊýÓÃÓÚÐ´Èë16bit»òÕß32bitµÄÊý¾Ý.
+  56   1      //WriteAddr  :¿ªÊ¼Ð´ÈëµÄµØÖ·  
+  57   1      //DataToWrite:Êý¾ÝÊý×éÊ×µØÖ·
+  58   1      //Len        :ÒªÐ´ÈëÊý¾ÝµÄ³¤¶È2,4       
+  59   1              uint8_t t;
+  60   1              for(t = 0;t < Len;t ++){
+  61   2                      epromWriteOneByte(WriteAddr + t, (DataToWrite >> (8 * t)) & 0xff);
+  62   2              }                                                                                                   
+  63   1      }
+  64          uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ¼¶Á³ö³¤¶ÈÎªLenµÄÊý¾Ý
+  65   1      //¸Ãº¯ÊýÓÃÓÚ¶Á³ö16bit»òÕß32bitµÄÊý¾Ý.
+  66   1      //ReadAddr   :¿ªÊ¼¶Á³öµÄµØÖ· 
+  67   1      //·µ»ØÖµ     :Êý¾Ý
+  68   1      //Len        :Òª¶Á³öÊý¾ÝµÄ³¤¶È2,4       
+  69   1              uint8_t t;
+  70   1              uint32_t temp=0;
+  71   1              for(t = 0;t < Len;t ++){
+  72   2                      temp <<= 8;
+  73   2                      temp += epromReadOneByte(ReadAddr + Len - t - 1);                                          
+  74   2              }
+  75   1              return temp;                                                                                                
+  76   1      }
+  77               
+  78          void epromRead(uint16_t ReadAddr,uint8_t *pBuffer,uint16_t NumToRead){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ¼¶Á³öÖ¸¶
              -¨¸öÊýµÄÊý¾Ý
-  84   1      //ReadAddr :¿ªÊ¼¶Á³öµÄµØÖ· ¶Ô24c02Îª0~255
-  85   1      //pBuffer  :Êý¾ÝÊý×éÊ×µØÖ·
-  86   1      //NumToRead:Òª¶Á³öÊý¾ÝµÄ¸öÊý
-  87   1              while(NumToRead)
-  88   1              {
-  89   2                      *pBuffer++ = epromReadOneByte(ReadAddr ++);     
-  90   2                      NumToRead --;
-  91   2              }
-  92   1      }  
-  93          void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ¼Ð´
-             -ÈëÖ¸¶¨¸öÊýµÄÊý¾Ý
-  94   1      //WriteAddr :¿ªÊ¼Ð´ÈëµÄµØÖ· ¶Ô24c02Îª0~255
-  95   1      //pBuffer   :Êý¾ÝÊý×éÊ×µØÖ·
-  96   1      //NumToWrite:ÒªÐ´ÈëÊý¾ÝµÄ¸öÊý
-  97   1              while(NumToWrite --)
-  98   1              {
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 64  
+  79   1      //ReadAddr :¿ªÊ¼¶Á³öµÄµØÖ· ¶Ô24c02Îª0~255
+  80   1      //pBuffer  :Êý¾ÝÊý×éÊ×µØÖ·
+  81   1      //NumToRead:Òª¶Á³öÊý¾ÝµÄ¸öÊý
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 64  
 
-  99   2                      epromWriteOneByte(WriteAddr, *pBuffer);
- 100   2                      WriteAddr ++;
- 101   2                      pBuffer ++;
- 102   2              }
- 103   1      }
- 104          #if CONFIG_EPROM_PAGEWRITE == 1
+  82   1              while(NumToRead)
+  83   1              {
+  84   2                      *pBuffer++ = epromReadOneByte(ReadAddr ++);     
+  85   2                      NumToRead --;
+  86   2              }
+  87   1      }  
+  88          void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ¼Ð´
+             -ÈëÖ¸¶¨¸öÊýµÄÊý¾Ý
+  89   1      //WriteAddr :¿ªÊ¼Ð´ÈëµÄµØÖ· ¶Ô24c02Îª0~255
+  90   1      //pBuffer   :Êý¾ÝÊý×éÊ×µØÖ·
+  91   1      //NumToWrite:ÒªÐ´ÈëÊý¾ÝµÄ¸öÊý
+  92   1              while(NumToWrite --)
+  93   1              {
+  94   2                      epromWriteOneByte(WriteAddr, *pBuffer);
+  95   2                      WriteAddr ++;
+  96   2                      pBuffer ++;
+  97   2              }
+  98   1      }
+  99          #if CONFIG_EPROM_PAGEWRITE == 1
               void epromWritePage(uint16_t pageAddr, uint8_t *pBuffer,uint8_t NumToWrite){//24C32ÒÔÉÏÈÝÁ¿°´Ò³ÃæÐ´Èë
               
               }
               #endif
- 109          #if CONFIG_DEBUG == 1
+ 104          #if CONFIG_EPROM_DEBUG == 1
               void epromTest(void){//EPROM ¶ÁÐ´×Ô²âÊÔ
-                      uint8_t temp;
-                      uint32_t i, j, crc32Src, crc32Dist;     
+                      idata uint8_t temp;
+                      idata uint32_t i, j, crc32Src, crc32Dist;       
                       crc32Clear();
                       for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
                               temp = rand() % 255;
@@ -4064,111 +4077,103 @@ line level    source
               
               }
               #endif
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 65  
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 65  
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
 
              ; FUNCTION epromInit (BEGIN)
+                                           ; SOURCE LINE # 4
                                            ; SOURCE LINE # 5
-                                           ; SOURCE LINE # 6
 0000 020000      E     LJMP    iic0Init
              ; FUNCTION epromInit (END)
 
              ; FUNCTION _epromReadOneByte (BEGIN)
-                                           ; SOURCE LINE # 9
-0000 8E00        R     MOV     ReadAddr,R6
-0002 8F00        R     MOV     ReadAddr+01H,R7
-                                           ; SOURCE LINE # 12
+                                           ; SOURCE LINE # 8
+;---- Variable 'ReadAddr' assigned to Register 'R2/R3' ----
+0000 AB07              MOV     R3,AR7
+0002 AA06              MOV     R2,AR6
+                                           ; SOURCE LINE # 11
+;---- Variable 'temp' assigned to Register 'R6' ----
 0004 E4                CLR     A
-0005 F500        R     MOV     temp,A
-                                           ; SOURCE LINE # 13
-0007 C285              CLR     epromBusyFlag
-                                           ; SOURCE LINE # 14
-0009 120000      E     LCALL   iic0Start
+0005 FE                MOV     R6,A
+                                           ; SOURCE LINE # 12
+0006 120000      E     LCALL   iic0Start
+                                           ; SOURCE LINE # 15
+0009 7FA0              MOV     R7,#0A0H
+000B 120000      E     LCALL   _iic0SendByte
+                                           ; SOURCE LINE # 16
+000E 120000      E     LCALL   iic0WaitAck
                                            ; SOURCE LINE # 17
-000C 7FA0              MOV     R7,#0A0H
-000E 120000      E     LCALL   _iic0SendByte
-                                           ; SOURCE LINE # 18
-0011 120000      E     LCALL   iic0WaitAck
-                                           ; SOURCE LINE # 19
-0014 E500        R     MOV     A,ReadAddr
-0016 FF                MOV     R7,A
-0017 120000      E     LCALL   _iic0SendByte
+0011 AF02              MOV     R7,AR2
+0013 120000      E     LCALL   _iic0SendByte
+                                           ; SOURCE LINE # 21
+0016 120000      E     LCALL   iic0WaitAck
+                                           ; SOURCE LINE # 22
+0019 AF03              MOV     R7,AR3
+001B 120000      E     LCALL   _iic0SendByte
                                            ; SOURCE LINE # 23
-001A 120000      E     LCALL   iic0WaitAck
+001E 120000      E     LCALL   iic0WaitAck
                                            ; SOURCE LINE # 24
-001D AF00        R     MOV     R7,ReadAddr+01H
-001F 120000      E     LCALL   _iic0SendByte
+0021 120000      E     LCALL   iic0Start
                                            ; SOURCE LINE # 25
-0022 120000      E     LCALL   iic0WaitAck
+0024 7FA1              MOV     R7,#0A1H
+0026 120000      E     LCALL   _iic0SendByte
                                            ; SOURCE LINE # 26
-0025 120000      E     LCALL   iic0Start
+0029 120000      E     LCALL   iic0WaitAck
                                            ; SOURCE LINE # 27
-0028 7FA1              MOV     R7,#0A1H
-002A 120000      E     LCALL   _iic0SendByte
+002C E4                CLR     A
+002D FF                MOV     R7,A
+002E 120000      E     LCALL   _iic0ReadByte
+0031 AE07              MOV     R6,AR7
                                            ; SOURCE LINE # 28
-002D 120000      E     LCALL   iic0WaitAck
+0033 120000      E     LCALL   iic0Stop
                                            ; SOURCE LINE # 29
-0030 E4                CLR     A
-0031 FF                MOV     R7,A
-0032 120000      E     LCALL   _iic0ReadByte
-0035 8F00        R     MOV     temp,R7
+0036 AF06              MOV     R7,AR6
                                            ; SOURCE LINE # 30
-0037 120000      E     LCALL   iic0Stop
-                                           ; SOURCE LINE # 31
-003A D285              SETB    epromBusyFlag
-                                           ; SOURCE LINE # 32
-003C AF00        R     MOV     R7,temp
-                                           ; SOURCE LINE # 33
-003E 22                RET     
+0038 22                RET     
              ; FUNCTION _epromReadOneByte (END)
 
              ; FUNCTION _epromWriteOneByte (BEGIN)
-                                           ; SOURCE LINE # 35
-0000 8E00        R     MOV     WriteAddr,R6
-0002 8F00        R     MOV     WriteAddr+01H,R7
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 66  
+                                           ; SOURCE LINE # 32
+;---- Variable 'WriteAddr' assigned to Register 'R2/R3' ----
+0000 AB07              MOV     R3,AR7
+0002 AA06              MOV     R2,AR6
+;---- Variable 'DataToWrite' assigned to Register 'R4' ----
+0004 AC05              MOV     R4,AR5
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 66  
 
-0004 8D00        R     MOV     DataToWrite,R5
+                                           ; SOURCE LINE # 35
+0006 120000      E     LCALL   iic0Start
+                                           ; SOURCE LINE # 37
+0009 7FA0              MOV     R7,#0A0H
+000B 120000      E     LCALL   _iic0SendByte
                                            ; SOURCE LINE # 38
-0006 C285              CLR     epromBusyFlag
+000E 120000      E     LCALL   iic0WaitAck
                                            ; SOURCE LINE # 39
-0008 120000      E     LCALL   iic0Start
-                                           ; SOURCE LINE # 41
-000B 7FA0              MOV     R7,#0A0H
-000D 120000      E     LCALL   _iic0SendByte
-                                           ; SOURCE LINE # 42
-0010 120000      E     LCALL   iic0WaitAck
+0011 AF02              MOV     R7,AR2
+0013 120000      E     LCALL   _iic0SendByte
                                            ; SOURCE LINE # 43
-0013 E500        R     MOV     A,WriteAddr
-0015 FF                MOV     R7,A
-0016 120000      E     LCALL   _iic0SendByte
+0016 120000      E     LCALL   iic0WaitAck
+                                           ; SOURCE LINE # 44
+0019 AF03              MOV     R7,AR3
+001B 120000      E     LCALL   _iic0SendByte
+                                           ; SOURCE LINE # 45
+001E 120000      E     LCALL   iic0WaitAck
+                                           ; SOURCE LINE # 46
+0021 AF04              MOV     R7,AR4
+0023 120000      E     LCALL   _iic0SendByte
                                            ; SOURCE LINE # 47
-0019 120000      E     LCALL   iic0WaitAck
+0026 120000      E     LCALL   iic0WaitAck
                                            ; SOURCE LINE # 48
-001C AF00        R     MOV     R7,WriteAddr+01H
-001E 120000      E     LCALL   _iic0SendByte
-                                           ; SOURCE LINE # 49
-0021 120000      E     LCALL   iic0WaitAck
-                                           ; SOURCE LINE # 50
-0024 AF00        R     MOV     R7,DataToWrite
-0026 120000      E     LCALL   _iic0SendByte
-                                           ; SOURCE LINE # 51
-0029 120000      E     LCALL   iic0WaitAck
-                                           ; SOURCE LINE # 52
-002C 120000      E     LCALL   iic0Stop
-                                           ; SOURCE LINE # 56
-002F D285              SETB    epromBusyFlag
-                                           ; SOURCE LINE # 57
-0031 22                RET     
+0029 020000      E     LJMP    iic0Stop
              ; FUNCTION _epromWriteOneByte (END)
 
              ; FUNCTION _epromWriteLenByte (BEGIN)
-                                           ; SOURCE LINE # 59
+                                           ; SOURCE LINE # 54
 0000 8E00        R     MOV     WriteAddr,R6
 0002 8F00        R     MOV     WriteAddr+01H,R7
-                                           ; SOURCE LINE # 65
+                                           ; SOURCE LINE # 60
 0004 E4                CLR     A
 0005 F500        R     MOV     t,A
 0007         ?C0004:
@@ -4176,7 +4181,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0009 C3                CLR     C
 000A 9500        R     SUBB    A,Len
 000C 502F              JNC     ?C0007
-                                           ; SOURCE LINE # 66
+                                           ; SOURCE LINE # 61
 000E 7E00              MOV     R6,#00H
 0010 E500        R     MOV     A,WriteAddr+01H
 0012 2500        R     ADD     A,t
@@ -4192,8 +4197,6 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0023 AC00        R     MOV     R4,DataToWrite
 0025 E500        R     MOV     A,t
 0027 75F008            MOV     B,#08H
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 67  
-
 002A A4                MUL     AB
 002B F9                MOV     R1,A
 002C F8                MOV     R0,A
@@ -4202,108 +4205,113 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0032 D007              POP     AR7
 0034 D006              POP     AR6
 0036 120000      R     LCALL   _epromWriteOneByte
-                                           ; SOURCE LINE # 67
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 67  
+
+                                           ; SOURCE LINE # 62
 0039 0500        R     INC     t
 003B 80CA              SJMP    ?C0004
-                                           ; SOURCE LINE # 68
+                                           ; SOURCE LINE # 63
 003D         ?C0007:
 003D 22                RET     
              ; FUNCTION _epromWriteLenByte (END)
 
              ; FUNCTION _epromReadLenByte (BEGIN)
-                                           ; SOURCE LINE # 69
+                                           ; SOURCE LINE # 64
 0000 8E00        R     MOV     ReadAddr,R6
 0002 8F00        R     MOV     ReadAddr+01H,R7
 0004 8D00        R     MOV     Len,R5
-                                           ; SOURCE LINE # 75
+                                           ; SOURCE LINE # 70
 0006 E4                CLR     A
 0007 F500        R     MOV     temp+03H,A
 0009 F500        R     MOV     temp+02H,A
 000B F500        R     MOV     temp+01H,A
 000D F500        R     MOV     temp,A
-                                           ; SOURCE LINE # 76
-000F F500        R     MOV     t,A
-0011         ?C0008:
-0011 E500        R     MOV     A,t
-0013 C3                CLR     C
-0014 9500        R     SUBB    A,Len
-0016 504E              JNC     ?C0009
-                                           ; SOURCE LINE # 77
-0018 AF00        R     MOV     R7,temp+03H
-001A AE00        R     MOV     R6,temp+02H
-001C AD00        R     MOV     R5,temp+01H
-001E AC00        R     MOV     R4,temp
-0020 7808              MOV     R0,#08H
-0022 120000      E     LCALL   ?C?LSHL
-0025 8F00        R     MOV     temp+03H,R7
-0027 8E00        R     MOV     temp+02H,R6
-0029 8D00        R     MOV     temp+01H,R5
-002B 8C00        R     MOV     temp,R4
-                                           ; SOURCE LINE # 78
-002D 7E00              MOV     R6,#00H
-002F E500        R     MOV     A,ReadAddr+01H
-0031 2500        R     ADD     A,Len
-0033 FF                MOV     R7,A
-0034 EE                MOV     A,R6
-0035 3500        R     ADDC    A,ReadAddr
-0037 FE                MOV     R6,A
+                                           ; SOURCE LINE # 71
+;---- Variable 't' assigned to Register 'R1' ----
+000F F9                MOV     R1,A
+0010         ?C0008:
+0010 E9                MOV     A,R1
+0011 C3                CLR     C
+0012 9500        R     SUBB    A,Len
+0014 504E              JNC     ?C0009
+                                           ; SOURCE LINE # 72
+0016 AF00        R     MOV     R7,temp+03H
+0018 AE00        R     MOV     R6,temp+02H
+001A AD00        R     MOV     R5,temp+01H
+001C AC00        R     MOV     R4,temp
+001E 7808              MOV     R0,#08H
+0020 120000      E     LCALL   ?C?LSHL
+0023 8F00        R     MOV     temp+03H,R7
+0025 8E00        R     MOV     temp+02H,R6
+0027 8D00        R     MOV     temp+01H,R5
+0029 8C00        R     MOV     temp,R4
+                                           ; SOURCE LINE # 73
+002B 7E00              MOV     R6,#00H
+002D E500        R     MOV     A,ReadAddr+01H
+002F 2500        R     ADD     A,Len
+0031 FF                MOV     R7,A
+0032 EE                MOV     A,R6
+0033 3500        R     ADDC    A,ReadAddr
+0035 FE                MOV     R6,A
+0036 E9                MOV     A,R1
+0037 FD                MOV     R5,A
 0038 C3                CLR     C
 0039 EF                MOV     A,R7
-003A 9500        R     SUBB    A,t
-003C FF                MOV     R7,A
-003D EE                MOV     A,R6
-003E 9400              SUBB    A,#00H
-0040 CF                XCH     A,R7
-0041 24FF              ADD     A,#0FFH
-0043 CF                XCH     A,R7
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 68  
+003A 9D                SUBB    A,R5
+003B FF                MOV     R7,A
+003C EE                MOV     A,R6
+003D 9400              SUBB    A,#00H
+003F CF                XCH     A,R7
+0040 24FF              ADD     A,#0FFH
+0042 CF                XCH     A,R7
+0043 34FF              ADDC    A,#0FFH
+0045 FE                MOV     R6,A
+0046 120000      R     LCALL   _epromReadOneByte
+0049 E4                CLR     A
+004A FC                MOV     R4,A
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 68  
 
-0044 34FF              ADDC    A,#0FFH
-0046 FE                MOV     R6,A
-0047 120000      R     LCALL   _epromReadOneByte
-004A E4                CLR     A
-004B FC                MOV     R4,A
-004C FD                MOV     R5,A
-004D FE                MOV     R6,A
-004E E500        R     MOV     A,temp+03H
-0050 2F                ADD     A,R7
-0051 F500        R     MOV     temp+03H,A
-0053 EE                MOV     A,R6
-0054 3500        R     ADDC    A,temp+02H
-0056 F500        R     MOV     temp+02H,A
-0058 ED                MOV     A,R5
-0059 3500        R     ADDC    A,temp+01H
-005B F500        R     MOV     temp+01H,A
-005D EC                MOV     A,R4
-005E 3500        R     ADDC    A,temp
-0060 F500        R     MOV     temp,A
-                                           ; SOURCE LINE # 79
-0062 0500        R     INC     t
-0064 80AB              SJMP    ?C0008
-0066         ?C0009:
-                                           ; SOURCE LINE # 80
-0066 AF00        R     MOV     R7,temp+03H
-0068 AE00        R     MOV     R6,temp+02H
-006A AD00        R     MOV     R5,temp+01H
-006C AC00        R     MOV     R4,temp
-                                           ; SOURCE LINE # 81
-006E 22                RET     
+004B FD                MOV     R5,A
+004C FE                MOV     R6,A
+004D E500        R     MOV     A,temp+03H
+004F 2F                ADD     A,R7
+0050 F500        R     MOV     temp+03H,A
+0052 EE                MOV     A,R6
+0053 3500        R     ADDC    A,temp+02H
+0055 F500        R     MOV     temp+02H,A
+0057 ED                MOV     A,R5
+0058 3500        R     ADDC    A,temp+01H
+005A F500        R     MOV     temp+01H,A
+005C EC                MOV     A,R4
+005D 3500        R     ADDC    A,temp
+005F F500        R     MOV     temp,A
+                                           ; SOURCE LINE # 74
+0061 09                INC     R1
+0062 80AC              SJMP    ?C0008
+0064         ?C0009:
+                                           ; SOURCE LINE # 75
+0064 AF00        R     MOV     R7,temp+03H
+0066 AE00        R     MOV     R6,temp+02H
+0068 AD00        R     MOV     R5,temp+01H
+006A AC00        R     MOV     R4,temp
+                                           ; SOURCE LINE # 76
+006C 22                RET     
              ; FUNCTION _epromReadLenByte (END)
 
              ; FUNCTION _epromRead (BEGIN)
-                                           ; SOURCE LINE # 83
+                                           ; SOURCE LINE # 78
 0000 8E00        R     MOV     ReadAddr,R6
 0002 8F00        R     MOV     ReadAddr+01H,R7
 0004 8B00        R     MOV     pBuffer,R3
 0006 8A00        R     MOV     pBuffer+01H,R2
 0008 8900        R     MOV     pBuffer+02H,R1
 000A         ?C0012:
-                                           ; SOURCE LINE # 87
+                                           ; SOURCE LINE # 82
 000A E500        R     MOV     A,NumToRead+01H
 000C 4500        R     ORL     A,NumToRead
 000E 602B              JZ      ?C0014
-                                           ; SOURCE LINE # 88
-                                           ; SOURCE LINE # 89
+                                           ; SOURCE LINE # 83
+                                           ; SOURCE LINE # 84
 0010 0500        R     INC     ReadAddr+01H
 0012 E500        R     MOV     A,ReadAddr+01H
 0014 AE00        R     MOV     R6,ReadAddr
@@ -4320,34 +4328,34 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0027 7002              JNZ     ?C0019
 0029 0500        R     INC     pBuffer+01H
 002B         ?C0019:
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 69  
-
 002B 14                DEC     A
 002C F9                MOV     R1,A
 002D EF                MOV     A,R7
 002E 120000      E     LCALL   ?C?CSTPTR
-                                           ; SOURCE LINE # 90
+                                           ; SOURCE LINE # 85
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 69  
+
 0031 E500        R     MOV     A,NumToRead+01H
 0033 1500        R     DEC     NumToRead+01H
 0035 70D3              JNZ     ?C0012
 0037 1500        R     DEC     NumToRead
 0039         ?C0020:
-                                           ; SOURCE LINE # 91
+                                           ; SOURCE LINE # 86
 0039 80CF              SJMP    ?C0012
-                                           ; SOURCE LINE # 92
+                                           ; SOURCE LINE # 87
 003B         ?C0014:
 003B 22                RET     
              ; FUNCTION _epromRead (END)
 
              ; FUNCTION _epromWrite (BEGIN)
-                                           ; SOURCE LINE # 93
+                                           ; SOURCE LINE # 88
 0000 8E00        R     MOV     WriteAddr,R6
 0002 8F00        R     MOV     WriteAddr+01H,R7
 0004 8B00        R     MOV     pBuffer,R3
 0006 8A00        R     MOV     pBuffer+01H,R2
 0008 8900        R     MOV     pBuffer+02H,R1
 000A         ?C0015:
-                                           ; SOURCE LINE # 97
+                                           ; SOURCE LINE # 92
 000A E500        R     MOV     A,NumToWrite+01H
 000C 1500        R     DEC     NumToWrite+01H
 000E AE00        R     MOV     R6,NumToWrite
@@ -4356,8 +4364,8 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0014         ?C0021:
 0014 4E                ORL     A,R6
 0015 6026              JZ      ?C0017
-                                           ; SOURCE LINE # 98
-                                           ; SOURCE LINE # 99
+                                           ; SOURCE LINE # 93
+                                           ; SOURCE LINE # 94
 0017 AB00        R     MOV     R3,pBuffer
 0019 AA00        R     MOV     R2,pBuffer+01H
 001B A900        R     MOV     R1,pBuffer+02H
@@ -4366,46 +4374,55 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0021 AF00        R     MOV     R7,WriteAddr+01H
 0023 AE00        R     MOV     R6,WriteAddr
 0025 120000      R     LCALL   _epromWriteOneByte
-                                           ; SOURCE LINE # 100
+                                           ; SOURCE LINE # 95
 0028 0500        R     INC     WriteAddr+01H
 002A E500        R     MOV     A,WriteAddr+01H
 002C 7002              JNZ     ?C0022
 002E 0500        R     INC     WriteAddr
 0030         ?C0022:
-                                           ; SOURCE LINE # 101
+                                           ; SOURCE LINE # 96
 0030 7401              MOV     A,#01H
 0032 2500        R     ADD     A,pBuffer+02H
 0034 F500        R     MOV     pBuffer+02H,A
 0036 E4                CLR     A
 0037 3500        R     ADDC    A,pBuffer+01H
 0039 F500        R     MOV     pBuffer+01H,A
-                                           ; SOURCE LINE # 102
+                                           ; SOURCE LINE # 97
 003B 80CD              SJMP    ?C0015
-                                           ; SOURCE LINE # 103
+                                           ; SOURCE LINE # 98
 003D         ?C0017:
 003D 22                RET     
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 70  
-
              ; FUNCTION _epromWrite (END)
 
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 71  
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 70  
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
 
 
+uint8_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
 uint16_t . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
-P0 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0080H  1
+uint32_t . . . . . . . . . . . . . . .  TYPEDEF  -----  U_LONG   -----  4
 uint64_t . . . . . . . . . . . . . . .  TYPEDEF  -----  ARRAY    -----  8
-SI_GEN_PTR_t . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  3
-  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
-  gptr . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
-int32_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
+int8_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
 int16_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  INT      -----  2
-_iic0SendByte. . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-S8 . . . . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
+int32_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
 int64_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  ARRAY    -----  8
-U8 . . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
+fp32_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  FLOAT    -----  4
+fp64_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  FLOAT    -----  4
+bool . . . . . . . . . . . . . . . . .  TYPEDEF  -----  BIT      -----  1
+false. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+true . . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+SI_UU16. . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
+  u16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
+  s16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
+  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+  s8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+SI_UU16_t. . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  2
+  u16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
+  s16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
+  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+  s8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
 SI_UU32. . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  4
   u32. . . . . . . . . . . . . . . . .  MEMBER   -----  U_LONG   0000H  4
   s32. . . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
@@ -4414,91 +4431,6 @@ SI_UU32. . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  4
   s16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
   u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
   s8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-false. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
-SI_UU16. . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
-  u16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
-  s16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
-  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-  s8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-iic0WaitAck. . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-iic0Stop . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-UU32 . . . . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  4
-  U32. . . . . . . . . . . . . . . . .  MEMBER   -----  U_LONG   0000H  4
-  S32. . . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
-  UU16 . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-UU32 . . . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  4
-  U32. . . . . . . . . . . . . . . . .  MEMBER   -----  U_LONG   0000H  4
-  S32. . . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
-  UU16 . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-fp32_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  FLOAT    -----  4
-size_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
-UU16 . . . . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  2
-  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
-  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
-  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-UU16 . . . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
-  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
-  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
-  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-GPTR_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  3
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 72  
-
-NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
-====                                    =====   ======  ====    ======  ====
-
-
-  memtype. . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0000H  1
-  address. . . . . . . . . . . . . . .  MEMBER   -----  UNION    0001H  2
-fp64_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  FLOAT    -----  4
-_epromRead . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  ReadAddr . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
-  pBuffer. . . . . . . . . . . . . . .  AUTO     DATA   PTR      0002H  3
-  NumToRead. . . . . . . . . . . . . .  AUTO     DATA   U_INT    0005H  2
-bool . . . . . . . . . . . . . . . . .  TYPEDEF  -----  BIT      -----  1
-SI_GEN_PTR . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  3
-  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
-  gptr . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
-adcTempDat_t . . . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  31
-  dat. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  28
-  out. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    001CH  2
-  wIndex . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   001EH  1
-_epromWrite. . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  WriteAddr. . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
-  pBuffer. . . . . . . . . . . . . . .  AUTO     DATA   PTR      0002H  3
-  NumToWrite . . . . . . . . . . . . .  AUTO     DATA   U_INT    0005H  2
-S32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
-S16. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  INT      -----  2
-U32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_LONG   -----  4
-U16. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
-epromInit. . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-true . . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
-epromBusyFlag. . . . . . . . . . . . .  ABSBIT   -----  BIT      0085H  1
-uint8_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
-SI_GENERIC_PTR . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  3
-  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
-  GPTR . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
-SI_GENERIC_PTR . . . . . . . . . . . .  * TAG *  -----  UNION    -----  3
-  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
-  GPTR . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
-int8_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
-_epromReadLenByte. . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  ReadAddr . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
-  Len. . . . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0002H  1
-  t. . . . . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0003H  1
-  temp . . . . . . . . . . . . . . . .  AUTO     DATA   U_LONG   0004H  4
-_epromReadOneByte. . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  ReadAddr . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
-  temp . . . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0002H  1
 SI_UU32_t. . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  4
   u32. . . . . . . . . . . . . . . . .  MEMBER   -----  U_LONG   0000H  4
   s32. . . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
@@ -4507,38 +4439,110 @@ SI_UU32_t. . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  4
   s16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
   u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
   s8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-SI_UU16_t. . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  2
-  u16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
-  s16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
-  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-  s8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-wchar_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
-_epromWriteLenByte . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-C51 COMPILER V9.59.0.0   EPROM                                                             01/14/2019 17:29:33 PAGE 73  
+GPTR_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  3
+  memtype. . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0000H  1
+  address. . . . . . . . . . . . . . .  MEMBER   -----  UNION    0001H  2
+SI_GEN_PTR . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  3
+  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
+  gptr . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
+SI_GEN_PTR_t . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  3
+  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
+  gptr . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
+U8 . . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
+U16. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
+U32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_LONG   -----  4
+S8 . . . . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
+S16. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  INT      -----  2
+S32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
+UU16 . . . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
+  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
+  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 71  
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
 
 
+  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+UU16 . . . . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  2
+  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
+  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
+  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+UU32 . . . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  4
+  U32. . . . . . . . . . . . . . . . .  MEMBER   -----  U_LONG   0000H  4
+  S32. . . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
+  UU16 . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+UU32 . . . . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  4
+  U32. . . . . . . . . . . . . . . . .  MEMBER   -----  U_LONG   0000H  4
+  S32. . . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
+  UU16 . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+SI_GENERIC_PTR . . . . . . . . . . . .  * TAG *  -----  UNION    -----  3
+  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
+  GPTR . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
+SI_GENERIC_PTR . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  3
+  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
+  GPTR . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
+size_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
+wchar_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
+iic0Init . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+iic0Start. . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+iic0Stop . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+iic0WaitAck. . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+_iic0SendByte. . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+_iic0ReadByte. . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+adcTempDat_t . . . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  31
+  dat. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  28
+  out. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    001CH  2
+  wIndex . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   001EH  1
+epromInit. . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+_epromReadOneByte. . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  ReadAddr . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0002H  2
+  temp . . . . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0006H  1
+_epromWriteOneByte . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  WriteAddr. . . . . . . . . . . . . .  * REG *  DATA   U_INT    0002H  2
+  DataToWrite. . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0004H  1
+_epromWriteLenByte . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
   WriteAddr. . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
   DataToWrite. . . . . . . . . . . . .  AUTO     DATA   U_LONG   0002H  4
   Len. . . . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0006H  1
   t. . . . . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0007H  1
-_epromWriteOneByte . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+_epromReadLenByte. . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  ReadAddr . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
+  Len. . . . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0002H  1
+  t. . . . . . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0001H  1
+C51 COMPILER V9.59.0.0   EPROM                                                             01/16/2019 18:30:05 PAGE 72  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+  temp . . . . . . . . . . . . . . . .  AUTO     DATA   U_LONG   0003H  4
+_epromRead . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  ReadAddr . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
+  pBuffer. . . . . . . . . . . . . . .  AUTO     DATA   PTR      0002H  3
+  NumToRead. . . . . . . . . . . . . .  AUTO     DATA   U_INT    0005H  2
+_epromWrite. . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
   WriteAddr. . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
-  DataToWrite. . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0002H  1
-iic0Start. . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-_iic0ReadByte. . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-uint32_t . . . . . . . . . . . . . . .  TYPEDEF  -----  U_LONG   -----  4
-iic0Init . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+  pBuffer. . . . . . . . . . . . . . .  AUTO     DATA   PTR      0002H  3
+  NumToWrite . . . . . . . . . . . . .  AUTO     DATA   U_INT    0005H  2
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    411    ----
+   CODE SIZE        =    397    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----      36
+   DATA SIZE        =   ----      29
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

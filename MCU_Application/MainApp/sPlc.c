@@ -1,8 +1,9 @@
 #include "sPlc.h"
 /*****************************************************************************/
+
 //ADC MUX3253 CH0-CH3
 sbit ADCMUX_0_3_S0 = P1^4;
-sbit ADCMUX_0_3_S1	= P1^7;
+sbit ADCMUX_0_3_S1 = P1^7;
 sbit ADCMUX_0_3_OE1 = P1^6;
 sbit ADCMUX_0_3_OE2 = P1^5;
 //ADC MUX3253 CH4-CH7
@@ -42,7 +43,7 @@ static idata uint8_t TimerCounter_1mS = 0;
 static idata uint8_t TimerCounter_10mS = 0;
 static idata uint8_t Timer0_L, Timer0_H;
 /*****************************************************************************/
-static pdata int8_t inputFilter[(X_END - X_START + 1) * 16];//IO输入滤波器缓冲区
+static idata int8_t inputFilter[(X_END - X_START + 1) * 16];//IO输入滤波器缓冲区
 static xdata adcTempDat_t adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
 static idata uint8_t adcSelect;//ADC通道选择
 static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
@@ -101,7 +102,7 @@ static uint8_t getLedError(void) reentrant{
 static void adcProcess(void){//循环采集ADC
 	uint16_t result = 0;
 #ifdef C8051F020
-	//while(!AD0INT);
+	while(!AD0INT);
 #endif
 	result = (ADC0 & 0xFFF);
 	refreshAdcData(&adcTempDat[adcSelect], result);
@@ -735,7 +736,7 @@ static void adcProcess(void){//循环采集ADC
 		}
 		case 20:{//MLD20
 			//ADC MUX
-			AMX0SL = 0x04;
+			AMX0SL = 0x05;
 			//CHIP0
 			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = true;
@@ -855,8 +856,8 @@ static void adcProcess(void){//循环采集ADC
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
 			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = false;
+			ADCMUX_20_23_OE1 = 1;
+			ADCMUX_20_23_OE2 = 0;
 			break;
 		}
 		case 24:{//MLD24
@@ -1698,7 +1699,7 @@ static void adcProcess(void){//循环采集ADC
 		}
 		case 55:{//MPD23
 			//ADC MUX
-			AMX0SL = 0x06;
+			AMX0SL = 0x05;
 			//CHIP0
 			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = true;
@@ -1859,7 +1860,7 @@ static void adcProcess(void){//循环采集ADC
 	AD0BUSY = 1;//AD0BUSY写入1
 }
 static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
-	xdata uint8_t i;
+	uint8_t i;
 	for(i = 0;i < CONFIG_SPLC_ADC_FILTER_TAP; i++){
 		s->dat[i] = 0x0;
 	}
@@ -1898,35 +1899,35 @@ static void assertRegisterAddress(uint16_t adr) reentrant{//检查寄存器地址
 #endif
 }
 static void clearDM(void){//清除DM寄存器
-	xdata uint16_t i;
+	uint16_t i;
 	for(i = 0;i <= DM_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearMR(void){//清除MR寄存器
-	xdata uint16_t i;
+	uint16_t i;
 	for(i = MR_START;i <= MR_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearEM(void){//清除EM寄存器
-	xdata uint16_t i;
+	uint16_t i;
 	for(i = EM_START;i <= EM_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearR(void){//清除R寄存器
-	xdata uint16_t i;
+	uint16_t i;
 	for(i = R_START;i <= R_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearT(void){//清除T寄存器
-	xdata uint16_t i;
+	uint16_t i;
 	for(i = T_1MS_START;i <= T_1MS_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
@@ -1941,7 +1942,7 @@ static void clearT(void){//清除T寄存器
 	}
 }
 static void clearTD(void){//清除TD寄存器
-	xdata uint16_t i;
+	uint16_t i;
 	for(i = TD_1MS_START;i <= TD_1MS_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
@@ -1956,35 +1957,35 @@ static void clearTD(void){//清除TD寄存器
 	}
 }
 static void clearC(void){//清除C寄存器
-	xdata uint16_t i;
+	uint16_t i;
 	for(i = C_START;i <= C_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearX(void){//清除X寄存器
-	xdata uint16_t i;
+	uint16_t i;
 	for(i = X_START;i <= X_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearY(void){//清除Y寄存器
-	xdata uint16_t i;
+	uint16_t i;
 	for(i = Y_START;i <= Y_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearSPREG(void){
-	xdata uint16_t i;
+	uint16_t i;
 	for(i = SPREG_START;i <= SPREG_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
 static void clearSPCOIL(){
-	xdata uint16_t i;
+	uint16_t i;
 	for(i = SPCOIL_START;i <= SPCOIL_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
@@ -1992,7 +1993,9 @@ static void clearSPCOIL(){
 }
 static void nvramLoad(void){//从EPROM中载入NVRAM
 	memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
+	setLedEprom(DEBUG_LED_ON);
 	epromRead(0, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
+	setLedEprom(DEBUG_LED_OFF);
 	clearEM();
 	clearR();
 	clearT();
@@ -2006,28 +2009,33 @@ static void nvramLoad(void){//从EPROM中载入NVRAM
 }
 static void nvramSave(void){//强制将NVRAM存入EPROM
 	DISABLE_INTERRUPT;
+	setLedEprom(DEBUG_LED_ON);
 	epromWrite(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));
+	setLedEprom(DEBUG_LED_OFF);
 	ENABLE_INTERRUPT;
 }
 static void nvramUpdata(void){//更新NVRAM->EPROM
 	data uint8_t *sp0, *sp1;
 	data uint16_t i;
-	sp0 = (uint8_t*)(NVRAM0 + (MR_START * 2));
-	sp1 = (uint8_t*)(NVRAM1 + (MR_START * 2));
-	for(i = MR_START;i < ((MR_END + 1) * 2);i ++){//储存MR
+	sp0 = (uint8_t*)NVRAM0;
+	sp1 = (uint8_t*)NVRAM1;
+	for(i = (MR_START * 2);i < ((MR_END + 1) * 2);i ++){//储存MR
 		if(*(sp0 + i) != *(sp1 + i)){
+			setLedEprom(DEBUG_LED_ON);
 			epromWriteOneByte(i, *(sp0 + i));
-		}
-		
+			setLedEprom(DEBUG_LED_OFF);
+		}	
 	}
-	sp0 = (uint8_t*)(NVRAM0 + (DM_START * 2));
-	sp1 = (uint8_t*)(NVRAM1 + (DM_START * 2));
-	for(i = DM_START;i < ((DM_END + 1) * 2);i ++){//储存DM
+	sp0 = (uint8_t*)NVRAM0;
+	sp1 = (uint8_t*)NVRAM1;
+	for(i = (DM_START * 2);i < ((DM_END + 1) * 2);i ++){//储存DM
 		if(*(sp0 + i) != *(sp1 + i)){
+			setLedEprom(DEBUG_LED_ON);
 			epromWriteOneByte(i, *(sp0 + i));
+			setLedEprom(DEBUG_LED_OFF);
 		}
 	}
-	memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));
+	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
 /*****************************************************************************/
 //软逻辑指令
@@ -2371,7 +2379,7 @@ static void chipAdcInit(void){//ADC模块初始化
 	ADC0CF |= (CONFIG_SYSCLK / SAR_CLK) << 3;     // ADC conversion clock = 2.5MHz
 	AMX0CF = 0x00;                      // AIN inputs are single-ended (default)
 	AMX0SL = 0x00;                      // Select AIN0.1 pin as ADC mux input
-	AD0INT = 0;
+	AD0INT = 1;
 	AD0BUSY = 1;//AD0BUSY写入1
 #endif
 	adcSelect = 0;
@@ -2382,167 +2390,167 @@ static void chipAdcInit(void){//ADC模块初始化
 static void refreshDac(void){//刷新DAC
 	//LD板0
 	if(NVRAM0[EM_DAC_0] != NVRAM1[EM_DAC_0]){//CH0
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_0_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_0]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_1] != NVRAM1[EM_DAC_1]){//CH1
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_0_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_1]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_2] != NVRAM1[EM_DAC_2]){//CH2
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_0_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_2]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_3] != NVRAM1[EM_DAC_3]){//CH3
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_0_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_3]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_4] != NVRAM1[EM_DAC_4]){//CH4
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_0_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_4]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_5] != NVRAM1[EM_DAC_5]){//CH5
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_0_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_5]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_6] != NVRAM1[EM_DAC_6]){//CH6
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_0_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_6]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_7] != NVRAM1[EM_DAC_7]){//CH7
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_0_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_7]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	//LD板1
 	if(NVRAM0[EM_DAC_8] != NVRAM1[EM_DAC_8]){//CH8
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_1_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_8]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_9] != NVRAM1[EM_DAC_9]){//CH9
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_1_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_9]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_10] != NVRAM1[EM_DAC_10]){//CH10
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_1_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_10]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_11] != NVRAM1[EM_DAC_11]){//CH11
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_1_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_11]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_12] != NVRAM1[EM_DAC_12]){//CH12
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_1_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_12]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_13] != NVRAM1[EM_DAC_13]){//CH13
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_1_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_13]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_14] != NVRAM1[EM_DAC_14]){//CH14
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_1_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_14]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_15] != NVRAM1[EM_DAC_15]){//CH15
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_1_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_15]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	//LD板2
 	if(NVRAM0[EM_DAC_16] != NVRAM1[EM_DAC_16]){//CH16
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_2_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_16]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_17] != NVRAM1[EM_DAC_17]){//CH17
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_2_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_17]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_18] != NVRAM1[EM_DAC_18]){//CH18
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_2_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_18]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_19] != NVRAM1[EM_DAC_19]){//CH19
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_2_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_19]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_20] != NVRAM1[EM_DAC_20]){//CH20
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_2_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_20]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_21] != NVRAM1[EM_DAC_21]){//CH21
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_2_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_21]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_22] != NVRAM1[EM_DAC_22]){//CH22
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_2_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_22]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_23] != NVRAM1[EM_DAC_23]){//CH23
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_2_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_23]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	//板4
 	if(NVRAM0[EM_DAC_24] != NVRAM1[EM_DAC_24]){//CH24
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_3_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_24]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_25] != NVRAM1[EM_DAC_25]){//CH25
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_3_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_26]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_26] != NVRAM1[EM_DAC_26]){//CH26
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_3_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_26]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_27] != NVRAM1[EM_DAC_27]){//CH27
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_3_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_27]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_28] != NVRAM1[EM_DAC_28]){//CH28
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_3_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_28]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_29] != NVRAM1[EM_DAC_29]){//CH29
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_3_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_29]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_30] != NVRAM1[EM_DAC_30]){//CH30
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_3_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_30]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 	if(NVRAM0[EM_DAC_31] != NVRAM1[EM_DAC_31]){//CH31
-		setLedDac(true);
+		setLedDac(DEBUG_LED_ON);
 		dac8568_3_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_31]);
-		setLedDac(false);
+		setLedDac(DEBUG_LED_OFF);
 	}
 }
 static void chipDacInit(void){//初始化DAC
@@ -2552,8 +2560,10 @@ static void chipDacInit(void){//初始化DAC
 	dac8568_3_Init();
 }
 void sPlcInit(void){//软逻辑初始化
-	setLedError(true);
-	setLedRun(false);
+	setLedError(DEBUG_LED_OFF);
+	setLedRun(DEBUG_LED_OFF);
+	setLedDac(DEBUG_LED_OFF);
+	setLedEprom(DEBUG_LED_OFF);
 	wdtInit();//看门狗使能
 	wdtDisable();//屏蔽看门狗
 #if CONFIG_SPLC_USING_UART1 == 1
@@ -2573,7 +2583,7 @@ void sPlcInit(void){//软逻辑初始化
 #endif
 	timer0Init();//初始化硬件计时器模块
 	NVRAM0[(SPCOIL_START + (SPCOIL_ON / 16))] |= (uint16_t)(1 << (SPCOIL_ON % 16));
-	setLedError(false);
+	setLedError(DEBUG_LED_OFF);
 }
 void sPlcProcessStart(void){//sPLC轮询起始
 #if CONFIG_SPLC_USING_WDT == 1

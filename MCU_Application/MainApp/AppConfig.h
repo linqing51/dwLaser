@@ -1,6 +1,8 @@
 #ifndef __APPCONFIG_H__
 #define __APPCONFIG_H__
 /*****************************************************************************/
+#define DEBUG_LED_ON						0
+#define DEBUG_LED_OFF						1
 #define CONFIG_SYSCLK                       (22118400L)
 #ifdef C8051F020
 #define SAR_CLK      						2000000L//ADC0时钟 <2.5MHz
@@ -9,7 +11,7 @@
 #define CONFIG_USING_WDT					0//使能看门狗
 #define CONFIG_USING_RESET					0//使能PLC复位MCU功能
 #define CONFIG_VERSION  					0x0001
-#define CONFIG_CHECK_CODE 					0x5A00
+#define CONFIG_CHECK_CODE 					0x5AC1
 #define CONFIG_USING_SIMULATION				1
 /*****************************************************************************/
 #define CONFIG_UART0_BAUDRATE				115200//串口波特率
@@ -24,6 +26,7 @@
 /*****************************************************************************/
 #define CONFIG_I2C0_FREQ 					1               
 /*****************************************************************************/
+#define CONFIG_EPROM_DEBUG					0
 #define CONFIG_EPROM_SIZE 					CONFIG_AT24C64_SIZE
 #define	CONFIG_AT24C02_SIZE 				256
 #define	CONFIG_AT24C04_SIZE  				512
@@ -79,11 +82,11 @@
 #define ENABLE_INTERRUPT					EA = 1;
 /*****************************************************************************/
 //指示盒子
-#define R_BOX_RED_SENDED					(R_START + 55)
-#define R_BOX_GREEN_SENDED					(R_START + 56)
+#define R_BOX_RED_SENDED					(R_START * 16 + 126)
+#define R_BOX_GREEN_SENDED					(R_START * 16 + 127)
 #define BOX_CMD_STX							0x81
 #define BOX_CMD_ETX							0x84
-#define BOX_SEND_BFADDR						(EM_START + 95)//发送缓冲区位置
+#define BOX_SEND_BFADDR						(EM_START + 100)//发送缓冲区位置
 #define BOX_SEND_LENGTH						29//发送数据量
 /*****************************************************************************/
 #include "stdint.h"

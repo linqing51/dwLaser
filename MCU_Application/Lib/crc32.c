@@ -106,9 +106,9 @@ code uint32_t crc32Tab[] = { /* CRC polynomial 0xedb88320 */
 	0x54de5729, 0x23d967bf, 0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94,
 	0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d
 };
-static pdata uint32_t oldcrc32;
+static idata uint32_t oldcrc32;
 
-uint32_t crc32Calculate(uint8_t *buf, uint32_t len){//CRC32 计算数组
+uint32_t crc32Calculate(uint8_t *buf, uint32_t idata len){//CRC32 计算数组
     pdata uint32_t i;  
     for (i = 0; i < len; i++){  
        oldcrc32 = crc32Tab[(oldcrc32 ^ buf[i]) & 0xff] ^ (oldcrc32 >> 8);  
@@ -116,14 +116,14 @@ uint32_t crc32Calculate(uint8_t *buf, uint32_t len){//CRC32 计算数组
 	return (oldcrc32 ^ 0xFFFFFFFF);  
 }
 
-uint32_t crc32CalculateAdd(uint8_t dat){//CRC32计算连续字节
+uint32_t crc32CalculateAdd(uint8_t idata dat){//CRC32计算连续字节
 	oldcrc32 = crc32Tab[(oldcrc32 ^ dat) & 0xff] ^ (oldcrc32 >> 8);
 	return (oldcrc32 ^ 0xFFFFFFFF);
 }
 void crc32Clear(void){//CRC32清楚计算值
 	oldcrc32 = 0xFFFFFFFF;
 }
-void crc32SetCrcOld(uint32_t old){//CRC32设置计算值
+void crc32SetCrcOld(uint32_t  idata old){//CRC32设置计算值
 	oldcrc32 = old;
 }
 

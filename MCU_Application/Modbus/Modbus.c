@@ -58,8 +58,6 @@ void modbusCrc16(const uint8_t Data, uint32_t* CRC){
             *CRC >>= 1;
     }
 }
-
-
 uint8_t DoSlaveTX(void){//It is used for send data package over physical layer
     modBusUartString(Tx_Buf, Tx_Buf_Size);
     Tx_Buf_Size = 0;

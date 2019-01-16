@@ -1,11 +1,11 @@
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 1   
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MODBUSPORT
 OBJECT MODULE PLACED IN .\Objects\ModbusPort.obj
-COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\ModbusPort.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\Lib;.\Driver;.\Mai
-                    -nApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS PRINT(.\Listings\ModbusPort.lst) OBJECT(.\O
-                    -bjects\ModbusPort.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE Modbus\ModbusPort.c OPTIMIZE(8,SPEED) REGFILE(.\Objects\dwLaser_F020.ORC
+                    -) BROWSE ORDER INCDIR(.\Lib;.\Driver;.\MainApp;.\Modbus) DEFINE(C8051F020) DEBUG OBJECTEXTEND CODE LISTINCLUDE SYMBOLS P
+                    -RINT(.\Listings\ModbusPort.lst) OBJECT(.\Objects\ModbusPort.obj)
 
 line level    source
 
@@ -17,94 +17,97 @@ line level    source
    1      =2  #ifndef __APPCONFIG_H__
    2      =2  #define __APPCONFIG_H__
    3      =2  /*****************************************************************************/
-   4      =2  #define CONFIG_SYSCLK                       (22118400L)
-   5      =2  #ifdef C8051F020
-   6      =2  #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
-   7      =2  #endif
-   8      =2  #define CONFIG_DEBUG                        0//µ÷ÊÔ¹¦ÄÜ
-   9      =2  #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
-  10      =2  #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
-  11      =2  #define CONFIG_VERSION                                          0x0001
-  12      =2  #define CONFIG_CHECK_CODE                                       0x5A00
-  13      =2  #define CONFIG_USING_SIMULATION                         1
-  14      =2  /*****************************************************************************/
-  15      =2  #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
-  16      =2  #define CONFIG_UART0_PARITY                                     NONE
-  17      =2  #define CONFIG_UART0_STOPBIT                            1
-  18      =2  #define CONFIG_UART0_DATABIT                            8
-  19      =2  
-  20      =2  #define CONFIG_UART1_BAUDRATE                           9600//´®¿Ú²¨ÌØÂÊ
-  21      =2  #define CONFIG_UART1_PARITY                                     NONE
-  22      =2  #define CONFIG_UART1_STOPBIT                            1
-  23      =2  #define CONFIG_UART1_DATABIT                            8
-  24      =2  /*****************************************************************************/
-  25      =2  #define CONFIG_I2C0_FREQ                                        1               
+   4      =2  #define DEBUG_LED_ON                                            0
+   5      =2  #define DEBUG_LED_OFF                                           1
+   6      =2  #define CONFIG_SYSCLK                       (22118400L)
+   7      =2  #ifdef C8051F020
+   8      =2  #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
+   9      =2  #endif
+  10      =2  #define CONFIG_DEBUG                        0//µ÷ÊÔ¹¦ÄÜ
+  11      =2  #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
+  12      =2  #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
+  13      =2  #define CONFIG_VERSION                                          0x0001
+  14      =2  #define CONFIG_CHECK_CODE                                       0x5AC1
+  15      =2  #define CONFIG_USING_SIMULATION                         1
+  16      =2  /*****************************************************************************/
+  17      =2  #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
+  18      =2  #define CONFIG_UART0_PARITY                                     NONE
+  19      =2  #define CONFIG_UART0_STOPBIT                            1
+  20      =2  #define CONFIG_UART0_DATABIT                            8
+  21      =2  
+  22      =2  #define CONFIG_UART1_BAUDRATE                           9600//´®¿Ú²¨ÌØÂÊ
+  23      =2  #define CONFIG_UART1_PARITY                                     NONE
+  24      =2  #define CONFIG_UART1_STOPBIT                            1
+  25      =2  #define CONFIG_UART1_DATABIT                            8
   26      =2  /*****************************************************************************/
-  27      =2  #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
-  28      =2  #define CONFIG_AT24C02_SIZE                             256
-  29      =2  #define CONFIG_AT24C04_SIZE                             512
-  30      =2  #define CONFIG_AT24C08_SIZE                             1024
-  31      =2  #define CONFIG_AT24C16_SIZE                             2048
-  32      =2  #define CONFIG_AT24C32_SIZE                             4096
-  33      =2  #define CONFIG_AT24C64_SIZE                                     8192
-  34      =2  #define CONFIG_AT24C128_SIZE                            16384
-  35      =2  #define CONFIG_AT24C256_SIZE                            32768
-  36      =2  #define CONFIG_EPROM_ADDRESS                            0x50
-  37      =2  #define CONFIG_EPROM_FRAM                                       1//Ìúµç´æ´¢ÌåÎÞÐ´ÈëµÈ´ý
-  38      =2  #define CONFIG_EPROM_PAGEWRITE                          0//Ò³Ð´Èë
-  39      =2  /*****************************************************************************/
-  40      =2  //SPLCÉèÖÃ
-  41      =2  #define CONFIG_SPLC_ASSERT                                      0//¼ì²éµØÖ··¶Î§
-  42      =2  #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
-  43      =2  #define CONFIG_INPUT_FILTER_TIME                        3//ÊäÈëÊý×ÖÂË²¨É¨ÃèÖÜÆÚ 1mS * N
-  44      =2  /*****************************************************************************/
-  45      =2  #define CONFIG_SPLC_USING_WDT                           1//¿´ÃÅ¹·ÆôÓÃ
-  46      =2  /*****************************************************************************/
-  47      =2  #define CONFIG_SPLC_USING_IO_INPUT                      1//ÊäÈëIOË¢ÐÂÆôÓÃ
-  48      =2  /*****************************************************************************/
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 2   
+  27      =2  #define CONFIG_I2C0_FREQ                                        1               
+  28      =2  /*****************************************************************************/
+  29      =2  #define CONFIG_EPROM_DEBUG                                      0
+  30      =2  #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
+  31      =2  #define CONFIG_AT24C02_SIZE                             256
+  32      =2  #define CONFIG_AT24C04_SIZE                             512
+  33      =2  #define CONFIG_AT24C08_SIZE                             1024
+  34      =2  #define CONFIG_AT24C16_SIZE                             2048
+  35      =2  #define CONFIG_AT24C32_SIZE                             4096
+  36      =2  #define CONFIG_AT24C64_SIZE                                     8192
+  37      =2  #define CONFIG_AT24C128_SIZE                            16384
+  38      =2  #define CONFIG_AT24C256_SIZE                            32768
+  39      =2  #define CONFIG_EPROM_ADDRESS                            0x50
+  40      =2  #define CONFIG_EPROM_FRAM                                       1//Ìúµç´æ´¢ÌåÎÞÐ´ÈëµÈ´ý
+  41      =2  #define CONFIG_EPROM_PAGEWRITE                          0//Ò³Ð´Èë
+  42      =2  /*****************************************************************************/
+  43      =2  //SPLCÉèÖÃ
+  44      =2  #define CONFIG_SPLC_ASSERT                                      0//¼ì²éµØÖ··¶Î§
+  45      =2  #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
+  46      =2  #define CONFIG_INPUT_FILTER_TIME                        3//ÊäÈëÊý×ÖÂË²¨É¨ÃèÖÜÆÚ 1mS * N
+  47      =2  /*****************************************************************************/
+  48      =2  #define CONFIG_SPLC_USING_WDT                           1//¿´ÃÅ¹·ÆôÓÃ
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 2   
 
-  49      =2  #define CONFIG_SPLC_USING_IO_OUTPUT                     1//Êä³öIOË¢ÐÂÆôÓÃ
-  50      =2  /*****************************************************************************/
-  51      =2  #define CONFIG_SPLC_USING_EPROM                         1//EPROMµôµç´æ´¢ÆôÓÃ
-  52      =2  /*****************************************************************************/
-  53      =2  #define CONFIG_SPLC_USING_UART1                         1//UART1´®¿ÚÆôÓÃ
-  54      =2  #if CONFIG_SPLC_USING_UART1 == 1
-  55      =2  #define SPLC_UART1                                                      1
-  56      =2  #endif
-  57      =2  /*****************************************************************************/
-  58      =2  #define CONFIG_SPLC_USING_ADC                           1//Ê¹ÄÜADCÄ£¿é
-  59      =2  #define CONFIG_SPLC_ADC_FILTER_TAP                      14//ADCÎ»ÒÆÂË²¨´ÎÊý
-  60      =2  #define CONFIG_SPLC_ADC_CHANNLE                         64//ADCÍ¨µÀÊý
-  61      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
-  62      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
-  63      =2  #define CONFIG_SPLC_ADC_INTERNAL_VREF           2200L// ADC Voltage Reference (mV)
-  64      =2  #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
-  65      =2  /*****************************************************************************/
-  66      =2  #define CONFIG_SPLC_USING_DAC                           1//ÊÇÄÜDACÄ£¿é
-  67      =2  /*****************************************************************************/
-  68      =2  #define CONFIG_SPLC_USING_MB_RTU_SLAVE          1//ÊÇÄÜMODBUS RTU´ÓÕ¾
-  69      =2  #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
-  70      =2  #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//´ÓÉè±¸µØÖ·
-  71      =2  #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//·¢ËÍ½ÓÊÕ»º³åÇø
-  72      =2  #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//½ÓÊÕÍ¨Ñ¶³¬Ê± 10mS
-  73      =2  #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TXÇÐ»»ÑÓÊ±
-  74      =2  /*****************************************************************************/
-  75      =2  /*****************************************************************************/
-  76      =2  #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
-  77      =2  #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
-  78      =2  #define DISABLE_INTERRUPT                                       EA = 0;
-  79      =2  #define ENABLE_INTERRUPT                                        EA = 1;
-  80      =2  /*****************************************************************************/
-  81      =2  //Ö¸Ê¾ºÐ×Ó
-  82      =2  #define R_BOX_RED_SENDED                                        (R_START + 55)
-  83      =2  #define R_BOX_GREEN_SENDED                                      (R_START + 56)
-  84      =2  #define BOX_CMD_STX                                                     0x81
-  85      =2  #define BOX_CMD_ETX                                                     0x84
-  86      =2  #define BOX_SEND_BFADDR                                         (EM_START + 95)//·¢ËÍ»º³åÇøÎ»ÖÃ
-  87      =2  #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
-  88      =2  /*****************************************************************************/
-  89      =2  #include "stdint.h"
+  49      =2  /*****************************************************************************/
+  50      =2  #define CONFIG_SPLC_USING_IO_INPUT                      1//ÊäÈëIOË¢ÐÂÆôÓÃ
+  51      =2  /*****************************************************************************/
+  52      =2  #define CONFIG_SPLC_USING_IO_OUTPUT                     1//Êä³öIOË¢ÐÂÆôÓÃ
+  53      =2  /*****************************************************************************/
+  54      =2  #define CONFIG_SPLC_USING_EPROM                         1//EPROMµôµç´æ´¢ÆôÓÃ
+  55      =2  /*****************************************************************************/
+  56      =2  #define CONFIG_SPLC_USING_UART1                         1//UART1´®¿ÚÆôÓÃ
+  57      =2  #if CONFIG_SPLC_USING_UART1 == 1
+  58      =2  #define SPLC_UART1                                                      1
+  59      =2  #endif
+  60      =2  /*****************************************************************************/
+  61      =2  #define CONFIG_SPLC_USING_ADC                           1//Ê¹ÄÜADCÄ£¿é
+  62      =2  #define CONFIG_SPLC_ADC_FILTER_TAP                      14//ADCÎ»ÒÆÂË²¨´ÎÊý
+  63      =2  #define CONFIG_SPLC_ADC_CHANNLE                         64//ADCÍ¨µÀÊý
+  64      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
+  65      =2  #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
+  66      =2  #define CONFIG_SPLC_ADC_INTERNAL_VREF           2200L// ADC Voltage Reference (mV)
+  67      =2  #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
+  68      =2  /*****************************************************************************/
+  69      =2  #define CONFIG_SPLC_USING_DAC                           1//ÊÇÄÜDACÄ£¿é
+  70      =2  /*****************************************************************************/
+  71      =2  #define CONFIG_SPLC_USING_MB_RTU_SLAVE          1//ÊÇÄÜMODBUS RTU´ÓÕ¾
+  72      =2  #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
+  73      =2  #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//´ÓÉè±¸µØÖ·
+  74      =2  #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//·¢ËÍ½ÓÊÕ»º³åÇø
+  75      =2  #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//½ÓÊÕÍ¨Ñ¶³¬Ê± 10mS
+  76      =2  #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TXÇÐ»»ÑÓÊ±
+  77      =2  /*****************************************************************************/
+  78      =2  /*****************************************************************************/
+  79      =2  #define DISABLE_MODBUS_SERIAL_INTERRUPT         ES0 = 0;
+  80      =2  #define ENABLE_MODBUS_SERIAL_INTERRUPT          ES0 = 1;
+  81      =2  #define DISABLE_INTERRUPT                                       EA = 0;
+  82      =2  #define ENABLE_INTERRUPT                                        EA = 1;
+  83      =2  /*****************************************************************************/
+  84      =2  //Ö¸Ê¾ºÐ×Ó
+  85      =2  #define R_BOX_RED_SENDED                                        (R_START * 16 + 126)
+  86      =2  #define R_BOX_GREEN_SENDED                                      (R_START * 16 + 127)
+  87      =2  #define BOX_CMD_STX                                                     0x81
+  88      =2  #define BOX_CMD_ETX                                                     0x84
+  89      =2  #define BOX_SEND_BFADDR                                         (EM_START + 100)//·¢ËÍ»º³åÇøÎ»ÖÃ
+  90      =2  #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
+  91      =2  /*****************************************************************************/
+  92      =2  #include "stdint.h"
    1      =3  /**************************************************************************//**
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
@@ -123,11 +126,11 @@ line level    source
   16      =3  
   17      =3  typedef signed char int8_t;
   18      =3  typedef short int16_t;
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 3   
+
   19      =3  typedef long int32_t;
   20      =3  typedef int32_t int64_t[2];
   21      =3  typedef float fp32_t;
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 3   
-
   22      =3  typedef double fp64_t;
   23      =3  
   24      =3  #elif defined __ICC8051__
@@ -159,7 +162,7 @@ line level    source
            =3 #endif
   51      =3  
   52      =3  #endif
-  90      =2  #include "stdbool.h"
+  93      =2  #include "stdbool.h"
    1      =3  /**************************************************************************//**
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
@@ -187,11 +190,11 @@ line level    source
            =3 
            =3 #define bool _Bool
            =3 #define true 1
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 4   
+
            =3 #define false 0
            =3 
            =3 #define __bool_true_false_are_defined 1
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 4   
-
            =3 
            =3 #endif /* !__cplusplus */
            =3 
@@ -207,7 +210,7 @@ line level    source
   43      =3  
   44      =3  #endif //STDBOOL_H
   45      =3  
-  91      =2  #include "endian.h"
+  94      =2  #include "endian.h"
    1      =3  /**************************************************************************//**
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
@@ -251,11 +254,11 @@ line level    source
            =3 
            =3 #else
            =3 
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 5   
+
            =3 #define htobe16(x) (x)
            =3 #define htobe32(x) (x)
            =3 #define be16toh(x) (x)
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 5   
-
            =3 #define be32toh(x) (x)
            =3 
            =3 #define htole16(x) (x)
@@ -266,7 +269,7 @@ line level    source
            =3 #endif  // Compiler Definitions
   55      =3  
   56      =3  #endif  // __ENDIAN_H__
-  92      =2  #include "si_toolchain.h"
+  95      =2  #include "si_toolchain.h"
    1      =3  /******************************************************************************
    2      =3   * Copyright (c) 2015 by Silicon Laboratories Inc. All rights reserved.
    3      =3   *
@@ -315,11 +318,11 @@ line level    source
            =4 
            =4 #ifdef __INT32_T_TYPE__
            =4   typedef __INT32_T_TYPE__   int32_t;
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 6   
+
            =4   typedef __UINT32_T_TYPE__ uint32_t;
            =4 #endif /* __INT32_T_TYPE__ */
            =4 
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 6   
-
            =4 #ifdef __INT64_T_TYPE__
            =4   #pragma language=save
            =4   #pragma language=extended
@@ -379,11 +382,11 @@ line level    source
   45      =4  
   12      =3  
   13      =3  /**************************************************************************//**
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 7   
+
   14      =3   *
   15      =3   * @addtogroup toolchain_group Toolchain Abstraction
   16      =3   *
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 7   
-
   17      =3   * @brief Macros for toolchain abstraction.
   18      =3   *
   19      =3   * # Introduction #
@@ -443,11 +446,11 @@ line level    source
   73      =3  // -------------------------------
   74      =3  // Keil/ARM C51
   75      =3  //
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 8   
+
   76      =3  #if defined(__C51__)
   77      =3  
   78      =3  /// Used with pointers, declares a generic pointer.  Generic pointers
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 8   
-
   79      =3  /// work with any memory space but are inefficient.
   80      =3  #define SI_SEG_GENERIC
   81      =3  
@@ -507,11 +510,11 @@ line level    source
  135      =3   * @param name The name of the SFR variable.
  136      =3   * @param address The address of the 16-bit SFR.
  137      =3   *
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 9   
+
  138      =3   * This creates a C variable (16-bit) that maps to a physical special function
  139      =3   * register of the 8051.  This cannot be used to make any arbitrary memory
  140      =3   * location into an SFR.  The _address_ must map to a real 16-bit SFR in the
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 9   
-
  141      =3   * memory map.
  142      =3   *****************************************************************************/
  143      =3  #define SI_SFR16(name, address) sfr16 name = address
@@ -571,11 +574,11 @@ line level    source
  197      =3   * @note This macro is used to declare a prototype for the interrupt function.
  198      =3   * To define the interrupt function implementation, use @ref SI_INTERRUPT.
  199      =3   *****************************************************************************/
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 10  
+
  200      =3  #define SI_INTERRUPT_PROTO(name, vector) void name (void)
  201      =3  
  202      =3  /**************************************************************************//**
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 10  
-
  203      =3   * Declare an interrupt handler prototype using a specific register bank.
  204      =3   *
  205      =3   * @param name The name of the interrupt handler function.
@@ -635,11 +638,11 @@ line level    source
  259      =3   * Declare a function to be reentrant (store local variables on the stack).
  260      =3   *
  261      =3   * @param name The name of the function.
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 11  
+
  262      =3   * @param return_type The data type of the function return value
  263      =3   * (void, int, etc).
  264      =3   * @param parameter One C function parameter (or "void") (type and name).
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 11  
-
  265      =3   *
  266      =3   * This macro declares a function prototype for a C function that is reentrant.
  267      =3   * See the documentation for @ref SI_REENTRANT_FUNCTION for an explanation of
@@ -699,11 +702,11 @@ line level    source
  321      =3   * @param name The name of the function.
  322      =3   * @param return_value The data type of the function return value
  323      =3   * (void, int, etc).
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 12  
+
  324      =3   * @param parameter One C function parameter (or "void") (type and name).
  325      =3   * @param regnum The register bank number (0-3).
  326      =3   *
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 12  
-
  327      =3   * This macro declares a function prototype for a C function that uses a
  328      =3   * specific register its working registers.  See the documentation for
  329      =3   * @ref SI_FUNCTION_USING for an explanation of the macro arguments.  This is
@@ -763,11 +766,11 @@ line level    source
  383      =3   * - @ref SI_SEG_PDATA
  384      =3   * - @ref SI_SEG_XDATA
  385      =3   * - @ref SI_SEG_CODE
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 13  
+
  386      =3   *
  387      =3   * __Example__
  388      =3   *
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 13  
-
  389      =3   * ~~~~~~~~.c
  390      =3   * // The following macro can be used to create a pointer that points to
  391      =3   * // a location in XDATA with the following signature:
@@ -827,11 +830,11 @@ line level    source
  445      =3   *
  446      =3   * - @ref SI_SEG_DATA
  447      =3   * - @ref SI_SEG_IDATA
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 14  
+
  448      =3   * - @ref SI_SEG_BDATA
  449      =3   * - @ref SI_SEG_PDATA
  450      =3   * - @ref SI_SEG_XDATA
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 14  
-
  451      =3   * - @ref SI_SEG_CODE
  452      =3   *
  453      =3   * __Example__
@@ -891,11 +894,11 @@ line level    source
            =3 #define SI_REENTRANT_FUNCTION_PROTO(name, return_value, parameter, regnum) return_value name (parameter)
            =3 
            =3 #define SI_FUNCTION_USING(name, return_value, parameter, regnum) return_value name (parameter)
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 15  
+
            =3 #define SI_FUNCTION_PROTO_USING(name, return_value, parameter, regnum) return_value name (parameter)
            =3 // Note: Parameter must be either 'void' or include a variable type and name. (Ex: char temp_variable)
            =3 
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 15  
-
            =3 #define SI_SEGMENT_VARIABLE(name, vartype, locsegment) vartype name
            =3 #define SI_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype * name
            =3 #define SI_SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype * name
@@ -955,11 +958,11 @@ line level    source
  569      =3  
  570      =3  /// A union type to allow access to the fields of a generic pointer.
  571      =3  /// A generic pointer has a field indicating the type of memory and an
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 16  
+
  572      =3  /// address within the memory.
  573      =3  typedef union SI_GEN_PTR
  574      =3  {
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 16  
-
  575      =3    uint8_t u8[3];    ///< 3-byte generic pointer as 3 unsigned 8-bit integers.
  576      =3    GPTR_t gptr;      ///< 3-byte generic pointer as pointer structure
  577      =3  } SI_GEN_PTR_t;
@@ -1019,11 +1022,11 @@ line level    source
            =3 #define MSB 1
            =3 typedef union SI_UU16
            =3 {
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 17  
+
            =3   uint16_t u16;
            =3   int16_t s16;
            =3   uint8_t u8[2];
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 17  
-
            =3   int8_t s8[2];
            =3 } SI_UU16_t;
            =3 
@@ -1083,11 +1086,11 @@ line level    source
            =3 #define SI_INTERRUPT_PROTO_USING(name, vector, regnum) __interrupt void name(void)
            =3 
            =3 #if (__DATA_MODEL__ == 0) /* TINY */ || \
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 18  
+
            =3     (__DATA_MODEL__ == 1) /* SMALL */
            =3 #define SI_REENTRANT_FUNCTION(name, return_type, parameter) \
            =3   __idata_reentrant return_type name parameter
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 18  
-
            =3 #define SI_REENTRANT_FUNCTION_PROTO(name, return_type, parameter) \
            =3   __idata_reentrant return_type name parameter
            =3 #elif (__DATA_MODEL__ == 2) /* LARGE */ || \
@@ -1147,11 +1150,11 @@ line level    source
            =3 /// use as signed or unsigned type.
            =3 typedef union SI_UU32
            =3 {
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 19  
+
            =3   uint32_t u32;       ///< The 4-byte value as a 32-bit unsigned integer.
            =3   int32_t s32;        ///< The 4-byte value as a 32-bit signed integer.
            =3   SI_UU16_t uu16[2];  ///< The 4-byte value as a SI_UU16_t.
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 19  
-
            =3   uint16_t u16[2];    ///< The 4-byte value as two unsigned 16-bit integers.
            =3   int16_t s16[2];     ///< The 4-byte value as two signed 16-bit integers.
            =3   uint8_t u8[4];      ///< The 4-byte value as 4 unsigned 8-bit integers.
@@ -1193,7 +1196,7 @@ line level    source
  795      =3  /** @} */
  796      =3  
  797      =3  #endif
-  93      =2  #include "compiler_defs.h"
+  96      =2  #include "compiler_defs.h"
    1      =3  //-----------------------------------------------------------------------------
    2      =3  // compiler_defs.h
    3      =3  //-----------------------------------------------------------------------------
@@ -1211,11 +1214,11 @@ line level    source
   15      =3    * This library is distributed in the hope that it will be useful,
   16      =3    * but WITHOUT ANY WARRANTY; without even the implied warranty of
   17      =3    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 20  
+
   18      =3    * Lesser General Public License for more details.
   19      =3    *
   20      =3    * You should have received a copy of the GNU Lesser General Public
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 20  
-
   21      =3    * License along with this library; if not, write to the Free Software
   22      =3    * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
   23      =3    *
@@ -1275,11 +1278,11 @@ line level    source
   77      =3  // Release 2.4 - 27 AUG 2012 (TP)
   78      =3  //    -Added defines for deprecated SDCC keywords interrupt, _asm, and _endasm
   79      =3  // Release 2.3 - 27 MAY 2010 (DM)
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 21  
+
   80      =3  //    -Removed 'LOCATED_VARIABLE' pragma from Keil because it is not supported
   81      =3  // Release 2.2 - 06 APR 2010 (ES)
   82      =3  //    -Removed 'PATHINCLUDE' pragma from Raisonance section
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 21  
-
   83      =3  // Release 2.1 - 16 JUL 2009 (ES)
   84      =3  //    -Added SEGMENT_POINTER macro definitions for SDCC, Keil, and Raisonance
   85      =3  //    -Added LOCATED_VARIABLE_NO_INIT macro definitions for Raisonance
@@ -1339,11 +1342,11 @@ line level    source
            =4   false = 0,
            =4   true = 1,
            =4 };
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 22  
+
            =4 
            =4 #elif defined __ICC8051__
            =4 
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 22  
-
            =4 #ifndef _SYSTEM_BUILD
            =4   #pragma system_include
            =4 #endif
@@ -1403,11 +1406,11 @@ line level    source
            =4 #endif /* __INT8_T_TYPE__ */
            =4 
            =4 #ifdef __INT16_T_TYPE__
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 23  
+
            =4   typedef __INT16_T_TYPE__   int16_t;
            =4   typedef __UINT16_T_TYPE__ uint16_t;
            =4 #endif /* __INT16_T_TYPE__ */
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 23  
-
            =4 
            =4 #ifdef __INT32_T_TYPE__
            =4   typedef __INT32_T_TYPE__   int32_t;
@@ -1467,11 +1470,11 @@ line level    source
            =3 # define SBIT(name, addr, bit)  __sbit  __at(addr+bit)                  name
            =3 # define SFR(name, addr)        __sfr   __at(addr)                      name
            =3 # define SFRX(name, addr)       xdata volatile unsigned char __at(addr) name
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 24  
+
            =3 # define SFR16(name, addr)      __sfr16 __at(((addr+1U)<<8) | addr)     name
            =3 # define SFR16E(name, fulladdr) __sfr16 __at(fulladdr)                  name
            =3 # define SFR32(name, addr)      __sfr32 __at(((addr+3UL)<<24) | ((addr+2UL)<<16) | ((addr+1UL)<<8) | addr)
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 24  
-
              - name
            =3 # define SFR32E(name, fulladdr) __sfr32 __at(fulladdr)                  name
            =3 
@@ -1531,11 +1534,11 @@ line level    source
            =3    S8 S8[4];
            =3 } UU32;
            =3 
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 25  
+
            =3 // NOP () macro support
            =3 #define NOP() _asm NOP _endasm
            =3 
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 25  
-
            =3 // generic pointer memory type specifiers
            =3 #define SI_GPTR
            =3 #define SI_GPTR_MTYPE_DATA       0x40
@@ -1595,11 +1598,11 @@ line level    source
            =3 # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype targsegment * name
            =3 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype targsegment * lo
              -csegment name
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 26  
+
            =3 # define SEGMENT_POINTER(name, vartype, locsegment) vartype * locsegment name
            =3 # define LOCATED_VARIABLE(name, vartype, locsegment, addr, init) at addr locsegment vartype name
            =3 # define LOCATED_VARIABLE_NO_INIT(name, vartype, locsegment, addr) at addr locsegment vartype name
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 26  
-
            =3 
            =3 
            =3 // used with UU16
@@ -1659,11 +1662,11 @@ line level    source
            =3     {
            =3         U8 MTYPE;
            =3         UU16 ADDR;
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 27  
+
            =3     } GPTR;
            =3 } SI_GENERIC_PTR;
            =3 
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 27  
-
            =3 //-----------------------------------------------------------------------------
            =3 
            =3 
@@ -1723,11 +1726,11 @@ line level    source
            =3 # define SEGMENT_VARIABLE(name, vartype, locsegment) vartype name
            =3 # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype * name
            =3 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype * name
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 28  
+
            =3 # define SEGMENT_POINTER(name, vartype, locsegment) vartype * name
            =3 # define LOCATED_VARIABLE_NO_INIT(name, vartype, locsegment, addr) vartype name
            =3 
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 28  
-
            =3 # endif // __SLS_IDE__
  415      =3  
  416      =3  // used with UU16
@@ -1787,11 +1790,11 @@ line level    source
  470      =3      struct
  471      =3      {
  472      =3          U8 MTYPE;
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 29  
+
  473      =3          UU16 ADDR;
  474      =3      } GPTR;
  475      =3  } SI_GENERIC_PTR;
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 29  
-
  476      =3  
  477      =3  //-----------------------------------------------------------------------------
  478      =3  
@@ -1851,11 +1854,11 @@ line level    source
            =3 
            =3 typedef signed char S8;
            =3 typedef signed int S16;
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 30  
+
            =3 typedef signed long S32;
            =3 
            =3 typedef union UU16
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 30  
-
            =3 {
            =3    U16 U16;
            =3    S16 S16;
@@ -1915,11 +1918,11 @@ line level    source
            =3 // When calling FUNCTION_USING in Tasking, the function must be called from an interrupt or Main which
            =3 // is also using the same register bank. If not, the compiler will generate an error.
            =3 # define FUNCTION_USING(name, return_value, parameter, regnum) _using(regnum) return_value name (parameter
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 31  
+
              -)
            =3 # define FUNCTION_PROTO_USING(name, return_value, parameter, regnum) _using(regnum) return_value name (par
              -ameter)
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 31  
-
            =3 // Note: Parameter must be either 'void' or include a variable type and name. (Ex: char temp_variable)
            =3 
            =3 # define SEGMENT_VARIABLE(name, vartype, locsegment) vartype locsegment name
@@ -1979,11 +1982,11 @@ line level    source
            =3 
            =3 #include <stdbool.h>
            =3 #include <intrinsics.h>
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 32  
+
            =3 
            =3 # define SBIT(name, addr, bit)  __bit __no_init volatile bool name @ (addr+bit)
            =3 # define SFR(name, addr)        __sfr __no_init volatile unsigned char name @ addr
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 32  
-
            =3 # define SFRX(name, addr)       __xdata __no_init volatile unsigned char name @ addr
            =3 # define SFR16(name, addr)      __sfr __no_init volatile unsigned int  name @ addr
            =3 # define SFR16E(name, fulladdr) /* not supported */
@@ -2043,11 +2046,11 @@ line level    source
            =3 typedef signed long S32;
            =3 
            =3 typedef union UU16
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 33  
+
            =3 {
            =3    U16 U16;
            =3    S16 S16;
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 33  
-
            =3    U8 U8[2];
            =3    S8 S8[2];
            =3 } UU16;
@@ -2107,11 +2110,11 @@ line level    source
            =3 #elif defined __UC__
            =3 # define SBIT(name, addr, bit)  unsigned char bit  name @ (addr+bit)
            =3 # define SFR(name, addr)        near unsigned char name @ addr
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 34  
+
            =3 # define SFR16(name, addr)      /* not supported */
            =3 # define SFR16E(name, fulladdr) /* not supported */
            =3 # define SFR32(name, fulladdr)  /* not supported */
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 34  
-
            =3 # define SFR32E(name, fulladdr) /* not supported */
            =3 
            =3 //-----------------------------------------------------------------------------
@@ -2140,7 +2143,7 @@ line level    source
  805      =3  //-----------------------------------------------------------------------------
  806      =3  // End Of File
  807      =3  //-----------------------------------------------------------------------------
-  94      =2  #include "C8051F020_defs.h"
+  97      =2  #include "C8051F020_defs.h"
    1      =3  //-----------------------------------------------------------------------------
    2      =3  // C8051F020_defs.h
    3      =3  //-----------------------------------------------------------------------------
@@ -2171,11 +2174,11 @@ line level    source
   28      =3  
   29      =3  #ifndef C8051F020_DEFS_H
   30      =3  #define C8051F020_DEFS_H
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 35  
+
   31      =3  
   32      =3  //-----------------------------------------------------------------------------
   33      =3  // Byte Registers
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 35  
-
   34      =3  //-----------------------------------------------------------------------------
   35      =3  
   36      =3  SFR (P0, 0x80);                        // Port 0 Latch
@@ -2235,11 +2238,11 @@ line level    source
   90      =3  SFR (AMX0CF, 0xBA);                    // ADC0 Mux Configuration
   91      =3  SFR (AMX0SL, 0xBB);                    // ADC0 Mux Channel Selection
   92      =3  SFR (ADC0CF, 0xBC);                    // ADC0 Configuration
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 36  
+
   93      =3  SFR (P1MDIN, 0xBD);                    // Port 1 Input Mode
   94      =3  SFR (ADC0L, 0xBE);                     // ADC0 Data Low
   95      =3  SFR (ADC0H, 0xBF);                     // ADC0 Data High
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 36  
-
   96      =3  SFR (SMB0CN, 0xC0);                    // SMBus0 Control
   97      =3  SFR (SMB0STA, 0xC1);                   // SMBus0 Status
   98      =3  SFR (SMB0DAT, 0xC2);                   // SMBus0 Data
@@ -2299,11 +2302,11 @@ line level    source
  152      =3  SFR (PCA0CPH0, 0xFA);                  // PCA0 Capture 0 High
  153      =3  SFR (PCA0CPH1, 0xFB);                  // PCA0 Capture 1 High
  154      =3  SFR (PCA0CPH2, 0xFC);                  // PCA0 Capture 2 High
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 37  
+
  155      =3  SFR (PCA0CPH3, 0xFD);                  // PCA0 Capture 3 High
  156      =3  SFR (PCA0CPH4, 0xFE);                  // PCA0 Capture 4 High
  157      =3  SFR (WDTCN, 0xFF);                     // Watchdog Timer Control
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 37  
-
  158      =3  
  159      =3  //-----------------------------------------------------------------------------
  160      =3  // 16-bit Register Definitions (might not be supported by all compilers)
@@ -2363,11 +2366,11 @@ line level    source
  214      =3  
  215      =3  // SCON0 0x98
  216      =3  SBIT (SM00, SFR_SCON0, 7);             // Serial Mode Control Bit 0
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 38  
+
  217      =3  SBIT (SM10, SFR_SCON0, 6);             // Serial Mode Control Bit 1
  218      =3  SBIT (SM20, SFR_SCON0, 5);             // Multiprocessor Communication Enable
  219      =3  SBIT (REN0, SFR_SCON0, 4);             // Receive Enable
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 38  
-
  220      =3  SBIT (TB80, SFR_SCON0, 3);             // Transmit Bit 8
  221      =3  SBIT (RB80, SFR_SCON0, 2);             // Receive Bit 8
  222      =3  SBIT (TI0, SFR_SCON0, 1);              // Transmit Interrupt Flag
@@ -2427,11 +2430,11 @@ line level    source
  276      =3  SBIT (CF, SFR_PCA0CN, 7);              // PCA 0 Counter Overflow Flag
  277      =3  SBIT (CR, SFR_PCA0CN, 6);              // PCA 0 Counter Run Control Bit
  278      =3                                         // Bit5 UNUSED
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 39  
+
  279      =3  SBIT (CCF4, SFR_PCA0CN, 4);            // PCA 0 Module 4 Interrupt Flag
  280      =3  SBIT (CCF3, SFR_PCA0CN, 3);            // PCA 0 Module 3 Interrupt Flag
  281      =3  SBIT (CCF2, SFR_PCA0CN, 2);            // PCA 0 Module 2 Interrupt Flag
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 39  
-
  282      =3  SBIT (CCF1, SFR_PCA0CN, 1);            // PCA 0 Module 1 Interrupt Flag
  283      =3  SBIT (CCF0, SFR_PCA0CN, 0);            // PCA 0 Module 0 Interrupt Flag
  284      =3  
@@ -2491,11 +2494,11 @@ line level    source
            =3 SFR(_XPAGE, 0xAF); // Point to the EMI0CN register
            =3 
            =3 #endif
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 40  
+
  341      =3  
  342      =3  //-----------------------------------------------------------------------------
  343      =3  // Header File PreProcessor Directive
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 40  
-
  344      =3  //-----------------------------------------------------------------------------
  345      =3  
  346      =3  #endif                                 // #define C8051F020_DEFS_H
@@ -2503,8 +2506,8 @@ line level    source
  348      =3  //-----------------------------------------------------------------------------
  349      =3  // End Of File
  350      =3  //-----------------------------------------------------------------------------
-  95      =2  /*****************************************************************************/
-  96      =2  #include <stdio.h>
+  98      =2  /*****************************************************************************/
+  99      =2  #include <stdio.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  STDIO.H
    3      =3  
@@ -2548,18 +2551,18 @@ line level    source
   41      =3  
   42      =3  #endif
   43      =3  
-  97      =2  #include <stdlib.h> 
+ 100      =2  #include <stdlib.h> 
    1      =3  /*--------------------------------------------------------------------------
    2      =3  STDLIB.H
    3      =3  
    4      =3  Standard functions.
    5      =3  Copyright (c) 1988-2008 Keil Elektronik GmbH and Keil Software, Inc.
    6      =3  Copyright (c) 2008-2016 ARM Germany GmbH
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 41  
+
    7      =3  All rights reserved.
    8      =3  --------------------------------------------------------------------------*/
    9      =3  
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 41  
-
   10      =3  #ifndef __STDLIB_H__
   11      =3  #define __STDLIB_H__
   12      =3  
@@ -2619,11 +2622,11 @@ line level    source
   66      =3  extern void   srand (unsigned int seed);
   67      =3  
   68      =3  #ifdef _DIV_T_DEFINED
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 42  
+
            =3 extern div_t  __div (int numer, int denom);
            =3 #define div(numer,denom)  __div((numer),(denom));
            =3 extern ldiv_t ldiv (long numer, long denom);
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 42  
-
            =3 #endif // _DIV_T_DEFINED
   73      =3  
   74      =3  extern float         strtod  (const char *nptr, char **endptr);
@@ -2645,7 +2648,7 @@ line level    source
   90      =3  #pragma RESTORE
   91      =3  
   92      =3  #endif // __STDLIB_H__
-  98      =2  #include <string.h>
+ 101      =2  #include <string.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  STRING.H
    3      =3  
@@ -2683,11 +2686,11 @@ line level    source
   35      =3  extern char  *strchr  (const char *s, char c);
   36      =3  extern int    strpos  (const char *s, char c);
   37      =3  extern char  *strrchr (const char *s, char c);
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 43  
+
   38      =3  extern int    strrpos (const char *s, char c);
   39      =3  
   40      =3  extern size_t strspn  (const char *s, const char *set);
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 43  
-
   41      =3  extern size_t strcspn (const char *s, const char *set);
   42      =3  extern char  *strpbrk (const char *s, const char *set);
   43      =3  extern char  *strrpbrk(const char *s, const char *set);
@@ -2703,7 +2706,7 @@ line level    source
   53      =3  #pragma RESTORE
   54      =3  
   55      =3  #endif
-  99      =2  #include <INTRINS.H>
+ 102      =2  #include <INTRINS.H>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  INTRINS.H
    3      =3  
@@ -2744,14 +2747,14 @@ line level    source
   38      =3  
   39      =3  #endif
   40      =3  
- 100      =2  #include <ctype.h>
+ 103      =2  #include <ctype.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  CTYPE.H
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 44  
+
    3      =3  
    4      =3  Prototypes for character functions.
    5      =3  Copyright (c) 1988-2002 Keil Elektronik GmbH and Keil Software, Inc.
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 44  
-
    6      =3  All rights reserved.
    7      =3  --------------------------------------------------------------------------*/
    8      =3  
@@ -2781,7 +2784,7 @@ line level    source
   32      =3  #pragma RESTORE
   33      =3  
   34      =3  #endif
- 101      =2  #include <LIMITS.H>
+ 104      =2  #include <LIMITS.H>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  LIMITS.H
    3      =3  
@@ -2811,11 +2814,11 @@ line level    source
   27      =3  #define ULONG_MAX        0xFFFFFFFF     /* Max "unsigned"  "long" value */
   28      =3  
   29      =3  #endif
- 102      =2  #include <math.h>
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 45  
+
+ 105      =2  #include <math.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  MATH.H
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 45  
-
    3      =3  
    4      =3  Prototypes for mathematic functions.
    5      =3  Copyright (c) 1988-2008 Keil Elektronik GmbH and Keil Software, Inc.
@@ -2875,14 +2878,14 @@ line level    source
   59      =3  #if defined (__CX2__)
            =3 extern float frexp (float val, int *exp);
            =3 extern float ldexp (float val, int exp);
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 46  
+
            =3 #endif
   63      =3  
   64      =3  #pragma RESTORE
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 46  
-
   65      =3  
   66      =3  #endif
- 103      =2  #include "crc32.h"
+ 106      =2  #include "crc32.h"
    1      =3  #ifndef __CRC32_H__
    2      =3  #define __CRC32_H__
    3      =3  
@@ -2894,6 +2897,8 @@ line level    source
    1      =4  #ifndef __APPCONFIG_H__
            =4 #define __APPCONFIG_H__
            =4 /*****************************************************************************/
+           =4 #define DEBUG_LED_ON                                            0
+           =4 #define DEBUG_LED_OFF                                           1
            =4 #define CONFIG_SYSCLK                       (22118400L)
            =4 #ifdef C8051F020
            =4 #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
@@ -2902,7 +2907,7 @@ line level    source
            =4 #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
            =4 #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
            =4 #define CONFIG_VERSION                                          0x0001
-           =4 #define CONFIG_CHECK_CODE                                       0x5A00
+           =4 #define CONFIG_CHECK_CODE                                       0x5AC1
            =4 #define CONFIG_USING_SIMULATION                         1
            =4 /*****************************************************************************/
            =4 #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
@@ -2917,6 +2922,7 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define CONFIG_I2C0_FREQ                                        1               
            =4 /*****************************************************************************/
+           =4 #define CONFIG_EPROM_DEBUG                                      0
            =4 #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
            =4 #define CONFIG_AT24C02_SIZE                             256
            =4 #define CONFIG_AT24C04_SIZE                             512
@@ -2936,14 +2942,14 @@ line level    source
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//ÊäÈëÊý×ÖÂË²¨É¨ÃèÖÜÆÚ 1mS * N
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_WDT                           1//¿´ÃÅ¹·ÆôÓÃ
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 47  
+
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//ÊäÈëIOË¢ÐÂÆôÓÃ
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_OUTPUT                     1//Êä³öIOË¢ÐÂÆôÓÃ
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_EPROM                         1//EPROMµôµç´æ´¢ÆôÓÃ
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 47  
-
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_UART1                         1//UART1´®¿ÚÆôÓÃ
            =4 #if CONFIG_SPLC_USING_UART1 == 1
@@ -2974,11 +2980,11 @@ line level    source
            =4 #define ENABLE_INTERRUPT                                        EA = 1;
            =4 /*****************************************************************************/
            =4 //Ö¸Ê¾ºÐ×Ó
-           =4 #define R_BOX_RED_SENDED                                        (R_START + 55)
-           =4 #define R_BOX_GREEN_SENDED                                      (R_START + 56)
+           =4 #define R_BOX_RED_SENDED                                        (R_START * 16 + 126)
+           =4 #define R_BOX_GREEN_SENDED                                      (R_START * 16 + 127)
            =4 #define BOX_CMD_STX                                                     0x81
            =4 #define BOX_CMD_ETX                                                     0x84
-           =4 #define BOX_SEND_BFADDR                                         (EM_START + 95)//·¢ËÍ»º³åÇøÎ»ÖÃ
+           =4 #define BOX_SEND_BFADDR                                         (EM_START + 100)//·¢ËÍ»º³åÇøÎ»ÖÃ
            =4 #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
            =4 /*****************************************************************************/
            =4 #include "stdint.h"
@@ -3000,14 +3006,14 @@ line level    source
            =4 #include "InitDeviceF020.h"
            =4 #include "delay.h"
            =4 #include "i2c0.h"
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 48  
+
            =4 #include "eprom.h"
            =4 #include "dac8568_0.h"
            =4 #include "dac8568_1.h"
            =4 #include "dac8568_2.h"
            =4 #include "dac8568_3.h"
            =4 #if CONFIG_SPLC_USING_UART1 == 1
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 48  
-
            =4 #include "sPlcUart.h"
            =4 #endif
            =4 /*****************************************************************************/
@@ -3030,8 +3036,8 @@ line level    source
   19      =3  
   20      =3  
   21      =3  
- 104      =2  /*****************************************************************************/
- 105      =2  #include "InitDeviceF020.h"
+ 107      =2  /*****************************************************************************/
+ 108      =2  #include "InitDeviceF020.h"
    1      =3  #ifndef __INITDEVICEF020_H__
    2      =3  #define __INITDEVICEF020_H__
    3      =3  /*****************************************************************************/
@@ -3039,6 +3045,8 @@ line level    source
    1      =4  #ifndef __APPCONFIG_H__
            =4 #define __APPCONFIG_H__
            =4 /*****************************************************************************/
+           =4 #define DEBUG_LED_ON                                            0
+           =4 #define DEBUG_LED_OFF                                           1
            =4 #define CONFIG_SYSCLK                       (22118400L)
            =4 #ifdef C8051F020
            =4 #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
@@ -3047,7 +3055,7 @@ line level    source
            =4 #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
            =4 #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
            =4 #define CONFIG_VERSION                                          0x0001
-           =4 #define CONFIG_CHECK_CODE                                       0x5A00
+           =4 #define CONFIG_CHECK_CODE                                       0x5AC1
            =4 #define CONFIG_USING_SIMULATION                         1
            =4 /*****************************************************************************/
            =4 #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
@@ -3062,6 +3070,9 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define CONFIG_I2C0_FREQ                                        1               
            =4 /*****************************************************************************/
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 49  
+
+           =4 #define CONFIG_EPROM_DEBUG                                      0
            =4 #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
            =4 #define CONFIG_AT24C02_SIZE                             256
            =4 #define CONFIG_AT24C04_SIZE                             512
@@ -3070,8 +3081,6 @@ line level    source
            =4 #define CONFIG_AT24C32_SIZE                             4096
            =4 #define CONFIG_AT24C64_SIZE                                     8192
            =4 #define CONFIG_AT24C128_SIZE                            16384
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 49  
-
            =4 #define CONFIG_AT24C256_SIZE                            32768
            =4 #define CONFIG_EPROM_ADDRESS                            0x50
            =4 #define CONFIG_EPROM_FRAM                                       1//Ìúµç´æ´¢ÌåÎÞÐ´ÈëµÈ´ý
@@ -3119,12 +3128,14 @@ line level    source
            =4 #define ENABLE_INTERRUPT                                        EA = 1;
            =4 /*****************************************************************************/
            =4 //Ö¸Ê¾ºÐ×Ó
-           =4 #define R_BOX_RED_SENDED                                        (R_START + 55)
-           =4 #define R_BOX_GREEN_SENDED                                      (R_START + 56)
+           =4 #define R_BOX_RED_SENDED                                        (R_START * 16 + 126)
+           =4 #define R_BOX_GREEN_SENDED                                      (R_START * 16 + 127)
            =4 #define BOX_CMD_STX                                                     0x81
            =4 #define BOX_CMD_ETX                                                     0x84
-           =4 #define BOX_SEND_BFADDR                                         (EM_START + 95)//·¢ËÍ»º³åÇøÎ»ÖÃ
+           =4 #define BOX_SEND_BFADDR                                         (EM_START + 100)//·¢ËÍ»º³åÇøÎ»ÖÃ
            =4 #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 50  
+
            =4 /*****************************************************************************/
            =4 #include "stdint.h"
            =4 #include "stdbool.h"
@@ -3134,8 +3145,6 @@ line level    source
            =4 #include "C8051F020_defs.h"
            =4 /*****************************************************************************/
            =4 #include <stdio.h>
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 50  
-
            =4 #include <stdlib.h> 
            =4 #include <string.h>
            =4 #include <INTRINS.H>
@@ -3165,7 +3174,7 @@ line level    source
    5      =3  /*****************************************************************************/
    6      =3  void initDeviceF020(void);
    7      =3  #endif
- 106      =2  #include "delay.h"
+ 109      =2  #include "delay.h"
    1      =3  #ifndef __DELAY_H__
    2      =3  #define __DELAY_H__
    3      =3  /*****************************************************************************/
@@ -3189,6 +3198,8 @@ line level    source
    4      =3  #ifndef __DELAY_H__
    4      =3  #define __DELAY_H__
    4      =3  /*****************************************************************************/
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 51  
+
    4      =3  #include "appConfig.h"
    5      =3  /*****************************************************************************/
    6      =3  void delayMs(uint8_t ms) reentrant;
@@ -3198,8 +3209,6 @@ line level    source
   10      =3  /*****************************************************************************/
   11      =3  #endif
   12      =3  
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 51  
-
    1      =3  #ifndef __I2C0_H__
    2      =3  #define __I2C0_H__
    3      =3  /*****************************************************************************/
@@ -3253,6 +3262,8 @@ line level    source
    8      =3  void dac8568_0_Reset(void);
    1      =3  #include "appConfig.h"
    1      =3  #include "appConfig.h"
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 52  
+
    2      =3  /*****************************************************************************/
    3      =3  void dac8568_1_Init(void);
    4      =3  void dac8568_1_Update(uint8_t ch);
@@ -3262,8 +3273,6 @@ line level    source
    8      =3  void dac8568_1_Reset(void);
    1      =3  #include "appConfig.h"
    1      =3  #include "appConfig.h"
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 52  
-
    2      =3  /*****************************************************************************/
    3      =3  void dac8568_2_Init(void);
    4      =3  void dac8568_2_Update(uint8_t ch);
@@ -3287,6 +3296,8 @@ line level    source
    1      =4  #ifndef __APPCONFIG_H__
            =4 #define __APPCONFIG_H__
            =4 /*****************************************************************************/
+           =4 #define DEBUG_LED_ON                                            0
+           =4 #define DEBUG_LED_OFF                                           1
            =4 #define CONFIG_SYSCLK                       (22118400L)
            =4 #ifdef C8051F020
            =4 #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
@@ -3295,7 +3306,7 @@ line level    source
            =4 #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
            =4 #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
            =4 #define CONFIG_VERSION                                          0x0001
-           =4 #define CONFIG_CHECK_CODE                                       0x5A00
+           =4 #define CONFIG_CHECK_CODE                                       0x5AC1
            =4 #define CONFIG_USING_SIMULATION                         1
            =4 /*****************************************************************************/
            =4 #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
@@ -3310,10 +3321,13 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define CONFIG_I2C0_FREQ                                        1               
            =4 /*****************************************************************************/
+           =4 #define CONFIG_EPROM_DEBUG                                      0
            =4 #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
            =4 #define CONFIG_AT24C02_SIZE                             256
            =4 #define CONFIG_AT24C04_SIZE                             512
            =4 #define CONFIG_AT24C08_SIZE                             1024
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 53  
+
            =4 #define CONFIG_AT24C16_SIZE                             2048
            =4 #define CONFIG_AT24C32_SIZE                             4096
            =4 #define CONFIG_AT24C64_SIZE                                     8192
@@ -3326,8 +3340,6 @@ line level    source
            =4 //SPLCÉèÖÃ
            =4 #define CONFIG_SPLC_ASSERT                                      0//¼ì²éµØÖ··¶Î§
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 53  
-
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//ÊäÈëÊý×ÖÂË²¨É¨ÃèÖÜÆÚ 1mS * N
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_WDT                           1//¿´ÃÅ¹·ÆôÓÃ
@@ -3367,17 +3379,19 @@ line level    source
            =4 #define ENABLE_INTERRUPT                                        EA = 1;
            =4 /*****************************************************************************/
            =4 //Ö¸Ê¾ºÐ×Ó
-           =4 #define R_BOX_RED_SENDED                                        (R_START + 55)
-           =4 #define R_BOX_GREEN_SENDED                                      (R_START + 56)
+           =4 #define R_BOX_RED_SENDED                                        (R_START * 16 + 126)
+           =4 #define R_BOX_GREEN_SENDED                                      (R_START * 16 + 127)
            =4 #define BOX_CMD_STX                                                     0x81
            =4 #define BOX_CMD_ETX                                                     0x84
-           =4 #define BOX_SEND_BFADDR                                         (EM_START + 95)//·¢ËÍ»º³åÇøÎ»ÖÃ
+           =4 #define BOX_SEND_BFADDR                                         (EM_START + 100)//·¢ËÍ»º³åÇøÎ»ÖÃ
            =4 #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
            =4 /*****************************************************************************/
            =4 #include "stdint.h"
            =4 #include "stdbool.h"
            =4 #include "endian.h"
            =4 #include "si_toolchain.h"
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 54  
+
            =4 #include "compiler_defs.h"
            =4 #include "C8051F020_defs.h"
            =4 /*****************************************************************************/
@@ -3390,8 +3404,6 @@ line level    source
            =4 #include <math.h>
            =4 #include "crc32.h"
            =4 /*****************************************************************************/
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 54  
-
            =4 #include "InitDeviceF020.h"
            =4 #include "delay.h"
            =4 #include "i2c0.h"
@@ -3442,6 +3454,8 @@ line level    source
            =3 extern uint8_t modBusUartString(uint8_t *s, uint16_t Length);
            =3 extern void receiveInterrupt(uint8_t Data);
            =3 /*****************************************************************************/
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 55  
+
            =3 #endif
    1      =3  #ifndef __SPLC_H__
    2      =3  #define __SPLC_H__
@@ -3450,17 +3464,17 @@ line level    source
    1      =4  #ifndef __APPCONFIG_H__
            =4 #define __APPCONFIG_H__
            =4 /*****************************************************************************/
+           =4 #define DEBUG_LED_ON                                            0
+           =4 #define DEBUG_LED_OFF                                           1
            =4 #define CONFIG_SYSCLK                       (22118400L)
            =4 #ifdef C8051F020
            =4 #define SAR_CLK                                                 2000000L//ADC0Ê±ÖÓ <2.5MHz
            =4 #endif
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 55  
-
            =4 #define CONFIG_DEBUG                        0//µ÷ÊÔ¹¦ÄÜ
            =4 #define CONFIG_USING_WDT                                        0//Ê¹ÄÜ¿´ÃÅ¹·
            =4 #define CONFIG_USING_RESET                                      0//Ê¹ÄÜPLC¸´Î»MCU¹¦ÄÜ
            =4 #define CONFIG_VERSION                                          0x0001
-           =4 #define CONFIG_CHECK_CODE                                       0x5A00
+           =4 #define CONFIG_CHECK_CODE                                       0x5AC1
            =4 #define CONFIG_USING_SIMULATION                         1
            =4 /*****************************************************************************/
            =4 #define CONFIG_UART0_BAUDRATE                           115200//´®¿Ú²¨ÌØÂÊ
@@ -3475,6 +3489,7 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define CONFIG_I2C0_FREQ                                        1               
            =4 /*****************************************************************************/
+           =4 #define CONFIG_EPROM_DEBUG                                      0
            =4 #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
            =4 #define CONFIG_AT24C02_SIZE                             256
            =4 #define CONFIG_AT24C04_SIZE                             512
@@ -3503,6 +3518,8 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_UART1                         1//UART1´®¿ÚÆôÓÃ
            =4 #if CONFIG_SPLC_USING_UART1 == 1
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 56  
+
            =4 #define SPLC_UART1                                                      1
            =4 #endif
            =4 /*****************************************************************************/
@@ -3518,8 +3535,6 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_MB_RTU_SLAVE          1//ÊÇÄÜMODBUS RTU´ÓÕ¾
            =4 #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 56  
-
            =4 #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//´ÓÉè±¸µØÖ·
            =4 #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//·¢ËÍ½ÓÊÕ»º³åÇø
            =4 #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//½ÓÊÕÍ¨Ñ¶³¬Ê± 10mS
@@ -3532,11 +3547,11 @@ line level    source
            =4 #define ENABLE_INTERRUPT                                        EA = 1;
            =4 /*****************************************************************************/
            =4 //Ö¸Ê¾ºÐ×Ó
-           =4 #define R_BOX_RED_SENDED                                        (R_START + 55)
-           =4 #define R_BOX_GREEN_SENDED                                      (R_START + 56)
+           =4 #define R_BOX_RED_SENDED                                        (R_START * 16 + 126)
+           =4 #define R_BOX_GREEN_SENDED                                      (R_START * 16 + 127)
            =4 #define BOX_CMD_STX                                                     0x81
            =4 #define BOX_CMD_ETX                                                     0x84
-           =4 #define BOX_SEND_BFADDR                                         (EM_START + 95)//·¢ËÍ»º³åÇøÎ»ÖÃ
+           =4 #define BOX_SEND_BFADDR                                         (EM_START + 100)//·¢ËÍ»º³åÇøÎ»ÖÃ
            =4 #define BOX_SEND_LENGTH                                         29//·¢ËÍÊý¾ÝÁ¿
            =4 /*****************************************************************************/
            =4 #include "stdint.h"
@@ -3567,6 +3582,8 @@ line level    source
            =4 #include "sPlcUart.h"
            =4 #endif
            =4 /*****************************************************************************/
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 57  
+
            =4 #include "Modbus.h"
            =4 #include "ModbusPort.h"
            =4 /*****************************************************************************/
@@ -3574,55 +3591,53 @@ line level    source
            =4 /*****************************************************************************/
            =4 #endif
    5      =3  /*****************************************************************************/
-   6      =3  //ÏßÈ¦ ±£³Ö 4 * 16 = 64BIT
+   6      =3  //ÏßÈ¦ ±£³Ö 8 * 16 = 128BIT
    7      =3  #define MR_START                                                0
    8      =3  #define MR_END                                                  3
-   9      =3  //ÏßÈ¦¼Ä´æÆ÷ ·Ç±£³Ö 4 * 16 = 64BIT
+   9      =3  //ÏßÈ¦¼Ä´æÆ÷ ·Ç±£³Ö 8 * 16 = 128BIT
   10      =3  #define R_START                                                 4
-  11      =3  #define R_END                                                   7
+  11      =3  #define R_END                                                   11
   12      =3  //Êý¾Ý¼Ä´æÆ÷ ±£³Ö 8
-  13      =3  #define DM_START                                                8
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 57  
-
-  14      =3  #define DM_END                                                  15
-  15      =3  //Êý¾Ý¼Ä´æÆ÷ ·Ç±£³Ö 128¸ö×Ö
-  16      =3  #define EM_START                                                16
-  17      =3  #define EM_END                                                  143
+  13      =3  #define DM_START                                                12
+  14      =3  #define DM_END                                                  19
+  15      =3  //Êý¾Ý¼Ä´æÆ÷ ·Ç±£³Ö 140¸ö×Ö
+  16      =3  #define EM_START                                                20
+  17      =3  #define EM_END                                                  159
   18      =3  //ÑÓÊ±ÏßÈ¦
   19      =3  //1MS 1 * 16 = 16BIT
-  20      =3  #define T_1MS_START                                             144
-  21      =3  #define T_1MS_END                                               144
+  20      =3  #define T_1MS_START                                             160
+  21      =3  #define T_1MS_END                                               160
   22      =3  //10MS 1 * 16 = 16BIT
-  23      =3  #define T_10MS_START                                    145
-  24      =3  #define T_10MS_END                                              145
+  23      =3  #define T_10MS_START                                    161
+  24      =3  #define T_10MS_END                                              161
   25      =3  //100MS 1 * 16 = 16BIT
-  26      =3  #define T_100MS_START                                   146
-  27      =3  #define T_100MS_END                                             146
+  26      =3  #define T_100MS_START                                   162
+  27      =3  #define T_100MS_END                                             162
   28      =3  //ÑÓÊ±¼ÆÊ±Æ÷ 
-  29      =3  //1MS 32
-  30      =3  #define TD_1MS_START                                    147
-  31      =3  #define TD_1MS_END                                              162
-  32      =3  //10MS 32
-  33      =3  #define TD_10MS_START                                   163
-  34      =3  #define TD_10MS_END                                             178
-  35      =3  //100MS 32
-  36      =3  #define TD_100MS_START                                  179
-  37      =3  #define TD_100MS_END                                    194
+  29      =3  //1MS 16
+  30      =3  #define TD_1MS_START                                    163
+  31      =3  #define TD_1MS_END                                              178
+  32      =3  //10MS 16
+  33      =3  #define TD_10MS_START                                   179
+  34      =3  #define TD_10MS_END                                             194
+  35      =3  //100MS 16
+  36      =3  #define TD_100MS_START                                  195
+  37      =3  #define TD_100MS_END                                    210
   38      =3  //¼ÆÊýÆ÷ 1
-  39      =3  #define C_START                                                 195
-  40      =3  #define C_END                                                   195
-  41      =3  //ÊäÈëÎ»¼Ä´æÆ÷ 1 * 16 = 128¸ö
-  42      =3  #define X_START                                                 196
-  43      =3  #define X_END                                                   196             
-  44      =3  //Êä³öÎ»¼Ä´æÆ÷ 1 * 16 = 128¸ö
-  45      =3  #define Y_START                                                 197
-  46      =3  #define Y_END                                                   197
+  39      =3  #define C_START                                                 211
+  40      =3  #define C_END                                                   211
+  41      =3  //ÊäÈëÎ»¼Ä´æÆ÷ 1 * 16 = 16¸ö
+  42      =3  #define X_START                                                 212
+  43      =3  #define X_END                                                   212             
+  44      =3  //Êä³öÎ»¼Ä´æÆ÷ 1 * 16 = 16¸ö
+  45      =3  #define Y_START                                                 213
+  46      =3  #define Y_END                                                   213
   47      =3  //ÌØÊâ¼Ä´æÆ÷ 24¸ö×Ö
-  48      =3  #define SPREG_START                                             198
-  49      =3  #define SPREG_END                                               221
+  48      =3  #define SPREG_START                                             214
+  49      =3  #define SPREG_END                                               237
   50      =3  //ÌØÊâÏßÈ¦      4 * 16 = 64¸ö
-  51      =3  #define SPCOIL_START                                    222
-  52      =3  #define SPCOIL_END                                              225
+  51      =3  #define SPCOIL_START                                    238
+  52      =3  #define SPCOIL_END                                              241
   53      =3  /*****************************************************************************/
   54      =3  #define EM_ADC_0                                                (EM_START + 0)//ADC0->MLD0
   55      =3  #define EM_ADC_1                                                (EM_START + 1)//ADC1->MLD1
@@ -3631,6 +3646,8 @@ line level    source
   58      =3  #define EM_ADC_4                                                (EM_START + 4)//ADC4->MLD4
   59      =3  #define EM_ADC_5                                                (EM_START + 5)//ADC5->MLD5
   60      =3  #define EM_ADC_6                                                (EM_START + 6)//ADC6->MLD6
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 58  
+
   61      =3  #define EM_ADC_7                                                (EM_START + 7)//ADC7->MLD7
   62      =3  #define EM_ADC_8                                                (EM_START + 8)//ADC8->MLD8
   63      =3  #define EM_ADC_9                                                (EM_START + 9)//ADC9->MLD9
@@ -3646,8 +3663,6 @@ line level    source
   73      =3  #define EM_ADC_19                                               (EM_START + 19)//ADC19->MLD19
   74      =3  #define EM_ADC_20                                               (EM_START + 20)//ADC20->MLD20
   75      =3  #define EM_ADC_21                                               (EM_START + 21)//ADC21->MLD21
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 58  
-
   76      =3  #define EM_ADC_22                                               (EM_START + 22)//ADC22->MLD22
   77      =3  #define EM_ADC_23                                               (EM_START + 23)//ADC23->MLD23
   78      =3  #define EM_ADC_24                                               (EM_START + 24)//ADC24->MLD24
@@ -3695,6 +3710,8 @@ line level    source
  120      =3  #define EM_DAC_2                                                (EM_START + 66)//DAC2
  121      =3  #define EM_DAC_3                                                (EM_START + 67)//DAC3
  122      =3  #define EM_DAC_4                                                (EM_START + 68)//DAC4
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 59  
+
  123      =3  #define EM_DAC_5                                                (EM_START + 69)//DAC5
  124      =3  #define EM_DAC_6                                                (EM_START + 70)//DAC6
  125      =3  #define EM_DAC_7                                                (EM_START + 71)//DAC7
@@ -3710,8 +3727,6 @@ line level    source
  135      =3  #define EM_DAC_17                                               (EM_START + 81)//DAC17
  136      =3  #define EM_DAC_18                                               (EM_START + 82)//DAC18
  137      =3  #define EM_DAC_19                                               (EM_START + 83)//DAC19
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 59  
-
  138      =3  #define EM_DAC_20                                               (EM_START + 84)//DAC20
  139      =3  #define EM_DAC_21                                               (EM_START + 85)//DAC21
  140      =3  #define EM_DAC_22                                               (EM_START + 86)//DAC22
@@ -3759,6 +3774,8 @@ line level    source
  182      =3          uint16_t dat[CONFIG_SPLC_ADC_FILTER_TAP];
  183      =3          uint16_t out;
  184      =3          uint8_t wIndex;//Ð´ÈëÖ¸Õë
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 60  
+
  185      =3  }adcTempDat_t;
  186      =3  /*****************************************************************************/
  187      =3  extern uint16_t ModbusSlaveAsciiOverTimeCounter;//Modbus SlaveÍ¨ÐÅ³¬Ê±¼ÆÊ±Æ÷
@@ -3774,8 +3791,6 @@ line level    source
  197      =3  void assertRegisterAddress(uint16_t adr) reentrant;
  198      =3  /*****************************************************************************/
  199      =3  void nvramUpdata(void);
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 60  
-
  200      =3  void clearDM(void);
  201      =3  void clearEM(void);
  202      =3  void clearR(void);
@@ -3823,6 +3838,8 @@ line level    source
    8   1              T2CON &= ~(1 << 0);//å½“å®šæ—¶å™¨2 æº¢å‡ºæˆ–T2EX ä¸Šå‘ç”Ÿè´Ÿè·³å˜æ—¶å°†è‡ªåŠ¨é‡è£…è½½ï¼ˆEXEN2=1ï¼‰
    9   1              T2CON &= ~(1 << 1);//å®šæ—¶å™¨åŠŸèƒ½ï¼šå®šæ—¶å™¨2 ç”±T2Mï¼ˆCKCON.5ï¼‰å®šä¹‰çš„æ—¶é’ŸåŠ 1
   10   1              T2CON |= (1 << 4);//Timer 2 overflows used for transmit clock.
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 61  
+
   11   1              T2CON |= (1 << 5);//Timer 2 overflows used for receive clock.   
   12   1              RCAP2  = - ((long) ((uint32_t)CONFIG_SYSCLK / baudrate) / 32L);
   13   1              TMR2 = RCAP2;
@@ -3838,8 +3855,6 @@ line level    source
   23   1      }
   24          void initModbusTimer(void){//åˆå§‹åŒ–MODBUSè®¡æ—¶å™¨ 1mS TIMER1
   25   1              uint16_t temp;
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 61  
-
   26   1              temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_MB_RTU_SLAVE_TIMER));
   27   1              Timer1_L = (uint8_t)(temp & 0xFF);
   28   1              Timer1_H = (uint8_t)((temp >> 8) & 0xFF);
@@ -3887,6 +3902,8 @@ line level    source
   68   1          modbusTimerValue = 0;
   69   1      }
   70          /******************************************************************************/
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 62  
+
   71          static void modbusHandle() interrupt INTERRUPT_TIMER1
   72          {//ç¡¬ä»¶è®¡æ—¶å™¨TIMER1ä¸­æ–­å‡½æ•° 1mS
   73   1              TF1 = 0;
@@ -3902,8 +3919,6 @@ line level    source
   83   1              if(RI0){
   84   2                      RI0 = 0;        
   85   2                      receiveInterrupt(SBUF0);
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 62  
-
   86   2      //              if(RI0)
   87   2      //              {
   88   2      //                      RI0 = 0;
@@ -3914,7 +3929,7 @@ line level    source
   93   2                      //modbusSerialTxHandle();
   94   2              }
   95   1      } 
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 63  
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 63  
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -3978,7 +3993,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
              ; FUNCTION initModbusTimer (BEGIN)
                                            ; SOURCE LINE # 24
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 64  
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 64  
 
                                            ; SOURCE LINE # 26
 ;---- Variable 'temp' assigned to Register 'R6/R7' ----
@@ -4042,7 +4057,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0000 020000      R     LJMP    initModbusTimer
              ; FUNCTION modBusTimerInitialise (END)
 
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 65  
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 65  
 
              ; FUNCTION _modBusUartPutch (BEGIN)
                                            ; SOURCE LINE # 52
@@ -4106,7 +4121,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0007 E4                CLR     A
 0008 3400        E     ADDC    A,#HIGH modbusReceiveBuffer
 000A F583              MOV     DPH,A
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 66  
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 66  
 
 000C EF                MOV     A,R7
 000D F0                MOVX    @DPTR,A
@@ -4170,7 +4185,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 000F 309807            JNB     RI0,?C0016
                                            ; SOURCE LINE # 84
 0012 C298              CLR     RI0
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 67  
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 67  
 
                                            ; SOURCE LINE # 85
 0014 AF99              MOV     R7,SBUF0
@@ -4193,29 +4208,35 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 002A 32                RETI    
              ; FUNCTION uart0Isr (END)
 
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 68  
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 68  
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
 
 
+uint8_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
 uint16_t . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
+uint32_t . . . . . . . . . . . . . . .  TYPEDEF  -----  U_LONG   -----  4
 uint64_t . . . . . . . . . . . . . . .  TYPEDEF  -----  ARRAY    -----  8
-SI_GEN_PTR_t . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  3
-  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
-  gptr . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
-modBusTimerInitialise. . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-int32_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
-_modBusUartString. . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  s. . . . . . . . . . . . . . . . . .  AUTO     DATA   PTR      0000H  3
-  Length . . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0003H  2
-  DummyCounter . . . . . . . . . . . .  * REG *  DATA   U_INT    0004H  2
+int8_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
 int16_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  INT      -----  2
-_initModbusSerial. . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  baudrate . . . . . . . . . . . . . .  * REG *  DATA   LONG     0004H  4
-S8 . . . . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
+int32_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
 int64_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  ARRAY    -----  8
-U8 . . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
+fp32_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  FLOAT    -----  4
+fp64_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  FLOAT    -----  4
+bool . . . . . . . . . . . . . . . . .  TYPEDEF  -----  BIT      -----  1
+false. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+true . . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
+SI_UU16. . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
+  u16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
+  s16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
+  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+  s8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+SI_UU16_t. . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  2
+  u16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
+  s16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
+  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+  s8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
 SI_UU32. . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  4
   u32. . . . . . . . . . . . . . . . .  MEMBER   -----  U_LONG   0000H  4
   s32. . . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
@@ -4224,108 +4245,6 @@ SI_UU32. . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  4
   s16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
   u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
   s8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-false. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
-SI_UU16. . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
-  u16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
-  s16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
-  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-  s8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-UU32 . . . . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  4
-  U32. . . . . . . . . . . . . . . . .  MEMBER   -----  U_LONG   0000H  4
-  S32. . . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
-  UU16 . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-UU32 . . . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  4
-  U32. . . . . . . . . . . . . . . . .  MEMBER   -----  U_LONG   0000H  4
-  S32. . . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
-  UU16 . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-fp32_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  FLOAT    -----  4
-size_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
-UU16 . . . . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  2
-  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
-  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
-  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-UU16 . . . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
-  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
-  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 69  
-
-NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
-====                                    =====   ======  ====    ======  ====
-
-
-  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-GPTR_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  3
-  memtype. . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0000H  1
-  address. . . . . . . . . . . . . . .  MEMBER   -----  UNION    0001H  2
-modbusTimerValue . . . . . . . . . . .  EXTERN   DATA   U_INT    -----  2
-_modBusUartPutch . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  c. . . . . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0000H  1
-fp64_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  FLOAT    -----  4
-IP . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B8H  1
-uart0Isr . . . . . . . . . . . . . . .  STATIC   CODE   PROC     0000H  -----
-_modBusUartInitialise. . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  baudrate . . . . . . . . . . . . . .  * REG *  DATA   U_LONG   0004H  4
-TMR2 . . . . . . . . . . . . . . . . .  SFR      DATA   U_INT    00CCH  2
-initModbusTimer. . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  temp . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0006H  2
-bool . . . . . . . . . . . . . . . . .  TYPEDEF  -----  BIT      -----  1
-SI_GEN_PTR . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  3
-  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
-  gptr . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
-adcTempDat_t . . . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  31
-  dat. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  28
-  out. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    001CH  2
-  wIndex . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   001EH  1
-modbusReceiveBuffer. . . . . . . . . .  EXTERN   XDATA  ARRAY    -----  256
-TMOD . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0089H  1
-_modbusSerialSendbyte. . . . . . . . .  STATIC   CODE   PROC     0000H  -----
-  dt . . . . . . . . . . . . . . . . .  * REG *  DATA   PTR      0001H  3
-S32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
-S16. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  INT      -----  2
-U32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_LONG   -----  4
-_receiveInterrupt. . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  Data . . . . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0007H  1
-modbusReceiveCounter . . . . . . . . .  EXTERN   DATA   U_CHAR   -----  1
-U16. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
-true . . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
-ES0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00ACH  1
-ET1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00ABH  1
-RI0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0098H  1
-TF1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008FH  1
-TI0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0099H  1
-TH1. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008DH  1
-uint8_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
-TL1. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008BH  1
-SI_GENERIC_PTR . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  3
-  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
-  GPTR . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
-SI_GENERIC_PTR . . . . . . . . . . . .  * TAG *  -----  UNION    -----  3
-  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
-  GPTR . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
-TR1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008EH  1
-TR2. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CAH  1
-RCAP2. . . . . . . . . . . . . . . . .  SFR      DATA   U_INT    00CAH  2
-int8_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
-Timer1_H . . . . . . . . . . . . . . .  STATIC   DATA   U_CHAR   0000H  1
-modbusHandle . . . . . . . . . . . . .  STATIC   CODE   PROC     0000H  -----
-Timer1_L . . . . . . . . . . . . . . .  STATIC   DATA   U_CHAR   0001H  1
-C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/14/2019 17:29:33 PAGE 70  
-
-NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
-====                                    =====   ======  ====    ======  ====
-
-
-SBUF0. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0099H  1
 SI_UU32_t. . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  4
   u32. . . . . . . . . . . . . . . . .  MEMBER   -----  U_LONG   0000H  4
   s32. . . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
@@ -4334,16 +4253,112 @@ SI_UU32_t. . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  4
   s16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
   u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
   s8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-SI_UU16_t. . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  2
-  u16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
-  s16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
-  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-  s8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-SCON0. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
-T2CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C8H  1
-wchar_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
+GPTR_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  3
+  memtype. . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0000H  1
+  address. . . . . . . . . . . . . . .  MEMBER   -----  UNION    0001H  2
+SI_GEN_PTR . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  3
+  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
+  gptr . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
+SI_GEN_PTR_t . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  3
+  u8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
+  gptr . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
+U8 . . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
+U16. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
+U32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_LONG   -----  4
+S8 . . . . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
+S16. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  INT      -----  2
+S32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
+UU16 . . . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
+  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
+  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 69  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+UU16 . . . . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  2
+  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
+  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
+  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
+UU32 . . . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  4
+  U32. . . . . . . . . . . . . . . . .  MEMBER   -----  U_LONG   0000H  4
+  S32. . . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
+  UU16 . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+UU32 . . . . . . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  4
+  U32. . . . . . . . . . . . . . . . .  MEMBER   -----  U_LONG   0000H  4
+  S32. . . . . . . . . . . . . . . . .  MEMBER   -----  LONG     0000H  4
+  UU16 . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  U16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  S16. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+  S8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
+SI_GENERIC_PTR . . . . . . . . . . . .  * TAG *  -----  UNION    -----  3
+  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
+  GPTR . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
+SI_GENERIC_PTR . . . . . . . . . . . .  TYPEDEF  -----  UNION    -----  3
+  U8 . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  3
+  GPTR . . . . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  3
+TMOD . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0089H  1
+TL1. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008BH  1
+TH1. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008DH  1
 CKCON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008EH  1
-uint32_t . . . . . . . . . . . . . . .  TYPEDEF  -----  U_LONG   -----  4
+SCON0. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
+SBUF0. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0099H  1
+IP . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B8H  1
+T2CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C8H  1
+RCAP2. . . . . . . . . . . . . . . . .  SFR      DATA   U_INT    00CAH  2
+TMR2 . . . . . . . . . . . . . . . . .  SFR      DATA   U_INT    00CCH  2
+TF1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008FH  1
+TR1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      008EH  1
+TI0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0099H  1
+RI0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0098H  1
+ES0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00ACH  1
+ET1. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00ABH  1
+TR2. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00CAH  1
+size_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
+wchar_t. . . . . . . . . . . . . . . .  TYPEDEF  -----  CHAR     -----  1
+modbusTimerValue . . . . . . . . . . .  EXTERN   DATA   U_INT    -----  2
+modbusReceiveCounter . . . . . . . . .  EXTERN   DATA   U_CHAR   -----  1
+modbusReceiveBuffer. . . . . . . . . .  EXTERN   XDATA  ARRAY    -----  256
+adcTempDat_t . . . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  31
+  dat. . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  28
+  out. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    001CH  2
+  wIndex . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   001EH  1
+_modBusUartInitialise. . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  baudrate . . . . . . . . . . . . . .  * REG *  DATA   U_LONG   0004H  4
+C51 COMPILER V9.59.0.0   MODBUSPORT                                                        01/16/2019 18:30:06 PAGE 70  
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
+modBusTimerInitialise. . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+_modBusUartPutch . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  c. . . . . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0000H  1
+_modBusUartString. . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  s. . . . . . . . . . . . . . . . . .  AUTO     DATA   PTR      0000H  3
+  Length . . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0003H  2
+  DummyCounter . . . . . . . . . . . .  * REG *  DATA   U_INT    0004H  2
+_receiveInterrupt. . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  Data . . . . . . . . . . . . . . . .  * REG *  DATA   U_CHAR   0007H  1
+Timer1_L . . . . . . . . . . . . . . .  STATIC   DATA   U_CHAR   0000H  1
+Timer1_H . . . . . . . . . . . . . . .  STATIC   DATA   U_CHAR   0001H  1
+_initModbusSerial. . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  baudrate . . . . . . . . . . . . . .  * REG *  DATA   LONG     0004H  4
+initModbusTimer. . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
+  temp . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0006H  2
+_modbusSerialSendbyte. . . . . . . . .  STATIC   CODE   PROC     0000H  -----
+  dt . . . . . . . . . . . . . . . . .  * REG *  DATA   PTR      0001H  3
+modbusHandle . . . . . . . . . . . . .  STATIC   CODE   PROC     0000H  -----
+uart0Isr . . . . . . . . . . . . . . .  STATIC   CODE   PROC     0000H  -----
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE

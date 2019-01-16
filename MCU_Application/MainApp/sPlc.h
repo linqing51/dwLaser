@@ -3,53 +3,53 @@
 /*****************************************************************************/
 #include "appConfig.h"
 /*****************************************************************************/
-//线圈 保持 4 * 16 = 64BIT
+//线圈 保持 8 * 16 = 128BIT
 #define MR_START						0
 #define MR_END   						3
-//线圈寄存器 非保持 4 * 16 = 64BIT
+//线圈寄存器 非保持 8 * 16 = 128BIT
 #define R_START							4
-#define R_END							7
+#define R_END							11
 //数据寄存器 保持 8
-#define DM_START						8
-#define DM_END							15
-//数据寄存器 非保持 128个字
-#define EM_START						16
-#define EM_END							143
+#define DM_START						12
+#define DM_END							19
+//数据寄存器 非保持 140个字
+#define EM_START						20
+#define EM_END							159
 //延时线圈
 //1MS 1 * 16 = 16BIT
-#define T_1MS_START						144
-#define T_1MS_END						144
+#define T_1MS_START						160
+#define T_1MS_END						160
 //10MS 1 * 16 = 16BIT
-#define T_10MS_START					145
-#define T_10MS_END						145
+#define T_10MS_START					161
+#define T_10MS_END						161
 //100MS 1 * 16 = 16BIT
-#define T_100MS_START					146
-#define T_100MS_END						146
+#define T_100MS_START					162
+#define T_100MS_END						162
 //延时计时器 
-//1MS 32
-#define TD_1MS_START					147
-#define TD_1MS_END						162
-//10MS 32
-#define TD_10MS_START					163
-#define TD_10MS_END						178
-//100MS 32
-#define TD_100MS_START					179
-#define TD_100MS_END					194
+//1MS 16
+#define TD_1MS_START					163
+#define TD_1MS_END						178
+//10MS 16
+#define TD_10MS_START					179
+#define TD_10MS_END						194
+//100MS 16
+#define TD_100MS_START					195
+#define TD_100MS_END					210
 //计数器 1
-#define C_START							195
-#define C_END							195
-//输入位寄存器 1 * 16 = 128个
-#define X_START							196
-#define X_END							196		
-//输出位寄存器 1 * 16 = 128个
-#define Y_START							197
-#define Y_END							197
+#define C_START							211
+#define C_END							211
+//输入位寄存器 1 * 16 = 16个
+#define X_START							212
+#define X_END							212		
+//输出位寄存器 1 * 16 = 16个
+#define Y_START							213
+#define Y_END							213
 //特殊寄存器 24个字
-#define SPREG_START						198
-#define SPREG_END						221
+#define SPREG_START						214
+#define SPREG_END						237
 //特殊线圈	4 * 16 = 64个
-#define SPCOIL_START					222
-#define SPCOIL_END						225
+#define SPCOIL_START					238
+#define SPCOIL_END						241
 /*****************************************************************************/
 #define EM_ADC_0						(EM_START + 0)//ADC0->MLD0
 #define EM_ADC_1						(EM_START + 1)//ADC1->MLD1

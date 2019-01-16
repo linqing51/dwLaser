@@ -1,28 +1,26 @@
 #include "i2c0.h"
-/*****************************************************************************/
-sbit SDA0 = P0^6;
-sbit SCL0 = P0^7;				
+/*****************************************************************************/		
 /*****************************************************************************/
 void iic0Init(void){
 
 }
 static void setSCL0(uint8_t s){
 	if(s)
-		SCL0 = 1;
+		P7 |= (1 << 7);
 	else
-		SCL0 = 0;
+		P7 &= ~((uint8_t)(1 << 7));
 }
 static void setSDA0(uint8_t s){
 	if(s)
-		SDA0 = 1;
+		P7 |= (uint8_t)(1 << 6);
 	else
-		SDA0 = 0;
+		P7 &= ~((uint8_t)(1 << 6));
 }
 static uint8_t getSCL0(void){
-	return SCL0;
+	return (P7 >> 7) & 0x01;
 }
 static uint8_t getSDA0(void){
-	return SDA0; 
+	return (P7 >> 6) & 0x01;
 }
 void iic0Start(void){//产生IIC起始信号
 	setSDA0(1);	  	  

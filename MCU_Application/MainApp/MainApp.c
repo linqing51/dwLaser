@@ -62,6 +62,7 @@ void main(void){
 		sPlcProcessStart();
 		debugLed2 = false;
 		if(runOnce == 0){//执行一次的代码
+			NVRAM0[EM_END] = CONFIG_CHECK_CODE;
 			RES(R_BOX_GREEN_SENDED);
 			RES(R_BOX_RED_SENDED);
 			runOnce = true;

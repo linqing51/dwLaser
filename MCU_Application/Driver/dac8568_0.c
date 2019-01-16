@@ -2,7 +2,7 @@
 /*****************************************************************************/
 //AOUT0-7
 /*****************************************************************************/
-static void setSYNC(uint8_t dat){//P6_0
+static void setSYNC(uint8_t idata dat){//P6_0
 	if(dat){
 		P6 |= (uint8_t)(1 << 0);
 	}
@@ -10,7 +10,7 @@ static void setSYNC(uint8_t dat){//P6_0
 		P6 &= ~(uint8_t)(1 << 0);
 	}
 }
-static void setCLK(uint8_t dat){//P6_1
+static void setCLK(uint8_t idata dat){//P6_1
 	if(dat){
 		P6 |= (uint8_t)(1 << 1);
 	}
@@ -18,7 +18,7 @@ static void setCLK(uint8_t dat){//P6_1
 		P6 &= ~(uint8_t)(1 << 1);
 	}
 }
-static void setDIN(uint8_t dat){//P6_2
+static void setDIN(uint8_t idata dat){//P6_2
 	if(dat){
 		P6 |= (uint8_t)(1 << 2);
 	}
@@ -26,7 +26,7 @@ static void setDIN(uint8_t dat){//P6_2
 		P6 &= ~(uint8_t)(1 << 2);
 	}
 }
-static void setCLR(uint8_t dat){//P6_3
+static void setCLR(uint8_t idata dat){//P6_3
 	if(dat){
 		P6 |= (uint8_t)(1 << 3);
 	}
@@ -34,7 +34,7 @@ static void setCLR(uint8_t dat){//P6_3
 		P6 &= ~(uint8_t)(1 << 3);
 	}
 }
-static void setLDAC(uint8_t dat){//P5_7
+static void setLDAC(uint8_t idata dat){//P5_7
 	if(dat){
 		P5 |= (uint8_t)(1 << 7);
 	}
@@ -42,7 +42,7 @@ static void setLDAC(uint8_t dat){//P5_7
 		P5 &= ~(uint8_t)(1 << 7);
 	}
 }
-static void spiWrite(uint32_t dat){//DAC8568 SPI写入
+static void spiWrite(uint32_t idata dat){//DAC8568 SPI写入
 	uint8_t tmp, i;
 	setSYNC(1);
 	_nop_();_nop_();_nop_();
@@ -58,7 +58,6 @@ static void spiWrite(uint32_t dat){//DAC8568 SPI写入
 	_nop_();
 	setSYNC(true);
 }
-
 void dac8568_0_Init(void){//DAC8568初始化
 	uint32_t tmp = 0;
 	setCLR(true);
