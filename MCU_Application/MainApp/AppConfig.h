@@ -8,11 +8,6 @@
 #define SAR_CLK      						2000000L//ADC0时钟 <2.5MHz
 #endif
 #define CONFIG_DEBUG                        0//调试功能
-#define CONFIG_USING_WDT					0//使能看门狗
-#define CONFIG_USING_RESET					0//使能PLC复位MCU功能
-#define CONFIG_VERSION  					0x0001
-#define CONFIG_CHECK_CODE 					0x5AC1
-#define CONFIG_USING_SIMULATION				1
 /*****************************************************************************/
 #define CONFIG_UART0_BAUDRATE				115200//串口波特率
 #define CONFIG_UART0_PARITY					NONE
@@ -24,7 +19,8 @@
 #define CONFIG_UART1_STOPBIT				1
 #define CONFIG_UART1_DATABIT				8
 /*****************************************************************************/
-#define CONFIG_I2C0_FREQ 					1               
+#define CONFIG_I2C0_FREQ 					1 
+#define CONFIG_I2C_WAITACT_TIME				250
 /*****************************************************************************/
 #define CONFIG_EPROM_DEBUG					0
 #define CONFIG_EPROM_SIZE 					CONFIG_AT24C64_SIZE
@@ -37,13 +33,17 @@
 #define	CONFIG_AT24C128_SIZE 				16384
 #define	CONFIG_AT24C256_SIZE 				32768
 #define CONFIG_EPROM_ADDRESS				0x50
-#define CONFIG_EPROM_FRAM					1//铁电存储体无写入等待
+#define CONFIG_EPROM_FRAM					0//铁电存储体无写入等待
 #define CONFIG_EPROM_PAGEWRITE				0//页写入
 /*****************************************************************************/
 //SPLC设置
 #define CONFIG_SPLC_ASSERT					0//检查地址范围
+#define CONFIG_SPLC_DEV						0x0A01//设备号
+#define CONFIG_SPLC_CLEAR_CODE				0xA58E
 #define CONFIG_SOFTPLC_HWTIME				1000L//1mS
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期 1mS * N
+/*****************************************************************************/
+#define CONFIG_SPLC_USING_CLEAR_NVRAM		1//启用清除NVRAM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT				1//看门狗启用
 /*****************************************************************************/
@@ -58,7 +58,7 @@
 #define SPLC_UART1							1
 #endif
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ADC				1//使能ADC模块
+#define CONFIG_SPLC_USING_CADC				1//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			14//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE				64//ADC通道数
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
@@ -115,6 +115,12 @@
 #include "dac8568_3.h"
 #if CONFIG_SPLC_USING_UART1 == 1
 #include "sPlcUart.h"
+#endif
+#if CONFIG_SPLC_USING_CADC == 1
+#include "sPlcChipAdc.h"
+#endif
+#if CONFIG_SPLC_USING_DAC == 1
+#include "sPlcDac.h"
 #endif
 /*****************************************************************************/
 #include "Modbus.h"

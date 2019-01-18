@@ -43,18 +43,20 @@ static void setLDAC(uint8_t dat){//P4_4
 }
 static void spiWrite(uint32_t dat){//DAC8568 SPI–¥»Î
 	uint8_t tmp, i;
-	setSYNC(1);
+	setSYNC(true);
 	_nop_();_nop_();_nop_();
 	setCLK(true);
+	_nop_();_nop_();_nop_();
 	setSYNC(false);
 	for(i = 0;i < 32;i ++){
-		tmp = (uint8_t)((dat >> (31 - i)) & 0x01);
+		tmp = (uint8_t)(dat >> (31 - i)) & 0x01;
 		setDIN(tmp);
+		_nop_();_nop_();_nop_();
 		setCLK(false);
-		_nop_();
+		_nop_();_nop_();_nop_();
 		setCLK(true);
 	}
-	_nop_();
+	_nop_();_nop_();_nop_();
 	setSYNC(true);
 }
 

@@ -22,7 +22,7 @@ void initModbusSerial(int32_t baudrate)
 	RI0 = 0;//清除接收完成
 }
 void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER1
-	uint16_t temp;
+	xdata uint16_t temp;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_MB_RTU_SLAVE_TIMER));
 	Timer1_L = (uint8_t)(temp & 0xFF);
 	Timer1_H = (uint8_t)((temp >> 8) & 0xFF);
@@ -39,7 +39,11 @@ static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
 	ES0 = 0;
 	TI0 = 0;
 	SBUF0 = *dt;
-	while( !TI0 );
+	while( !TI0 ){
+#if CONFIG_SPLC_USING_WDT == 1
+		wdtFeed();
+#endif
+	}
 	TI0 = 0;
 	ES0 = 1;
 }
@@ -83,13 +87,8 @@ static void uart0Isr() interrupt INTERRUPT_UART0
 	if(RI0){
 		RI0 = 0;	
 		receiveInterrupt(SBUF0);
-//		if(RI0)
-//		{
-//			RI0 = 0;
-//		}
 	}
 	if(TI0){
 		TI0 = 0;
-		//modbusSerialTxHandle();
 	}
 } 

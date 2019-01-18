@@ -10,10 +10,6 @@ static void Reset_Sources_Init()
 {
     WDTCN     = 0xDE;
     WDTCN     = 0xAD;
-#if CONFIG_USING_SIMULATION == 0
-	RSTSRC    = 0x02;
-#endif
-
 }
 
 static void DAC_Init()
@@ -77,10 +73,8 @@ static void Oscillator_Init()
 {
     int i = 0;
     OSCXCN    = 0x67;
-#if CONFIG_USING_SIMULATION == 0
     for (i = 0; i < 3000; i++);  // Wait 1ms for initialization
     while ((OSCXCN & 0x80) == 0);
-#endif
     OSCICN    = 0x0F;
 }
 

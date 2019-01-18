@@ -151,9 +151,11 @@
 #define CONFIG_NVRAM_SIZE 				(SPCOIL_END + 1)
 /*****************************************************************************/
 #define SPCOIL_ON						(SPCOIL_START * 16 + 0)//长通线圈
-#define SPCOIL_PS1MS					(SPCOIL_START * 16 + 1)//1mS间隔 50%占空比脉冲
-#define SPCOIL_PS10MS					(SPCOIL_START * 16 + 2)//10mS
-#define SPCOIL_PS100MS					(SPCOIL_START * 16 + 3)//100mS
+#define SPCOIL_START_UP					(SPCOIL_START * 16 + 1)//初次上电
+#define SPCOIL_PS1MS					(SPCOIL_START * 16 + 2)//1mS间隔 50%占空比脉冲
+#define SPCOIL_PS10MS					(SPCOIL_START * 16 + 3)//10mS
+#define SPCOIL_PS100MS					(SPCOIL_START * 16 + 4)//100mS	
+#define SPCOIL_PS1000MS					(SPCOIL_START * 16 + 5)//1000mS	
 #define SPCOIL_UART0_SEND_BUSY			(SPCOIL_START * 16 + 10)//UART1发送忙
 #define SPCOIL_UART0_RECV_BUSY			(SPCOIL_START * 16 + 11)//UART1接收忙
 #define SPCOIL_UART0_SEND_DONE			(SPCOIL_START * 16 + 12)//发送完成
@@ -163,7 +165,9 @@
 #define SPCOIL_UART1_SEND_DONE			(SPCOIL_START * 16 + 16)//发送完成
 #define SPCOIL_UART1_RECV_DONE			(SPCOIL_START * 16 + 17)//接收完成
 /*****************************************************************************/
-#define SPREG_MODBUS_SLAVE_ERR			(SPREG_START + 0)//MODBUS SLAVE 错误码
+#define SPREG_RUNTIME_L					(SPREG_START + 0)//累计运行时间秒 32BIT
+#define SPREG_RUNTIME_H					(SPREG_START + 1)//累计运行时间秒 32BIT		
+/*****************************************************************************/
 #define SPREG_UART0_SEND_BUFFER_ADR		(SPREG_START + 4)//UART0 发送缓冲NVRAM地址		
 #define SPREG_UART0_SEND_LENGTH			(SPREG_START + 5)//UART0 发送数据长度
 #define SPREG_UART0_SEND_NUM			(SPREG_START + 6)//UART0 已经发送数据长度
@@ -178,20 +182,26 @@
 #define SPREG_UART1_RECV_LENGTH			(SPREG_START + 14)//UART1 接收数据长度
 #define SPREG_UART1_RECV_NUM			(SPREG_START + 15)//UART1 已经接收数据长度
 /*****************************************************************************/
-typedef struct{//ADC滤波器
-	uint16_t dat[CONFIG_SPLC_ADC_FILTER_TAP];
-	uint16_t out;
-	uint8_t wIndex;//写入指针
-}adcTempDat_t;
+#define SPREG_CLEAR_NVRAM0				(SPREG_END)//清除NVRAM后重新启动
 /*****************************************************************************/
-extern uint16_t ModbusSlaveAsciiOverTimeCounter;//Modbus Slave通信超时计时器
-extern xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
-extern xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+extern xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
+extern xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 /*****************************************************************************/
-void wdtDisable(void);//看门狗屏蔽
+uint8_t getGlobalInterrupt(void);
+void setLedRun(uint8_t st);
+uint8_t getLedRun(void);
+void setLedEprom(uint8_t st);
+uint8_t getLedEprom(void);
+void setLedDac(uint8_t st);
+uint8_t getLedDac(void);
+void setLedError(uint8_t st);
+uint8_t getLedError(void);
 void sPlcInit(void);//软逻辑初始化
 void sPlcProcessStart(void);//sPLC轮询起始
 void sPlcProcessEnd(void);//sPLC轮询结束
+void wdtFeed(void) reentrant;
+void wdtEnable(void) reentrant;
+void wdtDisable(void) reentrant;
 /*****************************************************************************/
 void assertCoilAddress(uint16_t adr) reentrant;
 void assertRegisterAddress(uint16_t adr) reentrant;
@@ -207,6 +217,7 @@ void nvramLoad(void);
 void nvramSave(void);
 void nvramUpdata(void);
 /*****************************************************************************/
+void REBOOT(void) reentrant;//强制复位
 void SET(uint16_t A) reentrant;//线圈置位
 void RES(uint16_t A) reentrant;//线圈复位
 void FLIP(uint16_t A) reentrant;//翻转
@@ -218,6 +229,7 @@ void T100US(uint8_t A, uint8_t start, uint16_t value);
 void T1MS(uint8_t A, uint8_t start, uint16_t value);
 void T10MS(uint8_t A, uint8_t start, uint16_t value);
 void T100MS(uint8_t A, uint8_t start, uint16_t value);
+void DSUB(uint16_t Sa, uint16_t Sb, uint16_t D);
 /*****************************************************************************/
 void chipDacInit(void);
 void chipAdcInit(void);

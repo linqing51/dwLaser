@@ -1,61 +1,18 @@
 #include "sPlc.h"
 /*****************************************************************************/
-
-//ADC MUX3253 CH0-CH3
-sbit ADCMUX_0_3_S0 = P1^4;
-sbit ADCMUX_0_3_S1 = P1^7;
-sbit ADCMUX_0_3_OE1 = P1^6;
-sbit ADCMUX_0_3_OE2 = P1^5;
-//ADC MUX3253 CH4-CH7
-sbit ADCMUX_4_7_S0 = P1^2;
-sbit ADCMUX_4_7_S1 = P1^1;
-sbit ADCMUC_4_7_OE1 = P1^0;
-sbit ADCMUC_4_7_OE2 = P1^3;
-//ADC MUX3253 CH8-CH11
-sbit ADCMUX_8_11_S0 = P2^4;
-sbit ADCMUX_8_11_S1 = P2^6;
-sbit ADCMUX_8_11_OE1 = P2^7;
-sbit ADCMUX_8_11_OE2 = P2^5;
-//ADC MUX3253 CH12-CH15
-sbit ADCMUX_12_15_S0 = P2^0;
-sbit ADCMUX_12_15_S1 = P2^2;
-sbit ADCMUX_12_15_OE1 = P2^3;
-sbit ADCMUX_12_15_OE2 = P2^1;
-//ADC MUX3253 CH16-CH19
-sbit ADCMUX_16_19_S0 = P3^5;
-sbit ADCMUX_16_19_S1 = P3^7;
-sbit ADCMUX_16_19_OE1 = P3^6;
-sbit ADCMUX_16_19_OE2 = P3^4;
-//ADC MUX3253 CH20-CH23
-sbit ADCMUX_20_23_S0 = P3^1;
-sbit ADCMUX_20_23_S1 = P3^3;
-sbit ADCMUX_20_23_OE1 = P3^2;
-sbit ADCMUX_20_23_OE2 = P3^0;
-//ADC MUX3253 CH24-CH27
-sbit ADCMUX_24_27_S0 = P0^5;
-sbit ADCMUX_24_27_S1 = P0^7;
-sbit ADCMUX_24_27_OE1 = P0^6;
-sbit ADCMUX_24_27_OE2 = P0^4;
+xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
+xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+static idata volatile uint8_t TimerCounter_1mS = 0;
+static idata volatile uint8_t TimerCounter_10mS = 0;
+static idata volatile uint8_t TimerCounter_100mS = 0;
+static idata volatile uint8_t Timer0_L, Timer0_H;
 /*****************************************************************************/
-xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
-xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
-static idata uint8_t TimerCounter_1mS = 0;
-static idata uint8_t TimerCounter_10mS = 0;
-static idata uint8_t Timer0_L, Timer0_H;
-/*****************************************************************************/
-static idata int8_t inputFilter[(X_END - X_START + 1) * 16];//IO输入滤波器缓冲区
-static xdata adcTempDat_t adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
-static idata uint8_t adcSelect;//ADC通道选择
-static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
-static void adcProcess(void);
-static void initAdcData(adcTempDat_t *s);
-static void chipDacInit(void);
-static void chipAdcInit(void);
+static xdata volatile int8_t inputFilter[(X_END - X_START + 1) * 16];//IO输入滤波器缓冲区
 /******************************************************************************/
-static uint8_t getGlobalInterrupt(void){
+uint8_t getGlobalInterrupt(void){
 	return EA;
 }
-static void setLedRun(uint8_t st){//LED RUN P7_0
+void setLedRun(uint8_t idata st){//SETLED RUN P7_0
 	if(st){
 		P7 |= (uint8_t)(1 << 0);
 	}
@@ -63,10 +20,10 @@ static void setLedRun(uint8_t st){//LED RUN P7_0
 		P7 &= ~(uint8_t)(1 << 0);
 	}
 }
-static uint8_t getLedRun(void){//LED RUN P7_0
+uint8_t getLedRun(void){//GET LED RUN P7_0
 	return (uint8_t)((P7 >> 0) & 0x01);
 }
-static void setLedEprom(uint8_t st){//LED EPROM P7_1
+void setLedEprom(uint8_t idata st){//SET LED EPROM P7_1
 	if(st){
 		P7 |= (uint8_t)(1 << 1);
 	}
@@ -74,10 +31,10 @@ static void setLedEprom(uint8_t st){//LED EPROM P7_1
 		P7 &= ~(uint8_t)(1 << 1);
 	}
 }
-static uint8_t getLedEprom(void){//LED EPROM P7_1
+uint8_t getLedEprom(void){//GET LED EPROM P7_1
 	return (uint8_t)((P7 >> 1) & 0x01);
 }
-static void setLedDac(uint8_t st){//LED DAC P7_2
+void setLedDac(uint8_t idata st){//SET LED DAC P7_2
 	if(st){
 		P7 |= (uint8_t)(1 << 2);
 	}
@@ -85,10 +42,10 @@ static void setLedDac(uint8_t st){//LED DAC P7_2
 		P7 &= ~(uint8_t)(1 << 2);
 	}
 }
-static uint8_t getLedDac(void){//LED DAC P7_2
+uint8_t getLedDac(void){//GET LED DAC P7_2
 	return (uint8_t)((P7 >> 2) & 0x01);
 }
-static void setLedError(uint8_t st){//LED ERROR P7_3
+void setLedError(uint8_t idata st){//SET LED ERROR P7_3
 	if(st){
 		P7 |= (uint8_t)(1 << 3);
 	}
@@ -96,1795 +53,8 @@ static void setLedError(uint8_t st){//LED ERROR P7_3
 		P7 &= ~(uint8_t)(1 << 3);
 	}
 }
-static uint8_t getLedError(void) reentrant{
+uint8_t getLedError(void){//GET LED ERROR
 	return (uint8_t)((P7 >> 3) & 0x01);
-}
-static void adcProcess(void){//循环采集ADC
-	uint16_t result = 0;
-#ifdef C8051F020
-	while(!AD0INT);
-#endif
-	result = (ADC0 & 0xFFF);
-	refreshAdcData(&adcTempDat[adcSelect], result);
-	NVRAM0[EM_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
-	if(adcSelect < (CONFIG_SPLC_ADC_CHANNLE - 1)){
-		adcSelect ++;
-	}
-	else{
-		adcSelect = 0;
-	}
-	switch(adcSelect){
-		case 0:{//MLD0
-			//ADC MUX
-			AMX0SL = 0x00;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			ADCMUX_0_3_S1 = false;
-			ADCMUX_0_3_S0 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_0_3_OE1 = false;
-			ADCMUX_0_3_OE2 = true;
-			break;
-		}
-		case 1:{//MLD1
-			//ADC MUX
-			AMX0SL = 0x00;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			ADCMUX_0_3_S1 = true;
-			ADCMUX_0_3_S0 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_0_3_OE1 = false;
-			ADCMUX_0_3_OE2 = true;
-			break;
-		}
-		case 2:{//MLD2
-			//ADC MUX
-			AMX0SL = 0x00;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			ADCMUX_0_3_S1 = false;
-			ADCMUX_0_3_S0 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = false;
-			break;
-		}
-		case 3:{//MLD3
-			//ADC MUX
-			AMX0SL = 0x00;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			ADCMUX_0_3_S1 = true;
-			ADCMUX_0_3_S0 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = false;
-			break;
-		}
-		case 4:{//MLD4
-			//ADC MUX
-			AMX0SL = 0x01;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			ADCMUX_4_7_S1 = false;
-			ADCMUX_4_7_S0 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUC_4_7_OE1 = false;
-			ADCMUC_4_7_OE2 = true;
-			break;
-		}
-		case 5:{//MLD5
-			//ADC MUX
-			AMX0SL = 0x01;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			ADCMUX_0_3_S1 = true;
-			ADCMUX_0_3_S0 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUC_4_7_OE1 = false;
-			ADCMUC_4_7_OE2 = true;
-			break;
-		}
-		case 6:{//MLD6
-			//ADC MUX
-			AMX0SL = 0x01;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			ADCMUX_4_7_S1 = true;
-			ADCMUX_4_7_S0 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = false;
-			break;
-		}
-		case 7:{//MLD7
-			//ADC MUX
-			AMX0SL = 0x01;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			ADCMUX_4_7_S1 = true;
-			ADCMUX_4_7_S0 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = false;
-			break;
-		}
-		case 8:{//MLD8
-			//ADC MUX
-			AMX0SL = 0x02;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			ADCMUX_8_11_S1 = false;
-			ADCMUX_8_11_S0 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_8_11_OE1 = false;
-			ADCMUX_8_11_OE2 = true;
-			break;
-		}
-		case 9:{//MLD9
-			//ADC MUX
-			AMX0SL = 0x02;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			ADCMUX_8_11_S1 = true;
-			ADCMUX_8_11_S0 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_8_11_OE1 = false;
-			ADCMUX_8_11_OE2 = true;
-			break;
-		}
-		case 10:{//MLD10
-			//ADC MUX
-			AMX0SL = 0x02;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			ADCMUX_8_11_S1 = false;
-			ADCMUX_8_11_S0 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = false;
-			break;
-		}
-		case 11:{//MLD11
-			//ADC MUX
-			AMX0SL = 0x02;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			ADCMUX_8_11_S1 = true;
-			ADCMUX_8_11_S0 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = false;
-			break;
-		}
-		case 12:{//MLD12
-			//ADC MUX
-			AMX0SL = 0x03;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			ADCMUX_12_15_S1 = false;
-			ADCMUX_12_15_S0 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_12_15_OE1 = false;
-			ADCMUX_12_15_OE2 = true;
-			break;
-		}
-		case 13:{//MLD13
-			//ADC MUX
-			AMX0SL = 0x03;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			ADCMUX_12_15_S1 = true;
-			ADCMUX_12_15_S0 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_12_15_OE1 = false;
-			ADCMUX_12_15_OE2 = true;
-			break;
-		}
-		case 14:{//MLD14
-			//ADC MUX
-			AMX0SL = 0x03;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			ADCMUX_12_15_S1 = false;
-			ADCMUX_12_15_S0 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = false;
-			break;
-		}
-		case 15:{//MLD15
-			//ADC MUX
-			AMX0SL = 0x03;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			ADCMUX_12_15_S1 = true;
-			ADCMUX_12_15_S0 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = false;
-			break;
-		}
-		case 16:{//MLD16
-			//ADC MUX
-			AMX0SL = 0x04;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			ADCMUX_16_19_S1 = false;
-			ADCMUX_16_19_S0 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_16_19_OE1 = false;
-			ADCMUX_16_19_OE2 = true;
-			break;
-		}
-		case 17:{//MLD17
-			//ADC MUX
-			AMX0SL = 0x04;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			ADCMUX_16_19_S1 = true;
-			ADCMUX_16_19_S0 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_16_19_OE1 = false;
-			ADCMUX_16_19_OE2 = true;
-			break;
-		}
-		case 18:{//MLD18
-			//ADC MUX
-			AMX0SL = 0x04;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			ADCMUX_16_19_S1 = false;
-			ADCMUX_16_19_S0 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = false;
-			break;
-		}
-		case 19:{//MLD19
-			//ADC MUX
-			AMX0SL = 0x04;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			ADCMUX_16_19_S1 = true;
-			ADCMUX_16_19_S0 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = false;
-			break;
-		}
-		case 20:{//MLD20
-			//ADC MUX
-			AMX0SL = 0x05;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			ADCMUX_20_23_S1 = false;
-			ADCMUX_20_23_S0 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_20_23_OE1 = false;
-			ADCMUX_20_23_OE2 = true;
-			break;
-		}
-		case 21:{//MLD21
-			//ADC MUX
-			AMX0SL = 0x05;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = false;
-			ADCMUX_20_23_OE2 = true;
-			ADCMUX_20_23_S1 = true;
-			ADCMUX_20_23_S0 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_24_27_S1 = false;
-			ADCMUX_24_27_S0 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_24_27_OE1 = false;
-			ADCMUX_24_27_OE2 = true;
-			break;
-		}
-		case 22:{//MLD22
-			//ADC MUX
-			AMX0SL = 0x05;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			ADCMUX_20_23_S1 = false;
-			ADCMUX_20_23_S0 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;	
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = false;
-			break;
-		}
-		case 23:{//MLD23
-			//ADC MUX
-			AMX0SL = 0x05;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			ADCMUX_20_23_S1 = true;
-			ADCMUX_20_23_S0 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_20_23_OE1 = 1;
-			ADCMUX_20_23_OE2 = 0;
-			break;
-		}
-		case 24:{//MLD24
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_24_27_S1 = false;
-			ADCMUX_24_27_S0 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_24_27_OE1 = false;
-			ADCMUX_24_27_OE2 = true;
-			break;
-		}
-		case 25:{//MLD25
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_24_27_S1 = true;
-			ADCMUX_24_27_S0 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_24_27_OE1 = false;
-			ADCMUX_24_27_OE2 = true;
-			break;
-		}
-		case 26:{//MLD26
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_24_27_S1 = false;
-			ADCMUX_24_27_S0 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = false;
-			break;
-		}
-		case 27:{//MLD27
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_24_27_S1 = true;
-			ADCMUX_24_27_S0 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = false;
-			break;
-		}
-		case 32:{//MPD0
-			//ADC MUX
-			AMX0SL = 0x00;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			ADCMUX_0_3_S1 = false;
-			ADCMUX_0_3_S0 = false;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_0_3_OE1 = false;
-			ADCMUX_0_3_OE2 = true;
-			break;
-		}
-		case 33:{//MPD1
-			//ADC MUX
-			AMX0SL = 0x00;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			ADCMUX_0_3_S1 = true;
-			ADCMUX_0_3_S0 = false;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_0_3_OE1 = false;
-			ADCMUX_0_3_OE2 = true;
-			break;
-		}
-		case 34:{//MPD2
-			//ADC MUX
-			AMX0SL = 0x00;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			ADCMUX_0_3_S1 = false;
-			ADCMUX_0_3_S0 = false;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = false;
-			break;
-		}
-		case 35:{//MPD3
-			//ADC MUX
-			AMX0SL = 0x00;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			ADCMUX_0_3_S1 = true;
-			ADCMUX_0_3_S0 = false;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = false;
-			break;
-		}
-		case 36:{//MPD4
-			//ADC MUX
-			AMX0SL = 0x01;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			ADCMUX_4_7_S1 = false;
-			ADCMUX_4_7_S0 = false;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUC_4_7_OE1 = false;
-			ADCMUC_4_7_OE2 = true;
-			break;
-		}
-		case 37:{//MPD5
-			//ADC MUX
-			AMX0SL = 0x01;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			ADCMUX_4_7_S1 = true;
-			ADCMUX_4_7_S0 = false;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUC_4_7_OE1 = false;
-			ADCMUC_4_7_OE2 = true;
-			break;
-		}
-		case 38:{//MPD6
-			//ADC MUX
-			AMX0SL = 0x01;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			ADCMUX_4_7_S1 = false;
-			ADCMUX_4_7_S0 = false;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = false;
-			break;
-		}
-		case 39:{//MPD7
-			//ADC MUX
-			AMX0SL = 0x01;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			ADCMUX_4_7_S1 = true;
-			ADCMUX_4_7_S0 = false;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = false;
-			break;
-		}
-		case 40:{//MPD8
-			//ADC MUX
-			AMX0SL = 0x02;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			ADCMUX_8_11_S1 = false;
-			ADCMUX_8_11_S0 = false;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_8_11_OE1 = false;
-			ADCMUX_8_11_OE2 = true;
-			break;
-		}
-		case 41:{//MPD9
-			//ADC MUX
-			AMX0SL = 0x02;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			ADCMUX_8_11_S1 = true;
-			ADCMUX_8_11_S0 = false;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_8_11_OE1 = false;
-			ADCMUX_8_11_OE2 = true;
-			break;
-		}
-		case 42:{//MPD10
-			//ADC MUX
-			AMX0SL = 0x02;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			ADCMUX_8_11_S1 = false;
-			ADCMUX_8_11_S0 = false;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_8_11_OE1 = false;
-			ADCMUX_8_11_OE2 = true;
-			break;
-		}
-		case 43:{//MPD11
-			//ADC MUX
-			AMX0SL = 0x02;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			ADCMUX_8_11_S1 = true;
-			ADCMUX_8_11_S0 = false;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = false;
-			break;
-		}
-		case 44:{//MPD12
-			//ADC MUX
-			AMX0SL = 0x03;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			ADCMUX_12_15_S1 = false;
-			ADCMUX_12_15_S0 = false;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_12_15_OE1 = false;
-			ADCMUX_12_15_OE2 = true;
-			break;
-		}
-		case 45:{//MPD13
-			//ADC MUX
-			AMX0SL = 0x03;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			ADCMUX_12_15_S1 = true;
-			ADCMUX_12_15_S0 = false;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_12_15_OE1 = false;
-			ADCMUX_12_15_OE2 = true;
-			break;
-		}
-		case 46:{//MPD14
-			//ADC MUX
-			AMX0SL = 0x03;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			ADCMUX_12_15_S1 = false;
-			ADCMUX_12_15_S0 = false;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = false;
-			break;
-		}
-		case 47:{//MPD15
-			//ADC MUX
-			AMX0SL = 0x03;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			ADCMUX_12_15_S1 = true;
-			ADCMUX_12_15_S0 = false;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = false;
-			break;
-		}
-		case 48:{//MPD16
-			//ADC MUX
-			AMX0SL = 0x04;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			ADCMUX_16_19_S1 = false;
-			ADCMUX_16_19_S0 = false;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_16_19_OE1 = false;
-			ADCMUX_16_19_OE2 = true;
-			break;
-		}
-		case 49:{//MPD17
-			//ADC MUX
-			AMX0SL = 0x04;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			ADCMUX_16_19_S1 = true;
-			ADCMUX_16_19_S0 = false;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_16_19_OE1 = false;
-			ADCMUX_16_19_OE2 = true;
-			break;
-		}
-		case 50:{//MPD18
-			//ADC MUX
-			AMX0SL = 0x04;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			ADCMUX_16_19_S1 = true;
-			ADCMUX_16_19_S0 = false;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = false;
-			break;
-		}
-		case 51:{//MPD19
-			//ADC MUX
-			AMX0SL = 0x04;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			ADCMUX_16_19_S1 = true;
-			ADCMUX_16_19_S0 = false;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = false;
-			break;
-		}
-		case 52:{//MPD20
-			//ADC MUX
-			AMX0SL = 0x05;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			ADCMUX_20_23_S1 = false;
-			ADCMUX_20_23_S0 = false;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_20_23_OE1 = false;
-			ADCMUX_20_23_OE2 = true;
-			break;
-		}
-		case 53:{//MPD21
-			//ADC MUX
-			AMX0SL = 0x05;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			ADCMUX_20_23_S1 = true;
-			ADCMUX_20_23_S0 = false;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_20_23_OE1 = false;
-			ADCMUX_20_23_OE2 = true;
-			break;
-		}
-		case 54:{//MPD22
-			//ADC MUX
-			AMX0SL = 0x05;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			ADCMUX_20_23_S1 = false;
-			ADCMUX_20_23_S0 = false;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = false;
-			break;
-		}
-		case 55:{//MPD23
-			//ADC MUX
-			AMX0SL = 0x05;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			ADCMUX_20_23_S1 = true;
-			ADCMUX_20_23_S0 = false;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = false;
-			break;
-		}
-		case 56:{//MPD24
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_24_27_S1 = false;
-			ADCMUX_24_27_S0 = false;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_24_27_OE1 = false;
-			ADCMUX_24_27_OE2 = true;	
-			break;
-		}
-		case 57:{//MPD25
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_20_23_S1 = true;
-			ADCMUX_20_23_S0 = false;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_24_27_OE1 = false;
-			ADCMUX_24_27_OE2 = true;	
-			break;
-		}
-		case 58:{//MPD26
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_24_27_S1 = false;
-			ADCMUX_24_27_S0 = false;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = false;
-			break;
-		}
-		case 59:{//MPD27
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_24_27_S1 = true;
-			ADCMUX_24_27_S0 = false;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = false;
-			break;
-		}
-		default:{
-			break;
-		}
-	}
-	AD0INT = 0;
-	AD0BUSY = 1;//AD0BUSY写入1
-}
-static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
-	uint8_t i;
-	for(i = 0;i < CONFIG_SPLC_ADC_FILTER_TAP; i++){
-		s->dat[i] = 0x0;
-	}
-	s->out = 0;
-	s->wIndex = 0;
-}
-static void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值 
-	uint8_t i;
-	uint16_t temp;
-	uint32_t sum;
-	s->dat[s->wIndex] = dat;
-	s->wIndex ++;
-	if(s->wIndex >= CONFIG_SPLC_ADC_FILTER_TAP){
-		s->wIndex = 0;
-	}
-	//计算总和
-	sum = 0;
-	for(i = 0;i < CONFIG_SPLC_ADC_FILTER_TAP;i ++){
-		sum += s->dat[i];
-	}
-	//去掉一个最大值和一个最小值
-	
-	temp = (uint16_t)(sum / (uint32_t)CONFIG_SPLC_ADC_FILTER_TAP);
-	s->out = temp;
 }
 static void assertCoilAddress(uint16_t adr) reentrant{//检查线圈地址
 #if CONFIG_SPLC_ASSERT == 1
@@ -1977,21 +147,21 @@ static void clearY(void){//清除Y寄存器
 		NVRAM1[i] = 0x0;
 	}
 }
-static void clearSPREG(void){
+static void clearSPREG(void){//清除特殊寄存器
 	uint16_t i;
 	for(i = SPREG_START;i <= SPREG_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
-static void clearSPCOIL(){
+static void clearSPCOIL(){//清除特特殊线圈
 	uint16_t i;
 	for(i = SPCOIL_START;i <= SPCOIL_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
 }
-static void nvramLoad(void){//从EPROM中载入NVRAM
+static void loadNvram(void){//从EPROM中载入NVRAM
 	memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
 	setLedEprom(DEBUG_LED_ON);
 	epromRead(0, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
@@ -2007,14 +177,14 @@ static void nvramLoad(void){//从EPROM中载入NVRAM
 	clearSPCOIL();
 	memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
-static void nvramSave(void){//强制将NVRAM存入EPROM
+static void saveNvram(void){//强制将NVRAM存入EPROM
 	DISABLE_INTERRUPT;
 	setLedEprom(DEBUG_LED_ON);
 	epromWrite(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));
 	setLedEprom(DEBUG_LED_OFF);
 	ENABLE_INTERRUPT;
 }
-static void nvramUpdata(void){//更新NVRAM->EPROM
+static void updataNvram(void){//更新NVRAM->EPROM
 	data uint8_t *sp0, *sp1;
 	data uint16_t i;
 	sp0 = (uint8_t*)NVRAM0;
@@ -2037,8 +207,32 @@ static void nvramUpdata(void){//更新NVRAM->EPROM
 	}
 	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
+static void clearNvram(void){//清除NVRAM数据	
+	idata uint8_t oldEA;
+	idata uint16_t i;
+	oldEA = EA;//关闭中断
+	EA = 0;
+	wdtDisable();
+	for(i = 0; i<= CONFIG_EPROM_SIZE;i ++){
+		if(getLedEprom()){
+			setLedEprom(DEBUG_LED_OFF);
+		}
+		else{
+			setLedEprom(DEBUG_LED_ON);
+		}
+		epromWriteOneByte(i, 0x0);
+		
+	}
+	EA = oldEA;//恢复中断
+}
+static void selfTestNvram(void){//自检NVRAM
+	
+}
 /*****************************************************************************/
 //软逻辑指令
+void REBOOT(void) reentrant{//软件复位
+	RSTSRC |= 1 << 4;//强制复位
+}
 void SET(uint16_t A) reentrant{//线圈置位
 	assertCoilAddress(A);//检查地址范围
 	NVRAM0[(A / 16)] |= 1 << (A % 16);
@@ -2140,8 +334,8 @@ void T100MS(uint8_t A, uint8_t start, uint16_t value){//100MS延时器
 	}
 }
 int16_t TNTC(int16_t dat){//CODE转换为NTC测量温度温度
-	uint16_t temp;
-	fp32_t ftemp;
+	idata uint16_t temp;
+	idata fp32_t ftemp;
 	if(dat >= CONFIG_SPLC_ADC_INTERNAL_VREF) dat = CONFIG_SPLC_ADC_INTERNAL_VREF;//限制输入最大值
 	if(dat < 0) dat = 0;
 	
@@ -2155,14 +349,14 @@ int16_t TNTC(int16_t dat){//CODE转换为NTC测量温度温度
 	return (int16_t)(ftemp * 10);
 }
 int16_t TENV(int16_t dat){//CODE转换为环境温度
-	uint16_t temp;
+	idata uint16_t temp;
 	temp = (int16_t)(CONFIG_SPLC_ADC_INTERNAL_VREF * dat / 4096);//单位mV
 	temp = (int16_t)((temp - CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET) * 1000 / CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN);
 	return temp;
 }
 int16_t MAX(int16_t *s, uint8_t len){//找出长度为len的数据s中的最大值
-	int16_t max;
-	uint8_t i;
+	idata int16_t max;
+	idata uint8_t i;
 	max = *s;
 	for(i = 0;i < len;i ++){
 		if(*(s +i) > max){
@@ -2172,8 +366,8 @@ int16_t MAX(int16_t *s, uint8_t len){//找出长度为len的数据s中的最大值
 	return max;
 }
 int16_t MIN(int16_t *s, uint8_t len){//找出长度为len的数据s中的最小值
-	int16_t min;
-	uint8_t i;
+	idata int16_t min;
+	idata uint8_t i;
 	min = *s;
 	for(i = 0;i < len;i ++){
 		if(*(s +i) < min){
@@ -2182,42 +376,71 @@ int16_t MIN(int16_t *s, uint8_t len){//找出长度为len的数据s中的最小值
 	}
 	return min;
 }
+//void ADD(uint16_t idata Sa, uint16_t idata Sb, uint16_t idata D){//16位求和 D = Sa + Sb
+//	NVRAM0[D] = NVRAM0[Sa] + NVRAM0[Sb];
+//}
+void DADD(uint16_t Sa, uint16_t Sb, uint16_t D){//32位求和 D = Sa + Sb
+	int32_t *tmp0, *tmp1, *tmp2;
+	tmp0 = (int32_t*)(&NVRAM0[Sa]);
+	tmp1 = (int32_t*)(&NVRAM0[Sb]);
+	tmp2 = (int32_t*)(&NVRAM0[D]);
+	*tmp2 = *tmp0 + *tmp1;
+}
+//void ADDS(uint16_t idata Sa, uint16_t idata Sb, uint16_t idata D){//16位饱和求和 D = Sa + Sb
+//	idata int32_t tmp;
+//	tmp = NVRAM0[Sa] + NVRAM0[Sb];
+//	if(tmp >= SHRT_MAX)
+//		tmp = SHRT_MAX;
+//	if(tmp <= SHRT_MIN)
+//		tmp = SHRT_MIN;
+//	NVRAM0[D] = tmp;
+//}
+//void SUB(uint16_t Sa, uint16_t Sb, uint16_t D){//16位非饱和减法 D = Sa - Sb
+//	NVRAM0[D] = NVRAM0[Sa] - NVRAM0[Sb];
+//}
+//void SUBS(uint16_t idata Sa, uint16_t idata Sb, uint16_t idata D){//16位饱和减法 D = Sa - Sb
+//	idata int32_t tmp;
+//	tmp = NVRAM0[Sa] - NVRAM0[Sb];
+//	if(tmp >= SHRT_MAX)
+//		tmp = SHRT_MAX;
+//	if(tmp <= SHRT_MIN)
+//		tmp = SHRT_MIN;
+//	NVRAM0[D] = tmp;
+//}
+void DSUB(uint16_t Sa, uint16_t Sb, uint16_t D){//32位非饱和减法 D = Sa - Sb
+	idata int32_t *tmp0, *tmp1, *tmp2;
+	tmp0 = (int32_t*)(&NVRAM0[Sa]);
+	tmp1 = (int32_t*)(&NVRAM0[Sb]);
+	tmp2 = (int32_t*)(&NVRAM0[D]);
+	*tmp2 = *tmp0 - *tmp1;
+}
 /*****************************************************************************/
 static void wdtInit(void){//看门狗初始化
-#ifdef C8051F020
 	WDTCN = 0x07;//47mS
-#endif
 }
-static void wdtEnable(void){//使能看门狗
+void wdtEnable(void) reentrant{//使能看门狗
 #ifdef C8051F020
 	WDTCN = 0xA5;
 #endif
 }
-static void wdtDisable(void){//关闭看门狗(未锁定)
+void wdtDisable(void) reentrant{//关闭看门狗(未锁定)
 	uint8_t flagEA;
 	flagEA = EA;
 	EA = 0;
-#ifdef C8051F020
 	WDTCN = 0xDE;
     WDTCN = 0xAD;
-#endif
-#ifdef C8051F020
-#endif
 	EA = flagEA;
 }
-static void wdtFeed(void) reentrant{//喂狗
-#ifdef C8051F020
+void wdtFeed(void) reentrant{//喂狗
 	WDTCN = 0xA5;
-#endif
 }
-
 static void pcaInit(void){//硬件PCA初始化
 }
 static void timer0Init(void){//硬件sTimer计时器初始化
-	data uint16_t temp;
+	idata uint16_t temp;
 	TimerCounter_1mS = 0;
 	TimerCounter_10mS = 0;
-#ifdef C8051F020
+	TimerCounter_100mS = 0;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 /CONFIG_SOFTPLC_HWTIME));
 	Timer0_L = temp & 0xFF;
 	Timer0_H = (temp >> 8) & 0xFF;
@@ -2228,20 +451,20 @@ static void timer0Init(void){//硬件sTimer计时器初始化
 	TMOD |= (1 << 0);// T0 in 16-bit mode
 	ET0 = 1;// T0 interrupt enabled
 	TR0 = 1;// T0 ON
-#endif
 }
 static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
-	uint16_t i;
+	idata uint16_t i;
+	idata uint32_t tmp;
 	TF0 = 0;
 	TR0 = 0;
 	TH0 = Timer0_H;
 	TL0 = Timer0_L;
 	TR0 = 1;
-	if((NVRAM0[(SPCOIL_START + (SPCOIL_PS1MS / 16))] >> (SPCOIL_PS1MS % 16)) & 0x01){//ON
-		NVRAM0[(SPCOIL_START + (SPCOIL_PS1MS / 16))] &= ~(uint16_t)(1 << (SPCOIL_PS1MS % 16));
+	if(LD(SPCOIL_PS1MS)){//ON
+		RES(SPCOIL_PS1MS);
 	}
 	else{//OFF
-		NVRAM0[(SPCOIL_START + (SPCOIL_PS1MS / 16))] |= (uint16_t)(1 << (SPCOIL_PS1MS % 16));
+		SET(SPCOIL_PS1MS);
 	}
 	for(i = TD_1MS_START;i <= TD_1MS_END;i ++){//1mS计时
 		if(NVRAM0[i] < SHRT_MAX){
@@ -2249,11 +472,11 @@ static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1m
 		}
 	}
 	if(TimerCounter_1mS >= 10){//10mS计算
-		if((NVRAM0[(SPCOIL_START + (SPCOIL_PS10MS / 16))] >> (SPCOIL_PS10MS % 16)) & 0x01){//ON
-			NVRAM0[(SPCOIL_START + (SPCOIL_PS10MS / 16))] &= ~(uint16_t)(1 << (SPCOIL_PS10MS % 16));
+		if(LD(SPCOIL_PS10MS)){//ON
+			RES(SPCOIL_PS10MS);
 		}
 		else{//OFF
-			NVRAM0[(SPCOIL_START + (SPCOIL_PS10MS / 16))] |= (uint16_t)(1 << (SPCOIL_PS10MS % 16));
+			SET(SPCOIL_PS10MS);
 		}
 		for(i = TD_10MS_START;i <= TD_10MS_END;i ++){
 			if(NVRAM0[i] < SHRT_MAX){
@@ -2264,41 +487,50 @@ static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1m
 		TimerCounter_1mS = 0;
 	}
 	if(TimerCounter_10mS >= 10){//100ms计算
-		if((NVRAM0[(SPCOIL_START + (SPCOIL_PS100MS / 16))] >> (SPCOIL_PS100MS % 16)) & 0x01){//ON
-			NVRAM0[(SPCOIL_START + (SPCOIL_PS100MS / 16))] &= ~(uint16_t)(1 << (SPCOIL_PS100MS % 16));
+		if(LD(SPCOIL_PS100MS)){//ON
+			RES(SPCOIL_PS100MS);
 		}
 		else{//OFF
-			NVRAM0[(SPCOIL_START + (SPCOIL_PS100MS / 16))] |= (uint16_t)(1 << (SPCOIL_PS100MS % 16));
+			SET(SPCOIL_PS100MS);
 		}
 		for(i = TD_100MS_START;i < TD_100MS_END;i ++){
 			if(NVRAM0[i] < SHRT_MAX){
 				NVRAM0[i] ++;
 			}
 		}
+		TimerCounter_100mS ++;
 		TimerCounter_10mS = 0;
-		if(getLedRun()){
-			setLedRun(false);
+		setLedRun(LD(SPCOIL_PS100MS));
+	}
+	if(TimerCounter_100mS >= 10){//1000mS计算
+		if(LD(SPCOIL_PS1000MS)){//ON
+			RES(SPCOIL_PS1000MS);
 		}
 		else{
-			setLedRun(true);
+			SET(SPCOIL_PS1000MS);
 		}
+		tmp = 0;
+		tmp = NVRAM0[SPREG_RUNTIME_L] + (uint32_t)(NVRAM0[SPREG_RUNTIME_H]) * 65536L;
+		tmp += 1;
+		NVRAM0[SPREG_RUNTIME_H] = (tmp >> 16) & 0xFFFF;
+		NVRAM0[SPREG_RUNTIME_L] = tmp & 0xFFFF;
+		TimerCounter_100mS = 0;
 	}
-#if CONFIG_SPLC_USING_ADC == 1
-	adcProcess();//ADC扫描
+#if CONFIG_SPLC_USING_CADC == 1
+	chipAdcProcess();//ADC扫描
 #endif
 	TimerCounter_1mS ++;
 }
-
 static void inputInit(void){//IO输入滤波器初始化
 	memset(inputFilter, 0x0, (X_END - X_START + 1) * 16);
 }
-static void outputInit(void){
+static void outputInit(void){//IO输出初始化
 #ifdef C8051F020
 	
 #endif
 }
 static void inputRefresh(void){//获取输入IO
-	uint8_t ctemp0;
+	idata uint8_t ctemp0;
 	ctemp0 = ((P6 >> 7) & 0x01);
 	if(ctemp0){
 		if(inputFilter[0] < CONFIG_INPUT_FILTER_TIME){
@@ -2348,217 +580,6 @@ static void outputRefresh(void){//设置输出IO
 		P6 &= ~(uint8_t)(1 << 4);
 	}
 }
-static void chipAdcInit(void){//ADC模块初始化
-	uint8_t i;
-	//CHIP0
-	ADCMUX_0_3_OE1 = true;
-	ADCMUX_0_3_OE2 = true;
-	//CHIP1
-	ADCMUC_4_7_OE1 = true;
-	ADCMUC_4_7_OE2 = true;
-	//CHIP2
-	ADCMUX_8_11_OE1 = true;
-	ADCMUX_8_11_OE2 = true;
-	//CHIP3
-	ADCMUX_12_15_OE1 = true;
-	ADCMUX_12_15_OE2 = true;
-	//CHIP4
-	ADCMUX_16_19_OE1 = true;
-	ADCMUX_16_19_OE2 = true;
-	//CHIP5
-	ADCMUX_20_23_OE1 = true;
-	ADCMUX_20_23_OE2 = true;
-	//CHIP6
-	ADCMUX_24_27_OE1 = true;
-	ADCMUX_24_27_OE2 = true;
-#ifdef C8051F020
-	ADC0CN = 0x0;//软件触发
-	ADC0CN |= (1 << 6);//AD0TM = 1 启用跟踪
-	ADC0CN |= (1 << 7);//AD0EN = 1 
-	ADC0CF = 0x0;
-	ADC0CF |= (CONFIG_SYSCLK / SAR_CLK) << 3;     // ADC conversion clock = 2.5MHz
-	AMX0CF = 0x00;                      // AIN inputs are single-ended (default)
-	AMX0SL = 0x00;                      // Select AIN0.1 pin as ADC mux input
-	AD0INT = 1;
-	AD0BUSY = 1;//AD0BUSY写入1
-#endif
-	adcSelect = 0;
-	for(i = 0;i <= CONFIG_SPLC_ADC_CHANNLE;i ++){
-		initAdcData(&adcTempDat[i]);
-	}
-}
-static void refreshDac(void){//刷新DAC
-	//LD板0
-	if(NVRAM0[EM_DAC_0] != NVRAM1[EM_DAC_0]){//CH0
-		setLedDac(DEBUG_LED_ON);
-		dac8568_0_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_0]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_1] != NVRAM1[EM_DAC_1]){//CH1
-		setLedDac(DEBUG_LED_ON);
-		dac8568_0_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_1]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_2] != NVRAM1[EM_DAC_2]){//CH2
-		setLedDac(DEBUG_LED_ON);
-		dac8568_0_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_2]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_3] != NVRAM1[EM_DAC_3]){//CH3
-		setLedDac(DEBUG_LED_ON);
-		dac8568_0_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_3]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_4] != NVRAM1[EM_DAC_4]){//CH4
-		setLedDac(DEBUG_LED_ON);
-		dac8568_0_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_4]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_5] != NVRAM1[EM_DAC_5]){//CH5
-		setLedDac(DEBUG_LED_ON);
-		dac8568_0_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_5]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_6] != NVRAM1[EM_DAC_6]){//CH6
-		setLedDac(DEBUG_LED_ON);
-		dac8568_0_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_6]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_7] != NVRAM1[EM_DAC_7]){//CH7
-		setLedDac(DEBUG_LED_ON);
-		dac8568_0_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_7]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	//LD板1
-	if(NVRAM0[EM_DAC_8] != NVRAM1[EM_DAC_8]){//CH8
-		setLedDac(DEBUG_LED_ON);
-		dac8568_1_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_8]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_9] != NVRAM1[EM_DAC_9]){//CH9
-		setLedDac(DEBUG_LED_ON);
-		dac8568_1_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_9]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_10] != NVRAM1[EM_DAC_10]){//CH10
-		setLedDac(DEBUG_LED_ON);
-		dac8568_1_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_10]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_11] != NVRAM1[EM_DAC_11]){//CH11
-		setLedDac(DEBUG_LED_ON);
-		dac8568_1_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_11]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_12] != NVRAM1[EM_DAC_12]){//CH12
-		setLedDac(DEBUG_LED_ON);
-		dac8568_1_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_12]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_13] != NVRAM1[EM_DAC_13]){//CH13
-		setLedDac(DEBUG_LED_ON);
-		dac8568_1_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_13]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_14] != NVRAM1[EM_DAC_14]){//CH14
-		setLedDac(DEBUG_LED_ON);
-		dac8568_1_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_14]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_15] != NVRAM1[EM_DAC_15]){//CH15
-		setLedDac(DEBUG_LED_ON);
-		dac8568_1_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_15]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	//LD板2
-	if(NVRAM0[EM_DAC_16] != NVRAM1[EM_DAC_16]){//CH16
-		setLedDac(DEBUG_LED_ON);
-		dac8568_2_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_16]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_17] != NVRAM1[EM_DAC_17]){//CH17
-		setLedDac(DEBUG_LED_ON);
-		dac8568_2_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_17]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_18] != NVRAM1[EM_DAC_18]){//CH18
-		setLedDac(DEBUG_LED_ON);
-		dac8568_2_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_18]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_19] != NVRAM1[EM_DAC_19]){//CH19
-		setLedDac(DEBUG_LED_ON);
-		dac8568_2_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_19]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_20] != NVRAM1[EM_DAC_20]){//CH20
-		setLedDac(DEBUG_LED_ON);
-		dac8568_2_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_20]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_21] != NVRAM1[EM_DAC_21]){//CH21
-		setLedDac(DEBUG_LED_ON);
-		dac8568_2_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_21]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_22] != NVRAM1[EM_DAC_22]){//CH22
-		setLedDac(DEBUG_LED_ON);
-		dac8568_2_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_22]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_23] != NVRAM1[EM_DAC_23]){//CH23
-		setLedDac(DEBUG_LED_ON);
-		dac8568_2_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_23]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	//板4
-	if(NVRAM0[EM_DAC_24] != NVRAM1[EM_DAC_24]){//CH24
-		setLedDac(DEBUG_LED_ON);
-		dac8568_3_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_24]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_25] != NVRAM1[EM_DAC_25]){//CH25
-		setLedDac(DEBUG_LED_ON);
-		dac8568_3_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_26]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_26] != NVRAM1[EM_DAC_26]){//CH26
-		setLedDac(DEBUG_LED_ON);
-		dac8568_3_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_26]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_27] != NVRAM1[EM_DAC_27]){//CH27
-		setLedDac(DEBUG_LED_ON);
-		dac8568_3_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_27]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_28] != NVRAM1[EM_DAC_28]){//CH28
-		setLedDac(DEBUG_LED_ON);
-		dac8568_3_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_28]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_29] != NVRAM1[EM_DAC_29]){//CH29
-		setLedDac(DEBUG_LED_ON);
-		dac8568_3_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_29]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_30] != NVRAM1[EM_DAC_30]){//CH30
-		setLedDac(DEBUG_LED_ON);
-		dac8568_3_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_30]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-	if(NVRAM0[EM_DAC_31] != NVRAM1[EM_DAC_31]){//CH31
-		setLedDac(DEBUG_LED_ON);
-		dac8568_3_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_31]);
-		setLedDac(DEBUG_LED_OFF);
-	}
-}
-static void chipDacInit(void){//初始化DAC
-	dac8568_0_Init();
-	dac8568_1_Init();
-	dac8568_2_Init();
-	dac8568_3_Init();
-}
 void sPlcInit(void){//软逻辑初始化
 	setLedError(DEBUG_LED_OFF);
 	setLedRun(DEBUG_LED_OFF);
@@ -2570,22 +591,33 @@ void sPlcInit(void){//软逻辑初始化
 	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化
 #endif	
 #if CONFIG_SPLC_USING_EPROM == 1
-	nvramLoad();//上电恢复NVRAM
+	loadNvram();//上电恢复NVRAM
 #endif
-#if CONFIG_SPLC_USING_ADC == 1
-	chipAdcInit();//初始化ADC模块
+#if CONFIG_SPLC_USING_CADC == 1
+	initChipAdc();//初始化ADC模块
 #endif
 #if CONFIG_SPLC_USING_DAC == 1
-	chipDacInit();//初始化DAC模块
+	initChipDac();//初始化DAC模块
 #endif
 #if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 #endif
 	timer0Init();//初始化硬件计时器模块
-	NVRAM0[(SPCOIL_START + (SPCOIL_ON / 16))] |= (uint16_t)(1 << (SPCOIL_ON % 16));
+	SET(SPCOIL_ON);
 	setLedError(DEBUG_LED_OFF);
+	SET(SPCOIL_ON);
+	SET(SPCOIL_START_UP);
 }
 void sPlcProcessStart(void){//sPLC轮询起始
+#if CONFIG_SPLC_USING_CLEAR_NVRAM == 1
+	if(NVRAM0[SPREG_CLEAR_NVRAM0] == CONFIG_SPLC_CLEAR_CODE){
+		DISABLE_INTERRUPT;//关闭中断
+		setLedRun(DEBUG_LED_ON);//
+		setLedError(DEBUG_LED_ON);
+		clearNvram();
+		REBOOT();	
+	}
+#endif
 #if CONFIG_SPLC_USING_WDT == 1
 	wdtFeed();//喂狗
 #endif
@@ -2610,9 +642,10 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 	refreshDac();//更新DAC输出
 #endif
 #if CONFIG_SPLC_USING_EPROM == 1
-	nvramUpdata();//更新NVRAM
+	updataNvram();//更新NVRAM
 #endif
 #if CONFIG_SPLC_USING_WDT == 1
 	wdtFeed();//喂狗
 #endif
+	RES(SPCOIL_START_UP);
 }
