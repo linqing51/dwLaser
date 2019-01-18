@@ -7,7 +7,7 @@ static idata volatile uint8_t TimerCounter_10mS = 0;
 static idata volatile uint8_t TimerCounter_100mS = 0;
 static idata volatile uint8_t Timer0_L, Timer0_H;
 /*****************************************************************************/
-static xdata volatile int8_t inputFilter[(X_END - X_START + 1) * 16];//IOÊäÈëÂË²¨Æ÷»º³åÇø
+static idata volatile int8_t inputFilter[(X_END - X_START + 1) * 16];//IOÊäÈëÂË²¨Æ÷»º³åÇø
 /******************************************************************************/
 uint8_t getGlobalInterrupt(void){
 	return EA;

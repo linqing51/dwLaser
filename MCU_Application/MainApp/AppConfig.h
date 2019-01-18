@@ -63,7 +63,7 @@
 #define CONFIG_SPLC_ADC_CHANNLE				64//ADC通道数
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
-#define CONFIG_SPLC_ADC_INTERNAL_VREF     	2200L// ADC Voltage Reference (mV)
+#define CONFIG_SPLC_ADC_INTERNAL_VREF     	2400L// ADC Voltage Reference (mV)
 #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DAC				1//是能DAC模块

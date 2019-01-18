@@ -93,9 +93,14 @@ void chipAdcProcess(void){//Ñ­»·²É¼¯ADC
 #ifdef C8051F020
 	//while(!AD0INT);
 #endif
-	result = (ADC0 & 0xFFF);
+	result = (ADC0 & 0x0FFF);
 	refreshAdcData(&adcTempDat[adcSelect], result);
-	NVRAM0[EM_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
+//	if(adcTempDat[adcSelect].out < 100){
+//		NVRAM0[EM_ADC_0 + adcSelect] = 0;
+//	}
+//	else{
+		NVRAM0[EM_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
+//	}
 	if(adcSelect < (CONFIG_SPLC_ADC_CHANNLE - 1)){
 		adcSelect ++;
 	}
