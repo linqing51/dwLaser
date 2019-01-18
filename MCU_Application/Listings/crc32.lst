@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 1   
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE CRC32
@@ -60,17 +60,17 @@ line level    source
   37      =2  #define CONFIG_EPROM_PAGEWRITE                          0//页写入
   38      =2  /*****************************************************************************/
   39      =2  //SPLC设置
-  40      =2  #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+  40      =2  #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
   41      =2  #define CONFIG_SPLC_DEV                                         0x0A01//设备号
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 2   
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 2   
 
   42      =2  #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
   43      =2  #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
   44      =2  #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
   45      =2  /*****************************************************************************/
-  46      =2  #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+  46      =2  #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
   47      =2  /*****************************************************************************/
-  48      =2  #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+  48      =2  #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
   49      =2  /*****************************************************************************/
   50      =2  #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
   51      =2  /*****************************************************************************/
@@ -126,7 +126,7 @@ line level    source
    9      =3  
   10      =3  #if defined __C51__
   11      =3  
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 3   
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 3   
 
   12      =3  typedef unsigned char uint8_t;
   13      =3  typedef unsigned short uint16_t;
@@ -190,7 +190,7 @@ line level    source
   18      =3  #elif defined __ICC8051__
            =3 
            =3 #ifndef _SYSTEM_BUILD
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 4   
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 4   
 
            =3   #pragma system_include
            =3 #endif
@@ -254,7 +254,7 @@ line level    source
            =3 #define be16toh(x) bswap16(x)
            =3 #define be32toh(x) bswap32(x)
            =3 
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 5   
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 5   
 
            =3 #define htole16(x) (x)
            =3 #define htole32(x) (x)
@@ -318,7 +318,7 @@ line level    source
            =4   typedef __UINT8_T_TYPE__ uint8_t;
            =4 #endif /* __INT8_T_TYPE__ */
            =4 
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 6   
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 6   
 
            =4 #ifdef __INT16_T_TYPE__
            =4   typedef __INT16_T_TYPE__   int16_t;
@@ -382,7 +382,7 @@ line level    source
            =4   false = 0,
            =4   true = 1,
            =4 };
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 7   
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 7   
 
            =4 
            =4 #endif
@@ -446,7 +446,7 @@ line level    source
   66      =3   *****************************************************************************/
   67      =3  
   68      =3  // Make sure there is a NULL defined if the toolchain does not provide it.
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 8   
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 8   
 
   69      =3  #ifndef NULL
   70      =3  #define NULL ((void *)0)
@@ -510,7 +510,7 @@ line level    source
  128      =3   * map.
  129      =3   *****************************************************************************/
  130      =3  #define SI_SFR(name, address) sfr name = address
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 9   
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 9   
 
  131      =3  
  132      =3  /**************************************************************************//**
@@ -574,7 +574,7 @@ line level    source
  190      =3   *
  191      =3   * This macro declares a function prototype for an interrupt handler.  The
  192      =3   * _vector_ parameter is the 8051 interrupt vector number, not the address.
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 10  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 10  
 
  193      =3   * Declaring the function prototype this way will cause the compiler to
  194      =3   * recognize that the function is an interrupt handler and not a normal C
@@ -638,7 +638,7 @@ line level    source
  252      =3   * @note This macro is used to define the function implementation.  To declare
  253      =3   * the function prototype, use @ref SI_REENTRANT_FUNCTION_PROTO.
  254      =3   *****************************************************************************/
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 11  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 11  
 
  255      =3  #define SI_REENTRANT_FUNCTION(name, return_type, parameter) \
  256      =3    return_type name parameter reentrant
@@ -702,7 +702,7 @@ line level    source
  314      =3   *****************************************************************************/
  315      =3  #define SI_FUNCTION_USING(name, return_value, parameter, regnum)              \
  316      =3               return_value name parameter using regnum
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 12  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 12  
 
  317      =3  
  318      =3  /**************************************************************************//**
@@ -766,7 +766,7 @@ line level    source
  376      =3   * This macro declares a pointer that points at a specific memory area
  377      =3   * (or segment).  The memory segment of the pointer variable itself is not
  378      =3   * specified and the default is used.  The segment can be one of the following:
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 13  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 13  
 
  379      =3   *
  380      =3   * - @ref SI_SEG_DATA
@@ -830,7 +830,7 @@ line level    source
  438      =3   * @param vartype The pointer data type.
  439      =3   * @param memseg The memory segment to use for the pointer variable.
  440      =3   *
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 14  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 14  
 
  441      =3   * This macro declares a pointer that is a generic pointer.  This means it can
  442      =3   * point at any kind of memory location.  However the pointer variable itself
@@ -894,7 +894,7 @@ line level    source
  500      =3  #else  // __SLS_IDE__ : Macros defined to remove syntax errors within Simplicity Studio
            =3 #define SI_INTERRUPT(name, vector) void name (void)
            =3 #define SI_INTERRUPT_USING(name, vector, regnum) void name (void)
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 15  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 15  
 
            =3 #define SI_INTERRUPT_PROTO(name, vector) void name (void)
            =3 #define SI_INTERRUPT_PROTO_USING(name, vector, regnum) void name (void)
@@ -958,7 +958,7 @@ line level    source
  562      =3  
  563      =3  /// Generic pointer structure containing the type and address.
  564      =3  typedef struct
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 16  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 16  
 
  565      =3  {
  566      =3    uint8_t memtype;    ///< The type of memory of the generic pointer.
@@ -1022,7 +1022,7 @@ line level    source
            =3              vartype name
            =3 
            =3 #define B0 0
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 17  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 17  
 
            =3 #define B1 1
            =3 #define B2 2
@@ -1086,7 +1086,7 @@ line level    source
            =3 #define _PPTOSTR_(x) #x
            =3 #define _PPARAM_(address) _PPTOSTR_(vector=address * 8 + 3)
            =3 #define _PPARAM2_(regbank) _PPTOSTR_(register_bank=regbank)
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 18  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 18  
 
            =3 #define SI_INTERRUPT(name, vector) _Pragma(_PPARAM_(vector)) __interrupt void name(void)
            =3 #define SI_INTERRUPT_PROTO(name, vector)  __interrupt void name(void)
@@ -1150,7 +1150,7 @@ line level    source
            =3   int16_t s16;    ///< The two byte value as a 16-bit signed integer.
            =3   uint8_t u8[2];  ///< The two byte value as two unsigned 8-bit integers.
            =3   int8_t s8[2];   ///< The two byte value as two signed 8-bit integers.
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 19  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 19  
 
            =3 } SI_UU16_t;
            =3 
@@ -1214,7 +1214,7 @@ line level    source
    8      =3  //
    9      =3  // GNU LGPL boilerplate:
   10      =3  /** This library is free software; you can redistribute it and/or
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 20  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 20  
 
   11      =3    * modify it under the terms of the GNU Lesser General Public
   12      =3    * License as published by the Free Software Foundation; either
@@ -1278,7 +1278,7 @@ line level    source
   70      =3  //    -Added SI_GENERIC_PTR struct for accessing generic pointers
   71      =3  //    -Added SI_GPTR_MTYPE_XXXX definitions for determining the memory type
   72      =3  //     pointed at by a generic poitner
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 21  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 21  
 
   73      =3  // Release 2.6 - 14 DEC 2012 (GO)
   74      =3  //        -Added define for deprecated SDCC keyword 'at'
@@ -1342,7 +1342,7 @@ line level    source
    7      =4  #ifndef STDBOOL_H
            =4 #define STDBOOL_H
            =4 
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 22  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 22  
 
            =4 #if defined __C51__
            =4 
@@ -1406,7 +1406,7 @@ line level    source
            =4 
            =4 #elif defined __ICC8051__
            =4 
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 23  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 23  
 
            =4 /* Fixed size types. These are all optional. */
            =4 #ifdef __INT8_T_TYPE__
@@ -1470,7 +1470,7 @@ line level    source
            =3 # define SEG_NEAR  __data
            =3 # define SEG_IDATA __idata
            =3 # define SEG_XDATA __xdata
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 24  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 24  
 
            =3 # define SEG_PDATA __pdata
            =3 # define SEG_CODE  __code
@@ -1534,7 +1534,7 @@ line level    source
            =3 {
            =3    U32 U32;
            =3    S32 S32;
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 25  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 25  
 
            =3    UU16 UU16[2];
            =3    U16 U16[2];
@@ -1598,7 +1598,7 @@ line level    source
            =3 # define INTERRUPT_PROTO_USING(name, vector, regnum) void name (void)
            =3 
            =3 # define FUNCTION_USING(name, return_value, parameter, regnum) return_value name (parameter) using regnum
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 26  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 26  
 
            =3 # define FUNCTION_PROTO_USING(name, return_value, parameter, regnum) return_value name (parameter)
            =3 // Note: Parameter must be either 'void' or include a variable type and name. (Ex: char temp_variable)
@@ -1662,7 +1662,7 @@ line level    source
            =3 #define SI_GPTR_MTYPE_CODE       0x05
            =3 
            =3 // generic pointer access struct
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 27  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 27  
 
            =3 typedef union SI_GENERIC_PTR
            =3 {
@@ -1726,7 +1726,7 @@ line level    source
            =3 # define INTERRUPT_PROTO(name, vector) void name (void)
            =3 # define INTERRUPT_PROTO_USING(name, vector, regnum) void name (void)
            =3 
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 28  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 28  
 
            =3 # define FUNCTION_USING(name, return_value, parameter, regnum) return_value name (parameter)
            =3 # define FUNCTION_PROTO_USING(name, return_value, parameter, regnum) return_value name (parameter)
@@ -1790,7 +1790,7 @@ line level    source
  463      =3  #define SI_GPTR_MTYPE_XDATA     0x01
  464      =3  #define SI_GPTR_MTYPE_CODE      0xFF
  465      =3  
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 29  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 29  
 
  466      =3  // generic pointer access struct
  467      =3  typedef union SI_GENERIC_PTR
@@ -1854,7 +1854,7 @@ line level    source
            =3 # define b1 1
            =3 # define b2 2
            =3 # define b3 3
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 30  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 30  
 
            =3 
            =3 typedef unsigned char U8;
@@ -1918,7 +1918,7 @@ line level    source
            =3 # define SFR32E(name, fulladdr) /* not supported */
            =3 
            =3 # define INTERRUPT(name, vector) _interrupt (vector) void name (void)
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 31  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 31  
 
            =3 # define INTERRUPT_USING(name, vector, regnum) _interrupt (vector) _using(regnum) void name (void)
            =3 # define INTERRUPT_PROTO(name, vector) _interrupt (vector) void name (void)
@@ -1982,7 +1982,7 @@ line level    source
            =3 //-----------------------------------------------------------------------------
            =3 
            =3 
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 32  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 32  
 
            =3 // IAR 8051
            =3 // http://www.iar.com
@@ -2046,7 +2046,7 @@ line level    source
            =3 
            =3 typedef unsigned char U8;
            =3 typedef unsigned int U16;
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 33  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 33  
 
            =3 typedef unsigned long U32;
            =3 
@@ -2110,7 +2110,7 @@ line level    source
            =3 # define SFR32E(name, fulladdr) /* not supported */
            =3 
            =3 //-----------------------------------------------------------------------------
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 34  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 34  
 
            =3 
            =3 // Wickenh盲user
@@ -2174,7 +2174,7 @@ line level    source
   21      =3  //    -Removed #include <compiler_defs.h>. The C source file should include it.
   22      =3  // Release 1.2 - 09 JUL 2007 (PKC)
   23      =3  //    -Reformatted header file to enable portable SFR definitions
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 35  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 35  
 
   24      =3  
   25      =3  //-----------------------------------------------------------------------------
@@ -2238,7 +2238,7 @@ line level    source
   83      =3  SFR (OSCXCN, 0xB1);                    // External Oscillator Control
   84      =3  SFR (OSCICN, 0xB2);                    // Internal Oscillator Control
   85      =3  SFR (P74OUT, 0xB5);                    // Ports 4 - 7 Output Mode
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 36  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 36  
 
   86      =3  SFR (FLSCL, 0xB6);                     // Flash Memory Timing Prescaler
   87      =3  SFR (FLACL, 0xB7);                     // Flash Acess Limit
@@ -2302,7 +2302,7 @@ line level    source
  145      =3  SFR (SADDR1, 0xF3);                    // Serail Port UART1 Slave Address
  146      =3  SFR (TL4, 0xF4);                       // Timer/Counter 4 Low
  147      =3  SFR (TH4, 0xF5);                       // Timer/Counter 4 High
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 37  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 37  
 
  148      =3  SFR (EIP1, 0xF6);                      // External Interrupt Priority 1
  149      =3  SFR (EIP2, 0xF7);                      // External Interrupt Priority 2
@@ -2366,7 +2366,7 @@ line level    source
  207      =3  SBIT (TR1, SFR_TCON, 6);               // Timer 1 On/Off Control
  208      =3  SBIT (TF0, SFR_TCON, 5);               // Timer 0 Overflow Flag
  209      =3  SBIT (TR0, SFR_TCON, 4);               // Timer 0 On/Off Control
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 38  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 38  
 
  210      =3  SBIT (IE1, SFR_TCON, 3);               // Ext. Interrupt 1 Edge Flag
  211      =3  SBIT (IT1, SFR_TCON, 2);               // Ext. Interrupt 1 Type
@@ -2430,7 +2430,7 @@ line level    source
  269      =3  SBIT (RS1, SFR_PSW, 4);                // Register Bank Select 1
  270      =3  SBIT (RS0, SFR_PSW, 3);                // Register Bank Select 0
  271      =3  SBIT (OV, SFR_PSW, 2);                 // Overflow Flag
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 39  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 39  
 
  272      =3  SBIT (F1, SFR_PSW, 1);                 // User Flag 1
  273      =3  SBIT (P, SFR_PSW, 0);                  // Accumulator Parity Flag
@@ -2494,7 +2494,7 @@ line level    source
  331      =3  
  332      =3  //-----------------------------------------------------------------------------
  333      =3  // SDCC PDATA External Memory Paging Support
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 40  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 40  
 
  334      =3  //-----------------------------------------------------------------------------
  335      =3  
@@ -2558,7 +2558,7 @@ line level    source
   41      =3  
   42      =3  #endif
   43      =3  
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 41  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 41  
 
  100      =2  #include <stdlib.h> 
    1      =3  /*--------------------------------------------------------------------------
@@ -2622,7 +2622,7 @@ line level    source
   59      =3  #endif // __CX2__
   60      =3  extern long   labs (long  val);
   61      =3  
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 42  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 42  
 
   62      =3  extern float  atof (const char *s1);
   63      =3  extern long   atol (const char *s1);
@@ -2686,7 +2686,7 @@ line level    source
   28      =3  extern char   strncmp (const char *s1, const char *s2, size_t n);
   29      =3  
   30      =3  extern char  *strcpy  (char *s1, const char *s2);
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 43  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 43  
 
   31      =3  extern char  *strncpy (char *s1, const char *s2, size_t n);
   32      =3  
@@ -2750,7 +2750,7 @@ line level    source
   34      =3  extern void          _pop_     (unsigned char _sfr);
   35      =3  #endif
   36      =3  
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 44  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 44  
 
   37      =3  #pragma RESTORE
   38      =3  
@@ -2814,7 +2814,7 @@ line level    source
   20      =3  #define SHRT_MIN       (-32767-1)       /* Min ("signed") "short" value */
   21      =3  #define USHRT_MAX        0xFFFF         /* Max "unsigned" "short" value */
   22      =3  #define INT_MAX          32767          /* Max ("signed")   "int" value */
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 45  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 45  
 
   23      =3  #define INT_MIN        (-32767-1)       /* Min ("signed")   "int" value */
   24      =3  #define UINT_MAX         0xFFFF         /* Max "unsigned"   "int" value */
@@ -2878,7 +2878,7 @@ line level    source
   52      =3  
   53      =3  extern float ceil  (float val);
   54      =3  extern float floor (float val);
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 46  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 46  
 
   55      =3  extern float modf  (float val, float *n);
   56      =3  extern float fmod  (float x, float y);
@@ -2942,20 +2942,20 @@ line level    source
  106      =2  #define CONFIG_AT24C256_SIZE                            32768
  106      =2  #define CONFIG_EPROM_ADDRESS                            0x50
  106      =2  #define CONFIG_EPROM_FRAM                                       0//铁电存储体无写入等待
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 47  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 47  
 
  106      =2  #define CONFIG_EPROM_PAGEWRITE                          0//页写入
  106      =2  /*****************************************************************************/
  106      =2  //SPLC设置
- 106      =2  #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+ 106      =2  #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
  106      =2  #define CONFIG_SPLC_DEV                                         0x0A01//设备号
  106      =2  #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
  106      =2  #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
  106      =2  #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
  106      =2  /*****************************************************************************/
- 106      =2  #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+ 106      =2  #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
  106      =2  /*****************************************************************************/
- 106      =2  #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+ 106      =2  #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
  106      =2  /*****************************************************************************/
  106      =2  #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
  106      =2  /*****************************************************************************/
@@ -3006,7 +3006,7 @@ line level    source
  106      =2  #include "compiler_defs.h"
  106      =2  #include "C8051F020_defs.h"
  106      =2  /*****************************************************************************/
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 48  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 48  
 
  106      =2  #include <stdio.h>
  106      =2  #include <stdlib.h> 
@@ -3061,16 +3061,16 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 49  
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 49  
 
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
@@ -3134,7 +3134,7 @@ line level    source
            =4 #include "InitDeviceF020.h"
            =4 #include "delay.h"
            =4 #include "i2c0.h"
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 50  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 50  
 
            =4 #include "eprom.h"
            =4 #include "dac8568_0.h"
@@ -3198,7 +3198,7 @@ line level    source
            =4 #define CONFIG_AT24C32_SIZE                             4096
            =4 #define CONFIG_AT24C64_SIZE                                     8192
            =4 #define CONFIG_AT24C128_SIZE                            16384
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 51  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 51  
 
            =4 #define CONFIG_AT24C256_SIZE                            32768
            =4 #define CONFIG_EPROM_ADDRESS                            0x50
@@ -3206,15 +3206,15 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
            =4 /*****************************************************************************/
@@ -3262,7 +3262,7 @@ line level    source
            =4 #include "stdbool.h"
            =4 #include "endian.h"
            =4 #include "si_toolchain.h"
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 52  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 52  
 
            =4 #include "compiler_defs.h"
            =4 #include "C8051F020_defs.h"
@@ -3326,7 +3326,7 @@ line level    source
            =4 /*****************************************************************************/
            =4 #define CONFIG_UART0_BAUDRATE                           115200//串口波特率
            =4 #define CONFIG_UART0_PARITY                                     NONE
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 53  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 53  
 
            =4 #define CONFIG_UART0_STOPBIT                            1
            =4 #define CONFIG_UART0_DATABIT                            8
@@ -3354,15 +3354,15 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
            =4 /*****************************************************************************/
@@ -3390,7 +3390,7 @@ line level    source
            =4 #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//从设备地址
            =4 #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//发送接收缓冲区
            =4 #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//接收通讯超时 10mS
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 54  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 54  
 
            =4 #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TX切换延时
            =4 /*****************************************************************************/
@@ -3454,7 +3454,7 @@ line level    source
    8      =3  void iic0Init(void);
    9      =3  void iic0Start(void);
   10      =3  void iic0Stop(void);
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 55  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 55  
 
   11      =3  uint8_t iic0WaitAck(void);
   12      =3  void iic0Ack(void);
@@ -3509,16 +3509,16 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 56  
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 56  
 
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
@@ -3582,7 +3582,7 @@ line level    source
            =4 #include "InitDeviceF020.h"
            =4 #include "delay.h"
            =4 #include "i2c0.h"
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 57  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 57  
 
            =4 #include "eprom.h"
            =4 #include "dac8568_0.h"
@@ -3646,7 +3646,7 @@ line level    source
            =4 #define CONFIG_EPROM_SIZE                                       CONFIG_AT24C64_SIZE
            =4 #define CONFIG_AT24C02_SIZE                             256
            =4 #define CONFIG_AT24C04_SIZE                             512
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 58  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 58  
 
            =4 #define CONFIG_AT24C08_SIZE                             1024
            =4 #define CONFIG_AT24C16_SIZE                             2048
@@ -3659,15 +3659,15 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
            =4 /*****************************************************************************/
@@ -3710,7 +3710,7 @@ line level    source
            =4 #define BOX_CMD_ETX                                                     0x84
            =4 #define BOX_SEND_BFADDR                                         (EM_START + 100)//发送缓冲区位置
            =4 #define BOX_SEND_LENGTH                                         29//发送数据量
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 59  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 59  
 
            =4 /*****************************************************************************/
            =4 #include "stdint.h"
@@ -3774,7 +3774,7 @@ line level    source
            =4 #define CONFIG_DEBUG                        0//调试功能
            =4 /*****************************************************************************/
            =4 #define CONFIG_UART0_BAUDRATE                           115200//串口波特率
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 60  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 60  
 
            =4 #define CONFIG_UART0_PARITY                                     NONE
            =4 #define CONFIG_UART0_STOPBIT                            1
@@ -3803,15 +3803,15 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
            =4 /*****************************************************************************/
@@ -3838,7 +3838,7 @@ line level    source
            =4 #define CONFIG_MB_RTU_SLAVE_TIMER                       1000L//1000uS
            =4 #define CONFIG_MB_RTU_SLAVE_ADDRESS                     0x01//从设备地址
            =4 #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE         256//发送接收缓冲区
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 61  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 61  
 
            =4 #define CONFIG_MB_RTU_SLAVE_TIMEOUT                     100//接收通讯超时 10mS
            =4 #define CONFIG_MB_RTU_SLAVE_IO_DELAY            1//RX TX切换延时
@@ -3902,7 +3902,7 @@ line level    source
    4      =3  void dac8568_1_Update(uint8_t ch);
    5      =3  void dac8568_1_WriteInputRegister(uint8_t ch, uint16_t dat);
    6      =3  void dac8568_1_WriteDacRegister(uint8_t ch, uint16_t dat);
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 62  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 62  
 
    7      =3  void dac8568_1_Clear(void);
    8      =3  void dac8568_1_Reset(void);
@@ -3947,15 +3947,15 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
            =4 /*****************************************************************************/
@@ -3966,7 +3966,7 @@ line level    source
            =4 #define CONFIG_SPLC_USING_UART1                         1//UART1串口启用
            =4 #if CONFIG_SPLC_USING_UART1 == 1
            =4 #define SPLC_UART1                                                      1
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 63  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 63  
 
            =4 #endif
            =4 /*****************************************************************************/
@@ -4030,7 +4030,7 @@ line level    source
            =4 #endif
            =4 #if CONFIG_SPLC_USING_CADC == 1
            =4 #include "sPlcChipAdc.h"
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 64  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 64  
 
            =4 #endif
            =4 #if CONFIG_SPLC_USING_DAC == 1
@@ -4091,17 +4091,17 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 65  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 65  
 
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
            =4 /*****************************************************************************/
@@ -4158,7 +4158,7 @@ line level    source
            =4 #include <INTRINS.H>
            =4 #include <ctype.h>
            =4 #include <LIMITS.H>
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 66  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 66  
 
            =4 #include <math.h>
            =4 #include "crc32.h"
@@ -4222,7 +4222,7 @@ line level    source
            =4 #define CONFIG_UART1_DATABIT                            8
            =4 /*****************************************************************************/
            =4 #define CONFIG_I2C0_FREQ                                        1 
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 67  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 67  
 
            =4 #define CONFIG_I2C_WAITACT_TIME                         250
            =4 /*****************************************************************************/
@@ -4241,15 +4241,15 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
            =4 /*****************************************************************************/
@@ -4286,7 +4286,7 @@ line level    source
            =4 #define ENABLE_INTERRUPT                                        EA = 1;
            =4 /*****************************************************************************/
            =4 //指示盒子
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 68  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 68  
 
            =4 #define R_BOX_RED_SENDED                                        (R_START * 16 + 126)
            =4 #define R_BOX_GREEN_SENDED                                      (R_START * 16 + 127)
@@ -4350,7 +4350,7 @@ line level    source
            =4 #define __APPCONFIG_H__
            =4 /*****************************************************************************/
            =4 #define DEBUG_LED_ON                                            0
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 69  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 69  
 
            =4 #define DEBUG_LED_OFF                                           1
            =4 #define CONFIG_SYSCLK                       (22118400L)
@@ -4387,15 +4387,15 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
            =4 /*****************************************************************************/
@@ -4414,7 +4414,7 @@ line level    source
            =4 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
            =4 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
            =4 #define CONFIG_SPLC_ADC_INTERNAL_VREF           2400L// ADC Voltage Reference (mV)
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 70  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 70  
 
            =4 #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
            =4 /*****************************************************************************/
@@ -4478,7 +4478,7 @@ line level    source
            =4 #include "Modbus.h"
            =4 #include "ModbusPort.h"
            =4 /*****************************************************************************/
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 71  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 71  
 
            =4 #include "sPLC.h"
            =4 /*****************************************************************************/
@@ -4540,17 +4540,17 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 72  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 72  
 
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
            =4 /*****************************************************************************/
@@ -4606,7 +4606,7 @@ line level    source
            =4 #include <string.h>
            =4 #include <INTRINS.H>
            =4 #include <ctype.h>
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 73  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 73  
 
            =4 #include <LIMITS.H>
            =4 #include <math.h>
@@ -4670,7 +4670,7 @@ line level    source
            =4 #define CONFIG_UART1_STOPBIT                            1
            =4 #define CONFIG_UART1_DATABIT                            8
            =4 /*****************************************************************************/
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 74  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 74  
 
            =4 #define CONFIG_I2C0_FREQ                                        1 
            =4 #define CONFIG_I2C_WAITACT_TIME                         250
@@ -4690,15 +4690,15 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
            =4 /*****************************************************************************/
@@ -4734,7 +4734,7 @@ line level    source
            =4 #define DISABLE_INTERRUPT                                       EA = 0;
            =4 #define ENABLE_INTERRUPT                                        EA = 1;
            =4 /*****************************************************************************/
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 75  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 75  
 
            =4 //指示盒子
            =4 #define R_BOX_RED_SENDED                                        (R_START * 16 + 126)
@@ -4798,7 +4798,7 @@ line level    source
    3      =3  /*****************************************************************************/
    4      =3  #include "appConfig.h"
    1      =4  #ifndef __APPCONFIG_H__
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 76  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 76  
 
            =4 #define __APPCONFIG_H__
            =4 /*****************************************************************************/
@@ -4838,15 +4838,15 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
            =4 /*****************************************************************************/
@@ -4862,7 +4862,7 @@ line level    source
            =4 #define CONFIG_SPLC_USING_CADC                          1//使能ADC模块
            =4 #define CONFIG_SPLC_ADC_FILTER_TAP                      14//ADC位移滤波次数
            =4 #define CONFIG_SPLC_ADC_CHANNLE                         64//ADC通道数
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 77  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 77  
 
            =4 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
            =4 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
@@ -4926,7 +4926,7 @@ line level    source
            =4 #include "sPlcDac.h"
            =4 #endif
            =4 /*****************************************************************************/
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 78  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 78  
 
            =4 #include "Modbus.h"
            =4 #include "ModbusPort.h"
@@ -4987,17 +4987,17 @@ line level    source
            =4 #define CONFIG_EPROM_PAGEWRITE                          0//页写入
            =4 /*****************************************************************************/
            =4 //SPLC设置
-           =4 #define CONFIG_SPLC_ASSERT                                      0//检查地址范围
+           =4 #define CONFIG_SPLC_ASSERT                                      1//检查地址范围
            =4 #define CONFIG_SPLC_DEV                                         0x0A01//设备号
            =4 #define CONFIG_SPLC_CLEAR_CODE                          0xA58E
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 79  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 79  
 
            =4 #define CONFIG_SOFTPLC_HWTIME                           1000L//1mS
            =4 #define CONFIG_INPUT_FILTER_TIME                        3//输入数字滤波扫描周期 1mS * N
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
+           =4 #define CONFIG_SPLC_USING_CLEAR_NVRAM           0//启用清除NVRAM功能
            =4 /*****************************************************************************/
-           =4 #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
+           =4 #define CONFIG_SPLC_USING_WDT                           0//看门狗启用
            =4 /*****************************************************************************/
            =4 #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
            =4 /*****************************************************************************/
@@ -5054,7 +5054,7 @@ line level    source
            =4 #include <INTRINS.H>
            =4 #include <ctype.h>
            =4 #include <LIMITS.H>
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 80  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 80  
 
            =4 #include <math.h>
            =4 #include "crc32.h"
@@ -5118,7 +5118,7 @@ line level    source
   37      =3  #define TD_100MS_END                                    210
   38      =3  //计数器 1
   39      =3  #define C_START                                                 211
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 81  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 81  
 
   40      =3  #define C_END                                                   211
   41      =3  //输入位寄存器 1 * 16 = 16个
@@ -5182,7 +5182,7 @@ line level    source
   99      =3  #define EM_ADC_45                                               (EM_START + 45)//ADC42->MPD13
  100      =3  #define EM_ADC_46                                               (EM_START + 46)//ADC42->MPD14
  101      =3  #define EM_ADC_47                                               (EM_START + 47)//ADC42->MPD15
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 82  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 82  
 
  102      =3  #define EM_ADC_48                                               (EM_START + 48)//ADC42->MPD16
  103      =3  #define EM_ADC_49                                               (EM_START + 49)//ADC42->MPD17
@@ -5246,7 +5246,7 @@ line level    source
  161      =3  #define SPCOIL_UART0_SEND_DONE                  (SPCOIL_START * 16 + 12)//发送完成
  162      =3  #define SPCOIL_UART0_RECV_DONE                  (SPCOIL_START * 16 + 13)//接收完成
  163      =3  #define SPCOIL_UART1_SEND_BUSY                  (SPCOIL_START * 16 + 14)//UART1发送忙
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 83  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 83  
 
  164      =3  #define SPCOIL_UART1_RECV_BUSY                  (SPCOIL_START * 16 + 15)//UART1接收忙
  165      =3  #define SPCOIL_UART1_SEND_DONE                  (SPCOIL_START * 16 + 16)//发送完成
@@ -5310,7 +5310,7 @@ line level    source
  223      =3  void FLIP(uint16_t A) reentrant;//翻转
  224      =3  uint8_t LD(uint16_t A) reentrant;//载入
  225      =3  uint8_t LDB(uint16_t A) reentrant;//方向载入
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 84  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 84  
 
  226      =3  uint8_t LDP(uint16_t A) reentrant;//脉冲上升沿
  227      =3  uint8_t LDN(uint16_t A) reentrant;//脉冲下降沿
@@ -5374,7 +5374,7 @@ line level    source
   46          /*     tions for all combinations of data and CRC register values.     */
   47          /*                                                                     */
   48          /*  2. The CRC accumulation logic is the same for all CRC polynomials, */
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 85  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 85  
 
   49          /*     be they sixteen or thirty-two bits wide.  You simply choose the */
   50          /*     appropriate table.  Alternatively, because the table can be     */
@@ -5438,7 +5438,7 @@ line level    source
  108          };
  109          static idata uint32_t oldcrc32;
  110          
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 86  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 86  
 
  111          uint32_t crc32Calculate(uint8_t *buf, uint32_t idata len){//CRC32 计算数组
  112   1          pdata uint32_t i;  
@@ -5459,7 +5459,7 @@ line level    source
  127   1              oldcrc32 = old;
  128   1      }
  129          
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 87  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 87  
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -5523,7 +5523,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 004F FE                MOV     R6,A
 0050 7800        R     MOV     R0,#LOW oldcrc32
 0052 120000      E     LCALL   ?C?LLDIDATA0
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 88  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 88  
 
 0055 EF                MOV     A,R7
 0056 6B                XRL     A,R3
@@ -5587,7 +5587,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00A8 E4                CLR     A
 00A9 3C                ADDC    A,R4
 00AA FC                MOV     R4,A
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 89  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 89  
 
 00AB 7800        R     MOV     R0,#LOW i
 00AD 120000      E     LCALL   ?C?LSTPDATA
@@ -5651,7 +5651,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0037 6F                XRL     A,R7
 0038 FF                MOV     R7,A
 0039 EA                MOV     A,R2
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 90  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 90  
 
 003A 6E                XRL     A,R6
 003B FE                MOV     R6,A
@@ -5703,7 +5703,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0002 020000      E     LJMP    ?C?LSTIDATA
              ; FUNCTION _crc32SetCrcOld (END)
 
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 91  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 91  
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -5766,7 +5766,7 @@ S32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
 UU16 . . . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
   U16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
   S16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
-C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 16:20:25 PAGE 92  
+C51 COMPILER V9.59.0.0   CRC32                                                             01/18/2019 17:06:29 PAGE 92  
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====

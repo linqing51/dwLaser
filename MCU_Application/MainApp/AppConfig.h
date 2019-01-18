@@ -37,7 +37,7 @@
 #define CONFIG_EPROM_PAGEWRITE				0//页写入
 /*****************************************************************************/
 //SPLC设置
-#define CONFIG_SPLC_ASSERT					0//检查地址范围
+#define CONFIG_SPLC_ASSERT					1//检查地址范围
 #define CONFIG_SPLC_DEV						0x0A01//设备号
 #define CONFIG_SPLC_CLEAR_CODE				0xA58E
 #define CONFIG_SOFTPLC_HWTIME				1000L//1mS
@@ -82,8 +82,8 @@
 #define ENABLE_INTERRUPT					EA = 1;
 /*****************************************************************************/
 //指示盒子
-#define R_BOX_RED_SENDED					(R_START * 16 + 126)
-#define R_BOX_GREEN_SENDED					(R_START * 16 + 127)
+#define R_BOX_RED_SENDED					(R_START * 16 + 126)//190
+#define R_BOX_GREEN_SENDED					(R_START * 16 + 127)//191
 #define BOX_CMD_STX							0x81
 #define BOX_CMD_ETX							0x84
 #define BOX_SEND_BFADDR						(EM_START + 100)//发送缓冲区位置
@@ -103,7 +103,7 @@
 #include <ctype.h>
 #include <LIMITS.H>
 #include <math.h>
-#include "crc32.h"
+//#include "crc32.h"
 /*****************************************************************************/
 #include "InitDeviceF020.h"
 #include "delay.h"

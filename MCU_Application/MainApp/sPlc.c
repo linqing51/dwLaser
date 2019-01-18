@@ -58,13 +58,13 @@ uint8_t getLedError(void){//GET LED ERROR
 }
 static void assertCoilAddress(uint16_t adr) reentrant{//检查线圈地址
 #if CONFIG_SPLC_ASSERT == 1
-	if(adr > (SPREG_END * 16))
+	if(adr > (SPCOIL_END * 16))
 		while(1);
 #endif
 }
 static void assertRegisterAddress(uint16_t adr) reentrant{//检查寄存器地址
 #if CONFIG_SPLC_ASSERT == 1
-	if(adr >= SPREG_END)
+	if(adr >= SPCOIL_END)
 		while(1);
 #endif
 }
@@ -419,9 +419,7 @@ static void wdtInit(void){//看门狗初始化
 	WDTCN = 0x07;//47mS
 }
 void wdtEnable(void) reentrant{//使能看门狗
-#ifdef C8051F020
 	WDTCN = 0xA5;
-#endif
 }
 void wdtDisable(void) reentrant{//关闭看门狗(未锁定)
 	uint8_t flagEA;
@@ -618,21 +616,21 @@ void sPlcProcessStart(void){//sPLC轮询起始
 		if(epromTest()){//EPROM测试成功
 			setLedEprom(DEBUG_LED_OFF);
 			setLedError(DEBUG_LED_ON);
-			delayMs(500);
+			delayMs(10);
 			setLedError(DEBUG_LED_OFF);
 		}
 		else{//EPROM测试失败
 			setLedEprom(DEBUG_LED_OFF);
 			setLedError(DEBUG_LED_ON);
-			delayMs(500);
+			delayMs(50);
 			setLedError(DEBUG_LED_OFF);
-			delayMs(500);
+			delayMs(50);
 			setLedError(DEBUG_LED_ON);
-			delayMs(500);
+			delayMs(50);
 			setLedError(DEBUG_LED_OFF);
-			delayMs(500);
+			delayMs(50);
 			setLedError(DEBUG_LED_ON);
-			delayMs(500);
+			delayMs(50);
 			setLedError(DEBUG_LED_OFF);	
 		}
 		clearNvram();
