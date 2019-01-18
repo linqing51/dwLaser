@@ -607,13 +607,34 @@ void sPlcInit(void){//软逻辑初始化
 	setLedError(DEBUG_LED_OFF);
 	SET(SPCOIL_ON);
 	SET(SPCOIL_START_UP);
+	NVRAM0[EM_END] = CONFIG_SPLC_DEV;
 }
 void sPlcProcessStart(void){//sPLC轮询起始
 #if CONFIG_SPLC_USING_CLEAR_NVRAM == 1
 	if(NVRAM0[SPREG_CLEAR_NVRAM0] == CONFIG_SPLC_CLEAR_CODE){
 		DISABLE_INTERRUPT;//关闭中断
 		setLedRun(DEBUG_LED_ON);//
-		setLedError(DEBUG_LED_ON);
+		setLedEprom(DEBUG_LED_ON);
+		if(epromTest()){//EPROM测试成功
+			setLedEprom(DEBUG_LED_OFF);
+			setLedError(DEBUG_LED_ON);
+			delayMs(500);
+			setLedError(DEBUG_LED_OFF);
+		}
+		else{//EPROM测试失败
+			setLedEprom(DEBUG_LED_OFF);
+			setLedError(DEBUG_LED_ON);
+			delayMs(500);
+			setLedError(DEBUG_LED_OFF);
+			delayMs(500);
+			setLedError(DEBUG_LED_ON);
+			delayMs(500);
+			setLedError(DEBUG_LED_OFF);
+			delayMs(500);
+			setLedError(DEBUG_LED_ON);
+			delayMs(500);
+			setLedError(DEBUG_LED_OFF);	
+		}
 		clearNvram();
 		REBOOT();	
 	}

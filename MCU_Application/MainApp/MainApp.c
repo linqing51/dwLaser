@@ -52,7 +52,6 @@ void sPlcBoxLedRefresh(void){//刷新灯状态
 	}
 }
 void main(void){
-	uint32_t *p32;
 	initDeviceF020();
 	sPlcInit();//初始化软逻辑
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
@@ -60,7 +59,6 @@ void main(void){
 	while(1){
 		sPlcProcessStart();
 		if(LD(SPCOIL_START_UP)){//执行一次的代码
-			NVRAM0[EM_END] = CONFIG_SPLC_DEV;
 			RES(R_BOX_GREEN_SENDED);
 			RES(R_BOX_RED_SENDED);
 		}

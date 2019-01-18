@@ -5,6 +5,6 @@
 /*****************************************************************************/
 void initChipDac(void);
 void refreshDac(void);
-
+void selfTestDac(void);
 
 #endif

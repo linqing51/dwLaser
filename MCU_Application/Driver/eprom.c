@@ -99,10 +99,9 @@ void epromWritePage(uint16_t data pageAddr, uint8_t *pBuffer,uint8_t data NumToW
 
 }
 #endif
-#if CONFIG_EPROM_DEBUG == 1
-void epromTest(void){//EPROM ¶ÁÐ´×Ô²âÊÔ
+uint8_t epromTest(void){//EPROM ¶ÁÐ´×Ô²âÊÔ
 	idata uint8_t temp;
-	idata uint32_t i, j, crc32Src, crc32Dist;	
+	idata uint32_t i, crc32Src, crc32Dist;	
 	crc32Clear();
 	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
 		temp = rand() % 255;
@@ -115,9 +114,8 @@ void epromTest(void){//EPROM ¶ÁÐ´×Ô²âÊÔ
 		crc32Dist = crc32CalculateAdd(temp);
 	}
 	if(crc32Src == crc32Dist)
-		printf("EPROM:Self Test Loop %d OK\n", j);
+		return true;
 	else
-		printf("EPROM:Self Test Loop %d Fail\n", j);
+		return false;
 
 }
-#endif

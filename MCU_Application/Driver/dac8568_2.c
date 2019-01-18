@@ -1,7 +1,7 @@
 #include <dac8568_2.h>
 /*****************************************************************************/
 /*****************************************************************************/
-static void setSYNC(uint8_t dat){//P4_6
+static void setSYNC2(uint8_t dat){//P4_6
 	if(dat){
 		P4 |= (uint8_t)(1 << 6);
 	}
@@ -9,7 +9,7 @@ static void setSYNC(uint8_t dat){//P4_6
 		P4 &= ~(uint8_t)(1 << 6);
 	}
 }
-static void setCLK(uint8_t dat){//P4_7
+static void setCLK2(uint8_t dat){//P4_7
 	if(dat){
 		P4 |= (uint8_t)(1 << 7);
 	}
@@ -17,7 +17,7 @@ static void setCLK(uint8_t dat){//P4_7
 		P4 &= ~(uint8_t)(1 << 7);
 	}
 }
-static void setDIN(uint8_t dat){//P5_0
+static void setDIN2(uint8_t dat){//P5_0
 	if(dat){
 		P5 |= (uint8_t)(1 << 0);
 	}
@@ -25,7 +25,7 @@ static void setDIN(uint8_t dat){//P5_0
 		P5 &= ~(uint8_t)(1 << 0);
 	}
 }
-static void setCLR(uint8_t dat){//P5_1
+static void setCLR2(uint8_t dat){//P5_1
 	if(dat){
 		P5 |= (uint8_t)(1 << 1);
 	}
@@ -33,7 +33,7 @@ static void setCLR(uint8_t dat){//P5_1
 		P5 &= ~(uint8_t)(1 << 1);
 	}
 }
-static void setLDAC(uint8_t dat){//P4_5
+static void setLDAC2(uint8_t dat){//P4_5
 	if(dat){
 		P4 |= (uint8_t)(1 << 5);
 	}
@@ -41,64 +41,64 @@ static void setLDAC(uint8_t dat){//P4_5
 		P4 &= ~(uint8_t)(1 << 5);
 	}
 }
-static void spiWrite(uint32_t dat){//DAC8568 SPI写入
+static void spi2Write(uint32_t dat){//DAC8568 SPI写入
 	uint8_t tmp, i;
-	setSYNC(true);
+	setSYNC2(true);
 	_nop_();_nop_();_nop_();
-	setCLK(true);
+	setCLK2(true);
 	_nop_();_nop_();_nop_();
-	setSYNC(false);
+	setSYNC2(false);
 	for(i = 0;i < 32;i ++){
 		tmp = (uint8_t)(dat >> (31 - i)) & 0x01;
-		setDIN(tmp);
+		setDIN2(tmp);
 		_nop_();_nop_();_nop_();
-		setCLK(false);
+		setCLK2(false);
 		_nop_();_nop_();_nop_();
-		setCLK(true);
+		setCLK2(true);
 	}
 	_nop_();_nop_();_nop_();
-	setSYNC(true);
+	setSYNC2(true);
 }
-
 void dac8568_2_Init(void){//DAC8568初始化
 	uint32_t tmp = 0;
-	setCLR(true);
-	setLDAC(false);
-	tmp = 0x1C000000;//Software Reset
-	spiWrite(tmp);
+	setCLR2(false);
+	delayUs(1);
+	setCLR2(true);
+	setLDAC2(true);
+	tmp = 0x07000000;//Software Reset
+	spi2Write(tmp);
 	tmp = 0x08000001;////Write Sequence for Enabling Internal Reference (Static Mode)
-	spiWrite(tmp);
-	tmp = 0x14000000;//Clear all DAC outputs to zero scale (defaultmode)
-	spiWrite(tmp);
-	tmp = 0x14000003;//CLR引脚屏蔽
-	spiWrite(tmp);
+	spi2Write(tmp);
+	tmp = 0x05000000;//Clear all DAC outputs to zero scale (defaultmode)
+	spi2Write(tmp);
 }
 void dac8568_2_Update(uint8_t ch){//更新UPDATA寄存器
 	uint32_t tmp = 0;
 	tmp |= (uint32_t)ch & 0x000000FF;
 	tmp |= 0x18000000;
-	spiWrite(tmp);
+	spi2Write(tmp);
 }
 void dac8568_2_WriteInputRegister(uint8_t ch, uint16_t dat){//写入输入寄存器
 	uint32_t tmp = 0;
 	tmp |= (uint32_t)((uint32_t)ch << 20);
 	tmp |= (uint32_t)((uint32_t)dat << 4);
-	spiWrite(tmp);
+	spi2Write(tmp);
 }
 void dac8568_2_WriteDacRegister(uint8_t ch, uint16_t dat){//写入输入寄存器并更新输出
-	uint32_t tmp = 0;
-	tmp |= (1 << 25);
+	uint32_t tmp;
+	ch &= 0x0F;
+	tmp = 0x03000000;
 	tmp |= (uint32_t)((uint32_t)ch << 20);
 	tmp |= (uint32_t)((uint32_t)dat << 4);
-	spiWrite(tmp);
+	spi2Write(tmp);
 }
 void dac8568_2_Clear(void){//清除所有寄存器
-	uint32_t tmp;
-	tmp = 0x14000000;//Clear all DAC outputs to zero scale (defaultmode)
-	spiWrite(tmp);
+	setCLR2(false);
+	delayUs(1);
+	setCLR2(true);
 }
 void dac8568_2_Reset(void){//复位	
 	uint32_t tmp;
-	tmp = 0x1C000000;//Software Reset
-	spiWrite(tmp);
+	tmp = 0x07000000;//Software Reset
+	spi2Write(tmp);
 }
