@@ -1,6 +1,8 @@
 #include "sPlcUart.h"
 /*****************************************************************************/
-void USEND(uint16_t port, uint16_t sendBufAdr, uint16_t length){//串口发送
+void USSTP(uint16_t port){//串口强制停止发送
+}
+void USEND(uint16_t port, uint16_t sendBufAdr, uint16_t length){//串口启动发送
 	if(port == 0){
 	}
 	if(port == 1){
@@ -12,6 +14,9 @@ void USEND(uint16_t port, uint16_t sendBufAdr, uint16_t length){//串口发送
 		SCON1 |= 0x02;//开始发送			
 	}
 }
+void URSTP(uint16_t port){//串口强制停止接收
+	
+}
 void URECV(uint16_t port, uint16_t recvBufAdr, uint16_t length){//串口接收
 	if(port == 0){
 	}
@@ -21,12 +26,12 @@ void URECV(uint16_t port, uint16_t recvBufAdr, uint16_t length){//串口接收
 		NVRAM0[SPREG_UART1_RECV_NUM] = 0x0;
 		SET(SPCOIL_UART1_RECV_BUSY);
 		RES(SPCOIL_UART1_RECV_DONE);
-		SCON1 |= ~(uint8_t)(1 << 4);//REN1 = 1 开发接收
+		SCON1 |=0x10;//REN1 = 1 开发接收
 	}
 }
 void Uart1Isr() interrupt INTERRUPT_UART1{//UART1中断
 	DISABLE_INTERRUPT;
-	if(SCON1 & 0x02){//TI1 == 1    
+	if(SCON1 & 0x02){//TI1 == 1  
 		SCON1 &= 0xFD;//TI1 = 0
 		if(NVRAM0[SPREG_UART1_SEND_NUM] < NVRAM0[SPREG_UART1_SEND_LENGTH]){//
             SBUF1 = (uint8_t)NVRAM0[(NVRAM0[SPREG_UART1_SEND_BUFFER_ADR] + NVRAM0[SPREG_UART1_SEND_NUM])];
@@ -35,7 +40,6 @@ void Uart1Isr() interrupt INTERRUPT_UART1{//UART1中断
 		else{
 			SET(SPCOIL_UART1_SEND_DONE);//发送完成
 			RES(SPCOIL_UART1_SEND_BUSY);
-			SCON1 &= ~(uint8_t)(1 << 1);//TI1 = 0
 		}
     }
     if(SCON1 & 0x01){//RI1 == 1
@@ -45,14 +49,14 @@ void Uart1Isr() interrupt INTERRUPT_UART1{//UART1中断
 			NVRAM0[SPREG_UART1_RECV_NUM] ++;
 		}
 		else{
-			SCON1 &= ~(uint8_t)(1 << 4);//REN1 = 0 关闭接收
+			SCON1 &= 0xEF;//REN1 = 0 关闭接收
 			SET(SPCOIL_UART1_RECV_DONE);//接收完成
 			RES(SPCOIL_UART1_RECV_BUSY);
 		}
 	}   
 	ENABLE_INTERRUPT;
 }
-void initUart1(uint32_t baudrate){//指示盒串口初始化
+                                                                                                                                       void initUart1(uint32_t baudrate){//指示盒串口初始化
 	CKCON &= (1 << 6);//Timer 4 uses the system clock
 	T4CON = 0;
 	T4CON |= 1 << 4;//Timer 4 overflows used for transmit clock.

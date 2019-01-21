@@ -252,11 +252,11 @@ void FLIP(uint16_t A) reentrant{//翻转
 }
 uint8_t LD(uint16_t A) reentrant{//载入
 	assertCoilAddress(A);//检查地址范围
-	return (uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
+	return (uint8_t)((uint16_t)NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
 }
 uint8_t LDB(uint16_t A) reentrant{//方向载入
 	assertCoilAddress(A);//检查地址范围
-	return !((uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01);
+	return !((uint8_t)((uint16_t)NVRAM0[(A / 16)] >> (A % 16)) & 0x01);
 }
 uint8_t LDP(uint16_t A) reentrant{//脉冲上升沿
 	uint8_t temp0, temp1;

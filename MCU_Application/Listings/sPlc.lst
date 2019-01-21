@@ -1,4 +1,4 @@
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 1   
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 1   
 
 
 C51 COMPILER V9.59.0.0, COMPILATION OF MODULE SPLC
@@ -62,7 +62,7 @@ line level    source
   46      =2  #define CONFIG_SPLC_USING_CLEAR_NVRAM           1//启用清除NVRAM功能
   47      =2  /*****************************************************************************/
   48      =2  #define CONFIG_SPLC_USING_WDT                           1//看门狗启用
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 2   
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 2   
 
   49      =2  /*****************************************************************************/
   50      =2  #define CONFIG_SPLC_USING_IO_INPUT                      1//输入IO刷新启用
@@ -126,7 +126,7 @@ line level    source
   16      =3  
   17      =3  typedef signed char int8_t;
   18      =3  typedef short int16_t;
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 3   
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 3   
 
   19      =3  typedef long int32_t;
   20      =3  typedef int32_t int64_t[2];
@@ -190,7 +190,7 @@ line level    source
            =3 
            =3 #define bool _Bool
            =3 #define true 1
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 4   
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 4   
 
            =3 #define false 0
            =3 
@@ -254,7 +254,7 @@ line level    source
            =3 
            =3 #else
            =3 
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 5   
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 5   
 
            =3 #define htobe16(x) (x)
            =3 #define htobe32(x) (x)
@@ -318,7 +318,7 @@ line level    source
            =4 
            =4 #ifdef __INT32_T_TYPE__
            =4   typedef __INT32_T_TYPE__   int32_t;
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 6   
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 6   
 
            =4   typedef __UINT32_T_TYPE__ uint32_t;
            =4 #endif /* __INT32_T_TYPE__ */
@@ -382,7 +382,7 @@ line level    source
   45      =4  
   12      =3  
   13      =3  /**************************************************************************//**
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 7   
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 7   
 
   14      =3   *
   15      =3   * @addtogroup toolchain_group Toolchain Abstraction
@@ -446,7 +446,7 @@ line level    source
   73      =3  // -------------------------------
   74      =3  // Keil/ARM C51
   75      =3  //
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 8   
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 8   
 
   76      =3  #if defined(__C51__)
   77      =3  
@@ -510,7 +510,7 @@ line level    source
  135      =3   * @param name The name of the SFR variable.
  136      =3   * @param address The address of the 16-bit SFR.
  137      =3   *
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 9   
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 9   
 
  138      =3   * This creates a C variable (16-bit) that maps to a physical special function
  139      =3   * register of the 8051.  This cannot be used to make any arbitrary memory
@@ -574,7 +574,7 @@ line level    source
  197      =3   * @note This macro is used to declare a prototype for the interrupt function.
  198      =3   * To define the interrupt function implementation, use @ref SI_INTERRUPT.
  199      =3   *****************************************************************************/
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 10  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 10  
 
  200      =3  #define SI_INTERRUPT_PROTO(name, vector) void name (void)
  201      =3  
@@ -638,7 +638,7 @@ line level    source
  259      =3   * Declare a function to be reentrant (store local variables on the stack).
  260      =3   *
  261      =3   * @param name The name of the function.
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 11  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 11  
 
  262      =3   * @param return_type The data type of the function return value
  263      =3   * (void, int, etc).
@@ -702,7 +702,7 @@ line level    source
  321      =3   * @param name The name of the function.
  322      =3   * @param return_value The data type of the function return value
  323      =3   * (void, int, etc).
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 12  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 12  
 
  324      =3   * @param parameter One C function parameter (or "void") (type and name).
  325      =3   * @param regnum The register bank number (0-3).
@@ -766,7 +766,7 @@ line level    source
  383      =3   * - @ref SI_SEG_PDATA
  384      =3   * - @ref SI_SEG_XDATA
  385      =3   * - @ref SI_SEG_CODE
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 13  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 13  
 
  386      =3   *
  387      =3   * __Example__
@@ -830,7 +830,7 @@ line level    source
  445      =3   *
  446      =3   * - @ref SI_SEG_DATA
  447      =3   * - @ref SI_SEG_IDATA
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 14  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 14  
 
  448      =3   * - @ref SI_SEG_BDATA
  449      =3   * - @ref SI_SEG_PDATA
@@ -894,7 +894,7 @@ line level    source
            =3 #define SI_REENTRANT_FUNCTION_PROTO(name, return_value, parameter, regnum) return_value name (parameter)
            =3 
            =3 #define SI_FUNCTION_USING(name, return_value, parameter, regnum) return_value name (parameter)
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 15  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 15  
 
            =3 #define SI_FUNCTION_PROTO_USING(name, return_value, parameter, regnum) return_value name (parameter)
            =3 // Note: Parameter must be either 'void' or include a variable type and name. (Ex: char temp_variable)
@@ -958,7 +958,7 @@ line level    source
  569      =3  
  570      =3  /// A union type to allow access to the fields of a generic pointer.
  571      =3  /// A generic pointer has a field indicating the type of memory and an
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 16  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 16  
 
  572      =3  /// address within the memory.
  573      =3  typedef union SI_GEN_PTR
@@ -1022,7 +1022,7 @@ line level    source
            =3 #define MSB 1
            =3 typedef union SI_UU16
            =3 {
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 17  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 17  
 
            =3   uint16_t u16;
            =3   int16_t s16;
@@ -1086,7 +1086,7 @@ line level    source
            =3 #define SI_INTERRUPT_PROTO_USING(name, vector, regnum) __interrupt void name(void)
            =3 
            =3 #if (__DATA_MODEL__ == 0) /* TINY */ || \
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 18  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 18  
 
            =3     (__DATA_MODEL__ == 1) /* SMALL */
            =3 #define SI_REENTRANT_FUNCTION(name, return_type, parameter) \
@@ -1150,7 +1150,7 @@ line level    source
            =3 /// use as signed or unsigned type.
            =3 typedef union SI_UU32
            =3 {
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 19  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 19  
 
            =3   uint32_t u32;       ///< The 4-byte value as a 32-bit unsigned integer.
            =3   int32_t s32;        ///< The 4-byte value as a 32-bit signed integer.
@@ -1214,7 +1214,7 @@ line level    source
   15      =3    * This library is distributed in the hope that it will be useful,
   16      =3    * but WITHOUT ANY WARRANTY; without even the implied warranty of
   17      =3    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 20  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 20  
 
   18      =3    * Lesser General Public License for more details.
   19      =3    *
@@ -1278,7 +1278,7 @@ line level    source
   77      =3  // Release 2.4 - 27 AUG 2012 (TP)
   78      =3  //    -Added defines for deprecated SDCC keywords interrupt, _asm, and _endasm
   79      =3  // Release 2.3 - 27 MAY 2010 (DM)
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 21  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 21  
 
   80      =3  //    -Removed 'LOCATED_VARIABLE' pragma from Keil because it is not supported
   81      =3  // Release 2.2 - 06 APR 2010 (ES)
@@ -1342,7 +1342,7 @@ line level    source
            =4   false = 0,
            =4   true = 1,
            =4 };
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 22  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 22  
 
            =4 
            =4 #elif defined __ICC8051__
@@ -1406,7 +1406,7 @@ line level    source
            =4 #endif /* __INT8_T_TYPE__ */
            =4 
            =4 #ifdef __INT16_T_TYPE__
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 23  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 23  
 
            =4   typedef __INT16_T_TYPE__   int16_t;
            =4   typedef __UINT16_T_TYPE__ uint16_t;
@@ -1470,7 +1470,7 @@ line level    source
            =3 # define SBIT(name, addr, bit)  __sbit  __at(addr+bit)                  name
            =3 # define SFR(name, addr)        __sfr   __at(addr)                      name
            =3 # define SFRX(name, addr)       xdata volatile unsigned char __at(addr) name
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 24  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 24  
 
            =3 # define SFR16(name, addr)      __sfr16 __at(((addr+1U)<<8) | addr)     name
            =3 # define SFR16E(name, fulladdr) __sfr16 __at(fulladdr)                  name
@@ -1534,7 +1534,7 @@ line level    source
            =3    S8 S8[4];
            =3 } UU32;
            =3 
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 25  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 25  
 
            =3 // NOP () macro support
            =3 #define NOP() _asm NOP _endasm
@@ -1598,7 +1598,7 @@ line level    source
            =3 # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype targsegment * name
            =3 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype targsegment * lo
              -csegment name
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 26  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 26  
 
            =3 # define SEGMENT_POINTER(name, vartype, locsegment) vartype * locsegment name
            =3 # define LOCATED_VARIABLE(name, vartype, locsegment, addr, init) at addr locsegment vartype name
@@ -1662,7 +1662,7 @@ line level    source
            =3     {
            =3         U8 MTYPE;
            =3         UU16 ADDR;
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 27  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 27  
 
            =3     } GPTR;
            =3 } SI_GENERIC_PTR;
@@ -1726,7 +1726,7 @@ line level    source
            =3 # define SEGMENT_VARIABLE(name, vartype, locsegment) vartype name
            =3 # define VARIABLE_SEGMENT_POINTER(name, vartype, targsegment) vartype * name
            =3 # define SEGMENT_VARIABLE_SEGMENT_POINTER(name, vartype, targsegment, locsegment) vartype * name
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 28  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 28  
 
            =3 # define SEGMENT_POINTER(name, vartype, locsegment) vartype * name
            =3 # define LOCATED_VARIABLE_NO_INIT(name, vartype, locsegment, addr) vartype name
@@ -1790,7 +1790,7 @@ line level    source
  470      =3      struct
  471      =3      {
  472      =3          U8 MTYPE;
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 29  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 29  
 
  473      =3          UU16 ADDR;
  474      =3      } GPTR;
@@ -1854,7 +1854,7 @@ line level    source
            =3 
            =3 typedef signed char S8;
            =3 typedef signed int S16;
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 30  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 30  
 
            =3 typedef signed long S32;
            =3 
@@ -1918,7 +1918,7 @@ line level    source
            =3 // When calling FUNCTION_USING in Tasking, the function must be called from an interrupt or Main which
            =3 // is also using the same register bank. If not, the compiler will generate an error.
            =3 # define FUNCTION_USING(name, return_value, parameter, regnum) _using(regnum) return_value name (parameter
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 31  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 31  
 
              -)
            =3 # define FUNCTION_PROTO_USING(name, return_value, parameter, regnum) _using(regnum) return_value name (par
@@ -1982,7 +1982,7 @@ line level    source
            =3 
            =3 #include <stdbool.h>
            =3 #include <intrinsics.h>
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 32  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 32  
 
            =3 
            =3 # define SBIT(name, addr, bit)  __bit __no_init volatile bool name @ (addr+bit)
@@ -2046,7 +2046,7 @@ line level    source
            =3 typedef signed long S32;
            =3 
            =3 typedef union UU16
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 33  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 33  
 
            =3 {
            =3    U16 U16;
@@ -2110,7 +2110,7 @@ line level    source
            =3 #elif defined __UC__
            =3 # define SBIT(name, addr, bit)  unsigned char bit  name @ (addr+bit)
            =3 # define SFR(name, addr)        near unsigned char name @ addr
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 34  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 34  
 
            =3 # define SFR16(name, addr)      /* not supported */
            =3 # define SFR16E(name, fulladdr) /* not supported */
@@ -2174,7 +2174,7 @@ line level    source
   28      =3  
   29      =3  #ifndef C8051F020_DEFS_H
   30      =3  #define C8051F020_DEFS_H
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 35  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 35  
 
   31      =3  
   32      =3  //-----------------------------------------------------------------------------
@@ -2238,7 +2238,7 @@ line level    source
   90      =3  SFR (AMX0CF, 0xBA);                    // ADC0 Mux Configuration
   91      =3  SFR (AMX0SL, 0xBB);                    // ADC0 Mux Channel Selection
   92      =3  SFR (ADC0CF, 0xBC);                    // ADC0 Configuration
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 36  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 36  
 
   93      =3  SFR (P1MDIN, 0xBD);                    // Port 1 Input Mode
   94      =3  SFR (ADC0L, 0xBE);                     // ADC0 Data Low
@@ -2302,7 +2302,7 @@ line level    source
  152      =3  SFR (PCA0CPH0, 0xFA);                  // PCA0 Capture 0 High
  153      =3  SFR (PCA0CPH1, 0xFB);                  // PCA0 Capture 1 High
  154      =3  SFR (PCA0CPH2, 0xFC);                  // PCA0 Capture 2 High
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 37  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 37  
 
  155      =3  SFR (PCA0CPH3, 0xFD);                  // PCA0 Capture 3 High
  156      =3  SFR (PCA0CPH4, 0xFE);                  // PCA0 Capture 4 High
@@ -2366,7 +2366,7 @@ line level    source
  214      =3  
  215      =3  // SCON0 0x98
  216      =3  SBIT (SM00, SFR_SCON0, 7);             // Serial Mode Control Bit 0
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 38  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 38  
 
  217      =3  SBIT (SM10, SFR_SCON0, 6);             // Serial Mode Control Bit 1
  218      =3  SBIT (SM20, SFR_SCON0, 5);             // Multiprocessor Communication Enable
@@ -2430,7 +2430,7 @@ line level    source
  276      =3  SBIT (CF, SFR_PCA0CN, 7);              // PCA 0 Counter Overflow Flag
  277      =3  SBIT (CR, SFR_PCA0CN, 6);              // PCA 0 Counter Run Control Bit
  278      =3                                         // Bit5 UNUSED
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 39  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 39  
 
  279      =3  SBIT (CCF4, SFR_PCA0CN, 4);            // PCA 0 Module 4 Interrupt Flag
  280      =3  SBIT (CCF3, SFR_PCA0CN, 3);            // PCA 0 Module 3 Interrupt Flag
@@ -2494,7 +2494,7 @@ line level    source
            =3 SFR(_XPAGE, 0xAF); // Point to the EMI0CN register
            =3 
            =3 #endif
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 40  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 40  
 
  341      =3  
  342      =3  //-----------------------------------------------------------------------------
@@ -2558,7 +2558,7 @@ line level    source
    4      =3  Standard functions.
    5      =3  Copyright (c) 1988-2008 Keil Elektronik GmbH and Keil Software, Inc.
    6      =3  Copyright (c) 2008-2016 ARM Germany GmbH
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 41  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 41  
 
    7      =3  All rights reserved.
    8      =3  --------------------------------------------------------------------------*/
@@ -2622,7 +2622,7 @@ line level    source
   66      =3  extern void   srand (unsigned int seed);
   67      =3  
   68      =3  #ifdef _DIV_T_DEFINED
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 42  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 42  
 
            =3 extern div_t  __div (int numer, int denom);
            =3 #define div(numer,denom)  __div((numer),(denom));
@@ -2686,7 +2686,7 @@ line level    source
   35      =3  extern char  *strchr  (const char *s, char c);
   36      =3  extern int    strpos  (const char *s, char c);
   37      =3  extern char  *strrchr (const char *s, char c);
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 43  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 43  
 
   38      =3  extern int    strrpos (const char *s, char c);
   39      =3  
@@ -2750,7 +2750,7 @@ line level    source
  103      =2  #include <ctype.h>
    1      =3  /*--------------------------------------------------------------------------
    2      =3  CTYPE.H
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 44  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 44  
 
    3      =3  
    4      =3  Prototypes for character functions.
@@ -2814,7 +2814,7 @@ line level    source
   27      =3  #define ULONG_MAX        0xFFFFFFFF     /* Max "unsigned"  "long" value */
   28      =3  
   29      =3  #endif
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 45  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 45  
 
  105      =2  #include <math.h>
    1      =3  /*--------------------------------------------------------------------------
@@ -2878,7 +2878,7 @@ line level    source
   59      =3  #if defined (__CX2__)
            =3 extern float frexp (float val, int *exp);
            =3 extern float ldexp (float val, int exp);
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 46  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 46  
 
            =3 #endif
   63      =3  
@@ -2942,7 +2942,7 @@ line level    source
    2      =3  #define __I2C0_H__
    3      =3  /*****************************************************************************/
    4      =3  #include "appConfig.h"
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 47  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 47  
 
    4      =3  #ifndef __I2C0_H__
    4      =3  #define __I2C0_H__
@@ -3006,7 +3006,7 @@ line level    source
    3      =3  void dac8568_2_Init(void);
    4      =3  void dac8568_2_Update(uint8_t ch);
    5      =3  void dac8568_2_WriteInputRegister(uint8_t ch, uint16_t dat);
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 48  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 48  
 
    6      =3  void dac8568_2_WriteDacRegister(uint8_t ch, uint16_t dat);
    7      =3  void dac8568_2_Clear(void);
@@ -3070,7 +3070,7 @@ line level    source
    4      =3  #include "appConfig.h"
    4      =3  #ifndef __MODBUS__H__
    4      =3  #define __MODBUS__H__
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 49  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 49  
 
    4      =3  /*****************************************************************************/
    4      =3  #include "appConfig.h"
@@ -3134,7 +3134,7 @@ line level    source
            =3 #define TD_10MS_END                                             194
            =3 //100MS 16
            =3 #define TD_100MS_START                                  195
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 50  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 50  
 
            =3 #define TD_100MS_END                                    210
            =3 //计数器 1
@@ -3198,7 +3198,7 @@ line level    source
            =3 #define EM_ADC_42                                               (EM_START + 42)//ADC42->MPD10
            =3 #define EM_ADC_43                                               (EM_START + 43)//ADC42->MPD11
            =3 #define EM_ADC_44                                               (EM_START + 44)//ADC42->MPD12
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 51  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 51  
 
            =3 #define EM_ADC_45                                               (EM_START + 45)//ADC42->MPD13
            =3 #define EM_ADC_46                                               (EM_START + 46)//ADC42->MPD14
@@ -3260,16 +3260,16 @@ line level    source
            =3 #define SPCOIL_PS10MS                                   (SPCOIL_START * 16 + 3)//10mS
            =3 #define SPCOIL_PS100MS                                  (SPCOIL_START * 16 + 4)//100mS  
            =3 #define SPCOIL_PS1000MS                                 (SPCOIL_START * 16 + 5)//1000mS 
-           =3 #define SPCOIL_UART0_SEND_BUSY                  (SPCOIL_START * 16 + 10)//UART1发送忙
-           =3 #define SPCOIL_UART0_RECV_BUSY                  (SPCOIL_START * 16 + 11)//UART1接收忙
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 52  
+           =3 #define SPCOIL_UART0_SEND_BUSY                  (SPCOIL_START * 16 + 16)//UART1发送忙
+           =3 #define SPCOIL_UART0_RECV_BUSY                  (SPCOIL_START * 16 + 17)//UART1接收忙
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 52  
 
-           =3 #define SPCOIL_UART0_SEND_DONE                  (SPCOIL_START * 16 + 12)//发送完成
-           =3 #define SPCOIL_UART0_RECV_DONE                  (SPCOIL_START * 16 + 13)//接收完成
-           =3 #define SPCOIL_UART1_SEND_BUSY                  (SPCOIL_START * 16 + 14)//UART1发送忙
-           =3 #define SPCOIL_UART1_RECV_BUSY                  (SPCOIL_START * 16 + 15)//UART1接收忙
-           =3 #define SPCOIL_UART1_SEND_DONE                  (SPCOIL_START * 16 + 16)//发送完成
-           =3 #define SPCOIL_UART1_RECV_DONE                  (SPCOIL_START * 16 + 17)//接收完成
+           =3 #define SPCOIL_UART0_SEND_DONE                  (SPCOIL_START * 16 + 18)//发送完成
+           =3 #define SPCOIL_UART0_RECV_DONE                  (SPCOIL_START * 16 + 19)//接收完成
+           =3 #define SPCOIL_UART1_SEND_BUSY                  (SPCOIL_START * 16 + 20)//UART1发送忙
+           =3 #define SPCOIL_UART1_RECV_BUSY                  (SPCOIL_START * 16 + 21)//UART1接收忙
+           =3 #define SPCOIL_UART1_SEND_DONE                  (SPCOIL_START * 16 + 22)//发送完成
+           =3 #define SPCOIL_UART1_RECV_DONE                  (SPCOIL_START * 16 + 23)//接收完成
            =3 /*****************************************************************************/
            =3 #define SPREG_RUNTIME_L                                 (SPREG_START + 0)//累计运行时间秒 32BIT
            =3 #define SPREG_RUNTIME_H                                 (SPREG_START + 1)//累计运行时间秒 32BIT         
@@ -3326,7 +3326,7 @@ line level    source
            =3 void REBOOT(void) reentrant;//强制复位
            =3 void SET(uint16_t A) reentrant;//线圈置位
            =3 void RES(uint16_t A) reentrant;//线圈复位
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 53  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 53  
 
            =3 void FLIP(uint16_t A) reentrant;//翻转
            =3 uint8_t LD(uint16_t A) reentrant;//载入
@@ -3390,7 +3390,7 @@ line level    source
   45      =1  #define Y_START                                                 213
   46      =1  #define Y_END                                                   213
   47      =1  //特殊寄存器 24个字
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 54  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 54  
 
   48      =1  #define SPREG_START                                             214
   49      =1  #define SPREG_END                                               237
@@ -3454,7 +3454,7 @@ line level    source
  107      =1  #define EM_ADC_53                                               (EM_START + 53)//ADC43->MPD21
  108      =1  #define EM_ADC_54                                               (EM_START + 54)//ADC44->MPD22
  109      =1  #define EM_ADC_55                                               (EM_START + 55)//ADC45->MPD23
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 55  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 55  
 
  110      =1  #define EM_ADC_56                                               (EM_START + 56)//ADC46->MPD24
  111      =1  #define EM_ADC_57                                               (EM_START + 57)//ADC47->MPD25
@@ -3505,20 +3505,20 @@ line level    source
  156      =1  #define SPCOIL_PS10MS                                   (SPCOIL_START * 16 + 3)//10mS
  157      =1  #define SPCOIL_PS100MS                                  (SPCOIL_START * 16 + 4)//100mS  
  158      =1  #define SPCOIL_PS1000MS                                 (SPCOIL_START * 16 + 5)//1000mS 
- 159      =1  #define SPCOIL_UART0_SEND_BUSY                  (SPCOIL_START * 16 + 10)//UART1发送忙
- 160      =1  #define SPCOIL_UART0_RECV_BUSY                  (SPCOIL_START * 16 + 11)//UART1接收忙
- 161      =1  #define SPCOIL_UART0_SEND_DONE                  (SPCOIL_START * 16 + 12)//发送完成
- 162      =1  #define SPCOIL_UART0_RECV_DONE                  (SPCOIL_START * 16 + 13)//接收完成
- 163      =1  #define SPCOIL_UART1_SEND_BUSY                  (SPCOIL_START * 16 + 14)//UART1发送忙
- 164      =1  #define SPCOIL_UART1_RECV_BUSY                  (SPCOIL_START * 16 + 15)//UART1接收忙
- 165      =1  #define SPCOIL_UART1_SEND_DONE                  (SPCOIL_START * 16 + 16)//发送完成
- 166      =1  #define SPCOIL_UART1_RECV_DONE                  (SPCOIL_START * 16 + 17)//接收完成
+ 159      =1  #define SPCOIL_UART0_SEND_BUSY                  (SPCOIL_START * 16 + 16)//UART1发送忙
+ 160      =1  #define SPCOIL_UART0_RECV_BUSY                  (SPCOIL_START * 16 + 17)//UART1接收忙
+ 161      =1  #define SPCOIL_UART0_SEND_DONE                  (SPCOIL_START * 16 + 18)//发送完成
+ 162      =1  #define SPCOIL_UART0_RECV_DONE                  (SPCOIL_START * 16 + 19)//接收完成
+ 163      =1  #define SPCOIL_UART1_SEND_BUSY                  (SPCOIL_START * 16 + 20)//UART1发送忙
+ 164      =1  #define SPCOIL_UART1_RECV_BUSY                  (SPCOIL_START * 16 + 21)//UART1接收忙
+ 165      =1  #define SPCOIL_UART1_SEND_DONE                  (SPCOIL_START * 16 + 22)//发送完成
+ 166      =1  #define SPCOIL_UART1_RECV_DONE                  (SPCOIL_START * 16 + 23)//接收完成
  167      =1  /*****************************************************************************/
  168      =1  #define SPREG_RUNTIME_L                                 (SPREG_START + 0)//累计运行时间秒 32BIT
  169      =1  #define SPREG_RUNTIME_H                                 (SPREG_START + 1)//累计运行时间秒 32BIT         
  170      =1  /*****************************************************************************/
  171      =1  #define SPREG_UART0_SEND_BUFFER_ADR             (SPREG_START + 4)//UART0 发送缓冲NVRAM地址              
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 56  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 56  
 
  172      =1  #define SPREG_UART0_SEND_LENGTH                 (SPREG_START + 5)//UART0 发送数据长度
  173      =1  #define SPREG_UART0_SEND_NUM                    (SPREG_START + 6)//UART0 已经发送数据长度
@@ -3582,7 +3582,7 @@ line level    source
  231      =1  void T100MS(uint8_t A, uint8_t start, uint16_t value);
  232      =1  void DSUB(uint16_t Sa, uint16_t Sb, uint16_t D);
  233      =1  /*****************************************************************************/
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 57  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 57  
 
  234      =1  void chipDacInit(void);
  235      =1  void chipAdcInit(void);
@@ -3646,7 +3646,7 @@ line level    source
   53   2                      P7 &= ~(uint8_t)(1 << 3);
   54   2              }
   55   1      }
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 58  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 58  
 
   56          uint8_t getLedError(void){//GET LED ERROR
   57   1              return (uint8_t)((P7 >> 3) & 0x01);
@@ -3710,7 +3710,7 @@ line level    source
  115   1              uint16_t i;
  116   1              for(i = TD_1MS_START;i <= TD_1MS_END;i ++){
  117   2                      NVRAM0[i] = 0x0;
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 59  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 59  
 
  118   2                      NVRAM1[i] = 0x0;
  119   2              }
@@ -3774,7 +3774,7 @@ line level    source
  177   1              clearSPCOIL();
  178   1              memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));
  179   1      }
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 60  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 60  
 
  180          static void saveNvram(void){//强制将NVRAM存入EPROM
  181   1              DISABLE_INTERRUPT;
@@ -3838,7 +3838,7 @@ line level    source
  239   1      }
  240          void RES(uint16_t A) reentrant{//线圈置零
  241   1              assertCoilAddress(A);//检查地址范围
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 61  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 61  
 
  242   1              NVRAM0[(A / 16)] &= ~(1 << (A % 16));
  243   1      }
@@ -3853,11 +3853,11 @@ line level    source
  252   1      }
  253          uint8_t LD(uint16_t A) reentrant{//载入
  254   1              assertCoilAddress(A);//检查地址范围
- 255   1              return (uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
+ 255   1              return (uint8_t)((uint16_t)NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
  256   1      }
  257          uint8_t LDB(uint16_t A) reentrant{//方向载入
  258   1              assertCoilAddress(A);//检查地址范围
- 259   1              return !((uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01);
+ 259   1              return !((uint8_t)((uint16_t)NVRAM0[(A / 16)] >> (A % 16)) & 0x01);
  260   1      }
  261          uint8_t LDP(uint16_t A) reentrant{//脉冲上升沿
  262   1              uint8_t temp0, temp1;
@@ -3902,7 +3902,7 @@ line level    source
  301   1      #if CONFIG_DEBUG
                       if(A > (TD_10MS_END - TD_10MS_START + 1))
                               printf("T10MS:%d Over Num\n", A);
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 62  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 62  
 
               #endif
  305   1              if(start){
@@ -3966,7 +3966,7 @@ line level    source
  362   2                      if(*(s +i) > max){
  363   3                              max = *(s + i);
  364   3                      }
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 63  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 63  
 
  365   2              }
  366   1              return max;
@@ -4030,7 +4030,7 @@ line level    source
  424          void wdtDisable(void) reentrant{//关闭看门狗(未锁定)
  425   1              uint8_t flagEA;
  426   1              flagEA = EA;
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 64  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 64  
 
  427   1              EA = 0;
  428   1              WDTCN = 0xDE;
@@ -4094,7 +4094,7 @@ line level    source
  486   2              }
  487   1              if(TimerCounter_10mS >= 10){//100ms计算
  488   2                      if(LD(SPCOIL_PS100MS)){//ON
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 65  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 65  
 
  489   3                              RES(SPCOIL_PS100MS);
  490   3                      }
@@ -4158,7 +4158,7 @@ line level    source
  548   2              }
  549   1              ctemp0 = ((P6 >> 6) & 0x01);
  550   1              if(ctemp0){
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 66  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 66  
 
  551   2                      if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
  552   3                              inputFilter[1] ++;
@@ -4222,7 +4222,7 @@ line level    source
  610          void sPlcProcessStart(void){//sPLC轮询起始
  611   1      #if CONFIG_SPLC_USING_CLEAR_NVRAM == 1
  612   1              if(NVRAM0[SPREG_CLEAR_NVRAM0] == CONFIG_SPLC_CLEAR_CODE){
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 67  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 67  
 
  613   2                      DISABLE_INTERRUPT;//关闭中断
  614   2                      setLedRun(DEBUG_LED_ON);//
@@ -4282,7 +4282,7 @@ line level    source
  668   1      #endif
  669   1              RES(SPCOIL_START_UP);
  670   1      }
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 68  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 68  
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
@@ -4346,7 +4346,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 33
 000A         ?C0008:
 000A 22                RET     
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 69  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 69  
 
              ; FUNCTION _setLedEprom (END)
 
@@ -4410,7 +4410,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0007 5396F7            ANL     P7,#0F7H
                                            ; SOURCE LINE # 54
                                            ; SOURCE LINE # 55
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 70  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 70  
 
 000A         ?C0016:
 000A 22                RET     
@@ -4474,7 +4474,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
              ; FUNCTION _?assertRegisterAddress (BEGIN)
                                            ; SOURCE LINE # 65
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 71  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 71  
 
 0000 1500        E     DEC     ?C_IBP
 0002 1500        E     DEC     ?C_IBP
@@ -4538,7 +4538,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0023 F0                MOVX    @DPTR,A
 0024 A3                INC     DPTR
 0025 F0                MOVX    @DPTR,A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 72  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 72  
 
                                            ; SOURCE LINE # 76
 0026 0D                INC     R5
@@ -4602,7 +4602,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 84
 0031         ?C0033:
 0031 22                RET     
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 73  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 73  
 
              ; FUNCTION clearMR (END)
 
@@ -4666,7 +4666,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0004 ED                MOV     A,R5
 0005 25E0              ADD     A,ACC
 0007 FF                MOV     R7,A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 74  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 74  
 
 0008 EC                MOV     A,R4
 0009 33                RLC     A
@@ -4730,7 +4730,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0016 F0                MOVX    @DPTR,A
 0017 A3                INC     DPTR
 0018 F0                MOVX    @DPTR,A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 75  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 75  
 
                                            ; SOURCE LINE # 103
 0019 7400        R     MOV     A,#LOW NVRAM1
@@ -4794,7 +4794,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 005F 64A2              XRL     A,#0A2H
 0061 4C                ORL     A,R4
 0062 70D2              JNZ     ?C0045
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 76  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 76  
 
 0064         ?C0046:
                                            ; SOURCE LINE # 109
@@ -4858,7 +4858,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0009 33                RLC     A
 000A FE                MOV     R6,A
 000B 7400        R     MOV     A,#LOW NVRAM0
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 77  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 77  
 
 000D 2F                ADD     A,R7
 000E F582              MOV     DPL,A
@@ -4922,7 +4922,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0056 F0                MOVX    @DPTR,A
 0057 A3                INC     DPTR
 0058 F0                MOVX    @DPTR,A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 78  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 78  
 
                                            ; SOURCE LINE # 123
 0059 0D                INC     R5
@@ -4986,7 +4986,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 ;---- Variable 'i' assigned to Register 'R4/R5' ----
 0000 7DD3              MOV     R5,#0D3H
 0002 7C00              MOV     R4,#00H
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 79  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 79  
 
 0004         ?C0062:
                                            ; SOURCE LINE # 132
@@ -5050,7 +5050,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 000E F582              MOV     DPL,A
 0010 7400        R     MOV     A,#HIGH NVRAM0
 0012 3E                ADDC    A,R6
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 80  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 80  
 
 0013 F583              MOV     DPH,A
 0015 E4                CLR     A
@@ -5114,7 +5114,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0020 3E                ADDC    A,R6
 0021 F583              MOV     DPH,A
 0023 E4                CLR     A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 81  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 81  
 
 0024 F0                MOVX    @DPTR,A
 0025 A3                INC     DPTR
@@ -5178,7 +5178,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 002F 4C                ORL     A,R4
 0030 70D2              JNZ     ?C0074
                                            ; SOURCE LINE # 156
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 82  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 82  
 
 0032         ?C0077:
 0032 22                RET     
@@ -5242,7 +5242,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0006 7B01              MOV     R3,#01H
 0008 7A00        R     MOV     R2,#HIGH NVRAM0
 000A 7900        R     MOV     R1,#LOW NVRAM0
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 83  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 83  
 
 000C 120000      E     LCALL   ?C?MEMSET
                                            ; SOURCE LINE # 166
@@ -5306,7 +5306,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 000D 750000      E     MOV     ?_epromWrite?BYTE+05H,#00H
 0010 750008      E     MOV     ?_epromWrite?BYTE+06H,#08H
 0013 E4                CLR     A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 84  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 84  
 
 0014 FE                MOV     R6,A
 0015 120000      E     LCALL   _epromWrite
@@ -5370,7 +5370,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0057 120000      R     LCALL   _setLedEprom
                                            ; SOURCE LINE # 197
                                            ; SOURCE LINE # 198
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 85  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 85  
 
 005A         ?C0086:
 005A 0500        R     INC     i+01H
@@ -5434,7 +5434,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 207
 00C6         ?C0090:
 00C6 0500        R     INC     i+01H
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 86  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 86  
 
 00C8 E500        R     MOV     A,i+01H
 00CA 7002              JNZ     ?C0221
@@ -5498,7 +5498,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0021 7800        R     MOV     R0,#LOW i
 0023 E6                MOV     A,@R0
 0024 FE                MOV     R6,A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 87  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 87  
 
 0025 08                INC     R0
 0026 E6                MOV     A,@R0
@@ -5562,7 +5562,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 000D 09                INC     R1
 000E E7                MOV     A,@R1
 000F C4                SWAP    A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 88  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 88  
 
 0010 540F              ANL     A,#0FH
 0012 48                ORL     A,R0
@@ -5626,7 +5626,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 240
                                            ; SOURCE LINE # 241
 0000 120000      R     LCALL   L?0268
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 89  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 89  
 
                                            ; SOURCE LINE # 242
 0003 A900        E     MOV     R1,?C_IBP
@@ -5690,7 +5690,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 004C D082              POP     DPL
 004E D083              POP     DPH
 0050 EE                MOV     A,R6
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 90  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 90  
 
 0051 F0                MOVX    @DPTR,A
 0052 A3                INC     DPTR
@@ -5754,7 +5754,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 003F E0                MOVX    A,@DPTR
 0040 FB                MOV     R3,A
 0041 ED                MOV     A,R5
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 91  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 91  
 
 0042 540F              ANL     A,#0FH
 0044 FF                MOV     R7,A
@@ -5818,7 +5818,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
              ; FUNCTION _?LD (BEGIN)
                                            ; SOURCE LINE # 253
                                            ; SOURCE LINE # 254
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 92  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 92  
 
 0000 120000      R     LCALL   L?0269
                                            ; SOURCE LINE # 255
@@ -5861,28 +5861,28 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0030 EF                MOV     A,R7
 0031 A805              MOV     R0,AR5
 0033 08                INC     R0
-0034 8006              SJMP    ?C0230
+0034 8005              SJMP    ?C0230
 0036         ?C0229:
 0036 CE                XCH     A,R6
-0037 A2E7              MOV     C,ACC.7
-0039 13                RRC     A
-003A CE                XCH     A,R6
-003B 13                RRC     A
-003C         ?C0230:
-003C D8F8              DJNZ    R0,?C0229
-003E 5401              ANL     A,#01H
-0040 FF                MOV     R7,A
+0037 C3                CLR     C
+0038 13                RRC     A
+0039 CE                XCH     A,R6
+003A 13                RRC     A
+003B         ?C0230:
+003B D8F9              DJNZ    R0,?C0229
+003D 5401              ANL     A,#01H
+003F FF                MOV     R7,A
                                            ; SOURCE LINE # 256
-0041 0500        E     INC     ?C_IBP
-0043 0500        E     INC     ?C_IBP
-0045 22                RET     
+0040 0500        E     INC     ?C_IBP
+0042 0500        E     INC     ?C_IBP
+0044 22                RET     
              ; FUNCTION _?LD (END)
 
              ; FUNCTION _?LDB (BEGIN)
                                            ; SOURCE LINE # 257
                                            ; SOURCE LINE # 258
 0000 120000      R     LCALL   L?0269
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 93  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 93  
 
                                            ; SOURCE LINE # 259
 0003 A800        E     MOV     R0,?C_IBP
@@ -5924,29 +5924,29 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0030 EF                MOV     A,R7
 0031 A805              MOV     R0,AR5
 0033 08                INC     R0
-0034 8006              SJMP    ?C0232
+0034 8005              SJMP    ?C0232
 0036         ?C0231:
 0036 CE                XCH     A,R6
-0037 A2E7              MOV     C,ACC.7
-0039 13                RRC     A
-003A CE                XCH     A,R6
-003B 13                RRC     A
-003C         ?C0232:
-003C D8F8              DJNZ    R0,?C0231
-003E 20E004            JB      ACC.0,?C0107
-0041 7F01              MOV     R7,#01H
-0043 8002              SJMP    ?C0108
-0045         ?C0107:
-0045 7F00              MOV     R7,#00H
-0047         ?C0108:
+0037 C3                CLR     C
+0038 13                RRC     A
+0039 CE                XCH     A,R6
+003A 13                RRC     A
+003B         ?C0232:
+003B D8F9              DJNZ    R0,?C0231
+003D 20E004            JB      ACC.0,?C0107
+0040 7F01              MOV     R7,#01H
+0042 8002              SJMP    ?C0108
+0044         ?C0107:
+0044 7F00              MOV     R7,#00H
+0046         ?C0108:
                                            ; SOURCE LINE # 260
-0047 0500        E     INC     ?C_IBP
-0049 0500        E     INC     ?C_IBP
-004B 22                RET     
+0046 0500        E     INC     ?C_IBP
+0048 0500        E     INC     ?C_IBP
+004A 22                RET     
              ; FUNCTION _?LDB (END)
 
              ; FUNCTION _?LDP (BEGIN)
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 94  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 94  
 
                                            ; SOURCE LINE # 261
 0000 1500        E     DEC     ?C_IBP
@@ -6010,7 +6010,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 004C A2E7              MOV     C,ACC.7
 004E 13                RRC     A
 004F CE                XCH     A,R6
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 95  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 95  
 
 0050 13                RRC     A
 0051         ?C0234:
@@ -6074,7 +6074,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0004 A800        E     MOV     R0,?C_IBP
 0006 A606              MOV     @R0,AR6
 0008 08                INC     R0
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 96  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 96  
 
 0009 A607              MOV     @R0,AR7
 000B 1500        E     DEC     ?C_IBP
@@ -6138,7 +6138,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0058 A3                INC     DPTR
 0059 E0                MOVX    A,@DPTR
 005A A803              MOV     R0,AR3
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 97  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 97  
 
 005C 08                INC     R0
 005D 8006              SJMP    ?C0238
@@ -6202,7 +6202,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00A6 A2E7              MOV     C,ACC.7
 00A8 13                RRC     A
 00A9 CE                XCH     A,R6
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 98  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 98  
 
 00AA 13                RRC     A
 00AB         ?C0240:
@@ -6266,7 +6266,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0023 E500        R     MOV     A,A
 0025 C4                SWAP    A
 0026 540F              ANL     A,#0FH
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 99  
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 99  
 
 0028 25E0              ADD     A,ACC
 002A FF                MOV     R7,A
@@ -6330,7 +6330,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0077 FF                MOV     R7,A
 0078 7E00              MOV     R6,#00H
 007A 7401              MOV     A,#01H
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 100 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 100 
 
 007C A807              MOV     R0,AR7
 007E 08                INC     R0
@@ -6394,7 +6394,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00C2 08                INC     R0
 00C3 8005              SJMP    ?C0246
 00C5         ?C0245:
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 101 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 101 
 
 00C5 C3                CLR     C
 00C6 33                RLC     A
@@ -6458,7 +6458,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0008 EF                MOV     A,R7
 0009 25E0              ADD     A,ACC
 000B FF                MOV     R7,A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 102 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 102 
 
 000C E4                CLR     A
 000D 33                RLC     A
@@ -6522,7 +6522,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0058 8039              SJMP    ?C0265
 005A         ?C0122:
                                            ; SOURCE LINE # 309
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 103 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 103 
 
                                            ; SOURCE LINE # 310
 005A E500        R     MOV     A,A
@@ -6586,7 +6586,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 009E E500        R     MOV     A,A
 00A0 C4                SWAP    A
 00A1 540F              ANL     A,#0FH
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 104 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 104 
 
 00A3 25E0              ADD     A,ACC
 00A5 FF                MOV     R7,A
@@ -6650,7 +6650,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00F0 3E                ADDC    A,R6
 00F1 F583              MOV     DPH,A
 00F3 E4                CLR     A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 105 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 105 
 
 00F4 F0                MOVX    @DPTR,A
 00F5 A3                INC     DPTR
@@ -6714,7 +6714,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0040 FF                MOV     R7,A
 0041 7E00              MOV     R6,#00H
 0043 7401              MOV     A,#01H
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 106 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 106 
 
 0045 A807              MOV     R0,AR7
 0047 08                INC     R0
@@ -6778,7 +6778,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 008C FE                MOV     R6,A
 008D E0                MOVX    A,@DPTR
 008E 5E                ANL     A,R6
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 107 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 107 
 
 008F FE                MOV     R6,A
 0090 A3                INC     DPTR
@@ -6842,7 +6842,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00D4 A3                INC     DPTR
 00D5 E0                MOVX    A,@DPTR
 00D6 5F                ANL     A,R7
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 108 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 108 
 
 00D7 FF                MOV     R7,A
 00D8 D082              POP     DPL
@@ -6906,7 +6906,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0024 F583              MOV     DPH,A
 0026 F582              MOV     DPL,A
 0028         ?C0132:
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 109 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 109 
 
                                            ; SOURCE LINE # 342
 0028 AE83              MOV     R6,DPH
@@ -6970,7 +6970,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0083 7B62              MOV     R3,#062H
 0085 7AEB              MOV     R2,#0EBH
 0087 795B              MOV     R1,#05BH
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 110 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 110 
 
 0089 783B              MOV     R0,#03BH
 008B 120000      E     LCALL   ?C?FPADD
@@ -7034,7 +7034,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 00EB 7D20              MOV     R5,#020H
 00ED 7C41              MOV     R4,#041H
 00EF 7800        R     MOV     R0,#LOW ftemp
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 111 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 111 
 
 00F1 120000      E     LCALL   ?C?LLDIDATA0
 00F4 120000      E     LCALL   ?C?FPMUL
@@ -7098,7 +7098,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0047 F6                MOV     @R0,A
 0048 08                INC     R0
 0049 EF                MOV     A,R7
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 112 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 112 
 
 004A F6                MOV     @R0,A
                                            ; SOURCE LINE # 355
@@ -7162,7 +7162,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0049         ?C0139:
 0049 7800        R     MOV     R0,#LOW i
 004B 06                INC     @R0
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 113 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 113 
 
 004C 80C6              SJMP    ?C0137
 004E         ?C0138:
@@ -7226,7 +7226,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 374
 0042 7800        R     MOV     R0,#LOW min
 0044 A606              MOV     @R0,AR6
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 114 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 114 
 
 0046 08                INC     R0
 0047 A607              MOV     @R0,AR7
@@ -7290,7 +7290,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0034 E582              MOV     A,DPL
 0036 25E0              ADD     A,ACC
 0038 FF                MOV     R7,A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 115 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 115 
 
 0039 E583              MOV     A,DPH
 003B 33                RLC     A
@@ -7354,7 +7354,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 001A 7601              MOV     @R0,#01H
 001C 08                INC     R0
 001D F6                MOV     @R0,A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 116 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 116 
 
 001E 08                INC     R0
 001F A601              MOV     @R0,AR1
@@ -7418,7 +7418,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 006D F9                MOV     R1,A
 006E 120000      E     LCALL   ?C?LLDPTR
 0071 D003              POP     AR3
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 117 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 117 
 
 0073 D002              POP     AR2
 0075 D001              POP     AR1
@@ -7482,7 +7482,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0011 E6                MOV     A,@R0
 0012 24FF              ADD     A,#0FFH
 0014 92AF              MOV     EA,C
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 118 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 118 
 
                                            ; SOURCE LINE # 431
 0016 0500        E     INC     ?C_IBP
@@ -7546,7 +7546,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 449
 0027 438901            ORL     TMOD,#01H
                                            ; SOURCE LINE # 450
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 119 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 119 
 
 002A D2A9              SETB    ET0
                                            ; SOURCE LINE # 451
@@ -7610,7 +7610,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0047 76A3              MOV     @R0,#0A3H
 0049         ?C0157:
 0049 7800        R     MOV     R0,#LOW i
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 120 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 120 
 
 004B E6                MOV     A,@R0
 004C FE                MOV     R6,A
@@ -7674,7 +7674,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0096 940A              SUBB    A,#0AH
 0098 7480              MOV     A,#080H
 009A 9480              SUBB    A,#080H
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 121 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 121 
 
 009C 406C              JC      ?C0161
                                            ; SOURCE LINE # 473
@@ -7738,7 +7738,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 481
 00E9 7400        R     MOV     A,#LOW NVRAM0
 00EB 2F                ADD     A,R7
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 122 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 122 
 
 00EC F582              MOV     DPL,A
 00EE 7400        R     MOV     A,#HIGH NVRAM0
@@ -7802,7 +7802,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0133 7800        R     MOV     R0,#LOW i
 0135 E6                MOV     A,@R0
 0136 FE                MOV     R6,A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 123 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 123 
 
 0137 08                INC     R0
 0138 E6                MOV     A,@R0
@@ -7866,7 +7866,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 501
 0182 7E0E              MOV     R6,#0EH
 0184 7FE4              MOV     R7,#0E4H
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 124 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 124 
 
 0186 120000      R     LCALL   _?LD
 0189 120000      R     LCALL   _setLedRun
@@ -7930,7 +7930,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 01D7 AB07              MOV     R3,AR7
 01D9 900000      R     MOV     DPTR,#NVRAM0+01ACH
 01DC E0                MOVX    A,@DPTR
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 125 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 125 
 
 01DD FE                MOV     R6,A
 01DE A3                INC     DPTR
@@ -7994,7 +7994,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 022D F0                MOVX    @DPTR,A
                                            ; SOURCE LINE # 515
 022E 7800        R     MOV     R0,#LOW TimerCounter_100mS
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 126 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 126 
 
 0230 7600              MOV     @R0,#00H
                                            ; SOURCE LINE # 516
@@ -8058,7 +8058,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0010 E6                MOV     A,@R0
 0011 FF                MOV     R7,A
 0012 33                RLC     A
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 127 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 127 
 
 0013 95E0              SUBB    A,ACC
 0015 FE                MOV     R6,A
@@ -8122,7 +8122,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0051 7800        R     MOV     R0,#LOW ctemp0
 0053 F6                MOV     @R0,A
                                            ; SOURCE LINE # 550
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 128 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 128 
 
 0054 E6                MOV     A,@R0
 0055 601D              JZ      ?C0187
@@ -8186,7 +8186,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 566
 0090         ?C0193:
 0090 22                RET     
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 129 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 129 
 
              ; FUNCTION inputRefresh (END)
 
@@ -8250,7 +8250,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0018 7D00              MOV     R5,#00H
 001A 7C00              MOV     R4,#00H
 001C 120000      E     LCALL   _initUart1
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 130 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 130 
 
                                            ; SOURCE LINE # 592
 001F 120000      R     LCALL   loadNvram
@@ -8314,7 +8314,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0014 120000      R     LCALL   _setLedEprom
                                            ; SOURCE LINE # 616
 0017 120000      E     LCALL   epromTest
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 131 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 131 
 
 001A EF                MOV     A,R7
 001B 7F01              MOV     R7,#01H
@@ -8378,7 +8378,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
                                            ; SOURCE LINE # 638
 0069         ?C0200:
                                            ; SOURCE LINE # 641
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 132 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 132 
 
 0069 120000      R     LCALL   _?wdtFeed
                                            ; SOURCE LINE # 644
@@ -8407,7 +8407,7 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 0013 020000      R     LJMP    _?RES
              ; FUNCTION sPlcProcessEnd (END)
 
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 133 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 133 
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -8470,7 +8470,7 @@ S32. . . . . . . . . . . . . . . . . .  TYPEDEF  -----  LONG     -----  4
 UU16 . . . . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
   U16. . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
   S16. . . . . . . . . . . . . . . . .  MEMBER   -----  INT      0000H  2
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 134 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 134 
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -8533,7 +8533,7 @@ adcTempDat_t . . . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  31
 initChipAdc. . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 chipAdcProcess . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 initChipDac. . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 135 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 135 
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -8596,7 +8596,7 @@ _?LDP. . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
   A. . . . . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    0002H  2
   temp0. . . . . . . . . . . . . . . .  AUTO     IDATA  U_CHAR   0000H  1
   temp1. . . . . . . . . . . . . . . .  AUTO     IDATA  U_CHAR   0001H  1
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 136 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 136 
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -8659,7 +8659,7 @@ _TENV. . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
   dat. . . . . . . . . . . . . . . . .  * REG *  DATA   INT      0006H  2
   temp . . . . . . . . . . . . . . . .  AUTO     IDATA  U_INT    0000H  2
 _MAX . . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-C51 COMPILER V9.59.0.0   SPLC                                                              01/18/2019 17:28:08 PAGE 137 
+C51 COMPILER V9.59.0.0   SPLC                                                              01/21/2019 14:21:24 PAGE 137 
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -8696,7 +8696,7 @@ outputRefresh. . . . . . . . . . . . .  STATIC   CODE   PROC     0000H  -----
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   4772    ----
+   CODE SIZE        =   4770    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =    968    ----
    PDATA SIZE       =   ----    ----
