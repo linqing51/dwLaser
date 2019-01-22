@@ -12,11 +12,28 @@
  
  
  
-#line 6 ".\MainApp\appConfig.h" /1
+ 
+#line 7 ".\MainApp\appConfig.h" /1
   
   
  
-#line 9 ".\MainApp\appConfig.h" /0
+#line 10 ".\MainApp\appConfig.h" /0
+ 
+#line 11 ".\MainApp\appConfig.h" /1
+  
+ 
+#line 13 ".\MainApp\appConfig.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
@@ -184,7 +201,7 @@
 #line 51 ".\Lib\stdint.h" /0
  
  
-#line 120 ".\MainApp\appConfig.h" /0
+#line 135 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\stdbool.h" /0
@@ -235,7 +252,7 @@
  
  
  
-#line 121 ".\MainApp\appConfig.h" /0
+#line 136 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\endian.h" /0
@@ -297,7 +314,7 @@
 #line 55 ".\Lib\endian.h" /0
  
  
-#line 122 ".\MainApp\appConfig.h" /0
+#line 137 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\si_toolchain.h" /0
@@ -1209,7 +1226,7 @@
  
  
  
-#line 123 ".\MainApp\appConfig.h" /0
+#line 138 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\compiler_defs.h" /0
@@ -2135,18 +2152,7 @@
  
  
  
-#line 124 ".\MainApp\appConfig.h" /0
- 
- 
-#line 126 ".\MainApp\appConfig.h" /1
-  
- 
-#line 128 ".\MainApp\appConfig.h" /0
- 
-#line 129 ".\MainApp\appConfig.h" /1
-  
- 
-#line 131 ".\MainApp\appConfig.h" /0
+#line 139 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\C8051F580_defs.h" /0
@@ -2762,8 +2768,7 @@
  
  
  
-#line 132 ".\MainApp\appConfig.h" /0
- 
+#line 140 ".\MainApp\appConfig.h" /0
  
  
   
@@ -2813,7 +2818,7 @@
  
  
  
-#line 135 ".\MainApp\appConfig.h" /0
+#line 142 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2921,7 +2926,7 @@
  #pragma RESTORE
  
  
-#line 136 ".\MainApp\appConfig.h" /0
+#line 143 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2984,7 +2989,7 @@
  #pragma RESTORE
  
  
-#line 137 ".\MainApp\appConfig.h" /0
+#line 144 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -3032,7 +3037,7 @@
  
  
  
-#line 138 ".\MainApp\appConfig.h" /0
+#line 145 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -3070,7 +3075,7 @@
  #pragma RESTORE
  
  
-#line 139 ".\MainApp\appConfig.h" /0
+#line 146 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -3103,7 +3108,7 @@
  
  
  
-#line 140 ".\MainApp\appConfig.h" /0
+#line 147 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\math.h" /0
@@ -3177,1661 +3182,7 @@
  #pragma RESTORE
  
  
-#line 141 ".\MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Lib\crc32.h" /0
- 
- 
- 
- 
- 
- 
- 
-  
-#line 1 ".\MainApp\AppConfig.h" /0
- 
-#line 2 ".\MainApp\AppConfig.h" /1
-  
- 
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
- 
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 8 ".\Lib\crc32.h" /0
-#line 8 ".\Lib\crc32.h" /0
- 
- 
- uint32_t crc32Calculate(uint8_t *buf, uint32_t len); 
- uint32_t crc32CalculateAdd(uint8_t dat); 
- void crc32Clear(void); 
- void crc32SetCrcOld(uint32_t old);
- 
- 
- 
- 
- 
- 
- 
- 
-#line 142 ".\MainApp\appConfig.h" /0
- 
- 
- 
-#line 145 ".\MainApp\appConfig.h" /1
-  
- 
-#line 147 ".\MainApp\appConfig.h" /0
- 
-  
-#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\InitDeviceF580.h" /0
- 
- 
- 
-  
-#line 1 ".\Lib\compiler_defs.h" /0
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 123 ".\Lib\compiler_defs.h" /1
-  
- 
-  
-  
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
- 
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
- 
- 
-  
-  
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
-  
- 
-  
- 
-  
-  
-  
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
- 
- 
- 
- 
-  
-  
-  
- 
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
-#line 804 ".\Lib\compiler_defs.h" /0
- 
- 
- 
- 
-#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\InitDeviceF580.h" /0
- 
-  
-#line 1 ".\Lib\C8051F580_defs.h" /0
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 41 ".\Lib\C8051F580_defs.h" /1
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 607 ".\Lib\C8051F580_defs.h" /0
- 
- 
- 
- 
-#line 5 "\GitHub\dwLaser\MCU_Application\MainApp\InitDeviceF580.h" /0
- 
- 
- void initDeviceF580(void);
- 
 #line 148 ".\MainApp\appConfig.h" /0
- 
  
  
   
@@ -4845,57 +3196,15 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -4910,17 +3219,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -4937,6 +3254,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -4966,16 +3332,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -4983,14 +3341,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -5006,17 +3356,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Lib\delay.h" /0
@@ -5030,7 +3382,7 @@
  
  
  
-#line 151 ".\MainApp\appConfig.h" /0
+#line 150 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Driver\i2c0.h" /0
@@ -5043,57 +3395,15 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -5108,17 +3418,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -5135,6 +3453,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -5164,16 +3531,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -5181,14 +3540,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -5204,17 +3555,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 "Driver\i2c0.h" /0
@@ -5235,7 +3588,7 @@
  
  
  
-#line 152 ".\MainApp\appConfig.h" /0
+#line 151 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Driver\i2c1.h" /0
@@ -5248,57 +3601,15 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -5313,17 +3624,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -5340,6 +3659,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -5369,16 +3737,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -5386,14 +3746,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -5409,17 +3761,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 "Driver\i2c1.h" /0
@@ -5440,7 +3794,7 @@
  
  
  
-#line 153 ".\MainApp\appConfig.h" /0
+#line 152 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Driver\i2c2.h" /0
@@ -5453,57 +3807,15 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -5518,17 +3830,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -5545,6 +3865,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -5574,16 +3943,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -5591,14 +3952,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -5614,17 +3967,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 "Driver\i2c2.h" /0
@@ -5645,7 +4000,7 @@
  
  
  
-#line 154 ".\MainApp\appConfig.h" /0
+#line 153 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Driver\i2c3.h" /0
@@ -5658,57 +4013,15 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -5723,17 +4036,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -5750,6 +4071,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -5779,16 +4149,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -5796,14 +4158,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -5819,17 +4173,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 "Driver\i2c3.h" /0
@@ -5850,7 +4206,7 @@
  
  
  
-#line 155 ".\MainApp\appConfig.h" /0
+#line 154 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Driver\i2c4.h" /0
@@ -5863,57 +4219,15 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -5928,17 +4242,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -5955,6 +4277,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -5984,16 +4355,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -6001,14 +4364,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -6024,17 +4379,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 "Driver\i2c4.h" /0
@@ -6055,7 +4412,7 @@
  
  
  
-#line 156 ".\MainApp\appConfig.h" /0
+#line 155 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Driver\i2c5.h" /0
@@ -6068,57 +4425,15 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -6133,17 +4448,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -6160,6 +4483,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -6189,16 +4561,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -6206,14 +4570,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -6229,17 +4585,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 "Driver\i2c5.h" /0
@@ -6260,7 +4618,7 @@
  
  
  
-#line 157 ".\MainApp\appConfig.h" /0
+#line 156 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Driver\i2c6.h" /0
@@ -6273,57 +4631,15 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -6338,17 +4654,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -6365,6 +4689,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -6394,16 +4767,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -6411,14 +4776,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -6434,17 +4791,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 "Driver\i2c6.h" /0
@@ -6465,7 +4824,7 @@
  
  
  
-#line 158 ".\MainApp\appConfig.h" /0
+#line 157 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Driver\eprom.h" /0
@@ -6485,8 +4844,8 @@
  
  
  
-#line 159 ".\MainApp\appConfig.h" /0
-#line 159 ".\MainApp\appConfig.h" /0
+#line 158 ".\MainApp\appConfig.h" /0
+#line 158 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Driver\mcp47x6.h" /0
@@ -6499,57 +4858,15 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -6564,17 +4881,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -6591,6 +4916,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -6620,16 +4994,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -6637,14 +5003,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -6660,17 +5018,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 "Driver\mcp47x6.h" /0
@@ -6692,7 +5052,7 @@
  
  
  
-#line 160 ".\MainApp\appConfig.h" /0
+#line 159 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Driver\inPca9554.h" /0
@@ -6705,57 +5065,15 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -6770,17 +5088,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -6797,6 +5123,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -6826,16 +5201,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -6843,14 +5210,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -6866,17 +5225,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 "Driver\inPca9554.h" /0
@@ -6888,7 +5249,7 @@
  void inPca9554Write(uint8_t wdata);
  
  
-#line 161 ".\MainApp\appConfig.h" /0
+#line 160 ".\MainApp\appConfig.h" /0
  
   
 #line 1 "Driver\outPca9554.h" /0
@@ -6901,57 +5262,15 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -6966,17 +5285,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -6993,6 +5320,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -7022,16 +5398,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -7039,14 +5407,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -7062,17 +5422,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 "Driver\outPca9554.h" /0
@@ -7084,7 +5446,607 @@
  void outPca9554Write(uint8_t wdata);
  
  
-#line 162 ".\MainApp\appConfig.h" /0
+#line 161 ".\MainApp\appConfig.h" /0
+ 
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcUart.h" /0
+ 
+ 
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /0
+ 
+#line 2 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /1
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcUart.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcUart.h" /0
+ 
+ 
+ void initUart1(uint32_t baudrate);
+ void USEND(uint16_t port, uint16_t sendBufAdr, uint16_t length); 
+ void URECV(uint16_t port, uint16_t recvBufAdr, uint16_t length); 
+ 
+#line 163 ".\MainApp\appConfig.h" /0
+ 
+ 
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcChipAdc.h" /0
+ 
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /0
+ 
+#line 2 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /1
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+#line 3 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcChipAdc.h" /0
+#line 3 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcChipAdc.h" /0
+ 
+ 
+ typedef struct{ 
+ uint16_t dat[14];
+ uint16_t out;
+ uint8_t wIndex; 
+ }adcTempDat_t;
+ 
+ void initChipAdc(void);
+ void chipAdcProcess(void);
+ void refreshAdcData(adcTempDat_t *s , uint16_t dat);
+ 
+#line 166 ".\MainApp\appConfig.h" /0
+ 
+ 
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcDac.h" /0
+ 
+ 
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /0
+ 
+#line 2 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /1
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcDac.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcDac.h" /0
+ 
+ 
+ void initChipDac(void);
+ void refreshDac(void);
+ void selfTestDac(void);
+ 
+ 
+#line 169 ".\MainApp\appConfig.h" /0
+ 
  
  
   
@@ -7098,57 +6060,15 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -7163,17 +6083,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -7190,6 +6118,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -7219,16 +6196,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -7236,14 +6205,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -7259,17 +6220,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Modbus\Modbus.h" /0
@@ -7283,7 +6246,7 @@
  extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
  extern void modbusPorcess(void);
  
-#line 164 ".\MainApp\appConfig.h" /0
+#line 172 ".\MainApp\appConfig.h" /0
  
   
 #line 1 ".\Modbus\ModbusPort.h" /0
@@ -7296,57 +6259,15 @@
 #line 2 ".\MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -7361,17 +6282,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -7388,6 +6317,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -7417,16 +6395,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -7434,14 +6404,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -7457,17 +6419,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Modbus\ModbusPort.h" /0
@@ -7481,11 +6445,11 @@
  extern void receiveInterrupt(uint8_t Data);
  
  
-#line 165 ".\MainApp\appConfig.h" /0
+#line 173 ".\MainApp\appConfig.h" /0
  
  
   
-#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\sPlc.h" /0
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
  
  
  
@@ -7495,7 +6459,8 @@
 #line 2 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /1
   
  
- 
+  
+  
  
   
   
@@ -7523,6 +6488,7 @@
   
   
  
+  
   
   
   
@@ -7541,6 +6507,7 @@
   
   
   
+  
  
   
  
@@ -7556,11 +6523,16 @@
   
  
  
+  
   
   
   
   
+ 
+  
+ 
   
+ 
   
  
   
@@ -7570,6 +6542,7 @@
   
  
   
+ 
  
   
   
@@ -7581,12 +6554,18 @@
  
   
  
+  
+  
+  
   
   
   
+ 
+ 
   
   
   
+  
  
  
  
@@ -7611,20 +6590,12 @@
   
   
  
-  
-  
   
   
   
- 
   
- 
- 
   
- 
- 
   
- 
  
   
   
@@ -7633,15 +6604,9 @@
   
   
   
-  
  
- 
   
- 
- 
   
- 
- 
   
   
   
@@ -7651,15 +6616,63 @@
   
   
   
+  
+ 
   
+ 
+ 
   
+ 
+ 
   
+ 
  
   
   
  
   
   
+ 
+ 
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
@@ -7669,8 +6682,6 @@
  
  
  
-#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlc.h" /0
-#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlc.h" /0
  
  
  
@@ -7735,18 +6746,28 @@
  
  
  
- extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(773 + 1)]; 
- extern xdata int16_t NVRAM1[(773 + 1)]; 
  
- void wdtDisable(void); 
+ extern xdata int16_t volatile NVRAM0[(241 + 1)]; 
+ extern xdata int16_t volatile NVRAM1[(241 + 1)]; 
  
+ uint8_t getGlobalInterrupt(void);
+ void setLedRun(uint8_t st);
+ uint8_t getLedRun(void);
+ void setLedEprom(uint8_t st);
+ uint8_t getLedEprom(void);
+ void setLedDac(uint8_t st);
+ uint8_t getLedDac(void);
+ void setLedError(uint8_t st);
+ uint8_t getLedError(void);
  void sPlcInit(void); 
  void sPlcProcessStart(void); 
  void sPlcProcessEnd(void); 
+ void wdtFeed(void) reentrant;
+ void wdtEnable(void) reentrant;
+ void wdtDisable(void) reentrant;
  
- void assertCoilAddress(uint16_t adr);
- void assertRegisterAddress(uint16_t adr);
+ void assertCoilAddress(uint16_t adr) reentrant;
+ void assertRegisterAddress(uint16_t adr) reentrant;
  
  void nvramUpdata(void);
  void clearDM(void);
@@ -7759,21 +6780,6 @@
  void nvramSave(void);
  void nvramUpdata(void);
  
- int16_t ADD(int16_t A, int16_t B); 
- void SET(uint16_t A); 
- void RES(uint16_t A); 
- void FLIP(uint16_t A); 
- uint8_t LD(uint16_t A); 
- uint8_t LDP(uint16_t A); 
- uint8_t LDF(uint16_t A); 
- uint8_t LDB(uint16_t A); 
- 
- void T1MS(uint8_t A, uint8_t start, uint16_t value); 
- void T10MS(uint8_t A, uint8_t start, uint16_t value); 
- void T100MS(uint8_t A, uint8_t start, uint16_t value); 
- void UPDAC(uint16_t dat); 
- void REBOOT(void); 
- 
  void chipDacInit(void);
  void chipAdcInit(void);
  void sPlcInit(void);
@@ -7782,10 +6788,10 @@
  void refreshDac(void);
  
  
-#line 167 ".\MainApp\appConfig.h" /0
+#line 175 ".\MainApp\appConfig.h" /0
  
   
-#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcLaser.h" /0
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcFun.h" /0
  
  
  
@@ -7795,7 +6801,8 @@
 #line 2 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /1
   
  
- 
+  
+  
  
   
   
@@ -7823,6 +6830,7 @@
   
   
  
+  
   
   
   
@@ -7841,6 +6849,7 @@
   
   
   
+  
  
   
  
@@ -7856,7 +6865,6 @@
   
  
  
-  
   
   
   
@@ -7871,26 +6879,23 @@
  
   
  
-  
-  
-  
   
-  
-  
+ 
   
  
   
  
+ 
   
   
   
   
   
   
- 
- 
+  
  
   
+ 
   
   
   
@@ -7898,25 +6903,24 @@
   
   
  
+ 
   
   
   
- 
- 
   
+ 
  
  
   
   
   
   
- 
   
   
   
+ 
   
   
- 
   
  
  
@@ -7924,178 +6928,84 @@
  
  
   
- 
- 
   
   
   
+ 
   
   
   
   
   
- 
- 
   
  
- 
   
- 
- 
   
   
   
   
   
   
+ 
   
   
   
   
   
   
- 
   
   
- 
   
   
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcLaser.h" /0
-#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcLaser.h" /0
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+  
+  
  
+  
  
  
+  
  
  
+  
  
  
+  
+  
  
+  
+  
  
- void sPlcLaser(void); 
  
-#line 168 ".\MainApp\appConfig.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcFun.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcFun.h" /0
  
  
+ void REBOOT(void) reentrant; 
  
+ void SET(uint16_t A) reentrant; 
+ void RES(uint16_t A) reentrant; 
+ void FLIP(uint16_t A) reentrant; 
+ uint8_t LD(uint16_t A) reentrant; 
+ uint8_t LDB(uint16_t A) reentrant; 
+ uint8_t LDP(uint16_t A) reentrant; 
+ uint8_t LDN(uint16_t A) reentrant; 
  
+ void T100US(uint8_t A, uint8_t start, uint16_t value) reentrant; 
+ void T1MS(uint8_t A, uint8_t start, uint16_t value) reentrant; 
+ void T10MS(uint8_t A, uint8_t start, uint16_t value) reentrant; 
+ void T100MS(uint8_t A, uint8_t start, uint16_t value) reentrant; 
  
+ void ADD(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void ADDS(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void DADD(int32_t *Sa, int32_t *Sb, int32_t *D) reentrant; 
+ void SUB(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void SUBS(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void DSUB(int32_t *Sa, int32_t *Sb, int32_t *D) reentrant; 
+ void MULT(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant; 
+ void MULTS(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant; 
  
  
+#line 176 ".\MainApp\appConfig.h" /0
  
  
  
@@ -8110,7 +7020,7 @@
  uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len);
  void epromRead(uint16_t ReadAddr,uint8_t *pBuffer,uint16_t NumToRead);
  void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
- void epromTest(void);
+ uint8_t epromTest(void);
  
 #line 1 "Driver\eprom.c" /0
  
@@ -8119,10 +7029,11 @@
  void epromInit(void){ 
  iic0Init();
  }
+ 
  uint8_t epromReadOneByte(uint16_t ReadAddr){ 
  
  
- uint8_t temp=0;		  	    																 
+ data uint8_t temp=0;		  	    																 
  iic0Start();  
  
  
@@ -8130,10 +7041,10 @@
  iic0WaitAck();
  iic0SendByte(ReadAddr >> 8); 
  
-#line 18 "Driver\eprom.c" /1
+#line 19 "Driver\eprom.c" /1
  
  
-#line 20 "Driver\eprom.c" /0
+#line 21 "Driver\eprom.c" /0
  iic0WaitAck(); 
  iic0SendByte(ReadAddr % 256);    
  iic0WaitAck();	    
@@ -8154,10 +7065,10 @@
  iic0WaitAck();
  iic0SendByte(WriteAddr >> 8);     
  
-#line 40 "Driver\eprom.c" /1
+#line 41 "Driver\eprom.c" /1
  
  
-#line 42 "Driver\eprom.c" /0
+#line 43 "Driver\eprom.c" /0
  iic0WaitAck();	   
  iic0SendByte(WriteAddr % 256);    
  iic0WaitAck(); 	 										  		   
@@ -8165,7 +7076,7 @@
  iic0WaitAck();  		    	   
  iic0Stop(); 
  
- delayMs(10);	 
+ delayMs(10);	
  
  }
  
@@ -8174,7 +7085,7 @@
  
  
  
- uint8_t t;
+ data uint8_t t;
  for(t = 0;t < Len;t ++){
  epromWriteOneByte(WriteAddr + t, (DataToWrite >> (8 * t)) & 0xff);
  }												    
@@ -8184,7 +7095,7 @@
  
  
  
- uint8_t t;
+ data uint8_t t;
  uint32_t temp=0;
  for(t = 0;t < Len;t ++){
  temp <<= 8;
@@ -8193,12 +7104,11 @@
  return temp;												    
  }
  
- void epromRead(uint16_t ReadAddr,uint8_t *pBuffer,uint16_t NumToRead){ 
+ void epromRead(uint16_t ReadAddr, uint8_t *pBuffer,uint16_t NumToRead){ 
  
  
  
- while(NumToRead)
- {
+ while(NumToRead){
  *pBuffer++ = epromReadOneByte(ReadAddr ++);	
  NumToRead --;
  }
@@ -8207,32 +7117,34 @@
  
  
  
- while(NumToWrite --)
- {
+ while(NumToWrite --){
  epromWriteOneByte(WriteAddr, *pBuffer);
  WriteAddr ++;
  pBuffer ++;
  }
  }
  
- void epromTest(void){ 
- uint8_t temp;
- uint32_t i, j, crc32Src, crc32Dist;	
- crc32Clear();
- for(i = 0;i < 8192;i ++){
- temp = rand() % 255;
- crc32Src = crc32CalculateAdd(temp);
- epromWriteOneByte(i, temp);
- }
- crc32Clear();
- for(i = 0;i < 8192;i ++){
- temp = epromReadOneByte(i);
- crc32Dist = crc32CalculateAdd(temp);
- }
- if(crc32Src == crc32Dist)
- printf("EPROM:Self Test Loop %d OK\n", j);
- else
- printf("EPROM:Self Test Loop %d Fail\n", j);
+#line 98 "Driver\eprom.c" /1
  
- }
  
+ 
+ 
+#line 102 "Driver\eprom.c" /0
+ uint8_t epromTest(void){ 
+ idata uint32_t i;	
+ idata uint8_t result;
+ for(i = 0;i < 8192;i ++){
+ setLedEprom(0);
+ epromWriteOneByte(i, (i & 0xFF));
+ setLedEprom(1);
+ }
+ result = 0;
+ for(i = 0;i < 8192;i ++){
+ setLedEprom(0);
+ if(epromReadOneByte(i) != (i & 0xFF)){
+ return false;
+ }
+ setLedEprom(1);
+ }
+ return true;
+ }

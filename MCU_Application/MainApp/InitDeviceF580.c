@@ -1,7 +1,6 @@
 /////////////////////////////////////
 //  Generated Initialization File  //
 /////////////////////////////////////
-#ifdef C8051F580
 #include "InitDeviceF580.h"
 void Port_IO_Init()
 {
@@ -98,4 +97,3 @@ void initDeviceF580(void)
 	Oscillator_Init();
 	Port_IO_Init();
 }
-#endif

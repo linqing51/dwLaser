@@ -35,6 +35,35 @@
 
 /*****************************************************************************/
 void main(void){
+	initDeviceF020();
+	sPlcInit();//初始化软逻辑
+	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
+	ENABLE_INTERRUPT;
+	while(1){
+		sPlcProcessStart();
+		if(LD(SPCOIL_START_UP)){//执行一次的代码
+			RES(R_BOX_GREEN_SENDED);
+			RES(R_BOX_RED_SENDED);
+		}
+		if(LD(T_100MS_START * 16U + 0)){//每100mS执行一次BOX盒子刷新
+			sPlcBoxLedRefresh();
+			T100MS(0, false, 1);
+		}
+		else{
+			T100MS(0, true, 1);
+		}
+		
+//		if(LDP(SPCOIL_PS1000MS)){
+//			p32 = (uint32_t*)(&NVRAM0[DM_TOTAL_TIME_L]);
+//			*p32 = *p32 + 1;
+//		}
+		sPlcProcessEnd();
+	}
+}
+
+
+
+void main(void){
 	uint8_t tmp;
 #ifdef C8051F020
 	initDeviceF020();

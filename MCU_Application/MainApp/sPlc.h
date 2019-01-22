@@ -3,80 +3,136 @@
 /*****************************************************************************/
 #include "appConfig.h"
 /*****************************************************************************/
-/*****************************************************************************/
-//线圈 保持 16 * 16 = 256BIT
+//线圈 保持 8 * 16 = 128BIT
 #define MR_START						0
-#define MR_END							15
-//线圈寄存器 非保持 16 * 16 = 256BIT
-#define R_START							16
-#define R_END							31
-//数据寄存器 保持 256
-#define DM_START						32
-#define DM_END							287
-//数据寄存器 非保持 256个字
-#define EM_START						288
-#define EM_END							543
+#define MR_END   						3
+//线圈寄存器 非保持 8 * 16 = 128BIT
+#define R_START							4
+#define R_END							11
+//数据寄存器 保持 8
+#define DM_START						12
+#define DM_END							19
+//数据寄存器 非保持 140个字
+#define EM_START						20
+#define EM_END							159
 //延时线圈
-#define T_1MS_START						544//32个1mS
-#define T_1MS_END						545
-#define T_10MS_START					546//32个10mS
-#define T_10MS_END						547
-#define T_100MS_START					548//32个100mS
-#define T_100MS_END						549
+//1MS 1 * 16 = 16BIT
+#define T_1MS_START						160
+#define T_1MS_END						160
+//10MS 1 * 16 = 16BIT
+#define T_10MS_START					161
+#define T_10MS_END						161
+//100MS 1 * 16 = 16BIT
+#define T_100MS_START					162
+#define T_100MS_END						162
 //延时计时器 
-#define TD_1MS_START					550//32个1mS
-#define TD_1MS_END						581
-#define TD_10MS_START					582//32个10mS
-#define TD_10MS_END						613
-#define TD_100MS_START					614//32个100mS
-#define TD_100MS_END					645
-//计数器
-#define C_START							646//16个计数器
-#define C_END							661//
-//输入位寄存器 16 * 16 = 256个
-#define X_START							662//
-#define X_END							677// 
-//输出位寄存器 16 * 16 = 256个
-#define Y_START							678// 
-#define Y_END							693//
-//特殊寄存器 64个字
-#define SPREG_START						694//
-#define SPREG_END						757//
-//特殊线圈	16 * 16 = 256个
-#define SPCOIL_START					758
-#define SPCOIL_END						773
+//1MS 16
+#define TD_1MS_START					163
+#define TD_1MS_END						178
+//10MS 16
+#define TD_10MS_START					179
+#define TD_10MS_END						194
+//100MS 16
+#define TD_100MS_START					195
+#define TD_100MS_END					210
+//计数器 1
+#define C_START							211
+#define C_END							211
+//输入位寄存器 1 * 16 = 16个
+#define X_START							212
+#define X_END							212		
+//输出位寄存器 1 * 16 = 16个
+#define Y_START							213
+#define Y_END							213
+//特殊寄存器 24个字
+#define SPREG_START						214
+#define SPREG_END						237
+//特殊线圈	4 * 16 = 64个
+#define SPCOIL_START					238
+#define SPCOIL_END						241
+/*****************************************************************************/
+#define EM_ADC_0						(EM_START + 0)//ADC0->MLD0
+#define EM_ADC_1						(EM_START + 1)//ADC1->MLD1
+#define EM_ADC_2						(EM_START + 2)//ADC2->MLD2
+#define EM_ADC_3						(EM_START + 3)//ADC3->MLD3
+#define EM_ADC_4						(EM_START + 4)//ADC4->MLD4
+#define EM_ADC_5						(EM_START + 5)//ADC5->MLD5
+#define EM_ADC_6						(EM_START + 6)//ADC6->MLD6
+#define EM_ADC_7						(EM_START + 7)//ADC7->MLD7
+#define EM_ADC_8						(EM_START + 8)//ADC8->MLD8
+#define EM_ADC_9						(EM_START + 9)//ADC9->MLD9
+#define EM_ADC_10						(EM_START + 10)//ADC10->MLD10
+#define EM_ADC_11						(EM_START + 11)//ADC11->MLD11
+#define EM_ADC_12						(EM_START + 12)//ADC12->MLD12
+#define EM_ADC_13						(EM_START + 13)//ADC13->MLD13
+#define EM_ADC_14						(EM_START + 14)//ADC14->MLD14
+#define EM_ADC_15						(EM_START + 15)//ADC15->MLD15
+#define EM_DAC_0						(EM_START + 64)//DAC0
+#define EM_DAC_1						(EM_START + 65)//DAC1
+#define EM_DAC_2						(EM_START + 66)//DAC2
+#define EM_DAC_3						(EM_START + 67)//DAC3
+#define EM_DAC_4						(EM_START + 68)//DAC4
+#define EM_DAC_5						(EM_START + 69)//DAC5
+#define EM_DAC_6						(EM_START + 70)//DAC6
+#define EM_DAC_7						(EM_START + 71)//DAC7
 /*****************************************************************************/
 #define CONFIG_NVRAM_SIZE 				(SPCOIL_END + 1)
 /*****************************************************************************/
-#define SPREG_ADC_0						(SPREG_START + 0)
-#define SPREG_ADC_1						(SPREG_START + 1)
-#define SPREG_ADC_2						(SPREG_START + 2)
-#define SPREG_ADC_3						(SPREG_START + 3)
-#define SPREG_DAC_0						(SPREG_START + 4)
-#define SPREG_DAC_1						(SPREG_START + 5)
-#define SPREG_DAC_2						(SPREG_START + 6)
-#define SPREG_DAC_3						(SPREG_START + 7)
-#define SPREG_CHECKCODE					(SPREG_END)
-#define SPCOIL_ON						(SPCOIL_START + 0)//长通线圈
-#define SPCOIL_PSST						(SPCOIL_START + 1)//首次启动
-#define SPCOIL_PS1MS					(SPCOIL_START + 2)//1mS间隔 50%占空比脉冲
-#define SPCOIL_PS10MS					(SPCOIL_START + 3)//10mS 50%占空比脉冲
-#define SPCOIL_PS100MS					(SPCOIL_START + 4)//100mS 50%占空比脉冲
+#define SPCOIL_ON						(SPCOIL_START * 16 + 0)//长通线圈
+#define SPCOIL_START_UP					(SPCOIL_START * 16 + 1)//初次上电
+#define SPCOIL_PS1MS					(SPCOIL_START * 16 + 2)//1mS间隔 50%占空比脉冲
+#define SPCOIL_PS10MS					(SPCOIL_START * 16 + 3)//10mS
+#define SPCOIL_PS100MS					(SPCOIL_START * 16 + 4)//100mS	
+#define SPCOIL_PS1000MS					(SPCOIL_START * 16 + 5)//1000mS	
+#define SPCOIL_UART0_SEND_BUSY			(SPCOIL_START * 16 + 16)//UART1发送忙
+#define SPCOIL_UART0_RECV_BUSY			(SPCOIL_START * 16 + 17)//UART1接收忙
+#define SPCOIL_UART0_SEND_DONE			(SPCOIL_START * 16 + 18)//发送完成
+#define SPCOIL_UART0_RECV_DONE			(SPCOIL_START * 16 + 19)//接收完成
+#define SPCOIL_UART1_SEND_BUSY			(SPCOIL_START * 16 + 20)//UART1发送忙
+#define SPCOIL_UART1_RECV_BUSY			(SPCOIL_START * 16 + 21)//UART1接收忙
+#define SPCOIL_UART1_SEND_DONE			(SPCOIL_START * 16 + 22)//发送完成
+#define SPCOIL_UART1_RECV_DONE			(SPCOIL_START * 16 + 23)//接收完成
 /*****************************************************************************/
-
+#define SPREG_RUNTIME_L					(SPREG_START + 0)//累计运行时间秒 32BIT
+#define SPREG_RUNTIME_H					(SPREG_START + 1)//累计运行时间秒 32BIT		
 /*****************************************************************************/
-extern uint16_t ModbusSlaveAsciiOverTimeCounter;//Modbus Slave通信超时计时器
-extern xdata int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
-extern xdata int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+#define SPREG_UART0_SEND_BUFFER_ADR		(SPREG_START + 4)//UART0 发送缓冲NVRAM地址		
+#define SPREG_UART0_SEND_LENGTH			(SPREG_START + 5)//UART0 发送数据长度
+#define SPREG_UART0_SEND_NUM			(SPREG_START + 6)//UART0 已经发送数据长度
+#define SPREG_UART0_RECV_BUFFER_ADR		(SPREG_START + 7)//UART0 接收缓冲NVRAM地址
+#define SPREG_UART0_RECV_LENGTH			(SPREG_START + 8)//UART0 接收数据长度
+#define SPREG_UART0_RECV_NUM			(SPREG_START + 9)//UART0 已经接收数据长度
 /*****************************************************************************/
-void wdtDisable(void);//看门狗屏蔽
-
+#define SPREG_UART1_SEND_BUFFER_ADR		(SPREG_START + 10)//UART1 发送缓冲NVRAM地址		
+#define SPREG_UART1_SEND_LENGTH			(SPREG_START + 11)//UART1 发送数据长度
+#define SPREG_UART1_SEND_NUM			(SPREG_START + 12)//UART1 已经发送数据长度
+#define SPREG_UART1_RECV_BUFFER_ADR		(SPREG_START + 13)//UART1 接收缓冲NVRAM地址
+#define SPREG_UART1_RECV_LENGTH			(SPREG_START + 14)//UART1 接收数据长度
+#define SPREG_UART1_RECV_NUM			(SPREG_START + 15)//UART1 已经接收数据长度
+/*****************************************************************************/
+#define SPREG_CLEAR_NVRAM0				(SPREG_END)//清除NVRAM后重新启动
+/*****************************************************************************/
+extern xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
+extern xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+/*****************************************************************************/
+uint8_t getGlobalInterrupt(void);
+void setLedRun(uint8_t st);
+uint8_t getLedRun(void);
+void setLedEprom(uint8_t st);
+uint8_t getLedEprom(void);
+void setLedDac(uint8_t st);
+uint8_t getLedDac(void);
+void setLedError(uint8_t st);
+uint8_t getLedError(void);
 void sPlcInit(void);//软逻辑初始化
 void sPlcProcessStart(void);//sPLC轮询起始
 void sPlcProcessEnd(void);//sPLC轮询结束
+void wdtFeed(void) reentrant;
+void wdtEnable(void) reentrant;
+void wdtDisable(void) reentrant;
 /*****************************************************************************/
-void assertCoilAddress(uint16_t adr);
-void assertRegisterAddress(uint16_t adr);
+void assertCoilAddress(uint16_t adr) reentrant;
+void assertRegisterAddress(uint16_t adr) reentrant;
 /*****************************************************************************/
 void nvramUpdata(void);
 void clearDM(void);
@@ -88,21 +144,6 @@ void clearC(void);
 void nvramLoad(void);
 void nvramSave(void);
 void nvramUpdata(void);
-/*****************************************************************************/
-int16_t ADD(int16_t A, int16_t B);//加法指令
-void SET(uint16_t A);//置位
-void RES(uint16_t A);//复位
-void FLIP(uint16_t A);//翻转
-uint8_t LD(uint16_t A);//载入
-uint8_t LDP(uint16_t A);//脉冲上升沿
-uint8_t LDF(uint16_t A);//脉冲下降沿
-uint8_t LDB(uint16_t A);//取反载入
-//void T100US(uint8_t A, uint8_t start, uint16_t value);
-void T1MS(uint8_t A, uint8_t start, uint16_t value);//1mS延时器启动
-void T10MS(uint8_t A, uint8_t start, uint16_t value);//10mS延时器启动
-void T100MS(uint8_t A, uint8_t start, uint16_t value);//100mS延时器启动
-void UPDAC(uint16_t dat);//立即更新DAC输出
-void REBOOT(void);//SPLC复位指令
 /*****************************************************************************/
 void chipDacInit(void);
 void chipAdcInit(void);

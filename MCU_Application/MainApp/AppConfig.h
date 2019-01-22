@@ -1,7 +1,8 @@
 #ifndef __APPCONFIG_H__
 #define __APPCONFIG_H__
 /*****************************************************************************/
-
+#define DEBUG_LED_ON						0
+#define DEBUG_LED_OFF						1
 #ifdef C8051F020
 #define CONFIG_SYSCLK                       (22118400L)
 #define SAR_CLK      						2000000L//ADC0时钟 <2.5MHz
@@ -29,11 +30,12 @@
 #define CONFIG_UART1_STOPBIT				1
 #define CONFIG_UART1_DATABIT				8
 /*****************************************************************************/
-#define CONFIG_I2C0_FREQ 					(100000L)               
-#define CONFIG_I2C1_FREQ 					(100000L)
-#define CONFIG_I2C2_FREQ 					(100000L)
-#define CONFIG_I2C3_FREQ 					(100000L)
-#define CONFIG_I2C4_FREQ 					(100000L)
+#define CONFIG_I2C0_FREQ 					1            
+#define CONFIG_I2C1_FREQ 					1
+#define CONFIG_I2C2_FREQ 					1
+#define CONFIG_I2C3_FREQ 					1
+#define CONFIG_I2C4_FREQ 					1
+#define CONFIG_I2C_WAITACT_TIME				250
 /*****************************************************************************/
 #define CONFIG_EPROM_SIZE 					CONFIG_AT24C64_SIZE
 #define	CONFIG_AT24C02_SIZE 				256
@@ -47,6 +49,7 @@
 #define CONFIG_EPROM_ADDRESS				0x50
 #define CONFIG_EPROM_FRAM					0//铁电存储体无写入等待
 #define CONFIG_EPROM_FREQ					1//
+#define CONFIG_EPROM_PAGEWRITE				0//页写入
 /*****************************************************************************/
 #define CONFIG_USE_IPID						1//使能IPID温度控制
 /*****************************************************************************/
@@ -62,27 +65,33 @@
 #define CONFIG_USE_IPID_OUTSHOW				1//使能IPID输出显示
 /*****************************************************************************/
 //SPLC设置
-#define CONFIG_SPLC_IO_INPUT_NUM			16//硬件输入点数
-#define CONFIG_SPLC_IO_OUTPUT_NUM			16//硬件输出点数
+#define CONFIG_SPLC_ASSERT					1//检查地址范围
+#define CONFIG_SPLC_DEV						0x0A01//设备号
+#define CONFIG_SPLC_CLEAR_CODE				0xA58E
 #define CONFIG_SOFTPLC_HWTIME				1000L//1mS
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期 1mS * N
-#define CONFIG_IPID_RUN_CYCLE				40//IPID运行周期 默认 40 * 100mS
-#define CONFIG_IPID_PWM_CYCLE				20//IPID输出周期 默认 20 * 100mS
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_WDT				0//看门狗启用
+#define CONFIG_SPLC_USING_CLEAR_NVRAM		1//启用清除NVRAM功能
+/*****************************************************************************/
+#define CONFIG_SPLC_USING_WDT				1//看门狗启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_INPUT			1//输入IO刷新启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_OUTPUT			1//输出IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM				0//EPROM掉电存储启用
+#define CONFIG_SPLC_USING_EPROM				1//EPROM掉电存储启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ADC				0//使能ADC模块
-#define CONFIG_SPLC_ADC_FILTER_TAP			48//ADC位移滤波次数
-#define CONFIG_SPLC_ADC_CHANNLE				9//ADC通道数
+#define CONFIG_SPLC_USING_UART1				1//UART1串口启用
+#if CONFIG_SPLC_USING_UART1 == 1
+#define SPLC_UART1							1
+#endif
+/*****************************************************************************/
+#define CONFIG_SPLC_USING_CADC				1//使能ADC模块
+#define CONFIG_SPLC_ADC_FILTER_TAP			14//ADC位移滤波次数
+#define CONFIG_SPLC_ADC_CHANNLE				64//ADC通道数
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
-#define CONFIG_SPLC_ADC_INTERNAL_VREF     	2200L// ADC Voltage Reference (mV)
+#define CONFIG_SPLC_ADC_INTERNAL_VREF     	2400L// ADC Voltage Reference (mV)
 #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DAC				1//是能DAC模块
@@ -93,6 +102,12 @@
 #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE		256//发送接收缓冲区
 #define CONFIG_MB_RTU_SLAVE_TIMEOUT			100//接收通讯超时 10mS
 #define CONFIG_MB_RTU_SLAVE_IO_DELAY		1//RX TX切换延时
+/*****************************************************************************/
+/*****************************************************************************/
+#define DISABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 0;
+#define ENABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 1;
+#define DISABLE_INTERRUPT					EA = 0;
+#define ENABLE_INTERRUPT					EA = 1;
 /*****************************************************************************/
 
 /*****************************************************************************/
@@ -122,15 +137,7 @@
 #include "endian.h"
 #include "si_toolchain.h"
 #include "compiler_defs.h"
-#ifdef C8051F020
-#include "C8051F020_defs.h"
-#endif
-#ifdef C8051F340
-#include "C8051F340_defs.h"
-#endif
-#ifdef C8051F580
 #include "C8051F580_defs.h"
-#endif
 /*****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h> 
@@ -139,15 +146,7 @@
 #include <ctype.h>
 #include <LIMITS.H>
 #include <math.h>
-#include "crc32.h"
 /*****************************************************************************/
-#ifdef C8051F020
-#include "InitDeviceF020.h"
-#endif
-#ifdef C8051F580
-#include "InitDeviceF580.h"
-#endif
-
 #include "delay.h"
 #include "i2c0.h"
 #include "i2c1.h"
@@ -160,18 +159,20 @@
 #include "mcp47x6.h"
 #include "inPca9554.h"
 #include "outPca9554.h"
+#if CONFIG_SPLC_USING_UART1 == 1
+#include "sPlcUart.h"
+#endif
+#if CONFIG_SPLC_USING_CADC == 1
+#include "sPlcChipAdc.h"
+#endif
+#if CONFIG_SPLC_USING_DAC == 1
+#include "sPlcDac.h"
+#endif
 /*****************************************************************************/
 #include "Modbus.h"
 #include "ModbusPort.h"
 /*****************************************************************************/
-#include "sPlc.h"
-#include "sPlcLaser.h"
-//#include "pidFuzzy.h"
-/*****************************************************************************/
-//#include "AppMath.h"
-//#include "chipAdc.h"
-//#include "ad5621.h"
-//#include "chipBeem.h"
-
+#include "sPLC.h"
+#include "sPlcFun.h"
 /*****************************************************************************/
 #endif

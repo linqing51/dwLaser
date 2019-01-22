@@ -12,11 +12,28 @@
  
  
  
-#line 6 "MainApp\appConfig.h" /1
+ 
+#line 7 "MainApp\appConfig.h" /1
   
   
  
-#line 9 "MainApp\appConfig.h" /0
+#line 10 "MainApp\appConfig.h" /0
+ 
+#line 11 "MainApp\appConfig.h" /1
+  
+ 
+#line 13 "MainApp\appConfig.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
@@ -184,7 +201,7 @@
 #line 51 ".\Lib\stdint.h" /0
  
  
-#line 120 "MainApp\appConfig.h" /0
+#line 135 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\stdbool.h" /0
@@ -235,7 +252,7 @@
  
  
  
-#line 121 "MainApp\appConfig.h" /0
+#line 136 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\endian.h" /0
@@ -297,7 +314,7 @@
 #line 55 ".\Lib\endian.h" /0
  
  
-#line 122 "MainApp\appConfig.h" /0
+#line 137 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\si_toolchain.h" /0
@@ -1209,7 +1226,7 @@
  
  
  
-#line 123 "MainApp\appConfig.h" /0
+#line 138 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\compiler_defs.h" /0
@@ -2135,18 +2152,7 @@
  
  
  
-#line 124 "MainApp\appConfig.h" /0
- 
- 
-#line 126 "MainApp\appConfig.h" /1
-  
- 
-#line 128 "MainApp\appConfig.h" /0
- 
-#line 129 "MainApp\appConfig.h" /1
-  
- 
-#line 131 "MainApp\appConfig.h" /0
+#line 139 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Lib\C8051F580_defs.h" /0
@@ -2762,8 +2768,7 @@
  
  
  
-#line 132 "MainApp\appConfig.h" /0
- 
+#line 140 "MainApp\appConfig.h" /0
  
  
   
@@ -2813,7 +2818,7 @@
  
  
  
-#line 135 "MainApp\appConfig.h" /0
+#line 142 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2921,7 +2926,7 @@
  #pragma RESTORE
  
  
-#line 136 "MainApp\appConfig.h" /0
+#line 143 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2984,7 +2989,7 @@
  #pragma RESTORE
  
  
-#line 137 "MainApp\appConfig.h" /0
+#line 144 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -3032,7 +3037,7 @@
  
  
  
-#line 138 "MainApp\appConfig.h" /0
+#line 145 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -3070,7 +3075,7 @@
  #pragma RESTORE
  
  
-#line 139 "MainApp\appConfig.h" /0
+#line 146 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -3103,7 +3108,7 @@
  
  
  
-#line 140 "MainApp\appConfig.h" /0
+#line 147 "MainApp\appConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\math.h" /0
@@ -3177,1661 +3182,7 @@
  #pragma RESTORE
  
  
-#line 141 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Lib\crc32.h" /0
- 
- 
- 
- 
- 
- 
- 
-  
-#line 1 "MainApp\AppConfig.h" /0
- 
-#line 2 "MainApp\AppConfig.h" /1
-  
- 
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
- 
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 8 ".\Lib\crc32.h" /0
-#line 8 ".\Lib\crc32.h" /0
- 
- 
- uint32_t crc32Calculate(uint8_t *buf, uint32_t len); 
- uint32_t crc32CalculateAdd(uint8_t dat); 
- void crc32Clear(void); 
- void crc32SetCrcOld(uint32_t old);
- 
- 
- 
- 
- 
- 
- 
- 
-#line 142 "MainApp\appConfig.h" /0
- 
- 
- 
-#line 145 "MainApp\appConfig.h" /1
-  
- 
-#line 147 "MainApp\appConfig.h" /0
- 
-  
-#line 1 "MainApp\InitDeviceF580.h" /0
- 
- 
- 
-  
-#line 1 ".\Lib\compiler_defs.h" /0
- 
- 
- 
- 
- 
- 
- 
- 
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 123 ".\Lib\compiler_defs.h" /1
-  
- 
-  
-  
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
- 
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
- 
- 
- 
- 
-  
-  
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
-  
- 
-  
- 
-  
-  
-  
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
- 
- 
- 
- 
-  
-  
-  
- 
-  
- 
- 
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
-#line 804 ".\Lib\compiler_defs.h" /0
- 
- 
- 
- 
-#line 4 "MainApp\InitDeviceF580.h" /0
- 
-  
-#line 1 ".\Lib\C8051F580_defs.h" /0
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 41 ".\Lib\C8051F580_defs.h" /1
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
-  
-  
-  
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 607 ".\Lib\C8051F580_defs.h" /0
- 
- 
- 
- 
-#line 5 "MainApp\InitDeviceF580.h" /0
- 
- 
- void initDeviceF580(void);
- 
 #line 148 "MainApp\appConfig.h" /0
- 
  
  
   
@@ -4845,57 +3196,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -4910,17 +3219,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -4937,6 +3254,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -4966,16 +3332,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -4983,14 +3341,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -5006,17 +3356,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Lib\delay.h" /0
@@ -5030,7 +3382,7 @@
  
  
  
-#line 151 "MainApp\appConfig.h" /0
+#line 150 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c0.h" /0
@@ -5043,57 +3395,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -5108,17 +3418,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -5135,6 +3453,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -5164,16 +3531,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -5181,14 +3540,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -5204,17 +3555,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Driver\i2c0.h" /0
@@ -5235,7 +3588,7 @@
  
  
  
-#line 152 "MainApp\appConfig.h" /0
+#line 151 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c1.h" /0
@@ -5248,57 +3601,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -5313,17 +3624,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -5340,6 +3659,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -5369,16 +3737,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -5386,14 +3746,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -5409,17 +3761,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Driver\i2c1.h" /0
@@ -5440,7 +3794,7 @@
  
  
  
-#line 153 "MainApp\appConfig.h" /0
+#line 152 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c2.h" /0
@@ -5453,57 +3807,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -5518,17 +3830,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -5545,6 +3865,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -5574,16 +3943,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -5591,14 +3952,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -5614,17 +3967,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Driver\i2c2.h" /0
@@ -5645,7 +4000,7 @@
  
  
  
-#line 154 "MainApp\appConfig.h" /0
+#line 153 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c3.h" /0
@@ -5658,57 +4013,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -5723,17 +4036,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -5750,6 +4071,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -5779,16 +4149,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -5796,14 +4158,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -5819,17 +4173,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Driver\i2c3.h" /0
@@ -5850,7 +4206,7 @@
  
  
  
-#line 155 "MainApp\appConfig.h" /0
+#line 154 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c4.h" /0
@@ -5863,57 +4219,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -5928,17 +4242,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -5955,6 +4277,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -5984,16 +4355,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -6001,14 +4364,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -6024,17 +4379,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Driver\i2c4.h" /0
@@ -6055,7 +4412,7 @@
  
  
  
-#line 156 "MainApp\appConfig.h" /0
+#line 155 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c5.h" /0
@@ -6068,57 +4425,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -6133,17 +4448,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -6160,6 +4483,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -6189,16 +4561,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -6206,14 +4570,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -6229,17 +4585,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Driver\i2c5.h" /0
@@ -6260,7 +4618,7 @@
  
  
  
-#line 157 "MainApp\appConfig.h" /0
+#line 156 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\i2c6.h" /0
@@ -6273,57 +4631,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -6338,17 +4654,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -6365,6 +4689,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -6394,16 +4767,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -6411,14 +4776,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -6434,17 +4791,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Driver\i2c6.h" /0
@@ -6465,7 +4824,7 @@
  
  
  
-#line 158 "MainApp\appConfig.h" /0
+#line 157 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\eprom.h" /0
@@ -6478,57 +4837,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -6543,17 +4860,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -6570,6 +4895,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -6599,16 +4973,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -6616,14 +4982,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -6639,17 +4997,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Driver\eprom.h" /0
@@ -6664,9 +5024,9 @@
  uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len);
  void epromRead(uint16_t ReadAddr,uint8_t *pBuffer,uint16_t NumToRead);
  void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
- void epromTest(void);
+ uint8_t epromTest(void);
  
-#line 159 "MainApp\appConfig.h" /0
+#line 158 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\mcp47x6.h" /0
@@ -6679,57 +5039,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -6744,17 +5062,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -6771,6 +5097,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -6800,16 +5175,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -6817,14 +5184,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -6840,17 +5199,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Driver\mcp47x6.h" /0
@@ -6872,7 +5233,7 @@
  
  
  
-#line 160 "MainApp\appConfig.h" /0
+#line 159 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\inPca9554.h" /0
@@ -6885,57 +5246,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -6950,17 +5269,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -6977,6 +5304,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -7006,16 +5382,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -7023,14 +5391,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -7046,17 +5406,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Driver\inPca9554.h" /0
@@ -7068,7 +5430,7 @@
  void inPca9554Write(uint8_t wdata);
  
  
-#line 161 "MainApp\appConfig.h" /0
+#line 160 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Driver\outPca9554.h" /0
@@ -7081,57 +5443,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -7146,17 +5466,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -7173,6 +5501,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -7202,16 +5579,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -7219,14 +5588,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -7242,17 +5603,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Driver\outPca9554.h" /0
@@ -7264,7 +5627,607 @@
  void outPca9554Write(uint8_t wdata);
  
  
-#line 162 "MainApp\appConfig.h" /0
+#line 161 "MainApp\appConfig.h" /0
+ 
+ 
+  
+#line 1 "MainApp\sPlcUart.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+#line 4 "MainApp\sPlcUart.h" /0
+#line 4 "MainApp\sPlcUart.h" /0
+ 
+ 
+ void initUart1(uint32_t baudrate);
+ void USEND(uint16_t port, uint16_t sendBufAdr, uint16_t length); 
+ void URECV(uint16_t port, uint16_t recvBufAdr, uint16_t length); 
+ 
+#line 163 "MainApp\appConfig.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\sPlcChipAdc.h" /0
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+#line 3 "MainApp\sPlcChipAdc.h" /0
+#line 3 "MainApp\sPlcChipAdc.h" /0
+ 
+ 
+ typedef struct{ 
+ uint16_t dat[14];
+ uint16_t out;
+ uint8_t wIndex; 
+ }adcTempDat_t;
+ 
+ void initChipAdc(void);
+ void chipAdcProcess(void);
+ void refreshAdcData(adcTempDat_t *s , uint16_t dat);
+ 
+#line 166 "MainApp\appConfig.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\sPlcDac.h" /0
+ 
+ 
+ 
+  
+#line 1 "MainApp\appConfig.h" /0
+ 
+#line 2 "MainApp\appConfig.h" /1
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+#line 4 "MainApp\sPlcDac.h" /0
+#line 4 "MainApp\sPlcDac.h" /0
+ 
+ 
+ void initChipDac(void);
+ void refreshDac(void);
+ void selfTestDac(void);
+ 
+ 
+#line 169 "MainApp\appConfig.h" /0
+ 
  
  
   
@@ -7278,57 +6241,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -7343,17 +6264,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -7370,6 +6299,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -7399,16 +6377,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -7416,14 +6386,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -7439,17 +6401,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Modbus\Modbus.h" /0
@@ -7463,7 +6427,7 @@
  extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
  extern void modbusPorcess(void);
  
-#line 164 "MainApp\appConfig.h" /0
+#line 172 "MainApp\appConfig.h" /0
  
   
 #line 1 ".\Modbus\ModbusPort.h" /0
@@ -7476,57 +6440,15 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
- 
-  
-  
- 
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
   
   
  
   
   
-  
-  
  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
  
   
  
-  
-  
   
   
   
@@ -7541,17 +6463,25 @@
   
   
   
+ 
+  
+  
   
   
  
   
- 
+  
+  
+  
+  
   
  
   
- 
   
- 
+  
+  
+  
+  
   
   
   
@@ -7568,6 +6498,55 @@
   
   
   
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
  
  
  
@@ -7597,16 +6576,8 @@
   
   
   
- 
   
  
- 
-  
- 
- 
-  
- 
- 
   
   
   
@@ -7614,14 +6585,6 @@
   
   
   
-  
- 
- 
-  
- 
- 
-  
- 
  
   
   
@@ -7637,17 +6600,19 @@
   
  
   
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
   
  
   
   
- 
- 
- 
- 
- 
- 
- 
  
  
 #line 4 ".\Modbus\ModbusPort.h" /0
@@ -7661,21 +6626,17 @@
  extern void receiveInterrupt(uint8_t Data);
  
  
-#line 165 "MainApp\appConfig.h" /0
+#line 173 "MainApp\appConfig.h" /0
  
  
   
-#line 1 "MainApp\sPlc.h" /0
+#line 1 "MainApp\sPLC.h" /0
  
-#line 2 "MainApp\sPlc.h" /1
+#line 2 "MainApp\sPLC.h" /1
   
  
   
  
- 
- 
-  
-  
  
   
   
@@ -7688,17 +6649,17 @@
  
   
   
-  
-  
+ 
+ 
   
   
  
   
   
+ 
   
   
-  
-  
+ 
  
   
   
@@ -7716,6 +6677,40 @@
   
  
   
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
  
   
   
@@ -7732,60 +6727,71 @@
   
   
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 167 "MainApp\appConfig.h" /0
-#line 167 "MainApp\appConfig.h" /0
+  
+  
  
   
-#line 1 "MainApp\sPlcLaser.h" /0
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 175 "MainApp\appConfig.h" /0
+#line 175 "MainApp\appConfig.h" /0
+ 
+  
+#line 1 "MainApp\sPlcFun.h" /0
  
  
  
@@ -7795,7 +6801,8 @@
 #line 2 "MainApp\appConfig.h" /1
   
  
- 
+  
+  
  
   
   
@@ -7823,6 +6830,7 @@
   
   
  
+  
   
   
   
@@ -7841,6 +6849,7 @@
   
   
   
+  
  
   
  
@@ -7856,7 +6865,6 @@
   
  
  
-  
   
   
   
@@ -7871,26 +6879,23 @@
  
   
  
-  
-  
-  
   
-  
-  
+ 
   
  
   
  
+ 
   
   
   
   
   
   
- 
- 
+  
  
   
+ 
   
   
   
@@ -7898,25 +6903,24 @@
   
   
  
+ 
   
   
   
- 
- 
   
+ 
  
  
   
   
   
   
- 
   
   
   
+ 
   
   
- 
   
  
  
@@ -7924,178 +6928,84 @@
  
  
   
- 
- 
   
   
   
+ 
   
   
   
   
   
- 
- 
   
  
- 
   
- 
- 
   
   
   
   
   
   
+ 
   
   
   
   
   
   
- 
   
   
- 
   
   
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 4 "MainApp\sPlcLaser.h" /0
-#line 4 "MainApp\sPlcLaser.h" /0
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+  
+  
  
+  
  
  
+  
  
  
+  
  
  
+  
+  
  
+  
+  
  
- void sPlcLaser(void); 
  
-#line 168 "MainApp\appConfig.h" /0
+#line 4 "MainApp\sPlcFun.h" /0
+#line 4 "MainApp\sPlcFun.h" /0
  
  
+ void REBOOT(void) reentrant; 
  
+ void SET(uint16_t A) reentrant; 
+ void RES(uint16_t A) reentrant; 
+ void FLIP(uint16_t A) reentrant; 
+ uint8_t LD(uint16_t A) reentrant; 
+ uint8_t LDB(uint16_t A) reentrant; 
+ uint8_t LDP(uint16_t A) reentrant; 
+ uint8_t LDN(uint16_t A) reentrant; 
  
+ void T100US(uint8_t A, uint8_t start, uint16_t value) reentrant; 
+ void T1MS(uint8_t A, uint8_t start, uint16_t value) reentrant; 
+ void T10MS(uint8_t A, uint8_t start, uint16_t value) reentrant; 
+ void T100MS(uint8_t A, uint8_t start, uint16_t value) reentrant; 
  
+ void ADD(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void ADDS(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void DADD(int32_t *Sa, int32_t *Sb, int32_t *D) reentrant; 
+ void SUB(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void SUBS(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void DSUB(int32_t *Sa, int32_t *Sb, int32_t *D) reentrant; 
+ void MULT(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant; 
+ void MULTS(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant; 
  
  
+#line 176 "MainApp\appConfig.h" /0
  
  
  
@@ -8164,18 +7074,74 @@
  
  
  
- extern uint16_t ModbusSlaveAsciiOverTimeCounter; 
- extern xdata int16_t NVRAM0[(773 + 1)]; 
- extern xdata int16_t NVRAM1[(773 + 1)]; 
  
- void wdtDisable(void); 
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ extern xdata int16_t volatile NVRAM0[(241 + 1)]; 
+ extern xdata int16_t volatile NVRAM1[(241 + 1)]; 
+ 
+ uint8_t getGlobalInterrupt(void);
+ void setLedRun(uint8_t st);
+ uint8_t getLedRun(void);
+ void setLedEprom(uint8_t st);
+ uint8_t getLedEprom(void);
+ void setLedDac(uint8_t st);
+ uint8_t getLedDac(void);
+ void setLedError(uint8_t st);
+ uint8_t getLedError(void);
  void sPlcInit(void); 
  void sPlcProcessStart(void); 
  void sPlcProcessEnd(void); 
+ void wdtFeed(void) reentrant;
+ void wdtEnable(void) reentrant;
+ void wdtDisable(void) reentrant;
  
- void assertCoilAddress(uint16_t adr);
- void assertRegisterAddress(uint16_t adr);
+ void assertCoilAddress(uint16_t adr) reentrant;
+ void assertRegisterAddress(uint16_t adr) reentrant;
  
  void nvramUpdata(void);
  void clearDM(void);
@@ -8188,21 +7154,6 @@
  void nvramSave(void);
  void nvramUpdata(void);
  
- int16_t ADD(int16_t A, int16_t B); 
- void SET(uint16_t A); 
- void RES(uint16_t A); 
- void FLIP(uint16_t A); 
- uint8_t LD(uint16_t A); 
- uint8_t LDP(uint16_t A); 
- uint8_t LDF(uint16_t A); 
- uint8_t LDB(uint16_t A); 
- 
- void T1MS(uint8_t A, uint8_t start, uint16_t value); 
- void T10MS(uint8_t A, uint8_t start, uint16_t value); 
- void T100MS(uint8_t A, uint8_t start, uint16_t value); 
- void UPDAC(uint16_t dat); 
- void REBOOT(void); 
- 
  void chipDacInit(void);
  void chipAdcInit(void);
  void sPlcInit(void);
@@ -8214,211 +7165,172 @@
 #line 1 "MainApp\sPlc.c" /0
  
  
+ xdata int16_t volatile NVRAM0[(241 + 1)]; 
+ xdata int16_t volatile NVRAM1[(241 + 1)]; 
+ static idata volatile uint8_t TimerCounter_1mS = 0;
+ static idata volatile uint8_t TimerCounter_10mS = 0;
+ static idata volatile uint8_t TimerCounter_100mS = 0;
+ static idata volatile uint8_t Timer0_L, Timer0_H;
  
- xdata int16_t NVRAM0[(773 + 1)]; 
- xdata int16_t NVRAM1[(773 + 1)]; 
- static idata uint8_t TimerCounter_1mS = 0;
- static idata uint8_t TimerCounter_10mS = 0;
- static idata uint8_t Timer0_L, Timer0_H;
+ static idata volatile int8_t inputFilter[(212 - 212 + 1) * 16]; 
  
- typedef struct{ 
- uint16_t dat[48];
- uint16_t out;
- uint8_t wIndex; 
- }adcTempDat_t;
- 
- static xdata int8_t inputFilter[16]; 
- static xdata adcTempDat_t adcTempDat[9];
- static idata uint8_t adcSelect; 
- static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
- void adcProcess(void);
- static void initAdcData(adcTempDat_t *s);
- static void chipDacInit(void);
- static void chipAdcInit(void);
- 
- 
- static void adcProcess(void){ 
- uint16_t result = 0;
- 
-#line 29 "MainApp\sPlc.c" /1
- 
- 
-#line 31 "MainApp\sPlc.c" /0
- result = (uint16_t)(ADC0H << 8) + (uint16_t)(ADC0L);
- refreshAdcData(&adcTempDat[adcSelect], result);
- NVRAM0[(694 + 0) + adcSelect] = adcTempDat[adcSelect].out;
- if(adcSelect < (9 - 1)){
- adcSelect ++;
+ uint8_t getGlobalInterrupt(void){
+ return EA;
+ }
+ void setLedRun(uint8_t idata st){ 
+ if(st){
+ P7 |= (uint8_t)(1 << 0);
  }
  else{
- adcSelect = 0;
+ P7 &= ~(uint8_t)(1 << 0);
  }
- switch(adcSelect){
- case 0:{
+ }
+ uint8_t getLedRun(void){ 
+ return (uint8_t)((P7 >> 0) & 0x01);
+ }
+ void setLedEprom(uint8_t idata st){ 
+ if(st){
+ P7 |= (uint8_t)(1 << 1);
+ }
+ else{
+ P7 &= ~(uint8_t)(1 << 1);
+ }
+ }
+ uint8_t getLedEprom(void){ 
+ return (uint8_t)((P7 >> 1) & 0x01);
+ }
+ void setLedDac(uint8_t idata st){ 
+ if(st){
+ P7 |= (uint8_t)(1 << 2);
+ }
+ else{
+ P7 &= ~(uint8_t)(1 << 2);
+ }
+ }
+ uint8_t getLedDac(void){ 
+ return (uint8_t)((P7 >> 2) & 0x01);
+ }
+ void setLedError(uint8_t idata st){ 
+ if(st){
+ P7 |= (uint8_t)(1 << 3);
+ }
+ else{
+ P7 &= ~(uint8_t)(1 << 3);
+ }
+ }
+ uint8_t getLedError(void){ 
+ return (uint8_t)((P7 >> 3) & 0x01);
+ }
+ void assertCoilAddress(uint16_t adr) reentrant{ 
  
- break;
- }
- case 1:{
- 
- break;
- }
- case 2:{
- 
- break;
- }
- case 3:{
- 
- break;
- }
- case 4:{
- 
- break;
- }
- default:{
- break;
- }
- }
- AD0INT = 0;
- AD0BUSY = 1; 
- }
- static void initAdcData(adcTempDat_t *s){ 
- uint8_t i;
- for(i = 0;i < 48; i++){
- s->dat[i] = 0x0;
- }
- s->out = 0;
- s->wIndex = 0;
- }
- static void refreshAdcData(adcTempDat_t *s , uint16_t dat){ 
- uint8_t i;
- uint16_t temp;
- uint32_t sum;
- s->dat[s->wIndex] = dat;
- s->wIndex ++;
- if(s->wIndex >= 48){
- s->wIndex = 0;
- }
- sum = 0;
- for(i = 0;i < 48;i ++){
- sum += s->dat[i];
- }
- temp = (uint16_t)(sum / (uint32_t)48);
- s->out = temp;
- }
- void assertCoilAddress(uint16_t adr){ 
- if(adr > (757 * 16))
+ if(adr > (241 * 16))
  while(1);
+ 
  }
- void assertRegisterAddress(uint16_t adr){ 
- if(adr >= 757)
+ void assertRegisterAddress(uint16_t adr) reentrant{ 
+ 
+ if(adr >= 241)
  while(1);
+ 
  }
- void clearDM(void){ 
+ static void clearDM(void){ 
  uint16_t i;
- for(i = 0;i <= 287;i ++)
- {
+ for(i = 0;i <= 19;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- void clearMR(void){ 
+ static void clearMR(void){ 
  uint16_t i;
- for(i = 0;i <= 15;i ++)
- {
+ for(i = 0;i <= 3;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- void clearEM(void){ 
+ static void clearEM(void){ 
  uint16_t i;
- for(i = 288;i <= 543;i ++)
- {
+ for(i = 20;i <= 159;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- void clearR(void){ 
+ static void clearR(void){ 
  uint16_t i;
- for(i = 16;i <= 31;i ++)
- {
+ for(i = 4;i <= 11;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- void clearT(void){ 
+ static void clearT(void){ 
  uint16_t i;
- for(i = 544;i <= 545;i ++)
- {
+ for(i = 160;i <= 160;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
- for(i = 546;i <= 547;i ++)
- {
+ for(i = 161;i <= 161;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
- for(i = 548;i <= 549;i ++)
- {
+ for(i = 162;i <= 162;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- void clearTD(void){ 
+ static void clearTD(void){ 
  uint16_t i;
- for(i = 550;i <= 581;i ++)
- {
+ for(i = 163;i <= 178;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
- for(i = 582;i <= 613;i ++)
- {
+ for(i = 179;i <= 194;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
- for(i = 614;i <= 645;i ++)
- {
+ for(i = 195;i <= 210;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- void clearC(void){ 
+ static void clearC(void){ 
  uint16_t i;
- for(i = 646;i <= 661;i ++){
+ for(i = 211;i <= 211;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- void clearX(void){ 
+ static void clearX(void){ 
  uint16_t i;
- for(i = 662;i <= 677;i ++){
+ for(i = 212;i <= 212;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- void clearY(void){ 
+ static void clearY(void){ 
  uint16_t i;
- for(i = 678;i <= 693;i ++){
+ for(i = 213;i <= 213;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- void clearSPREG(void){
+ static void clearSPREG(void){ 
  uint16_t i;
- for(i = 694;i <= 757;i ++){
+ for(i = 214;i <= 237;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- void clearSPCOIL(){
+ static void clearSPCOIL(){ 
  uint16_t i;
- for(i = 758;i <= 773;i ++){
+ for(i = 238;i <= 241;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- static void nvramLoad(void){ 
- memset(NVRAM0, 0x0, ((773 + 1) * 2)); 
- epromRead(0, (uint8_t*)NVRAM0, ((773 + 1) * 2)); 
+ static void loadNvram(void){ 
+ memset(NVRAM0, 0x0, ((241 + 1) * 2)); 
+ setLedEprom(0);
+ epromRead(0, (uint8_t*)NVRAM0, ((241 + 1) * 2)); 
+ setLedEprom(1);
  clearEM();
  clearR();
  clearT();
@@ -8428,315 +7340,86 @@
  clearY();
  clearSPREG();
  clearSPCOIL();
- memcpy(NVRAM1, NVRAM0, (773 + 1));
+ memcpy(NVRAM1, NVRAM0, ((241 + 1) * 2));
  }
- static void nvramSave(void){ 
-  EA = 0; 
- epromWrite(0x0, (uint8_t*)NVRAM0, ((15 + 1) * 2));
-  EA = 1;
+ static void saveNvram(void){ 
+  EA = 0;;
+ setLedEprom(0);
+ epromWrite(0x0, (uint8_t*)NVRAM0, ((3 + 1) * 2));
+ setLedEprom(1);
+  EA = 1;;
  }
- static void nvramUpdata(void){ 
- uint8_t *sp0, *sp1;
- uint16_t i;
- sp0 = (uint8_t*)(NVRAM0 + (0 * 2));
- sp1 = (uint8_t*)(NVRAM1 + (0 * 2));
- for(i = 0;i < ((15 + 1) * 2);i ++){ 
+ static void updataNvram(void){ 
+ data uint8_t *sp0, *sp1;
+ data uint16_t i;
+ sp0 = (uint8_t*)NVRAM0;
+ sp1 = (uint8_t*)NVRAM1;
+ for(i = (0 * 2);i < ((3 + 1) * 2);i ++){ 
  if(*(sp0 + i) != *(sp1 + i)){
+ setLedEprom(0);
  epromWriteOneByte(i, *(sp0 + i));
+ setLedEprom(1);
+ }	
  }
- }
- sp0 = (uint8_t*)(NVRAM0 + (32 * 2));
- sp1 = (uint8_t*)(NVRAM1 + (32 * 2));
- for(i = 32;i < ((287 + 1) * 2);i ++){ 
+ sp0 = (uint8_t*)NVRAM0;
+ sp1 = (uint8_t*)NVRAM1;
+ for(i = (12 * 2);i < ((19 + 1) * 2);i ++){ 
  if(*(sp0 + i) != *(sp1 + i)){
+ setLedEprom(0);
  epromWriteOneByte(i, *(sp0 + i));
+ setLedEprom(1);
  }
  }
- memcpy(NVRAM1, NVRAM0, ((773 + 1) * 2));
+ memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, ((241 + 1) * 2));
  }
- 
- int16_t ADD(int16_t A, int16_t B){ 
- int32_t tmp;
- tmp = (int32_t)(A) + (int32_t)(B);
- if(tmp >= 32767)
- tmp = 32767;
- if(tmp <= (-32767-1))
- tmp = (-32767-1);
- return (int16_t)tmp;
- }
- void SET(uint16_t A){ 
- assertCoilAddress(A); 
- NVRAM0[(A / 16)] |= 1 << (A % 16);
- }
- void RES(uint16_t A){ 
- assertCoilAddress(A); 
- NVRAM0[(A / 16)] &= ~(1 << (A % 16));
- }
- void FLIP(uint16_t A){ 
- uint16_t temp;
- assertCoilAddress(A); 
- temp= NVRAM0[(A / 16)] & (1 << (A % 16));
- if(temp)
- RES(A);
- else
- SET(A);
- }
- uint8_t LD(uint16_t A){ 
- assertCoilAddress(A); 
- return (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
- }
- uint8_t LDB(uint16_t A){ 
- assertCoilAddress(A); 
- if((uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)])){
- return false;
+ static void clearNvram(void){ 
+ idata uint8_t oldEA;
+ idata uint16_t i;
+ oldEA = EA; 
+ EA = 0;
+ wdtDisable();
+ for(i = 0; i<= 8192;i ++){
+ if(getLedEprom()){
+ setLedEprom(1);
  }
  else{
- return true;
+ setLedEprom(0);
  }
+ epromWriteOneByte(i, 0x0);
  
  }
- uint8_t LDP(uint16_t A){ 
- pdata uint8_t temp0, temp1;
- assertCoilAddress(A); 
- temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
- temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
- if(temp0 && !temp1)
- return true;
- else
- return false;
+ EA = oldEA; 
  }
- uint8_t LDF(uint16_t A){ 
- uint8_t temp0, temp1;
- assertCoilAddress(A);
- temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
- temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
- if(!temp0 && temp1)
- return 1;
- else
- return 0;
- }
- void T1MS(uint8_t A, uint8_t start, uint16_t value){ 
- 
-#line 304 "MainApp\sPlc.c" /1
  
  
  
-#line 307 "MainApp\sPlc.c" /0
- if(start){
- if(NVRAM0[(550 + A)] >= value){
- NVRAM0[(544 + (A / 16))] |= 1 << (A % 16);
- }
- else{
- NVRAM0[(544 + (A / 16))] &= ~(1 << (A % 16));
- }
- 
- }
- else{
- NVRAM0[(544 + (A / 16))] &= ~(1 << (A % 16));
- NVRAM0[(550 + A)] = 0x0;
- }	
- }
- void T10MS(uint8_t A, uint8_t start, uint16_t value){ 
- 
-#line 323 "MainApp\sPlc.c" /1
- 
- 
- 
-#line 326 "MainApp\sPlc.c" /0
- if(start){
- if(NVRAM0[(582 + A)] >= value){
- NVRAM0[(546 + (A / 16))] |= 1 << (A % 16);
- }
- else{
- NVRAM0[(546 + (A / 16))] &= ~(1 << (A % 16));
- }
- }
- else{
- NVRAM0[(546 + (A / 16))] &= ~(1 << (A % 16));
- NVRAM0[(582 + A)] = 0x0;
- }	
- }
- void T100MS(uint8_t A, uint8_t start, uint16_t value){ 
- 
-#line 341 "MainApp\sPlc.c" /1
- 
- 
- 
-#line 344 "MainApp\sPlc.c" /0
- if(start){
- if(NVRAM0[(614 + A)] >= value){
- NVRAM0[(548 + (A / 16))] |= 1 << (A % 16);
- }
- else{
- NVRAM0[(548 + (A / 16))] &= ~(1 << (A % 16));
- }	
- }
- else{
- NVRAM0[(548 + (A / 16))] &= ~(1 << (A % 16));
- NVRAM0[(614 + A)] = 0x0;
- }
- }
- 
- int16_t TNTC(uint16_t A){ 
- idata uint16_t temp, dat;
- idata fp32_t ftemp;
- dat = NVRAM0[A];
- if(dat >= 2200L) dat = 2200L; 
- if(dat < 0) dat = 0;
- temp = (int16_t)(2200L * dat / 4096); 
- temp = 10000 * 5000 / (5000 - temp); 
- ftemp = ((1.0 / 3477)*log((fp32_t)(temp) / 10000)) + (1 / (25+273.0)); 
- ftemp = ( 1.0 / ftemp ) - 273.0;
- if(ftemp >= 100) ftemp = 100;
- if(ftemp <= -100) ftemp = -100;
- return (int16_t)(ftemp * 10);
- }
- int16_t TENV(uint16_t A){ 
- uint16_t temp;
- temp = (int16_t)(2200L * NVRAM0[A] / 4096); 
- temp = (int16_t)((temp - 856L) * 1000 / 3330L);
- return temp;
- }
- int16_t YTAB(uint16_t X, uint16_t tab, uint16_t len){ 
- 
- idata uint16_t x1, x2, y1, y2, i;
- idata fp32_t k, b, y;
- for(i = 0;i < (len - 1);i ++){
- if(NVRAM0[X] == NVRAM0[tab + i]){
- return NVRAM0[(tab + i + len)];
- }
- else if(NVRAM0[X] > NVRAM0[(tab + i + 1)]){
- x1 = NVRAM0[(tab + i)];
- y1 = NVRAM0[(tab + len + i)];
- x2 = NVRAM0[(tab + i + 1)];
- y2 = NVRAM0[(tab + len + i + 1)];
- k = (y2 - y1) / (x2 - x1);
- b = y1 - (k * x1);
- y = k * NVRAM0[X] + b;
- return (int16_t)y;
- }
- }
- return NVRAM0[(tab + len + len)];
- }
- int16_t XTAB(uint16_t Y, uint16_t tab, uint16_t len){ 
- 
- idata uint16_t x1, x2, y1, y2, i;
- idata fp32_t k, b, x;
- for(i = 0;i < (len - 1);i ++){
- if(NVRAM0[Y] = NVRAM0[tab + i + len]){
- return NVRAM0[(tab + i)];
- }
- else if(NVRAM0[Y] > NVRAM0[(tab + i + 1 + len)]){
- x1 = NVRAM0[(tab + i)];
- y1 = NVRAM0[(tab + len + i)];
- x2 = NVRAM0[(tab + i + 1)];
- y2 = NVRAM0[(tab + len + i + 1)];
- k = (y2 - y1) / (x2 - x1);
- b = y1 - (k * x1);
- x = (NVRAM0[Y] - b) / k;
- return (int16_t)x;
- }
- }
- return NVRAM0[(tab + len)];
- }
- void UPDAC(uint16_t dat){ 
- switch(dat){
- case 0:{
- mcp47x6Write(0, NVRAM0[694 + (694 + 4)]);
- break;
- }
- case 1:{
- mcp47x6Write(1, NVRAM0[694 + (694 + 5)]);
- break;
- }
- case 2:{
- mcp47x6Write(2, NVRAM0[694 + (694 + 6)]);
- break;
- }
- case 3:{
- mcp47x6Write(3, NVRAM0[694 + (694 + 7)]);
- break;
- }
- default:break;
- }
- }
- void REBOOT(void){ 
- 
- uint8_t SFRPAGE_save;
- 
- 
-#line 446 "MainApp\sPlc.c" /1
- 
- 
-#line 448 "MainApp\sPlc.c" /0
- 
- SFRPAGE_save = SFRPAGE;
- SFRPAGE = 0x00;
- RSTSRC |= (1 << 1); 
- SFRPAGE = SFRPAGE_save;
- 
- 
- }
  static void wdtInit(void){ 
- 
-#line 458 "MainApp\sPlc.c" /1
- 
- 
-#line 460 "MainApp\sPlc.c" /0
+ WDTCN = 0x07; 
  }
- static void wdtEnable(void){ 
- 
-#line 463 "MainApp\sPlc.c" /1
- 
- 
-#line 465 "MainApp\sPlc.c" /0
- 
- 
+ void wdtEnable(void) reentrant{ 
+ WDTCN = 0xA5;
  }
- void wdtDisable(void){ 
+ void wdtDisable(void) reentrant{ 
  uint8_t flagEA;
  flagEA = EA;
  EA = 0;
- 
-#line 473 "MainApp\sPlc.c" /1
- 
- 
- 
-#line 476 "MainApp\sPlc.c" /0
- 
-#line 477 "MainApp\sPlc.c" /1
- 
-#line 478 "MainApp\sPlc.c" /0
+ WDTCN = 0xDE;
+ WDTCN = 0xAD;
  EA = flagEA;
- 
  }
- static void wdtFeed(void){ 
- 
-#line 483 "MainApp\sPlc.c" /1
- 
- 
-#line 485 "MainApp\sPlc.c" /0
+ void wdtFeed(void) reentrant{ 
+ WDTCN = 0xA5;
  }
- 
  static void pcaInit(void){ 
- 
-#line 489 "MainApp\sPlc.c" /1
- 
- 
-#line 491 "MainApp\sPlc.c" /0
- 
- 
- 
- 
  }
- 
  static void timer0Init(void){ 
- uint16_t tmp;
+ idata uint16_t temp;
  TimerCounter_1mS = 0;
  TimerCounter_10mS = 0;
- tmp = (uint16_t)(65536 - ((48000000L) / 12 /1000L));
- Timer0_L = tmp & 0xFF;
- Timer0_H = (tmp >> 8) & 0xFF;
+ TimerCounter_100mS = 0;
+ temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 /1000L));
+ Timer0_L = temp & 0xFF;
+ Timer0_H = (temp >> 8) & 0xFF;
  TH0 = Timer0_H; 
  TL0 = Timer0_L; 
  CKCON &= ~(1 << 3); 
@@ -8746,32 +7429,32 @@
  TR0 = 1; 
  }
  static void timer0Isr(void) interrupt 1{ 
- uint16_t i;
+ idata uint16_t i;
+ idata uint32_t tmp;
  TF0 = 0;
  TR0 = 0;
  TH0 = Timer0_H;
  TL0 = Timer0_L;
  TR0 = 1;
- if((NVRAM0[(758 + ((758 + 2) / 16))] >> ((758 + 2) % 16)) & 0x01){ 
- NVRAM0[(758 + ((758 + 2) / 16))] &= ~(uint16_t)(1 << ((758 + 2) % 16));
+ if(LD((238 * 16 + 2))){ 
+ RES((238 * 16 + 2));
  }
  else{ 
- NVRAM0[(758 + ((758 + 2) / 16))] |= (uint16_t)(1 << ((758 + 2) % 16));
+ SET((238 * 16 + 2));
  }
- 
- for(i = 550;i <= 581;i ++){ 
+ for(i = 163;i <= 178;i ++){ 
  if(NVRAM0[i] < 32767){
  NVRAM0[i] ++;
  }
  }
  if(TimerCounter_1mS >= 10){ 
- if((NVRAM0[(758 + ((758 + 3) / 16))] >> ((758 + 3) % 16)) & 0x01){ 
- NVRAM0[(758 + ((758 + 3) / 16))] &= ~(uint16_t)(1 << ((758 + 3) % 16));
+ if(LD((238 * 16 + 3))){ 
+ RES((238 * 16 + 3));
  }
  else{ 
- NVRAM0[(758 + ((758 + 3) / 16))] |= (uint16_t)(1 << ((758 + 3) % 16));
+ SET((238 * 16 + 3));
  }
- for(i = 582;i <= 613;i ++){
+ for(i = 179;i <= 194;i ++){
  if(NVRAM0[i] < 32767){
  NVRAM0[i] ++;
  }
@@ -8780,178 +7463,163 @@
  TimerCounter_1mS = 0;
  }
  if(TimerCounter_10mS >= 10){ 
- if((NVRAM0[(758 + ((758 + 4) / 16))] >> ((758 + 4) % 16)) & 0x01){ 
- NVRAM0[(758 + ((758 + 4) / 16))] &= ~(uint16_t)(1 << ((758 + 4) % 16));
+ if(LD((238 * 16 + 4))){ 
+ RES((238 * 16 + 4));
  }
  else{ 
- NVRAM0[(758 + ((758 + 4) / 16))] |= (uint16_t)(1 << ((758 + 4) % 16));
+ SET((238 * 16 + 4));
  }
- for(i = 614;i < 645;i ++){
+ for(i = 195;i < 210;i ++){
  if(NVRAM0[i] < 32767){
  NVRAM0[i] ++;
  }
  }
+ TimerCounter_100mS ++;
  TimerCounter_10mS = 0;
+ setLedRun(LD((238 * 16 + 4)));
+ }
+ if(TimerCounter_100mS >= 10){ 
+ if(LD((238 * 16 + 5))){ 
+ RES((238 * 16 + 5));
+ }
+ else{
+ SET((238 * 16 + 5));
+ }
+ tmp = 0;
+ tmp = NVRAM0[(214 + 0)] + (uint32_t)(NVRAM0[(214 + 1)]) * 65536L;
+ tmp += 1;
+ NVRAM0[(214 + 1)] = (tmp >> 16) & 0xFFFF;
+ NVRAM0[(214 + 0)] = tmp & 0xFFFF;
+ TimerCounter_100mS = 0;
  }
  
-#line 561 "MainApp\sPlc.c" /1
+ chipAdcProcess(); 
  
- 
-#line 563 "MainApp\sPlc.c" /0
  TimerCounter_1mS ++;
  }
- 
- static void inputInit(void){
- memset(inputFilter, 0x0, 16);
- 
-#line 569 "MainApp\sPlc.c" /1
- 
-#line 570 "MainApp\sPlc.c" /0
- 
- 
+ static void inputInit(void){ 
+ memset(inputFilter, 0x0, (212 - 212 + 1) * 16);
  }
- static void outputInit(void){
+ static void outputInit(void){ 
  
-#line 575 "MainApp\sPlc.c" /1
- 
- 
-#line 577 "MainApp\sPlc.c" /0
+#line 340 "MainApp\sPlc.c" /1
  
  
- 
+#line 342 "MainApp\sPlc.c" /0
  }
  static void inputRefresh(void){ 
- uint8_t ctemp0,ctemp1, i;
- ctemp0 = 0;
- ctemp0 = 0;
- 
-#line 586 "MainApp\sPlc.c" /1
- 
- 
- 
- 
-#line 590 "MainApp\sPlc.c" /0
- 
- ctemp0 = inPca9554Read() ;
- 
- for(i = 0;i < 8;i ++){ 
- if((ctemp0 >> i) & 0x01){
- if(inputFilter[i] < 3){
- inputFilter[i] ++;
+ idata uint8_t ctemp0;
+ ctemp0 = ((P6 >> 7) & 0x01);
+ if(ctemp0){
+ if(inputFilter[0] < 3){
+ inputFilter[0] ++;
  }
  else{
- NVRAM0[662] |= (int16_t)(1 << i);
+ NVRAM0[212] |= (int16_t)(1 << 0);
  }
  }
  else{
- if(inputFilter[i] > (3 * -1)){
- inputFilter[i] --;
+ if(inputFilter[0] > (3 * -1)){
+ inputFilter[0] --;
  }
  else{
- NVRAM0[662] &= ~(uint16_t)(1 << i);
+ NVRAM0[212] &= ~(uint16_t)(1 << 0);
  }
  }
- }
- for(i = 8;i < 16;i ++){ 
- if((ctemp1 >> (i - 8)) & 0x01){
- if(inputFilter[i] < 3){
- inputFilter[i] ++;
- }
- else{
- NVRAM0[662] |= (int16_t)(1 << i);
- }
+ ctemp0 = ((P6 >> 6) & 0x01);
+ if(ctemp0){
+ if(inputFilter[1] < 3){
+ inputFilter[1] ++;
  }
  else{
- if(inputFilter[i] > (3 * -1)){
- inputFilter[i] --;
+ NVRAM0[212] |= (int16_t)(1 << 1);
+ }
  }
  else{
- NVRAM0[662] &= ~(uint16_t)(1 << i);
+ if(inputFilter[1] > (3 * -1)){
+ inputFilter[1] --;
  }
+ else{
+ NVRAM0[212] &= ~(uint16_t)(1 << 1);
  }
  }
  }
  static void outputRefresh(void){ 
- 
-#line 632 "MainApp\sPlc.c" /1
- 
- 
- 
- 
-#line 636 "MainApp\sPlc.c" /0
- 
- outPca9554Write(NVRAM0[678]);
- 
+ if((NVRAM0[213] >> 0) & 0x01){ 
+ P6 |= (uint8_t)(1 << 5);
  }
- static void chipAdcInit(void){ 
- uint8_t i;
- 
-#line 643 "MainApp\sPlc.c" /1
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 653 "MainApp\sPlc.c" /0
- adcSelect = 0;
- for(i = 0;i <= 9;i ++){
- initAdcData(&adcTempDat[i]);
+ else{
+ P6 &= ~(uint8_t)(1 << 5);
+ }
+ if((NVRAM0[213] >> 1) & 0x01){ 
+ P6 |= (uint8_t)(1 << 4);
+ }
+ else{
+ P6 &= ~(uint8_t)(1 << 4);
  }
  }
  void sPlcInit(void){ 
+ setLedError(1);
+ setLedRun(1);
+ setLedDac(1);
+ setLedEprom(1);
  wdtInit(); 
  wdtDisable(); 
  
- 
-#line 663 "MainApp\sPlc.c" /1
- 
- 
-#line 665 "MainApp\sPlc.c" /0
+ initUart1(115200); 
  
  
-#line 667 "MainApp\sPlc.c" /1
+ loadNvram(); 
  
  
-#line 669 "MainApp\sPlc.c" /0
+ initChipAdc(); 
  
  
- chipDacInit(); 
- 
+ initChipDac(); 
  
  
  initModbus(0x01, 115200);
  
  timer0Init(); 
- NVRAM0[(758 + ((758 + 0) / 16))] |= (uint16_t)(1 << ((758 + 0) % 16));
- }
- static void refreshDac(void){ 
- 
-#line 682 "MainApp\sPlc.c" /1
- 
- 
- 
- 
- 
- 
- 
-#line 689 "MainApp\sPlc.c" /0
- }
- static void chipDacInit(void){ 
- 
-#line 692 "MainApp\sPlc.c" /1
- 
- 
- 
- 
- 
-#line 697 "MainApp\sPlc.c" /0
+ SET((238 * 16 + 0));
+ setLedError(1);
+ SET((238 * 16 + 0));
+ SET((238 * 16 + 1));
+ NVRAM0[159] = 0x0A01;
  }
  void sPlcProcessStart(void){ 
+ 
+ if(NVRAM0[(237)] == 0xA58E){
+  EA = 0;; 
+ setLedRun(0); 
+ setLedEprom(0);
+ if(epromTest()){ 
+ setLedEprom(1);
+ setLedError(0);
+ delayMs(10);
+ setLedError(1);
+ }
+ else{ 
+ setLedEprom(1);
+ setLedError(0);
+ delayMs(50);
+ setLedError(1);
+ delayMs(50);
+ setLedError(0);
+ delayMs(50);
+ setLedError(1);
+ delayMs(50);
+ setLedError(0);
+ delayMs(50);
+ setLedError(1);	
+ }
+ clearNvram();
+ REBOOT();	
+ }
+ 
+ 
+ wdtFeed(); 
+ 
  
  modbusPorcess(); 
  
@@ -8959,17 +7627,13 @@
  inputRefresh(); 
  
  
-#line 706 "MainApp\sPlc.c" /1
+ wdtFeed();
  
- 
-#line 708 "MainApp\sPlc.c" /0
  }
  void sPlcProcessEnd(void){ 
  
-#line 711 "MainApp\sPlc.c" /1
+ wdtFeed(); 
  
- 
-#line 713 "MainApp\sPlc.c" /0
  
  outputRefresh(); 
  
@@ -8977,8 +7641,10 @@
  refreshDac(); 
  
  
-#line 720 "MainApp\sPlc.c" /1
+ updataNvram(); 
  
  
-#line 722 "MainApp\sPlc.c" /0
+ wdtFeed(); 
+ 
+ RES((238 * 16 + 1));
  }

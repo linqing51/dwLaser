@@ -4,10 +4,11 @@
 void epromInit(void){//³õÊ¼»¯IIC½Ó¿Ú
 	iic0Init();
 }
+
 uint8_t epromReadOneByte(uint16_t ReadAddr){//ÔÚAT24CXXÖ¸¶¨µØÖ·¶Á³öÒ»¸öÊı¾İ
 //ReadAddr:¿ªÊ¼¶ÁÊıµÄµØÖ·  
 //·µ»ØÖµ  :¶Áµ½µÄÊı¾İ				  
-	uint8_t temp=0;		  	    																 
+	data uint8_t temp=0;		  	    																 
 	iic0Start();  
 #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
 //¼æÈİ24CxxÖĞÆäËûµÄ°æ±¾
@@ -46,7 +47,7 @@ void epromWriteOneByte(uint16_t WriteAddr, uint8_t DataToWrite){//ÔÚAT24CXXÖ¸¶¨µ
 	iic0WaitAck();  		    	   
 	iic0Stop();//²úÉúÒ»¸öÍ£Ö¹Ìõ¼ş 
 #if CONFIG_EPROM_FRAM != 1
-	delayMs(10);	 
+	delayMs(10);	
 #endif
 }
 
@@ -55,7 +56,7 @@ void epromWriteLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len){//
 //WriteAddr  :¿ªÊ¼Ğ´ÈëµÄµØÖ·  
 //DataToWrite:Êı¾İÊı×éÊ×µØÖ·
 //Len        :ÒªĞ´ÈëÊı¾İµÄ³¤¶È2,4  	
-	uint8_t t;
+	data uint8_t t;
 	for(t = 0;t < Len;t ++){
 		epromWriteOneByte(WriteAddr + t, (DataToWrite >> (8 * t)) & 0xff);
 	}												    
@@ -65,7 +66,7 @@ uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µ
 //ReadAddr   :¿ªÊ¼¶Á³öµÄµØÖ· 
 //·µ»ØÖµ     :Êı¾İ
 //Len        :Òª¶Á³öÊı¾İµÄ³¤¶È2,4  	
-	uint8_t t;
+	data uint8_t t;
 	uint32_t temp=0;
 	for(t = 0;t < Len;t ++){
 		temp <<= 8;
@@ -74,12 +75,11 @@ uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µ
 	return temp;												    
 }
      
-void epromRead(uint16_t ReadAddr,uint8_t *pBuffer,uint16_t NumToRead){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ¼¶Á³öÖ¸¶¨¸öÊıµÄÊı¾İ
+void epromRead(uint16_t ReadAddr, uint8_t *pBuffer,uint16_t NumToRead){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µØÖ·¿ªÊ¼¶Á³öÖ¸¶¨¸öÊıµÄÊı¾İ
 //ReadAddr :¿ªÊ¼¶Á³öµÄµØÖ· ¶Ô24c02Îª0~255
 //pBuffer  :Êı¾İÊı×éÊ×µØÖ·
 //NumToRead:Òª¶Á³öÊı¾İµÄ¸öÊı
-	while(NumToRead)
-	{
+	while(NumToRead){
 		*pBuffer++ = epromReadOneByte(ReadAddr ++);	
 		NumToRead --;
 	}
@@ -88,32 +88,32 @@ void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite){//ÔÚA
 //WriteAddr :¿ªÊ¼Ğ´ÈëµÄµØÖ· ¶Ô24c02Îª0~255
 //pBuffer   :Êı¾İÊı×éÊ×µØÖ·
 //NumToWrite:ÒªĞ´ÈëÊı¾İµÄ¸öÊı
-	while(NumToWrite --)
-	{
+	while(NumToWrite --){
 		epromWriteOneByte(WriteAddr, *pBuffer);
 		WriteAddr ++;
 		pBuffer ++;
 	}
 }
-//#if CONFIG_DEBUG == 1
-void epromTest(void){//EPROM ¶ÁĞ´×Ô²âÊÔ
-	uint8_t temp;
-	uint32_t i, j, crc32Src, crc32Dist;	
-	crc32Clear();
-	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
-		temp = rand() % 255;
-		crc32Src = crc32CalculateAdd(temp);
-		epromWriteOneByte(i, temp);
-	}
-	crc32Clear();
-	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
-		temp = epromReadOneByte(i);
-		crc32Dist = crc32CalculateAdd(temp);
-	}
-	if(crc32Src == crc32Dist)
-		printf("EPROM:Self Test Loop %d OK\n", j);
-	else
-		printf("EPROM:Self Test Loop %d Fail\n", j);
+#if CONFIG_EPROM_PAGEWRITE == 1
+void epromWritePage(uint16_t data pageAddr, uint8_t *pBuffer,uint8_t data NumToWrite){//24C32ÒÔÉÏÈİÁ¿°´Ò³ÃæĞ´Èë
 
 }
-//#endif
+#endif
+uint8_t epromTest(void){//EPROM ¶ÁĞ´×Ô²âÊÔ
+	idata uint32_t i;	
+	idata uint8_t result;
+	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
+		setLedEprom(DEBUG_LED_ON);
+		epromWriteOneByte(i, (i & 0xFF));
+		setLedEprom(DEBUG_LED_OFF);
+	}
+	result = 0;
+	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
+		setLedEprom(DEBUG_LED_ON);
+		if(epromReadOneByte(i) != (i & 0xFF)){
+			return false;
+		}
+		setLedEprom(DEBUG_LED_OFF);
+	}
+	return true;
+}
