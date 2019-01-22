@@ -6,55 +6,36 @@ static idata volatile uint8_t TimerCounter_1mS = 0;
 static idata volatile uint8_t TimerCounter_10mS = 0;
 static idata volatile uint8_t TimerCounter_100mS = 0;
 static idata volatile uint8_t Timer0_L, Timer0_H;
+bit debugLed0, debugLed1, debugLed2, debugLed3;
 /*****************************************************************************/
 static idata volatile int8_t inputFilter[(X_END - X_START + 1) * 16];//IO输入滤波器缓冲区
 /******************************************************************************/
 uint8_t getGlobalInterrupt(void){
 	return EA;
 }
-void setLedRun(uint8_t idata st){//SETLED RUN P7_0
-	if(st){
-		P4 |= (uint8_t)(1 << 0);
-	}
-	else{
-		P4 &= ~(uint8_t)(1 << 0);
-	}
+void setLedRun(uint8_t st){//SETLED RUN
+	debugLed0 = st;
 }
 uint8_t getLedRun(void){//GET LED RUN P7_0
-	return (uint8_t)((P7 >> 0) & 0x01);
+	return debugLed0;
 }
-void setLedEprom(uint8_t idata st){//SET LED EPROM P7_1
-	if(st){
-		P7 |= (uint8_t)(1 << 1);
-	}
-	else{
-		P7 &= ~(uint8_t)(1 << 1);
-	}
+void setLedEprom(uint8_t st){//SET LED EPROM
+	debugLed1 = st;
 }
-uint8_t getLedEprom(void){//GET LED EPROM P7_1
-	return (uint8_t)((P7 >> 1) & 0x01);
+uint8_t getLedEprom(void){//GET LED EPROM
+	return debugLed1;
 }
-void setLedDac(uint8_t idata st){//SET LED DAC P7_2
-	if(st){
-		P7 |= (uint8_t)(1 << 2);
-	}
-	else{
-		P7 &= ~(uint8_t)(1 << 2);
-	}
+void setLedDac(uint8_t st){//SET LED DAC
+	debugLed2 = st;
 }
-uint8_t getLedDac(void){//GET LED DAC P7_2
-	return (uint8_t)((P7 >> 2) & 0x01);
+uint8_t getLedDac(void){//GET LED DAC
+	return debugLed2;
 }
-void setLedError(uint8_t idata st){//SET LED ERROR P7_3
-	if(st){
-		P7 |= (uint8_t)(1 << 3);
-	}
-	else{
-		P7 &= ~(uint8_t)(1 << 3);
-	}
+void setLedError(uint8_t st){//SET LED ERROR
+	debugLed3 = st;
 }
 uint8_t getLedError(void){//GET LED ERROR
-	return (uint8_t)((P7 >> 3) & 0x01);
+	return debugLed3;
 }
 void assertCoilAddress(uint16_t adr) reentrant{//检查线圈地址
 #if CONFIG_SPLC_ASSERT == 1
@@ -241,21 +222,28 @@ static void clearNvram(void){//清除NVRAM数据
 
 /*****************************************************************************/
 static void wdtInit(void){//看门狗初始化
-	WDTCN = 0x07;//47mS
+	uint8_t	SFRPAGE_save = SFRPAGE;
+	SFRPAGE = ACTIVE_PAGE;
+    PCA0MD    &= ~0x40;
+    PCA0MD    = 0x00;
+    PCA0CPL5  = 0xFF;
+	SFRPAGE = SFRPAGE_save;
 }
 void wdtEnable(void) reentrant{//使能看门狗
-	WDTCN = 0xA5;
+	PCA0MD    |= 0x40;
 }
 void wdtDisable(void) reentrant{//关闭看门狗(未锁定)
 	uint8_t flagEA;
+	uint8_t	SFRPAGE_save = SFRPAGE;	
 	flagEA = EA;
 	EA = 0;
-	WDTCN = 0xDE;
-    WDTCN = 0xAD;
+	SFRPAGE = ACTIVE_PAGE;
+	PCA0MD &= 0xBF;
+	SFRPAGE = SFRPAGE_save;
 	EA = flagEA;
 }
 void wdtFeed(void) reentrant{//喂狗
-	WDTCN = 0xA5;
+	PCA0CPH5 = 0x00;  
 }
 static void pcaInit(void){//硬件PCA初始化
 }
@@ -347,62 +335,7 @@ static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1m
 static void inputInit(void){//IO输入滤波器初始化
 	memset(inputFilter, 0x0, (X_END - X_START + 1) * 16);
 }
-static void outputInit(void){//IO输出初始化
-#ifdef C8051F020
-	
-#endif
-}
-static void inputRefresh(void){//获取输入IO
-	idata uint8_t ctemp0;
-	ctemp0 = ((P6 >> 7) & 0x01);
-	if(ctemp0){
-		if(inputFilter[0] < CONFIG_INPUT_FILTER_TIME){
-			inputFilter[0] ++;
-		}
-		else{
-			NVRAM0[X_START] |= (int16_t)(1 << 0);
-		}
-	}
-	else{
-		if(inputFilter[0] > (CONFIG_INPUT_FILTER_TIME * -1)){
-			inputFilter[0] --;
-		}
-		else{
-			NVRAM0[X_START] &= ~(uint16_t)(1 << 0);
-		}
-	}
-	ctemp0 = ((P6 >> 6) & 0x01);
-	if(ctemp0){
-		if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
-			inputFilter[1] ++;
-		}
-		else{
-			NVRAM0[X_START] |= (int16_t)(1 << 1);
-		}
-	}
-	else{
-		if(inputFilter[1] > (CONFIG_INPUT_FILTER_TIME * -1)){
-			inputFilter[1] --;
-		}
-		else{
-			NVRAM0[X_START] &= ~(uint16_t)(1 << 1);
-		}
-	}
-}
-static void outputRefresh(void){//设置输出IO
-	if((NVRAM0[Y_START] >> 0) & 0x01){//P6_5
-		P6 |= (uint8_t)(1 << 5);
-	}
-	else{
-		P6 &= ~(uint8_t)(1 << 5);
-	}
-	if((NVRAM0[Y_START] >> 1) & 0x01){//P6_4
-		P6 |= (uint8_t)(1 << 4);
-	}
-	else{
-		P6 &= ~(uint8_t)(1 << 4);
-	}
-}
+
 void sPlcInit(void){//软逻辑初始化
 #if CONFIG_SPLC_USING_WDT == 1
 	if ((RSTSRC & 0x02) == 0x00){

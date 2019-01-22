@@ -52,7 +52,7 @@ uint8_t iic1WaitAck(void){
 	delayUs(1);	 
 	while(getSDA1()){
 		ucErrTime ++;
-		if(ucErrTime >= 250){
+		if(ucErrTime >= CONFIG_I2C_WAITACT_TIME){
 			iic1Stop();
 			return 1;
 		}

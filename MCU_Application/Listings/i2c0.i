@@ -7231,29 +7231,27 @@
 #line 1 "Driver\i2c0.c" /0
  
  
- sbit SDA0 = P3^5;
- sbit SCL0 = P3^6;				
  
  void iic0Init(void){
  
  }
  static void setSCL0(uint8_t s){
  if(s)
- SCL0 = 1;
+ P4 |= (1 << 7);
  else
- SCL0 = 0;
+ P4 &= ~((uint8_t)(1 << 7));
  }
  static void setSDA0(uint8_t s){
  if(s)
- SDA0 = 1;
+ P4 |= (uint8_t)(1 << 6);
  else
- SDA0 = 0;
+ P4 &= ~((uint8_t)(1 << 6));
  }
  static uint8_t getSCL0(void){
- return SCL0;
+ return (P4 >> 7) & 0x01;
  }
  static uint8_t getSDA0(void){
- return SDA0; 
+ return (P4 >> 6) & 0x01;
  }
  void iic0Start(void){ 
  setSDA0(1);	  	  

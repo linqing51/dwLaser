@@ -7446,55 +7446,36 @@
  static idata volatile uint8_t TimerCounter_10mS = 0;
  static idata volatile uint8_t TimerCounter_100mS = 0;
  static idata volatile uint8_t Timer0_L, Timer0_H;
+ bit debugLed0, debugLed1, debugLed2, debugLed3;
  
  static idata volatile int8_t inputFilter[(212 - 212 + 1) * 16]; 
  
  uint8_t getGlobalInterrupt(void){
  return EA;
  }
- void setLedRun(uint8_t idata st){ 
- if(st){
- P7 |= (uint8_t)(1 << 0);
- }
- else{
- P7 &= ~(uint8_t)(1 << 0);
- }
+ void setLedRun(uint8_t st){ 
+ debugLed0 = st;
  }
  uint8_t getLedRun(void){ 
- return (uint8_t)((P7 >> 0) & 0x01);
+ return debugLed0;
  }
- void setLedEprom(uint8_t idata st){ 
- if(st){
- P7 |= (uint8_t)(1 << 1);
- }
- else{
- P7 &= ~(uint8_t)(1 << 1);
- }
+ void setLedEprom(uint8_t st){ 
+ debugLed1 = st;
  }
  uint8_t getLedEprom(void){ 
- return (uint8_t)((P7 >> 1) & 0x01);
+ return debugLed1;
  }
- void setLedDac(uint8_t idata st){ 
- if(st){
- P7 |= (uint8_t)(1 << 2);
- }
- else{
- P7 &= ~(uint8_t)(1 << 2);
- }
+ void setLedDac(uint8_t st){ 
+ debugLed2 = st;
  }
  uint8_t getLedDac(void){ 
- return (uint8_t)((P7 >> 2) & 0x01);
+ return debugLed2;
  }
- void setLedError(uint8_t idata st){ 
- if(st){
- P7 |= (uint8_t)(1 << 3);
- }
- else{
- P7 &= ~(uint8_t)(1 << 3);
- }
+ void setLedError(uint8_t st){ 
+ debugLed3 = st;
  }
  uint8_t getLedError(void){ 
- return (uint8_t)((P7 >> 3) & 0x01);
+ return debugLed3;
  }
  void assertCoilAddress(uint16_t adr) reentrant{ 
  
@@ -7681,21 +7662,28 @@
  
  
  static void wdtInit(void){ 
- WDTCN = 0x07; 
+ uint8_t	SFRPAGE_save = SFRPAGE;
+ SFRPAGE = 0x00;
+ PCA0MD    &= ~0x40;
+ PCA0MD    = 0x00;
+ PCA0CPL5  = 0xFF;
+ SFRPAGE = SFRPAGE_save;
  }
  void wdtEnable(void) reentrant{ 
- WDTCN = 0xA5;
+ PCA0MD    |= 0x40;
  }
  void wdtDisable(void) reentrant{ 
  uint8_t flagEA;
+ uint8_t	SFRPAGE_save = SFRPAGE;	
  flagEA = EA;
  EA = 0;
- WDTCN = 0xDE;
- WDTCN = 0xAD;
+ SFRPAGE = 0x00;
+ PCA0MD &= 0xBF;
+ SFRPAGE = SFRPAGE_save;
  EA = flagEA;
  }
  void wdtFeed(void) reentrant{ 
- WDTCN = 0xA5;
+ PCA0CPH5 = 0x00;  
  }
  static void pcaInit(void){ 
  }
@@ -7787,64 +7775,7 @@
  static void inputInit(void){ 
  memset(inputFilter, 0x0, (212 - 212 + 1) * 16);
  }
- static void outputInit(void){ 
  
-#line 352 "MainApp\sPlc.c" /1
- 
- 
-#line 354 "MainApp\sPlc.c" /0
- }
- static void inputRefresh(void){ 
- idata uint8_t ctemp0;
- ctemp0 = ((P6 >> 7) & 0x01);
- if(ctemp0){
- if(inputFilter[0] < 3){
- inputFilter[0] ++;
- }
- else{
- NVRAM0[212] |= (int16_t)(1 << 0);
- }
- }
- else{
- if(inputFilter[0] > (3 * -1)){
- inputFilter[0] --;
- }
- else{
- NVRAM0[212] &= ~(uint16_t)(1 << 0);
- }
- }
- ctemp0 = ((P6 >> 6) & 0x01);
- if(ctemp0){
- if(inputFilter[1] < 3){
- inputFilter[1] ++;
- }
- else{
- NVRAM0[212] |= (int16_t)(1 << 1);
- }
- }
- else{
- if(inputFilter[1] > (3 * -1)){
- inputFilter[1] --;
- }
- else{
- NVRAM0[212] &= ~(uint16_t)(1 << 1);
- }
- }
- }
- static void outputRefresh(void){ 
- if((NVRAM0[213] >> 0) & 0x01){ 
- P6 |= (uint8_t)(1 << 5);
- }
- else{
- P6 &= ~(uint8_t)(1 << 5);
- }
- if((NVRAM0[213] >> 1) & 0x01){ 
- P6 |= (uint8_t)(1 << 4);
- }
- else{
- P6 &= ~(uint8_t)(1 << 4);
- }
- }
  void sPlcInit(void){ 
  
  if ((RSTSRC & 0x02) == 0x00){

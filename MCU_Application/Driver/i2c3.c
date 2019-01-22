@@ -50,7 +50,7 @@ uint8_t iic3WaitAck(void){
 	delayUs(1);	 
 	while(getSDA3()){
 		ucErrTime ++;
-		if(ucErrTime >= 250){
+		if(ucErrTime >= CONFIG_I2C_WAITACT_TIME){
 			iic3Stop();
 			return 1;
 		}
