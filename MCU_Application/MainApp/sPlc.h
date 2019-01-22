@@ -217,20 +217,6 @@ void nvramLoad(void);
 void nvramSave(void);
 void nvramUpdata(void);
 /*****************************************************************************/
-void REBOOT(void) reentrant;//强制复位
-void SET(uint16_t A) reentrant;//线圈置位
-void RES(uint16_t A) reentrant;//线圈复位
-void FLIP(uint16_t A) reentrant;//翻转
-uint8_t LD(uint16_t A) reentrant;//载入
-uint8_t LDB(uint16_t A) reentrant;//方向载入
-uint8_t LDP(uint16_t A) reentrant;//脉冲上升沿
-uint8_t LDN(uint16_t A) reentrant;//脉冲下降沿
-void T100US(uint8_t A, uint8_t start, uint16_t value);
-void T1MS(uint8_t A, uint8_t start, uint16_t value);
-void T10MS(uint8_t A, uint8_t start, uint16_t value);
-void T100MS(uint8_t A, uint8_t start, uint16_t value);
-void DSUB(uint16_t Sa, uint16_t Sb, uint16_t D);
-/*****************************************************************************/
 void chipDacInit(void);
 void chipAdcInit(void);
 void sPlcInit(void);
