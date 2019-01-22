@@ -1,8 +1,7 @@
 #ifndef __INITDEVICEF020_H__
 #define __INITDEVICEF020_H__
 /*****************************************************************************/
-#include "compiler_defs.h"
-#include "C8051F580_defs.h"
+#include "appConfig.h"
 /*****************************************************************************/
-void initDeviceF580(void);
+void initDevice(void);
 #endif

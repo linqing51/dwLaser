@@ -20,16 +20,7 @@
  
  
  
-#line 7 ".\MainApp\AppConfig.h" /1
-  
-  
  
-#line 10 ".\MainApp\AppConfig.h" /0
- 
-#line 11 ".\MainApp\AppConfig.h" /1
-  
- 
-#line 13 ".\MainApp\AppConfig.h" /0
  
  
  
@@ -208,7 +199,7 @@
 #line 51 "Lib\stdint.h" /0
  
  
-#line 135 ".\MainApp\AppConfig.h" /0
+#line 130 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "Lib\stdbool.h" /0
@@ -259,7 +250,7 @@
  
  
  
-#line 136 ".\MainApp\AppConfig.h" /0
+#line 131 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "Lib\endian.h" /0
@@ -321,7 +312,7 @@
 #line 55 "Lib\endian.h" /0
  
  
-#line 137 ".\MainApp\AppConfig.h" /0
+#line 132 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "Lib\si_toolchain.h" /0
@@ -1233,7 +1224,7 @@
  
  
  
-#line 138 ".\MainApp\AppConfig.h" /0
+#line 133 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "Lib\compiler_defs.h" /0
@@ -2159,7 +2150,7 @@
  
  
  
-#line 139 ".\MainApp\AppConfig.h" /0
+#line 134 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "Lib\C8051F580_defs.h" /0
@@ -2775,7 +2766,7 @@
  
  
  
-#line 140 ".\MainApp\AppConfig.h" /0
+#line 135 ".\MainApp\AppConfig.h" /0
  
  
   
@@ -2825,7 +2816,7 @@
  
  
  
-#line 142 ".\MainApp\AppConfig.h" /0
+#line 137 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2933,7 +2924,7 @@
  #pragma RESTORE
  
  
-#line 143 ".\MainApp\AppConfig.h" /0
+#line 138 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2996,7 +2987,7 @@
  #pragma RESTORE
  
  
-#line 144 ".\MainApp\AppConfig.h" /0
+#line 139 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -3044,7 +3035,7 @@
  
  
  
-#line 145 ".\MainApp\AppConfig.h" /0
+#line 140 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -3082,7 +3073,7 @@
  #pragma RESTORE
  
  
-#line 146 ".\MainApp\AppConfig.h" /0
+#line 141 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -3115,7 +3106,7 @@
  
  
  
-#line 147 ".\MainApp\AppConfig.h" /0
+#line 142 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\math.h" /0
@@ -3189,8 +3180,199 @@
  #pragma RESTORE
  
  
-#line 148 ".\MainApp\AppConfig.h" /0
+#line 143 ".\MainApp\AppConfig.h" /0
  
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\InitDeviceF580.h" /0
+ 
+ 
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /0
+ 
+#line 2 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /1
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\InitDeviceF580.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\MainApp\InitDeviceF580.h" /0
+ 
+ 
+ void initDevice(void);
+ 
+#line 145 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "Lib\delay.h" /0
@@ -3205,13 +3387,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -3361,6 +3538,8 @@
   
   
   
+  
+ 
  
   
  
@@ -3389,7 +3568,7 @@
  
  
  
-#line 150 ".\MainApp\AppConfig.h" /0
+#line 146 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\i2c0.h" /0
@@ -3404,13 +3583,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -3560,6 +3734,8 @@
   
   
   
+  
+ 
  
   
  
@@ -3595,7 +3771,7 @@
  
  
  
-#line 151 ".\MainApp\AppConfig.h" /0
+#line 147 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\i2c1.h" /0
@@ -3610,13 +3786,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -3766,6 +3937,8 @@
   
   
   
+  
+ 
  
   
  
@@ -3801,7 +3974,7 @@
  
  
  
-#line 152 ".\MainApp\AppConfig.h" /0
+#line 148 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\i2c2.h" /0
@@ -3816,13 +3989,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -3972,6 +4140,8 @@
   
   
   
+  
+ 
  
   
  
@@ -4007,7 +4177,7 @@
  
  
  
-#line 153 ".\MainApp\AppConfig.h" /0
+#line 149 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\i2c3.h" /0
@@ -4022,13 +4192,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -4178,6 +4343,8 @@
   
   
   
+  
+ 
  
   
  
@@ -4213,7 +4380,7 @@
  
  
  
-#line 154 ".\MainApp\AppConfig.h" /0
+#line 150 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\i2c4.h" /0
@@ -4228,13 +4395,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -4384,6 +4546,8 @@
   
   
   
+  
+ 
  
   
  
@@ -4419,7 +4583,7 @@
  
  
  
-#line 155 ".\MainApp\AppConfig.h" /0
+#line 151 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\i2c5.h" /0
@@ -4434,13 +4598,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -4590,6 +4749,8 @@
   
   
   
+  
+ 
  
   
  
@@ -4625,7 +4786,7 @@
  
  
  
-#line 156 ".\MainApp\AppConfig.h" /0
+#line 152 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\i2c6.h" /0
@@ -4640,13 +4801,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -4796,6 +4952,8 @@
   
   
   
+  
+ 
  
   
  
@@ -4831,7 +4989,7 @@
  
  
  
-#line 157 ".\MainApp\AppConfig.h" /0
+#line 153 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\eprom.h" /0
@@ -4846,13 +5004,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -5002,6 +5155,8 @@
   
   
   
+  
+ 
  
   
  
@@ -5033,7 +5188,7 @@
  void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
  uint8_t epromTest(void);
  
-#line 158 ".\MainApp\AppConfig.h" /0
+#line 154 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\mcp47x6.h" /0
@@ -5048,13 +5203,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -5204,6 +5354,8 @@
   
   
   
+  
+ 
  
   
  
@@ -5240,7 +5392,7 @@
  
  
  
-#line 159 ".\MainApp\AppConfig.h" /0
+#line 155 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\inPca9554.h" /0
@@ -5255,13 +5407,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -5411,6 +5558,8 @@
   
   
   
+  
+ 
  
   
  
@@ -5437,7 +5586,7 @@
  void inPca9554Write(uint8_t wdata);
  
  
-#line 160 ".\MainApp\AppConfig.h" /0
+#line 156 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Driver\outPca9554.h" /0
@@ -5452,13 +5601,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -5608,6 +5752,8 @@
   
   
   
+  
+ 
  
   
  
@@ -5634,7 +5780,8 @@
  void outPca9554Write(uint8_t wdata);
  
  
-#line 161 ".\MainApp\AppConfig.h" /0
+#line 157 ".\MainApp\AppConfig.h" /0
+ 
  
  
   
@@ -5650,13 +5797,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -5806,6 +5948,8 @@
   
   
   
+  
+ 
  
   
  
@@ -5831,7 +5975,7 @@
  void USEND(uint16_t port, uint16_t sendBufAdr, uint16_t length); 
  void URECV(uint16_t port, uint16_t recvBufAdr, uint16_t length); 
  
-#line 163 ".\MainApp\AppConfig.h" /0
+#line 160 ".\MainApp\AppConfig.h" /0
  
  
  
@@ -5847,13 +5991,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -6003,6 +6142,8 @@
   
   
   
+  
+ 
  
   
  
@@ -6034,7 +6175,7 @@
  void chipAdcProcess(void);
  void refreshAdcData(adcTempDat_t *s , uint16_t dat);
  
-#line 166 ".\MainApp\AppConfig.h" /0
+#line 163 ".\MainApp\AppConfig.h" /0
  
  
  
@@ -6051,13 +6192,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -6207,6 +6343,8 @@
   
   
   
+  
+ 
  
   
  
@@ -6233,7 +6371,7 @@
  void selfTestDac(void);
  
  
-#line 169 ".\MainApp\AppConfig.h" /0
+#line 166 ".\MainApp\AppConfig.h" /0
  
  
  
@@ -6250,13 +6388,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -6406,6 +6539,8 @@
   
   
   
+  
+ 
  
   
  
@@ -6434,7 +6569,7 @@
  extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
  extern void modbusPorcess(void);
  
-#line 172 ".\MainApp\AppConfig.h" /0
+#line 169 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 ".\Modbus\ModbusPort.h" /0
@@ -6449,13 +6584,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -6605,6 +6735,8 @@
   
   
   
+  
+ 
  
   
  
@@ -6633,7 +6765,7 @@
  extern void receiveInterrupt(uint8_t Data);
  
  
-#line 173 ".\MainApp\AppConfig.h" /0
+#line 170 ".\MainApp\AppConfig.h" /0
  
  
   
@@ -6649,13 +6781,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -6805,6 +6932,8 @@
   
   
   
+  
+ 
  
   
  
@@ -6824,6 +6953,79 @@
  
 #line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
 #line 4 "\GitHub\dwLaser\MCU_Application\MainApp\sPLC.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  
  
  
@@ -6976,7 +7178,7 @@
  void refreshDac(void);
  
  
-#line 175 ".\MainApp\AppConfig.h" /0
+#line 172 ".\MainApp\AppConfig.h" /0
  
   
 #line 1 "\GitHub\dwLaser\MCU_Application\MainApp\sPlcFun.h" /0
@@ -6991,13 +7193,8 @@
  
   
   
- 
   
   
- 
- 
-  
- 
   
   
   
@@ -7147,6 +7344,8 @@
   
   
   
+  
+ 
  
   
  
@@ -7193,7 +7392,7 @@
  void MULTS(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant; 
  
  
-#line 176 ".\MainApp\AppConfig.h" /0
+#line 173 ".\MainApp\AppConfig.h" /0
  
  
  

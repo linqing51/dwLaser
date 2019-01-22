@@ -86,7 +86,7 @@ void PCA0_Init()
 
 // Initialization function for device,
 // Call Init_Device() from your main program
-void initDeviceF580(void)
+void initDevice(void)
 {
 	//Reset_Sources_Init();
 	//Voltage_Reference_Init();

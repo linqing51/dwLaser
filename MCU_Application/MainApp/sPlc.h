@@ -67,6 +67,54 @@
 #define EM_ADC_13						(EM_START + 13)//ADC13->MLD13
 #define EM_ADC_14						(EM_START + 14)//ADC14->MLD14
 #define EM_ADC_15						(EM_START + 15)//ADC15->MLD15
+#define EM_ADC_16						(EM_START + 16)//ADC16->MLD16
+#define EM_ADC_17						(EM_START + 17)//ADC17->MLD17
+#define EM_ADC_18						(EM_START + 18)//ADC18->MLD18
+#define EM_ADC_19						(EM_START + 19)//ADC19->MLD19
+#define EM_ADC_20						(EM_START + 20)//ADC20->MLD20
+#define EM_ADC_21						(EM_START + 21)//ADC21->MLD21
+#define EM_ADC_22						(EM_START + 22)//ADC22->MLD22
+#define EM_ADC_23						(EM_START + 23)//ADC23->MLD23
+#define EM_ADC_24						(EM_START + 24)//ADC24->MLD24
+#define EM_ADC_25						(EM_START + 25)//ADC25->MLD25
+#define EM_ADC_26						(EM_START + 26)//ADC26->MLD26
+#define EM_ADC_27						(EM_START + 27)//ADC27->MLD27
+#define EM_ADC_28						(EM_START + 28)//ADC28->MLD28
+#define EM_ADC_29						(EM_START + 29)//ADC29->MLD29
+#define EM_ADC_30						(EM_START + 30)//ADC30->MLD30
+#define EM_ADC_31						(EM_START + 31)//ADC31->MLD31
+#define EM_ADC_32						(EM_START + 32)//ADC32->MPD0
+#define EM_ADC_33						(EM_START + 33)//ADC33->MPD1
+#define EM_ADC_34						(EM_START + 34)//ADC34->MPD2
+#define EM_ADC_35						(EM_START + 35)//ADC35->MPD3
+#define EM_ADC_36						(EM_START + 36)//ADC36->MPD4
+#define EM_ADC_37						(EM_START + 37)//ADC37->MPD5
+#define EM_ADC_38						(EM_START + 38)//ADC38->MPD6
+#define EM_ADC_39						(EM_START + 39)//ADC39->MPD7
+#define EM_ADC_40						(EM_START + 40)//ADC40->MPD8
+#define EM_ADC_41						(EM_START + 41)//ADC41->MPD9
+#define EM_ADC_42						(EM_START + 42)//ADC42->MPD10
+#define EM_ADC_43						(EM_START + 43)//ADC42->MPD11
+#define EM_ADC_44						(EM_START + 44)//ADC42->MPD12
+#define EM_ADC_45						(EM_START + 45)//ADC42->MPD13
+#define EM_ADC_46						(EM_START + 46)//ADC42->MPD14
+#define EM_ADC_47						(EM_START + 47)//ADC42->MPD15
+#define EM_ADC_48						(EM_START + 48)//ADC42->MPD16
+#define EM_ADC_49						(EM_START + 49)//ADC42->MPD17
+#define EM_ADC_50						(EM_START + 50)//ADC42->MPD18
+#define EM_ADC_51						(EM_START + 51)//ADC42->MPD19
+#define EM_ADC_52						(EM_START + 52)//ADC42->MPD20
+#define EM_ADC_53						(EM_START + 53)//ADC43->MPD21
+#define EM_ADC_54						(EM_START + 54)//ADC44->MPD22
+#define EM_ADC_55						(EM_START + 55)//ADC45->MPD23
+#define EM_ADC_56						(EM_START + 56)//ADC46->MPD24
+#define EM_ADC_57						(EM_START + 57)//ADC47->MPD25
+#define EM_ADC_58						(EM_START + 58)//ADC48->MPD26
+#define EM_ADC_59						(EM_START + 59)//ADC49->MPD27
+#define EM_ADC_60						(EM_START + 60)//ADC50->MPD28
+#define EM_ADC_61						(EM_START + 61)//ADC50->MPD29
+#define EM_ADC_62						(EM_START + 62)//ADC50->MPD30
+#define EM_ADC_63						(EM_START + 63)//ADC50->MPD31
 #define EM_DAC_0						(EM_START + 64)//DAC0
 #define EM_DAC_1						(EM_START + 65)//DAC1
 #define EM_DAC_2						(EM_START + 66)//DAC2
@@ -75,6 +123,30 @@
 #define EM_DAC_5						(EM_START + 69)//DAC5
 #define EM_DAC_6						(EM_START + 70)//DAC6
 #define EM_DAC_7						(EM_START + 71)//DAC7
+#define EM_DAC_8						(EM_START + 72)//DAC8
+#define EM_DAC_9						(EM_START + 73)//DAC9
+#define EM_DAC_10						(EM_START + 74)//DAC10
+#define EM_DAC_11						(EM_START + 75)//DAC11
+#define EM_DAC_12						(EM_START + 76)//DAC12
+#define EM_DAC_13						(EM_START + 77)//DAC13
+#define EM_DAC_14						(EM_START + 78)//DAC14
+#define EM_DAC_15						(EM_START + 79)//DAC15
+#define EM_DAC_16						(EM_START + 80)//DAC16
+#define EM_DAC_17						(EM_START + 81)//DAC17
+#define EM_DAC_18						(EM_START + 82)//DAC18
+#define EM_DAC_19						(EM_START + 83)//DAC19
+#define EM_DAC_20						(EM_START + 84)//DAC20
+#define EM_DAC_21						(EM_START + 85)//DAC21
+#define EM_DAC_22						(EM_START + 86)//DAC22
+#define EM_DAC_23						(EM_START + 87)//DAC23
+#define EM_DAC_24						(EM_START + 88)//DAC24
+#define EM_DAC_25						(EM_START + 89)//DAC25
+#define EM_DAC_26						(EM_START + 90)//DAC26
+#define EM_DAC_27						(EM_START + 91)//DAC27
+#define EM_DAC_28						(EM_START + 92)//DAC28
+#define EM_DAC_29						(EM_START + 93)//DAC29
+#define EM_DAC_30						(EM_START + 94)//DAC30
+#define EM_DAC_31						(EM_START + 95)//DAC31
 /*****************************************************************************/
 #define CONFIG_NVRAM_SIZE 				(SPCOIL_END + 1)
 /*****************************************************************************/
@@ -84,6 +156,7 @@
 #define SPCOIL_PS10MS					(SPCOIL_START * 16 + 3)//10mS
 #define SPCOIL_PS100MS					(SPCOIL_START * 16 + 4)//100mS	
 #define SPCOIL_PS1000MS					(SPCOIL_START * 16 + 5)//1000mS	
+#define SPCOIL_WATCHDOG					(SPCOIL_START * 16 + 15)//看门狗溢出
 #define SPCOIL_UART0_SEND_BUSY			(SPCOIL_START * 16 + 16)//UART1发送忙
 #define SPCOIL_UART0_RECV_BUSY			(SPCOIL_START * 16 + 17)//UART1接收忙
 #define SPCOIL_UART0_SEND_DONE			(SPCOIL_START * 16 + 18)//发送完成

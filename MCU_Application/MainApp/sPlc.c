@@ -14,10 +14,10 @@ uint8_t getGlobalInterrupt(void){
 }
 void setLedRun(uint8_t idata st){//SETLED RUN P7_0
 	if(st){
-		P7 |= (uint8_t)(1 << 0);
+		P4 |= (uint8_t)(1 << 0);
 	}
 	else{
-		P7 &= ~(uint8_t)(1 << 0);
+		P4 &= ~(uint8_t)(1 << 0);
 	}
 }
 uint8_t getLedRun(void){//GET LED RUN P7_0
@@ -176,6 +176,18 @@ static void loadNvram(void){//从EPROM中载入NVRAM
 	clearSPREG();
 	clearSPCOIL();
 	memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));
+#if CONFIG_SPLC_USING_WDT == 1
+	if ((RSTSRC & 0x02) == 0x00){
+		if(RSTSRC == 0x08){//检测WDT看门狗 看门狗复位后锁定
+			SET(SPCOIL_WATCHDOG);
+			setLedError(DEBUG_LED_ON);
+			setLedRun(DEBUG_LED_ON);
+			setLedDac(DEBUG_LED_OFF);
+			setLedEprom(DEBUG_LED_OFF);
+			delayMs(100);
+		}
+	}
+#endif
 }
 static void saveNvram(void){//强制将NVRAM存入EPROM
 	DISABLE_INTERRUPT;
@@ -392,6 +404,18 @@ static void outputRefresh(void){//设置输出IO
 	}
 }
 void sPlcInit(void){//软逻辑初始化
+#if CONFIG_SPLC_USING_WDT == 1
+	if ((RSTSRC & 0x02) == 0x00){
+		if(RSTSRC == 0x08)
+		{//检测WDT看门狗 看门狗复位后锁定
+			setLedError(DEBUG_LED_ON);
+			setLedRun(DEBUG_LED_ON);
+			setLedDac(DEBUG_LED_OFF);
+			setLedEprom(DEBUG_LED_OFF);
+			while(1);
+		}
+	}
+#endif
 	setLedError(DEBUG_LED_OFF);
 	setLedRun(DEBUG_LED_OFF);
 	setLedDac(DEBUG_LED_OFF);

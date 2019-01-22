@@ -3,13 +3,8 @@
 /*****************************************************************************/
 #define DEBUG_LED_ON						0
 #define DEBUG_LED_OFF						1
-#ifdef C8051F020
-#define CONFIG_SYSCLK                       (22118400L)
-#define SAR_CLK      						2000000L//ADC0时钟 <2.5MHz
-#endif
-#ifdef C8051F580
 #define CONFIG_SYSCLK                       (48000000L)//F580内部48M
-#endif
+#define SAR_CLK      						2000000L//ADC0时钟 <2.5MHz
 #define CONFIG_DEBUG                        0//调试功能
 #define CONFIG_USING_WDT					0//使能看门狗
 #define CONFIG_USING_RESET					0//使能PLC复位MCU功能
@@ -147,6 +142,7 @@
 #include <LIMITS.H>
 #include <math.h>
 /*****************************************************************************/
+#include "InitDeviceF580.h"
 #include "delay.h"
 #include "i2c0.h"
 #include "i2c1.h"
@@ -159,6 +155,7 @@
 #include "mcp47x6.h"
 #include "inPca9554.h"
 #include "outPca9554.h"
+
 #if CONFIG_SPLC_USING_UART1 == 1
 #include "sPlcUart.h"
 #endif

@@ -2,25 +2,6 @@
 /*****************************************************************************/
 /*****************************************************************************/
 void initModbusSerial(int32_t baudrate){//初始化MODBUS串口
-#ifdef C8051F020
-	CKCON |= (1 << 5);//Timer2 uses the system clock
-	T2CON &= ~(1 << 0);//当定时器2 溢出或T2EX 上发生负跳变时将自动重装载（EXEN2=1）
-	T2CON &= ~(1 << 1);//定时器功能：定时器2 由T2M（CKCON.5）定义的时钟加1
-	T2CON |= (1 << 4);//Timer 2 overflows used for transmit clock.
-	T2CON |= (1 << 5);//Timer 2 overflows used for receive clock.	
-	RCAP2  = - ((long) ((uint32_t)CONFIG_SYSCLK / baudrate) / 32L);
-	TMR2 = RCAP2;
-	TR2= 1;                             // Start Timer2
-	SCON0 = 0x0;
-	SCON0 |= (1 << 4);//接收允许
-	SCON0 |= (1 << 6);//方式1：8 位UART，可变波特率
-	//RS485_DIRECTION_RXD;//接收状态
-	ES0 = 1;
-	IP |= (1 << 4);//UART0 中断高优先级
-	TI0 = 0;//清除发送完成   		
-	RI0 = 0;//清除接收完成
-#endif
-#ifdef C8051F580
 	uint8_t SFRPAGE_save;
 	uint16_t tmp;
 	SFRPAGE_save = SFRPAGE;	
@@ -39,18 +20,9 @@ void initModbusSerial(int32_t baudrate){//初始化MODBUS串口
 	//RS485_DIRECTION_RXD;//接收状态
 	ES0 = 1;
 	IP |= (1 << 4);//UART0 中断高优先级
-#endif	
 }
 void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER3
 	uint16_t tmp;	
-#ifdef C8051F020
-	tmp = (uint16_t)(65536L - (int32_t)(CONFIG_SYSCLK / 12L / CONFIG_MB_RTU_SLAVE_TIMER));
-	TMR3CN = 0x0;//T3 SYSCLK / 12	
-	TMR3RLH = (uint8_t)((tmp >> 8) & 0xFF);
-	TMR3RLL = (uint8_t)(tmp & 0xFF);
-	TMR3CN |= (1 << 2);
-#endif
-#ifdef C8051F580
 	uint8_t SFRPAGE_save;
 	SFRPAGE_save = SFRPAGE;
 	tmp = (uint16_t)(65536L - (int32_t)(CONFIG_SYSCLK / 12L / CONFIG_MB_RTU_SLAVE_TIMER));
@@ -60,19 +32,9 @@ void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER3
 	TMR3RLL = (uint8_t)(tmp & 0xFF);
 	TMR3CN |= (1 << 2);
 	SFRPAGE = SFRPAGE_save;
-#endif
 	EIE1 |= (1 << 6);//使能T3中断
 }
 static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
-#ifdef C8051F020
-	ES0 = 0;
-	TI0 = 0;
-	SBUF0 = *dt;
-	while( !TI0 );
-	TI0 = 0;
-	ES0 = 1;
-#endif
-#ifdef C8051F580
 	uint8_t SFRPAGE_save;
 	SFRPAGE_save = SFRPAGE;
 	SFRPAGE = ACTIVE_PAGE;
@@ -83,7 +45,6 @@ static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
 	TI0 = 0;
 	ES0 = 1;
 	SFRPAGE = SFRPAGE_save;
-#endif
 }
 void modBusUartInitialise(uint32_t baudrate){// UART Initialize for Microconrollers, yes you can use another phsycal layer!
     initModbusSerial(baudrate);

@@ -35,100 +35,14 @@
 
 /*****************************************************************************/
 void main(void){
-	initDeviceF020();
+	initDevice();
 	sPlcInit();//初始化软逻辑
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 	ENABLE_INTERRUPT;
 	while(1){
 		sPlcProcessStart();
 		if(LD(SPCOIL_START_UP)){//执行一次的代码
-			RES(R_BOX_GREEN_SENDED);
-			RES(R_BOX_RED_SENDED);
 		}
-		if(LD(T_100MS_START * 16U + 0)){//每100mS执行一次BOX盒子刷新
-			sPlcBoxLedRefresh();
-			T100MS(0, false, 1);
-		}
-		else{
-			T100MS(0, true, 1);
-		}
-		
-//		if(LDP(SPCOIL_PS1000MS)){
-//			p32 = (uint32_t*)(&NVRAM0[DM_TOTAL_TIME_L]);
-//			*p32 = *p32 + 1;
-//		}
-		sPlcProcessEnd();
-	}
-}
-
-
-
-void main(void){
-	uint8_t tmp;
-#ifdef C8051F020
-	initDeviceF020();
-#endif
-#ifdef C8051F580
-	initDeviceF580();
-	inPca9554Init();
-	epromTest();
-	tmp = inPca9554Read();
-	tmp &= 0x0;
-	tmp = inPca9554Read();
-	tmp &= 0x0;
-	tmp = inPca9554Read();
-	tmp &= 0x0;
-	tmp = inPca9554Read();
-	tmp &= 0x0;
-	tmp = inPca9554Read();
-	tmp &= 0x0;
-	tmp = inPca9554Read();
-	tmp &= 0x0;
-	tmp = inPca9554Read();
-	tmp &= 0x0;
-	//while(1);
-#endif
-#if CONFIG_USING_WDT == 1
-	if ((RSTSRC & 0x02) == 0x00)
-	{
-		if (RSTSRC == 0x08)
-		{//检测WDT看门狗 看门狗复位后锁定
-			while(1);
-		}
-	}
-#endif
-	sPlcInit();//初始化软逻辑
-	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
-	NVRAM0[SPREG_CHECKCODE] = CONFIG_CHECK_CODE;
-	ENABLE_INTERRUPT;
-	while(1){
-		sPlcProcessStart();
-		NVRAM0[EM_MCU_CHECKCODE] = CONFIG_CHECK_CODE;//写入板卡校验码
-		if(LD(R_MCU_RESET)){
-			REBOOT();
-		}
-		sPlcLaser();
-		//SPLC代码插入此处
-////		SET(10);
-////		RESET(10);
-////		SET(10);
-////		RESET(10);
-////		SET(10);
-////		RESET(10);
-////		SET(10);
-////		RESET(10);
-////		FLIP(10);
-////		FLIP(10);
-////		FLIP(10);
-////		FLIP(10);
-////		//读取IO
-////		//执行程序
-////		//输出IO
-////		T100MS(0, 1, 2);
-////		if(LD(TD_100MS_START * 16 + 0));
-////		{
-////			SET(0);	
-////		}
 		sPlcProcessEnd();
 	}
 }
