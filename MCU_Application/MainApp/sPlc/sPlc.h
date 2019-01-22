@@ -187,22 +187,19 @@
 /*****************************************************************************/
 extern xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 extern xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+extern idata volatile uint8_t TimerCounter_1mS;
+extern idata volatile uint8_t TimerCounter_10mS;
+extern idata volatile uint8_t TimerCounter_100mS;
+extern idata volatile uint8_t Timer0_L, Timer0_H;
 /*****************************************************************************/
-uint8_t getGlobalInterrupt(void);
-void setLedRun(uint8_t st);
-uint8_t getLedRun(void);
-void setLedEprom(uint8_t st);
-uint8_t getLedEprom(void);
-void setLedDac(uint8_t st);
-uint8_t getLedDac(void);
-void setLedError(uint8_t st);
-uint8_t getLedError(void);
 void sPlcInit(void);//软逻辑初始化
+extern void timer0Init(void);
 void sPlcProcessStart(void);//sPLC轮询起始
 void sPlcProcessEnd(void);//sPLC轮询结束
-void wdtFeed(void) reentrant;
-void wdtEnable(void) reentrant;
-void wdtDisable(void) reentrant;
+extern void initWatchDog(void);//看门狗初始化
+extern void feedWatchDog(void) reentrant;//喂狗
+extern void enableWatchDog(void);//使能看门狗
+extern void disableWatchDog(void);//关闭看门狗(未锁定)
 /*****************************************************************************/
 void assertCoilAddress(uint16_t adr) reentrant;
 void assertRegisterAddress(uint16_t adr) reentrant;
@@ -221,8 +218,6 @@ void nvramUpdata(void);
 void chipDacInit(void);
 void chipAdcInit(void);
 void sPlcInit(void);
-void refreshInput(void);
-void refreshOutput(void);
 void refreshDac(void);
 /*****************************************************************************/
 #endif

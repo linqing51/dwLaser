@@ -127,6 +127,10 @@
 #include "ModbusPort.h"
 /*****************************************************************************/
 #include "sPLC.h"
+#include "sPlcTimer.h"
 #include "sPlcFun.h"
+#include "sPlcLed.h"
+#include "sPlcIo.h"
+#include "sPlcWatchDog.h"
 /*****************************************************************************/
 #endif

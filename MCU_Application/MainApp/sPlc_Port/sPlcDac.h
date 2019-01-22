@@ -4,7 +4,6 @@
 #include "appConfig.h"
 /*****************************************************************************/
 void initChipDac(void);
-void refreshDac(void);
 void selfTestDac(void);
-
+void refreshDac(void);
 #endif

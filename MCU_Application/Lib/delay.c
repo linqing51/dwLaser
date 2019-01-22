@@ -7,7 +7,7 @@ void delayUs(uint8_t data us) reentrant
 	while(us)
 	{
 #if CONFIG_SPLC_USING_WDT == 1
-		wdtFeed();
+		feedWatchDog();
 #endif
         us --;
 	}

@@ -41,7 +41,7 @@ static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
 	SBUF0 = *dt;
 	while( !TI0 ){
 #if CONFIG_SPLC_USING_WDT == 1
-		wdtFeed();
+		feedWatchDog();
 #endif
 	}
 	TI0 = 0;

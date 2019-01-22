@@ -149,7 +149,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>10</TargetSelection>
+          <TargetSelection>-1</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define>C8051F020</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Lib;.\Driver;.\MainApp;.\Modbus</IncludePath>
+              <IncludePath>.\Lib;.\Driver;.\MainApp\sPlc;.\MainApp\sPlc_Port;.\MainApp;.\Modbus</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -446,153 +446,60 @@
               <FileType>1</FileType>
               <FilePath>.\MainApp\InitDeviceF020.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sPlc</GroupName>
+          <Files>
             <File>
               <FileName>sPlc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\MainApp\sPlc.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcUart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MainApp\sPlcUart.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>2</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                  <BankNo>65535</BankNo>
-                </CommonProperty>
-                <File51>
-                  <C51>
-                    <RegisterColoring>2</RegisterColoring>
-                    <VariablesInOrder>2</VariablesInOrder>
-                    <IntegerPromotion>2</IntegerPromotion>
-                    <uAregs>2</uAregs>
-                    <UseInterruptVector>2</UseInterruptVector>
-                    <Fuzzy>8</Fuzzy>
-                    <Optimize>4</Optimize>
-                    <WarningLevel>3</WarningLevel>
-                    <SizeSpeed>2</SizeSpeed>
-                    <ObjectExtend>2</ObjectExtend>
-                    <ACallAJmp>2</ACallAJmp>
-                    <InterruptVectorAddress>0</InterruptVectorAddress>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </C51>
-                </File51>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>sPlcChipAdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MainApp\sPlcChipAdc.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>2</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                  <BankNo>65535</BankNo>
-                </CommonProperty>
-                <File51>
-                  <C51>
-                    <RegisterColoring>2</RegisterColoring>
-                    <VariablesInOrder>2</VariablesInOrder>
-                    <IntegerPromotion>2</IntegerPromotion>
-                    <uAregs>2</uAregs>
-                    <UseInterruptVector>2</UseInterruptVector>
-                    <Fuzzy>8</Fuzzy>
-                    <Optimize>4</Optimize>
-                    <WarningLevel>3</WarningLevel>
-                    <SizeSpeed>2</SizeSpeed>
-                    <ObjectExtend>2</ObjectExtend>
-                    <ACallAJmp>2</ACallAJmp>
-                    <InterruptVectorAddress>0</InterruptVectorAddress>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </C51>
-                </File51>
-              </FileOption>
-            </File>
-            <File>
-              <FileName>sPlcDac.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MainApp\sPlcDac.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>2</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                  <BankNo>65535</BankNo>
-                </CommonProperty>
-                <File51>
-                  <C51>
-                    <RegisterColoring>2</RegisterColoring>
-                    <VariablesInOrder>2</VariablesInOrder>
-                    <IntegerPromotion>2</IntegerPromotion>
-                    <uAregs>2</uAregs>
-                    <UseInterruptVector>2</UseInterruptVector>
-                    <Fuzzy>8</Fuzzy>
-                    <Optimize>4</Optimize>
-                    <WarningLevel>3</WarningLevel>
-                    <SizeSpeed>2</SizeSpeed>
-                    <ObjectExtend>2</ObjectExtend>
-                    <ACallAJmp>2</ACallAJmp>
-                    <InterruptVectorAddress>0</InterruptVectorAddress>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </C51>
-                </File51>
-              </FileOption>
+              <FilePath>.\MainApp\sPlc\sPlc.c</FilePath>
             </File>
             <File>
               <FileName>sPlcFun.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\MainApp\sPlcFun.c</FilePath>
+              <FilePath>.\MainApp\sPlc\sPlcFun.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sPlc_F020</GroupName>
+          <Files>
+            <File>
+              <FileName>sPlcChipAdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainApp\sPlc_Port\sPlcChipAdc.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcDac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainApp\sPlc_Port\sPlcDac.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcIo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainApp\sPlc_Port\sPlcIo.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcLed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainApp\sPlc_Port\sPlcLed.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcUart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainApp\sPlc_Port\sPlcUart.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcTimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainApp\sPlc_Port\sPlcTimer.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcWatchDog.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\MainApp\sPlc_Port\sPlcWatchDog.c</FilePath>
             </File>
           </Files>
         </Group>
