@@ -111,32 +111,10 @@ int16_t TENV(int16_t dat) reentrant{//CODE转换为环境温度
 	temp = (int16_t)((temp - CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET) * 1000 / CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN);
 	return temp;
 }
-int16_t MAX(int16_t *s, uint8_t len) reentrant{//找出长度为len的数据s中的最大值
-	int16_t max;
-	uint8_t i;
-	max = *s;
-	for(i = 0;i < len;i ++){
-		if(*(s +i) > max){
-			max = *(s + i);
-		}
-	}
-	return max;
-}
-int16_t MIN(int16_t *s, uint8_t len) reentrant{//找出长度为len的数据s中的最小值
-	int16_t min;
-	uint8_t i;
-	min = *s;
-	for(i = 0;i < len;i ++){
-		if(*(s +i) < min){
-			min = *(s + i);
-		}
-	}
-	return min;
-}
-void ADD(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant{//16位非饱和加法 D = Sa + Sb
+void ADD16(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant{//16位非饱和加法 D = Sa + Sb
 	*D = *Sa + *Sb;
 }
-void ADDS(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant{//16位饱和加法 D = Sa + Sb
+void ADDS16(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant{//16位饱和加法 D = Sa + Sb
 	int32_t tmp;
 	tmp =*Sa + *Sb;;
 	if(tmp >= SHRT_MAX)
@@ -145,13 +123,13 @@ void ADDS(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant{//16位饱和加法 D = Sa 
 		tmp = SHRT_MIN;
 	*D = tmp;
 }
-void DADD(int32_t *Sa, int32_t *Sb, int32_t *D) reentrant{//32位非饱加法 D = Sa + Sb
+void ADD32(int32_t *Sa, int32_t *Sb, int32_t *D) reentrant{//32位非饱加法 D = Sa + Sb
 	*D = *Sa + *Sb;
 }
-void SUB(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant{//16位非饱和减法 D = Sa - Sb
+void SUB16(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant{//16位非饱和减法 D = Sa - Sb
 	*D = *Sa - *Sb;
 }
-void SUBS(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant{//16位饱和减法 D = Sa - Sb
+void SUBS16(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant{//16位饱和减法 D = Sa - Sb
 	int32_t tmp;
 	tmp = (int32_t)(*Sa) - (int32_t)(*Sb);
 	if(tmp >= SHRT_MAX)
@@ -160,19 +138,124 @@ void SUBS(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant{//16位饱和减法 D = Sa 
 		tmp = SHRT_MIN;
 	*D = tmp;
 }
-void DSUB(int32_t *Sa, int32_t *Sb, int32_t *D) reentrant{//32位非饱和减法 D = Sa - Sb
+void SUB32(int32_t *Sa, int32_t *Sb, int32_t *D) reentrant{//32位非饱和减法 D = Sa - Sb
 	*D = (int32_t)(*Sa) - (int32_t)(*Sb);
 }
-void MULT(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant{//16*16->16非饱和乘法 D = Sa * Sb
+void MULT16(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant{//16*16->16非饱和乘法 D = Sa * Sb
+	int32_t tmp;
+	tmp = (int32_t)(*Sa) * (int32_t)(*Sb);
+	*D = (int16_t)(tmp & 0xFFFF);
+}
+void MULTS16(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant{//16*16->16饱和乘法 D = Sa * Sb
 	int32_t tmp;
 	tmp = (int32_t)(*Sa) * (int32_t)(*Sb);
 	if(tmp >= SHRT_MAX)
 		tmp = SHRT_MAX;
 	if(tmp <= SHRT_MIN)
 		tmp = SHRT_MIN;
-	*D = tmp;
+	*D = (int16_t)tmp;
 }
-void MULTS(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant{//16*16->32饱和乘法 D = Sa * Sb
+void MULT32(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant{//16*16->32非饱和乘法 D = Sa * Sb
 	*D = (int32_t)(*Sa) * (int32_t)(*Sb);
+}
+void SUM16(int16_t *index, int16_t *length, int32_t *sum) reentrant{//16BIT数求和->32BIT
+	int32_t tmp = 0;
+	uint16_t i = 0;
+	for(i = 0; i < *length; i++)
+	{
+		tmp += *(index + i);
+	}
+	*sum = tmp;
+}
+void UMAX16(uint16_t *index, uint16_t *length, uint16_t *max) reentrant{//16位无符号数组找最大值
+	uint16_t i = 0;
+	uint16_t tmp = 0;
+	for(i = 0;i < *length;i ++ ){
+		if(tmp < *(index + i)){
+			tmp = *(index + i);
+		}
+	}
+	*max = tmp;
+}
+void UMIN16(uint16_t *index, uint16_t *length, uint16_t *min)reentrant{//16位无符号数组找最小值
+	uint16_t i = 0;
+	uint16_t tmp = 0;
+	for(i = 0;i < *length;i ++){
+		if(tmp < *(index + i))
+		{
+			tmp = *(index + i);
+		}
+	}
+	*min = tmp;
+}
+void SMAX16(int16_t *index, uint16_t *length, int16_t *max) reentrant{//16位有符号数组找最大值
+	int16_t i = 0;
+	int16_t tmp = 0;
+	for(i = 0;i < *length;i ++ ){
+		if(tmp < *(index + i)){
+			tmp = *(index + i);
+		}
+	}
+	*max = tmp;
+}
+void SMIN16(int16_t *index, uint16_t *length, int16_t *min) reentrant{//16位有符号数组找最小值
+	int16_t i = 0;
+	int16_t tmp = 0;
+	for(i = 0;i < *length;i ++){
+		if(tmp < *(index + i))
+		{
+			tmp = *(index + i);
+		}
+	}
+	*min = tmp;
+}
+/*****************************************************************************/
+void XTAB(int16_t *x, int16_t *index, int16_t *length) reentrant{//线性查表从X计算Y值
+	uint16_t xIndex0, xIndex1, i;
+	xIndex0 = 0; xIndex1 = 0;
+	for(i = 0;i < *length;i ++){
+		xIndex1 ++;
+//	}
+	
+}
+void YTAB(int16_t *y, int16_t tab, int16_t *length) reentrant{//线性查表从Y计算X值
+
+}
+
+
+
+
+uint16_t linear_interp_x(linear_interp_table * psource, uint16_t y, uint16_t size)//get x from y
+{
+	uint16_t i = 0;
+	float x = 0;
+	for(i = 0; i < size; i++)
+	{
+		if(y <= psource[i].y )
+		{
+			break;
+		}
+	}
+	if(i == 0)
+	{
+		x = (float)y *psource[i].x /psource[i].y;
+	}
+	else if(i == size)
+				{
+					x = psource[i-2].x + (float)(y - psource[i-2].y)*(psource[i-1].x - psource[i-2].x)/(psource[i-1].y - psource[i-2].y);
+				}
+				else
+				{
+					x = psource[i-1].x + (float)(y - psource[i-1].y)*(psource[i].x - psource[i-1].x)/(psource[i].y - psource[i-1].y);
+				}
+#if debug_math == 1
+	rt_kprintf("linear_interp_y result x = %d,para y = %d\n ",(uint16_t)x,y);
+#endif
+	return (uint16_t)x;
+}
+/*****************************************************************************/
+//IO指令
+void IMDIO(void) reentrant{//立即更新IO点状态含输入输出
+
 }
 /*****************************************************************************/

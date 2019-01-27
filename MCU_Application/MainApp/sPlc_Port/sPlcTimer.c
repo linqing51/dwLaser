@@ -1,6 +1,6 @@
 #include "sPlcTimer.h"
 /*****************************************************************************/
-void timer0Init(void){//硬件sTimer计时器初始化
+void initSplcTimer(void){//硬件sTimer计时器初始化
 	idata uint16_t temp;
 	TimerCounter_1mS = 0;
 	TimerCounter_10mS = 0;
@@ -16,9 +16,10 @@ void timer0Init(void){//硬件sTimer计时器初始化
 	ET0 = 1;// T0 interrupt enabled
 	TR0 = 1;// T0 ON
 }
-static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
+static void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
 	idata uint16_t i;
 	idata uint32_t tmp;
+	enterSplcIsr();
 	TF0 = 0;
 	TR0 = 0;
 	TH0 = Timer0_H;
@@ -84,4 +85,5 @@ static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1m
 	chipAdcProcess();//ADC扫描
 #endif
 	TimerCounter_1mS ++;
+	exitSplcIsr();
 }

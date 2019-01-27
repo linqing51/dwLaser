@@ -204,17 +204,26 @@ extern void disableWatchDog(void);//关闭看门狗(未锁定)
 void assertCoilAddress(uint16_t adr) reentrant;
 void assertRegisterAddress(uint16_t adr) reentrant;
 /*****************************************************************************/
-void nvramUpdata(void);
+void clearX(void);
+void clearY(void);
 void clearDM(void);
 void clearEM(void);
 void clearR(void);
 void clearT(void);
 void clearTD(void);
 void clearC(void);
-void nvramLoad(void);
-void nvramSave(void);
-void nvramUpdata(void);
+void clearSPCOIL();
+void clearSPREG(void);
+extern void loadNvram(void);
+extern void clearNvram(void);
+extern void saveNvram(void);
+extern void updataNvram(void);
 /*****************************************************************************/
+void enterSplcIsr(void);
+void exitSplcIsr(void);
+/*****************************************************************************/
+
+void initSplcTimer(void);
 void chipDacInit(void);
 void chipAdcInit(void);
 void sPlcInit(void);
