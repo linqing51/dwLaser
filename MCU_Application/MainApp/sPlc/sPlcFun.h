@@ -28,8 +28,8 @@ void MULT(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant;//16*16非饱和乘法 D = 
 void MULTS(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant;//16*16->32饱和乘法 D = Sa * Sb
 void SUMS(uint16_t index, uint16_t length, int32_t *sum) reentrant;//16BIT数求和->32BIT
 /*****************************************************************************/
-void XTAB(int16_t *x, int16_t tab, int16_t *length) reentrant;//线性查表从X计算Y值
-void YTAB(int16_t *y, int16_t tab, int16_t *length) reentrant;//线性查表从Y计算X值
+void XTAB(int16_t *x, int16_t *index, int16_t *length) reentrant;//线性查表从X计算Y值
+void XTAB(int16_t *y, int16_t *index, int16_t *length) reentrant;//线性查表从Y计算X值
 /*****************************************************************************/
 void IMDIO(void) reentrant;//立即更新IO点状态含输入输出
 void TPCTL(int16_t *ref, int16_t *fb, int16_t buf) reentrant;//温控PID指令

@@ -156,6 +156,8 @@
 #define SPCOIL_PS10MS					(SPCOIL_START * 16 + 3)//10mS
 #define SPCOIL_PS100MS					(SPCOIL_START * 16 + 4)//100mS	
 #define SPCOIL_PS1000MS					(SPCOIL_START * 16 + 5)//1000mS	
+
+#define SPCOIL_NVRAM_FAIL				(SPCOIL_START * 16 + 14)//NVRAM校验码错误
 #define SPCOIL_WATCHDOG					(SPCOIL_START * 16 + 15)//看门狗溢出
 #define SPCOIL_UART0_SEND_BUSY			(SPCOIL_START * 16 + 16)//UART1发送忙
 #define SPCOIL_UART0_RECV_BUSY			(SPCOIL_START * 16 + 17)//UART1接收忙
@@ -200,6 +202,7 @@ extern void initWatchDog(void);//看门狗初始化
 extern void feedWatchDog(void) reentrant;//喂狗
 extern void enableWatchDog(void);//使能看门狗
 extern void disableWatchDog(void);//关闭看门狗(未锁定)
+void checkWatchDog(void);//检查看门狗状态
 /*****************************************************************************/
 void assertCoilAddress(uint16_t adr) reentrant;
 void assertRegisterAddress(uint16_t adr) reentrant;

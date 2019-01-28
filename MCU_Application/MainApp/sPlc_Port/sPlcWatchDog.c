@@ -17,3 +17,17 @@ void disableWatchDog(void){//关闭看门狗(未锁定)
 void feedWatchDog(void) reentrant{//喂狗
 	WDTCN = 0xA5;
 }
+void checkWatchDog(void){//检查看门狗状态
+#if CONFIG_SPLC_USING_WDT == 1
+	if ((RSTSRC & 0x02) == 0x00){
+		if(RSTSRC == 0x08){//检测WDT看门狗 看门狗复位后锁定
+			SET(SPCOIL_WATCHDOG);
+			setLedError(DEBUG_LED_ON);
+			setLedRun(DEBUG_LED_ON);
+			setLedDac(DEBUG_LED_OFF);
+			setLedEprom(DEBUG_LED_OFF);
+			delayMs(100);
+		}
+	}
+#endif
+}

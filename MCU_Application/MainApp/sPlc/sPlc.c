@@ -115,18 +115,7 @@ void clearSPCOIL(){//清除特特殊线圈
 }
 /*****************************************************************************/
 void sPlcInit(void){//软逻辑初始化
-#if CONFIG_SPLC_USING_WDT == 1
-	if ((RSTSRC & 0x02) == 0x00){
-		if(RSTSRC == 0x08)
-		{//检测WDT看门狗 看门狗复位后锁定
-			setLedError(DEBUG_LED_ON);
-			setLedRun(DEBUG_LED_ON);
-			setLedDac(DEBUG_LED_OFF);
-			setLedEprom(DEBUG_LED_OFF);
-			while(1);
-		}
-	}
-#endif
+	checkWatchDog();//检查看门狗状态
 	setLedError(DEBUG_LED_OFF);
 	setLedRun(DEBUG_LED_OFF);
 	setLedDac(DEBUG_LED_OFF);

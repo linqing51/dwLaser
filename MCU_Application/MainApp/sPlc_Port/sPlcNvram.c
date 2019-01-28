@@ -1,32 +1,32 @@
 #include "sPlcNvram.h"
 /*****************************************************************************/
 void loadNvram(void){//从EPROM中载入NVRAM
-	memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
-	setLedEprom(DEBUG_LED_ON);
-	epromRead(0, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
-	setLedEprom(DEBUG_LED_OFF);
-	clearEM();
-	clearR();
-	clearT();
-	clearTD();
-	clearC();
-	clearX();
-	clearY();
-	clearSPREG();
-	clearSPCOIL();
-	memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));
-#if CONFIG_SPLC_USING_WDT == 1
-	if ((RSTSRC & 0x02) == 0x00){
-		if(RSTSRC == 0x08){//检测WDT看门狗 看门狗复位后锁定
-			SET(SPCOIL_WATCHDOG);
-			setLedError(DEBUG_LED_ON);
-			setLedRun(DEBUG_LED_ON);
-			setLedDac(DEBUG_LED_OFF);
-			setLedEprom(DEBUG_LED_OFF);
-			delayMs(100);
-		}
+	//判断EPROM是否存在
+	uint8_t sPlcDev[2];
+	epromRead((CONFIG_EPROM_SIZE - 2), sPlcDev, 2);//从EPROM中恢复MR
+	if((sPlcDev[0] == (CONFIG_SPLC_DEV & 0xFF)) && (sPlcDev[1] == ((CONFIG_SPLC_DEV >> 8) && 0xFF))){//EPROM 校验码正确
+		RES(SPCOIL_NVRAM_FAIL);
+		memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
+		setLedEprom(DEBUG_LED_ON);
+		epromRead(0, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
+		setLedEprom(DEBUG_LED_OFF);
+		clearEM();
+		clearR();
+		clearT();
+		clearTD();
+		clearC();
+		clearX();
+		clearY();
+		clearSPREG();
+		clearSPCOIL();
+		memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 	}
-#endif
+	else{//校验码错误
+		clearNvram();//清空EPROM
+		epromWriteOneByte((CONFIG_EPROM_SIZE - 2), (uint8_t)(CONFIG_SPLC_DEV & 0xFF));
+		epromWriteOneByte((CONFIG_EPROM_SIZE - 1), (uint8_t)((CONFIG_SPLC_DEV >> 8) & 0xFF));
+		SET(SPCOIL_NVRAM_FAIL);
+	}
 }
 void clearNvram(void){//清除NVRAM数据	
 	idata uint8_t oldEA;
