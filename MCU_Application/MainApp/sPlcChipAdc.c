@@ -90,17 +90,19 @@ void initChipAdc(void){//ADC模块初始化
 }
 void chipAdcProcess(void){//循环采集ADC
 	idata uint16_t result = 0;
+	float ftmp;
 #ifdef C8051F020
 	//while(!AD0INT);
 #endif
 	result = (ADC0 & 0x0FFF);
 	refreshAdcData(&adcTempDat[adcSelect], result);
-//	if(adcTempDat[adcSelect].out < 100){
-//		NVRAM0[EM_ADC_0 + adcSelect] = 0;
-//	}
-//	else{
+	if(adcSelect >= 0 && adcSelect <= 31){//LD显示值
+		ftmp = (float)(adcTempDat[adcSelect].out) *  CONFIG_SPLC_ADC_INTERNAL_VREF / 4096.0 / 19.78788 / 0.1;
+		NVRAM0[EM_ADC_0 + adcSelect] = (int16_t)ftmp;
+	}
+	else{//PD显示值
 		NVRAM0[EM_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
-//	}
+	}
 	if(adcSelect < (CONFIG_SPLC_ADC_CHANNLE - 1)){
 		adcSelect ++;
 	}
@@ -272,8 +274,8 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP1
 			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = true;
-			ADCMUX_0_3_S1 = true;
-			ADCMUX_0_3_S0 = true;
+			ADCMUX_4_7_S1 = true;
+			ADCMUX_4_7_S0 = true;
 			//CHIP2
 			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = true;
@@ -303,7 +305,7 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP1
 			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = true;
-			ADCMUX_4_7_S1 = true;
+			ADCMUX_4_7_S1 = false;
 			ADCMUX_4_7_S0 = true;
 			//CHIP2
 			ADCMUX_8_11_OE1 = true;
