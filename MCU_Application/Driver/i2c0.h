@@ -1,8 +1,7 @@
 #ifndef __I2C0_H__
 #define __I2C0_H__
 /*****************************************************************************/
-#include "compiler_defs.h"
-#include "C8051F580_defs.h"
+#include "lib.h"
 /*****************************************************************************/
 void iic0Init(void);
 void iic0Start(void);

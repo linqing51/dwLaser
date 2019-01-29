@@ -1,7 +1,7 @@
 #ifndef __DELAY_H__
 #define __DELAY_H__
 /*****************************************************************************/
-#include "appConfig.h"
+#include "lib.h"
 /*****************************************************************************/
 void delayMs(uint8_t ms) reentrant;
 void delayUs(uint8_t us) reentrant;

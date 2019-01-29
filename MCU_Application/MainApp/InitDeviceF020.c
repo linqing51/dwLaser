@@ -2,12 +2,7 @@
 //  Generated Initialization File  //
 /////////////////////////////////////
 #ifdef C8051F020
-#include "stdint.h"
-#include "stdbool.h"
-#include "endian.h"
-#include "si_toolchain.h"
-#include "compiler_defs.h"
-#include "C8051F020_defs.h"
+#include "lib.h"
 // Peripheral specific initialization functions,
 // Called from the Init_Device() function
 static void Reset_Sources_Init()

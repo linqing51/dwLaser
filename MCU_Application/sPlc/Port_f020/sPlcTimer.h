@@ -1,7 +1,9 @@
 #ifndef __SPLCTIMER_H__
 #define __SPLCTIMER_H__
 /*****************************************************************************/
-#include "sPlcPort.h"
+#include "sPlc.h"
+#include "sPlcConfig.h"
+#include "lib.h"
 
 
 #endif

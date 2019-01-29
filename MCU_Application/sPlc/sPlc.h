@@ -4,14 +4,9 @@
 #include "sPlcConfig.h"
 #include "sPlcFun.h"
 #include "sPlcPort.h"
+#include "lib.h"
 /*****************************************************************************/
-#include <stdio.h>
-#include <stdlib.h> 
-#include <string.h>
-#include <INTRINS.H>
-#include <ctype.h>
-#include <LIMITS.H>
-#include <math.h>
+
 /*****************************************************************************/
 extern xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 extern xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次

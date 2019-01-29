@@ -3,12 +3,7 @@
 /*****************************************************************************/
 #include "sPlc.h"
 #include "sPlcConfig.h"
-#include "stdint.h"
-#include "stdbool.h"
-#include "endian.h"
-#include "si_toolchain.h"
-#include "compiler_defs.h"
-#include "C8051F580_defs.h"
+#include "lib.h"
 /*****************************************************************************/
 
 
