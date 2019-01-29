@@ -114,12 +114,12 @@ void clearSPCOIL(){//清除特特殊线圈
 	}
 }
 /*****************************************************************************/
-void sPlcInit(void){//软逻辑初始化
-	checkWatchDog();//检查看门狗状态
+void sPlcInit(void){//软逻辑初始化	
 	setLedError(DEBUG_LED_OFF);
 	setLedRun(DEBUG_LED_OFF);
 	setLedDac(DEBUG_LED_OFF);
 	setLedEprom(DEBUG_LED_OFF);
+	checkWatchDog();//检查看门狗状态
 	initWatchDog();//看门狗使能
 	disableWatchDog();//屏蔽看门狗
 #if CONFIG_SPLC_USING_UART1 == 1
