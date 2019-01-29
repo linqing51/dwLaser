@@ -1,12 +1,12 @@
 
-#line 1 "MainApp\sPlc.c" /0
+#line 1 "sPlc\sPlc.c" /0
   
-#line 1 "MainApp\sPlc.h" /0
+#line 1 "sPlc\sPlc.h" /0
  
  
  
   
-#line 1 "MainApp\appConfig.h" /0
+#line 1 "sPlc\sPlcConfig.h" /0
  
  
  
@@ -14,7 +14,11 @@
  
  
  
+#line 8 "sPlc\sPlcConfig.h" /1
+  
+  
  
+#line 11 "sPlc\sPlcConfig.h" /0
  
  
  
@@ -71,7 +75,10 @@
  
  
  
+#line 67 "sPlc\sPlcConfig.h" /1
+  
  
+#line 69 "sPlc\sPlcConfig.h" /0
  
  
  
@@ -135,6 +142,497 @@
  
  
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 "sPlc\sPlc.h" /0
+ 
+  
+#line 1 "sPlc\sPlcFun.h" /0
+ 
+ 
+ 
+  
+#line 1 "sPlc\sPlcConfig.h" /0
+ 
+#line 2 "sPlc\sPlcConfig.h" /1
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+ 
+#line 4 "sPlc\sPlcFun.h" /0
+#line 4 "sPlc\sPlcFun.h" /0
+ 
+  
+#line 1 "sPlc\sPlcConfig.h" /0
+ 
+#line 2 "sPlc\sPlcConfig.h" /1
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+ 
+#line 5 "sPlc\sPlcFun.h" /0
+#line 5 "sPlc\sPlcFun.h" /0
+ 
+  
+#line 1 "sPlc\sPlcFun.h" /0
+ 
+#line 2 "sPlc\sPlcFun.h" /1
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 6 "sPlc\sPlcFun.h" /0
+#line 6 "sPlc\sPlcFun.h" /0
  
   
 #line 1 ".\Lib\stdint.h" /0
@@ -192,7 +690,7 @@
 #line 51 ".\Lib\stdint.h" /0
  
  
-#line 130 "MainApp\appConfig.h" /0
+#line 7 "sPlc\sPlcFun.h" /0
  
   
 #line 1 ".\Lib\stdbool.h" /0
@@ -243,7 +741,7 @@
  
  
  
-#line 131 "MainApp\appConfig.h" /0
+#line 8 "sPlc\sPlcFun.h" /0
  
   
 #line 1 ".\Lib\endian.h" /0
@@ -305,7 +803,7 @@
 #line 55 ".\Lib\endian.h" /0
  
  
-#line 132 "MainApp\appConfig.h" /0
+#line 9 "sPlc\sPlcFun.h" /0
  
   
 #line 1 ".\Lib\si_toolchain.h" /0
@@ -1217,7 +1715,7 @@
  
  
  
-#line 133 "MainApp\appConfig.h" /0
+#line 10 "sPlc\sPlcFun.h" /0
  
   
 #line 1 ".\Lib\compiler_defs.h" /0
@@ -2143,7 +2641,2098 @@
  
  
  
-#line 134 "MainApp\appConfig.h" /0
+#line 11 "sPlc\sPlcFun.h" /0
+ 
+ 
+ 
+ void SET(uint16_t A) reentrant; 
+ void RES(uint16_t A) reentrant; 
+ void FLIP(uint16_t A) reentrant; 
+ uint8_t LD(uint16_t A) reentrant; 
+ uint8_t LDB(uint16_t A) reentrant; 
+ uint8_t LDP(uint16_t A) reentrant; 
+ uint8_t LDN(uint16_t A) reentrant; 
+ 
+ void T100US(uint8_t A, uint8_t start, uint16_t value) reentrant; 
+ void T1MS(uint8_t A, uint8_t start, uint16_t value) reentrant; 
+ void T10MS(uint8_t A, uint8_t start, uint16_t value) reentrant; 
+ void T100MS(uint8_t A, uint8_t start, uint16_t value) reentrant; 
+ 
+ void SWAP(int16_t *dist, int32_t *src) reentrant; 
+ void ABS16(int16_t *dist, int16_t *src) reentrant; 
+ void ABS32(int32_t *dist, int32_t *src) reentrant; 
+ void SMIN16(int16_t *index, uint16_t *length, int16_t *min) reentrant; 
+ void SMAX16(int16_t *index, uint16_t *length, int16_t *max) reentrant; 
+ void UMIN16(uint16_t *index, uint16_t *length, uint16_t *min)reentrant; 
+ void UMAX16(uint16_t *index, uint16_t *length, uint16_t *max) reentrant; 
+ void SUM16(int16_t *index, int16_t *length, int32_t *sum) reentrant; 
+ void MULT32(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant; 
+ void MULTS16(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void MULT16(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void SUB32(int32_t *Sa, int32_t *Sb, int32_t *D) reentrant; 
+ void SUBS16(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void SUB16(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void ADD32(int32_t *Sa, int32_t *Sb, int32_t *D) reentrant; 
+ void ADDS16(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void ADD16(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
+ void TENV(int16_t *dist, int16_t *src) reentrant; 
+ void TNTC(int16_t *dist, int16_t *src) reentrant; 
+ 
+ void XTAB(int16_t *distY, int16_t *srcX, int16_t *index, int16_t *length) reentrant; 
+ void YTAB(int16_t *distX, int16_t *srcY, int16_t *index, int16_t *length) reentrant; 
+ 
+ void IMDIO(void) reentrant; 
+ void TPCTL(int16_t *ref, int16_t *fb, int16_t buf) reentrant; 
+ void HSPWM(int16_t *pos, int16_t *neg, int16_t pot) reentrant; 
+ 
+ 
+ 
+#line 5 "sPlc\sPlc.h" /0
+ 
+  
+#line 1 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+ 
+ 
+  
+#line 1 "sPlc\sPlc.h" /0
+ 
+#line 2 "sPlc\sPlc.h" /1
+  
+ 
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\sPlc\Port_f020\sPlcPort.h" /0
+#line 4 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+  
+#line 1 "sPlc\sPlcConfig.h" /0
+ 
+#line 2 "sPlc\sPlcConfig.h" /1
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+ 
+#line 5 ".\sPlc\Port_f020\sPlcPort.h" /0
+#line 5 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+  
+#line 1 ".\Lib\stdint.h" /0
+
+
+
+
+ 
+ 
+ 
+#line 8 ".\Lib\stdint.h" /1
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 6 ".\sPlc\Port_f020\sPlcPort.h" /0
+#line 6 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+  
+#line 1 ".\Lib\stdbool.h" /0
+
+
+
+
+ 
+ 
+ 
+#line 8 ".\Lib\stdbool.h" /1
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 45 ".\Lib\stdbool.h" /0
+ 
+#line 7 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+  
+#line 1 ".\Lib\endian.h" /0
+
+
+
+
+ 
+ 
+ 
+#line 8 ".\Lib\endian.h" /1
+  
+ 
+  
+  
+
+ 
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+#line 8 ".\sPlc\Port_f020\sPlcPort.h" /0
+#line 8 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+  
+#line 1 ".\Lib\si_toolchain.h" /0
+
+
+
+
+ 
+ 
+ 
+#line 8 ".\Lib\si_toolchain.h" /1
+  
+ 
+  
+  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+  
+ 
+
+
+
+
+ 
+  
+ 
+
+
+
+
+
+
+
+
+
+ 
+  
+ 
+
+
+
+
+
+
+
+
+
+
+ 
+  
+ 
+
+
+
+
+
+
+
+
+
+
+ 
+  
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+  
+
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+  
+
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+
+  
+
+  
+
+ 
+
+
+  
+
+  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+
+  
+
+ 
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 9 ".\sPlc\Port_f020\sPlcPort.h" /0
+#line 9 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+  
+#line 1 ".\Lib\compiler_defs.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 123 ".\Lib\compiler_defs.h" /1
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+ 
+ 
+ 
+  
+  
+  
+ 
+  
+ 
+ 
+  
+  
+ 
+ 
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 804 ".\Lib\compiler_defs.h" /0
+ 
+ 
+ 
+ 
+#line 10 ".\sPlc\Port_f020\sPlcPort.h" /0
  
   
 #line 1 ".\Lib\C8051F580_defs.h" /0
@@ -2759,7 +5348,513 @@
  
  
  
-#line 135 "MainApp\appConfig.h" /0
+#line 11 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+#line 1 ".\MainApp\InitDeviceF020.h" /0
+ 
+ 
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\MainApp\appConfig.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 ".\MainApp\InitDeviceF020.h" /0
+ 
+ 
+ void initDeviceF020(void);
+ 
+#line 31 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+  
+#line 1 ".\Lib\delay.h" /0
+ 
+ 
+ 
+  
+#line 1 ".\MainApp\appConfig.h" /0
+ 
+#line 2 ".\MainApp\appConfig.h" /1
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+ 
+#line 4 ".\Lib\delay.h" /0
+#line 4 ".\Lib\delay.h" /0
+ 
+ 
+ void delayMs(uint8_t ms) reentrant;
+ void delayUs(uint8_t us) reentrant;
+ void hwDelayInit(uint8_t reload_h, uint8_t reload_l);
+ void hwDelay(uint8_t control, uint8_t reload_h, uint8_t reload_l);
+ 
+ 
+ 
+#line 32 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\sPlc\Port_f020\sPlcTimer.h" /0
+ 
+ 
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\sPlc\Port_f020\sPlcPort.h" /0
+ 
+#line 2 "\GitHub\dwLaser\MCU_Application\sPlc\Port_f020\sPlcPort.h" /1
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+ 
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 4 "\GitHub\dwLaser\MCU_Application\sPlc\Port_f020\sPlcTimer.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\sPlc\Port_f020\sPlcTimer.h" /0
+ 
+ 
+ 
+ 
+#line 34 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\sPlc\Port_f020\sPlcInt.h" /0
+ 
+ 
+ 
+  
+#line 1 "sPlc\sPlcConfig.h" /0
+ 
+#line 2 "sPlc\sPlcConfig.h" /1
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+  
+ 
+ 
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+  
+ 
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+  
+  
+  
+  
+  
+ 
+  
+ 
+ 
+ 
+#line 4 "\GitHub\dwLaser\MCU_Application\sPlc\Port_f020\sPlcInt.h" /0
+#line 4 "\GitHub\dwLaser\MCU_Application\sPlc\Port_f020\sPlcInt.h" /0
+ 
+  
+#line 1 "\GitHub\dwLaser\MCU_Application\sPlc\Port_f020\sPlcPort.h" /0
+ 
+#line 2 "\GitHub\dwLaser\MCU_Application\sPlc\Port_f020\sPlcPort.h" /1
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+ 
+  
+  
+ 
+  
+ 
+ 
+ 
+  
+ 
+ 
+  
+ 
+ 
+ 
+  
+  
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 5 "\GitHub\dwLaser\MCU_Application\sPlc\Port_f020\sPlcInt.h" /0
+#line 5 "\GitHub\dwLaser\MCU_Application\sPlc\Port_f020\sPlcInt.h" /0
+ 
+ 
+ 
+ 
+#line 35 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+ 
+#line 37 ".\sPlc\Port_f020\sPlcPort.h" /1
+  
+ 
+#line 39 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+ 
+#line 41 ".\sPlc\Port_f020\sPlcPort.h" /1
+  
+ 
+#line 43 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+#line 44 ".\sPlc\Port_f020\sPlcPort.h" /1
+  
+ 
+#line 46 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+ 
+#line 48 ".\sPlc\Port_f020\sPlcPort.h" /1
+  
+  
+ 
+#line 51 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+ 
+ 
+ 
+#line 55 ".\sPlc\Port_f020\sPlcPort.h" /1
+  
+ 
+#line 57 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+ 
+#line 59 ".\sPlc\Port_f020\sPlcPort.h" /1
+  
+ 
+#line 61 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+ 
+#line 63 ".\sPlc\Port_f020\sPlcPort.h" /1
+ 
+#line 64 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+ 
+#line 66 ".\sPlc\Port_f020\sPlcPort.h" /1
+  
+ 
+#line 68 ".\sPlc\Port_f020\sPlcPort.h" /0
+ 
+ 
+ 
+ 
+ 
+ 
+#line 6 "sPlc\sPlc.h" /0
  
  
   
@@ -2809,7 +5904,7 @@
  
  
  
-#line 137 "MainApp\appConfig.h" /0
+#line 8 "sPlc\sPlc.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\stdlib.h" /0
@@ -2917,7 +6012,7 @@
  #pragma RESTORE
  
  
-#line 138 "MainApp\appConfig.h" /0
+#line 9 "sPlc\sPlc.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\string.h" /0
@@ -2980,7 +6075,7 @@
  #pragma RESTORE
  
  
-#line 139 "MainApp\appConfig.h" /0
+#line 10 "sPlc\sPlc.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\INTRINS.H" /0
@@ -3028,7 +6123,7 @@
  
  
  
-#line 140 "MainApp\appConfig.h" /0
+#line 11 "sPlc\sPlc.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\ctype.h" /0
@@ -3066,7 +6161,7 @@
  #pragma RESTORE
  
  
-#line 141 "MainApp\appConfig.h" /0
+#line 12 "sPlc\sPlc.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\LIMITS.H" /0
@@ -3099,7 +6194,7 @@
  
  
  
-#line 142 "MainApp\appConfig.h" /0
+#line 13 "sPlc\sPlc.h" /0
  
   
 #line 1 "C:\Keil_v5\C51\Inc\math.h" /0
@@ -3173,4310 +6268,64 @@
  #pragma RESTORE
  
  
-#line 143 "MainApp\appConfig.h" /0
- 
- 
-  
-#line 1 "MainApp\InitDeviceF580.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 "MainApp\InitDeviceF580.h" /0
-#line 4 "MainApp\InitDeviceF580.h" /0
- 
- 
- void initDevice(void);
- 
-#line 145 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Lib\delay.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Lib\delay.h" /0
-#line 4 ".\Lib\delay.h" /0
- 
- 
- void delayMs(uint8_t ms) reentrant;
- void delayUs(uint8_t us) reentrant;
- void hwDelayInit(uint8_t reload_h, uint8_t reload_l);
- void hwDelay(uint8_t control, uint8_t reload_h, uint8_t reload_l);
- 
- 
- 
-#line 146 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Driver\i2c0.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Driver\i2c0.h" /0
-#line 4 ".\Driver\i2c0.h" /0
- 
- 
- 
- 
- void iic0Init(void);
- void iic0Start(void);
- void iic0Stop(void);
- uint8_t iic0WaitAck(void);
- void iic0Ack(void);
- void iic0NAck(void);
- void iic0SendByte(uint8_t txd);
- uint8_t iic0ReadByte(uint8_t ack);
- 
- 
- 
- 
-#line 147 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Driver\i2c1.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Driver\i2c1.h" /0
-#line 4 ".\Driver\i2c1.h" /0
- 
- 
- 
- 
- void iic1Init(void);
- void iic1Start(void);
- void iic1Stop(void);
- uint8_t iic1WaitAck(void);
- void iic1Ack(void);
- void iic1NAck(void);
- void iic1SendByte(uint8_t txd);
- uint8_t iic1ReadByte(uint8_t ack);
- 
- 
- 
- 
-#line 148 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Driver\i2c2.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Driver\i2c2.h" /0
-#line 4 ".\Driver\i2c2.h" /0
- 
- 
- 
- 
- void iic2Init(void);
- void iic2Start(void);
- void iic2Stop(void);
- uint8_t iic2WaitAck(void);
- void iic2Ack(void);
- void iic2NAck(void);
- void iic2SendByte(uint8_t txd);
- uint8_t iic2ReadByte(uint8_t ack);
- 
- 
- 
- 
-#line 149 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Driver\i2c3.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Driver\i2c3.h" /0
-#line 4 ".\Driver\i2c3.h" /0
- 
- 
- 
- 
- void iic3Init(void);
- void iic3Start(void);
- void iic3Stop(void);
- uint8_t iic3WaitAck(void);
- void iic3Ack(void);
- void iic3NAck(void);
- void iic3SendByte(uint8_t txd);
- uint8_t iic3ReadByte(uint8_t ack);
- 
- 
- 
- 
-#line 150 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Driver\i2c4.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Driver\i2c4.h" /0
-#line 4 ".\Driver\i2c4.h" /0
- 
- 
- 
- 
- void iic4Init(void);
- void iic4Start(void);
- void iic4Stop(void);
- uint8_t iic4WaitAck(void);
- void iic4Ack(void);
- void iic4NAck(void);
- void iic4SendByte(uint8_t txd);
- uint8_t iic4ReadByte(uint8_t ack);
- 
- 
- 
- 
-#line 151 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Driver\i2c5.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Driver\i2c5.h" /0
-#line 4 ".\Driver\i2c5.h" /0
- 
- 
- 
- 
- void iic5Init(void);
- void iic5Start(void);
- void iic5Stop(void);
- uint8_t iic5WaitAck(void);
- void iic5Ack(void);
- void iic5NAck(void);
- void iic5SendByte(uint8_t txd);
- uint8_t iic5ReadByte(uint8_t ack);
- 
- 
- 
- 
-#line 152 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Driver\i2c6.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Driver\i2c6.h" /0
-#line 4 ".\Driver\i2c6.h" /0
- 
- 
- 
- 
- void iic6Init(void);
- void iic6Start(void);
- void iic6Stop(void);
- uint8_t iic6WaitAck(void);
- void iic6Ack(void);
- void iic6NAck(void);
- void iic6SendByte(uint8_t txd);
- uint8_t iic6ReadByte(uint8_t ack);
- 
- 
- 
- 
-#line 153 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Driver\eprom.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Driver\eprom.h" /0
-#line 4 ".\Driver\eprom.h" /0
- 
- 
- 
- void epromInit(void);
- uint8_t epromReadOneByte(uint16_t ReadAddr);
- void epromWriteOneByte(uint16_t WriteAddr, uint8_t DataToWrite);
- void epromWriteLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len);
- uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len);
- void epromRead(uint16_t ReadAddr,uint8_t *pBuffer,uint16_t NumToRead);
- void epromWrite(uint16_t WriteAddr, uint8_t *pBuffer, uint16_t NumToWrite);
- uint8_t epromTest(void);
- 
-#line 154 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Driver\mcp47x6.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Driver\mcp47x6.h" /0
-#line 4 ".\Driver\mcp47x6.h" /0
- 
- 
- uint8_t mcp47x6Init(void);
- void mcp47x6Write(uint8_t channel, uint16_t dat) reentrant;
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 155 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Driver\inPca9554.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Driver\inPca9554.h" /0
-#line 4 ".\Driver\inPca9554.h" /0
- 
- 
- void inPca9554Init(void);
- uint8_t inPca9554Read(void);
- void inPca9554Write(uint8_t wdata);
- 
- 
-#line 156 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Driver\outPca9554.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Driver\outPca9554.h" /0
-#line 4 ".\Driver\outPca9554.h" /0
- 
- 
- void outPca9554Init(void);
- uint8_t outPca9554Read(void);
- void outPca9554Write(uint8_t wdata);
- 
- 
-#line 157 "MainApp\appConfig.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\sPlcUart.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 "MainApp\sPlcUart.h" /0
-#line 4 "MainApp\sPlcUart.h" /0
- 
- 
- void initUart1(uint32_t baudrate);
- void USEND(uint16_t port, uint16_t sendBufAdr, uint16_t length); 
- void URECV(uint16_t port, uint16_t recvBufAdr, uint16_t length); 
- 
-#line 160 "MainApp\appConfig.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\sPlcChipAdc.h" /0
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 3 "MainApp\sPlcChipAdc.h" /0
-#line 3 "MainApp\sPlcChipAdc.h" /0
- 
- 
- typedef struct{ 
- uint16_t dat[14];
- uint16_t out;
- uint8_t wIndex; 
- }adcTempDat_t;
- 
- void initChipAdc(void);
- void chipAdcProcess(void);
- void refreshAdcData(adcTempDat_t *s , uint16_t dat);
- 
-#line 163 "MainApp\appConfig.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\sPlcDac.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 "MainApp\sPlcDac.h" /0
-#line 4 "MainApp\sPlcDac.h" /0
- 
- 
- void initChipDac(void);
- void refreshDac(void);
- void selfTestDac(void);
- 
- 
-#line 166 "MainApp\appConfig.h" /0
- 
- 
- 
-  
-#line 1 ".\Modbus\Modbus.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Modbus\Modbus.h" /0
-#line 4 ".\Modbus\Modbus.h" /0
- 
- 
- extern volatile uint16_t modbusTimerValue;
- extern volatile uint8_t modbusReceiveCounter; 
- extern xdata volatile uint8_t modbusReceiveBuffer[256];
- 
- extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);
- extern void modbusPorcess(void);
- 
-#line 169 "MainApp\appConfig.h" /0
- 
-  
-#line 1 ".\Modbus\ModbusPort.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 ".\Modbus\ModbusPort.h" /0
-#line 4 ".\Modbus\ModbusPort.h" /0
- 
- 
- extern void modBusUartInitialise(uint32_t baudrate);
- extern void modBusTimerInitialise(void);
- extern void modBusUartPutch(uint8_t c);
- extern uint8_t modBusUartString(uint8_t *s, uint16_t Length);
- extern void receiveInterrupt(uint8_t Data);
- 
- 
-#line 170 "MainApp\appConfig.h" /0
- 
- 
-  
-#line 1 "MainApp\sPLC.h" /0
- 
-#line 2 "MainApp\sPLC.h" /1
-  
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
-  
-  
- 
-  
-  
- 
- 
-  
-  
- 
-  
-  
- 
-  
-  
- 
- 
-  
-  
- 
-  
-  
- 
-  
-  
- 
-  
-  
- 
-  
-  
- 
-  
-  
- 
-  
-  
- 
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-#line 172 "MainApp\appConfig.h" /0
-#line 172 "MainApp\appConfig.h" /0
- 
-  
-#line 1 "MainApp\sPlcFun.h" /0
- 
- 
- 
-  
-#line 1 "MainApp\appConfig.h" /0
- 
-#line 2 "MainApp\appConfig.h" /1
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
-  
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
- 
-  
-  
-  
-  
-  
-  
- 
- 
-  
-  
-  
-  
- 
- 
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
- 
- 
-  
- 
- 
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
- 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
- 
- 
-  
-  
- 
-  
-  
- 
- 
-#line 4 "MainApp\sPlcFun.h" /0
-#line 4 "MainApp\sPlcFun.h" /0
- 
- 
- void REBOOT(void) reentrant; 
- 
- void SET(uint16_t A) reentrant; 
- void RES(uint16_t A) reentrant; 
- void FLIP(uint16_t A) reentrant; 
- uint8_t LD(uint16_t A) reentrant; 
- uint8_t LDB(uint16_t A) reentrant; 
- uint8_t LDP(uint16_t A) reentrant; 
- uint8_t LDN(uint16_t A) reentrant; 
- 
- void T100US(uint8_t A, uint8_t start, uint16_t value) reentrant; 
- void T1MS(uint8_t A, uint8_t start, uint16_t value) reentrant; 
- void T10MS(uint8_t A, uint8_t start, uint16_t value) reentrant; 
- void T100MS(uint8_t A, uint8_t start, uint16_t value) reentrant; 
- 
- void ADD(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
- void ADDS(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
- void DADD(int32_t *Sa, int32_t *Sb, int32_t *D) reentrant; 
- void SUB(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
- void SUBS(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant; 
- void DSUB(int32_t *Sa, int32_t *Sb, int32_t *D) reentrant; 
- void MULT(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant; 
- void MULTS(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant; 
- 
- 
-#line 173 "MainApp\appConfig.h" /0
- 
- 
- 
-#line 4 "MainApp\sPlc.h" /0
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+#line 14 "sPlc\sPlc.h" /0
  
  
  extern xdata int16_t volatile NVRAM0[(241 + 1)]; 
  extern xdata int16_t volatile NVRAM1[(241 + 1)]; 
+ extern idata volatile uint8_t TimerCounter_1mS;
+ extern idata volatile uint8_t TimerCounter_10mS;
+ extern idata volatile uint8_t TimerCounter_100mS;
+ extern idata volatile uint8_t Timer0_L, Timer0_H;
  
- uint8_t getGlobalInterrupt(void);
- void setLedRun(uint8_t st);
- uint8_t getLedRun(void);
- void setLedEprom(uint8_t st);
- uint8_t getLedEprom(void);
- void setLedDac(uint8_t st);
- uint8_t getLedDac(void);
- void setLedError(uint8_t st);
- uint8_t getLedError(void);
  void sPlcInit(void); 
+ 
  void sPlcProcessStart(void); 
  void sPlcProcessEnd(void); 
- void wdtFeed(void) reentrant;
- void wdtEnable(void) reentrant;
- void wdtDisable(void) reentrant;
+ extern void initWatchDog(void); 
+ extern void feedWatchDog(void) reentrant; 
+ extern void enableWatchDog(void); 
+ extern void disableWatchDog(void); 
+ void checkWatchDog(void); 
  
  void assertCoilAddress(uint16_t adr) reentrant;
  void assertRegisterAddress(uint16_t adr) reentrant;
  
- void nvramUpdata(void);
+ void clearX(void);
+ void clearY(void);
  void clearDM(void);
  void clearEM(void);
  void clearR(void);
  void clearT(void);
  void clearTD(void);
  void clearC(void);
- void nvramLoad(void);
- void nvramSave(void);
- void nvramUpdata(void);
+ void clearSPCOIL();
+ void clearSPREG(void);
+ extern void loadNvram(void);
+ extern void clearNvram(void);
+ extern void saveNvram(void);
+ extern void updataNvram(void);
  
+ void enterSplcIsr(void);
+ void exitSplcIsr(void);
+ 
+ void initSplcTimer(void);
  void chipDacInit(void);
  void chipAdcInit(void);
  void sPlcInit(void);
- void refreshInput(void);
- void refreshOutput(void);
  void refreshDac(void);
  
  
-#line 1 "MainApp\sPlc.c" /0
+#line 1 "sPlc\sPlc.c" /0
  
  
  xdata int16_t volatile NVRAM0[(241 + 1)]; 
  xdata int16_t volatile NVRAM1[(241 + 1)]; 
- static idata volatile uint8_t TimerCounter_1mS = 0;
- static idata volatile uint8_t TimerCounter_10mS = 0;
- static idata volatile uint8_t TimerCounter_100mS = 0;
- static idata volatile uint8_t Timer0_L, Timer0_H;
- bit debugLed0, debugLed1, debugLed2, debugLed3;
+ idata volatile uint8_t TimerCounter_1mS = 0;
+ idata volatile uint8_t TimerCounter_10mS = 0;
+ idata volatile uint8_t TimerCounter_100mS = 0;
+ idata volatile uint8_t Timer0_L, Timer0_H;
  
- static idata volatile int8_t inputFilter[(212 - 212 + 1) * 16]; 
- 
- uint8_t getGlobalInterrupt(void){
- return EA;
- }
- void setLedRun(uint8_t st){ 
- debugLed0 = st;
- }
- uint8_t getLedRun(void){ 
- return debugLed0;
- }
- void setLedEprom(uint8_t st){ 
- debugLed1 = st;
- }
- uint8_t getLedEprom(void){ 
- return debugLed1;
- }
- void setLedDac(uint8_t st){ 
- debugLed2 = st;
- }
- uint8_t getLedDac(void){ 
- return debugLed2;
- }
- void setLedError(uint8_t st){ 
- debugLed3 = st;
- }
- uint8_t getLedError(void){ 
- return debugLed3;
- }
  void assertCoilAddress(uint16_t adr) reentrant{ 
  
  if(adr > (241 * 16))
@@ -7489,35 +6338,36 @@
  while(1);
  
  }
- static void clearDM(void){ 
+ 
+ void clearDM(void){ 
  uint16_t i;
  for(i = 0;i <= 19;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- static void clearMR(void){ 
+ void clearMR(void){ 
  uint16_t i;
  for(i = 0;i <= 3;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- static void clearEM(void){ 
+ void clearEM(void){ 
  uint16_t i;
  for(i = 20;i <= 159;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- static void clearR(void){ 
+ void clearR(void){ 
  uint16_t i;
  for(i = 4;i <= 11;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- static void clearT(void){ 
+ void clearT(void){ 
  uint16_t i;
  for(i = 160;i <= 160;i ++){
  NVRAM0[i] = 0x0;
@@ -7532,7 +6382,7 @@
  NVRAM1[i] = 0x0;
  }
  }
- static void clearTD(void){ 
+ void clearTD(void){ 
  uint16_t i;
  for(i = 163;i <= 178;i ++){
  NVRAM0[i] = 0x0;
@@ -7547,334 +6397,171 @@
  NVRAM1[i] = 0x0;
  }
  }
- static void clearC(void){ 
+ void clearC(void){ 
  uint16_t i;
  for(i = 211;i <= 211;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- static void clearX(void){ 
+ void clearX(void){ 
  uint16_t i;
  for(i = 212;i <= 212;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- static void clearY(void){ 
+ void clearY(void){ 
  uint16_t i;
  for(i = 213;i <= 213;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- static void clearSPREG(void){ 
+ void clearSPREG(void){ 
  uint16_t i;
  for(i = 214;i <= 237;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- static void clearSPCOIL(){ 
+ void clearSPCOIL(){ 
  uint16_t i;
  for(i = 238;i <= 241;i ++){
  NVRAM0[i] = 0x0;
  NVRAM1[i] = 0x0;
  }
  }
- static void loadNvram(void){ 
- memset(NVRAM0, 0x0, ((241 + 1) * 2)); 
- setLedEprom(0);
- epromRead(0, (uint8_t*)NVRAM0, ((241 + 1) * 2)); 
- setLedEprom(1);
- clearEM();
- clearR();
- clearT();
- clearTD();
- clearC();
- clearX();
- clearY();
- clearSPREG();
- clearSPCOIL();
- memcpy(NVRAM1, NVRAM0, ((241 + 1) * 2));
- 
- if ((RSTSRC & 0x02) == 0x00){
- if(RSTSRC == 0x08){ 
- SET((238 * 16 + 15));
- setLedError(0);
- setLedRun(0);
- setLedDac(1);
- setLedEprom(1);
- delayMs(100);
- }
- }
- 
- }
- static void saveNvram(void){ 
-  EA = 0;;
- setLedEprom(0);
- epromWrite(0x0, (uint8_t*)NVRAM0, ((3 + 1) * 2));
- setLedEprom(1);
-  EA = 1;;
- }
- static void updataNvram(void){ 
- data uint8_t *sp0, *sp1;
- data uint16_t i;
- sp0 = (uint8_t*)NVRAM0;
- sp1 = (uint8_t*)NVRAM1;
- for(i = (0 * 2);i < ((3 + 1) * 2);i ++){ 
- if(*(sp0 + i) != *(sp1 + i)){
- setLedEprom(0);
- epromWriteOneByte(i, *(sp0 + i));
- setLedEprom(1);
- }	
- }
- sp0 = (uint8_t*)NVRAM0;
- sp1 = (uint8_t*)NVRAM1;
- for(i = (12 * 2);i < ((19 + 1) * 2);i ++){ 
- if(*(sp0 + i) != *(sp1 + i)){
- setLedEprom(0);
- epromWriteOneByte(i, *(sp0 + i));
- setLedEprom(1);
- }
- }
- memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, ((241 + 1) * 2));
- }
- static void clearNvram(void){ 
- idata uint8_t oldEA;
- idata uint16_t i;
- oldEA = EA; 
- EA = 0;
- wdtDisable();
- for(i = 0; i<= 8192;i ++){
- if(getLedEprom()){
- setLedEprom(1);
- }
- else{
- setLedEprom(0);
- }
- epromWriteOneByte(i, 0x0);
- 
- }
- EA = oldEA; 
- }
- 
- 
- 
- static void wdtInit(void){ 
- uint8_t	SFRPAGE_save = SFRPAGE;
- SFRPAGE = 0x00;
- PCA0MD    &= ~0x40;
- PCA0MD    = 0x00;
- PCA0CPL5  = 0xFF;
- SFRPAGE = SFRPAGE_save;
- }
- void wdtEnable(void) reentrant{ 
- PCA0MD    |= 0x40;
- }
- void wdtDisable(void) reentrant{ 
- uint8_t flagEA;
- uint8_t	SFRPAGE_save = SFRPAGE;	
- flagEA = EA;
- EA = 0;
- SFRPAGE = 0x00;
- PCA0MD &= 0xBF;
- SFRPAGE = SFRPAGE_save;
- EA = flagEA;
- }
- void wdtFeed(void) reentrant{ 
- PCA0CPH5 = 0x00;  
- }
- static void pcaInit(void){ 
- }
- static void timer0Init(void){ 
- idata uint16_t temp;
- TimerCounter_1mS = 0;
- TimerCounter_10mS = 0;
- TimerCounter_100mS = 0;
- temp = (uint16_t)(65536 - ((48000000L) / 12 /1000L));
- Timer0_L = temp & 0xFF;
- Timer0_H = (temp >> 8) & 0xFF;
- TH0 = Timer0_H; 
- TL0 = Timer0_L; 
- CKCON &= ~(1 << 3); 
- TMOD &= 0xF0;
- TMOD |= (1 << 0); 
- ET0 = 1; 
- TR0 = 1; 
- }
- static void timer0Isr(void) interrupt 1{ 
- idata uint16_t i;
- idata uint32_t tmp;
- TF0 = 0;
- TR0 = 0;
- TH0 = Timer0_H;
- TL0 = Timer0_L;
- TR0 = 1;
- if(LD((238 * 16 + 2))){ 
- RES((238 * 16 + 2));
- }
- else{ 
- SET((238 * 16 + 2));
- }
- for(i = 163;i <= 178;i ++){ 
- if(NVRAM0[i] < 32767){
- NVRAM0[i] ++;
- }
- }
- if(TimerCounter_1mS >= 10){ 
- if(LD((238 * 16 + 3))){ 
- RES((238 * 16 + 3));
- }
- else{ 
- SET((238 * 16 + 3));
- }
- for(i = 179;i <= 194;i ++){
- if(NVRAM0[i] < 32767){
- NVRAM0[i] ++;
- }
- }
- TimerCounter_10mS ++;
- TimerCounter_1mS = 0;
- }
- if(TimerCounter_10mS >= 10){ 
- if(LD((238 * 16 + 4))){ 
- RES((238 * 16 + 4));
- }
- else{ 
- SET((238 * 16 + 4));
- }
- for(i = 195;i < 210;i ++){
- if(NVRAM0[i] < 32767){
- NVRAM0[i] ++;
- }
- }
- TimerCounter_100mS ++;
- TimerCounter_10mS = 0;
- setLedRun(LD((238 * 16 + 4)));
- }
- if(TimerCounter_100mS >= 10){ 
- if(LD((238 * 16 + 5))){ 
- RES((238 * 16 + 5));
- }
- else{
- SET((238 * 16 + 5));
- }
- tmp = 0;
- tmp = NVRAM0[(214 + 0)] + (uint32_t)(NVRAM0[(214 + 1)]) * 65536L;
- tmp += 1;
- NVRAM0[(214 + 1)] = (tmp >> 16) & 0xFFFF;
- NVRAM0[(214 + 0)] = tmp & 0xFFFF;
- TimerCounter_100mS = 0;
- }
- 
- chipAdcProcess(); 
- 
- TimerCounter_1mS ++;
- }
- static void inputInit(void){ 
- memset(inputFilter, 0x0, (212 - 212 + 1) * 16);
- }
  
  void sPlcInit(void){ 
+  ;
+  ;
+  ;
+  ;
+  ;
  
- if ((RSTSRC & 0x02) == 0x00){
- if(RSTSRC == 0x08)
- { 
- setLedError(0);
- setLedRun(0);
- setLedDac(1);
- setLedEprom(1);
- while(1);
- }
- }
- 
- setLedError(1);
- setLedRun(1);
- setLedDac(1);
- setLedEprom(1);
- wdtInit(); 
- wdtDisable(); 
- 
- initUart1(115200); 
+#line 124 "sPlc\sPlc.c" /1
  
  
- loadNvram(); 
  
  
- initChipAdc(); 
+#line 128 "sPlc\sPlc.c" /0
+ 
+#line 129 "sPlc\sPlc.c" /1
  
  
- initChipDac(); 
+#line 131 "sPlc\sPlc.c" /0
+ 
+#line 132 "sPlc\sPlc.c" /1
  
  
- initModbus(0x01, 115200);
+#line 134 "sPlc\sPlc.c" /0
  
- timer0Init(); 
+#line 135 "sPlc\sPlc.c" /1
+ 
+ 
+#line 137 "sPlc\sPlc.c" /0
+ 
+#line 138 "sPlc\sPlc.c" /1
+ 
+ 
+#line 140 "sPlc\sPlc.c" /0
+ 
+#line 141 "sPlc\sPlc.c" /1
+ 
+ 
+#line 143 "sPlc\sPlc.c" /0
+ initSplcTimer(); 
  SET((238 * 16 + 0));
- setLedError(1);
+  ;
  SET((238 * 16 + 0));
  SET((238 * 16 + 1));
  NVRAM0[159] = 0x0A01;
+ 
+#line 150 "sPlc\sPlc.c" /1
+ 
+ 
+#line 152 "sPlc\sPlc.c" /0
+  EA = 1;;
  }
  void sPlcProcessStart(void){ 
  
- if(NVRAM0[(237)] == 0xA58E){
-  EA = 0;; 
- setLedRun(0); 
- setLedEprom(0);
- if(epromTest()){ 
- setLedEprom(1);
- setLedError(0);
- delayMs(10);
- setLedError(1);
- }
- else{ 
- setLedEprom(1);
- setLedError(0);
- delayMs(50);
- setLedError(1);
- delayMs(50);
- setLedError(0);
- delayMs(50);
- setLedError(1);
- delayMs(50);
- setLedError(0);
- delayMs(50);
- setLedError(1);	
- }
- clearNvram();
- REBOOT();	
- }
+#line 156 "sPlc\sPlc.c" /1
  
  
- wdtFeed(); 
  
  
- modbusPorcess(); 
  
  
- inputRefresh(); 
  
  
- wdtFeed();
  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+#line 184 "sPlc\sPlc.c" /0
+ 
+#line 185 "sPlc\sPlc.c" /1
+ 
+ 
+#line 187 "sPlc\sPlc.c" /0
+ 
+#line 188 "sPlc\sPlc.c" /1
+ 
+ 
+#line 190 "sPlc\sPlc.c" /0
+ 
+#line 191 "sPlc\sPlc.c" /1
+ 
+ 
+#line 193 "sPlc\sPlc.c" /0
+ 
+#line 194 "sPlc\sPlc.c" /1
+ 
+ 
+#line 196 "sPlc\sPlc.c" /0
  }
  void sPlcProcessEnd(void){ 
  
- wdtFeed(); 
+#line 199 "sPlc\sPlc.c" /1
  
  
- outputRefresh(); 
+#line 201 "sPlc\sPlc.c" /0
+ 
+#line 202 "sPlc\sPlc.c" /1
  
  
- refreshDac(); 
+#line 204 "sPlc\sPlc.c" /0
+ 
+#line 205 "sPlc\sPlc.c" /1
  
  
- updataNvram(); 
+#line 207 "sPlc\sPlc.c" /0
+ 
+#line 208 "sPlc\sPlc.c" /1
  
  
- wdtFeed(); 
+#line 210 "sPlc\sPlc.c" /0
  
+#line 211 "sPlc\sPlc.c" /1
+ 
+ 
+#line 213 "sPlc\sPlc.c" /0
  RES((238 * 16 + 1));
  }

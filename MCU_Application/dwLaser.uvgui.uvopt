@@ -22,14 +22,14 @@
   </DaveTm>
 
   <Target>
-    <TargetName>C8051F058</TargetName>
+    <TargetName>F020</TargetName>
     <ToolsetNumber>0x0</ToolsetNumber>
     <ToolsetName>MCS-51</ToolsetName>
     <TargetOption>
-      <CLK51>24000000</CLK51>
+      <CLK51>25000000</CLK51>
       <OPTTT>
         <gFlags>1</gFlags>
-        <BeepAtEnd>0</BeepAtEnd>
+        <BeepAtEnd>1</BeepAtEnd>
         <RunSim>1</RunSim>
         <RunTarget>0</RunTarget>
         <RunAbUc>0</RunAbUc>
@@ -69,7 +69,7 @@
         <LLines>1</LLines>
         <LLocSym>1</LLocSym>
         <LPubSym>1</LPubSym>
-        <LXref>1</LXref>
+        <LXref>0</LXref>
         <LExpSel>0</LExpSel>
       </OPTXL>
       <OPTFL>
@@ -82,22 +82,17 @@
         <Book>
           <Number>0</Number>
           <Title>Data Sheet</Title>
-          <Path>DATASHTS\SILABS\C8051F50x_51x_DS.pdf</Path>
+          <Path>DATASHTS\SILABS\C8051F02X.PDF</Path>
         </Book>
         <Book>
           <Number>1</Number>
-          <Title>Eratta Sheet</Title>
-          <Path>DATASHTS\SILABS\C8051F50x_ES.pdf</Path>
-        </Book>
-        <Book>
-          <Number>2</Number>
-          <Title>Short Product Description</Title>
-          <Path>DATASHTS\SILABS\C8051F500_SD.PDF</Path>
+          <Title>Data Short</Title>
+          <Path>DATASHTS\SILABS\C8051F020_SHORT.PDF</Path>
         </Book>
       </Books>
       <DebugOpt>
-        <uSim>0</uSim>
-        <uTrg>1</uTrg>
+        <uSim>1</uSim>
+        <uTrg>0</uTrg>
         <sLdApp>1</sLdApp>
         <sGomain>1</sGomain>
         <sRbreak>1</sRbreak>
@@ -106,7 +101,7 @@
         <sRfunc>1</sRfunc>
         <sRbox>1</sRbox>
         <tLdApp>1</tLdApp>
-        <tGomain>1</tGomain>
+        <tGomain>0</tGomain>
         <tRbreak>1</tRbreak>
         <tRwatch>1</tRwatch>
         <tRmem>1</tRmem>
@@ -116,85 +111,55 @@
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
         <sRunDeb>0</sRunDeb>
-        <sLrtime>1</sLrtime>
+        <sLrtime>0</sLrtime>
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
-        <nTsel>10</nTsel>
+        <nTsel>-1</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
         <sDlgPa></sDlgPa>
-        <sIfile>.\Simulation.ini</sIfile>
+        <sIfile></sIfile>
         <tDll></tDll>
         <tDllPa></tDllPa>
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>BIN\SiC8051F.dll</pMon>
+        <pMon></pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
-          <Key>SiC8051F</Key>
-          <Name>-S1 -B115200 -O1793 -J0 -K0 -L0 -M0 -A3 -P1 -T0 -UEC300001343</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>PWSTATINFO</Key>
-          <Name>200,50,700</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGTCYG</Key>
-          <Name></Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
           <Key>DLGDCYG</Key>
-          <Name></Name>
+          <Name>(98=-1,-1,-1,-1,0)(3004=-1,-1,-1,-1,0)(3003=-1,-1,-1,-1,0)(3006=-1,-1,-1,-1,0)(3007=-1,-1,-1,-1,0)(3008=-1,-1,-1,-1,0)(3011=-1,-1,-1,-1,0)(3012=-1,-1,-1,-1,0)(3013=-1,-1,-1,-1,0)(3014=-1,-1,-1,-1,0)(99=-1,-1,-1,-1,0)(5068=-1,-1,-1,-1,0)(91=-1,-1,-1,-1,0)(92=-1,-1,-1,-1,0)(93=-1,-1,-1,-1,0)(3010=-1,-1,-1,-1,0)(3009=-1,-1,-1,-1,0)(5092=-1,-1,-1,-1,0)(95=-1,-1,-1,-1,0)(100=-1,-1,-1,-1,0)(5057=-1,-1,-1,-1,0)(5015=-1,-1,-1,-1,0)(5047=-1,-1,-1,-1,0)(5093=-1,-1,-1,-1,0)(1002=-1,-1,-1,-1,0)(5094=-1,-1,-1,-1,0)(5096=-1,-1,-1,-1,0)(5061=-1,-1,-1,-1,0)(5067=-1,-1,-1,-1,0)(5095=-1,-1,-1,-1,0)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint/>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>263</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>-16774695</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>sPlc\SPLCFUN.C</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression></Expression>
+        </Bp>
+      </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
           <WinNumber>1</WinNumber>
-          <ItemText>Tx_Data</ItemText>
-        </Ww>
-        <Ww>
-          <count>1</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>NVRAM0,0x10</ItemText>
-        </Ww>
-        <Ww>
-          <count>2</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Rx_Data</ItemText>
-        </Ww>
-        <Ww>
-          <count>3</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>NVRAM0[400]</ItemText>
-        </Ww>
-        <Ww>
-          <count>4</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>inputFilter,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>5</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>NVRAM0[496]</ItemText>
+          <ItemText>NVRAM0,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
-      <WatchWindow2>
-        <Ww>
-          <count>0</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>num_bits</ItemText>
-        </Ww>
-      </WatchWindow2>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -241,14 +206,14 @@
   </Target>
 
   <Target>
-    <TargetName>C8051F020</TargetName>
+    <TargetName>F580</TargetName>
     <ToolsetNumber>0x0</ToolsetNumber>
     <ToolsetName>MCS-51</ToolsetName>
     <TargetOption>
-      <CLK51>48000000</CLK51>
+      <CLK51>25000000</CLK51>
       <OPTTT>
-        <gFlags>1</gFlags>
-        <BeepAtEnd>0</BeepAtEnd>
+        <gFlags>0</gFlags>
+        <BeepAtEnd>1</BeepAtEnd>
         <RunSim>1</RunSim>
         <RunTarget>0</RunTarget>
         <RunAbUc>0</RunAbUc>
@@ -273,11 +238,11 @@
         <CreateIListing>0</CreateIListing>
         <AsmCond>1</AsmCond>
         <AsmSymb>1</AsmSymb>
-        <AsmXref>1</AsmXref>
+        <AsmXref>0</AsmXref>
         <CCond>1</CCond>
-        <CCode>1</CCode>
-        <CListInc>1</CListInc>
-        <CSymb>1</CSymb>
+        <CCode>0</CCode>
+        <CListInc>0</CListInc>
+        <CSymb>0</CSymb>
         <LinkerCodeListing>0</LinkerCodeListing>
       </ListingPage>
       <OPTXL>
@@ -288,7 +253,7 @@
         <LLines>1</LLines>
         <LLocSym>1</LLocSym>
         <LPubSym>1</LPubSym>
-        <LXref>1</LXref>
+        <LXref>0</LXref>
         <LExpSel>0</LExpSel>
       </OPTXL>
       <OPTFL>
@@ -320,7 +285,7 @@
         <sRfunc>1</sRfunc>
         <sRbox>1</sRbox>
         <tLdApp>1</tLdApp>
-        <tGomain>1</tGomain>
+        <tGomain>0</tGomain>
         <tRbreak>1</tRbreak>
         <tRwatch>1</tRwatch>
         <tRmem>1</tRmem>
@@ -330,50 +295,28 @@
         <sRSysVw>1</sRSysVw>
         <tRSysVw>1</tRSysVw>
         <sRunDeb>0</sRunDeb>
-        <sLrtime>1</sLrtime>
+        <sLrtime>0</sLrtime>
         <bEvRecOn>1</bEvRecOn>
         <bSchkAxf>0</bSchkAxf>
         <bTchkAxf>0</bTchkAxf>
-        <nTsel>10</nTsel>
+        <nTsel>-1</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
         <sDlgPa></sDlgPa>
-        <sIfile>.\Simulation.ini</sIfile>
+        <sIfile></sIfile>
         <tDll></tDll>
         <tDllPa></tDllPa>
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>BIN\SiC8051F.dll</pMon>
+        <pMon></pMon>
       </DebugOpt>
-      <TargetDriverDllRegistry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>SiC8051F</Key>
-          <Name>-S1 -B115200 -O1793 -J0 -K0 -L0 -M0 -A3 -P1 -T0 -UEC300001343</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>PWSTATINFO</Key>
-          <Name>200,50,700</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGTCYG</Key>
-          <Name>(98=1654,492,2032,789,0)(3004=1318,541,1662,918,0)(3003=-1,-1,-1,-1,0)(3006=-1,-1,-1,-1,0)(3007=-1,-1,-1,-1,0)(3008=868,542,1111,661,0)(3011=-1,-1,-1,-1,0)(3012=-1,-1,-1,-1,0)(3013=-1,-1,-1,-1,0)(3014=-1,-1,-1,-1,0)(99=-1,-1,-1,-1,0)(5068=-1,-1,-1,-1,0)(91=-1,-1,-1,-1,0)(92=918,514,1118,811,0)(93=963,284,1198,533,0)(3010=-1,-1,-1,-1,0)(3009=1096,251,1321,493,0)(5092=-1,-1,-1,-1,0)(95=-1,-1,-1,-1,0)(100=-1,-1,-1,-1,0)(5057=-1,-1,-1,-1,0)(5015=-1,-1,-1,-1,0)(5047=1710,142,2070,483,1)(5093=-1,-1,-1,-1,0)(1002=1195,378,1492,791,1)(5094=-1,-1,-1,-1,0)(5096=-1,-1,-1,-1,0)(5061=-1,-1,-1,-1,0)(5067=992,469,1271,844,0)(5095=-1,-1,-1,-1,0)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>DLGDCYG</Key>
-          <Name>(98=1857,509,2235,806,0)(3004=225,186,579,570,0)(3003=-1,-1,-1,-1,0)(3006=-1,-1,-1,-1,0)(3007=-1,-1,-1,-1,0)(3008=-1,-1,-1,-1,0)(3011=1015,210,1256,355,1)(3012=1257,392,1498,537,1)(3013=950,392,1191,537,0)(3014=947,317,1188,462,0)(99=1894,828,2107,1127,0)(5068=-1,-1,-1,-1,0)(91=1095,531,1305,835,0)(92=1646,353,1856,657,0)(93=1403,504,1638,753,0)(3010=-1,-1,-1,-1,0)(3009=1133,512,1368,761,0)(5092=482,428,720,553,0)(95=-1,-1,-1,-1,0)(100=-1,-1,-1,-1,0)(5057=-1,-1,-1,-1,0)(5015=-1,-1,-1,-1,0)(5047=-1,-1,-1,-1,0)(5093=-1,-1,-1,-1,0)(1002=-1,-1,-1,-1,0)(5094=-1,-1,-1,-1,0)(5096=-1,-1,-1,-1,0)(5061=-1,-1,-1,-1,0)(5067=4,694,283,1156,0)(5095=705,900,1003,1188,0)</Name>
-        </SetRegEntry>
-      </TargetDriverDllRegistry>
       <Breakpoint>
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>528</LineNumber>
+          <LineNumber>263</LineNumber>
           <EnabledFlag>1</EnabledFlag>
           <Address>0</Address>
           <ByteObject>0</ByteObject>
@@ -382,78 +325,23 @@
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>0</BreakIfRCount>
-          <Filename>C:\GitHub\dwLaser\MCU_Application\MainApp\sPlc.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression></Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>43</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>0</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>0</BreakIfRCount>
-          <Filename>C:\GitHub\dwLaser\MCU_Application\MainApp\MainApp.c</Filename>
+          <Filename>D:\GitHub\dwLaser\MCU_Application\sPlc\sPlcFun.c</Filename>
           <ExecCommand></ExecCommand>
           <Expression></Expression>
         </Bp>
       </Breakpoint>
-      <WatchWindow1>
-        <Ww>
-          <count>0</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Tx_Data</ItemText>
-        </Ww>
-        <Ww>
-          <count>1</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>NVRAM0,0x10</ItemText>
-        </Ww>
-        <Ww>
-          <count>2</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>Rx_Data</ItemText>
-        </Ww>
-        <Ww>
-          <count>3</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>NVRAM0[400]</ItemText>
-        </Ww>
-        <Ww>
-          <count>4</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>inputFilter,0x0A</ItemText>
-        </Ww>
-        <Ww>
-          <count>5</count>
-          <WinNumber>1</WinNumber>
-          <ItemText>NVRAM0[496]</ItemText>
-        </Ww>
-      </WatchWindow1>
-      <WatchWindow2>
-        <Ww>
-          <count>0</count>
-          <WinNumber>2</WinNumber>
-          <ItemText>num_bits</ItemText>
-        </Ww>
-      </WatchWindow2>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
-        <aLwin>1</aLwin>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
-        <aPa>1</aPa>
-        <viewmode>1</viewmode>
+        <aPa>0</aPa>
+        <viewmode>0</viewmode>
         <vrSel>0</vrSel>
         <aSym>0</aSym>
         <aTbox>0</aTbox>
@@ -462,7 +350,7 @@
         <AscS3>0</AscS3>
         <aSer3>0</aSer3>
         <eProf>0</eProf>
-        <aLa>1</aLa>
+        <aLa>0</aLa>
         <aPa1>0</aPa1>
         <AscS4>0</AscS4>
         <aSer4>0</aSer4>
@@ -484,43 +372,24 @@
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
       <pMultCmdsp></pMultCmdsp>
-      <LogicAnalyzers>
-        <Wi>
-          <IntNumber>0</IntNumber>
-          <FirstString>NVRAM0[496] </FirstString>
-          <SecondString>00800000000000000000000000000000E0FFEF40020000000000000000000000000000004E5652414D3000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000000000000000F03F0A00000000000000000000000000000000000000A42400FF</SecondString>
-        </Wi>
-      </LogicAnalyzers>
     </TargetOption>
   </Target>
 
   <Group>
     <GroupName>Lib</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>1</GroupNumber>
       <FileNumber>1</FileNumber>
-      <FileType>1</FileType>
+      <FileType>2</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Lib\delay.c</PathWithFileName>
-      <FilenameWithoutPath>delay.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>1</GroupNumber>
-      <FileNumber>2</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\Lib\crc32.c</PathWithFileName>
-      <FilenameWithoutPath>crc32.c</FilenameWithoutPath>
+      <PathWithFileName>.\Lib\STARTUP.A51</PathWithFileName>
+      <FilenameWithoutPath>STARTUP.A51</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -532,170 +401,90 @@
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>3</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\Driver\i2c0.c</PathWithFileName>
-      <FilenameWithoutPath>i2c0.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>4</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\Driver\eprom.c</PathWithFileName>
-      <FilenameWithoutPath>eprom.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>5</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\Driver\i2c1.c</PathWithFileName>
-      <FilenameWithoutPath>i2c1.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>6</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\Driver\i2c2.c</PathWithFileName>
-      <FilenameWithoutPath>i2c2.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>7</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\Driver\i2c3.c</PathWithFileName>
-      <FilenameWithoutPath>i2c3.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>8</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\Driver\i2c4.c</PathWithFileName>
-      <FilenameWithoutPath>i2c4.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>9</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\Driver\i2c5.c</PathWithFileName>
-      <FilenameWithoutPath>i2c5.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>10</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\Driver\i2c6.c</PathWithFileName>
-      <FilenameWithoutPath>i2c6.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>11</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\Driver\mcp47x6.c</PathWithFileName>
-      <FilenameWithoutPath>mcp47x6.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>12</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\Driver\inPca9554.c</PathWithFileName>
-      <FilenameWithoutPath>inPca9554.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>2</GroupNumber>
-      <FileNumber>13</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\Driver\outPca9554.c</PathWithFileName>
-      <FilenameWithoutPath>outPca9554.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
   </Group>
 
   <Group>
-    <GroupName>Modbus</GroupName>
+    <GroupName>sPlc</GroupName>
     <tvExp>1</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>3</GroupNumber>
-      <FileNumber>14</FileNumber>
+      <FileNumber>2</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Modbus\Modbus.c</PathWithFileName>
-      <FilenameWithoutPath>Modbus.c</FilenameWithoutPath>
+      <PathWithFileName>.\sPlc\sPlc.c</PathWithFileName>
+      <FilenameWithoutPath>sPlc.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>3</GroupNumber>
-      <FileNumber>15</FileNumber>
+      <FileNumber>3</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Modbus\ModbusPort.c</PathWithFileName>
-      <FilenameWithoutPath>ModbusPort.c</FilenameWithoutPath>
+      <PathWithFileName>.\sPlc\sPlcFun.c</PathWithFileName>
+      <FilenameWithoutPath>sPlcFun.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>4</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\sPlc\sPlcTest.c</PathWithFileName>
+      <FilenameWithoutPath>sPlcTest.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+  </Group>
+
+  <Group>
+    <GroupName>sPlc_F020</GroupName>
+    <tvExp>1</tvExp>
+    <tvExpOptDlg>0</tvExpOptDlg>
+    <cbSel>0</cbSel>
+    <RteFlg>0</RteFlg>
+    <File>
+      <GroupNumber>4</GroupNumber>
+      <FileNumber>5</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\sPlc\Port_f020\sPlcInt.c</PathWithFileName>
+      <FilenameWithoutPath>sPlcInt.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>4</GroupNumber>
+      <FileNumber>6</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\sPlc\Port_f020\sPlcTimer.c</PathWithFileName>
+      <FilenameWithoutPath>sPlcTimer.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+  </Group>
+
+  <Group>
+    <GroupName>sPlc_Modbus</GroupName>
+    <tvExp>1</tvExp>
+    <tvExpOptDlg>0</tvExpOptDlg>
+    <cbSel>0</cbSel>
+    <RteFlg>0</RteFlg>
   </Group>
 
   <Group>
@@ -705,8 +494,8 @@
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>16</FileNumber>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>7</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -717,110 +506,14 @@
       <bShared>0</bShared>
     </File>
     <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>17</FileNumber>
+      <GroupNumber>6</GroupNumber>
+      <FileNumber>8</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\MainApp\sPlc.c</PathWithFileName>
-      <FilenameWithoutPath>sPlc.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>18</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\MainApp\InitDeviceF580.c</PathWithFileName>
-      <FilenameWithoutPath>InitDeviceF580.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>19</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\MainApp\sPlcLaser.c</PathWithFileName>
-      <FilenameWithoutPath>sPlcLaser.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>20</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\MainApp\sPlcChipAdc.c</PathWithFileName>
-      <FilenameWithoutPath>sPlcChipAdc.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>21</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\MainApp\sPlcDac.c</PathWithFileName>
-      <FilenameWithoutPath>sPlcDac.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>22</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\MainApp\sPlcFun.c</PathWithFileName>
-      <FilenameWithoutPath>sPlcFun.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>23</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\MainApp\sPlcUart.c</PathWithFileName>
-      <FilenameWithoutPath>sPlcUart.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>24</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\MainApp\sPlcOutput.c</PathWithFileName>
-      <FilenameWithoutPath>sPlcOutput.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>4</GroupNumber>
-      <FileNumber>25</FileNumber>
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-      <PathWithFileName>.\MainApp\sPlcInput.c</PathWithFileName>
-      <FilenameWithoutPath>sPlcInput.c</FilenameWithoutPath>
+      <PathWithFileName>.\MainApp\InitDeviceF020.c</PathWithFileName>
+      <FilenameWithoutPath>InitDeviceF020.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

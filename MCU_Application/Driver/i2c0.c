@@ -22,6 +22,18 @@ static uint8_t getSCL0(void){
 static uint8_t getSDA0(void){
 	return (P4 >> 6) & 0x01;
 }
+static void setSDA0(uint8_t s){
+	if(s)
+		P7 |= (uint8_t)(1 << 6);
+	else
+		P7 &= ~((uint8_t)(1 << 6));
+}
+static uint8_t getSCL0(void){
+	return (P7 >> 7) & 0x01;
+}
+static uint8_t getSDA0(void){
+	return (P7 >> 6) & 0x01;
+}
 void iic0Start(void){//产生IIC起始信号
 	setSDA0(1);	  	  
 	setSCL0(1);
