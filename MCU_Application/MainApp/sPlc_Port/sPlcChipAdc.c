@@ -1317,8 +1317,8 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
 			_nop_();_nop_();_nop_();_nop_();_nop_();
-			ADCMUX_8_11_OE1 = false;
-			ADCMUX_8_11_OE2 = true;
+			ADCMUX_8_11_OE1 = true;
+			ADCMUX_8_11_OE2 = false;
 			break;
 		}
 		case 43:{//MPD11
@@ -1556,7 +1556,7 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP4
 			ADCMUX_16_19_OE1 = true;
 			ADCMUX_16_19_OE2 = true;
-			ADCMUX_16_19_S1 = true;
+			ADCMUX_16_19_S1 = false;
 			ADCMUX_16_19_S0 = false;
 			//CHIP5
 			ADCMUX_20_23_OE1 = true;

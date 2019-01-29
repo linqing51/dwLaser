@@ -38,7 +38,7 @@
 /*****************************************************************************/
 //SPLC设置
 #define CONFIG_SPLC_ASSERT					1//检查地址范围
-#define CONFIG_SPLC_DEV						0x0A02//设备号
+#define CONFIG_SPLC_DEV						0x0A01//设备号
 #define CONFIG_SPLC_CLEAR_CODE				0xA58E
 #define CONFIG_SOFTPLC_HWTIME				1000L//1mS
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期 1mS * N
@@ -127,5 +127,10 @@
 #include "ModbusPort.h"
 /*****************************************************************************/
 #include "sPLC.h"
+#include "sPlcTimer.h"
+#include "sPlcFun.h"
+#include "sPlcLed.h"
+#include "sPlcIo.h"
+#include "sPlcWatchDog.h"
 /*****************************************************************************/
 #endif

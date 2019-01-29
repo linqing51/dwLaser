@@ -156,6 +156,7 @@
 #define SPCOIL_PS10MS					(SPCOIL_START * 16 + 3)//10mS
 #define SPCOIL_PS100MS					(SPCOIL_START * 16 + 4)//100mS	
 #define SPCOIL_PS1000MS					(SPCOIL_START * 16 + 5)//1000mS	
+#define SPCOIL_WATCHDOG					(SPCOIL_START * 16 + 15)//看门狗溢出
 #define SPCOIL_UART0_SEND_BUSY			(SPCOIL_START * 16 + 16)//UART1发送忙
 #define SPCOIL_UART0_RECV_BUSY			(SPCOIL_START * 16 + 17)//UART1接收忙
 #define SPCOIL_UART0_SEND_DONE			(SPCOIL_START * 16 + 18)//发送完成
@@ -186,22 +187,19 @@
 /*****************************************************************************/
 extern xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 extern xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+extern idata volatile uint8_t TimerCounter_1mS;
+extern idata volatile uint8_t TimerCounter_10mS;
+extern idata volatile uint8_t TimerCounter_100mS;
+extern idata volatile uint8_t Timer0_L, Timer0_H;
 /*****************************************************************************/
-uint8_t getGlobalInterrupt(void);
-void setLedRun(uint8_t st);
-uint8_t getLedRun(void);
-void setLedEprom(uint8_t st);
-uint8_t getLedEprom(void);
-void setLedDac(uint8_t st);
-uint8_t getLedDac(void);
-void setLedError(uint8_t st);
-uint8_t getLedError(void);
 void sPlcInit(void);//软逻辑初始化
+extern void timer0Init(void);
 void sPlcProcessStart(void);//sPLC轮询起始
 void sPlcProcessEnd(void);//sPLC轮询结束
-void wdtFeed(void) reentrant;
-void wdtEnable(void) reentrant;
-void wdtDisable(void) reentrant;
+extern void initWatchDog(void);//看门狗初始化
+extern void feedWatchDog(void) reentrant;//喂狗
+extern void enableWatchDog(void);//使能看门狗
+extern void disableWatchDog(void);//关闭看门狗(未锁定)
 /*****************************************************************************/
 void assertCoilAddress(uint16_t adr) reentrant;
 void assertRegisterAddress(uint16_t adr) reentrant;
@@ -217,25 +215,9 @@ void nvramLoad(void);
 void nvramSave(void);
 void nvramUpdata(void);
 /*****************************************************************************/
-void REBOOT(void) reentrant;//强制复位
-void SET(uint16_t A) reentrant;//线圈置位
-void RES(uint16_t A) reentrant;//线圈复位
-void FLIP(uint16_t A) reentrant;//翻转
-uint8_t LD(uint16_t A) reentrant;//载入
-uint8_t LDB(uint16_t A) reentrant;//方向载入
-uint8_t LDP(uint16_t A) reentrant;//脉冲上升沿
-uint8_t LDN(uint16_t A) reentrant;//脉冲下降沿
-void T100US(uint8_t A, uint8_t start, uint16_t value);
-void T1MS(uint8_t A, uint8_t start, uint16_t value);
-void T10MS(uint8_t A, uint8_t start, uint16_t value);
-void T100MS(uint8_t A, uint8_t start, uint16_t value);
-void DSUB(uint16_t Sa, uint16_t Sb, uint16_t D);
-/*****************************************************************************/
 void chipDacInit(void);
 void chipAdcInit(void);
 void sPlcInit(void);
-void refreshInput(void);
-void refreshOutput(void);
 void refreshDac(void);
 /*****************************************************************************/
 #endif
