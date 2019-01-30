@@ -103,17 +103,17 @@ uint8_t epromTest(void){//EPROM ¶ÁĞ´×Ô²âÊÔ
 	idata uint32_t i;	
 	idata uint8_t result;
 	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
-		setLedEprom(DEBUG_LED_ON);
+		SET_LED_EPROM(DEBUG_LED_ON);
 		epromWriteOneByte(i, (i & 0xFF));
-		setLedEprom(DEBUG_LED_OFF);
+		SET_LED_EPROM(DEBUG_LED_OFF);
 	}
 	result = 0;
 	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
-		setLedEprom(DEBUG_LED_ON);
+		SET_LED_EPROM(DEBUG_LED_ON);
 		if(epromReadOneByte(i) != (i & 0xFF)){
 			return false;
 		}
-		setLedEprom(DEBUG_LED_OFF);
+		SET_LED_EPROM(DEBUG_LED_OFF);
 	}
 	return true;
 }

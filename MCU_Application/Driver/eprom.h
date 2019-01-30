@@ -1,11 +1,7 @@
 #ifndef __EPROM_H__
 #define __EPROM_H__
 /*****************************************************************************/
-#include "compiler_defs.h"
-#include "C8051F580_defs.h"
-#include "driverConfig.h"
-#include "delay.h"
-#include "i2c0.h"
+#include "device.h"
 /*****************************************************************************/
 void epromInit(void);
 uint8_t epromReadOneByte(uint16_t ReadAddr);

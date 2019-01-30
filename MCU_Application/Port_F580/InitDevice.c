@@ -1,7 +1,7 @@
 /////////////////////////////////////
 //  Generated Initialization File  //
 /////////////////////////////////////
-#include "InitDeviceF580.h"
+#include "InitDevice.h"
 void Port_IO_Init()
 {
     // P0.0  -  Skipped,     Open-Drain, Digital

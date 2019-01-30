@@ -72,12 +72,12 @@ uint8_t SendMessage(void){//This function start to sending messages
     return true;
 }
 void HandleModbusError(char ErrorCode){// Initialise the output buffer. The first byte in the buffer says how many registers we have read
-    setLedError(DEBUG_LED_ON);
+    SET_LED_ERROR(DEBUG_LED_ON);
 	Tx_Data.function = ErrorCode | 0x80;
     Tx_Data.address = ModbusSlaveAddress;
     Tx_Data.dataLen = 0; 
 	SendMessage();
-	setLedError(DEBUG_LED_OFF);
+	SET_LED_ERROR(DEBUG_LED_OFF);
 }
 
 void HandleModbusReadCoils(void){//Modbus function 01 - ¶ÁÈ¡ÏßÈ¦×´Ì¬

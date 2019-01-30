@@ -40,7 +40,7 @@
 /*****************************************************************************/
 
 void main(void){
-	initDeviceF580();
+	initDevice();
 	sPlcInit();//≥ı ºªØ»Ì¬ﬂº≠
 	while(1){
 		sPlcProcessStart();

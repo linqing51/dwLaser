@@ -1,11 +1,27 @@
-#ifndef __DRIVERCONFIG_H__
-#define __DRIVERCONFIG_H__
+#ifndef __DEVICE_H__
+#define __DEVICE_H__
+/*****************************************************************************/
+#include "lib.h"
+#include "sPlc.h"
+#include "i2c0.h"
+#include "i2c1.h"
+#include "i2c2.h"
+#include "i2c3.h"
+#include "i2c4.h"
+#include "i2c5.h"
+#include "i2c6.h"
+#include "eprom.h"
+#include "inPca9554.h"
+#include "outPca9554.h"
+#include "mcp47x6.h"
 /*****************************************************************************/
 #define CONFIG_I2C0_FREQ 					1            
 #define CONFIG_I2C1_FREQ 					1
 #define CONFIG_I2C2_FREQ 					1
 #define CONFIG_I2C3_FREQ 					1
 #define CONFIG_I2C4_FREQ 					1
+#define CONFIG_I2C5_FREQ 					1
+#define CONFIG_I2C6_FREQ 					1
 #define CONFIG_I2C_WAITACT_TIME				250
 /*****************************************************************************/
 #define CONFIG_EPROM_DEBUG					0

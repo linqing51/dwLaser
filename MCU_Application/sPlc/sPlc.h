@@ -1,6 +1,7 @@
 #ifndef __SPLC_H__
 #define __SPLC_H__
 /*****************************************************************************/
+#include "modbus.h"
 #include "sPlcConfig.h"
 #include "sPlcFun.h"
 #include "sPlcPort.h"

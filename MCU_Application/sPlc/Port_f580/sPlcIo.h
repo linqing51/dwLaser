@@ -1,7 +1,7 @@
 #ifndef __SPLCIO_H__
 #define __SPLCIO_H__
 /*****************************************************************************/
-#include "appConfig.h"
+#include "sPlc.h"
 /*****************************************************************************/
 void inputInit(void);//
 void outputInit(void);

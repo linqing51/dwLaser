@@ -26,18 +26,18 @@ static uint8_t getSDA2(void){
 void iic2Start(void){//产生IIC起始信号
 	setSDA2(1);	  	  
 	setSCL2(1);
-	delayUs(CONFIG_EPROM_FREQ);
+	delayUs(CONFIG_I2C2_FREQ);
  	setSDA2(0);//START:when CLK is high,DATA change form high to low 
-	delayUs(CONFIG_EPROM_FREQ);
+	delayUs(CONFIG_I2C2_FREQ);
 	setSCL2(0);//钳住I2C总线，准备发送或接收数据 
 }	  
 void iic2Stop(void){//产生IIC停止信号
 	setSCL2(0);
 	setSDA2(0);//STOP:when CLK is high DATA change form low to high
- 	delayUs(CONFIG_EPROM_FREQ);
+ 	delayUs(CONFIG_I2C2_FREQ);
 	setSCL2(1); 
 	setSDA2(1);//发送I2C总线结束信号
-	delayUs(CONFIG_EPROM_FREQ);							   	
+	delayUs(CONFIG_I2C2_FREQ);							   	
 }
 
 uint8_t iic2WaitAck(void){
@@ -62,18 +62,18 @@ uint8_t iic2WaitAck(void){
 void iic2Ack(void){//产生ACK应答
 	setSCL2(0);
 	setSDA2(0);
-	delayUs(CONFIG_EPROM_FREQ);
+	delayUs(CONFIG_I2C2_FREQ);
 	setSCL2(1);
-	delayUs(CONFIG_EPROM_FREQ);
+	delayUs(CONFIG_I2C2_FREQ);
 	setSCL2(0);
 }
 	    
 void iic2NAck(void){//不产生ACK应答	
 	setSCL2(0);
 	setSDA2(1);
-	delayUs(CONFIG_EPROM_FREQ);
+	delayUs(CONFIG_I2C2_FREQ);
 	setSCL2(1);
-	delayUs(CONFIG_EPROM_FREQ);
+	delayUs(CONFIG_I2C2_FREQ);
 	setSCL2(0);
 }					 				     	  
 void iic2SendByte(uint8_t txd){//IIC发送一个字节
@@ -90,11 +90,11 @@ void iic2SendByte(uint8_t txd){//IIC发送一个字节
 		else
 			setSDA2(0);
 		txd <<= 1; 	  
-		delayUs(CONFIG_EPROM_FREQ);
+		delayUs(CONFIG_I2C2_FREQ);
 		setSCL2(1);
-		delayUs(CONFIG_EPROM_FREQ); 
+		delayUs(CONFIG_I2C2_FREQ); 
 		setSCL2(0);	
-		delayUs(CONFIG_EPROM_FREQ);
+		delayUs(CONFIG_I2C2_FREQ);
     }	 
 } 	    
   
@@ -102,12 +102,12 @@ uint8_t iic2ReadByte(uint8_t ack){//读1个字节，ack=1时，发送ACK，ack=0，发送nACK
 	uint8_t i, receive=0;
     for(i=0;i<8;i++ ){
         setSCL2(0); 
-        delayUs(CONFIG_EPROM_FREQ);
+        delayUs(CONFIG_I2C2_FREQ);
 		setSCL2(1);
         receive <<= 1;
         if(getSDA2())
 			receive ++;   
-		delayUs(CONFIG_EPROM_FREQ); 
+		delayUs(CONFIG_I2C2_FREQ); 
     }					 
     if(!ack)
         iic2NAck();        //发送nACK

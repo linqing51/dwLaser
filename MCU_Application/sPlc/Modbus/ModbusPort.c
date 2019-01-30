@@ -1,24 +1,10 @@
 #include "modbusPort.h"
 /*****************************************************************************/
-/*****************************************************************************/
-<<<<<<< HEAD
 void initModbusSerial(int32_t baudrate){//初始化MODBUS串口
 	uint8_t SFRPAGE_save;
 	uint16_t tmp;
 	SFRPAGE_save = SFRPAGE;	
 	SFRPAGE = ACTIVE_PAGE;
-=======
-void initModbusSerial(int32_t baudrate)
-{//初始化MODBUS串口
-	CKCON |= (1 << 5);//Timer2 uses the system clock
-	T2CON &= ~(1 << 0);//当定时器2 溢出或T2EX 上发生负跳变时将自动重装载（EXEN2=1）
-	T2CON &= ~(1 << 1);//定时器功能：定时器2 由T2M（CKCON.5）定义的时钟加1
-	T2CON |= (1 << 4);//Timer 2 overflows used for transmit clock.
-	T2CON |= (1 << 5);//Timer 2 overflows used for receive clock.	
-	RCAP2  = - ((long) ((uint32_t)CONFIG_SYSCLK / baudrate) / 32L);
-	TMR2 = RCAP2;
-	TR2= 1;                             // Start Timer2
->>>>>>> MCFCL_25MP
 	SCON0 = 0x0;
 	SCON0 |= (1 << 4);//REN0=1使能接收
 	SFRPAGE   = CONFIG_PAGE;
@@ -33,7 +19,6 @@ void initModbusSerial(int32_t baudrate)
 	//RS485_DIRECTION_RXD;//接收状态
 	ES0 = 1;
 	IP |= (1 << 4);//UART0 中断高优先级
-<<<<<<< HEAD
 }
 void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER3
 	uint16_t tmp;	
@@ -47,7 +32,6 @@ void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER3
 	TMR3CN |= (1 << 2);
 	SFRPAGE = SFRPAGE_save;
 	EIE1 |= (1 << 6);//使能T3中断
-=======
 	TI0 = 0;//清除发送完成   		
 	RI0 = 0;//清除接收完成
 }
@@ -64,7 +48,6 @@ void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER1
 	TF1 = 0;
 	TR1 = 1;        
 	ET1 = 1; //开中断T1
->>>>>>> MCFCL_25MP
 }
 static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
 	uint8_t SFRPAGE_save;
@@ -108,39 +91,17 @@ void receiveInterrupt(uint8_t Data){//Call this function into your UART Interrup
 }
 /******************************************************************************/
 static void modbusHandle() interrupt INTERRUPT_TIMER3 {//硬件计时器T3中断函数 1mS
-#ifdef C8051F020
-	TMR3CN = ~((uint8_t)(1 << 7));
-#endif
-#ifdef C8051F580
 	uint8_t SFRPAGE_save;
 	SFRPAGE_save = SFRPAGE;
 	SFRPAGE = ACTIVE_PAGE;
 	TMR3CN = ~((uint8_t)(1 << 7));
 	SFRPAGE = SFRPAGE_save;
-#endif
 	modbusTimerValue ++;
-<<<<<<< HEAD
 }
 static void serialHandle() interrupt INTERRUPT_UART0 {//UART0 串口中断程序
-#ifdef C8051F202
-	if(RI0){
-		RI0 = 0;	
-		receiveInterrupt(SBUF0);
-	}
-	if(TI0){
-		TI0 = 0;
-	}
-#endif
-#ifdef C8051F580
 	uint8_t SFRPAGE_save;
 	SFRPAGE_save = SFRPAGE;
 	SFRPAGE = ACTIVE_PAGE;
-=======
-} 
-
-static void uart0Isr() interrupt INTERRUPT_UART0
-{//UART0 串口中断程序
->>>>>>> MCFCL_25MP
 	if(RI0){
 		RI0 = 0;	
 		receiveInterrupt(SBUF0);
@@ -149,5 +110,4 @@ static void uart0Isr() interrupt INTERRUPT_UART0
 		TI0 = 0;
 	}
 	SFRPAGE = SFRPAGE_save;
-#endif
 } 

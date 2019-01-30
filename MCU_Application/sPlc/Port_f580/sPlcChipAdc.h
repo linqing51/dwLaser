@@ -1,6 +1,7 @@
 #ifndef __SPLCCHIPADC_H__
 #define __SPLCCHIPADC_H__
-#include "sPlcConfig.h"
+/*****************************************************************************/
+#include "sPlc.h"
 /*****************************************************************************/
 typedef struct{//ADCÂË²¨Æ÷
 	uint16_t dat[CONFIG_SPLC_ADC_FILTER_TAP];

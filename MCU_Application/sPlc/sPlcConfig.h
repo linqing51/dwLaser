@@ -4,16 +4,6 @@
 #define DEBUG_LED_ON						0
 #define DEBUG_LED_OFF						1
 /*****************************************************************************/
-#ifdef C8051F580
-#define CONFIG_SYSCLK                       (48000000L)//F580内部48M
-#define CONFIG_SARCLK      					(2000000L)//ADC0时钟 <2.5MHz
-#endif
-
-#ifdef C8051F020
-#define CONFIG_SYSCLK                       (22118400L)
-#define CONFIG_SARCLK      					(2000000L)//ADC0时钟 <2.5MHz
-#endif
-
 //SPLC设置
 #define SET_LED_RUN(b)
 #define SET_LED_ERROR(b)
@@ -149,6 +139,7 @@
 
 #define SPCOIL_NVRAM_FAIL				(SPCOIL_START * 16 + 14)//NVRAM校验码错误
 #define SPCOIL_WATCHDOG					(SPCOIL_START * 16 + 15)//看门狗溢出
+/*****************************************************************************/
 #define SPCOIL_UART0_SEND_BUSY			(SPCOIL_START * 16 + 16)//UART1发送忙
 #define SPCOIL_UART0_RECV_BUSY			(SPCOIL_START * 16 + 17)//UART1接收忙
 #define SPCOIL_UART0_SEND_DONE			(SPCOIL_START * 16 + 18)//发送完成
@@ -174,6 +165,23 @@
 #define SPREG_UART1_RECV_BUFFER_ADR		(SPREG_START + 13)//UART1 接收缓冲NVRAM地址
 #define SPREG_UART1_RECV_LENGTH			(SPREG_START + 14)//UART1 接收数据长度
 #define SPREG_UART1_RECV_NUM			(SPREG_START + 15)//UART1 已经接收数据长度
+/*****************************************************************************/
+#define SPREG_ADC_0						(SPREG_START + 20)//ADC0采集值
+#define SPREG_ADC_1						(SPREG_START + 21)//ADC1采集值
+#define SPREG_ADC_2						(SPREG_START + 22)//ADC2采集值
+#define SPREG_ADC_3						(SPREG_START + 23)//ADC3采集值
+#define SPREG_ADC_4						(SPREG_START + 24)//ADC4采集值
+#define SPREG_ADC_5						(SPREG_START + 25)//ADC5采集值
+#define SPREG_ADC_6						(SPREG_START + 26)//ADC6采集值
+#define SPREG_ADC_7						(SPREG_START + 27)//ADC7采集值
+#define SPREG_DAC_0						(SPREG_START + 30)//DAC0设定值
+#define SPREG_DAC_1						(SPREG_START + 31)//DAC0设定值
+#define SPREG_DAC_2						(SPREG_START + 32)//DAC0设定值
+#define SPREG_DAC_3						(SPREG_START + 33)//DAC0设定值
+#define SPREG_DAC_4						(SPREG_START + 34)//DAC0设定值
+#define SPREG_DAC_5						(SPREG_START + 35)//DAC0设定值
+#define SPREG_DAC_6						(SPREG_START + 36)//DAC0设定值
+#define SPREG_DAC_7						(SPREG_START + 37)//DAC0设定值
 /*****************************************************************************/
 #define SPREG_CLEAR_NVRAM0				(SPREG_END)//清除NVRAM后重新启动
 /*****************************************************************************/

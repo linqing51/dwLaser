@@ -1,7 +1,7 @@
 #ifndef __SPLCLED_H__
 #define __SPLCLED_H__
 /*****************************************************************************/
-#include "appConfig.h"
+#include "sPlc.h"
 /*****************************************************************************/
 uint8_t getGlobalInterrupt(void);
 void setLedRun(uint8_t st);

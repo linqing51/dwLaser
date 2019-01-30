@@ -57,18 +57,18 @@ void Uart1Isr() interrupt INTERRUPT_UART1{//UART1中断
 	exitSplcIsr();
 }
 void initUart1(uint32_t baudrate){//指示盒串口初始化
-	CKCON &= (1 << 6);//Timer 4 uses the system clock
-	T4CON = 0;
-	T4CON |= 1 << 4;//Timer 4 overflows used for transmit clock.
-	T4CON |= 1 << 5;//Timer 4 overflows used for receive clock.
-	T4CON &= ~(1 << 0);//当定时器4 溢出或T2EX 上发生负跳变时将自动重装载（EXEN2=1）
-	T4CON &= ~(1 << 1);//定时器功能：定时器4 由T2M（CKCON.5）定义的时钟加1
-	RCAP4  = - ((long) ((uint32_t)CONFIG_SYSCLK / baudrate) / 32L);
-	TMR4 = RCAP4;
-	T4CON |= (1 << 2);//Timer 4 enabled
-	SCON1 = 0x0;
-	SCON1 |= (uint8_t)(1 << 6);//Mode 1: 8-Bit UART, Variable Baud Rate
-	SCON1 &= ~(uint8_t)(1 << 0);//RI1: Receive Interrupt Flag.
-	SCON1 &= ~(uint8_t)(1 << 1);//TI1: Transmit Interrupt Flag.	
-	EIE2 |= (1 << 6);//ES1: Enable UART1 Interrupt.
+//	CKCON &= (1 << 6);//Timer 4 uses the system clock
+//	T4CON = 0;
+//	T4CON |= 1 << 4;//Timer 4 overflows used for transmit clock.
+//	T4CON |= 1 << 5;//Timer 4 overflows used for receive clock.
+//	T4CON &= ~(1 << 0);//当定时器4 溢出或T2EX 上发生负跳变时将自动重装载（EXEN2=1）
+//	T4CON &= ~(1 << 1);//定时器功能：定时器4 由T2M（CKCON.5）定义的时钟加1
+//	RCAP4  = - ((long) ((uint32_t)CONFIG_SYSCLK / baudrate) / 32L);
+//	TMR4 = RCAP4;
+//	T4CON |= (1 << 2);//Timer 4 enabled
+//	SCON1 = 0x0;
+//	SCON1 |= (uint8_t)(1 << 6);//Mode 1: 8-Bit UART, Variable Baud Rate
+//	SCON1 &= ~(uint8_t)(1 << 0);//RI1: Receive Interrupt Flag.
+//	SCON1 &= ~(uint8_t)(1 << 1);//TI1: Transmit Interrupt Flag.	
+//	EIE2 |= (1 << 6);//ES1: Enable UART1 Interrupt.
 }

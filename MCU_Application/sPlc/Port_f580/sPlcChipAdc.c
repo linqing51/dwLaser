@@ -30,7 +30,7 @@ void initChipAdc(void){//ADC模块初始化
 	ADC0CN = 0x0;//AD0BUSY触发
 	REF0CN = 0x33;//打开基准源输出2.25V
 	ADC0MX = 0x0;
-	ADC0CF = ((SYSCLK / 3000000) - 1) << 3; // Set SAR clock to 3MHz
+	ADC0CF = ((CONFIG_SYSCLK / CONFIG_SARCLK) - 1) << 3; // Set SAR clock to 3MHz
 	EIE1 &=  ~(1 << 2);//关闭EADC0中断
 	AD0EN = 1;// Enable ADC0
 	SFRPAGE = SFRPAGE_save;
@@ -44,7 +44,7 @@ void chipAdcProcess(void){//循环采集ADC
 	while(!AD0INT);
 	result = (ADC0 & 0x0FFF);
 	refreshAdcData(&adcTempDat[adcSelect], result);
-	NVRAM0[EM_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
+	NVRAM0[SPREG_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
 	if(adcSelect < (CONFIG_SPLC_ADC_CHANNLE - 1)){
 		adcSelect ++;
 	}
