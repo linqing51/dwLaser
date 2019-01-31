@@ -1,11 +1,11 @@
-#ifndef __MODBUS_H__
-#define __MODBUS_H__
+#ifndef __SPLCMODBUS_H__
+#define __SPLCMODBUS_H__
 /*****************************************************************************/
-#include "lib.h"
-#include "modbusPort.h"
+#include "sPlcModbusPort.h"
+#include "sPlc.h"
 /*****************************************************************************/
 extern idata volatile uint16_t modbusTimerValue;
-extern idata volatile uint8_t modbusReceiveCounter;// Collected data number
+extern idata volatile uint8_t modbusReceiveCounter;
 extern xdata volatile uint8_t modbusReceiveBuffer[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];
 /*****************************************************************************/
 extern void initModbus(uint8_t modbusSlaveAddress, uint32_t bd);

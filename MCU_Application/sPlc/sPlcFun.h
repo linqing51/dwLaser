@@ -10,6 +10,7 @@
 #include "si_toolchain.h"
 #include "compiler_defs.h"
 /*****************************************************************************/
+void REBOOT(void) reentrant;//复位
 //位指令
 void SET(uint16_t A) reentrant;//线圈置位
 void RES(uint16_t A) reentrant;//线圈复位

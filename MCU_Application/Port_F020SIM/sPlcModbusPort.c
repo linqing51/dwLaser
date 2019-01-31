@@ -1,37 +1,23 @@
-#include "modbusPort.h"
+#include "sPlcModbusPort.h"
 /*****************************************************************************/
-void initModbusSerial(int32_t baudrate){//初始化MODBUS串口
-	uint8_t SFRPAGE_save;
-	uint16_t tmp;
-	SFRPAGE_save = SFRPAGE;	
-	SFRPAGE = ACTIVE_PAGE;
+static uint8_t Timer1_L,Timer1_H;
+/*****************************************************************************/
+void initModbusSerial(int32_t baudrate)
+{//初始化MODBUS串口
+	CKCON |= (1 << 5);//Timer2 uses the system clock
+	T2CON &= ~(1 << 0);//当定时器2 溢出或T2EX 上发生负跳变时将自动重装载（EXEN2=1）
+	T2CON &= ~(1 << 1);//定时器功能：定时器2 由T2M（CKCON.5）定义的时钟加1
+	T2CON |= (1 << 4);//Timer 2 overflows used for transmit clock.
+	T2CON |= (1 << 5);//Timer 2 overflows used for receive clock.	
+	RCAP2  = - ((long) ((uint32_t)CONFIG_SYSCLK / baudrate) / 32L);
+	TMR2 = RCAP2;
+	TR2= 1;                             // Start Timer2
 	SCON0 = 0x0;
-	SCON0 |= (1 << 4);//REN0=1使能接收
-	SFRPAGE   = CONFIG_PAGE;
-	tmp = (uint16_t)(65536L - ((long) ((uint32_t)CONFIG_SYSCLK / baudrate) / 2L));
-    SBRLL0    = (tmp & 0xFF);
-    SBRLH0    = (tmp >> 8) & 0xFF;
-	SBCON0 = 0x0;
-	SBCON0 |= 1 << 0;
-	SBCON0 |= 1 << 1;//Prescaler=1
-	SBCON0 |= 1 << 6;//SB0RUN = 1波特率发生器使能
-	SFRPAGE = SFRPAGE_save;
+	SCON0 |= (1 << 4);//接收允许
+	SCON0 |= (1 << 6);//方式1：8 位UART，可变波特率
 	//RS485_DIRECTION_RXD;//接收状态
 	ES0 = 1;
 	IP |= (1 << 4);//UART0 中断高优先级
-}
-void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER3
-	uint16_t tmp;	
-	uint8_t SFRPAGE_save;
-	SFRPAGE_save = SFRPAGE;
-	tmp = (uint16_t)(65536L - (int32_t)(CONFIG_SYSCLK / 12L / CONFIG_MB_RTU_SLAVE_TIMER));
-	SFRPAGE = ACTIVE_PAGE;
-	TMR3CN = 0x0;//T3 SYSCLK / 12	
-	TMR3RLH = (uint8_t)((tmp >> 8) & 0xFF);
-	TMR3RLL = (uint8_t)(tmp & 0xFF);
-	TMR3CN |= (1 << 2);
-	SFRPAGE = SFRPAGE_save;
-	EIE1 |= (1 << 6);//使能T3中断
 	TI0 = 0;//清除发送完成   		
 	RI0 = 0;//清除接收完成
 }
@@ -50,20 +36,16 @@ void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER1
 	ET1 = 1; //开中断T1
 }
 static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
-	uint8_t SFRPAGE_save;
-	SFRPAGE_save = SFRPAGE;
-	SFRPAGE = ACTIVE_PAGE;
 	ES0 = 0;
 	TI0 = 0;
 	SBUF0 = *dt;
 	while( !TI0 ){
 #if CONFIG_SPLC_USING_WDT == 1
-		feedWatchDog();
+		wdtFeed();
 #endif
 	}
 	TI0 = 0;
 	ES0 = 1;
-	SFRPAGE = SFRPAGE_save;
 }
 void modBusUartInitialise(uint32_t baudrate){// UART Initialize for Microconrollers, yes you can use another phsycal layer!
     initModbusSerial(baudrate);
@@ -90,18 +72,18 @@ void receiveInterrupt(uint8_t Data){//Call this function into your UART Interrup
     modbusTimerValue = 0;
 }
 /******************************************************************************/
-static void modbusHandle() interrupt INTERRUPT_TIMER3 {//硬件计时器T3中断函数 1mS
-	uint8_t SFRPAGE_save;
-	SFRPAGE_save = SFRPAGE;
-	SFRPAGE = ACTIVE_PAGE;
-	TMR3CN = ~((uint8_t)(1 << 7));
-	SFRPAGE = SFRPAGE_save;
+static void modbusHandle() interrupt INTERRUPT_TIMER1
+{//硬件计时器TIMER1中断函数 1mS
+	TF1 = 0;
+	TR1 = 0;
+	TH1 = Timer1_H;
+	TL1 = Timer1_L;
+	TR1 = 1;
 	modbusTimerValue ++;
-}
-static void serialHandle() interrupt INTERRUPT_UART0 {//UART0 串口中断程序
-	uint8_t SFRPAGE_save;
-	SFRPAGE_save = SFRPAGE;
-	SFRPAGE = ACTIVE_PAGE;
+} 
+
+static void uart0Isr() interrupt INTERRUPT_UART0
+{//UART0 串口中断程序
 	if(RI0){
 		RI0 = 0;	
 		receiveInterrupt(SBUF0);
@@ -109,5 +91,4 @@ static void serialHandle() interrupt INTERRUPT_UART0 {//UART0 串口中断程序
 	if(TI0){
 		TI0 = 0;
 	}
-	SFRPAGE = SFRPAGE_save;
 } 

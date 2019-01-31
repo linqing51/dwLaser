@@ -1,4 +1,4 @@
-#include "modbus.h"
+#include "sPlcModbus.h"
 /*******************************ModBus Functions*******************************/
 #define MODBUS_READ_COILS                  				1
 #define MODBUS_READ_DISCRETE_INPUTS        				2
@@ -72,12 +72,17 @@ uint8_t SendMessage(void){//This function start to sending messages
     return true;
 }
 void HandleModbusError(char ErrorCode){// Initialise the output buffer. The first byte in the buffer says how many registers we have read
-    SET_LED_ERROR(DEBUG_LED_ON);
+#if CONFIG_SPLC_USING_LED == 1
+    setLedError(true);
+#endif
 	Tx_Data.function = ErrorCode | 0x80;
     Tx_Data.address = ModbusSlaveAddress;
     Tx_Data.dataLen = 0; 
 	SendMessage();
-	SET_LED_ERROR(DEBUG_LED_OFF);
+#if CONFIG_SPLC_USING_LED == 1
+	setLedError(false);
+#endif
+	SET(SPCOIL_MODBUS_S0_ERROR);
 }
 
 void HandleModbusReadCoils(void){//Modbus function 01 - ¶ÁÈ¡ÏßÈ¦×´Ì¬

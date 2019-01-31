@@ -113,13 +113,94 @@ void clearSPCOIL(){//清除特特殊线圈
 		NVRAM1[i] = 0x0;
 	}
 }
+static void loadNvram(void){//从EPROM中载入NVRAM
+	enterSplcIsr();
+	memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
+#if CONFIG_SPLC_USING_LED == 1
+	setLedEprom(true);
+#endif
+	epromRead(0, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
+#if CONFIG_SPLC_USING_LED == 1
+	setLedEprom(false);
+#endif
+	clearEM();
+	clearR();
+	clearT();
+	clearTD();
+	clearC();
+	clearX();
+	clearY();
+	clearSPREG();
+	clearSPCOIL();
+	memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));
+	exitSplcIsr();
+}
+static void saveNvram(void){//强制将NVRAM存入EPROM
+	enterSplcIsr();
+#if CONFIG_SPLC_USING_LED == 1
+	setLedEprom(true);
+#endif
+	epromWrite(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));
+#if CONFIG_SPLC_USING_LED == 1
+	setLedEprom(false);
+#endif
+	exitSplcIsr();
+}
+static void updataNvram(void){//更新NVRAM->EPROM
+	data uint8_t *sp0, *sp1;
+	data uint16_t i;
+	sp0 = (uint8_t*)NVRAM0;
+	sp1 = (uint8_t*)NVRAM1;
+	for(i = (MR_START * 2);i < ((MR_END + 1) * 2);i ++){//储存MR
+		if(*(sp0 + i) != *(sp1 + i)){
+#if CONFIG_SPLC_USING_LED == 1
+			setLedEprom(true);
+#endif
+			epromWriteOneByte(i, *(sp0 + i));
+#if CONFIG_SPLC_USING_LED == 1
+			setLedEprom(false);
+#endif
+		}	
+	}
+	sp0 = (uint8_t*)NVRAM0;
+	sp1 = (uint8_t*)NVRAM1;
+	for(i = (DM_START * 2);i < ((DM_END + 1) * 2);i ++){//储存DM
+		if(*(sp0 + i) != *(sp1 + i)){
+#if CONFIG_SPLC_USING_LED == 1
+			setLedEprom(true);
+#endif
+			epromWriteOneByte(i, *(sp0 + i));
+#if CONFIG_SPLC_USING_LED == 1
+			setLedEprom(false);
+#endif
+		}
+	}
+	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
+}
+static void clearNvram(void){//清除NVRAM数据	
+	idata uint16_t i;
+	enterSplcIsr();
+	disableWatchDog();
+	for(i = 0; i<= CONFIG_EPROM_SIZE;i ++){
+#if CONFIG_SPLC_USING_LED == 1
+		setLedEprom(true);
+#endif
+		epromWriteOneByte(i, 0x0);
+#if CONFIG_SPLC_USING_LED == 1
+		setLedEprom(false);
+#endif
+	}
+	exitSplcIsr();//恢复中断
+}
 /*****************************************************************************/
-void sPlcInit(void){//软逻辑初始化	
-	SET_LED_ERROR(DEBUG_LED_OFF);
-	SET_LED_RUN(DEBUG_LED_OFF);
-	SET_LED_DAC(DEBUG_LED_OFF);
-	SET_LED_ADC(DEBUG_LED_OFF);
-	SET_LED_EPROM(DEBUG_LED_OFF);
+void sPlcInit(void){//软逻辑初始化
+#if CONFIG_SPLC_USING_LED == 1	
+	setLedError(false);
+	setLedRun(false);
+	setLedDac(false);
+	setLedAdc(false);
+	setLedEprom(false);
+#endif
 #if CONFIG_SPLC_USING_WDT == 1
 	checkWatchDog();//检查看门狗状态
 	initWatchDog();//看门狗使能
@@ -128,9 +209,7 @@ void sPlcInit(void){//软逻辑初始化
 #if CONFIG_SPLC_USING_UART1 == 1
 	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化
 #endif	
-#if CONFIG_SPLC_USING_EPROM == 1
 	loadNvram();//上电恢复NVRAM
-#endif
 #if CONFIG_SPLC_USING_ADC == 1
 	initChipAdc();//初始化ADC模块
 #endif
@@ -142,7 +221,9 @@ void sPlcInit(void){//软逻辑初始化
 #endif
 	initSplcTimer();//初始化硬件计时器模块
 	SET(SPCOIL_ON);
-	SET_LED_ERROR(DEBUG_LED_OFF);
+#if CONFIG_SPLC_USING_LED == 1	
+	setLedError(false);
+#endif
 	SET(SPCOIL_ON);
 	SET(SPCOIL_START_UP);
 	NVRAM0[EM_END] = CONFIG_SPLC_DEV;
@@ -155,27 +236,33 @@ void sPlcProcessStart(void){//sPLC轮询起始
 #if CONFIG_SPLC_USING_CLEAR_NVRAM == 1
 	if(NVRAM0[SPREG_CLEAR_NVRAM0] == CONFIG_SPLC_CLEAR_CODE){
 		DISABLE_INTERRUPT;//关闭中断
-		SET_LED_RUN(DEBUG_LED_ON);//
-		SET_LED_EPROM(DEBUG_LED_ON);
+#if CONFIG_SPLC_USING_LED == 1	
+		setLedRun(true);//
+		setLedEprom(true);
+#endif
 		if(epromTest()){//EPROM测试成功
-			SET_LED_EPROM(DEBUG_LED_OFF);
-			SET_LED_ERROR(DEBUG_LED_ON);
+#if CONFIG_SPLC_USING_LED == 1			
+			setLedEprom(false);
+			setLedError(true);
 			delayMs(10);
-			SET_LED_ERROR(DEBUG_LED_OFF);
+			setLedError(false);
+#endif
 		}
 		else{//EPROM测试失败
-			SET_LED_EPROM(DEBUG_LED_OFF);
-			SET_LED_ERROR(DEBUG_LED_ON);
+#if CONFIG_SPLC_USING_LED == 1
+			setLedEprom(false);
+			setLedError(true);
 			delayMs(50);
-			SET_LED_ERROR(DEBUG_LED_OFF);
+			setLedError(false);
 			delayMs(50);
-			SET_LED_ERROR(DEBUG_LED_ON);
+			setLedError(true);
 			delayMs(50);
-			SET_LED_ERROR(DEBUG_LED_OFF);
+			setLedError(false);
 			delayMs(50);
-			SET_LED_ERROR(DEBUG_LED_ON);
+			setLedError(true);
 			delayMs(50);
-			SET_LED_ERROR(DEBUG_LED_OFF);	
+			setLedError(false);	
+#endif
 		}
 		clearNvram();
 		REBOOT();	
@@ -204,9 +291,7 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 #if CONFIG_SPLC_USING_DAC
 	refreshDac();//更新DAC输出
 #endif
-#if CONFIG_SPLC_USING_EPROM == 1
 	updataNvram();//更新NVRAM
-#endif
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();//喂狗
 #endif

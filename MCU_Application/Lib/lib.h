@@ -8,7 +8,7 @@
 #include <ctype.h>
 #include <LIMITS.H>
 #include <math.h>
-#include "crc32.h"
+//#include "crc32.h"
 #include "delay.h"
 #include "endian.h"
 #include "stdbool.h"

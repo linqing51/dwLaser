@@ -1,5 +1,8 @@
 #include "sPlc.h"
 /*****************************************************************************/
+void REBOOT(void) reentrant{//软件复位	
+	mucReboot();
+}
 void ORG(uint16_t A) reentrant{
 }
 //位指令

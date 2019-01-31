@@ -1,6 +1,6 @@
-#ifndef __MODBUSPORT__H__
-#define __MODBUSPORT__H__
+#ifndef __SPLCLED_H__
+#define __SPLCLED_H__
 /*****************************************************************************/
-#include "lib.h"
+#include "sPlcPort.h"
 /*****************************************************************************/
 #endif

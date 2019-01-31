@@ -40,14 +40,16 @@
 /*****************************************************************************/
 
 void main(void){
-	initDeviceF020();
+	initDevice();
 	sPlcInit();//初始化软逻辑
 	while(1){
 		sPlcProcessStart();
 		if(LD(SPCOIL_START_UP)){//执行一次的代码
 		
 		}
+#if CONFIG_SPLC_FUNTEST == 1
 		sPlcTest();
+#endif
 		sPlcProcessEnd();
 	}
 }

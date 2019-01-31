@@ -155,7 +155,7 @@
             <CpuDllArguments></CpuDllArguments>
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
-            <InitializationFile></InitializationFile>
+            <InitializationFile>.\Simulation.ini</InitializationFile>
           </SimDlls>
           <TargetDlls>
             <CpuDll></CpuDll>
@@ -194,7 +194,7 @@
             <UseOnchipRom>1</UseOnchipRom>
             <UseOnchipArithmetic>0</UseOnchipArithmetic>
             <UseMultipleDPTR>0</UseMultipleDPTR>
-            <UseOnchipXram>1</UseOnchipXram>
+            <UseOnchipXram>0</UseOnchipXram>
             <HadIRAM>1</HadIRAM>
             <HadXRAM>1</HadXRAM>
             <HadIROM>1</HadIROM>
@@ -258,7 +258,7 @@
               <Ocr1>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <Size>0xf000</Size>
               </Ocr1>
               <Ocr2>
                 <Type>0</Type>
@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define>C8051F020</Define>
               <Undefine></Undefine>
-              <IncludePath>.\Lib;.\Driver;.\sPlc;.\sPlc\Modbus;.\sPlc\Port_f020;.\MainApp</IncludePath>
+              <IncludePath>..\Lib;..\Driver;..\sPlc;..\Port_F020;..\MainApp</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -348,7 +348,7 @@
             <DataOverlaying>1</DataOverlaying>
             <OverlayString></OverlayString>
             <MiscControls></MiscControls>
-            <DisableWarningNumbers></DisableWarningNumbers>
+            <DisableWarningNumbers>16</DisableWarningNumbers>
             <LinkerCmdFile></LinkerCmdFile>
             <Assign></Assign>
             <ReserveString></ReserveString>
@@ -356,8 +356,8 @@
             <UserClasses></UserClasses>
             <CSection></CSection>
             <UserSection></UserSection>
-            <CodeBaseAddress>0X0000-0XFFFF</CodeBaseAddress>
-            <XDataBaseAddress>0X0000-0X0FFF</XDataBaseAddress>
+            <CodeBaseAddress></CodeBaseAddress>
+            <XDataBaseAddress>0X0000-0XEFFF</XDataBaseAddress>
             <PDataBaseAddress></PDataBaseAddress>
             <BitBaseAddress></BitBaseAddress>
             <DataBaseAddress></DataBaseAddress>
@@ -377,24 +377,26 @@
           <GroupName>Lib</GroupName>
           <Files>
             <File>
-              <FileName>STARTUP.A51</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\Lib\STARTUP.A51</FilePath>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Lib\delay.c</FilePath>
             </File>
             <File>
               <FileName>crc32.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Lib\crc32.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Lib\delay.c</FilePath>
+              <FilePath>..\Lib\crc32.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Driver</GroupName>
+          <Files>
+            <File>
+              <FileName>epromSimulation.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\epromSimulation.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>sPlc</GroupName>
@@ -402,17 +404,22 @@
             <File>
               <FileName>sPlc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlc\sPlc.c</FilePath>
+              <FilePath>..\sPlc\sPlc.c</FilePath>
             </File>
             <File>
               <FileName>sPlcFun.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlc\sPlcFun.c</FilePath>
+              <FilePath>..\sPlc\sPlcFun.c</FilePath>
             </File>
             <File>
               <FileName>sPlcTest.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlc\sPlcTest.c</FilePath>
+              <FilePath>..\sPlc\sPlcTest.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcModbus.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\sPlc\sPlcModbus.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -420,19 +427,36 @@
           <GroupName>sPlc_F020</GroupName>
           <Files>
             <File>
-              <FileName>sPlcInt.c</FileName>
+              <FileName>InitDevice.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlc\Port_f020\sPlcInt.c</FilePath>
+              <FilePath>.\InitDevice.c</FilePath>
             </File>
             <File>
               <FileName>sPlcTimer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlc\Port_f020\sPlcTimer.c</FilePath>
+              <FilePath>.\sPlcTimer.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcModbusPort.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcModbusPort.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcLed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcLed.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcUart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcUart.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcMcu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcMcu.c</FilePath>
             </File>
           </Files>
-        </Group>
-        <Group>
-          <GroupName>sPlc_Modbus</GroupName>
         </Group>
         <Group>
           <GroupName>MainApp</GroupName>
@@ -440,12 +464,7 @@
             <File>
               <FileName>MainApp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\MainApp\MainApp.c</FilePath>
-            </File>
-            <File>
-              <FileName>InitDeviceF020.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MainApp\InitDeviceF020.c</FilePath>
+              <FilePath>..\MainApp\MainApp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -822,24 +841,26 @@
           <GroupName>Lib</GroupName>
           <Files>
             <File>
-              <FileName>STARTUP.A51</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\Lib\STARTUP.A51</FilePath>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Lib\delay.c</FilePath>
             </File>
             <File>
               <FileName>crc32.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Lib\crc32.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\Lib\delay.c</FilePath>
+              <FilePath>..\Lib\crc32.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Driver</GroupName>
+          <Files>
+            <File>
+              <FileName>epromSimulation.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\epromSimulation.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>sPlc</GroupName>
@@ -847,17 +868,22 @@
             <File>
               <FileName>sPlc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlc\sPlc.c</FilePath>
+              <FilePath>..\sPlc\sPlc.c</FilePath>
             </File>
             <File>
               <FileName>sPlcFun.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlc\sPlcFun.c</FilePath>
+              <FilePath>..\sPlc\sPlcFun.c</FilePath>
             </File>
             <File>
               <FileName>sPlcTest.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlc\sPlcTest.c</FilePath>
+              <FilePath>..\sPlc\sPlcTest.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcModbus.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\sPlc\sPlcModbus.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -865,19 +891,36 @@
           <GroupName>sPlc_F020</GroupName>
           <Files>
             <File>
-              <FileName>sPlcInt.c</FileName>
+              <FileName>InitDevice.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlc\Port_f020\sPlcInt.c</FilePath>
+              <FilePath>.\InitDevice.c</FilePath>
             </File>
             <File>
               <FileName>sPlcTimer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlc\Port_f020\sPlcTimer.c</FilePath>
+              <FilePath>.\sPlcTimer.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcModbusPort.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcModbusPort.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcLed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcLed.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcUart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcUart.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcMcu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcMcu.c</FilePath>
             </File>
           </Files>
-        </Group>
-        <Group>
-          <GroupName>sPlc_Modbus</GroupName>
         </Group>
         <Group>
           <GroupName>MainApp</GroupName>
@@ -885,12 +928,7 @@
             <File>
               <FileName>MainApp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\MainApp\MainApp.c</FilePath>
-            </File>
-            <File>
-              <FileName>InitDeviceF020.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\MainApp\InitDeviceF020.c</FilePath>
+              <FilePath>..\MainApp\MainApp.c</FilePath>
             </File>
           </Files>
         </Group>
