@@ -6,12 +6,12 @@
 #define CONFIG_UART0_STOPBIT				1
 #define CONFIG_UART0_DATABIT				8
 
-#define CONFIG_UART1_BAUDRATE				9600//串口波特率
+#define CONFIG_UART1_BAUDRATE				115200//串口波特率
 #define CONFIG_UART1_PARITY					NONE
 #define CONFIG_UART1_STOPBIT				1
 #define CONFIG_UART1_DATABIT				8
 /*****************************************************************************/
-#define CONFIG_SPLC_FUNTEST					1//功能指令测试
+#define CONFIG_SPLC_FUNTEST					0//功能指令测试
 /*****************************************************************************/
 #define CONFIG_SPLC_ASSERT					1//检查地址范围
 #define CONFIG_SPLC_DEV						0x0A01//设备号
@@ -34,7 +34,7 @@
 #if CONFIG_SPLC_USING_UART1 == 1
 #define SPLC_UART1							0
 #endif
-#define CONFIG_SPLC_USING_UART2				0//UART1串口启用
+#define CONFIG_SPLC_USING_UART2				1//UART1串口启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ADC				0//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			14//ADC位移滤波次数

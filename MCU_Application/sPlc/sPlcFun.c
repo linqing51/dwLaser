@@ -298,6 +298,25 @@ void YTAB(int16_t *distX, int16_t *srcY, int16_t *index, int16_t *length) reentr
 		*distX = (int16_t)x;
 	}
 }
+void IPID(int16_t *fb, int16_t *tab){//增量PID指令
+//TAB + 0:REF 设置定值
+//TAB + 1:OUT 结果返回值
+//TAB + 2:KP 比例系数
+//TAB + 3:TI 积分系数
+//TAB + 4:TD 微分系数
+//TAB + 5:eK2 前2次误差值
+//TAB + 6:eK1 前1次误差值
+//TAB + 7:eK0 当前误差
+//TAB + 8:dK0 增量误差
+	static fp32_t kp, ki,kd;
+	
+	
+}
+void APID(int16_t *fb, int16_t *tab){//绝对PID指令
+
+}
+void FPID(int16_t *fb, int16_t *tab){//自适应PID指令
+}
 /*****************************************************************************/
 //IO指令
 void IMDIO(void) reentrant{//立即更新IO点状态含输入输出

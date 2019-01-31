@@ -1,6 +1,7 @@
 #include "sPlcModbusPort.h"
 /*****************************************************************************/
 static uint8_t Timer1_L,Timer1_H;
+static uint8_t *pSendBuf;
 /*****************************************************************************/
 void initModbusSerial(int32_t baudrate)
 {//初始化MODBUS串口
@@ -35,33 +36,35 @@ void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER1
 	TR1 = 1;        
 	ET1 = 1; //开中断T1
 }
-static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
-	ES0 = 0;
-	TI0 = 0;
-	SBUF0 = *dt;
-	while( !TI0 ){
-#if CONFIG_SPLC_USING_WDT == 1
-		wdtFeed();
-#endif
-	}
-	TI0 = 0;
-	ES0 = 1;
-}
+//static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
+//	ES0 = 0;
+//	TI0 = 0;
+//	SBUF0 = *dt;
+//	while( !TI0 ){
+//#if CONFIG_SPLC_USING_WDT == 1
+//		wdtFeed();
+//#endif
+//	}
+//	TI0 = 0;
+//	ES0 = 1;
+//}
 void modBusUartInitialise(uint32_t baudrate){// UART Initialize for Microconrollers, yes you can use another phsycal layer!
     initModbusSerial(baudrate);
 }
 void modBusTimerInitialise(void){// Timer Initialize for Petit Modbus, 1ms Timer will be good for us!
     initModbusTimer();
 }
-void modBusUartPutch(uint8_t c){// This is used for send one character
-	modbusSerialSendbyte(&c);
-}
+//void modBusUartPutch(uint8_t c){// This is used for send one character
+//	modbusSerialSendbyte(&c);
+//}
 uint8_t modBusUartString(uint8_t *s, uint16_t  Length){// This is used for send string, better to use DMA for it ;)
-    uint16_t DummyCounter;
-    for(DummyCounter=0; DummyCounter < Length; DummyCounter ++){
-        modBusUartPutch(s[DummyCounter]);
-    }
-    return true;
+		pSendBuf = s;	
+		NVRAM0[SPREG_UART0_SEND_LENGTH] = Length;
+		NVRAM0[SPREG_UART0_SEND_NUM] = 0x0;
+		SET(SPCOIL_UART0_SEND_BUSY);
+		RES(SPCOIL_UART0_SEND_DONE);
+		TI0 = 1;//开始发送			
+		return true;
 }
 void receiveInterrupt(uint8_t Data){//Call this function into your UART Interrupt. Collect data from it!
     modbusReceiveBuffer[modbusReceiveCounter] = Data;
@@ -84,11 +87,35 @@ static void modbusHandle() interrupt INTERRUPT_TIMER1
 
 static void uart0Isr() interrupt INTERRUPT_UART0
 {//UART0 串口中断程序
+	enterSplcIsr();
 	if(RI0){
 		RI0 = 0;	
 		receiveInterrupt(SBUF0);
 	}
 	if(TI0){
 		TI0 = 0;
+		if(NVRAM0[SPREG_UART0_SEND_NUM] < NVRAM0[SPREG_UART0_SEND_LENGTH]){//
+            SBUF0 = *(pSendBuf + NVRAM0[SPREG_UART0_SEND_NUM]);
+			NVRAM0[SPREG_UART0_SEND_NUM] ++;						                   
+		}
+		else{
+			SET(SPCOIL_UART0_SEND_DONE);//发送完成
+			RES(SPCOIL_UART0_SEND_BUSY);
+		}
 	}
+	exitSplcIsr();
+//    if(SCON1 & 0x01){//RI1 == 1
+//        SCON1 &= 0xFE;//RI1 = 0
+//	    if(NVRAM0[SPREG_UART1_RECV_NUM] < NVRAM0[SPREG_UART1_RECV_LENGTH]){
+//			NVRAM0[SPREG_UART1_RECV_BUFFER_ADR + SPREG_UART1_RECV_NUM] = (uint16_t)SBUF1;
+//			NVRAM0[SPREG_UART1_RECV_NUM] ++;
+//		}
+//		else{
+//			SCON1 &= 0xEF;//REN1 = 0 关闭接收
+//			SET(SPCOIL_UART1_RECV_DONE);//接收完成
+//			RES(SPCOIL_UART1_RECV_BUSY);
+//		}
+//	}   
+//	ENABLE_INTERRUPT;
+	
 } 

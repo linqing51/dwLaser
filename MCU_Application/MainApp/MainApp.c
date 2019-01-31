@@ -38,19 +38,28 @@
 //#define STEPNUM_LASERON					4//激光开始
 
 /*****************************************************************************/
-
+bit debugLed0, debugLed1, debugLed2, debugLed3;
 void main(void){
 	initDevice();
 	sPlcInit();//初始化软逻辑
 	while(1){
+		debugLed0 = ~debugLed0;
 		sPlcProcessStart();
+		//debugLed0 = false;
+	
+		//debugLed1 = true;
 		if(LD(SPCOIL_START_UP)){//执行一次的代码
 		
 		}
+		//debugLed1 = false;
+
 #if CONFIG_SPLC_FUNTEST == 1
 		sPlcTest();
 #endif
+		
+		//debugLed2 = true;
 		sPlcProcessEnd();
+		//debugLed2 = false;
 	}
 }
 
