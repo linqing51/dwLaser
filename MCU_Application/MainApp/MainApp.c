@@ -38,6 +38,15 @@
 //#define STEPNUM_LASERON					4//激光开始
 
 /*****************************************************************************/
+typedef struct dwLaser_t{
+	uint8_t schemeName[32];//方案名称
+	uint16_t setLaserPower[2];//设定功率
+	uint16_t getPhotoDiode[2];//获取PD
+	uint16_t lt3763_in[2];//获取LT3763输出电流
+	uint16_t lt3763_out[2];//获取LT3763输入电流
+	uint8_t lt3763_fault;//LT3763失败信号
+};
+
 bit debugLed0, debugLed1, debugLed2, debugLed3;
 void main(void){
 	initDevice();
