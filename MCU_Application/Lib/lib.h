@@ -8,7 +8,7 @@
 #include <ctype.h>
 #include <LIMITS.H>
 #include <math.h>
-//#include "crc32.h"
+#include "crc32.h"
 #include "delay.h"
 #include "endian.h"
 #include "stdbool.h"
@@ -29,6 +29,7 @@
 #endif
 /*****************************************************************************/
 #ifdef C8051F120
+#include "C8051F120_defs.h"
 #define CONFIG_SYSCLK                       (22118400L)
 #define CONFIG_SARCLK      					(2000000L)//ADC0 ±÷” <2.5MHz
 #endif

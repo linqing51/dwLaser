@@ -49,7 +49,7 @@
           <OutputName>dwLaser.uvgui</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>1</CreateHexFile>
+          <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>.\Listings\</ListingPath>
@@ -168,7 +168,7 @@
         </DebugOption>
         <Utilities>
           <Flash1>
-            <UseTargetDll>0</UseTargetDll>
+            <UseTargetDll>1</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
@@ -206,8 +206,8 @@
             <Mode2>0</Mode2>
             <useCB>0</useCB>
             <useXB>0</useXB>
-            <useL251>1</useL251>
-            <useA251>1</useA251>
+            <useL251>0</useL251>
+            <useA251>0</useA251>
             <Mx51>0</Mx51>
             <ModC812>0</ModC812>
             <ModCont>0</ModCont>
@@ -258,7 +258,7 @@
               <Ocr1>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <Size>0x8000</Size>
               </Ocr1>
               <Ocr2>
                 <Type>0</Type>
@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define>C8051F120</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Lib;..\Driver;..\sPlc;..\Port_F020;..\MainApp</IncludePath>
+              <IncludePath>..\Lib;..\sPlc;..\Driver;..\Port_F120;..\MainApp</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -356,8 +356,8 @@
             <UserClasses></UserClasses>
             <CSection></CSection>
             <UserSection></UserSection>
-            <CodeBaseAddress></CodeBaseAddress>
-            <XDataBaseAddress>0X0000-0XEFFF</XDataBaseAddress>
+            <CodeBaseAddress>0X0000-0XFFFF</CodeBaseAddress>
+            <XDataBaseAddress>0X0000-0X7FFF</XDataBaseAddress>
             <PDataBaseAddress></PDataBaseAddress>
             <BitBaseAddress></BitBaseAddress>
             <DataBaseAddress></DataBaseAddress>
@@ -411,16 +411,6 @@
               <FileType>1</FileType>
               <FilePath>..\sPlc\sPlcFun.c</FilePath>
             </File>
-            <File>
-              <FileName>sPlcTest.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\sPlc\sPlcTest.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcModbus.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\sPlc\sPlcModbus.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -437,19 +427,9 @@
               <FilePath>.\sPlcTimer.c</FilePath>
             </File>
             <File>
-              <FileName>sPlcModbusPort.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcModbusPort.c</FilePath>
-            </File>
-            <File>
               <FileName>sPlcLed.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sPlcLed.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcUart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcUart.c</FilePath>
             </File>
             <File>
               <FileName>sPlcMcu.c</FileName>
@@ -457,9 +437,9 @@
               <FilePath>.\sPlcMcu.c</FilePath>
             </File>
             <File>
-              <FileName>sPlcLaser.c</FileName>
+              <FileName>sPlcUart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlcLaser.c</FilePath>
+              <FilePath>.\sPlcUart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -470,11 +450,6 @@
               <FileName>MainApp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MainApp\MainApp.c</FilePath>
-            </File>
-            <File>
-              <FileName>pidFuzzy.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\pidFuzzy.c</FilePath>
             </File>
           </Files>
         </Group>

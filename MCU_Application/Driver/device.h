@@ -6,14 +6,7 @@
 #include "i2c0.h"
 #include "i2c1.h"
 #include "i2c2.h"
-#include "i2c3.h"
-#include "i2c4.h"
-#include "i2c5.h"
-#include "i2c6.h"
 #include "eprom.h"
-#include "inPca9554.h"
-#include "outPca9554.h"
-#include "mcp47x6.h"
 /*****************************************************************************/
 #define CONFIG_I2C0_FREQ 					1            
 #define CONFIG_I2C1_FREQ 					1
@@ -25,7 +18,7 @@
 #define CONFIG_I2C_WAITACT_TIME				250
 /*****************************************************************************/
 #define CONFIG_EPROM_DEBUG					0
-#define CONFIG_EPROM_SIZE 					CONFIG_AT24C64_SIZE
+#define CONFIG_EPROM_SIZE 					CONFIG_AT24C08_SIZE
 #define	CONFIG_AT24C02_SIZE 				256
 #define	CONFIG_AT24C04_SIZE  				512
 #define	CONFIG_AT24C08_SIZE 				1024

@@ -27,14 +27,23 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_OUTPUT			0//输出IO刷新启用
 /*****************************************************************************/
+#define CONFIG_SPLC_USING_EPROM				0//EPROM 
 #define CONFIG_SPLC_USING_EPROMSIM			1//EPROM 仿真启用
-#define CONFIG_SPLC_USING_CLEAR_NVRAM		1//启用清除NVRAM功能
+#define CONFIG_SPLC_USING_CLEAR_NVRAM		0//启用清除NVRAM功能
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_UART1				1//UART1串口启用
-#if CONFIG_SPLC_USING_UART1 == 1
-#define SPLC_UART1							0
+#define CONFIG_SPLC_USING_UART0				1//UART 0串口启用
+#if CONFIG_SPLC_USING_UART0 == 1
+#define UART0								0
+#define CONFIG_UART0_RBUF_SIZE				256//接收缓冲
+#define CONFIG_UART0_TBUF_SIZE				256//发送缓冲
 #endif
-#define CONFIG_SPLC_USING_UART2				1//UART1串口启用
+
+#define CONFIG_SPLC_USING_UART1				1//UART 1串口启用
+#if CONFIG_SPLC_USING_UART1 == 1
+#define UART1								1
+#define CONFIG_UART1_RBUF_SIZE				256//接收缓冲
+#define CONFIG_UART1_TBUF_SIZE				256//发送缓冲
+#endif
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ADC				0//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			14//ADC位移滤波次数
@@ -46,7 +55,7 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DAC				0//是能DAC模块
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_MB_RTU_SLAVE		1//是能MODBUS RTU从站
+#define CONFIG_SPLC_USING_MB_RTU_SLAVE		0//使能MODBUS RTU从站
 #define CONFIG_MB_RTU_SLAVE_TIMER			1000L//1000uS
 #define CONFIG_MB_RTU_SLAVE_ADDRESS			0x01//从设备地址
 #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE		256//发送接收缓冲区
@@ -143,17 +152,13 @@
 #define SPREG_RUNTIME_L						(SPREG_START + 0)//累计运行时间秒 32BIT
 #define SPREG_RUNTIME_H						(SPREG_START + 1)//累计运行时间秒 32BIT		
 /*****************************************************************************/
-#define SPREG_UART0_SEND_BUFFER_ADR			(SPREG_START + 4)//UART0 发送缓冲NVRAM地址		
 #define SPREG_UART0_SEND_LENGTH				(SPREG_START + 5)//UART0 发送数据长度
 #define SPREG_UART0_SEND_NUM				(SPREG_START + 6)//UART0 已经发送数据长度
-#define SPREG_UART0_RECV_BUFFER_ADR			(SPREG_START + 7)//UART0 接收缓冲NVRAM地址
 #define SPREG_UART0_RECV_LENGTH				(SPREG_START + 8)//UART0 接收数据长度
 #define SPREG_UART0_RECV_NUM				(SPREG_START + 9)//UART0 已经接收数据长度
-/*****************************************************************************/
-#define SPREG_UART1_SEND_BUFFER_ADR			(SPREG_START + 10)//UART1 发送缓冲NVRAM地址		
+/*****************************************************************************/		
 #define SPREG_UART1_SEND_LENGTH				(SPREG_START + 11)//UART1 发送数据长度
 #define SPREG_UART1_SEND_NUM				(SPREG_START + 12)//UART1 已经发送数据长度
-#define SPREG_UART1_RECV_BUFFER_ADR			(SPREG_START + 13)//UART1 接收缓冲NVRAM地址
 #define SPREG_UART1_RECV_LENGTH				(SPREG_START + 14)//UART1 接收数据长度
 #define SPREG_UART1_RECV_NUM				(SPREG_START + 15)//UART1 已经接收数据长度
 /*****************************************************************************/

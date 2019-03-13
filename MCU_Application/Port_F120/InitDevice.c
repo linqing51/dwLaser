@@ -22,58 +22,30 @@ static void Voltage_Reference_Init()
 
 void Port_IO_Init()
 {
-    // P0.0  -  TX0 (UART0), Push-Pull,  Digital
-    // P0.1  -  RX0 (UART0), Open-Drain, Digital
-    // P0.2  -  TX1 (UART1), Open-Drain, Digital
-    // P0.3  -  RX1 (UART1), Open-Drain, Digital
-    // P0.4  -  Unassigned,  Push-Pull,  Digital
-    // P0.5  -  Unassigned,  Push-Pull,  Digital
-    // P0.6  -  Unassigned,  Push-Pull,  Digital
-    // P0.7  -  Unassigned,  Push-Pull,  Digital
 
-    // P1.0  -  Unassigned,  Push-Pull,  Digital
-    // P1.1  -  Unassigned,  Push-Pull,  Digital
-    // P1.2  -  Unassigned,  Push-Pull,  Digital
-    // P1.3  -  Unassigned,  Push-Pull,  Digital
-    // P1.4  -  Unassigned,  Push-Pull,  Digital
-    // P1.5  -  Unassigned,  Push-Pull,  Digital
-    // P1.6  -  Unassigned,  Push-Pull,  Digital
-    // P1.7  -  Unassigned,  Push-Pull,  Digital
-
-    // P2.0  -  Unassigned,  Push-Pull,  Digital
-    // P2.1  -  Unassigned,  Push-Pull,  Digital
-    // P2.2  -  Unassigned,  Push-Pull,  Digital
-    // P2.3  -  Unassigned,  Push-Pull,  Digital
-    // P2.4  -  Unassigned,  Push-Pull,  Digital
-    // P2.5  -  Unassigned,  Push-Pull,  Digital
-    // P2.6  -  Unassigned,  Push-Pull,  Digital
-    // P2.7  -  Unassigned,  Push-Pull,  Digital
-
-    // P3.0  -  Unassigned,  Push-Pull,  Digital
-    // P3.1  -  Unassigned,  Push-Pull,  Digital
-    // P3.2  -  Unassigned,  Push-Pull,  Digital
-    // P3.3  -  Unassigned,  Push-Pull,  Digital
-    // P3.4  -  Unassigned,  Push-Pull,  Digital
-    // P3.5  -  Unassigned,  Push-Pull,  Digital
-    // P3.6  -  Unassigned,  Push-Pull,  Digital
-    // P3.7  -  Unassigned,  Push-Pull,  Digital
-
-    P0MDOUT   = 0xF1;
-    P1MDOUT   = 0xFF;
-    P2MDOUT   = 0xFF;
-    P3MDOUT   = 0xFF;
-    P74OUT    = 0x1F;
-    XBR0      = 0x04;
-    XBR2      = 0x44;
 }
 
 static void Oscillator_Init()
 {
     int i = 0;
+    SFRPAGE   = CONFIG_PAGE;
     OSCXCN    = 0x67;
     for (i = 0; i < 3000; i++);  // Wait 1ms for initialization
     while ((OSCXCN & 0x80) == 0);
-    OSCICN    = 0x0F;
+    PLL0CN    = 0x04;
+    CCH0CN    &= ~0x20;
+    SFRPAGE   = LEGACY_PAGE;
+    FLSCL     = 0xB0;
+    SFRPAGE   = CONFIG_PAGE;
+    CCH0CN    |= 0x20;
+    PLL0CN    |= 0x01;
+    PLL0DIV   = 0x01;
+    PLL0FLT   = 0x01;
+    PLL0MUL   = 0x04;
+    for (i = 0; i < 15; i++);  // Wait 5us for initialization
+    PLL0CN    |= 0x02;
+    while ((PLL0CN & 0x10) == 0);
+    CLKSEL    = 0x02;
 }
 
 static void Interrupts_Init()

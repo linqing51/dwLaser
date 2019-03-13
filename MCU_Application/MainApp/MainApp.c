@@ -1,5 +1,6 @@
 #include "MainApp.h"
-#include "sPlcTest.h"
+//#include "vGus.h"
+//#include "sPlcTest.h"
 /*****************************************************************************/
 ////C8051F020 仿真计时器功能定义
 ////TIMER0 ->SPLC_FRAME
@@ -37,21 +38,14 @@
 //#define STEPNUM_READY					3//准备
 //#define STEPNUM_LASERON					4//激光开始
 
-/*****************************************************************************/
-typedef struct dwLaser_t{
-	uint8_t schemeName[32];//方案名称
-	uint16_t setLaserPower[2];//设定功率
-	uint16_t getPhotoDiode[2];//获取PD
-	uint16_t lt3763_in[2];//获取LT3763输出电流
-	uint16_t lt3763_out[2];//获取LT3763输入电流
-	uint8_t lt3763_fault;//LT3763失败信号
-};
 
 bit debugLed0, debugLed1, debugLed2, debugLed3;
 void main(void){
 	initDevice();
 	sPlcInit();//初始化软逻辑
+	//vGusRegRead(0, 1);
 	while(1){
+		
 		debugLed0 = ~debugLed0;
 		sPlcProcessStart();
 		//debugLed0 = false;
@@ -63,7 +57,7 @@ void main(void){
 		//debugLed1 = false;
 
 #if CONFIG_SPLC_FUNTEST == 1
-		sPlcTest();
+		//sPlcTest();
 #endif
 		
 		//debugLed2 = true;
