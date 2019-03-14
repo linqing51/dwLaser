@@ -30,7 +30,7 @@
 /*****************************************************************************/
 #ifdef C8051F120
 #include "C8051F120_defs.h"
-#define CONFIG_SYSCLK                       (22118400L)
+#define CONFIG_SYSCLK                       (22118400L * 4)
 #define CONFIG_SARCLK      					(2000000L)//ADC0 ±÷” <2.5MHz
 #endif
 #endif

@@ -2,7 +2,9 @@
 /*****************************************************************************/
 bit debugTimer;
 void initSplcTimer(void){//硬件sTimer计时器初始化
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
 	idata uint16_t temp;
+	SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE
 	TimerCounter_1mS = 0;
 	TimerCounter_10mS = 0;
 	TimerCounter_100mS = 0;
@@ -11,11 +13,15 @@ void initSplcTimer(void){//硬件sTimer计时器初始化
 	Timer0_H = (temp >> 8) & 0xFF;
 	TH0 = Timer0_H;// Init T0 High register
 	TL0 = Timer0_L;// Init T0 Low register
-	CKCON &= ~(1 << 3);//SYSCLK / 12	
+	SFRPAGE = TIMER01_PAGE;
+	CKCON &= ~(1 << 3);//defined by the prescale bits, SCA1-SCA0.
+	CKCON &= 0xFC;
+	CKCON |= (1 << 1);//System clock divided by 48
 	TMOD &= 0xF0;
 	TMOD |= (1 << 0);// T0 in 16-bit mode
 	ET0 = 1;// T0 interrupt enabled
 	TR0 = 1;// T0 ON
+	SFRPAGE = SFRPAGE_SAVE; 
 }
 static void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
 	idata uint16_t i;

@@ -6,6 +6,14 @@
 #define VGUS_CMD_WRITE_REG				0x80
 #define VGUS_CMD_READ_VAR				0x83
 #define VGUS_CMD_WRITE_VAR				0x82
+//#define VGUS_CMD_READ_EXT				
+#define VGUS_CMD_WRITE_VRAM				0x8500//直接写显存
+#define VGUS_CMD_WRITE_FILE				0x8501//下载指定文件
+#define VGUS_MAX_READ_REG				200
+#define VGUS_MAX_WRITE_REG				200
+#define VGUS_MAX_READ_VAR				100
+#define VGUS_MAX_WRITE_VAR				100
+#define	VGUS_USING_CMD_CRC				0//串口CRC校验
 /*****************************************************************************/
 uint8_t uchCRCHi;//CRC高字节
 uint8_t uchCRCLo;//CRC低字节
@@ -93,16 +101,29 @@ static uint16_t vGusCrc16(uint8_t * pMsg, uint16_t Len)
 	return (uchCRCHi << 8 | uchCRCLo);
 }
 void vGusRegRead(uint8_t addr, uint8_t length){//读取VGUS寄存器
+	uint16_t crc = 0;
+	if(length > VGUS_MAX_READ_REG){
+		length = VGUS_MAX_READ_REG;}
 	UART1_TXBUF[0] = VGUS_R3;//帧头R3
 	UART1_TXBUF[1] = VGUS_RA;//帧头RA
 	UART1_TXBUF[2] = 1;//指令长度
 	UART1_TXBUF[3] = VGUS_CMD_READ_REG;//指令
 	UART1_TXBUF[4] = addr;//起始地址
 	UART1_TXBUF[5] = length;//数据长度
+#if VGUS_USING_CMD_CRC == 1
+	crc = vGusCrc16(&UART1_TXBUF[3], 3);
+	UART1_TXBUF[(length + 6)] = ((crc >> 8) & 0xFF);
+	UART1_TXBUF[(length + 7)] = (crc & 0xFF);
+	USEND(UART1, 8);
+#else
 	USEND(UART1, 6);
+#endif
+	
 }
 void vGusRegWrite(uint8_t addr, uint8_t *pbuf ,uint8_t length){//写入VGUS寄存器
-	uint16_t crc;
+	uint16_t crc = 0;
+	if(length > VGUS_MAX_WRITE_REG){
+		length = VGUS_MAX_WRITE_REG;}
 	UART1_TXBUF[0] = VGUS_R3;//帧头R3
 	UART1_TXBUF[1] = VGUS_RA;//帧头RA
 	UART1_TXBUF[2] = 1;//指令长度
@@ -110,31 +131,69 @@ void vGusRegWrite(uint8_t addr, uint8_t *pbuf ,uint8_t length){//写入VGUS寄存器
 	UART1_TXBUF[4] = addr;//起始地址
 	UART1_TXBUF[5] = length;//数据长度
 	memcpy(&UART1_TXBUF[6], pbuf, length);
+#if VGUS_USING_CMD_CRC == 1
 	crc = vGusCrc16(&UART1_TXBUF[3], (length + 3));
 	UART1_TXBUF[(length + 6)] = ((crc >> 8) & 0xFF);
 	UART1_TXBUF[(length + 7)] = (crc & 0xFF);
-	USEND(UART1, (8 + length));
+	USEND(UART1, (8 + length));		
+#else
+	USEND(UART1, (6 + length));	
+#endif
+		
 }
-void vGusVarRead(uint8_t addr, uint8_t length){//读取VGUS变量
+void vGusVarRead(uint16_t addr, uint8_t length){//读取VGUS变量
+	uint16_t crc = 0;
+	if(length > VGUS_MAX_READ_VAR){
+		length = VGUS_MAX_READ_VAR;}
 	UART1_TXBUF[0] = VGUS_R3;//帧头R3
 	UART1_TXBUF[1] = VGUS_RA;//帧头RA
 	UART1_TXBUF[2] = 1;//指令长度
 	UART1_TXBUF[3] = VGUS_CMD_READ_VAR;//指令
-	UART1_TXBUF[4] = addr;//起始地址
-	UART1_TXBUF[5] = length;//数据长度
-	USEND(UART1, 6);
+	UART1_TXBUF[4] = (addr >> 8) & 0xFF;//起始地址
+	UART1_TXBUF[5] = addr & 0xFF;	
+	UART1_TXBUF[6] = length;//数据长度
+#if VGUS_USING_CMD_CRC == 1
+	crc = vGusCrc16(&UART1_TXBUF[3], (length + 3));
+	UART1_TXBUF[7] = ((crc >> 8) & 0xFF);
+	UART1_TXBUF[8] = (crc & 0xFF);
+	USEND(UART1, 9);	
+#else
+	USEND(UART1, 7);		
+#endif	
 }
-void vGusVarWrite(uint8_t addr, uint8_t *pbuf ,uint8_t length){//写入VGUS变量
-	uint16_t crc;
+void vGusVarWrite(uint16_t addr, uint16_t *pbuf ,uint8_t length){//写入VGUS变量
+	uint16_t crc = 0;
+	if(length > VGUS_MAX_WRITE_VAR){
+		length = VGUS_MAX_WRITE_VAR;}
 	UART1_TXBUF[0] = VGUS_R3;//帧头R3
 	UART1_TXBUF[1] = VGUS_RA;//帧头RA
 	UART1_TXBUF[2] = 1;//指令长度
 	UART1_TXBUF[3] = VGUS_CMD_WRITE_VAR;//指令
-	UART1_TXBUF[4] = addr;//起始地址
-	UART1_TXBUF[5] = length;//数据长度
-	memcpy(&UART1_TXBUF[6], pbuf, length);
-	crc = vGusCrc16(&UART1_TXBUF[3], (length + 3));
-	UART1_TXBUF[(length + 6)] = ((crc >> 8) & 0xFF);
-	UART1_TXBUF[(length + 7)] = (crc & 0xFF);
-	USEND(UART1, (8 + length));
+	UART1_TXBUF[4] = (addr >> 8) & 0xFF;//起始地址
+	UART1_TXBUF[5] = addr & 0xFF;	
+	UART1_TXBUF[6] = length;//数据长度
+	memcpy(&UART1_TXBUF[7], (uint8_t*)pbuf, length * 2);
+#if VGUS_USING_CMD_CRC == 1
+	crc = vGusCrc16(&UART1_TXBUF[3], ((length * 2) + 3));
+	UART1_TXBUF[(length + 8)] = ((crc >> 8) & 0xFF);
+	UART1_TXBUF[(length + 9)] = (crc & 0xFF);
+	USEND(UART1, (9 + (length * 2)));
+#else
+	USEND(UART1, (7 + (length * 2)));	
+#endif		
+}
+void vGusVramWrite(uint16_t x, uint16_t y, uint16_t *pbuf){//直接写显存
+}
+void vGusLoop(void){
+	//将SPLC 中128字写入
+}
+void vGusUpload(void){//vGus->sPlc
+	vGusVarRead(100, 50);
+	if(NVRAM0[SPREG_UART1_RECV_NUM] == 50){
+void *memcpy(void *dest, const void *src, size_t n);	
+		memcpy( (uint8_t*)(&NVRAM0[EM_VGUS_WAVE_SEL]), &UART1_RXBUF[7], 50 * 2);
+	}
+}
+void vGusDownload(void){//vGus<-sPlc
+	
 }
