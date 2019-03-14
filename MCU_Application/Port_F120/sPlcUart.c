@@ -22,6 +22,8 @@ void initUart0(uint32_t baudrate){//初始化串口0
 	ES0 = 1;  
 	IP |= 0x10;
 	SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
+	RES(SPCOIL_UART0_SEND_BUSY);
+	RES(SPCOIL_UART0_SEND_DONE);
 }
 #endif
 #if CONFIG_SPLC_USING_UART1 == 1
@@ -38,7 +40,9 @@ void initUart1(uint32_t baudrate){
 	CKCON |=  0x02;                  // T1M = 0; SCA1:0 = 10		
 	TL1 = TH1;                          // init Timer1
 	TR1 = 1;                            // START Timer1
-	EIE2      = 0x40;                   // Enable UART1 interrupts	 
+	EIE2      = 0x40;                   // Enable UART1 interrupts
+	RES(SPCOIL_UART1_SEND_BUSY);
+	RES(SPCOIL_UART1_SEND_DONE);	
 }
 #endif
 void USSTP(uint8_t port){//串口强制停止发送
