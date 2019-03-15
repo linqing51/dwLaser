@@ -123,7 +123,9 @@ static void loadNvram(void){//从EPROM中载入NVRAM
 #if CONFIG_SPLC_USING_LED == 1
 	setLedEprom(true);
 #endif
+#if CONFIG_SPLC_USING_EPROM == 1
 	epromRead(0, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
+#endif
 #if CONFIG_SPLC_USING_LED == 1
 	setLedEprom(false);
 #endif
@@ -144,7 +146,9 @@ static void saveNvram(void){//强制将NVRAM存入EPROM
 #if CONFIG_SPLC_USING_LED == 1
 	setLedEprom(true);
 #endif
+#if CONFIG_SPLC_USING_EPROM == 1
 	epromWrite(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));
+#endif
 #if CONFIG_SPLC_USING_LED == 1
 	setLedEprom(false);
 #endif
@@ -160,7 +164,9 @@ static void updataNvram(void){//更新NVRAM->EPROM
 #if CONFIG_SPLC_USING_LED == 1
 			setLedEprom(true);
 #endif
+#if CONFIG_SPLC_USING_EPROM == 1
 			epromWriteOneByte(i, *(sp0 + i));
+#endif
 #if CONFIG_SPLC_USING_LED == 1
 			setLedEprom(false);
 #endif
@@ -172,7 +178,9 @@ static void updataNvram(void){//更新NVRAM->EPROM
 #if CONFIG_SPLC_USING_LED == 1
 			setLedEprom(true);
 #endif
+#if CONFIG_SPLC_USING_EPROM == 1
 			epromWriteOneByte(i, *(sp0 + i));
+#endif
 #if CONFIG_SPLC_USING_LED == 1
 			setLedEprom(false);
 #endif
@@ -181,9 +189,10 @@ static void updataNvram(void){//更新NVRAM->EPROM
 	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
 static void clearNvram(void){//清除NVRAM数据	
-	idata uint16_t i;
+	idata uint16_t i = 0;
 	enterSplcIsr();
 	disableWatchDog();
+#if CONFIG_SPLC_USING_EPROM == 1
 	for(i = 0; i<= CONFIG_EPROM_SIZE;i ++){
 #if CONFIG_SPLC_USING_LED == 1
 		setLedEprom(true);
@@ -193,6 +202,7 @@ static void clearNvram(void){//清除NVRAM数据
 		setLedEprom(false);
 #endif
 	}
+#endif
 	exitSplcIsr();//恢复中断
 }
 /*****************************************************************************/

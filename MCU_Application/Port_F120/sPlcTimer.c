@@ -8,7 +8,7 @@ void initSplcTimer(void){//硬件sTimer计时器初始化
 	TimerCounter_1mS = 0;
 	TimerCounter_10mS = 0;
 	TimerCounter_100mS = 0;
-	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 /CONFIG_SOFTPLC_HWTIME));
+	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 48 /CONFIG_SOFTPLC_HWTIME));
 	Timer0_L = temp & 0xFF;
 	Timer0_H = (temp >> 8) & 0xFF;
 	TH0 = Timer0_H;// Init T0 High register

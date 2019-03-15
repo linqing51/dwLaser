@@ -26,19 +26,25 @@ void FLIP(uint16_t A) reentrant{//·­×ª
 		SET(A);
 }
 uint8_t LD(uint16_t A) reentrant{//ÔØÈë
-	uint8_t a;
+	uint8_t res = 0;
 	assertCoilAddress(A);//¼ì²éµØÖ··¶Î§
-	a = (uint8_t)((uint16_t)NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
-	return a;
+	res = (uint8_t)((uint16_t)NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
+	if(res)
+		return true;
+	else
+		return false;
 }
 uint8_t LDB(uint16_t A) reentrant{//·´ÏòÔØÈë
-	uint8_t a;
+	uint8_t res = 0;
 	assertCoilAddress(A);//¼ì²éµØÖ··¶Î§
-	a = !((uint8_t)((uint16_t)NVRAM0[(A / 16)] >> (A % 16)) & 0x01);
-	return a;
+	res = ((uint8_t)((uint16_t)NVRAM0[(A / 16)] >> (A % 16)) & 0x01);
+	if(res)
+		return false;
+	else
+		return true;
 }
 uint8_t LDP(uint16_t A) reentrant{//Âö³åÉÏÉýÑØ
-	uint8_t temp0, temp1;
+	uint8_t temp0 = 0, temp1 = 0;
 	assertCoilAddress(A);//¼ì²éµØÖ··¶Î§
 	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
 	temp1 = (uint8_t)(NVRAM1[(A / 16)] >> (A % 16)) & 0x01;
@@ -48,7 +54,7 @@ uint8_t LDP(uint16_t A) reentrant{//Âö³åÉÏÉýÑØ
 		return false;
 }
 uint8_t LDN(uint16_t A) reentrant{//Âö³åÏÂ½µÑØ
-	uint8_t temp0, temp1;
+	uint8_t temp0 = 0, temp1 = 0;
 	assertCoilAddress(A);
 	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
 	temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);

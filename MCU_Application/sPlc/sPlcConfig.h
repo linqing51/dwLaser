@@ -28,7 +28,6 @@
 #define CONFIG_SPLC_USING_IO_OUTPUT			0//输出IO刷新启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_EPROM				0//EPROM 
-#define CONFIG_SPLC_USING_EPROMSIM			1//EPROM 仿真启用
 #define CONFIG_SPLC_USING_CLEAR_NVRAM		0//启用清除NVRAM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_UART0				1//UART 0串口启用
@@ -67,66 +66,59 @@
 #define DISABLE_INTERRUPT					EA = 0;
 #define ENABLE_INTERRUPT					EA = 1;
 /*****************************************************************************/
-#define SPLC_MR_SIZE						64//64*16 = 1024
-#define SPLC_R_SIZE							61//64*16 = 1024
-#define SPLC_DM_SIZE						256
-#define SPLC_EM_SIZE						256
-
-//线圈 保持 64 * 16 = 1024BIT
+//线圈 保持 16*8=256 
 #define MR_START							0
-#define MR_END   							63
-//#message "MR_START ="MR_START
-
-//线圈寄存器 非保持 8 * 16 = 128BIT
-#define R_START								64
-#define R_END								127
-//数据寄存器 保持 128	
-#define DM_START							128
-#define DM_END								255
-//数据寄存器 非保持 256个字
-#define EM_START							256
-#define EM_END								511
+#define MR_END   							7
+//线圈寄存器 非保持 16*8=256
+#define R_START								8
+#define R_END								15
+//数据寄存器 保持 512
+#define DM_START							16
+#define DM_END								527
+//数据寄存器 非保持 512
+#define EM_START							528
+#define EM_END								1039
 //延时线圈
-//100US 4 * 16 = 64BIT
-#define T_100US_START						512
-#define T_100US_END							515
-//1MS 4 * 16 = 64BIT
-#define T_1MS_START							516
-#define T_1MS_END							519
-//10MS 4 * 16 = 16BIT
-#define T_10MS_START						520
-#define T_10MS_END							523
-//100MS 4 * 16 = 16BIT
-#define T_100MS_START						524
-#define T_100MS_END							527
+//100US 4*16
+#define T_100US_START						1040
+#define T_100US_END							1043
+//1MS 4*16
+#define T_1MS_START							1044
+#define T_1MS_END							1047
+//10MS 4*16
+#define T_10MS_START						1048
+#define T_10MS_END							1051
+//100MS 4*16
+#define T_100MS_START						1052
+#define T_100MS_END							1055
 //延时计时器 
-//100US 64
-#define TD_100US_START						528
-#define TD_100US_END						591	
-//1MS 64
-#define TD_1MS_START						592
-#define TD_1MS_END							655
-//10MS 64
-#define TD_10MS_START						656
-#define TD_10MS_END							719
-//100MS 64
-#define TD_100MS_START						720
-#define TD_100MS_END						783
+//100US 4*16
+#define TD_100US_START						1056
+#define TD_100US_END						1119	
+//1MS 4*16
+#define TD_1MS_START						1120
+#define TD_1MS_END							1183
+//10MS 4*16
+#define TD_10MS_START						1184
+#define TD_10MS_END							1283
+//100MS 4*16
+#define TD_100MS_START						1284
+#define TD_100MS_END						1311
 //计数器 8
-#define C_START								784
-#define C_END								791
-//输入位寄存器 4 * 16 = 64个
-#define X_START								792
-#define X_END								795		
-//输出位寄存器 4 * 16 = 64个
-#define Y_START								796
-#define Y_END								799
-//特殊寄存器 32个字
-#define SPREG_START							800
-#define SPREG_END							831
-//特殊线圈	8 * 16 = 128个
-#define SPCOIL_START						832
-#define SPCOIL_END							839
+#define C_START								1312
+#define C_END								1319
+//输入位寄存器 4
+#define X_START								1320
+#define X_END								1323
+//输出位寄存器 4
+#define Y_START								1324
+#define Y_END								1327
+//特殊寄存器 32
+#define SPREG_START							1328
+#define SPREG_END							1359
+//特殊线圈 4*16
+#define SPCOIL_START						1360
+#define SPCOIL_END							1363
 /*****************************************************************************/
 #define CONFIG_NVRAM_SIZE 					(SPCOIL_END + 1)
 /*****************************************************************************/
@@ -152,15 +144,15 @@
 #define SPREG_RUNTIME_L						(SPREG_START + 0)//累计运行时间秒 32BIT
 #define SPREG_RUNTIME_H						(SPREG_START + 1)//累计运行时间秒 32BIT		
 /*****************************************************************************/
-#define SPREG_UART0_SEND_LENGTH				(SPREG_START + 5)//UART0 发送数据长度
-#define SPREG_UART0_SEND_NUM				(SPREG_START + 6)//UART0 已经发送数据长度
-#define SPREG_UART0_RECV_LENGTH				(SPREG_START + 8)//UART0 接收数据长度
-#define SPREG_UART0_RECV_NUM				(SPREG_START + 9)//UART0 已经接收数据长度
+#define SPREG_UART0_SEND_LENGTH				(SPREG_START + 2)//UART0 发送数据长度
+#define SPREG_UART0_SEND_NUM				(SPREG_START + 3)//UART0 已经发送数据长度
+#define SPREG_UART0_RECV_LENGTH				(SPREG_START + 4)//UART0 接收数据长度
+#define SPREG_UART0_RECV_NUM				(SPREG_START + 5)//UART0 已经接收数据长度
 /*****************************************************************************/		
-#define SPREG_UART1_SEND_LENGTH				(SPREG_START + 11)//UART1 发送数据长度
-#define SPREG_UART1_SEND_NUM				(SPREG_START + 12)//UART1 已经发送数据长度
-#define SPREG_UART1_RECV_LENGTH				(SPREG_START + 14)//UART1 接收数据长度
-#define SPREG_UART1_RECV_NUM				(SPREG_START + 15)//UART1 已经接收数据长度
+#define SPREG_UART1_SEND_LENGTH				(SPREG_START + 6)//UART1 发送数据长度
+#define SPREG_UART1_SEND_NUM				(SPREG_START + 7)//UART1 已经发送数据长度
+#define SPREG_UART1_RECV_LENGTH				(SPREG_START + 8)//UART1 接收数据长度
+#define SPREG_UART1_RECV_NUM				(SPREG_START + 9)//UART1 已经接收数据长度
 /*****************************************************************************/
 #define SPREG_ADC_0							(SPREG_START + 20)//ADC0采集值
 #define SPREG_ADC_1							(SPREG_START + 21)//ADC1采集值
@@ -172,12 +164,7 @@
 #define SPREG_ADC_7							(SPREG_START + 27)//ADC7采集值
 #define SPREG_DAC_0							(SPREG_START + 30)//DAC0设定值
 #define SPREG_DAC_1							(SPREG_START + 31)//DAC0设定值
-#define SPREG_DAC_2							(SPREG_START + 32)//DAC0设定值
-#define SPREG_DAC_3							(SPREG_START + 33)//DAC0设定值
-#define SPREG_DAC_4							(SPREG_START + 34)//DAC0设定值
-#define SPREG_DAC_5							(SPREG_START + 35)//DAC0设定值
-#define SPREG_DAC_6							(SPREG_START + 36)//DAC0设定值
-#define SPREG_DAC_7							(SPREG_START + 37)//DAC0设定值
+
 /*****************************************************************************/
 #define SPREG_CLEAR_NVRAM0					(SPREG_END)//清除NVRAM后重新启动
 /*****************************************************************************/

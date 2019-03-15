@@ -46,8 +46,40 @@ void initUart1(uint32_t baudrate){
 }
 #endif
 void USSTP(uint8_t port){//串口强制停止发送
+	if(port == UART0){
+		NVRAM0[SPREG_UART0_SEND_LENGTH] = 0x0;
+		NVRAM0[SPREG_UART0_SEND_NUM] = 0x0;
+		RES(SPCOIL_UART0_SEND_BUSY);
+		RES(SPCOIL_UART0_SEND_DONE);
+	}
+	if(port == UART1){
+		NVRAM0[SPREG_UART1_SEND_LENGTH] = 0x0;
+		NVRAM0[SPREG_UART1_SEND_NUM] = 0x0;
+		RES(SPCOIL_UART1_SEND_BUSY);
+		RES(SPCOIL_UART1_SEND_DONE);	
+	}
 }
 void URSTP(uint8_t port){//串口强制停止接收
+	uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
+	SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE
+	if(port == UART0){
+		NVRAM0[SPREG_UART0_RECV_LENGTH] = 0x0;
+		NVRAM0[SPREG_UART0_RECV_NUM] = 0x0;
+		RES(SPCOIL_UART0_RECV_BUSY);
+		RES(SPCOIL_UART0_RECV_DONE);
+		SFRPAGE = UART0_PAGE;
+		RI0 = false;//关闭接收
+		SFRPAGE = SFRPAGE_SAVE;
+	}
+	if(port == UART1){
+		NVRAM0[SPREG_UART1_RECV_LENGTH] = 0x0;
+		NVRAM0[SPREG_UART1_RECV_NUM] = 0x0;
+		RES(SPCOIL_UART1_RECV_BUSY);
+		RES(SPCOIL_UART1_RECV_DONE);
+		SFRPAGE = UART1_PAGE;
+		SCON1 &=0xEF;//REN1 = 0关闭接收
+		SFRPAGE = SFRPAGE_SAVE;
+	}
 }
 void USEND(uint8_t port, uint8_t length){//串口启动发送
 	uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
@@ -111,15 +143,17 @@ void Uart0Isr(void) interrupt INTERRUPT_UART0 {//UART0中断
     if(RI0){
 		RI0 = 0;
 	    if(NVRAM0[SPREG_UART0_RECV_NUM] < NVRAM0[SPREG_UART0_RECV_LENGTH]){
-			UART0_RXBUF[((uint8_t)NVRAM0[SPREG_UART0_RECV_NUM])] = SBUF0;
-			NVRAM0[SPREG_UART0_RECV_NUM] ++;
+			UART0_RXBUF[((uint8_t)NVRAM0[SPREG_UART0_RECV_NUM])] = SBUF0;		
+			if(NVRAM0[SPREG_UART0_RECV_NUM] >= (NVRAM0[SPREG_UART0_RECV_LENGTH] - 1)){
+				REN0 = 0;//关闭接收
+				SET(SPCOIL_UART0_RECV_DONE);//接收完成
+				RES(SPCOIL_UART0_RECV_BUSY);
+			}
+			else{
+				NVRAM0[SPREG_UART0_RECV_NUM] ++;	
+			}
 		}
-		else{
-			REN0 = 0;//关闭接收
-			SET(SPCOIL_UART0_RECV_DONE);//接收完成
-			RES(SPCOIL_UART0_RECV_BUSY);
-		}
-	}   
+	}		
 	exitSplcIsr();	
 }
 #endif
@@ -140,16 +174,18 @@ void Uart1Isr(void) interrupt INTERRUPT_UART1 {//UART1中断
     }
     if(SCON1 & 0x01){//RI1 == 1
         SCON1 &= 0xFE;//RI1 = 0
-	    if(NVRAM0[SPREG_UART1_RECV_NUM] < NVRAM0[SPREG_UART1_RECV_LENGTH]){
-			UART1_RXBUF[(uint8_t)NVRAM0[SPREG_UART1_RECV_NUM]] = SBUF1;
-			NVRAM0[SPREG_UART1_RECV_NUM] ++;
+	    if(NVRAM0[SPREG_UART1_RECV_NUM] < NVRAM0[SPREG_UART1_SEND_LENGTH]){
+			UART1_RXBUF[(uint8_t)NVRAM0[SPREG_UART1_RECV_NUM]] = SBUF1;		
+			if(NVRAM0[SPREG_UART1_RECV_NUM] >= (NVRAM0[SPREG_UART1_SEND_LENGTH] - 1)){
+				SCON1 &= 0xEF;//REN1 = 0 关闭接收
+				SET(SPCOIL_UART1_RECV_DONE);//接收完成
+				RES(SPCOIL_UART1_RECV_BUSY);
+			}
+			else{
+				NVRAM0[SPREG_UART1_RECV_NUM] ++;	
+			}
 		}
-		else{
-			SCON1 &= 0xEF;//REN1 = 0 关闭接收
-			SET(SPCOIL_UART1_RECV_DONE);//接收完成
-			RES(SPCOIL_UART1_RECV_BUSY);
-		}
-	}   
+	}		
 	exitSplcIsr();
 }
 #endif

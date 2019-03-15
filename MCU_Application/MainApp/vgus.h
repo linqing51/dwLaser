@@ -4,9 +4,17 @@
 #include "lib.h"
 #include "sPlc.h"
 /*****************************************************************************/
-#define R_VGUS_UPLOAD_DOING					(R_START + 10)
-#define R_VGUS_UPLOAD_DONE					(R_START + 11)
-
+#define T100MS_VGUS_OVERTIME				0//VGUS 接收超时
+#define T100MS_VGUS_POWERON					1//VGUS 上电超时
+#define T100MS_VGUS_INIT					2//VGUS 初始化超时
+#define R_VGUS_POWERON_DOING				(R_START * 16 + 0)//上电进行中
+#define R_VGUS_POWERON_DONE					(R_START * 16 + 1)//上电完成
+#define R_VGUS_INIT_DOING					(R_START * 16 + 2)//初始化进行中
+#define R_VGUS_INIT_DONE					(R_START * 16 + 3)//初始化完成
+#define R_VGUS_UPLOAD_DOING					(R_START * 16 + 4)//上传进行中
+#define R_VGUS_UPLOAD_DONE					(R_START * 16 + 5)//上传完成
+#define R_VGUS_DOWNLOAD_DOING				(R_START * 16 + 6)//下载进行中
+#define R_VGUS_DOWNLOAD_DONE				(R_START * 16 + 7)//下载完成
 
 #define DM_VGUS_PINCODE						0//密码值
 #define DM_VGUS_NEWPINCODE					1//新密码值
@@ -45,12 +53,18 @@
 #define DM_SCHEME_13						360//40
 #define DM_SCHEME_14						360//40
 #define DM_SCHEME_15						360//40
-
+#define R_VGUS_READY
+#define R_VGUS_SAVE
+#define R_VGUS_DISP_RESET
 
 void vGusRegRead(uint8_t addr, uint8_t length);//读取VGUS寄存器
 void vGusRegWrite(uint8_t addr, uint8_t *pbuf ,uint8_t length);//写入VGUS寄存器
 void vGusVarRead(uint16_t addr, uint8_t length);//读取VGUS变量
-void vGusVarWrite(uint16_t addr, uint16_t *pbuf ,uint8_t length);//写入VGUS变量
+void vGusVarWrite(uint16_t addr, int16_t *pbuf ,uint8_t length);//写入VGUS变量
+void vGusInit(void);//vGus初始化
+void vGusWaitPowerOn(void);//等待vGus上电
+void vGusUpload(void);
+void vGusDownload(void);
 /*****************************************************************************/
 
 #endif

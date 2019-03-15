@@ -13,7 +13,8 @@
 #define VGUS_MAX_WRITE_REG				200
 #define VGUS_MAX_READ_VAR				100
 #define VGUS_MAX_WRITE_VAR				100
-#define	VGUS_USING_CMD_CRC				0//串口CRC校验
+#define	CONFIG_VGUS_CMD_CRC				0//串口CRC校验
+#define CONFIG_VGUS_OVERTIME			100//VGUS接收超时
 /*****************************************************************************/
 uint8_t uchCRCHi;//CRC高字节
 uint8_t uchCRCLo;//CRC低字节
@@ -110,7 +111,7 @@ void vGusRegRead(uint8_t addr, uint8_t length){//读取VGUS寄存器
 	UART1_TXBUF[3] = (VGUS_CMD_READ_REG & 0xFF);//指令
 	UART1_TXBUF[4] = addr;//起始地址
 	UART1_TXBUF[5] = length;//数据长度
-#if VGUS_USING_CMD_CRC == 1
+#if CONFIG_VGUS_CMD_CRC == 1
 	crc = vGusCrc16(&UART1_TXBUF[3], 3);
 	UART1_TXBUF[(length + 6)] = ((crc >> 8) & 0xFF);
 	UART1_TXBUF[(length + 7)] = (crc & 0xFF);
@@ -131,7 +132,7 @@ void vGusRegWrite(uint8_t addr, uint8_t *pbuf ,uint8_t length){//写入VGUS寄存器
 	UART1_TXBUF[4] = addr;//起始地址
 	UART1_TXBUF[5] = length;//数据长度
 	memcpy(&UART1_TXBUF[6], pbuf, length);
-#if VGUS_USING_CMD_CRC == 1
+#if CONFIG_VGUS_CMD_CRC == 1
 	crc = vGusCrc16(&UART1_TXBUF[3], (length + 3));
 	UART1_TXBUF[(length + 6)] = ((crc >> 8) & 0xFF);
 	UART1_TXBUF[(length + 7)] = (crc & 0xFF);
@@ -152,7 +153,7 @@ void vGusVarRead(uint16_t addr, uint8_t length){//读取VGUS变量
 	UART1_TXBUF[4] = (addr >> 8) & 0xFF;//起始地址
 	UART1_TXBUF[5] = addr & 0xFF;	
 	UART1_TXBUF[6] = length;//数据长度
-#if VGUS_USING_CMD_CRC == 1
+#if CONFIG_VGUS_CMD_CRC == 1
 	crc = vGusCrc16(&UART1_TXBUF[3], (length + 3));
 	UART1_TXBUF[7] = ((crc >> 8) & 0xFF);
 	UART1_TXBUF[8] = (crc & 0xFF);
@@ -161,7 +162,7 @@ void vGusVarRead(uint16_t addr, uint8_t length){//读取VGUS变量
 	USEND(UART1, 7);		
 #endif	
 }
-void vGusVarWrite(uint16_t addr, uint16_t *pbuf ,uint8_t length){//写入VGUS变量
+void vGusVarWrite(uint16_t addr, int16_t *pbuf ,uint8_t length){//写入VGUS变量
 	uint16_t crc = 0;
 	if(length > VGUS_MAX_WRITE_VAR){
 		length = VGUS_MAX_WRITE_VAR;}
@@ -173,7 +174,7 @@ void vGusVarWrite(uint16_t addr, uint16_t *pbuf ,uint8_t length){//写入VGUS变量
 	UART1_TXBUF[5] = addr & 0xFF;	
 	UART1_TXBUF[6] = length;//数据长度
 	memcpy(&UART1_TXBUF[7], (uint8_t*)pbuf, length * 2);
-#if VGUS_USING_CMD_CRC == 1
+#if CONFIG_VGUS_CMD_CRC == 1
 	crc = vGusCrc16(&UART1_TXBUF[3], ((length * 2) + 3));
 	UART1_TXBUF[(length + 8)] = ((crc >> 8) & 0xFF);
 	UART1_TXBUF[(length + 9)] = (crc & 0xFF);
@@ -182,25 +183,96 @@ void vGusVarWrite(uint16_t addr, uint16_t *pbuf ,uint8_t length){//写入VGUS变量
 	USEND(UART1, (7 + (length * 2)));	
 #endif		
 }
-void vGusVramWrite(uint16_t x, uint16_t y, uint16_t *pbuf){//直接写显存
-}
+//void vGusVramWrite(uint16_t x, uint16_t y, uint16_t *pbuf){//直接写显存
+//}
 void vGusLoop(void){
 	//将SPLC 中128字写入
 }
+void vGusInit(void){//vGus初始化
+	if(LDB(R_VGUS_INIT_DONE)){
+		T100MS(T100MS_VGUS_INIT, true, 2);//启动上电超时计时器
+		if(LDB(R_VGUS_INIT_DOING)){
+			URECV(UART1, 6);
+			vGusVarWrite(200, (int16_t*)&NVRAM0[(EM_START + 100)], 50);
+			SET(R_VGUS_INIT_DOING);
+		}
+		if(LD(SPCOIL_UART1_RECV_DONE) &&
+		  (UART1_RXBUF[0] == 0xA5) && 
+		  (UART1_RXBUF[1] == 0x5A)){
+			RES(R_VGUS_INIT_DOING);
+			SET(R_VGUS_INIT_DONE);
+		}else if(LD(T_100MS_START * 16 + T100MS_VGUS_INIT)){
+			URSTP(UART1);//停止接收
+			T100MS(T100MS_VGUS_INIT, false, 1);//停止计时器
+			RES(R_VGUS_INIT_DONE);
+			RES(R_VGUS_INIT_DOING);
+		}
+	}
+}
+void vGusWaitPowerOn(void){//等待vGus上电
+	if(LDB(R_VGUS_POWERON_DONE)){
+		T100MS(T100MS_VGUS_POWERON, true, 2);//启动上电超时计时器
+		if(LDB(R_VGUS_POWERON_DOING)){
+			URECV(UART1, 7);//接收6个字节
+			vGusRegRead(0x0, 1);
+			SET(R_VGUS_POWERON_DOING);
+		}
+		if(LD(SPCOIL_UART1_RECV_DONE) &&
+		   (UART1_RXBUF[0] == 0xA5) && 
+		   (UART1_RXBUF[1] == 0x5A)){
+			RES(R_VGUS_POWERON_DOING);
+			SET(R_VGUS_POWERON_DONE);
+		}else if(LD(T_100MS_START * 16 + T100MS_VGUS_POWERON)){
+			URSTP(UART1);//停止接收
+			T100MS(T100MS_VGUS_POWERON, false, 1);//停止计时器
+			RES(R_VGUS_POWERON_DONE);
+			RES(R_VGUS_POWERON_DOING);
+		}
+	}
+}
+bit F_UploadStart, F_UploadDone, F_UploadOverTime;
+bit F_DownloadStart,F_DownloadDone;
 void vGusUpload(void){//vGus->sPlc
+	if(LD(R_VGUS_UPLOAD_DOING)){
+		T100MS(T100MS_VGUS_OVERTIME, true, 5);//启动超时计时器
+	}
 	if(LDB(SPCOIL_UART1_SEND_BUSY) && 
 	   LDB(SPCOIL_UART1_RECV_BUSY) &&
 	   LDB(R_VGUS_UPLOAD_DOING)){//UART1空闲 
+		F_UploadStart = true;
+		F_UploadDone = false;
+		F_UploadOverTime = false;
 		URECV(UART1, 100);//接收100个字节
 		vGusVarRead(100, 50);
-		SET(R_VGUS_UPLOAD_DOING);
-	}
-	if(LD(SPCOIL_UART1_RECV_DONE)){
+		SET(R_VGUS_UPLOAD_DOING);	
+	}else if(LDB(SPCOIL_UART1_RECV_BUSY) &&
+	         LD(SPCOIL_UART1_RECV_DONE)){//接收完毕
 		RES(R_VGUS_UPLOAD_DOING);
 		SET(R_VGUS_UPLOAD_DONE);
-		memcpy((uint8_t*)(&NVRAM0[EM_VGUS_WAVE_SEL]), &UART1_RXBUF[7], 50 * 2);
+		memcpy((uint8_t*)(&NVRAM0[EM_START]), &UART1_RXBUF[7], 50 * 2);
+		T100MS(T100MS_VGUS_OVERTIME, false, 1);//停止计时器
+		F_UploadStart = 0;
+		F_UploadDone = 1;
+	}else if(LD(T_100MS_START * 16 + T100MS_VGUS_OVERTIME)){//接收超时
+		T100MS(T100MS_VGUS_OVERTIME, false, 1);//停止计时器
+		URSTP(UART1);//停止接收
+		RES(R_VGUS_UPLOAD_DOING);//
+		F_UploadOverTime = true;
 	}
 }
-void vGusDownload(void){//vGus<-sPlc
-	
-}
+//void vGusDownload(void){//vGus<-sPlc
+//	if(LDB(SPCOIL_UART1_SEND_BUSY) && 
+//	   LDB(SPCOIL_UART1_RECV_BUSY) &&
+//	   LDB(R_VGUS_DOWNLOAD_DOING)){//UART1空闲 
+//		//F_UploadStart = true;
+//		//F_UploadDone = false;
+//		//F_UploadOverTime = false;
+//		//URECV(UART1, 100);//接收100个字节
+//		SET(R_VGUS_DOWNLOAD_DOING);
+//		RES(R_VGUS_DOWNLOAD_DONE);
+//		vGusVarWrite(200, NVRAM0[(EM_START + 100)], 50);
+//			
+//	   }else if(LD(R_VGUS_DOWNLOAD_DONE)){//发送完成
+//		   
+//	}
+//}

@@ -25,9 +25,6 @@
 #endif
 #if CONFIG_SPLC_USING_IO_OUTPUT == 1
 #endif
-#if CONFIG_SPLC_USING_EPROMSIM == 1
-#include "epromSimulation.h"
-#endif
 #if CONFIG_SPLC_USING_EPROM == 1
 #include "eprom.h"
 #endif
