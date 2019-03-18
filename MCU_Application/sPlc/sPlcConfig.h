@@ -37,7 +37,7 @@
 #define CONFIG_UART0_TBUF_SIZE				256//发送缓冲
 #endif
 
-#define CONFIG_SPLC_USING_UART1				1//UART 1串口启用
+#define CONFIG_SPLC_USING_UART1				0//UART 1串口启用
 #if CONFIG_SPLC_USING_UART1 == 1
 #define UART1								1
 #define CONFIG_UART1_RBUF_SIZE				256//接收缓冲

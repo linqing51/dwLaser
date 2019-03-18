@@ -1,6 +1,7 @@
 #include "sPlcTimer.h"
 /*****************************************************************************/
 bit debugTimer;
+uint16_t data hWdelayTickCount;
 void initSplcTimer(void){//硬件sTimer计时器初始化
 	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
 	idata uint16_t temp;
@@ -8,6 +9,7 @@ void initSplcTimer(void){//硬件sTimer计时器初始化
 	TimerCounter_1mS = 0;
 	TimerCounter_10mS = 0;
 	TimerCounter_100mS = 0;
+	hWdelayTickCount = 0;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 48 /CONFIG_SOFTPLC_HWTIME));
 	Timer0_L = temp & 0xFF;
 	Timer0_H = (temp >> 8) & 0xFF;
@@ -95,5 +97,6 @@ static void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断
 	chipAdcProcess();//ADC扫描
 #endif
 	TimerCounter_1mS ++;
+	hWdelayTickCount ++;
 	exitSplcIsr();
 }

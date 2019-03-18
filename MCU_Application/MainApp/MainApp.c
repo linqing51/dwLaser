@@ -29,23 +29,11 @@ bit debugLed0, debugLed1, debugLed2, debugLed3;
 void main(void){ 
 	initDevice();
 	sPlcInit();//初始化软逻辑
+	NVRAM0[EM_VGUS_WAVE_SEL] = 999;
 	while(1){
 		debugLed0 = ~debugLed0;
 		sPlcProcessStart();
-		if(LD(SPCOIL_START_UP)){//执行一次的代码
-			RES(R_VGUS_UPLOAD_DONE);
-			RES(R_VGUS_UPLOAD_DOING);
-			RES(R_VGUS_POWERON_DONE);
-			RES(R_VGUS_POWERON_DOING);
-		}
-		vGusWaitPowerOn();//等待vGus上电
-		
-		if(LD(R_VGUS_POWERON_DONE)){//vGus就绪
-			vGusInit();
-		}
-		if(LD(R_VGUS_INIT_DONE)){
-			vGusUpload();//vGus数据上传
-		}
+		vGusLoop();
 #if CONFIG_SPLC_FUNTEST == 1
 #endif
 		sPlcProcessEnd();

@@ -162,51 +162,59 @@ void vGusVarRead(uint16_t addr, uint8_t length){//读取VGUS变量
 	USEND(UART1, 7);		
 #endif	
 }
-void vGusVarWrite(uint16_t addr, int16_t *pbuf ,uint8_t length){//写入VGUS变量
+void vGusVarWrite(uint16_t addr, int16_t dat){//写入VGUS变量
 	uint16_t crc = 0;
-	if(length > VGUS_MAX_WRITE_VAR){
-		length = VGUS_MAX_WRITE_VAR;}
 	UART1_TXBUF[0] = VGUS_R3;//帧头R3
 	UART1_TXBUF[1] = VGUS_RA;//帧头RA
-	UART1_TXBUF[2] = (VGUS_CMD_WRITE_VAR >> 8) >> 0xFF;//指令长度
+	UART1_TXBUF[2] = (VGUS_CMD_WRITE_VAR >> 8) & 0xFF;//指令长度
 	UART1_TXBUF[3] = (VGUS_CMD_WRITE_VAR & 0xFF);//指令
 	UART1_TXBUF[4] = (addr >> 8) & 0xFF;//起始地址
 	UART1_TXBUF[5] = addr & 0xFF;	
-	UART1_TXBUF[6] = length;//数据长度
-	memcpy(&UART1_TXBUF[7], (uint8_t*)pbuf, length * 2);
+	UART1_TXBUF[6] = (dat >> 8) & 0xFF;
+	UART1_TXBUF[7] = dat & 0xFF;
 #if CONFIG_VGUS_CMD_CRC == 1
-	crc = vGusCrc16(&UART1_TXBUF[3], ((length * 2) + 3));
-	UART1_TXBUF[(length + 8)] = ((crc >> 8) & 0xFF);
-	UART1_TXBUF[(length + 9)] = (crc & 0xFF);
-	USEND(UART1, (9 + (length * 2)));
+	crc = vGusCrc16(&UART1_TXBUF[3], 6);
+	UART1_TXBUF[9] = ((crc >> 8) & 0xFF);
+	UART1_TXBUF[10] = (crc & 0xFF);
+	USEND(UART1, 10);
 #else
-	USEND(UART1, (7 + (length * 2)));	
+	USEND(UART1, 8);	
 #endif		
 }
 //void vGusVramWrite(uint16_t x, uint16_t y, uint16_t *pbuf){//直接写显存
 //}
-void vGusLoop(void){
-	//将SPLC 中128字写入
-}
 void vGusInit(void){//vGus初始化
 	if(LDB(R_VGUS_INIT_DONE)){
 		T100MS(T100MS_VGUS_INIT, true, 2);//启动上电超时计时器
-		if(LDB(R_VGUS_INIT_DOING)){
-			URECV(UART1, 6);
-			vGusVarWrite(200, (int16_t*)&NVRAM0[(EM_START + 100)], 50);
-			SET(R_VGUS_INIT_DOING);
-		}
-		if(LD(SPCOIL_UART1_RECV_DONE) &&
-		  (UART1_RXBUF[0] == 0xA5) && 
-		  (UART1_RXBUF[1] == 0x5A)){
-			RES(R_VGUS_INIT_DOING);
-			SET(R_VGUS_INIT_DONE);
-		}else if(LD(T_100MS_START * 16 + T100MS_VGUS_INIT)){
-			URSTP(UART1);//停止接收
-			T100MS(T100MS_VGUS_INIT, false, 1);//停止计时器
-			RES(R_VGUS_INIT_DONE);
-			RES(R_VGUS_INIT_DOING);
-		}
+		vGusVarWrite(0x200, NVRAM0[EM_VGUS_WAVE_SEL]);while(LDB(SPCOIL_UART1_SEND_DONE));
+		vGusVarWrite(0x201, NVRAM0[EM_VGUS_MODE_SEL]);while(LDB(SPCOIL_UART1_SEND_DONE));
+		vGusVarWrite(0x202, NVRAM0[EM_VGUS_POWER_980]);while(LDB(SPCOIL_UART1_SEND_DONE));
+		vGusVarWrite(0x203, NVRAM0[EM_VGUS_POWER_1470]);while(LDB(SPCOIL_UART1_SEND_DONE));
+		vGusVarWrite(0x204, NVRAM0[EM_VGUS_PP_POS]);while(LDB(SPCOIL_UART1_SEND_DONE));
+		vGusVarWrite(0x205, NVRAM0[EM_VGUS_PP_NEG]);while(LDB(SPCOIL_UART1_SEND_DONE));
+		vGusVarWrite(0x206, NVRAM0[EM_VGUS_PP_SPACE]);while(LDB(SPCOIL_UART1_SEND_DONE));
+		vGusVarWrite(0x207, NVRAM0[EM_VGUS_PP_GROUP]);while(LDB(SPCOIL_UART1_SEND_DONE));
+		//vGusVarWrite(0x100, NVRAM0[EM_VGUS_DISP_NAME]);while(LDB(SPCOIL_UART1_SEND_DONE));
+		//vGusVarWrite(0x100, NVRAM0[EM_VGUS_PP_NEG]);while(LDB(SPCOIL_UART1_SEND_DONE));
+		//vGusVarWrite(0x100, NVRAM0[EM_VGUS_PP_NEG]);while(LDB(SPCOIL_UART1_SEND_DONE));
+		//vGusVarWrite(0x100, NVRAM0[EM_VGUS_PP_NEG]);while(LDB(SPCOIL_UART1_SEND_DONE));
+		SET(R_VGUS_INIT_DOING);
+//		if(LDB(R_VGUS_INIT_DOING)){
+//			URECV(UART1, 6);
+//			vGusVarWrite(200, (int16_t*)&NVRAM0[(EM_START + 100)], 50);
+//			SET(R_VGUS_INIT_DOING);
+//		}
+//		if(LD(SPCOIL_UART1_RECV_DONE) &&
+//		  (UART1_RXBUF[0] == 0xA5) && 
+//		  (UART1_RXBUF[1] == 0x5A)){
+//			RES(R_VGUS_INIT_DOING);
+//			SET(R_VGUS_INIT_DONE);
+//		}else if(LD(T_100MS_START * 16 + T100MS_VGUS_INIT)){
+//			URSTP(UART1);//停止接收
+//			T100MS(T100MS_VGUS_INIT, false, 1);//停止计时器
+//			RES(R_VGUS_INIT_DONE);
+//			RES(R_VGUS_INIT_DOING);
+//		}
 	}
 }
 void vGusWaitPowerOn(void){//等待vGus上电
@@ -276,3 +284,18 @@ void vGusUpload(void){//vGus->sPlc
 //		   
 //	}
 //}
+void vGusLoop(void){//vGus轮询
+	if(LD(SPCOIL_START_UP)){//执行一次的代码
+		RES(R_VGUS_UPLOAD_DONE);
+		RES(R_VGUS_UPLOAD_DOING);
+		RES(R_VGUS_POWERON_DONE);
+		RES(R_VGUS_POWERON_DOING);
+	}
+	vGusWaitPowerOn();//等待vGus上电
+	if(LD(R_VGUS_POWERON_DONE)){//等待vGus就绪
+		vGusInit();//vGus写入初值
+	}
+	//if(LD(R_VGUS_INIT_DONE)){
+	//	vGusUpload();//vGus数据上传
+	//}
+}

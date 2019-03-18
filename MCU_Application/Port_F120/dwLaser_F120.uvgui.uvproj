@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define>C8051F120</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Lib;..\sPlc;..\Driver;..\Port_F120;..\MainApp</IncludePath>
+              <IncludePath>..\Lib;..\sPlc;..\Driver;..\Port_F120;..\dcHMI;..\MainApp</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -356,8 +356,8 @@
             <UserClasses></UserClasses>
             <CSection></CSection>
             <UserSection></UserSection>
-            <CodeBaseAddress></CodeBaseAddress>
-            <XDataBaseAddress></XDataBaseAddress>
+            <CodeBaseAddress>0X0000-0XFFFF</CodeBaseAddress>
+            <XDataBaseAddress>0X0000-0X1FFF</XDataBaseAddress>
             <PDataBaseAddress></PDataBaseAddress>
             <BitBaseAddress></BitBaseAddress>
             <DataBaseAddress></DataBaseAddress>
@@ -429,10 +429,30 @@
               <FileType>1</FileType>
               <FilePath>.\sPlcMcu.c</FilePath>
             </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>dcHMI</GroupName>
+          <Files>
             <File>
-              <FileName>sPlcUart.c</FileName>
+              <FileName>cmd_queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlcUart.c</FilePath>
+              <FilePath>..\dcHMI\cmd_queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>hmi_driver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\dcHMI\hmi_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>hmi_user_uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\dcHMI\hmi_user_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\dcHMI\main.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -443,11 +463,6 @@
               <FileName>MainApp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MainApp\MainApp.c</FilePath>
-            </File>
-            <File>
-              <FileName>vgus.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\vgus.c</FilePath>
             </File>
           </Files>
         </Group>

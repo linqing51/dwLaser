@@ -37,6 +37,8 @@
 #define EM_VGUS_DISP_TIME					42//32bit ->112
 #define EM_VGUS_DISP_WARNING				50//32Byte ->300
 
+#define EM_VGUS_QUEUE		 				500//vGus读写队列
+
 #define DM_SCHEME_0							0
 #define DM_SCHEME_1							40
 #define DM_SCHEME_2							80
@@ -60,11 +62,12 @@
 void vGusRegRead(uint8_t addr, uint8_t length);//读取VGUS寄存器
 void vGusRegWrite(uint8_t addr, uint8_t *pbuf ,uint8_t length);//写入VGUS寄存器
 void vGusVarRead(uint16_t addr, uint8_t length);//读取VGUS变量
-void vGusVarWrite(uint16_t addr, int16_t *pbuf ,uint8_t length);//写入VGUS变量
+void vGusVarWrite(uint16_t addr, int16_t dat);//写入VGUS变量
 void vGusInit(void);//vGus初始化
 void vGusWaitPowerOn(void);//等待vGus上电
 void vGusUpload(void);
 void vGusDownload(void);
+void vGusLoop(void);//vGus轮询
 /*****************************************************************************/
 
 #endif
