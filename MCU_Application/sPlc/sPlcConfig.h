@@ -30,7 +30,7 @@
 #define CONFIG_SPLC_USING_EPROM				0//EPROM 
 #define CONFIG_SPLC_USING_CLEAR_NVRAM		0//启用清除NVRAM功能
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_UART0				1//UART 0串口启用
+#define CONFIG_SPLC_USING_UART0				0//UART 0串口启用
 #if CONFIG_SPLC_USING_UART0 == 1
 #define UART0								0
 #define CONFIG_UART0_RBUF_SIZE				256//接收缓冲
@@ -43,6 +43,8 @@
 #define CONFIG_UART1_RBUF_SIZE				256//接收缓冲
 #define CONFIG_UART1_TBUF_SIZE				256//发送缓冲
 #endif
+/*****************************************************************************/
+#define CONFIG_USING_GDDC_HMI				1//GD-DC液晶屏使能
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ADC				0//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			14//ADC位移滤波次数

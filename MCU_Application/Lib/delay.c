@@ -1,6 +1,6 @@
 #include "delay.h"
 /*****************************************************************************/
-extern uint16_t hWdelayTickCount;
+extern uint16_t data hWdelayTickCount;
 /*****************************************************************************/
 void delayUs(uint8_t us) reentrant{//Œ¢√Î—” ±
 	while(us){

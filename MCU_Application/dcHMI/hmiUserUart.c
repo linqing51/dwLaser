@@ -1,15 +1,7 @@
-/************************************版权申明********************************************
-**                             广州大彩光电科技有限公司
-**                             http://www.gz-dc.com
-**-----------------------------------文件信息--------------------------------------------
-** 文件名称:   hmi_user_uart.c
-** 修改时间:   2018-05-18
-** 文件说明:   用户MCU串口驱动函数库
-** 技术支持：  Tel: 020-82186683  Email: hmi@gz-dc.com Web:www.gz-dc.com
---------------------------------------------------------------------------------------*/
-#include "hmi_user_uart.h"
-extern void queue_push(qdata _data);
-void initHmiUart1(uint32_t baudrate){
+/*****************************************************************************/
+#include "hmiUserUart.h"
+/*****************************************************************************/
+void hmiInitUart(uint32_t baudrate){
 	uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
 	SFRPAGE = UART1_PAGE;
 	SCON1   = 0x10;                     // SCON1: mode 0, 8-bit UART, enable RX
@@ -27,14 +19,12 @@ void initHmiUart1(uint32_t baudrate){
 	RES(SPCOIL_UART1_SEND_DONE);	
 }
 
-void  hmiUart1SendChar(uint8_t t){
+void hmiUartSendChar(uint8_t t){//UART1发送
     SBUF1 = t;
     while((SCON1 & 0x02) == 0);
 	SCON1 &= 0xFD;//TI1 = 0      
 } 
-
-
-void hmiUart1Isr(void) interrupt INTERRUPT_UART1 {//UART1中断
+void hmiUartIsr(void) interrupt INTERRUPT_UART1 {//UART1中断
 	enterSplcIsr();
     if(SCON1 & 0x01){//RI1 == 1
         SCON1 &= 0xFE;//RI1 = 0

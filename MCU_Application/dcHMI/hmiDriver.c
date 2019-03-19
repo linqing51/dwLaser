@@ -8,8 +8,8 @@
 ** 技术支持：  Tel: 020-82186683  Email: hmi@gz-dc.com Web:www.gz-dc.com
 --------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------*/
-#include "hmi_driver.h"
-
+#include "hmiLib.h"
+/*****************************************************************************/
 #define TX_8(P1) SEND_DATA((P1)&0xFF)                    //发送单个字节
 #define TX_8N(P,N) SendNU8((uint8_t *)P,N)                 //发送N个字节
 #define TX_16(P1) TX_8((P1)>>8);TX_8(P1)                 //发送16位整数
@@ -90,9 +90,9 @@ void END_CMD()
 
 #else//NO CRC16
 
-#define SEND_DATA(P) hmiUart1SendChar(P)          //发送一个字节
-#define BEGIN_CMD() TX_8(0XEE)            //帧头
-#define END_CMD() TX_32(0XFFFCFFFF)       //帧尾
+#define SEND_DATA(P) 					hmiUartSendChar(P)//发送一个字节
+#define BEGIN_CMD() 					TX_8(0XEE)//帧头
+#define END_CMD() 						TX_32(0XFFFCFFFF)//帧尾
 
 #endif
 /*! 

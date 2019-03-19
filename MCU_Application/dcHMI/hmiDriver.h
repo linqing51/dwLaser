@@ -1,22 +1,13 @@
-/*! 
-*  \file hmi_driver.h
-*  \brief 串口屏驱动文件
-*  \version 1.0
-*  \date 2012-2018
-*  \copyright 广州大彩光电科技有限公司
-*/
-
-#ifndef _HMI_DRIVER_
-#define _HMI_DRIVER_
-
+#ifndef __HMIDRIVER_H__
+#define __HMIDRIVER_H__
+/*****************************************************************************/
+#include "hmiLib.h"
+/*****************************************************************************/
 #define FIRMWARE_VER 921          // 保持此固件版本号与真实屏幕一致，确保新增功能可用
 #define CRC16_ENABLE 0            // 如果需要CRC16校验功能，修改此宏为1(此时需要在VisualTFT工程中配CRC校验)
 #define CMD_MAX_SIZE 64           // 单条指令大小，根据需要调整，尽量设置大一些
 #define QUEUE_MAX_SIZE 512        // 指令接收缓冲区大小，根据需要调整，尽量设置大一些
-
 #define SD_FILE_EN 0
-
-#include "hmi_user_uart.h"
 
 /*! 
 *  \brief  检查数据是否符合CRC16校验

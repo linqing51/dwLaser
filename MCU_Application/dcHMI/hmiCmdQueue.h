@@ -1,15 +1,8 @@
-/*! 
-*  \file cmd_queue.h
-*  \brief 串口指令队列
-*  \version 1.0
-*  \date 2012-2018
-*  \copyright 广州大彩光电科技有限公司
-*/
-
-#ifndef _CMD_QUEUE
-#define _CMD_QUEUE
-#include "hmi_driver.h"
-
+#ifndef __HMICMDQUEUE_H__
+#define __HMICMDQUEUE_H__
+/*****************************************************************************/
+#include "hmiLib.h"
+/*****************************************************************************/
 typedef unsigned char qdata;
 typedef unsigned short qsize;
 
