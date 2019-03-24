@@ -1,15 +1,7 @@
 #ifndef __SPLCCONFIG_H__
 #define __SPLCCONFIG_H__
 /*****************************************************************************/
-#define CONFIG_UART0_BAUDRATE				115200//串口波特率
-#define CONFIG_UART0_PARITY					NONE
-#define CONFIG_UART0_STOPBIT				1
-#define CONFIG_UART0_DATABIT				8
-
-#define CONFIG_UART1_BAUDRATE				115200//串口波特率
-#define CONFIG_UART1_PARITY					NONE
-#define CONFIG_UART1_STOPBIT				1
-#define CONFIG_UART1_DATABIT				8
+#define CONFIG_UART_BAUDRATE				115200//串口0 串口1 波特率
 /*****************************************************************************/
 #define CONFIG_SPLC_FUNTEST					0//功能指令测试
 /*****************************************************************************/
@@ -54,7 +46,7 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DAC				0//是能DAC模块
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_MB_RTU_SLAVE		0//使能MODBUS RTU从站
+#define CONFIG_SPLC_USING_MB_RTU_SLAVE		1//使能MODBUS RTU从站
 #define CONFIG_MB_RTU_SLAVE_TIMER			1000L//1000uS
 #define CONFIG_MB_RTU_SLAVE_ADDRESS			0x01//从设备地址
 #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE		256//发送接收缓冲区

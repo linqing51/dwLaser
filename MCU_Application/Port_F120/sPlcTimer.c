@@ -2,37 +2,27 @@
 /*****************************************************************************/
 bit debugTimer;
 void initSplcTimer(void){//硬件sTimer计时器初始化
-	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
-	idata uint16_t temp;
-	SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE
+	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	SFRPAGE = TMR2_PAGE;// Set SFR page
 	TimerCounter_1mS = 0;
 	TimerCounter_10mS = 0;
 	TimerCounter_100mS = 0;
-	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 48 /CONFIG_SOFTPLC_HWTIME));
-	Timer0_L = temp & 0xFF;
-	Timer0_H = (temp >> 8) & 0xFF;
-	TH0 = Timer0_H;// Init T0 High register
-	TL0 = Timer0_L;// Init T0 Low register
-	SFRPAGE = TIMER01_PAGE;
-	CKCON &= ~(1 << 3);//defined by the prescale bits, SCA1-SCA0.
-	CKCON &= 0xFC;
-	CKCON |= (1 << 1);//System clock divided by 48
-	TMOD &= 0xF0;
-	TMOD |= (1 << 0);// T0 in 16-bit mode
-	ET0 = 1;// T0 interrupt enabled
-	TR0 = 1;// T0 ON
-	SFRPAGE = SFRPAGE_SAVE; 
+	temp =(uint16_t)(65536 - CONFIG_SYSCLK / 12 /1000 / CONFIG_SOFTPLC_HWTIME
+	TMR2CF = 0x0;//SYSCLK/2;Timer output disable;Timer count up
+	RCAP2 = temp;// Reload value to be used in Timer2
+	TMR2 = RCAP2;// Init the Timer2 register
+	TMR2CN = 0x0;
+	TMR2CN |= (1 << 2);Enable Timer2 in auto-reload mode
+	ET2 = 1;// Timer2 interrupt enabled
+	SFRPAGE = SFRPAGE_SAVE;             // Restore SFR page
 }
-static void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
+static void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER2{//硬件sTimer计时器中断 1mS
 	idata uint16_t i;
 	idata uint32_t tmp;
 	enterSplcIsr();
 	debugTimer = ~debugTimer;
-	TF0 = 0;
-	TR0 = 0;
-	TH0 = Timer0_H;
-	TL0 = Timer0_L;
-	TR0 = 1;
+	TF2 = 0;// Reset Interrupt
+	//TR2 = 0;//关闭T2
 	if(LD(SPCOIL_PS1MS)){//ON
 		RES(SPCOIL_PS1MS);
 	}
@@ -95,5 +85,7 @@ static void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断
 	chipAdcProcess();//ADC扫描
 #endif
 	TimerCounter_1mS ++;
+	//TR2 = 1;//打开T2
 	exitSplcIsr();
+	
 }

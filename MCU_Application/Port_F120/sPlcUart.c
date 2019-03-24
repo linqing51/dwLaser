@@ -1,6 +1,18 @@
 #include "sPlcUart.h"
 /*****************************************************************************/
 #if CONFIG_SPLC_USING_UART0 == 1
+void initUartBaudRate(uint32_t baudrate){//初始化串口0 串口1 波特率
+	uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
+	SFRPAGE = TIMER01_PAGE;
+	TMOD &= 0xF0;
+	TMOD |= (1 << 5);//Mode 2: 8-bit counter/timer with auto-reload
+	
+	TH1 = -(CONFIG_SYSCLK / baudrate /2 / 48);
+	CKCON &= ~0x13;                  // Clear all T1 related bits
+	CKCON |=  0x02;                  // T1M = 0; SCA1:0 = 10		
+	TL1 = TH1;                          // init Timer1
+	TR1 = 1;                            // START Timer1
+}
 void initUart0(uint32_t baudrate){//初始化串口0
 	uint8_t SFRPAGE_SAVE;
 	SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE
@@ -14,6 +26,8 @@ void initUart0(uint32_t baudrate){//初始化串口0
 	SCON0 = 0x50;                       // 8-bit variable baud rate;
                                        // 9th bit ignored; RX enabled
                                        // clear all flags
+	SSTA0 = 0;
+	
 	SSTA0 = 0x15;                       // Clear all flags; enable baud rate
                                        // doubler (not relevant for these
                                        // timers);

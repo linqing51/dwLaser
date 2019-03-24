@@ -2,7 +2,11 @@
 #include "vGus.h"
 //#include "sPlcTest.h"
 /*****************************************************************************/
-
+//T0->PCA
+//T1->UART0/UART1
+//T2->MODBUS
+//T3->SPLC
+//T4->LASER
 ///*****************************************************************************/
 //#define DM_TOTAL_TIME_L					(DM_START + 0)
 //#define DM_TOTAL_TIME_H					(DM_START + 1)
@@ -40,12 +44,12 @@ void main(void){
 		}
 		vGusWaitPowerOn();//等待vGus上电
 		
-		if(LD(R_VGUS_POWERON_DONE)){//vGus就绪
-			vGusInit();
-		}
-		if(LD(R_VGUS_INIT_DONE)){
-			vGusUpload();//vGus数据上传
-		}
+//		if(LD(R_VGUS_POWERON_DONE)){//vGus就绪
+//			vGusInit();
+//		}
+//		if(LD(R_VGUS_INIT_DONE)){
+//			vGusUpload();//vGus数据上传
+//		}
 #if CONFIG_SPLC_FUNTEST == 1
 #endif
 		sPlcProcessEnd();
