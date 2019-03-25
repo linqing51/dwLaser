@@ -3,7 +3,6 @@
 /*****************************************************************************/
 #include "sPlcPort.h"
 /*****************************************************************************/
-extern void modBusUartInitialise(uint32_t baudrate);
 extern void modBusTimerInitialise(void);
 extern void modBusUartPutch(uint8_t c);
 extern uint8_t modBusUartString(uint8_t *s, uint16_t Length);

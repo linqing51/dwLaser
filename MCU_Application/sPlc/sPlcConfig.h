@@ -1,14 +1,15 @@
 #ifndef __SPLCCONFIG_H__
 #define __SPLCCONFIG_H__
 /*****************************************************************************/
-#define CONFIG_UART_BAUDRATE				115200//串口0 串口1 波特率
+#define CONFIG_UART0_BAUDRATE				115200//串口0 波特率
+#define CONFIG_UART1_BAUDRATE				115200//串口1 波特率
 /*****************************************************************************/
 #define CONFIG_SPLC_FUNTEST					0//功能指令测试
 /*****************************************************************************/
 #define CONFIG_SPLC_ASSERT					1//检查地址范围
 #define CONFIG_SPLC_DEV						0x0A01//设备号
 #define CONFIG_SPLC_CLEAR_CODE				0xA58E
-#define CONFIG_SOFTPLC_HWTIME				1000L//1mS
+#define CONFIG_SOFTPLC_TICK					1000L//1mS
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期 1mS * N
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_LED				1//启用调试LED
@@ -36,18 +37,19 @@
 #define CONFIG_UART1_TBUF_SIZE				256//发送缓冲
 #endif
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ADC				0//使能ADC模块
+#define CONFIG_SPLC_USING_ADC				1//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			14//ADC位移滤波次数
-#define CONFIG_SPLC_ADC_CHANNLE				64//ADC通道数
+#define CONFIG_SPLC_ADC_CHANNLE				9//ADC通道数
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
 #define CONFIG_SPLC_ADC_INTERNAL_VREF     	2400L// ADC Voltage Reference (mV)
 #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_DAC				0//是能DAC模块
+#define CONFIG_SPLC_USING_DAC				1//是能DAC模块
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_MB_RTU_SLAVE		1//使能MODBUS RTU从站
-#define CONFIG_MB_RTU_SLAVE_TIMER			1000L//1000uS
+#define CONFIG_USING_RTU_SLAVE				1//使能MODBUS RTU从站
+#define CONFIG_MB_PORT						UART0
+#define CONFIG_MB_RTU_SLAVE_TICK			1000L//1000uS
 #define CONFIG_MB_RTU_SLAVE_ADDRESS			0x01//从设备地址
 #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE		256//发送接收缓冲区
 #define CONFIG_MB_RTU_SLAVE_TIMEOUT			100//接收通讯超时 10mS
@@ -57,6 +59,10 @@
 #define ENABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 1;
 #define DISABLE_INTERRUPT					EA = 0;
 #define ENABLE_INTERRUPT					EA = 1;
+/*****************************************************************************/
+#if CONFIG_USING_RTU_SLAVE == 1
+#define CONFIG_USING_HMI					1//使能MODBUS HMI
+#endif
 /*****************************************************************************/
 //线圈 保持 16*8=256 
 #define MR_START							0
@@ -146,16 +152,16 @@
 #define SPREG_UART1_RECV_LENGTH				(SPREG_START + 8)//UART1 接收数据长度
 #define SPREG_UART1_RECV_NUM				(SPREG_START + 9)//UART1 已经接收数据长度
 /*****************************************************************************/
-#define SPREG_ADC_0							(SPREG_START + 20)//ADC0采集值
-#define SPREG_ADC_1							(SPREG_START + 21)//ADC1采集值
-#define SPREG_ADC_2							(SPREG_START + 22)//ADC2采集值
-#define SPREG_ADC_3							(SPREG_START + 23)//ADC3采集值
-#define SPREG_ADC_4							(SPREG_START + 24)//ADC4采集值
-#define SPREG_ADC_5							(SPREG_START + 25)//ADC5采集值
-#define SPREG_ADC_6							(SPREG_START + 26)//ADC6采集值
-#define SPREG_ADC_7							(SPREG_START + 27)//ADC7采集值
-#define SPREG_DAC_0							(SPREG_START + 30)//DAC0设定值
-#define SPREG_DAC_1							(SPREG_START + 31)//DAC0设定值
+#define SPREG_ADC_0							(SPREG_START + 10)//ADC0采集值
+#define SPREG_ADC_1							(SPREG_START + 11)//ADC1采集值
+#define SPREG_ADC_2							(SPREG_START + 12)//ADC2采集值
+#define SPREG_ADC_3							(SPREG_START + 13)//ADC3采集值
+#define SPREG_ADC_4							(SPREG_START + 14)//ADC4采集值
+#define SPREG_ADC_5							(SPREG_START + 15)//ADC5采集值
+#define SPREG_ADC_6							(SPREG_START + 16)//ADC6采集值
+#define SPREG_ADC_7							(SPREG_START + 17)//ADC7采集值
+#define SPREG_DAC_0							(SPREG_START + 18)//DAC0设定值
+#define SPREG_DAC_1							(SPREG_START + 19)//DAC0设定值
 
 /*****************************************************************************/
 #define SPREG_CLEAR_NVRAM0					(SPREG_END)//清除NVRAM后重新启动

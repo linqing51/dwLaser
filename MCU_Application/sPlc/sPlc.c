@@ -2,14 +2,17 @@
 /*****************************************************************************/
 xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+#if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_MB_PORT != UART0)
 xdata uint8_t volatile UART0_TXBUF[CONFIG_UART0_RBUF_SIZE];//UART0发送缓冲
 xdata uint8_t volatile UART0_RXBUF[CONFIG_UART0_TBUF_SIZE];//UART0接收缓冲
+#endif
+#if (CONFIG_SPLC_USING_UART1 == 1 && CONFIG_MB_PORT != UART1)
 xdata uint8_t volatile UART1_TXBUF[CONFIG_UART1_RBUF_SIZE];//UART1发送缓冲
 xdata uint8_t volatile UART1_RXBUF[CONFIG_UART1_TBUF_SIZE];//UART1接收缓冲
+#endif
 idata volatile uint8_t TimerCounter_1mS = 0;
 idata volatile uint8_t TimerCounter_10mS = 0;
 idata volatile uint8_t TimerCounter_100mS = 0;
-idata volatile uint8_t Timer0_L, Timer0_H;
 /******************************************************************************/
 void assertCoilAddress(uint16_t adr) reentrant{//检查线圈地址
 #if CONFIG_SPLC_ASSERT == 1
@@ -232,9 +235,6 @@ void sPlcInit(void){//软逻辑初始化
 #if CONFIG_SPLC_USING_DAC == 1
 	initChipDac();//初始化DAC模块
 #endif
-#if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1
-	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
-#endif
 	initSplcTimer();//初始化硬件计时器模块
 	SET(SPCOIL_ON);
 #if CONFIG_SPLC_USING_LED == 1	
@@ -243,7 +243,7 @@ void sPlcInit(void){//软逻辑初始化
 	SET(SPCOIL_ON);
 	SET(SPCOIL_START_UP);
 	NVRAM0[EM_END] = CONFIG_SPLC_DEV;
-#if CONFIG_SPLC_USING_MB_RTU_SLAVE	
+#if CONFIG_USING_RTU_SLAVE == 1	
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 #endif
 	ENABLE_INTERRUPT;
@@ -287,7 +287,7 @@ void sPlcProcessStart(void){//sPLC轮询起始
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();//喂狗
 #endif
-#if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1
+#if CONFIG_USING_RTU_SLAVE == 1
 	modbusPorcess();//处理MODBUS
 #endif
 #if CONFIG_SPLC_USING_IO_INPUT == 1
@@ -305,11 +305,14 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 	outputRefresh();//更新Y口输出
 #endif
 #if CONFIG_SPLC_USING_DAC
-	refreshDac();//更新DAC输出
+	refreshChipDac();//更新DAC输出
 #endif
 	updataNvram();//更新NVRAM
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();//喂狗
 #endif
 	RES(SPCOIL_START_UP);
+#if CONFIG_USING_HMI == 1
+	hmiLoop();
+#endif
 }

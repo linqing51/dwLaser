@@ -15,7 +15,7 @@
 #include "sPlcChipAdc.h"
 #endif
 #if CONFIG_SPLC_USING_DAC == 1
-#include "sPlcDac.h"
+#include "sPlcChipDac.h"
 #endif
 #if CONFIG_SPLC_USING_LED == 1
 #include "sPlcLed.h"
@@ -28,7 +28,10 @@
 #if CONFIG_SPLC_USING_EPROM == 1
 #include "eprom.h"
 #endif
-
+#if CONFIG_USING_RTU_SLAVE == 1
+#include "sPlcModbus.h"
+#include "sPlcModbusPort.h"
+#endif
 /*****************************************************************************/
 
 
