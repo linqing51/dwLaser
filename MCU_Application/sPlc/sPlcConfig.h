@@ -44,6 +44,10 @@
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
 #define CONFIG_SPLC_ADC_INTERNAL_VREF     	2400L// ADC Voltage Reference (mV)
 #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
+#define CONFIG_SPLC_NTC_RS					3300L
+#define CONFIG_SPLC_NTC_B					3500L
+#define CONFIG_SPLC_NTC_RB					10000L
+#define CONFIG_SPLC_NTC_VREF				5000L
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DAC				1//是能DAC模块
 /*****************************************************************************/
@@ -72,9 +76,9 @@
 #define R_END								15
 //数据寄存器 保持 512
 #define DM_START							16
-#define DM_END								527
+#define DM_END								767
 //数据寄存器 非保持 512
-#define EM_START							528
+#define EM_START							768
 #define EM_END								1039
 //延时线圈
 //100US 4*16
@@ -152,10 +156,10 @@
 #define SPREG_UART1_RECV_LENGTH				(SPREG_START + 8)//UART1 接收数据长度
 #define SPREG_UART1_RECV_NUM				(SPREG_START + 9)//UART1 已经接收数据长度
 /*****************************************************************************/
-#define SPREG_ADC_0							(SPREG_START + 10)//ADC0采集值
-#define SPREG_ADC_1							(SPREG_START + 11)//ADC1采集值
-#define SPREG_ADC_2							(SPREG_START + 12)//ADC2采集值
-#define SPREG_ADC_3							(SPREG_START + 13)//ADC3采集值
+#define SPREG_ADC_0							(SPREG_START + 10)//ADC0采集值 PD0
+#define SPREG_ADC_1							(SPREG_START + 11)//ADC1采集值 PD1
+#define SPREG_ADC_2							(SPREG_START + 12)//ADC2采集值 NTC0
+#define SPREG_ADC_3							(SPREG_START + 13)//ADC3采集值 NTC1
 #define SPREG_ADC_4							(SPREG_START + 14)//ADC4采集值
 #define SPREG_ADC_5							(SPREG_START + 15)//ADC5采集值
 #define SPREG_ADC_6							(SPREG_START + 16)//ADC6采集值

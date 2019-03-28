@@ -15,6 +15,8 @@ static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
 }
 void initChipAdc(void){//ADC模块初始化
 	idata uint8_t i;
+	idata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	SFRPAGE = ADC0_PAGE;
 	ADC0CN = 0x0;//软件触发
 	ADC0CN |= (1 << 6);//AD0TM = 1 启用跟踪
 	ADC0CN |= (1 << 7);//AD0EN = 1 
@@ -24,7 +26,7 @@ void initChipAdc(void){//ADC模块初始化
 	AMX0SL = 0x00;// Select AIN0.1 pin as ADC mux input
 	AD0INT = 1;
 	AD0BUSY = 1;//AD0BUSY写入1
-
+	SFRPAGE = SFRPAGE_SAVE;             // Restore SFR page
 	adcSelect = 0;
 	for(i = 0;i <= CONFIG_SPLC_ADC_CHANNLE;i ++){
 		initAdcData(&adcTempDat[i]);
@@ -32,7 +34,14 @@ void initChipAdc(void){//ADC模块初始化
 }
 void chipAdcProcess(void){//循环采集ADC
 	idata uint16_t result = 0;
-	//while(!AD0INT);
+	idata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	idata uint8_t inTime;
+	inTime = TimerCounter_10mS - 1;
+	SFRPAGE = ADC0_PAGE;
+	while(1){
+		if(AD0INT != 1 || (TimerCounter_10mS > inTime))
+			break;
+	}
 	result = (ADC0 & 0x0FFF);
 	refreshAdcData(&adcTempDat[adcSelect], result);
 	NVRAM0[SPREG_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
@@ -43,49 +52,40 @@ void chipAdcProcess(void){//循环采集ADC
 		adcSelect = 0;
 	}
 	switch(adcSelect){
-		case 0:{//MLD0
-			//ADC MUX
-			AMX0SL = 0x00;
+		case 0:{//PD0
+			AMX0SL = 0x00;//AIN0
 			break;
 		}
-		case 1:{//MLD1
-			//ADC MUX
-			AMX0SL = 0x00;
+		case 1:{//PD1
+			AMX0SL = 0x01;//AIN1
 			break;
 		}
-		case 2:{//MLD2
-			//ADC MUX
-			AMX0SL = 0x00;
+		case 2:{//NTC0
+			AMX0SL = 0x02;//AIN2
 			break;
 		}
-		case 3:{//MLD3
-			//ADC MUX
-			AMX0SL = 0x00;
+		case 3:{//NTC1
+			AMX0SL = 0x03;//AIN3
 			break;
 		}
-		case 4:{//MLD4
-			//ADC MUX
-			AMX0SL = 0x01;
+		case 4:{//ISMON0
+			AMX0SL = 0x04;//AIN4
 			break;
 		}
-		case 5:{//MLD5
-			//ADC MUX
-			AMX0SL = 0x01;
+		case 5:{//IVINMON0
+			AMX0SL = 0x05;//AIN5
 			break;
 		}
-		case 6:{//MLD6
-			//ADC MUX
-			AMX0SL = 0x01;
+		case 6:{//ISMON1
+			AMX0SL = 0x06;//AIN6
 			break;
 		}
-		case 7:{//MLD7
-			//ADC MUX
-			AMX0SL = 0x01;
+		case 7:{//IVINMON1
+			AMX0SL = 0x07;//AIN7
 			break;
 		}
-		case 8:{//MLD8
-			//ADC MUX
-			AMX0SL = 0x02;
+		case 8:{//Chip Temperature
+			AMX0SL = 0x08;
 			break;
 		}
 		default:{
@@ -94,6 +94,7 @@ void chipAdcProcess(void){//循环采集ADC
 	}
 	AD0INT = 0;
 	AD0BUSY = 1;//AD0BUSY写入1
+	SFRPAGE = SFRPAGE_SAVE;
 }
 void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值 
 	idata uint8_t i;
