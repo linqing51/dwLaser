@@ -145,12 +145,6 @@ static void saveScheme(void){//EM->DM
 	memcpy(pdist, psrc, 50);
 }
 
-static void processTemperature(void){//温度处理过程
-	int16_t volt, res;
-	volt = (int16_t)((int32_t)(NVRAM0[SPREG_ADC_2]) * CONFIG_SPLC_ADC_INTERNAL_VREF / 4096.L);
-	res = (uint16_t)(CONFIG_SPLC_NTC_RS * (CONFIG_SPLC_NTC_VREF - volt) / volt);
-		
-}
 void hmiLoop(void){//HMI轮训程序
 	if(LD(SPCOIL_START_UP)){//执行一次的代码
 		NVRAM0[EM_HMI_HMI_PAGE] = 0x0;//HMI页面
@@ -162,8 +156,10 @@ void hmiLoop(void){//HMI轮训程序
 		NVRAM0[EM_HMI_DEFAULT_PASSWORD0] = 0x0; 
 		loadScheme();
 	}
-	if(LDP(SPCOIL_PS100MS)){//每100mS更新一次温度
-		processTemperature();
+	if(LDP(SPCOIL_PS10MS)){//每100mS更新一次温度
+		TNTC(&NVRAM0[EM_DIODE_TEMP0], &NVRAM0[SPREG_ADC_2]);//CODE转换为NTC测量温度温度
+		TNTC(&NVRAM0[EM_DIODE_TEMP1], &NVRAM0[SPREG_ADC_3]);//CODE转换为NTC测量温度温度
+		TENV(&NVRAM0[EM_ENVI_TEMP], &NVRAM0[SPREG_ADC_8]);//CODE转换为环境温度
 	}
 	//判断二极管0是否过热
 	if(NVRAM0[EM_DIODE_TEMP0] > NVRAM0[DM_DIODE_HIGH_TEMP]){

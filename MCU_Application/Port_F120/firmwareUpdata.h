@@ -1,7 +1,10 @@
-#ifndef __SPLCMCU_H__
-#define __SPLCMCU_H__
+#ifndef __FIRMWAREUPDATE_H__
+#define __FIRMWAREUPDATE_H__
 /*****************************************************************************/
 #include "sPlcPort.h"
+#include "sPlc.h"
 /*****************************************************************************/
-void Cache_ISR_Entry(unsigned int start_address, unsigned int interrupt_number);
+
+
 #endif
+

@@ -40,14 +40,14 @@
 #define CONFIG_SPLC_USING_ADC				1//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			14//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE				9//ADC通道数
-#define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
-#define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
-#define CONFIG_SPLC_ADC_INTERNAL_VREF     	2400L// ADC Voltage Reference (mV)
-#define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
-#define CONFIG_SPLC_NTC_RS					3300L
-#define CONFIG_SPLC_NTC_B					3500L
-#define CONFIG_SPLC_NTC_RB					10000L
-#define CONFIG_SPLC_NTC_VREF				5000L
+#define CONFIG_ADC_TEMP_SENSOR_GAIN    	3330L// Temp Sensor Gain in (uV / degC)
+#define CONFIG_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
+#define CONFIG_ADC_INTERNAL_VREF     	2400L// ADC Voltage Reference (mV)
+#define CONFIG_ADC_AMBIENT             25L// Ambient temp in deg C
+#define CONFIG_NTC_RS					3300L
+#define CONFIG_NTC_B					3500L
+#define CONFIG_NTC_RB					10000L
+#define CONFIG_NTC_VREF				5000L
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DAC				1//是能DAC模块
 /*****************************************************************************/
@@ -164,8 +164,10 @@
 #define SPREG_ADC_5							(SPREG_START + 15)//ADC5采集值
 #define SPREG_ADC_6							(SPREG_START + 16)//ADC6采集值
 #define SPREG_ADC_7							(SPREG_START + 17)//ADC7采集值
-#define SPREG_DAC_0							(SPREG_START + 18)//DAC0设定值
-#define SPREG_DAC_1							(SPREG_START + 19)//DAC0设定值
+#define SPREG_ADC_8							(SPREG_START + 18)//ADC8采集值 Temperature Sensor
+
+#define SPREG_DAC_0							(SPREG_START + 19)//DAC0设定值
+#define SPREG_DAC_1							(SPREG_START + 20)//DAC0设定值
 
 /*****************************************************************************/
 #define SPREG_CLEAR_NVRAM0					(SPREG_END)//清除NVRAM后重新启动

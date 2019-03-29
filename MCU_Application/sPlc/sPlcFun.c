@@ -114,11 +114,11 @@ void T100MS(uint8_t A, uint8_t start, uint16_t value) reentrant{//100MS延时器
 void TNTC(int16_t *dist, int16_t *src) reentrant{//CODE转换为NTC测量温度温度
 	uint16_t temp;
 	fp32_t ftemp;
-	if(*src >= CONFIG_SPLC_ADC_INTERNAL_VREF) *src = CONFIG_SPLC_ADC_INTERNAL_VREF;//限制输入最大值
+	if(*src >= CONFIG_ADC_INTERNAL_VREF) *src = CONFIG_ADC_INTERNAL_VREF;//限制输入最大值
 	if(*src < 0) *src = 0;
-	temp = (int16_t)(CONFIG_SPLC_ADC_INTERNAL_VREF * (*src) / 4096);//单位mV
-	temp = 10000 * 5000 / (5000 - temp);//电源5V 分压电阻10K
-	ftemp = ((1.0 / 3477)*log((fp32_t)(temp) / 10000)) + (1 / (25+273.0));//limo R25=10740,B=3450	 uniquemode 3988
+	temp = (int16_t)(CONFIG_ADC_INTERNAL_VREF * (*src) / 4096);//单位mV
+	temp = (uint16_t)(CONFIG_NTC_RS * (CONFIG_NTC_VREF - temp) / temp);
+	ftemp = ((1.0 / CONFIG_NTC_B) * log((fp32_t)(temp) / 10000)) + (1 / (CONFIG_ADC_AMBIENT + 273.0));//limo R25=10740,B=3450	 uniquemode 3988
 	ftemp = ( 1.0 / ftemp ) - 273.0;
 	if(ftemp >= 100) ftemp = 100;
 	if(ftemp <= -100) ftemp = -100;
@@ -126,8 +126,8 @@ void TNTC(int16_t *dist, int16_t *src) reentrant{//CODE转换为NTC测量温度温度
 }
 void TENV(int16_t *dist, int16_t *src) reentrant{//CODE转换为环境温度
 	int16_t temp;
-	temp = (int16_t)(CONFIG_SPLC_ADC_INTERNAL_VREF * (*src) / 4096);//单位mV
-	temp = (int16_t)((temp - CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET) * 1000 / CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN);
+	temp = (int16_t)(CONFIG_ADC_INTERNAL_VREF * (*src) / 4096);//单位mV
+	temp = (int16_t)((temp - CONFIG_ADC_TEMP_SENSOR_OFFSET) * 1000 / CONFIG_ADC_TEMP_SENSOR_GAIN);
 	*dist = temp;
 }
 void ADD16(int16_t *Sa, int16_t *Sb, int16_t *D) reentrant{//16位非饱和加法 D = Sa + Sb
