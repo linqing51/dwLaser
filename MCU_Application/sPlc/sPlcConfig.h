@@ -1,6 +1,7 @@
 #ifndef __SPLCCONFIG_H__
 #define __SPLCCONFIG_H__
 /*****************************************************************************/
+/*****************************************************************************/
 #define CONFIG_UART0_BAUDRATE				115200//串口0 波特率
 #define CONFIG_UART1_BAUDRATE				115200//串口1 波特率
 /*****************************************************************************/
@@ -40,14 +41,14 @@
 #define CONFIG_SPLC_USING_ADC				1//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			14//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE				9//ADC通道数
-#define CONFIG_ADC_TEMP_SENSOR_GAIN    	3330L// Temp Sensor Gain in (uV / degC)
-#define CONFIG_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
-#define CONFIG_ADC_INTERNAL_VREF     	2400L// ADC Voltage Reference (mV)
-#define CONFIG_ADC_AMBIENT             25L// Ambient temp in deg C
-#define CONFIG_NTC_RS					3300L
-#define CONFIG_NTC_B					3500L
-#define CONFIG_NTC_RB					10000L
-#define CONFIG_NTC_VREF				5000L
+#define CONFIG_ADC_TEMP_SENSOR_GAIN    		3330L// Temp Sensor Gain in (uV / degC)
+#define CONFIG_ADC_TEMP_SENSOR_OFFSET  		856L// Temp Sensor Offset in mV
+#define CONFIG_ADC_INTERNAL_VREF     		2400L// ADC Voltage Reference (mV)
+#define CONFIG_ADC_AMBIENT             		25L// Ambient temp in deg C
+#define CONFIG_NTC_RS						3300L
+#define CONFIG_NTC_B						3500L
+#define CONFIG_NTC_RB						10000L
+#define CONFIG_NTC_VREF						5000L
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DAC				1//是能DAC模块
 /*****************************************************************************/

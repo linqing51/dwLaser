@@ -26,6 +26,7 @@ extern idata volatile uint8_t TimerCounter_100mS;
 void sPlcInit(void);//软逻辑初始化
 void sPlcProcessStart(void);//sPLC轮询起始
 void sPlcProcessEnd(void);//sPLC轮询结束
+extern void sPlcPortProcess(void);//sPLC平台程序
 extern void initWatchDog(void);//看门狗初始化
 extern void feedWatchDog(void) reentrant;//喂狗
 extern void enableWatchDog(void);//使能看门狗
