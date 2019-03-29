@@ -114,5 +114,4 @@ void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值
 	temp = (uint16_t)(sum / (uint32_t)CONFIG_SPLC_ADC_FILTER_TAP);
 	s->out = temp;
 }
-
 #endif

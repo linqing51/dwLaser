@@ -17,7 +17,7 @@
 #ifndef	__CH376_FS_H__
 #define __CH376_FS_H__
 
-#include	"HAL.H"
+#include "ch376.h"
 
 #define	STRUCT_OFFSET( s, m )	( (UINT8)( & ((s *)0) -> m ) )	/* 定义获取结构成员相对偏移地址的宏 */
 

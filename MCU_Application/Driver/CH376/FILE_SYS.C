@@ -18,9 +18,10 @@
 #if 0
 #define		DEF_IC_V43_U	1	/* ÍÆ¼ö¶¨Òå DEF_IC_V43_U ÒÔÓÅ»¯´úÂë */
 #endif
-
-#include	"FILE_SYS.H"
-
+/*****************************************************************************/
+#include "FILE_SYS.H"
+#include "usbSpi.h"
+/*****************************************************************************/
 UINT8	CH376ReadBlock( PUINT8 buf )  /* ´Óµ±Ç°Ö÷»ú¶ËµãµÄ½ÓÊÕ»º³åÇø¶ÁÈ¡Êý¾Ý¿é,·µ»Ø³¤¶È */
 {
 	UINT8	s, l;
@@ -208,7 +209,7 @@ UINT8	Wait376Interrupt( void )  /* µÈ´ýCH376ÖÐ¶Ï(INT#µÍµçÆ½)£¬·µ»ØÖÐ¶Ï×´Ì¬Âë, ³¬
 #else
 	UINT32	i;
 	for ( i = 0; i < 5000000; i ++ ) {  /* ¼ÆÊý·ÀÖ¹³¬Ê±,Ä¬ÈÏµÄ³¬Ê±Ê±¼ä,Óëµ¥Æ¬»úÖ÷ÆµÓÐ¹Ø */
-		if ( Query376Interrupt( ) ) return( CH376GetIntStatus( ) );  /* ¼ì²âµ½ÖÐ¶Ï */
+		if ( usbSpiIntQuery( ) ) return( CH376GetIntStatus( ) );  /* ¼ì²âµ½ÖÐ¶Ï */
 /* ÔÚµÈ´ýCH376ÖÐ¶ÏµÄ¹ý³ÌÖÐ,¿ÉÒÔ×öÐ©ÐèÒª¼°Ê±´¦ÀíµÄÆäËüÊÂÇé */
 	}
 	return( ERR_USB_UNKNOWN );  /* ²»Ó¦¸Ã·¢ÉúµÄÇé¿ö */
@@ -234,15 +235,15 @@ UINT8	CH376SendCmdDatWaitInt( UINT8 mCmd, UINT8 mDat )  /* ·¢³öÃüÁîÂëºÍÒ»×Ö½ÚÊý¾
 UINT8	CH376DiskReqSense( void )  /* ¼ì²éUSB´æ´¢Æ÷´íÎó */
 {
 	UINT8	s;
-	mDelaymS( 5 );
+	delayMs( 5 );
 	s = CH376SendCmdWaitInt( CMD0H_DISK_R_SENSE );
-	mDelaymS( 5 );
+	delayMs( 5 );
 	return( s );
 }
 
 UINT8	CH376DiskConnect( void )  /* ¼ì²éUÅÌÊÇ·ñÁ¬½Ó,²»Ö§³ÖSD¿¨ */
 {
-	if ( Query376Interrupt( ) ) CH376GetIntStatus( );  /* ¼ì²âµ½ÖÐ¶Ï */
+	if ( usbSpiIntQuery( ) ) CH376GetIntStatus( );  /* ¼ì²âµ½ÖÐ¶Ï */
 	return( CH376SendCmdWaitInt( CMD0H_DISK_CONNECT ) );
 }
 

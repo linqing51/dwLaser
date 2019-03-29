@@ -69,6 +69,11 @@
 #define CONFIG_USING_HMI					1//使能MODBUS HMI
 #endif
 /*****************************************************************************/
+#define CONFIG_USING_USB_HOST				1
+#if CONFIG_USING_USB_HOST == 1
+
+#endif
+/*****************************************************************************/
 //线圈 保持 16*8=256 
 #define MR_START							0
 #define MR_END   							7
@@ -132,6 +137,8 @@
 #define SPCOIL_PS100MS						(SPCOIL_START * 16 + 4)//100mS	
 #define SPCOIL_PS1000MS						(SPCOIL_START * 16 + 5)//1000mS	
 #define SPCOIL_MODBUS_S0_ERROR				(SPCOIL_START * 16 + 6)//Modbus Slave->Uart0 错误
+#define SPCOIL_USB_UNKNOWN_ERROR			(SPCOIL_START * 16 + 7)//USB HOST初始化错误
+#define SPCOIL_USB_INT_SUCCESS				(SPCOIL_START * 16 + 8)//USB HOST初始化成功
 #define SPCOIL_NVRAM_FAIL					(SPCOIL_START * 16 + 14)//NVRAM校验码错误
 #define SPCOIL_WATCHDOG						(SPCOIL_START * 16 + 15)//看门狗溢出
 /*****************************************************************************/

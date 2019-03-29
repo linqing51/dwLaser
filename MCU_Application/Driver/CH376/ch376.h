@@ -4,8 +4,8 @@
 /* Author:   W.ch 2008.10    */
 /* V1.0 for CH376            */
 
-#ifndef __CH376INC_H__
-#define __CH376INC_H__
+#ifndef __CH376_H__
+#define __CH376_H__
 
 #ifdef __cplusplus
 extern "C" {
