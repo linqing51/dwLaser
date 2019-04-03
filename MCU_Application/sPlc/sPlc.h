@@ -8,6 +8,9 @@
 #if CONFIG_USING_HMI == 1
 #include "hmi.h"
 #endif
+#if CONFIG_USING_USB == 1
+#include "usbSpi.h"
+#endif
 /*****************************************************************************/
 extern xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 extern xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次

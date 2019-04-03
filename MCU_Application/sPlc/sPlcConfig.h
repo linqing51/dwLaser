@@ -69,10 +69,20 @@
 #define CONFIG_USING_HMI					1//使能MODBUS HMI
 #endif
 /*****************************************************************************/
-#define CONFIG_USING_USB_HOST				1
-#if CONFIG_USING_USB_HOST == 1
+#define CONFIG_USING_USB					1
+#if CONFIG_USING_USB == 1
 
 #endif
+/*****************************************************************************/
+#define CONFIG_USING_SIMEPROM				1//片内模拟EPROM
+#if CONFIG_USING_SIMEPROM == 1
+#endif
+#define CONFIG_FIRMWARE_0_START				0x0000//固件1起始地址
+#define CONFIG_FIRMWARE_0_SIZE				1//固件1容量
+#define CONFIG_FIRMWARE_1_START				0x8000//固件2起始地址
+#define CONFIG_FIRMWARE_1_SIZE				1//固件2容量
+#define CONFIG_FIRMWARE_PARA_START			0xFFFF//固件配置参数地址
+#define CONFIG_FIRMWARE_PARA_SIZE			1//固件参数容量
 /*****************************************************************************/
 //线圈 保持 16*8=256 
 #define MR_START							0
@@ -127,8 +137,11 @@
 //特殊线圈 4*16
 #define SPCOIL_START						1360
 #define SPCOIL_END							1363
+//固件寄存器
+#define FWREG_START
+#define FWREG_END
 /*****************************************************************************/
-#define CONFIG_NVRAM_SIZE 					(SPCOIL_END + 1)
+#define CONFIG_NVRAM_SIZE 					(FWREG_END + 1)
 /*****************************************************************************/
 #define SPCOIL_ON							(SPCOIL_START * 16 + 0)//长通线圈
 #define SPCOIL_START_UP						(SPCOIL_START * 16 + 1)//初次上电
@@ -163,6 +176,26 @@
 #define SPREG_UART1_SEND_NUM				(SPREG_START + 7)//UART1 已经发送数据长度
 #define SPREG_UART1_RECV_LENGTH				(SPREG_START + 8)//UART1 接收数据长度
 #define SPREG_UART1_RECV_NUM				(SPREG_START + 9)//UART1 已经接收数据长度
+/*****************************************************************************/
+#define FWREG_FWM0_VER						(SPREG_START + 10)//固件0 版本
+#define FWREG_FWM0_CRC16					(SPREG_START + 11)//固件0 CRC校验码
+#define FWREG_FWM0_SIZE_L					(SPREG_START + 12)//固件0 容量低位
+#define FWREG_FWM0_SIZE_H					(SPREG_START + 13)//固件0 容量高位
+#define FWREG_FWM0_ADR_START_L				(SPREG_START + 14)//固件0 起始地址低位
+#define FWREG_FWM0_ADR_START_H				(SPREG_START + 15)//固件0 起始地址高位
+#define FWREG_FWM0_ADR_END_L				(SPREG_START + 16)//固件0 结束地址低位
+#define FWREG_FWM0_ADR_END_H				(SPREG_START + 17)//固件0 结束地址高位
+
+#define FWREG_FWM1_VER						(SPREG_START + 18)//固件1 版本
+#define FWREG_FWM1_CRC16					(SPREG_START + 19)//固件1 CRC校验码
+#define FWREG_FWM1_SIZE_L					(SPREG_START + 20)//固件1 容量低位
+#define FWREG_FWM1_SIZE_H					(SPREG_START + 21)//固件1 容量高位
+#define FWREG_FWM1_ADR_START_L				(SPREG_START + 22)//固件1 起始地址低位
+#define FWREG_FWM1_ADR_START_H				(SPREG_START + 23)//固件1 起始地址高位
+#define FWREG_FWM1_ADR_END_L				(SPREG_START + 24)//固件1 结束地址低位
+#define FWREG_FWM1_ADR_END_H				(SPREG_START + 25)//固件1 结束地址高位
+#defien SPREG_HWM_VER						(SPREG_START + 26)//硬件版本
+#define SPREG_BOOT_SELECT					(SPREG_START + 27)//引导固件选择 
 /*****************************************************************************/
 #define SPREG_ADC_0							(SPREG_START + 10)//ADC0采集值 PD0
 #define SPREG_ADC_1							(SPREG_START + 11)//ADC1采集值 PD1

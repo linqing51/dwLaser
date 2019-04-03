@@ -13,15 +13,6 @@ extern "C" {
 
 /* ********************************************************************************************************************* */
 /* 常用类型和常量定义 */
-
-#ifndef		TRUE
-#define		TRUE	1
-#define		FALSE	0
-#endif
-#ifndef		NULL
-#define		NULL	0
-#endif
-
 #ifndef UINT8
 typedef unsigned char                UINT8;
 #endif
