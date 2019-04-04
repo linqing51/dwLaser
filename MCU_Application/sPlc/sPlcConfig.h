@@ -69,20 +69,15 @@
 #define CONFIG_USING_HMI					1//使能MODBUS HMI
 #endif
 /*****************************************************************************/
+#define CONFIG_USING_SIMEPROM				1
 #define CONFIG_USING_USB					1
-#if CONFIG_USING_USB == 1
-
-#endif
+#define CONFIG_USING_ONCHIPFLASH			1
 /*****************************************************************************/
-#define CONFIG_USING_SIMEPROM				1//片内模拟EPROM
-#if CONFIG_USING_SIMEPROM == 1
-#endif
-#define CONFIG_FIRMWARE_0_START				0x0000//固件1起始地址
-#define CONFIG_FIRMWARE_0_SIZE				1//固件1容量
-#define CONFIG_FIRMWARE_1_START				0x8000//固件2起始地址
-#define CONFIG_FIRMWARE_1_SIZE				1//固件2容量
-#define CONFIG_FIRMWARE_PARA_START			0xFFFF//固件配置参数地址
-#define CONFIG_FIRMWARE_PARA_SIZE			1//固件参数容量
+#define CONFIG_FIRMWARE_UPDATE_PAGE_SIZE	128//FLASH单次读写容量
+#define CONFIG_FW_CONFIG_ADR				0x0000//固件配置信息起始地址
+#define CONFIG_FW_CONFIG_SIZE				0x0000//固件配置信息容量
+#define CONFIG_FW_STORAGE_ADR				0x0000//固件暂存区起始地址
+#define CONFIG_FW_STORAGE_SIZE				0x0000//固件暂存区容量
 /*****************************************************************************/
 //线圈 保持 16*8=256 
 #define MR_START							0
@@ -92,56 +87,53 @@
 #define R_END								15
 //数据寄存器 保持 512
 #define DM_START							16
-#define DM_END								767
-//数据寄存器 非保持 512
-#define EM_START							768
-#define EM_END								1039
+#define DM_END								527
+//数据寄存器 非保持 256
+#define EM_START							528
+#define EM_END								783
 //延时线圈
-//100US 4*16
-#define T_100US_START						1040
-#define T_100US_END							1043
+//100US 2 * 16
+#define T_100US_START						784
+#define T_100US_END							785
 //1MS 4*16
-#define T_1MS_START							1044
-#define T_1MS_END							1047
+#define T_1MS_START							786
+#define T_1MS_END							789
 //10MS 4*16
-#define T_10MS_START						1048
-#define T_10MS_END							1051
+#define T_10MS_START						790
+#define T_10MS_END							793
 //100MS 4*16
-#define T_100MS_START						1052
-#define T_100MS_END							1055
+#define T_100MS_START						794
+#define T_100MS_END							797
 //延时计时器 
 //100US 4*16
-#define TD_100US_START						1056
-#define TD_100US_END						1119	
+#define TD_100US_START						798
+#define TD_100US_END						861	
 //1MS 4*16
-#define TD_1MS_START						1120
-#define TD_1MS_END							1183
+#define TD_1MS_START						862
+#define TD_1MS_END							925
 //10MS 4*16
-#define TD_10MS_START						1184
-#define TD_10MS_END							1283
+#define TD_10MS_START						926
+#define TD_10MS_END							989
 //100MS 4*16
-#define TD_100MS_START						1284
-#define TD_100MS_END						1311
+#define TD_100MS_START						990
+#define TD_100MS_END						1053
 //计数器 8
-#define C_START								1312
-#define C_END								1319
+#define C_START								1054
+#define C_END								1061
 //输入位寄存器 4
-#define X_START								1320
-#define X_END								1323
+#define X_START								1062
+#define X_END								1065
 //输出位寄存器 4
-#define Y_START								1324
-#define Y_END								1327
+#define Y_START								1066
+#define Y_END								1069
 //特殊寄存器 32
-#define SPREG_START							1328
-#define SPREG_END							1359
+#define SPREG_START							1070
+#define SPREG_END							1101
 //特殊线圈 4*16
-#define SPCOIL_START						1360
-#define SPCOIL_END							1363
-//固件寄存器
-#define FWREG_START							1364
-#define FWREG_END							1380
+#define SPCOIL_START						1102
+#define SPCOIL_END							1105
 /*****************************************************************************/
-#define CONFIG_NVRAM_SIZE 					(FWREG_END + 1)
+#define CONFIG_NVRAM_SIZE 					(SPCOIL_END + 1)
 /*****************************************************************************/
 #define SPCOIL_ON							(SPCOIL_START * 16 + 0)//长通线圈
 #define SPCOIL_START_UP						(SPCOIL_START * 16 + 1)//初次上电
@@ -150,19 +142,31 @@
 #define SPCOIL_PS100MS						(SPCOIL_START * 16 + 4)//100mS	
 #define SPCOIL_PS1000MS						(SPCOIL_START * 16 + 5)//1000mS	
 #define SPCOIL_MODBUS_S0_ERROR				(SPCOIL_START * 16 + 6)//Modbus Slave->Uart0 错误
-#define SPCOIL_USB_UNKNOWN_ERROR			(SPCOIL_START * 16 + 7)//USB HOST初始化错误
-#define SPCOIL_USB_INT_SUCCESS				(SPCOIL_START * 16 + 8)//USB HOST初始化成功
-#define SPCOIL_NVRAM_FAIL					(SPCOIL_START * 16 + 14)//NVRAM校验码错误
-#define SPCOIL_WATCHDOG						(SPCOIL_START * 16 + 15)//看门狗溢出
+#define SPCOIL_NVRAM_FAIL					(SPCOIL_START * 16 + 7)//NVRAM校验码错误
+#define SPCOIL_WATCHDOG						(SPCOIL_START * 16 + 8)//看门狗溢出
 /*****************************************************************************/
-#define SPCOIL_UART0_SEND_BUSY				(SPCOIL_START * 16 + 16)//UART1发送忙
-#define SPCOIL_UART0_RECV_BUSY				(SPCOIL_START * 16 + 17)//UART1接收忙
-#define SPCOIL_UART0_SEND_DONE				(SPCOIL_START * 16 + 18)//发送完成
-#define SPCOIL_UART0_RECV_DONE				(SPCOIL_START * 16 + 19)//接收完成
-#define SPCOIL_UART1_SEND_BUSY				(SPCOIL_START * 16 + 20)//UART1发送忙
-#define SPCOIL_UART1_RECV_BUSY				(SPCOIL_START * 16 + 21)//UART1接收忙
-#define SPCOIL_UART1_SEND_DONE				(SPCOIL_START * 16 + 22)//发送完成
-#define SPCOIL_UART1_RECV_DONE				(SPCOIL_START * 16 + 23)//接收完成
+//串口
+#define SPCOIL_UART0_SEND_BUSY				(SPCOIL_START * 16 + 9)//UART1发送忙
+#define SPCOIL_UART0_RECV_BUSY				(SPCOIL_START * 16 + 10)//UART1接收忙
+#define SPCOIL_UART0_SEND_DONE				(SPCOIL_START * 16 + 11)//发送完成
+#define SPCOIL_UART0_RECV_DONE				(SPCOIL_START * 16 + 12)//接收完成
+#define SPCOIL_UART1_SEND_BUSY				(SPCOIL_START * 16 + 13)//UART1发送忙
+#define SPCOIL_UART1_RECV_BUSY				(SPCOIL_START * 16 + 14)//UART1接收忙
+#define SPCOIL_UART1_SEND_DONE				(SPCOIL_START * 16 + 15)//发送完成
+#define SPCOIL_UART1_RECV_DONE				(SPCOIL_START * 16 + 16)//接收完成
+//USB 
+#define SPCOIL_USB_INT_SUCCESS				(SPCOIL_START * 16 + 17)//USB 底层中断返回成功
+#define SPCOIL_USB_UNKNOWN_ERROR			(SPCOIL_START * 16 + 18)//USB 底层未知错误
+#define SPCOIL_USBHOST_CONNECT_REQ			(SPCOIL_START * 16 + 19)//USBHOST连接请求
+#define SPCOIL_USBDISK_CONNECT_DOING		(SPCOIL_START * 16 + 20)//USBHOST连接进行中
+#define SPCOIL_USBDISK_CONNECT_DONE			(SPCOIL_START * 16 + 21)//USBHOST连接完成
+#define SPCOIL_USBDISK_MOUNT_REQ			(SPCOIL_START * 16 + 22)//USBDISK载入请求
+#define SPCOIL_USBDISK_MOUNT_DOING			(SPCOIL_START * 16 + 23)//USBDISK装载进行中
+#define SPCOIL_USBDISK_MOUNT_DONE			(SPCOIL_START * 16 + 24)//USBDISK装载完成
+#define SPCOIL_USBDISK_REMOVE_REQ			(SPCOIL_START * 16 + 25)//USBHOST移除请求
+#define SPCOIL_USBDISK_REMOVE_DOING			(SPCOIL_START * 16 + 26)//USBHOST移除进行中
+#define SPCOIL_USBDISK_REMOVE_DONE			(SPCOIL_START * 16 + 27)//USBHOST移除完成
+#define SPCOIL_USBDISK_READING				(SPCOIL_START * 16 + 28)//USBDISK读取进行中
 /*****************************************************************************/
 #define SPREG_RUNTIME_L						(SPREG_START + 0)//累计运行时间秒 32BIT
 #define SPREG_RUNTIME_H						(SPREG_START + 1)//累计运行时间秒 32BIT		
@@ -191,25 +195,9 @@
 /*****************************************************************************/
 #define SPREG_CLEAR_NVRAM0					(SPREG_START + 21)//清除NVRAM后重新启动
 /*****************************************************************************/
-#define FWREG_BOOT_SELECT					(FWREG_START + 0)//引导固件选择 
-#define FWREG_HWM_VER						(FWREG_START + 1)//硬件版本
-#define FWREG_FWM0_VER						(FWREG_START + 2)//固件0 版本
-#define FWREG_FWM0_CRC16					(FWREG_START + 3)//固件0 CRC校验码
-#define FWREG_FWM0_SIZE_L					(FWREG_START + 4)//固件0 容量低位
-#define FWREG_FWM0_SIZE_H					(FWREG_START + 5)//固件0 容量高位
-#define FWREG_FWM0_ADR_START_L				(FWREG_START + 6)//固件0 起始地址低位
-#define FWREG_FWM0_ADR_START_H				(FWREG_START + 7)//固件0 起始地址高位
-#define FWREG_FWM0_ADR_END_L				(FWREG_START + 8)//固件0 结束地址低位
-#define FWREG_FWM0_ADR_END_H				(FWREG_START + 9)//固件0 结束地址高位
-
-#define FWREG_FWM1_VER						(FWREG_START + 10)//固件1 版本
-#define FWREG_FWM1_CRC16					(FWREG_START + 11)//固件1 CRC校验码
-#define FWREG_FWM1_SIZE_L					(FWREG_START + 12)//固件1 容量低位
-#define FWREG_FWM1_SIZE_H					(FWREG_START + 13)//固件1 容量高位
-#define FWREG_FWM1_ADR_START_L				(FWREG_START + 14)//固件1 起始地址低位
-#define FWREG_FWM1_ADR_START_H				(FWREG_START + 15)//固件1 起始地址高位
-#define FWREG_FWM1_ADR_END_L				(FWREG_START + 16)//固件1 结束地址低位
-#define FWREG_FWM1_ADR_END_H				(FWREG_START + 17)//固件1 结束地址高位
+#define T10MS_USBDISK_CONNECT_DELAY			0
+#define T10MS_USBDISK_MOUNT_DELAY			1
+#define T10MS_USBDISK_REMOVE_DELAY			2
 /*****************************************************************************/
 
 #endif

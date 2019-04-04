@@ -45,14 +45,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>.\Objects\</OutputDirectory>
+          <OutputDirectory>..\Objects\</OutputDirectory>
           <OutputName>dwLaser.uvgui</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
+          <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>.\Listings\</ListingPath>
+          <ListingPath>..\Listings\</ListingPath>
           <HexFormatSelection>0</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define>C8051F120</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Lib;..\Driver\SimEprom;..\sPlc;..\Driver;..\Driver\CH376;..\Port_F120;..\MainApp</IncludePath>
+              <IncludePath>..\Lib;..\sPlc;..\Port_F120;.\UsbHost;.\SimEprom;.\OnChipFlash;..\MainApp</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -386,40 +386,10 @@
               <FileType>1</FileType>
               <FilePath>..\Lib\crc32.c</FilePath>
             </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Driver</GroupName>
-          <Files>
             <File>
-              <FileName>usbSpi.C</FileName>
+              <FileName>crc16.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Driver\CH376\usbSpi.C</FilePath>
-            </File>
-            <File>
-              <FileName>FILE_SYS.C</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\CH376\FILE_SYS.C</FilePath>
-            </File>
-            <File>
-              <FileName>eeprom.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\SimEprom\eeprom.c</FilePath>
-            </File>
-            <File>
-              <FileName>flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\SimEprom\flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>F120_FlashPrimitives.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\Flash\F120_FlashPrimitives.c</FilePath>
-            </File>
-            <File>
-              <FileName>F120_FlashUtils.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\Flash\F120_FlashUtils.c</FilePath>
+              <FilePath>..\Lib\crc16.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -486,6 +456,16 @@
               <FileType>1</FileType>
               <FilePath>.\sPlcChipDac.c</FilePath>
             </File>
+            <File>
+              <FileName>sPlcSimEprom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcSimEprom.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcUsb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcUsb.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -505,6 +485,51 @@
               <FileName>firmwareUpdata.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\firmwareUpdata.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sPlc_F120_OnChipFlash</GroupName>
+          <Files>
+            <File>
+              <FileName>F120_FlashPrimitives.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\OnChipFlash\F120_FlashPrimitives.c</FilePath>
+            </File>
+            <File>
+              <FileName>F120_FlashUtils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\OnChipFlash\F120_FlashUtils.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sPlc_F120_USBHost</GroupName>
+          <Files>
+            <File>
+              <FileName>FILE_SYS.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\UsbHost\FILE_SYS.C</FilePath>
+            </File>
+            <File>
+              <FileName>usbSpi.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\UsbHost\usbSpi.C</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>sPlc_F120_SimEprom</GroupName>
+          <Files>
+            <File>
+              <FileName>eeprom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SimEprom\eeprom.c</FilePath>
+            </File>
+            <File>
+              <FileName>flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\SimEprom\flash.c</FilePath>
             </File>
           </Files>
         </Group>

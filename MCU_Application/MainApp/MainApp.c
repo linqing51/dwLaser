@@ -30,17 +30,6 @@
 bit debugLed0, debugLed1, debugLed2, debugLed3;
 
 void main(void){ 
-	   // 32-bit Unsigned Multiply
-	xdata unsigned long ul_multiplier, ul_multiplicand, ul_product;
-#if CONFIG_USING_SIMEPROM == 1
-	SFRPAGE_SWITCH()
-    ENABLE_VDDMON()
-    DISABLE_WDT()
-    SFRPAGE_RESTORE()
-    eeprom_init();
-#endif
-	ul_product = ul_multiplicand * ul_multiplier;
-	ul_product *= ul_product;
 	initDevice();
 	sPlcInit();//≥ı ºªØ»Ì¬ﬂº≠
 	 //Cache_ISR_Entry( (unsigned int) Timer0_ISR, Timer0_ISR_NUM);

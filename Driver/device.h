@@ -2,11 +2,11 @@
 #define __DEVICE_H__
 /*****************************************************************************/
 #include "lib.h"
-#include "sPlc.h"
 #include "i2c0.h"
 #include "i2c1.h"
 #include "i2c2.h"
 #include "eprom.h"
+#include "usbSpi.h"
 /*****************************************************************************/
 #define CONFIG_I2C0_FREQ 					1            
 #define CONFIG_I2C1_FREQ 					1

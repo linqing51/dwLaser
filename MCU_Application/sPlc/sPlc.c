@@ -210,6 +210,7 @@ static void clearNvram(void){//清除NVRAM数据
 }
 /*****************************************************************************/
 void sPlcInit(void){//软逻辑初始化
+	sPlcSimEpromInit();
 #if CONFIG_SPLC_USING_LED == 1	
 	setLedError(false);
 	setLedRun(false);
@@ -318,5 +319,8 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 	RES(SPCOIL_START_UP);
 #if CONFIG_USING_HMI == 1
 	hmiLoop();
+#endif
+#if CONFIG_USING_USB == 1
+	sPlcUsbPoll();
 #endif
 }

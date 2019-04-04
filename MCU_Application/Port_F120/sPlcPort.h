@@ -9,6 +9,7 @@
 #include "delay.h"
 #include "sPlcMcu.h"
 #include "sPlcTimer.h"
+#include "sPlcSimEprom.h"
 /*****************************************************************************/
 #include "sPlcUart.h"
 #if CONFIG_SPLC_USING_ADC == 1
@@ -32,9 +33,18 @@
 #include "sPlcModbus.h"
 #include "sPlcModbusPort.h"
 #endif
-
-
-
+#if CONFIG_USING_USB == 1
+#include "usbSpi.h"
+#include "FILE_SYS.H"
+#include "sPlcUsb.h"
+#endif
+#if CONFIG_USING_SIMEPROM == 1
+#include "sPlcSimEprom.h"
+#endif
+#if CONFIG_USING_ONCHIPFLASH == 1
+#include "F120_FlashPrimitives.h"
+#include "F120_FlashUtils.h"
+#endif
 /*****************************************************************************/
 
 
