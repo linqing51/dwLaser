@@ -210,7 +210,9 @@ static void clearNvram(void){//清除NVRAM数据
 }
 /*****************************************************************************/
 void sPlcInit(void){//软逻辑初始化
+#if CONFIG_USING_SIMEPROM == 1
 	sPlcSimEpromInit();
+#endif
 #if CONFIG_SPLC_USING_LED == 1	
 	setLedError(false);
 	setLedRun(false);

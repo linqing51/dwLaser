@@ -1,87 +1,179 @@
 #include "firmwareUpdata.h"
 /*****************************************************************************/
-#define FIRMWARE_UPDATE_REQ								0x5A;
-typedef struct{
-	uint8_t updateReq;//固件更新请求
-	uint8_t hardwareCode;//硬件型号
-	uint8_t hardwareVer;//硬件版本
-	uint8_t firmwareVer;//待更新固件版本
-	uint16_t firmwareCrc16;//待更新固件CRC8值
-	uint16_t firmwareSize;//待更新固件容量
-}fwConfig_t;
 xdata fwConfig_t oldFwConfig, newFwConfig;
 /***************************************************************************/
-
-
-void upDateHmi(uint8_t *fname){//更新HMI固件
+void upDateHmi(void){//更新HMI固件
 	
 }
-void upDateFirmware(uint8_t *fname){//更新MCU固件
-	uint8_t fileReadbuf[CONFIG_FIRMWARE_UPDATE_PAGE_SIZE];
-	uint8_t fileWritebuf[CONFIG_FIRMWARE_UPDATE_PAGE_SIZE];
-	uint8_t filePageSize, fileRemainSize;
+void upDateFirmwareInit(void){//固件配置初始化
+	oldFwConfig.UREQ = 0;
+	oldFwConfig.HW_CODE = 0;
+	oldFwConfig.HW_VER = 0;
+	oldFwConfig.FW_VER = 0;
+	oldFwConfig.FW_SIZE = 0;
+	
+	newFwConfig.UREQ = 0;
+	newFwConfig.HW_CODE = 0;
+	newFwConfig.HW_VER = 0;
+	newFwConfig.FW_VER = 0;
+	newFwConfig.FW_SIZE = 0;
+}
+void upDateFirmware(void){//更新MCU 2nd 固件
+	uint8_t filebuf[CONFIG_FIRMWARE_UPDATE_PAGE_SIZE];
+	uint8_t filePageSize, fileRemainSize, st;
 	uint16_t fileCrc16, i;
-	uint32_t fileSize, fileAddr;
+	uint32_t fileSize;
+	FLADDR tempFAR;
+	uint8_t *tempFP;
 	//关闭硬件DAC输出
 	//打开风扇
 	//关闭计时器中断
-	
-	
+	//清空错误标志
+	RES(SPCOIL_SIMEPROM_READ_FAIL);
+	RES(SPCOIL_SIMEPROM_WRITE_FAIL);
+	RES(SPCOIL_USBDISK_OPEN_FILE_FAIL);
+	RES(SPCOIL_USBDISK_READ_FILE_FAIL);
+	RES(SPCOIL_USBDISK_WRITE_FILE_FAIL);
+	RES(SPCOIL_USBDISK_CLOSE_FILE_FAIL);
 	//从SIMEPROM读取当前固件配置信息->oldFwConfig.ini
-	
-	
+	for(i = 0;i< sizeof(oldFwConfig) ;i++){
+		if(eeprom_read_byte(i, (uint8_t*)(&oldFwConfig)) == ERROR){//simEprom读取失败
+			SET(SPCOIL_SIMEPROM_READ_FAIL);
+			goto UPDATE_FW_ERROR;
+		}
+    }
 	//从U盘读取固件配置信息->newFwConfig.ini
-	if(oldFwConfig.hardwareCode == newFwConfig.hardwareCode){//比较硬件型号是否匹配
-		if(oldFwConfig.hardwareVer == newFwConfig.hardwareVer){//比较硬件版本是否匹配
-			if(oldFwConfig.firmwareVer < newFwConfig.firmwareVer){//比较固件版本是否需要更新
-				if(newFwConfig.firmwareSize <= CONFIG_FW_STORAGE_SIZE){//比较固件容量是否大于暂存区
-					//从U盘读取固件firmware.bin并存储在待刷新区
-					
-					//校验待刷新区固件CRC16
-					fileCrc16 = 0;
-					filePageSize = fileSize / CONFIG_FIRMWARE_UPDATE_PAGE_SIZE;
-					fileRemainSize = fileSize % CONFIG_FIRMWARE_UPDATE_PAGE_SIZE;
-					fileAddr = CONFIG_FW_STORAGE_ADR;
-					crc16Clear();
-					for(i = 0;i < filePageSize;i ++){
-						FLASH_Read(fileReadbuf, fileAddr, CONFIG_FIRMWARE_UPDATE_PAGE_SIZE, 0);
-						fileAddr += CONFIG_FIRMWARE_UPDATE_PAGE_SIZE;
-						crc16Calculate(fileReadbuf, CONFIG_FIRMWARE_UPDATE_PAGE_SIZE);
-					}
-					FLASH_Read(fileReadbuf, fileAddr, fileRemainSize, 0);
-					fileCrc16 = crc16Calculate(fileReadbuf, fileRemainSize);
-					//比较计算得到CRC16与配置文件是否线头
-					if(newFwConfig.firmwareCrc16 == fileCrc16){//判断已写入暂存区内的固件CRC值正确
-						//更新Bootload刷新执行区请求
-						newFwConfig.updateReq = FIRMWARE_UPDATE_REQ;
-						mucReboot();//复位单片机
-					}
-				}
-				else{
-					//大于暂存区
-					//显示错误
-				}
-				
-			}
-			else{
-				//当前固件版本无需更新
-				//显示错误信息
-			}
-		}
-		else{
-			//硬件版本不匹配
-			//显示错误信息
-		}
+	st = CH376FileOpen(CONFIG_FW_CONFIG_FILE_NAME);//打开文件,该文件在根目录下
+	if(st != USB_INT_SUCCESS){//文件打开失败
+		SET(SPCOIL_USBDISK_OPEN_FILE_FAIL);
+		goto UPDATE_FW_ERROR;
 	}
-	else{
+	fileSize = CH376GetFileSize();//读取当前文件长度
+	st = CH376ByteLocate(0);//移到文件头
+	st = CH376ByteRead((uint8_t*)(&newFwConfig), sizeof(newFwConfig), NULL);
+	if(st != USB_INT_SUCCESS){//文件读取失败
+		SET(SPCOIL_USBDISK_READ_FILE_FAIL);
+		goto UPDATE_FW_ERROR;
+	}
+	st = CH376FileClose(TRUE);//关闭自动计算文件长度
+	if(st != USB_INT_SUCCESS){//文件关闭失败
+		SET(SPCOIL_USBDISK_CLOSE_FILE_FAIL);
+		goto UPDATE_FW_ERROR;
+	}	
+	if(oldFwConfig.HW_CODE != newFwConfig.HW_CODE){//比较硬件型号是否匹配
 		//硬件型号不匹配
-		//显示错误信息
+		goto UPDATE_FW_ERROR;
+	}
+	if(oldFwConfig.HW_VER != newFwConfig.HW_VER){//比较硬件版本是否匹配
+		//硬件版本不匹配
+		goto UPDATE_FW_ERROR;
+	}
+	if(oldFwConfig.FW_VER >= newFwConfig.FW_VER){//比较固件版本是否需要更新
+		//待更新固件版本比运行固件旧掉过更新
+		goto UPDATE_FW_ERROR;
+	}		
+	if(newFwConfig.FW_SIZE > CONFIG_FW_STORAGE_SIZE){//比较固件容量是否大于暂存区
+		//待更新固件容量超过待存区
+		goto UPDATE_FW_ERROR;
+	}
+	//保存当前运行MCU固件到UDISK
+#if CONFIG_FW_ORIGINAL_SAVE == 1
+	st = CH376FileOpen(CONFIG_FW_MCU_FILE_SAVE_NAME);//打开文件,该文件在根目录下
+	if(st != USB_INT_SUCCESS){//文件打开失败
+		SET(SPCOIL_USBDISK_OPEN_FILE_FAIL);
+		goto UPDATE_FW_ERROR;
 	}
 	
-	
-	
+#endif
+	//从U盘读取固件firmware.bin并存储在待刷新区
+	st = CH376FileOpen(CONFIG_FW_MCU_FILE_LOAD_NAME);//打开文件,该文件在根目录下
+	if(st != USB_INT_SUCCESS){//文件打开失败
+		SET(SPCOIL_USBDISK_OPEN_FILE_FAIL);
+		goto UPDATE_FW_ERROR;
+	}				
+	fileSize = CH376GetFileSize();//读取当前文件长度
+	if(fileSize != newFwConfig.FW_SIZE){//新固件文件长度错误
+#if CONFIG_DEBUG == 1
+	printf("Error:UDISK file size != newFwConfig.FW_SIZE!\n");
+#endif
+		goto UPDATE_FW_ERROR;
+	}
+	st = CH376ByteLocate(0);//移到文件头
+	filePageSize = newFwConfig.FW_SIZE / CONFIG_FIRMWARE_UPDATE_PAGE_SIZE;
+	fileRemainSize = newFwConfig.FW_SIZE % CONFIG_FIRMWARE_UPDATE_PAGE_SIZE;
+	tempFAR = CONFIG_FW_STORAGE_ADR;
+	tempFP = filebuf;
+	for(i = 0;i < filePageSize;i ++){
+		st = CH376ByteRead(tempFP, CONFIG_FIRMWARE_UPDATE_PAGE_SIZE, NULL);
+		if(st != USB_INT_SUCCESS){//读取固件错误
+			SET(SPCOIL_USBDISK_READ_FILE_FAIL);
+#if CONFIG_DEBUG == 1
+			printf("Error:UDISK file read fail!\n");
+#endif
+			goto UPDATE_FW_ERROR;
+		}
+		FLASH_Clear(tempFAR, CONFIG_FIRMWARE_UPDATE_PAGE_SIZE, 0);//Clear Flash->0xFF
+		FLASH_Write(tempFAR, tempFP, CONFIG_FIRMWARE_UPDATE_PAGE_SIZE, 0);//fileBuf->Flash
+		tempFAR += CONFIG_FIRMWARE_UPDATE_PAGE_SIZE;
+		tempFP += CONFIG_FIRMWARE_UPDATE_PAGE_SIZE;
+	}
+	if(fileRemainSize != 0){//持续写入剩余字节
+		FLASH_Clear(tempFAR, fileRemainSize, 0);//Clear Flash->0xFF
+		FLASH_Write(tempFAR, tempFP, fileRemainSize, 0);//fileBuf->Flash
+		tempFAR += fileRemainSize;
+		tempFP += fileRemainSize;
+	}
+	st = CH376FileClose(TRUE);//关闭自动计算文件长度
+	if(st != USB_INT_SUCCESS){//文件读取失败
+		SET(SPCOIL_USBDISK_CLOSE_FILE_FAIL);
+#if CONFIG_DEBUG == 1
+		printf("Error:UDISK file close fail!\n");
+#endif
+		goto UPDATE_FW_ERROR;
+	}
+	//校验待刷新区固件CRC16
+	fileCrc16 = 0;
+	tempFAR = CONFIG_FW_STORAGE_ADR;
+	crc16Clear();
+	for(i = 0;i < filePageSize;i ++){
+		FLASH_Read(filebuf, tempFAR, CONFIG_FIRMWARE_UPDATE_PAGE_SIZE, 0);
+		tempFAR += CONFIG_FIRMWARE_UPDATE_PAGE_SIZE;
+		crc16Calculate(filebuf, CONFIG_FIRMWARE_UPDATE_PAGE_SIZE);
+	}
+	if(fileRemainSize != 0){
+		FLASH_Read(filebuf, tempFAR, fileRemainSize, 0);
+		fileCrc16 = crc16Calculate(filebuf, fileRemainSize);
+	}
 	//比较计算得到CRC16与配置文件是否线头
-	//比较相同 更新附件更新请求
-	//重新启动MCU
+	if(newFwConfig.FW_CRC16 != fileCrc16){//判断已写入暂存区内的固件CRC值正确
+#if CONFIG_DEBUG == 1
+		printf("Error:2nd firmware crc fail,newCrc16:%d;calcCrc16:%d !\n",newFwConfig.FW_CRC16, fileCrc16);
+#endif
+		goto UPDATE_FW_ERROR;	
+	}
+	//更新Bootload刷新执行区请求
+	newFwConfig.UREQ = CONFIG_FW_UPDATE_REQ_FLAG;
+    for(i = 0;i< sizeof(newFwConfig) ;i++){//更新FLASH配置文件
+		if(eeprom_read_byte(i, (uint8_t*)(&newFwConfig)) == ERROR){//simEprom读取失败
+			SET(SPCOIL_SIMEPROM_WRITE_FAIL);
+#if CONFIG_DEBUG == 1
+			printf("Error:Write newFwConfig fail and exit!\n");
+#endif
+			goto UPDATE_FW_ERROR;
+		}
+	}
+#if CONFIG_DEBUG == 1
+	printf("Info:Update 2nd firmware successful.\n");
+#endif
+	mucReboot();//复位单片机
+	//return;
+UPDATE_FW_ERROR:
+	{
+		delayMs(1);
+#if CONFIG_DEBUG == 1
+		printf("Error:Update 2nd Firmware fail and exit!\n");
+#endif
+	}
 }
+
 

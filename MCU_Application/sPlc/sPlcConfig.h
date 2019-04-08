@@ -1,6 +1,7 @@
 #ifndef __SPLCCONFIG_H__
 #define __SPLCCONFIG_H__
 /*****************************************************************************/
+#define CONFIG_DEBUG 					 	0
 /*****************************************************************************/
 #define CONFIG_UART0_BAUDRATE				115200//串口0 波特率
 #define CONFIG_UART1_BAUDRATE				115200//串口1 波特率
@@ -66,7 +67,7 @@
 #define ENABLE_INTERRUPT					EA = 1;
 /*****************************************************************************/
 #if CONFIG_USING_RTU_SLAVE == 1
-#define CONFIG_USING_HMI					1//使能MODBUS HMI
+#define CONFIG_USING_HMI					0//使能MODBUS HMI
 #endif
 /*****************************************************************************/
 #define CONFIG_USING_SIMEPROM				1
@@ -78,6 +79,12 @@
 #define CONFIG_FW_CONFIG_SIZE				0x0000//固件配置信息容量
 #define CONFIG_FW_STORAGE_ADR				0x0000//固件暂存区起始地址
 #define CONFIG_FW_STORAGE_SIZE				0x0000//固件暂存区容量
+/*****************************************************************************/
+#define CONFIG_FW_ORIGINAL_SAVE				1//更新前保存旧固件
+#define CONFIG_FW_UPDATE_REQ_FLAG			0x5A//固件更新标志
+#define CONFIG_FW_CONFIG_FILE_NAME			"/fwConfig.ini"//固件配置文件名称
+#define CONFIG_FW_MCU_FILE_LOAD_NAME		"/dwLaserNE.bin"//单片机固件名称
+#define CONFIG_FW_MCU_FILE_SAVE_NAME		"/dwLaserOD.bib"//
 /*****************************************************************************/
 //线圈 保持 16*8=256 
 #define MR_START							0
@@ -167,6 +174,12 @@
 #define SPCOIL_USBDISK_REMOVE_DOING			(SPCOIL_START * 16 + 26)//USBHOST移除进行中
 #define SPCOIL_USBDISK_REMOVE_DONE			(SPCOIL_START * 16 + 27)//USBHOST移除完成
 #define SPCOIL_USBDISK_READING				(SPCOIL_START * 16 + 28)//USBDISK读取进行中
+#define SPCOIL_USBDISK_OPEN_FILE_FAIL		(SPCOIL_START * 16 + 29)//USBDISK打开文件失败
+#define SPCOIL_USBDISK_READ_FILE_FAIL		(SPCOIL_START * 16 + 30)//USBDISK读取文件失败
+#define SPCOIL_USBDISK_WRITE_FILE_FAIL		(SPCOIL_START * 16 + 31)//USBDISK写入文件失败
+#define SPCOIL_USBDISK_CLOSE_FILE_FAIL		(SPCOIL_START * 16 + 32)//USBDISK关闭文件失败
+#define SPCOIL_SIMEPROM_READ_FAIL			(SPCOIL_START * 16 + 33)//SIMEPROM读取失败
+#define SPCOIL_SIMEPROM_WRITE_FAIL			(SPCOIL_START * 16 + 34)//USBDISK关闭文件失败
 /*****************************************************************************/
 #define SPREG_RUNTIME_L						(SPREG_START + 0)//累计运行时间秒 32BIT
 #define SPREG_RUNTIME_H						(SPREG_START + 1)//累计运行时间秒 32BIT		
