@@ -9,6 +9,10 @@
 #include "hmi.h"
 #endif
 /*****************************************************************************/
+#define SPLC_FP32					*(fp32_t*)//指针取单精度浮点
+#define SPLC_FP64					*(fp64_t*)//指针取双精度浮点
+#define SPLC_INT32					*(int32_t*)//指针取长整数
+/*****************************************************************************/
 extern xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 extern xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 #if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_MB_PORT != UART0)

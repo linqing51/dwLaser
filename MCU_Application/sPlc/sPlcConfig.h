@@ -2,6 +2,11 @@
 #define __SPLCCONFIG_H__
 /*****************************************************************************/
 #define CONFIG_DEBUG 					 	0
+#if CONFIG_DEBUG == 1
+#define CONFIG_DEBUG_PID					1//PID调试功能
+#else
+#define CONFIG_DEBUG_PID					0
+#endif
 /*****************************************************************************/
 #define CONFIG_UART0_BAUDRATE				115200//串口0 波特率
 #define CONFIG_UART1_BAUDRATE				115200//串口1 波特率

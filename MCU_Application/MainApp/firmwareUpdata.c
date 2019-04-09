@@ -25,7 +25,12 @@ void upDateFirmware(void){//更新MCU 2nd 固件
 	uint32_t fileSize;
 	FLADDR tempFAR;
 	uint8_t *tempFP;
+	//关闭全局中断
+	disableSplcIsr();
 	//关闭硬件DAC输出
+	NVRAM0[SPREG_DAC_0] = 0;
+	NVRAM1[SPREG_DAC_1] = 0;
+	DAC0 = 0;DAC1 = 0;
 	//打开风扇
 	//关闭计时器中断
 	//清空错误标志
@@ -83,7 +88,6 @@ void upDateFirmware(void){//更新MCU 2nd 固件
 		SET(SPCOIL_USBDISK_OPEN_FILE_FAIL);
 		goto UPDATE_FW_ERROR;
 	}
-	
 #endif
 	//从U盘读取固件firmware.bin并存储在待刷新区
 	st = CH376FileOpen(CONFIG_FW_MCU_FILE_LOAD_NAME);//打开文件,该文件在根目录下
@@ -170,6 +174,7 @@ void upDateFirmware(void){//更新MCU 2nd 固件
 UPDATE_FW_ERROR:
 	{
 		delayMs(1);
+		enableSplcIsr();
 #if CONFIG_DEBUG == 1
 		printf("Error:Update 2nd Firmware fail and exit!\n");
 #endif
