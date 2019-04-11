@@ -319,6 +319,12 @@ void FPID(int16_t *fb, int16_t *tab){//自适应PID指令
 void IMDIO(void) reentrant{//立即更新IO点状态含输入输出
 
 }
+void SPWM(uint16_t A, int16_t *tab) reentrant{//软件PWM输出 
+//A 线圈点位
+//*tab + 0 正脉宽数 * 0.01S
+//*tab + 1 周期数 * 0.01S
+//*tab + 2 脉宽计时器 * 0.01S
+}
 /*****************************************************************************/
 //步指令
 void TO(uint16_t SA) reentrant{//步进开始指令

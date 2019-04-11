@@ -94,7 +94,7 @@
         <uSim>1</uSim>
         <uTrg>0</uTrg>
         <sLdApp>1</sLdApp>
-        <sGomain>1</sGomain>
+        <sGomain>0</sGomain>
         <sRbreak>1</sRbreak>
         <sRwatch>1</sRwatch>
         <sRmem>1</sRmem>
@@ -137,7 +137,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDCYG</Key>
-          <Name>(5129=150,103,313,281,0)(98=781,507,1159,803,0)(3004=-1,-1,-1,-1,0)(3003=0,22,241,166,0)(3006=-1,-1,-1,-1,0)(3007=-1,-1,-1,-1,0)(3008=-1,-1,-1,-1,0)(5130=-1,-1,-1,-1,0)(5131=-1,-1,-1,-1,0)(5132=-1,-1,-1,-1,0)(5133=-1,-1,-1,-1,0)(5153=1097,370,1310,761,0)(99=1570,610,1783,908,0)(91=1513,376,1723,679,0)(92=1283,404,1493,707,0)(5150=1289,489,1524,785,0)(5151=-1,-1,-1,-1,0)(5152=-1,-1,-1,-1,0)(5092=-1,-1,-1,-1,0)(95=-1,-1,-1,-1,0)(100=-1,-1,-1,-1,0)(5108=-1,-1,-1,-1,0)(5015=-1,-1,-1,-1,0)(5047=-1,-1,-1,-1,0)(5154=-1,-1,-1,-1,0)(1002=180,120,477,537,0)(5155=-1,-1,-1,-1,0)(5096=-1,-1,-1,-1,0)(5061=-1,-1,-1,-1,0)(5140=656,409,936,1047,0)(104=180,136,502,379,0)(5095=-1,-1,-1,-1,0)</Name>
+          <Name>(5129=150,103,313,281,0)(98=453,783,831,1080,1)(3004=225,186,579,570,0)(3003=0,22,241,166,0)(3006=-1,-1,-1,-1,0)(3007=-1,-1,-1,-1,0)(3008=-1,-1,-1,-1,0)(5130=-1,-1,-1,-1,0)(5131=-1,-1,-1,-1,0)(5132=-1,-1,-1,-1,0)(5133=-1,-1,-1,-1,0)(5153=1097,370,1310,761,0)(99=1570,610,1783,908,0)(91=894,216,1104,520,1)(92=1283,404,1493,707,0)(5150=1289,489,1524,785,0)(5151=-1,-1,-1,-1,0)(5152=-1,-1,-1,-1,0)(5092=-1,-1,-1,-1,0)(95=1233,607,1479,812,1)(100=1115,252,1415,541,0)(5108=-1,-1,-1,-1,0)(5015=-1,-1,-1,-1,0)(5047=-1,-1,-1,-1,0)(5154=-1,-1,-1,-1,0)(1002=180,120,477,537,0)(5155=908,325,1208,660,0)(5096=-1,-1,-1,-1,0)(5061=-1,-1,-1,-1,0)(5140=901,209,1181,848,0)(104=180,136,502,380,0)(5095=225,186,523,474,0)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -187,7 +187,22 @@
           <WinNumber>1</WinNumber>
           <ItemText>NVRAM0[1337]</ItemText>
         </Ww>
+        <Ww>
+          <count>9</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>TimerCounter_10mS</ItemText>
+        </Ww>
       </WatchWindow1>
+      <PerformanceAnalyzer>
+        <Li>
+          <IntNumber>0</IntNumber>
+          <ItemText>\SPLCTIMER\sPlcTimerIsr</ItemText>
+        </Li>
+        <Li>
+          <IntNumber>1</IntNumber>
+          <ItemText>hmiLoop</ItemText>
+        </Li>
+      </PerformanceAnalyzer>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>
@@ -198,7 +213,7 @@
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
-        <aPa>0</aPa>
+        <aPa>1</aPa>
         <viewmode>1</viewmode>
         <vrSel>0</vrSel>
         <aSym>0</aSym>
@@ -208,7 +223,7 @@
         <AscS3>0</AscS3>
         <aSer3>0</aSer3>
         <eProf>0</eProf>
-        <aLa>0</aLa>
+        <aLa>1</aLa>
         <aPa1>0</aPa1>
         <AscS4>0</AscS4>
         <aSer4>0</aSer4>
@@ -233,13 +248,8 @@
       <LogicAnalyzers>
         <Wi>
           <IntNumber>0</IntNumber>
-          <FirstString>debugTimer</FirstString>
-          <SecondString>FF0000000000000000000000000000000000F03F00000000000000000000000000000000646562756754696D6572000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000000000000000E03F1000000000000000000000000000000000000000B40F00FF</SecondString>
-        </Wi>
-        <Wi>
-          <IntNumber>1</IntNumber>
-          <FirstString>modbusTimerDebug</FirstString>
-          <SecondString>008000000000000000000000000000000000F03F000000000000000000000000000000006D6F6462757354696D65724465627567000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000002000000000000000000E03F1000000000000000000000000000000000000000943B00FF</SecondString>
+          <FirstString>P1</FirstString>
+          <SecondString>0000800000000000000000000000000000E06F400000000000000000000000000000000050310000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000000000000000F03F1400000000000000000000000000000000000000AD5E00FF</SecondString>
         </Wi>
       </LogicAnalyzers>
     </TargetOption>
@@ -471,6 +481,30 @@
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>18</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\sPlcIo.c</PathWithFileName>
+      <FilenameWithoutPath>sPlcIo.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>19</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\sPlcPac.c</PathWithFileName>
+      <FilenameWithoutPath>sPlcPac.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
   </Group>
 
   <Group>
@@ -481,7 +515,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>4</GroupNumber>
-      <FileNumber>18</FileNumber>
+      <FileNumber>20</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -493,7 +527,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-      <FileNumber>19</FileNumber>
+      <FileNumber>21</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -505,7 +539,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-      <FileNumber>20</FileNumber>
+      <FileNumber>22</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -525,7 +559,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>21</FileNumber>
+      <FileNumber>23</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -537,7 +571,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>22</FileNumber>
+      <FileNumber>24</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -557,7 +591,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>23</FileNumber>
+      <FileNumber>25</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -569,7 +603,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>24</FileNumber>
+      <FileNumber>26</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -589,7 +623,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>25</FileNumber>
+      <FileNumber>27</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -601,7 +635,7 @@
     </File>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>26</FileNumber>
+      <FileNumber>28</FileNumber>
       <FileType>1</FileType>
       <tvExp>1</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>

@@ -19,11 +19,14 @@
 #define EPID_TAB_FOUT				21//输出累加值 FP32
 /*****************************************************************************/
 void EPID(int16_t *tab){//泛用PID指令
-	if(*(tab + EPID_TAB_TS) == *(tab + EPID_TAB_TSC)){//TSC == TS
+	if(*(tab + EPID_TAB_TS) > 3000){//限制间隔时间不大于3000
+		*(tab + EPID_TAB_TS) = 3000;
+	}
+	if(*(tab + EPID_TAB_TSC) >= *(tab + EPID_TAB_TS)){//TSC >= TS
 		SPLC_FP32(tab + EPID_TAB_EN) = (fp32_t)(*(tab + EPID_TAB_REF)) - (fp32_t)(*(tab + EPID_TAB_VFB));//En = REF - VFB
 		SPLC_FP32(tab + EPID_TAB_KP_SUM) = (fp32_t)(*(tab + EPID_TAB_KP)) / 100.0 * (SPLC_FP32(tab + EPID_TAB_EN));//KP_SUM = KP * En  
 		SPLC_FP32(tab + EPID_TAB_KI_SUM) += (fp32_t)(*(tab + EPID_TAB_KP)) / 100.0 * ((fp32_t)*(tab + EPID_TAB_KI)) * ((fp32_t)*(tab + EPID_TAB_TS)) * (*(fp32_t*)(tab + EPID_TAB_EN));//KI_SUM = KP * KI * TS * EN
-		SPLC_FP32(tab + EPID_TAB_KD_SUM) = (fp32_t)(*(tab + EPID_TAB_KP)) / 100.0 * (fp32_t)(*(tab + EPID_TAB_TD)) * ((fp32_t)*(tab + EPID_TAB_VFB) - (fp32_t)*(tab + EPID_TAB_VFB1));//KP * Td * (VFB -VFB1)
+		SPLC_FP32(tab + EPID_TAB_KD_SUM) = (fp32_t)(*(tab + EPID_TAB_KP)) / 100.0 * (fp32_t)(*(tab + EPID_TAB_TD)) * ((fp32_t)*(tab + EPID_TAB_VFB) - (fp32_t)*(tab + EPID_TAB_VFB1)) / ((fp32_t)*(tab + EPID_TAB_TS));//KP * Td * (VFB -VFB1) / Ts
 		//限制积分大小
 		if(SPLC_FP32(tab + EPID_TAB_KI_SUM) >= ((fp32_t)*(tab + EPID_TAB_MAX))){
 			SPLC_FP32(tab + EPID_TAB_KI_SUM) = (fp32_t)*(tab + EPID_TAB_MAX);
@@ -34,20 +37,23 @@ void EPID(int16_t *tab){//泛用PID指令
 		SPLC_FP32(tab + EPID_TAB_FOUT) = SPLC_FP32(tab + EPID_TAB_EN);
 		SPLC_FP32(tab + EPID_TAB_FOUT) += SPLC_FP32(tab + EPID_TAB_KP_SUM);
 		SPLC_FP32(tab + EPID_TAB_FOUT) += SPLC_FP32(tab + EPID_TAB_KI_SUM);
-SPLC_FP32(tab + EPID_TAB_FOUT) = 		+ SPLC_FP32(tab + EPID_TAB_KD_SUM);
+		SPLC_FP32(tab + EPID_TAB_FOUT) += SPLC_FP32(tab + EPID_TAB_KD_SUM);
 		SPLC_FP32(tab + EPID_TAB_FOUT) += (fp32_t)(*(tab + EPID_TAB_BIAS));//out += bias
 		//限制输出大小
-		if(SPLC_FP32(tab + EPID_TAB_KI_SUM) >= ((fp32_t)*(tab + EPID_TAB_MAX))){
-			SPLC_FP32(tab + EPID_TAB_KI_SUM) = (fp32_t)*(tab + EPID_TAB_MAX);
+		if(SPLC_FP32(tab + EPID_TAB_FOUT) >= ((fp32_t)*(tab + EPID_TAB_MAX))){
+			SPLC_FP32(tab + EPID_TAB_FOUT) = (fp32_t)*(tab + EPID_TAB_MAX);
 		}
-		if(SPLC_FP32(tab + EPID_TAB_KI_SUM) <= ((fp32_t)*(tab + EPID_TAB_MIN))){
-			SPLC_FP32(tab + EPID_TAB_KI_SUM) = (fp32_t)*(tab + EPID_TAB_MIN);
+		if(SPLC_FP32(tab + EPID_TAB_FOUT) <= ((fp32_t)*(tab + EPID_TAB_MIN))){
+			SPLC_FP32(tab + EPID_TAB_FOUT) = (fp32_t)*(tab + EPID_TAB_MIN);
 		}
-		
-#if CONFIG_DEBUG_PID == 1	
-	fEn = *(fp32_t*)(tab + 7);
-	printf("");
-#endif	
-	*(tab + 18) += 1;
+		*(tab + EPID_TAB_VFB1) = *(tab + EPID_TAB_VFB);//VFB1 <- VFB
+		*(tab + EPID_TAB_OUT) = (int16_t)(SPLC_FP32(tab + EPID_TAB_FOUT));//OUT <- FOUT
+		*(tab + EPID_TAB_TSC) = 0;//TSC = 0	
 	}
+	else{
+		*(tab + EPID_TAB_TSC) += 1;//TSC = 1
+	}
+#if CONFIG_DEBUG_PID == 1	
+	printf("INFO:EPID->Kp=,Ki=,Td=,Out=,");
+#endif		
 }

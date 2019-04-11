@@ -208,8 +208,91 @@ static void clearNvram(void){//清除NVRAM数据
 #endif
 	exitSplcIsr();//恢复中断
 }
+void sPlcSpwmLoop(void){//SPWM轮询
+	
+	if(LDP(SPCOIL_PS10MS)){//每10mS执行一次
+		//SPWM0
+		if(LD(SPCOIL_SPWM_RESET_0)){//复位
+			NVRAM0[SPREG_SPWM_COUNTER_0] = SHRT_MAX;
+			RES(SPCOIL_SPWM_RESET_0);
+		}
+		if(NVRAM0[SPREG_SPWM_COUNTER_0] == NVRAM0[SPREG_SPWM_POS_SHADOW_0]){//发生匹配翻转输出
+			NVRAM0[SPREG_SPWM_COUNTER_0] ++;
+			RES(SPCOIL_SPWM_OUT_0);
+		}
+		else if(NVRAM0[SPREG_SPWM_COUNTER_0] >= NVRAM0[SPREG_SPWM_CYCLE_SHADOW_0]){//发生溢出
+			NVRAM0[SPREG_SPWM_COUNTER_0] = 0;
+			NVRAM0[SPREG_SPWM_POS_SHADOW_0] = NVRAM0[SPREG_SPWM_POS_0];
+			NVRAM0[SPREG_SPWM_CYCLE_SHADOW_0] = NVRAM0[SPREG_SPWM_CYCLE_0];
+			SET(SPCOIL_SPWM_OUT_0);
+		}
+		else{
+			NVRAM0[SPREG_SPWM_COUNTER_0]++;
+		}
+		//SPWM1
+		if(LD(SPCOIL_SPWM_RESET_1)){//复位
+			NVRAM0[SPREG_SPWM_COUNTER_1] = SHRT_MAX;
+			RES(SPCOIL_SPWM_RESET_1);
+		}
+		if(NVRAM0[SPREG_SPWM_COUNTER_1] == NVRAM0[SPREG_SPWM_POS_SHADOW_1]){//发生匹配翻转输出
+			NVRAM0[SPREG_SPWM_COUNTER_1] ++;
+			RES(SPCOIL_SPWM_OUT_1);
+		}
+		else if(NVRAM0[SPREG_SPWM_COUNTER_1] >= NVRAM0[SPREG_SPWM_CYCLE_SHADOW_1]){//发生溢出
+			NVRAM0[SPREG_SPWM_COUNTER_1] = 0;
+			NVRAM0[SPREG_SPWM_POS_SHADOW_1] = NVRAM0[SPREG_SPWM_POS_1];
+			NVRAM0[SPREG_SPWM_CYCLE_SHADOW_1] = NVRAM0[SPREG_SPWM_CYCLE_1];
+			SET(SPCOIL_SPWM_OUT_1);
+		}
+		else{
+			NVRAM0[SPREG_SPWM_COUNTER_1]++;
+		}
+		//SPWM2
+		if(LD(SPCOIL_SPWM_RESET_2)){//复位
+			NVRAM0[SPREG_SPWM_COUNTER_2] = SHRT_MAX;
+			RES(SPCOIL_SPWM_RESET_2);
+		}
+		if(NVRAM0[SPREG_SPWM_COUNTER_2] == NVRAM0[SPREG_SPWM_POS_SHADOW_2]){//发生匹配翻转输出
+			NVRAM0[SPREG_SPWM_COUNTER_2] ++;
+			RES(SPCOIL_SPWM_OUT_2);
+		}
+		else if(NVRAM0[SPREG_SPWM_COUNTER_2] >= NVRAM0[SPREG_SPWM_CYCLE_SHADOW_2]){//发生溢出
+			NVRAM0[SPREG_SPWM_COUNTER_2] = 0;
+			NVRAM0[SPREG_SPWM_POS_SHADOW_2] = NVRAM0[SPREG_SPWM_POS_2];
+			NVRAM0[SPREG_SPWM_CYCLE_SHADOW_2] = NVRAM0[SPREG_SPWM_CYCLE_2];
+			SET(SPCOIL_SPWM_OUT_2);
+		}
+		else{
+			NVRAM0[SPREG_SPWM_COUNTER_2]++;
+		}
+		//SPWM3
+		if(LD(SPCOIL_SPWM_RESET_3)){//复位
+			NVRAM0[SPREG_SPWM_COUNTER_3] = SHRT_MAX;
+			RES(SPCOIL_SPWM_RESET_3);
+		}
+		if(NVRAM0[SPREG_SPWM_COUNTER_3] == NVRAM0[SPREG_SPWM_POS_SHADOW_3]){//发生匹配翻转输出
+			NVRAM0[SPREG_SPWM_COUNTER_3] ++;
+			RES(SPCOIL_SPWM_OUT_3);
+		}
+		else if(NVRAM0[SPREG_SPWM_COUNTER_3] >= NVRAM0[SPREG_SPWM_CYCLE_SHADOW_3]){//发生溢出
+			NVRAM0[SPREG_SPWM_COUNTER_3] = 0;
+			NVRAM0[SPREG_SPWM_POS_SHADOW_3] = NVRAM0[SPREG_SPWM_POS_3];
+			NVRAM0[SPREG_SPWM_CYCLE_SHADOW_3] = NVRAM0[SPREG_SPWM_CYCLE_3];
+			SET(SPCOIL_SPWM_OUT_3);
+		}
+		else{
+			NVRAM0[SPREG_SPWM_COUNTER_3]++;
+		}
+	}
+}
 /*****************************************************************************/
 void sPlcInit(void){//软逻辑初始化
+#if CONFIG_SPLC_USING_IO_INPUT == 1
+	inputInit();
+#endif
+#if CONFIG_SPLC_USING_IO_OUTPUT == 1
+	outputInit();
+#endif
 #if CONFIG_USING_SIMEPROM == 1
 	sPlcSimEpromInit();
 #endif
@@ -243,9 +326,12 @@ void sPlcInit(void){//软逻辑初始化
 #if CONFIG_SPLC_USING_LED == 1	
 	setLedError(false);
 #endif
+#if CONFIG_SPLC_USING_PCA == 1
+	sPlcPcaInit();
+#endif
 	SET(SPCOIL_ON);
 	SET(SPCOIL_START_UP);
-	NVRAM0[EM_END] = CONFIG_SPLC_DEV;
+	NVRAM0[SPREG_IDENTITY] = CONFIG_SPLC_DEV;
 #if CONFIG_USING_RTU_SLAVE == 1	
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 #endif
@@ -303,6 +389,9 @@ void sPlcProcessStart(void){//sPLC轮询起始
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();
 #endif
+#if CONFIG_SPLC_SPWM == 1
+	sPlcSpwmLoop();
+#endif
 }
 void sPlcProcessEnd(void){//sPLC轮询结束
 #if CONFIG_SPLC_USING_WDT == 1
@@ -311,18 +400,20 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 #if CONFIG_SPLC_USING_IO_OUTPUT == 1
 	outputRefresh();//更新Y口输出
 #endif
-#if CONFIG_SPLC_USING_DAC
+#if CONFIG_SPLC_USING_DAC == 1
 	refreshChipDac();//更新DAC输出
 #endif
+#if CONFIG_SPLC_USING_PCA == 1
+	sPlcPcaRefresh();
+#endif
+#if CONFIG_USING_USB == 1
+	sPlcUsbPoll();
+#endif	
+	
 	updataNvram();//更新NVRAM
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();//喂狗
 #endif
+
 	RES(SPCOIL_START_UP);
-#if CONFIG_USING_HMI == 1
-	hmiLoop();
-#endif
-#if CONFIG_USING_USB == 1
-	sPlcUsbPoll();
-#endif
 }

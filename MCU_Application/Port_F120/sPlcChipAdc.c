@@ -35,11 +35,11 @@ void initChipAdc(void){//ADC模块初始化
 void chipAdcProcess(void){//循环采集ADC
 	idata uint16_t result = 0;
 	idata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
-	idata uint8_t inTime;
-	inTime = TimerCounter_10mS - 1;
+	idata uint8_t adcOverTime = 0;
 	SFRPAGE = ADC0_PAGE;
 	while(1){
-		if(AD0INT != 1 || (TimerCounter_10mS > inTime))
+		adcOverTime ++;
+		if(AD0INT != 1 || (adcOverTime > 250))
 			break;
 	}
 	result = (ADC0 & 0x0FFF);

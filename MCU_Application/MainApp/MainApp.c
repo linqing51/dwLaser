@@ -38,6 +38,10 @@ void main(void){
 		sPlcProcessStart();
 		if(LD(SPCOIL_START_UP)){//执行一次的代码
 		}
+#if CONFIG_USING_HMI == 1
+		hmiLoop();
+#endif
+		
 #if CONFIG_SPLC_FUNTEST == 1
 #endif
 		sPlcProcessEnd();

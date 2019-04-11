@@ -24,9 +24,17 @@ static void usbSpiNssSet(uint8_t nss){//SPI NSS设置
 static uint8_t usbSpiTransmit(uint8_t txd){//CH376 SPI 收发
 	xdata uint8_t rxd;
 	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;
+	xdata uint8_t counter;
 	SFRPAGE = SPI0_PAGE;
 	SPI0DAT = txd;         
-	while (!SPIF);                      
+	while(!SPIF){
+		if(counter > 250){
+			break;
+		}
+		else{
+			counter ++;
+		}
+	}		
 	SPIF = 0; 
 	rxd = SPI0DAT;
 	SFRPAGE = SFRPAGE_SAVE;
@@ -60,11 +68,11 @@ uint8_t	usbHostInit(void){//初始化CH376
 	res = xReadCH376Data();
 	xEndCH376Cmd();
 	if(res != 0x9A){
-		SET(SPCOIL_USB_INT_SUCCESS);//设置SPLC标志
+		SET(SPCOIL_USB_INT_ERROR);//设置SPLC标志
 		return(ERR_USB_UNKNOWN);//通讯接口不正常,可能原因有:接口连接异常,其它设备影响(片选不唯一),串口波特率,一直在复位,晶振不工作 */
 	}
 	else{
-		RES(SPCOIL_USB_UNKNOWN_ERROR);
+		RES(SPCOIL_USB_INT_ERROR);//设置SPLC标志
 	}
 	xWriteCH376Cmd(CMD11_SET_USB_MODE);//设备USB工作模式
 	xWriteCH376Data(0x05);
@@ -72,28 +80,21 @@ uint8_t	usbHostInit(void){//初始化CH376
 	res = xReadCH376Data();
 	xEndCH376Cmd();
 	if(res == CMD_RET_SUCCESS){
-		RES(SPCOIL_USB_UNKNOWN_ERROR);
-		SET(SPCOIL_USB_INT_SUCCESS);
+		RES(SPCOIL_USB_INT_ERROR);
 		return(USB_INT_SUCCESS);
 	}
 	else{
-		SET(SPCOIL_USB_UNKNOWN_ERROR);
-		RES(SPCOIL_USB_INT_SUCCESS);
+		SET(SPCOIL_USB_INT_ERROR);
 		return(ERR_USB_UNKNOWN);//设置模式错误
 	}
 }
 
 /* 检查操作状态,如果错误则显示错误代码并停机,应该替换为实际的处理措施,例如显示错误信息,等待用户确认后重试等 */
 void mStopIfError(uint8_t iError){
-	if(iError == USB_INT_SUCCESS){
-		return;//操作成功
+	if(iError == USB_INT_SUCCESS){//USB 错误
+		RES(SPCOIL_USB_INT_ERROR);
 	}
-	
-	//printf("Error: %02X\n", (uint16_t)iError);//显示错误
-	while(1){
-/*		LED_OUT_ACT( );*/  /* LED闪烁 */
-		delayMs( 200 );
-/*		LED_OUT_INACT( );*/
-		delayMs( 200 );
+	else{
+		SET(SPCOIL_USB_INT_ERROR);
 	}
 }

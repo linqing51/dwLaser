@@ -92,6 +92,5 @@ static void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断
 	chipAdcProcess();//ADC扫描
 #endif
 	TimerCounter_1mS ++;
-	exitSplcIsr();
-	
+	exitSplcIsr();	
 }

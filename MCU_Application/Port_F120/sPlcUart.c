@@ -142,7 +142,7 @@ void URECV(uint8_t port, uint8_t length){//串口接收
 #endif
 }
 
-#if (CONFIG_SPLC_USING_UART1 == 1 && CONFIG_MB_PORT != UART0)
+#if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_MB_PORT != UART0)
 void Uart0Isr(void) interrupt INTERRUPT_UART0 {//UART0中断
 	enterSplcIsr();	
 	if(TI0){  

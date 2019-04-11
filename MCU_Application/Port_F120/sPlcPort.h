@@ -12,6 +12,9 @@
 #include "sPlcSimEprom.h"
 /*****************************************************************************/
 #include "sPlcUart.h"
+#if CONFIG_SPLC_USING_PCA == 1
+#include "sPlcPca.h"
+#endif
 #if CONFIG_SPLC_USING_ADC == 1
 #include "sPlcChipAdc.h"
 #endif

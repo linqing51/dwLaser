@@ -11,6 +11,9 @@
 #define CONFIG_UART0_BAUDRATE				115200//串口0 波特率
 #define CONFIG_UART1_BAUDRATE				115200//串口1 波特率
 /*****************************************************************************/
+#define CONFIG_SPLC_SPWM					1//使了软件PWM功能
+/*****************************************************************************/
+#define CONFIG_SPLC_FUN_EPID				1//使能SPLC扩展指令
 #define CONFIG_SPLC_FUNTEST					0//功能指令测试
 /*****************************************************************************/
 #define CONFIG_SPLC_ASSERT					1//检查地址范围
@@ -23,9 +26,11 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT				0//看门狗启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_INPUT			0//输入IO刷新启用
+#define CONFIG_SPLC_USING_IO_INPUT			1//输入IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_OUTPUT			0//输出IO刷新启用
+#define CONFIG_SPLC_USING_IO_OUTPUT			1//输出IO刷新启用
+/*****************************************************************************/
+#define CONFIG_SPLC_USING_PCA				1//片内计数器阵列
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_EPROM				0//EPROM 
 #define CONFIG_SPLC_USING_CLEAR_NVRAM		0//启用清除NVRAM功能
@@ -72,7 +77,7 @@
 #define ENABLE_INTERRUPT					EA = 1;
 /*****************************************************************************/
 #if CONFIG_USING_RTU_SLAVE == 1
-#define CONFIG_USING_HMI					0//使能MODBUS HMI
+#define CONFIG_USING_HMI					1//使能MODBUS HMI
 #endif
 /*****************************************************************************/
 #define CONFIG_USING_SIMEPROM				1
@@ -132,18 +137,18 @@
 //计数器 8
 #define C_START								1054
 #define C_END								1061
-//输入位寄存器 4
+//输入位寄存器 4*16
 #define X_START								1062
 #define X_END								1065
-//输出位寄存器 4
+//输出位寄存器 4*16
 #define Y_START								1066
 #define Y_END								1069
-//特殊寄存器 32
+//特殊寄存器 64
 #define SPREG_START							1070
-#define SPREG_END							1101
+#define SPREG_END							1134
 //特殊线圈 4*16
-#define SPCOIL_START						1102
-#define SPCOIL_END							1105
+#define SPCOIL_START						1135
+#define SPCOIL_END							1137
 /*****************************************************************************/
 #define CONFIG_NVRAM_SIZE 					(SPCOIL_END + 1)
 /*****************************************************************************/
@@ -155,7 +160,7 @@
 #define SPCOIL_PS1000MS						(SPCOIL_START * 16 + 5)//1000mS	
 #define SPCOIL_MODBUS_S0_ERROR				(SPCOIL_START * 16 + 6)//Modbus Slave->Uart0 错误
 #define SPCOIL_NVRAM_FAIL					(SPCOIL_START * 16 + 7)//NVRAM校验码错误
-#define SPCOIL_WATCHDOG						(SPCOIL_START * 16 + 8)//看门狗溢出
+#define SPCOIL_WATCHDOG_OVERFLOW			(SPCOIL_START * 16 + 8)//看门狗溢出
 /*****************************************************************************/
 //串口
 #define SPCOIL_UART0_SEND_BUSY				(SPCOIL_START * 16 + 9)//UART1发送忙
@@ -167,27 +172,35 @@
 #define SPCOIL_UART1_SEND_DONE				(SPCOIL_START * 16 + 15)//发送完成
 #define SPCOIL_UART1_RECV_DONE				(SPCOIL_START * 16 + 16)//接收完成
 //USB 
-#define SPCOIL_USB_INT_SUCCESS				(SPCOIL_START * 16 + 17)//USB 底层中断返回成功
-#define SPCOIL_USB_UNKNOWN_ERROR			(SPCOIL_START * 16 + 18)//USB 底层未知错误
-#define SPCOIL_USBHOST_CONNECT_REQ			(SPCOIL_START * 16 + 19)//USBHOST连接请求
-#define SPCOIL_USBDISK_CONNECT_DOING		(SPCOIL_START * 16 + 20)//USBHOST连接进行中
-#define SPCOIL_USBDISK_CONNECT_DONE			(SPCOIL_START * 16 + 21)//USBHOST连接完成
-#define SPCOIL_USBDISK_MOUNT_REQ			(SPCOIL_START * 16 + 22)//USBDISK载入请求
-#define SPCOIL_USBDISK_MOUNT_DOING			(SPCOIL_START * 16 + 23)//USBDISK装载进行中
-#define SPCOIL_USBDISK_MOUNT_DONE			(SPCOIL_START * 16 + 24)//USBDISK装载完成
-#define SPCOIL_USBDISK_REMOVE_REQ			(SPCOIL_START * 16 + 25)//USBHOST移除请求
-#define SPCOIL_USBDISK_REMOVE_DOING			(SPCOIL_START * 16 + 26)//USBHOST移除进行中
-#define SPCOIL_USBDISK_REMOVE_DONE			(SPCOIL_START * 16 + 27)//USBHOST移除完成
-#define SPCOIL_USBDISK_READING				(SPCOIL_START * 16 + 28)//USBDISK读取进行中
-#define SPCOIL_USBDISK_OPEN_FILE_FAIL		(SPCOIL_START * 16 + 29)//USBDISK打开文件失败
-#define SPCOIL_USBDISK_READ_FILE_FAIL		(SPCOIL_START * 16 + 30)//USBDISK读取文件失败
-#define SPCOIL_USBDISK_WRITE_FILE_FAIL		(SPCOIL_START * 16 + 31)//USBDISK写入文件失败
-#define SPCOIL_USBDISK_CLOSE_FILE_FAIL		(SPCOIL_START * 16 + 32)//USBDISK关闭文件失败
-#define SPCOIL_SIMEPROM_READ_FAIL			(SPCOIL_START * 16 + 33)//SIMEPROM读取失败
-#define SPCOIL_SIMEPROM_WRITE_FAIL			(SPCOIL_START * 16 + 34)//USBDISK关闭文件失败
+#define SPCOIL_USB_INT_ERROR				(SPCOIL_START * 16 + 17)//USB 底层中断返回错误
+#define SPCOIL_USBHOST_CONNECT_REQ			(SPCOIL_START * 16 + 18)//USBHOST连接请求
+#define SPCOIL_USBDISK_CONNECT_DOING		(SPCOIL_START * 16 + 19)//USBHOST连接进行中
+#define SPCOIL_USBDISK_CONNECT_DONE			(SPCOIL_START * 16 + 20)//USBHOST连接完成
+#define SPCOIL_USBDISK_MOUNT_REQ			(SPCOIL_START * 16 + 21)//USBDISK载入请求
+#define SPCOIL_USBDISK_MOUNT_DOING			(SPCOIL_START * 16 + 22)//USBDISK装载进行中
+#define SPCOIL_USBDISK_MOUNT_DONE			(SPCOIL_START * 16 + 23)//USBDISK装载完成
+#define SPCOIL_USBDISK_REMOVE_REQ			(SPCOIL_START * 16 + 24)//USBHOST移除请求
+#define SPCOIL_USBDISK_REMOVE_DOING			(SPCOIL_START * 16 + 25)//USBHOST移除进行中
+#define SPCOIL_USBDISK_REMOVE_DONE			(SPCOIL_START * 16 + 26)//USBHOST移除完成
+#define SPCOIL_USBDISK_READING				(SPCOIL_START * 16 + 27)//USBDISK读取进行中
+#define SPCOIL_USBDISK_OPEN_FILE_FAIL		(SPCOIL_START * 16 + 28)//USBDISK打开文件失败
+#define SPCOIL_USBDISK_READ_FILE_FAIL		(SPCOIL_START * 16 + 29)//USBDISK读取文件失败
+#define SPCOIL_USBDISK_WRITE_FILE_FAIL		(SPCOIL_START * 16 + 30)//USBDISK写入文件失败
+#define SPCOIL_USBDISK_CLOSE_FILE_FAIL		(SPCOIL_START * 16 + 31)//USBDISK关闭文件失败
+#define SPCOIL_SIMEPROM_READ_FAIL			(SPCOIL_START * 16 + 32)//SIMEPROM读取失败
+#define SPCOIL_SIMEPROM_WRITE_FAIL			(SPCOIL_START * 16 + 33)//SIMEPROM写入失败
 /*****************************************************************************/
-#define SPREG_RUNTIME_L						(SPREG_START + 0)//累计运行时间秒 32BIT
-#define SPREG_RUNTIME_H						(SPREG_START + 1)//累计运行时间秒 32BIT		
+#define SPCOIL_SPWM_OUT_0					(SPCOIL_START * 16 + 34)//SPWM0输出状态
+#define SPCOIL_SPWM_RESET_0					(SPCOIL_START * 16 + 35)//SPWM0复位
+#define SPCOIL_SPWM_OUT_1					(SPCOIL_START * 16 + 36)//SPWM1输出状态
+#define SPCOIL_SPWM_RESET_1					(SPCOIL_START * 16 + 37)//SPWM1复位
+#define SPCOIL_SPWM_OUT_2					(SPCOIL_START * 16 + 38)//SPWM2输出状态
+#define SPCOIL_SPWM_RESET_2					(SPCOIL_START * 16 + 39)//SPWM2复位
+#define SPCOIL_SPWM_OUT_3					(SPCOIL_START * 16 + 40)//SPWM3输出状态
+#define SPCOIL_SPWM_RESET_3					(SPCOIL_START * 16 + 41)//SPWM3复位
+/*****************************************************************************/
+#define SPREG_RUNTIME_L						(SPREG_START + 0)//累计运行时间秒L 32BIT
+#define SPREG_RUNTIME_H						(SPREG_START + 1)//累计运行时间秒H 32BIT		
 /*****************************************************************************/
 #define SPREG_UART0_SEND_LENGTH				(SPREG_START + 2)//UART0 发送数据长度
 #define SPREG_UART0_SEND_NUM				(SPREG_START + 3)//UART0 已经发送数据长度
@@ -203,19 +216,47 @@
 #define SPREG_ADC_1							(SPREG_START + 11)//ADC1采集值 PD1
 #define SPREG_ADC_2							(SPREG_START + 12)//ADC2采集值 NTC0
 #define SPREG_ADC_3							(SPREG_START + 13)//ADC3采集值 NTC1
-#define SPREG_ADC_4							(SPREG_START + 14)//ADC4采集值
-#define SPREG_ADC_5							(SPREG_START + 15)//ADC5采集值
-#define SPREG_ADC_6							(SPREG_START + 16)//ADC6采集值
-#define SPREG_ADC_7							(SPREG_START + 17)//ADC7采集值
+#define SPREG_ADC_4							(SPREG_START + 14)//ADC4采集值 ISMON0
+#define SPREG_ADC_5							(SPREG_START + 15)//ADC5采集值 IVINMON0
+#define SPREG_ADC_6							(SPREG_START + 16)//ADC6采集值 ISMON1
+#define SPREG_ADC_7							(SPREG_START + 17)//ADC7采集值 IVINMON1
 #define SPREG_ADC_8							(SPREG_START + 18)//ADC8采集值 Temperature Sensor
-#define SPREG_DAC_0							(SPREG_START + 19)//DAC0设定值
-#define SPREG_DAC_1							(SPREG_START + 20)//DAC0设定值
+#define SPREG_DAC_0							(SPREG_START + 19)//DAC0设定值 LSET0
+#define SPREG_DAC_1							(SPREG_START + 20)//DAC0设定值 LSET1
 /*****************************************************************************/
-#define SPREG_CLEAR_NVRAM0					(SPREG_START + 21)//清除NVRAM后重新启动
+#define SPREG_SPWM_POS_0					(SPREG_START + 21)//软件PWM0正脉宽设置
+#define SPREG_SPWM_POS_SHADOW_0				(SPREG_START + 22)//软件PWM0正脉宽阴影
+#define SPREG_SPWM_CYCLE_0					(SPREG_START + 23)//软件PWM0周期设置
+#define SPREG_SPWM_CYCLE_SHADOW_0			(SPREG_START + 24)//软件PWM0周期阴影
+#define SPREG_SPWM_COUNTER_0				(SPREG_START + 25)//软件PWM0计数器
+
+#define SPREG_SPWM_POS_1					(SPREG_START + 26)//软件PWM1正脉宽设置
+#define SPREG_SPWM_POS_SHADOW_1				(SPREG_START + 27)//软件PWM1正脉宽阴影
+#define SPREG_SPWM_CYCLE_1					(SPREG_START + 28)//软件PWM1周期设置
+#define SPREG_SPWM_CYCLE_SHADOW_1			(SPREG_START + 29)//软件PWM1周期阴影
+#define SPREG_SPWM_COUNTER_1				(SPREG_START + 30)//软件PWM1计数器
+
+#define SPREG_SPWM_POS_2					(SPREG_START + 31)//软件PWM2正脉宽设置
+#define SPREG_SPWM_POS_SHADOW_2				(SPREG_START + 32)//软件PWM2正脉宽阴影
+#define SPREG_SPWM_CYCLE_2					(SPREG_START + 33)//软件PWM2周期设置
+#define SPREG_SPWM_CYCLE_SHADOW_2			(SPREG_START + 34)//软件PWM2周期阴影
+#define SPREG_SPWM_COUNTER_2				(SPREG_START + 35)//软件PWM2计数器
+
+#define SPREG_SPWM_POS_3					(SPREG_START + 36)//软件PWM3正脉宽设置
+#define SPREG_SPWM_POS_SHADOW_3				(SPREG_START + 37)//软件PWM3正脉宽阴影
+#define SPREG_SPWM_CYCLE_3					(SPREG_START + 38)//软件PWM3周期设置
+#define SPREG_SPWM_CYCLE_SHADOW_3			(SPREG_START + 39)//软件PWM3周期阴影
+#define SPREG_SPWM_COUNTER_3				(SPREG_START + 40)//软件PWM3计数器
+/*****************************************************************************/
+#define SPREG_AIM0_DUTYRATIO				(SPREG_START + 41)//指示光0亮度
+#define SPREG_AIM1_DUTYRATIO				(SPREG_START + 42)//指示光1亮度
+#define SPREG_BEEM_DUTYRATIO				(SPREG_START + 43)//蜂鸣器音量
+/*****************************************************************************/
+#define SPREG_IDENTITY						(SPREG_START + 44)//平台ID号
+#define SPREG_CLEAR_NVRAM0					(SPREG_START + 45)//清除NVRAM后重新启动
 /*****************************************************************************/
 #define T10MS_USBDISK_CONNECT_DELAY			0
 #define T10MS_USBDISK_MOUNT_DELAY			1
 #define T10MS_USBDISK_REMOVE_DELAY			2
 /*****************************************************************************/
-
 #endif
