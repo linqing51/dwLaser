@@ -129,15 +129,24 @@
 #define DM_HMI_OLD_PASSWORD3			(DM_START + 1)
 
 /*****************************************************************************/
-#define X_FOOTSWITCH					(X_START * 16 + 0)//XIN0
-#define X_INTERLOCK						(X_START * 16 + 1)//XIN1
+#define X_INTERLOCK						(X_START * 16 + 0)//XIN0 安全连锁
+#define X_ESTOP							(X_START * 16 + 1)//XIN1 紧急停止开关
+#define X_FOOTSWITCH_OC					(X_START * 16 + 2)//XIN2 脚踏常开
+#define X_FOOTSWITCH_ON					(X_START * 16 + 3)//XIN3 脚踏常闭
+#define X_LDR_FAULT0					(X_START * 16 + 3)//XIN4 驱动器故障0
+#define X_LDR_FAULT1					(X_START * 16 + 3)//XIN5 驱动器故障1
+#define X_FBD0							(X_START * 16 + 3)//XIN6 光纤探测0
+#define X_FBD1							(X_START * 16 + 3)//XIN7 光纤探测1
 /*****************************************************************************/
-#define Y_LED_POWERON					(Y_START * 16 + 0)//YOUT0
-#define Y_LED_EMIT						(Y_START * 16 + 1)//YOUT1
-#define Y_LED_ALARM						(Y_START * 16 + 2)//YOUT2
+#define Y_LED_POWERON					(Y_START * 16 + 0)//YOUT0 电源灯
+#define Y_LED_EMIT						(Y_START * 16 + 1)//YOUT1 激光指示灯
+#define Y_LED_ALARM						(Y_START * 16 + 2)//YOUT2 故障指示灯
+
+#define Y_FAN0							(Y_START * 16 + 8)//YOUT8 风扇开关0
+#define Y_FAN1							(Y_START * 16 + 9)//YOUT9 风扇开关1
+#define Y_TEC0							(Y_START * 16 + 10)//TEC0 制冷开关0
+#define Y_TEC1							(Y_START * 16 + 11)//TEC1 制冷开关1
 /*****************************************************************************/
-#define R_FIBER_DETECT_0				(R_START * 16 + 0)//光纤探测
-#define R_FIBER_DETECT_1				(R_START * 16 + 0)
 #define R_FIBER_MANUFACT_0				(R_START * 16 + 0)
 #define R_FIBER_MANUFACT_1				(R_START * 16 + 0)
 #define R_DIODE_TEMP_HIGH_0				(R_START * 16 + 0)
