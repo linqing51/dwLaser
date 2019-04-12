@@ -377,6 +377,7 @@ void modbusPorcess(void){//ModBus main core! Call this function into main!
 	}
     RxRTU();                                                              // Call this function every cycle
     if (RxDataAvailable()){
+		UDIRX(CONFIG_MB_PORT);//关闭串口接收中断
         if (Rx_Data.address == ModbusSlaveAddress){
             switch (Rx_Data.function)                                     // Data is for us but which function?
             {
@@ -410,7 +411,8 @@ void modbusPorcess(void){//ModBus main core! Call this function into main!
 				}
             }
         }
-    }
+		UENRX(CONFIG_MB_PORT);//关闭串口接收中断//打开串口接收中断
+	}
 }
 void InitModbus(uint8_t modbusSlaveAddress, uint32_t baudrate){//ModBus slave initialize
     ModbusSlaveAddress = modbusSlaveAddress;

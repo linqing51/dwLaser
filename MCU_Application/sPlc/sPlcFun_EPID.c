@@ -52,8 +52,5 @@ void EPID(int16_t *tab){//·ºÓÃPIDÖ¸Áî
 	}
 	else{
 		*(tab + EPID_TAB_TSC) += 1;//TSC = 1
-	}
-#if CONFIG_DEBUG_PID == 1	
-	printf("INFO:EPID->Kp=,Ki=,Td=,Out=,");
-#endif		
+	}	
 }

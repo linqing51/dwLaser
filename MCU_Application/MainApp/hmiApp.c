@@ -11,7 +11,7 @@ static void loadScheme(void){//DM->EM
 	memcpy(pdist, psrc, ((DM_SCHEME_END_0 - DM_SCHEME_START_0 +1 ) * 2));
 }
 static void saveScheme(void){//EM->DM
-	idata uint8_t *psrc, *pdist;
+	xdata uint8_t *psrc, *pdist;
 	if(NVRAM0[DM_SCHEME_NUM] > CONFIG_HMI_SCHEME_NUM)
 		NVRAM0[DM_SCHEME_NUM] = CONFIG_HMI_SCHEME_NUM;
 	if(NVRAM0[DM_SCHEME_NUM] < 0)
@@ -56,6 +56,12 @@ void hmiLoop(void){//HMIÂÖÑµ³ÌÐò
 	NVRAM0[SPREG_SPWM_CYCLE_0] = NVRAM0[EM_EPID0_TAB_MAX];
 	NVRAM0[SPREG_SPWM_POS_0] = NVRAM0[EM_EPID0_TAB_OUT]; 
 	//SPWM0°ó¶¨IO
+	if(LD(SPCOIL_SPWM_OUT_0)){
+		SET(Y_TEC0);SET(Y_TEC1);
+	}
+	else{
+		RES(Y_TEC0);RES(Y_TEC1);
+	}
 	//ÅÐ¶Ï¶þ¼«¹Ü0ÊÇ·ñ¹ýÈÈ
 	if(NVRAM0[EM_DIODE_TEMP0] > NVRAM0[DM_DIODE_HIGH_TEMP]){
 		SET(R_DIODE_TEMP_HIGH_0);
@@ -85,8 +91,8 @@ void hmiLoop(void){//HMIÂÖÑµ³ÌÐò
 		RES(R_ENVI_TEMP_HIGH);
 	}
 	
-	if(LD(R_FIBER_DETECT_0) ||
-    LD(R_FIBER_DETECT_1) ||
+	if(LD(X_FBD0) ||
+    LD(X_FBD1) ||
 	LD(R_FIBER_MANUFACT_0) ||
 	LD(R_FIBER_MANUFACT_1) ||
 	LD(R_DIODE_TEMP_HIGH_0) ||		
@@ -97,12 +103,10 @@ void hmiLoop(void){//HMIÂÖÑµ³ÌÐò
 	LD(R_ENVI_TEMP_HIGH)){
 		SET(R_SAFE_READY);
 	}
-	
-	
-	if(NVRAM0[EM_HMI_READY_STATUS] == STATUS_LASER_READY){//READY×´Ì¬
+	if(NVRAM0[EM_HMI_READY_STATUS] == STATUS_LASER_STANDBY){//READY×´Ì¬
 	}
-	else if(NVRAM0[EM_HMI_READY_STATUS] == STATUS_LASER_STANDBY){//STAND×´Ì¬
-		if(LD(X_FOOTSWITCH) && LD(R_SAFE_READY)){//·¢Éä¼¤¹â
+	else if(NVRAM0[EM_HMI_READY_STATUS] == STATUS_LASER_READY){//STAND×´Ì¬
+		if(LD(X_FOOTSWITCH_OC) && LDB(X_FOOTSWITCH_ON) && LD(R_SAFE_READY)){//·¢Éä¼¤¹â
 			
 		}
 		else{//Í£Ö¹¼¤¹â

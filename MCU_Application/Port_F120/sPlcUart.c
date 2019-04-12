@@ -203,3 +203,39 @@ void Uart1Isr(void) interrupt INTERRUPT_UART1 {//UART1中断
 	exitSplcIsr();
 }
 #endif
+
+void UDIRX(uint8_t port){//关闭串口接收中断
+	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE
+#if CONFIG_SPLC_USING_UART0 == 1
+	if(port == UART0){
+		SFRPAGE = UART0_PAGE;
+		SCON0 &= 0xEF;//UART0 reception disabled
+		SFRPAGE = SFRPAGE_SAVE;		
+	}
+#endif
+#if CONFIG_SPLC_USING_UART1 == 1
+	if(port == UART1){
+		SFRPAGE = UART1_PAGE;
+		SCON1 &= 0xEF;//UART0 reception disabled
+		SFRPAGE = SFRPAGE_SAVE;
+	}
+#endif
+}
+
+void UENRX(uint8_t port){//打开串口接收中断
+	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE	
+#if CONFIG_SPLC_USING_UART0 == 1
+	if(port == UART0){
+		SFRPAGE = UART0_PAGE;
+		SCON0 |= 0x10;//UART0 reception enabled.
+		SFRPAGE = SFRPAGE_SAVE;
+	}
+#endif
+#if CONFIG_SPLC_USING_UART1 == 1
+	if(port == UART1){
+		SFRPAGE = UART1_PAGE;
+		SCON1 |= 0x10;//UART1 reception enabled.
+		SFRPAGE = SFRPAGE_SAVE;
+	}
+#endif
+}

@@ -16,14 +16,17 @@ idata volatile uint8_t TimerCounter_100mS = 0;
 /******************************************************************************/
 void assertCoilAddress(uint16_t adr) reentrant{//¼ì²éÏßÈ¦µØÖ·
 #if CONFIG_SPLC_ASSERT == 1
-	if(adr > (SPCOIL_END * 16))
+	uint16_t maxCoilAdr = SPCOIL_END * 16;
+	if(adr > (maxCoilAdr)){
 		while(1);
+	}
 #endif
 }
 void assertRegisterAddress(uint16_t adr) reentrant{//¼ì²é¼Ä´æÆ÷µØÖ·
 #if CONFIG_SPLC_ASSERT == 1
-	if(adr >= SPCOIL_END)
+	if(adr > SPCOIL_END){
 		while(1);
+	}
 #endif
 }
 /*****************************************************************************/

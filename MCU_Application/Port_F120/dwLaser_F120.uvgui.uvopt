@@ -137,7 +137,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>DLGDCYG</Key>
-          <Name>(5129=150,103,313,281,0)(98=453,783,831,1080,1)(3004=225,186,579,570,0)(3003=0,22,241,166,0)(3006=-1,-1,-1,-1,0)(3007=-1,-1,-1,-1,0)(3008=-1,-1,-1,-1,0)(5130=-1,-1,-1,-1,0)(5131=-1,-1,-1,-1,0)(5132=-1,-1,-1,-1,0)(5133=-1,-1,-1,-1,0)(5153=1097,370,1310,761,0)(99=1570,610,1783,908,0)(91=894,216,1104,520,1)(92=1283,404,1493,707,0)(5150=1289,489,1524,785,0)(5151=-1,-1,-1,-1,0)(5152=-1,-1,-1,-1,0)(5092=-1,-1,-1,-1,0)(95=1233,607,1479,812,1)(100=1115,252,1415,541,0)(5108=-1,-1,-1,-1,0)(5015=-1,-1,-1,-1,0)(5047=-1,-1,-1,-1,0)(5154=-1,-1,-1,-1,0)(1002=180,120,477,537,0)(5155=908,325,1208,660,0)(5096=-1,-1,-1,-1,0)(5061=-1,-1,-1,-1,0)(5140=901,209,1181,848,0)(104=180,136,502,380,0)(5095=225,186,523,474,0)</Name>
+          <Name>(5129=150,103,313,281,0)(98=1235,340,1613,637,1)(3004=225,186,579,570,0)(3003=0,22,241,166,0)(3006=-1,-1,-1,-1,0)(3007=-1,-1,-1,-1,0)(3008=-1,-1,-1,-1,0)(5130=-1,-1,-1,-1,0)(5131=-1,-1,-1,-1,0)(5132=-1,-1,-1,-1,0)(5133=-1,-1,-1,-1,0)(5153=1660,387,1873,779,1)(99=1570,610,1783,908,0)(91=894,216,1104,520,0)(92=1283,404,1493,707,0)(5150=1289,489,1524,785,0)(5151=-1,-1,-1,-1,0)(5152=-1,-1,-1,-1,0)(5092=-1,-1,-1,-1,0)(95=1233,607,1479,812,1)(100=1115,252,1415,541,0)(5108=-1,-1,-1,-1,0)(5015=-1,-1,-1,-1,0)(5047=-1,-1,-1,-1,0)(5154=-1,-1,-1,-1,0)(1002=180,120,477,537,0)(5155=908,325,1208,660,0)(5096=-1,-1,-1,-1,0)(5061=-1,-1,-1,-1,0)(5140=901,209,1181,848,0)(104=180,136,502,380,0)(5095=225,186,523,474,0)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -192,6 +192,11 @@
           <WinNumber>1</WinNumber>
           <ItemText>TimerCounter_10mS</ItemText>
         </Ww>
+        <Ww>
+          <count>10</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>modbusReceiveBuffer</ItemText>
+        </Ww>
       </WatchWindow1>
       <PerformanceAnalyzer>
         <Li>
@@ -209,11 +214,11 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>0</periodic>
-        <aLwin>1</aLwin>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
-        <aPa>1</aPa>
+        <aPa>0</aPa>
         <viewmode>1</viewmode>
         <vrSel>0</vrSel>
         <aSym>0</aSym>
@@ -226,7 +231,7 @@
         <aLa>1</aLa>
         <aPa1>0</aPa1>
         <AscS4>0</AscS4>
-        <aSer4>0</aSer4>
+        <aSer4>1</aSer4>
         <StkLoc>1</StkLoc>
         <TrcWin>0</TrcWin>
         <newCpu>0</newCpu>
@@ -248,8 +253,8 @@
       <LogicAnalyzers>
         <Wi>
           <IntNumber>0</IntNumber>
-          <FirstString>P1</FirstString>
-          <SecondString>0000800000000000000000000000000000E06F400000000000000000000000000000000050310000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000000000000000F03F1400000000000000000000000000000000000000AD5E00FF</SecondString>
+          <FirstString>modbusTimerDebug</FirstString>
+          <SecondString>008000000000000000000000000000000000F03F000000000000000000000000000000006D6F6462757354696D65724465627567000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000001000000000000000000F03F1000000000000000000000000000000000000000C57400FF</SecondString>
         </Wi>
       </LogicAnalyzers>
     </TargetOption>
@@ -505,6 +510,18 @@
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
+    <File>
+      <GroupNumber>3</GroupNumber>
+      <FileNumber>20</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\sPlcLaser.c</PathWithFileName>
+      <FilenameWithoutPath>sPlcLaser.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
   </Group>
 
   <Group>
@@ -515,7 +532,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>4</GroupNumber>
-      <FileNumber>20</FileNumber>
+      <FileNumber>21</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -527,7 +544,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-      <FileNumber>21</FileNumber>
+      <FileNumber>22</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -539,7 +556,7 @@
     </File>
     <File>
       <GroupNumber>4</GroupNumber>
-      <FileNumber>22</FileNumber>
+      <FileNumber>23</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -559,7 +576,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>23</FileNumber>
+      <FileNumber>24</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -571,7 +588,7 @@
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-      <FileNumber>24</FileNumber>
+      <FileNumber>25</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -591,7 +608,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>25</FileNumber>
+      <FileNumber>26</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -603,7 +620,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-      <FileNumber>26</FileNumber>
+      <FileNumber>27</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -623,7 +640,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>27</FileNumber>
+      <FileNumber>28</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -635,7 +652,7 @@
     </File>
     <File>
       <GroupNumber>7</GroupNumber>
-      <FileNumber>28</FileNumber>
+      <FileNumber>29</FileNumber>
       <FileType>1</FileType>
       <tvExp>1</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>

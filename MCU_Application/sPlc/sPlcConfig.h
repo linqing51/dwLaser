@@ -148,7 +148,7 @@
 #define SPREG_END							1134
 //特殊线圈 4*16
 #define SPCOIL_START						1135
-#define SPCOIL_END							1137
+#define SPCOIL_END							1142
 /*****************************************************************************/
 #define CONFIG_NVRAM_SIZE 					(SPCOIL_END + 1)
 /*****************************************************************************/
@@ -199,6 +199,10 @@
 #define SPCOIL_SPWM_OUT_3					(SPCOIL_START * 16 + 40)//SPWM3输出状态
 #define SPCOIL_SPWM_RESET_3					(SPCOIL_START * 16 + 41)//SPWM3复位
 /*****************************************************************************/
+#define SPCOIL_LASER_EMITING				(SPCOIL_START * 16 + 42)//激光发射中
+#define SPCOIL_LASER_EMITOVER				(SPCOIL_START * 16 + 43)//激光发射结束
+/*****************************************************************************/
+
 #define SPREG_RUNTIME_L						(SPREG_START + 0)//累计运行时间秒L 32BIT
 #define SPREG_RUNTIME_H						(SPREG_START + 1)//累计运行时间秒H 32BIT		
 /*****************************************************************************/
@@ -248,12 +252,26 @@
 #define SPREG_SPWM_CYCLE_SHADOW_3			(SPREG_START + 39)//软件PWM3周期阴影
 #define SPREG_SPWM_COUNTER_3				(SPREG_START + 40)//软件PWM3计数器
 /*****************************************************************************/
-#define SPREG_AIM0_DUTYRATIO				(SPREG_START + 41)//指示光0亮度
-#define SPREG_AIM1_DUTYRATIO				(SPREG_START + 42)//指示光1亮度
-#define SPREG_BEEM_DUTYRATIO				(SPREG_START + 43)//蜂鸣器音量
+#define SPREG_HPWM0_DUTYRATIO				(SPREG_START + 41)//指示光0亮度
+#define SPREG_HPWM1_DUTYRATIO				(SPREG_START + 42)//指示光1亮度
+#define SPREG_HPWM2_DUTYRATIO				(SPREG_START + 43)//蜂鸣器音量
+#define SPREG_HPWM3_DUTYRATIO				(SPREG_START + 44)//NULL
+#define SPREG_HPWM4_DUTYRATIO				(SPREG_START + 45)//NULL
+#define SPREG_HPWM5_DUTYRATIO				(SPREG_START + 46)//NULL
+#define SPREG_HPWM6_DUTYRATIO				(SPREG_START + 47)//NULL
+#define SPREG_HPWM7_DUTYRATIO				(SPREG_START + 48)//NULL
 /*****************************************************************************/
-#define SPREG_IDENTITY						(SPREG_START + 44)//平台ID号
-#define SPREG_CLEAR_NVRAM0					(SPREG_START + 45)//清除NVRAM后重新启动
+#define SPREG_IDENTITY						(SPREG_START + 49)//平台ID号
+#define SPREG_CLEAR_NVRAM0					(SPREG_START + 50)//清除NVRAM后重新启动
+/*****************************************************************************/
+//激光脉冲发射相关寄存器
+#define SPREG_LASER_TMATE					(SPREG_START +	51)//激光脉冲计时器器匹配值
+#define SPREG_LASER_TOVERFLOW				(SPREG_START +  52)//激光脉冲计时器溢出值
+#define SPREG_LASER_TCOUNTER				(SPREG_START +	53)//激光脉冲计时器计数值	
+#define SPREG_LASER_PMATE					(SPREG_START +	54)//激光脉冲个数匹配值
+#define SPREG_LASER_SMATE					(SPREG_START +	55)//激光脉个数溢出值
+#define SPREG_LASER_PCOUNTER 				(SPREG_START +	56)//激光脉冲个数计数值
+#define SPREG_LASER_SCOUNTER				(SPREG_START +	57)//激光脉冲间隔计时值
 /*****************************************************************************/
 #define T10MS_USBDISK_CONNECT_DELAY			0
 #define T10MS_USBDISK_MOUNT_DELAY			1

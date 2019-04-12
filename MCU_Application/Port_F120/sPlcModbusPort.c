@@ -24,12 +24,15 @@ void modBusTimerInitialise(void){// Timer Initialize for Petit Modbus, 1ms Timer
     initModbusTimer();
 }
 uint8_t modBusUartString(uint8_t *s, uint16_t  Length){// This is used for send string, better to use DMA for it ;)
+	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
+	SFRPAGE = UART0_PAGE;
 	pSendBuf = s;	
 	NVRAM0[SPREG_UART0_SEND_LENGTH] = Length;
 	NVRAM0[SPREG_UART0_SEND_NUM] = 0x0;
 	SET(SPCOIL_UART0_SEND_BUSY);
 	RES(SPCOIL_UART0_SEND_DONE);
 	TI0 = 1;//开始发送			
+	SFRPAGE = SFRPAGE_SAVE;
 	return true;
 }
 void receiveInterrupt(uint8_t Data){//Call this function into your UART Interrupt. Collect data from it!
@@ -69,24 +72,23 @@ static void Uart0Isr(void) interrupt INTERRUPT_UART0 {//UART0中断
 }
 #endif
 
-//#if CONFIG_MB_RTU_SLAVE == 1 && CONFIG_MR_PORT == UART1
-//static void Uart1Isr(void) interrupt INTERRUPT_UART0 {//UART0中断
-//	enterSplcIsr();	
-
-//		if(RI0){
-//		RI0 = 0;	
-//		receiveInterrupt(SBUF0);
-//	}
-//	if(TI0){
-//		TI0 = 0;
-//		if(NVRAM0[SPREG_UART0_SEND_NUM] < NVRAM0[SPREG_UART0_SEND_LENGTH]){//
-//            SBUF0 = *(pSendBuf + NVRAM0[SPREG_UART0_SEND_NUM]);
-//			NVRAM0[SPREG_UART0_SEND_NUM] ++;						                   
-//		}
-//		else{
-//			SET(SPCOIL_UART0_SEND_DONE);//发送完成
-//			RES(SPCOIL_UART0_SEND_BUSY);
-//		}
-//	}
-//}
+#if (CONFIG_USING_RTU_SLAVE == 1 && CONFIG_MB_PORT == UART1)
+static void Uart1Isr(void) interrupt INTERRUPT_UART1 {//UART0中断
+	enterSplcIsr();	
+	if(SCON1 & 0x01){//RI1 == 1
+		SCON1 &= 0xFE;//RI1 = 0	
+		receiveInterrupt(SBUF1);
+	}
+	if(SCON1 & 0x02){//TI1 == 1  
+		SCON1 &= 0xFD;//TI1 = 0
+		if(NVRAM0[SPREG_UART1_SEND_NUM] < NVRAM0[SPREG_UART1_SEND_LENGTH]){//
+            SBUF1 = *(pSendBuf + NVRAM0[SPREG_UART1_SEND_NUM]);
+			NVRAM0[SPREG_UART1_SEND_NUM] ++;						                   
+		}
+		else{
+			SET(SPCOIL_UART1_SEND_DONE);//发送完成
+			RES(SPCOIL_UART1_SEND_BUSY);
+		}
+	}
+}
 //#endif

@@ -97,9 +97,6 @@ void upDateFirmware(void){//更新MCU 2nd 固件
 	}				
 	fileSize = CH376GetFileSize();//读取当前文件长度
 	if(fileSize != newFwConfig.FW_SIZE){//新固件文件长度错误
-#if CONFIG_DEBUG == 1
-	printf("Error:UDISK file size != newFwConfig.FW_SIZE!\n");
-#endif
 		goto UPDATE_FW_ERROR;
 	}
 	st = CH376ByteLocate(0);//移到文件头
@@ -111,9 +108,6 @@ void upDateFirmware(void){//更新MCU 2nd 固件
 		st = CH376ByteRead(tempFP, CONFIG_FIRMWARE_UPDATE_PAGE_SIZE, NULL);
 		if(st != USB_INT_SUCCESS){//读取固件错误
 			SET(SPCOIL_USBDISK_READ_FILE_FAIL);
-#if CONFIG_DEBUG == 1
-			printf("Error:UDISK file read fail!\n");
-#endif
 			goto UPDATE_FW_ERROR;
 		}
 		FLASH_Clear(tempFAR, CONFIG_FIRMWARE_UPDATE_PAGE_SIZE, 0);//Clear Flash->0xFF
@@ -130,9 +124,6 @@ void upDateFirmware(void){//更新MCU 2nd 固件
 	st = CH376FileClose(TRUE);//关闭自动计算文件长度
 	if(st != USB_INT_SUCCESS){//文件读取失败
 		SET(SPCOIL_USBDISK_CLOSE_FILE_FAIL);
-#if CONFIG_DEBUG == 1
-		printf("Error:UDISK file close fail!\n");
-#endif
 		goto UPDATE_FW_ERROR;
 	}
 	//校验待刷新区固件CRC16
@@ -150,9 +141,6 @@ void upDateFirmware(void){//更新MCU 2nd 固件
 	}
 	//比较计算得到CRC16与配置文件是否线头
 	if(newFwConfig.FW_CRC16 != fileCrc16){//判断已写入暂存区内的固件CRC值正确
-#if CONFIG_DEBUG == 1
-		printf("Error:2nd firmware crc fail,newCrc16:%d;calcCrc16:%d !\n",newFwConfig.FW_CRC16, fileCrc16);
-#endif
 		goto UPDATE_FW_ERROR;	
 	}
 	//更新Bootload刷新执行区请求
@@ -160,9 +148,6 @@ void upDateFirmware(void){//更新MCU 2nd 固件
     for(i = 0;i< sizeof(newFwConfig) ;i++){//更新FLASH配置文件
 		if(eeprom_read_byte(i, (uint8_t*)(&newFwConfig)) == ERROR){//simEprom读取失败
 			SET(SPCOIL_SIMEPROM_WRITE_FAIL);
-#if CONFIG_DEBUG == 1
-			printf("Error:Write newFwConfig fail and exit!\n");
-#endif
 			goto UPDATE_FW_ERROR;
 		}
 	}
@@ -175,9 +160,6 @@ UPDATE_FW_ERROR:
 	{
 		delayMs(1);
 		enableSplcIsr();
-#if CONFIG_DEBUG == 1
-		printf("Error:Update 2nd Firmware fail and exit!\n");
-#endif
 	}
 }
 
