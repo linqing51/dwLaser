@@ -48,6 +48,12 @@
 #include "F120_FlashPrimitives.h"
 #include "F120_FlashUtils.h"
 #endif
+#if CONFIG_SPLC_USING_LASER_TIMER == 1
+#include "sPlcLaser.h"
+#endif
+#if CONFIG_SPLC_USING_BEEM == 1
+#include "sPlcBeem.h"
+#endif
 /*****************************************************************************/
 
 

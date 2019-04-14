@@ -37,11 +37,23 @@ void main(void){
 		debugLed0 = ~debugLed0;
 		sPlcProcessStart();
 		if(LD(SPCOIL_START_UP)){//执行一次的代码
+			testBenchLaserTimer(2);
 		}
 #if CONFIG_USING_HMI == 1
 		hmiLoop();
 #endif
 		
+		//testBenchLaserTimer(1);
+		//testBenchLaserTimer(2);
+		//testBenchLaserTimer(3);
+		//testBenchLaserTimer(4);
+		//testBenchLaserTimer(5);
+		//testBenchLaserTimer(6);
+		//testBenchLaserTimer(7);
+		//testBenchLaserTimer(8);
+		//testBenchLaserTimer(9);
+		//testBenchLaserTimer(10);
+		//testBenchLaserTimer(11);
 #if CONFIG_SPLC_FUNTEST == 1
 #endif
 		sPlcProcessEnd();

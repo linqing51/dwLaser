@@ -50,6 +50,7 @@ static void modbusHandle() interrupt INTERRUPT_TIMER3
 	TMR3CN &= 0x7F;//Overflow Underflow Flag Clear
 	modbusTimerValue ++;
 }
+
 #if (CONFIG_USING_RTU_SLAVE == 1 && CONFIG_MB_PORT == UART0)
 static void Uart0Isr(void) interrupt INTERRUPT_UART0 {//UART0中断
 	enterSplcIsr();	
@@ -91,4 +92,5 @@ static void Uart1Isr(void) interrupt INTERRUPT_UART1 {//UART0中断
 		}
 	}
 }
-//#endif
+#endif
+

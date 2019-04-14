@@ -1,190 +1,155 @@
 #include "sPlcLaser.h"
 /*****************************************************************************/
-#define MCP47X6_LASER_CHANNEL_CH1				0
-#define MCP47X6_LASER_CHANNEL_CH2				1
-#define LASER_MODE_CW							0//连续模式
-#define LASER_MODE_SP							1//单脉冲模式
-#define LASER_MODE_MP							2//多脉冲模式
-#define LASER_MODE_GP							3//群脉冲模式
-#define LASER_STEPNUM_INIT						0
-#define LASER_STEPNUM_STANDBY					1
-#define LASER_STEPNUM_INTO_READY				2
-#define LASER_STEPNUM_READY						3
-#define LASER_STEPNUM_LASERON					100
-#define LASER_STEPNUM_FAULT						255
+//#define LASER_STEPNUM_INIT						0
+//#define LASER_STEPNUM_STANDBY					1
+//#define LASER_STEPNUM_INTO_READY				2
+//#define LASER_STEPNUM_READY						3
+//#define LASER_STEPNUM_LASERON					100
+//#define LASER_STEPNUM_FAULT						255
 /*****************************************************************************/
-#define LASER_CH1_MODPIN_ON		(P4 |= (uint8_t)(1 << 6))
-#define LASER_CH1_MODPIN_OFF	(P4 &= ~(uint8_t)(1 << 6))
-
-#define LASER_CH2_MODPIN_ON		(P4 |= (uint8_t)(1 << 1))
-#define LASER_CH2_MODPIN_OFF	(P4 &= ~(uint8_t)(1 << 1))
-#define SPLC_100MS_INTOREADY_BEEM				1
+sbit LASER_980_MODPIN = P2^7;
+sbit LASER_1470_MODPIN = P2^6;
+#if CONFIG_DEBUG_TIMER4 == 1
+bit debugTimer4;
+#endif
 /*****************************************************************************/
-
-static void STLAR(void);
-static void EDLAR(void);
-//void sPlcLaser(void){
-//	if(LD(SPCOIL_PSST)){//上电初始化STEPNUM
-//		NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_INIT;
-//	}
-//	if((NVRAM0[EM_DRIVER_TEMPERATURE] > NVRAM0[DM_DRIVE_PROTECT_HTEMP]) && LDF(R_FLAG_DRIVER_TEMP_FAULT_IGNORE)){
-//		SET(R_FLAG_DRIVER_HTEMP_FAULT);
-//	}
-//	else{
-//		RES(R_FLAG_DRIVER_HTEMP_FAULT);
-//	}
-//	if((NVRAM0[EM_DRIVER_TEMPERATURE] < NVRAM0[DM_DRIVE_PROTECT_LTEMP]) && LDF(R_FLAG_DRIVER_TEMP_FAULT_IGNORE)){
-//		SET(R_FLAG_DRIVER_LTEMP_FAULT);
-//	}
-//	else{
-//		RES(R_FLAG_DRIVER_LTEMP_FAULT);
-//	}
-//	if((NVRAM0[EM_MCHIP_TEMPERATURE] > NVRAM0[DM_MCHIP_PROTECT_HTEMP]) && LDF(R_FLAG_MCHIP_TEMP_FAULT_IGNORE)){
-//		SET(R_FLAG_MCHIP_HTEMP_FAULT);
-//	}
-//	else{
-//		RES(R_FLAG_MCHIP_HTEMP_FAULT);
-//	}
-//	if((NVRAM0[EM_MCHIP_TEMPERATURE] < NVRAM0[DM_MCHIP_PROTECT_LTEMP]) && LDF(R_FLAG_MCHIP_TEMP_FAULT_IGNORE)){
-//		SET(R_FLAG_MCHIP_HTEMP_FAULT);
-//	}
-//	else{
-//		RES(R_FLAG_MCHIP_HTEMP_FAULT);
-//	}
-//	if((NVRAM0[EM_LASER_TEMPERATURE] > NVRAM0[DM_LASER_PROTECT_HTEMP]) && LDF(R_FLAG_LASER_TEMP_FAULT_IGNORE)){
-//		SET(R_FLAG_LASER_HTEMP_FAULT);
-//	}
-//	else{
-//		RES(R_FLAG_LASER_HTEMP_FAULT);
-//	}
-//	if((NVRAM0[EM_LASER_TEMPERATURE] < NVRAM0[DM_LASER_PROTCET_LTEMP]) && LDF(R_FLAG_LASER_TEMP_FAULT_IGNORE)){
-//		SET(R_FLAG_LASER_LTEMP_FAULT);
-//	}
-//	else{
-//		RES(R_FLAG_LASER_LTEMP_FAULT);
-//	}
-//		
-//	if(LD(R_FLAG_DRIVER_LTEMP_FAULT) || 
-//	   LD(R_FLAG_DRIVER_HTEMP_FAULT) || 
-//	   LD(R_FLAG_MCHIP_LTEMP_FAULT) ||
-//	   LD(R_FLAG_MCHIP_HTEMP_FAULT) || 
-//	   LD(R_FLAG_LASER_LTEMP_FAULT) ||
-//	   LD(R_FLAG_LASER_HTEMP_FAULT)){
-//		SET(R_FLAG_TEMP_FAULT);
-//	}
-//	else{
-//		RES(R_FLAG_TEMP_FAULT);
-//	}
-//	if(LDF(X_MECH_FIBER_DETECT)){
-//		SET(R_FLAG_FIBER_MECH_DETECT);
-//	}
-//	else{
-//		RES(R_FLAG_FIBER_MECH_DETECT);
-//	}
-//	if(LD(R_FLAG_FIBER_MECH_DETECT) && LDF(R_FLAG_FIBER_MECH_DETECT)){
-//		SET(R_FLAG_SAFE_FAULT);
-//	}
-//	else{
-//		RES(R_FLAG_SAFE_FAULT);
-//	}
-
-////STEP_LOOP_START:
-//	if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_INIT){//初始化
-//		NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_STANDBY;//Goto next step
-//		goto STEP_LOOP_END;
-//	}
-//	if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_STANDBY){//第一步 待机状态->蜂鸣器提示
-//		if(LD(R_FLAG_SAFE_FAULT) || LD(R_FLAG_TEMP_FAULT)){
-//			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_FAULT;
-//			goto STEP_LOOP_END;
-//		}
-//		if(LD(R_FLAG_READY)){//检测准备状态
-//			SET(R_FLAG_BEEM);
-//			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_INTO_READY;//进入准备状态
-//			goto STEP_LOOP_END;
-//		}
-//		goto STEP_LOOP_END;
-//	}
-//	if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_INTO_READY){//第二步 等待1秒后进入
-//		T100MS(SPLC_100MS_INTOREADY_BEEM, true, 10);//启动1秒延时器	
-//		if(LD(T_100MS_START * 16 + SPLC_100MS_INTOREADY_BEEM)){//计时达到进入READY步骤
-//			SET(R_FLAG_BEEM);
-//			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_READY;
-//			T100MS(SPLC_100MS_INTOREADY_BEEM, false, 10);//停止延时器
-//			goto STEP_LOOP_END;
-//		}
-//		goto STEP_LOOP_END;
-//	}
-//	if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_READY){//第三步 准备状态 等待脚踏信号发射激光
-//		if(LD(R_FLAG_SAFE_FAULT) || LD(R_FLAG_TEMP_FAULT)){
-//			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_FAULT;
-//			goto STEP_LOOP_END;
-//		}
-//		if(LDP(R_FLAG_FOOTSWITCH)){//检测footSwitch上升沿
-//			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_LASERON;
-//			RES(R_FLAG_LASER_EMITOVER);//发射完成标志清零
-//			SET(R_FLAG_LASER_EMITING);//发射中标志置位
-//			//将激光功率值转换为电流值
-//			STLAR();//开始发射激光
-//			goto STEP_LOOP_END;
-//		}
-//		goto STEP_LOOP_END;
-//	}
-//	if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_LASERON){
-//		if(LD(R_FLAG_SAFE_FAULT) || LD(R_FLAG_TEMP_FAULT)){
-//			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_FAULT;
-//			goto STEP_LOOP_END;
-//		}
-//		if(LDB(R_FLAG_FOOTSWITCH)){//检测到脚踏复位
-//			EDLAR();//关闭激光
-//			SET(R_FLAG_LASER_EMITOVER);//发射完成标志清零
-//			RES(R_FLAG_LASER_EMITING);//发射中标志置位
-//			NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_FAULT;//返回READY步骤
-//			goto STEP_LOOP_END;
-//		}
-//		goto STEP_LOOP_END;
-//	}
-//	if(NVRAM0[EM_STEP_NUM] == LASER_STEPNUM_FAULT){//错误状态
-//			if(LDB(R_FLAG_SAFE_FAULT) && LDB(R_FLAG_TEMP_FAULT)){//错误已消除
-//				if(LD(R_LASER_ERROR_CLEAR)){//错误消除返回待机状态
-//					RES(R_LASER_ERROR_CLEAR);
-//					NVRAM0[EM_STEP_NUM] = LASER_STEPNUM_STANDBY;
-//				}
-//				goto STEP_LOOP_END;
-//			}
-//			goto STEP_LOOP_END;
-//		}
-//STEP_LOOP_END:
-//	{}
-//}
+static void initTimer4(void);
+/*****************************************************************************/
+void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
+	EDLAR();
+	if(st == 0){//980 CW模式测试
+		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_CW;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_980;
+		NVRAM0[SPREG_LASER_TMATE] = 0;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 0;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_CURRENT_980] = 200;
+		NVRAM0[SPREG_LASER_CURRENT_1470] = 300;
+		STLAR();
+	}
+	if(st == 1){//1470 CW模式测试
+		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_CW;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_1470;
+		NVRAM0[SPREG_LASER_TMATE] = 5;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 15;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_CURRENT_980] = 300;
+		NVRAM0[SPREG_LASER_CURRENT_1470] = 400;
+		STLAR();
+	}
+	if(st == 2){//980+1470 CW模式测试
+		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_CW;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
+		NVRAM0[SPREG_LASER_TMATE] = 12;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 21;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_CURRENT_980] = 500;
+		NVRAM0[SPREG_LASER_CURRENT_1470] = 600;
+		STLAR();
+	}
+	if(st ==3){//980 SP模式测试
+		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_SP;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_980;
+		NVRAM0[SPREG_LASER_TMATE] = 50;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 200;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_CURRENT_980] = 700;
+		NVRAM0[SPREG_LASER_CURRENT_1470] = 800;
+		STLAR();
+	}
+	if(st == 4){//1480 SP模式测试
+		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_SP;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_1470;
+		NVRAM0[SPREG_LASER_TMATE] = 25;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 100;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_CURRENT_980] = 900;
+		NVRAM0[SPREG_LASER_CURRENT_1470] = 1000;
+		STLAR();
+	}
+	if(st == 5){//980+1470 SP模式测试
+		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_SP;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
+		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 90;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_CURRENT_980] = 1100;
+		NVRAM0[SPREG_LASER_CURRENT_1470] = 1200;
+		STLAR();
+	}
+	if(st == 6){//980 MP模式测试
+		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_MP;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_980;
+		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 90;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_CURRENT_980] = 1300;
+		NVRAM0[SPREG_LASER_CURRENT_1470] = 1400;
+		STLAR();
+	}
+	if(st == 7){//1470 MP模式测试
+		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_MP;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_1470;
+		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 90;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_CURRENT_980] = 1500;
+		NVRAM0[SPREG_LASER_CURRENT_1470] = 1600;
+		STLAR();
+	}
+	if(st == 8){//980+1470 MP模式测试
+		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_MP;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
+		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 90;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_CURRENT_980] = 1700;
+		NVRAM0[SPREG_LASER_CURRENT_1470] = 1800;
+		STLAR();
+	}
+	if(st == 9){//980 GP模式测试
+		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_GP;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_980;
+		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 90;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_CURRENT_980] = 1900;
+		NVRAM0[SPREG_LASER_CURRENT_1470] = 2000;
+		STLAR();
+	}
+	if(st == 10){//1470 GP模式测试
+		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_GP;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_1470;
+		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 90;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_CURRENT_980] = 2100;
+		NVRAM0[SPREG_LASER_CURRENT_1470] = 2200;
+		STLAR();
+	}
+	if(st == 11){//980+1470 GP模式测试
+		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_MP;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
+		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 90;//激光脉冲周期 25mS
 		
+		NVRAM0[SPREG_LASER_CURRENT_980] = 2300;
+		NVRAM0[SPREG_LASER_CURRENT_1470] = 2400;
+		STLAR();
+	}
+}
 
-
-static void STLAR(void){//开始发射脉冲
+void STLAR(void){//开始发射脉冲
 	uint8_t SFRPAGE_save;
-	NVRAM0[SPREG_LASER_TMATE] = NVRAM0[EM_HMI_LASER_POSWIDTH];//设置匹配值
-	NVRAM0[SPREG_LASER_TOVERFLOW] = ADD(NVRAM0[EM_HMI_LASER_POSWIDTH], NVRAM0[EM_HMI_LASER_NEGWIDTH]);//设置溢出值
+	NVRAM0[SPREG_LASER_PCOUNTER] = 0X0;
 	NVRAM0[SPREG_LASER_TCOUNTER] = 0X00;	
 	NVRAM0[SPREG_LASER_PMATE] = 0x00;//脉冲个数匹配值
-	NVRAM0[SPREG_LASER_SMATE] = 0x0;//脉个数溢出值
-	NVRAM0[SPREG_LASER_PCOUNTER] = 0X0;
-	NVRAM0[SPREG_LASER_SCOUNTER] = 0X0;
+	NVRAM0[SPREG_LASER_TMATE] = 0x0;//脉个数溢出值
 	SFRPAGE = TMR4_PAGE;
-	TMR34CN &= ~(uint8_t)(1 << 7);//TF4 溢出标志清零
+	TMR4CN &= ~(uint8_t)(1 << 7);//TF4 溢出标志清零
 	EIE2 |= (1 << 2);//T4 ET3中断使能
 	TMR4L = 0xFF;
 	TMR4H = 0xFF;
 	TMR4CN |= (1 << 2);//TR3 使能TIMER3计时器
-	SFRPAGE = SFRPAGE_save
+	SFRPAGE = SFRPAGE_save;
 	SET(SPCOIL_LASER_EMITING);//发射标志置位
 	RES(SPCOIL_LASER_EMITOVER);
 }
-static void EDLAR(void){//停止发射脉冲
+void EDLAR(void){//停止发射脉冲
 	uint8_t SFRPAGE_save;
 	SFRPAGE = TMR4_PAGE;
-	TMR3CN &= ~(uint8_t)(1 << 2);//Stop Timer 3
-	TMR3CN &= ~(uint8_t)(1 << 7);//Clear Timer 3 High Byte Overflow Flag.
-	EIE1 &= ~(uint8_t)(1 << 6);//关闭Timer3中断
+	TMR4CN &= ~(uint8_t)(1 << 2);//Stop Timer 4
+	TMR4CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag.
+	EIE2 &= ~(uint8_t)(1 << 2);//关闭Timer4中断
 	SFRPAGE = SFRPAGE_save;
 	//关闭DAC输出
 	NVRAM0[SPREG_DAC_0] = 0;
@@ -193,32 +158,53 @@ static void EDLAR(void){//停止发射脉冲
 	UPDAC1();
 	RES(SPCOIL_LASER_EMITING);//发射标志置位
 }
-void initTimer4(void){//TIMER4初始化
-	
+void sPlcLaserInit(void){//激光脉冲功能初始化
+	initTimer4();
+}
+static void initTimer4(void){//TIMER4初始化
+	xdata uint16_t temp;
+	xdata uint8_t SFRPAGE_SAVE;
+	SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE
+	SFRPAGE = TMR4_PAGE;
+	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_LASER_TIMER_TICK));
+	TMR4CF = 0;//	
+	RCAP4 = temp;// Reload value to be used in Timer3
+	TMR4 = RCAP4;// Init the Timer3 register
+	TMR4CN = 0;//16Bit AutoReload
+	TMR4CN |= 1 << 2;//TR3 RUN
+	SFRPAGE = SFRPAGE_SAVE;  
+	EIE2 |= (1 << 2);// Timer4 interrupt enabled 
 }
 void timer4Isr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 	uint8_t SFRPAGE_save;	
+#if CONFIG_DEBUG_TIMER4 == 1
+	debugTimer4 = ~debugTimer4;
+#endif
 	SFRPAGE_save = SFRPAGE;
 	SFRPAGE = TMR4_PAGE;
-	TMR4CN &= ~(uint8_t)(1 << 7);//Clear Timer 3 High Byte Overflow Flag
+	TMR4CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag
 	SFRPAGE = SFRPAGE_save;
-	switch(NVRAM0[EM_LASER_MODE]){
+	switch(NVRAM0[SPREG_LASER_MODE]){
 		case LASER_MODE_CW:{//CW连续模式
-			if(LD(R_LASER_SELECT_CH1)){
-				NVRAM0[SPREG_DAC_0] = EM_LASER_CURRENT_980;//电流值写入DAC寄存器
+			if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_980){//980激光通道
+				NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_980];//电流值写入DAC寄存器
 				UPDAC0();//DAC立即输出计时器值
+				LASER_980_MODPIN = true; 
 			}
 			else{
 				NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
 				UPDAC0();//DAC立即输出计时器值
+				LASER_980_MODPIN = false;
 			}
-			if(LD(R_LASER_SELECT_CH2)){
-				NVRAM0[SPREG_DAC_1] = EM_LASER_CURRENT_1470;//电流值写入DAC寄存器
+			if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_1470){//1470激光通道
+				NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1470];//电流值写入DAC寄存器
 				UPDAC1();//DAC立即输出计时器值
+				LASER_1470_MODPIN = true; 
 			}
 			else{
 				NVRAM0[SPREG_DAC_1] = 0;//电流值写入DAC寄存器
 				UPDAC1();//DAC立即输出计时器值
+				LASER_1470_MODPIN = false; 
 			}
 			break;
 		}
@@ -226,44 +212,87 @@ void timer4Isr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 			break;
 		}
 		case LASER_MODE_MP:{//MP多脉冲模式	
-			if(NVRAM0[SPREG_LASER_TCOUNTER] ==  NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
-				LASER_CH1_MODPIN_OFF;LASER_CH2_MODPIN_OFF;//翻转输出		
+			if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
+				NVRAM0[SPREG_DAC_0] = 0x0;//电流值写入DAC寄存器
+				UPDAC0();//DAC立即输出计时器值
+				NVRAM0[SPREG_DAC_1] = 0x0;//电流值写入DAC寄存器
+				UPDAC1();//DAC立即输出计时器值
+				LASER_980_MODPIN = false;
+				LASER_1470_MODPIN = false;//翻转输出		
 			}
-			if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TOVERFLOW]){//计时器溢出
-				NVRAM0[EM_LASER_TCOUNTER] = 0;//清零
+			if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TOVERTIME]){//计时器溢出
+				NVRAM0[SPREG_LASER_TCOUNTER] = 0;//清零
 			}
-			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转
-				LASER_CH1_MODPIN_ON;LASER_CH2_MODPIN_ON;//翻转输出
+			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转	
+				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_980){//980激光通道
+					NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_980];//电流值写入DAC寄存器
+					UPDAC0();//DAC立即输出计时器值
+					LASER_980_MODPIN = true; 
+				}
+				else{
+					NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
+					UPDAC0();//DAC立即输出计时器值
+					LASER_980_MODPIN = false;
+				}
+				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_1470){//1470激光通道
+					NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1470];//电流值写入DAC寄存器
+					UPDAC1();//DAC立即输出计时器值
+					LASER_1470_MODPIN = true; 
+				}
+				else{
+					NVRAM0[SPREG_DAC_1] = 0;//电流值写入DAC寄存器
+					UPDAC1();//DAC立即输出计时器值
+					LASER_1470_MODPIN = false; 
+				}
 			}
 			NVRAM0[SPREG_LASER_TCOUNTER] ++;
 			break;
 		}
 		case LASER_MODE_GP:{//GP可编程脉冲模式
-			if(NVRAM0[SPREG_LASER_PCOUNTER] < NVRAM0[SPREG_LASER_PMATE]){
-				if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){
-					if(NVRAM0[SPREG_LASER_PCOUNTER] < NVRAM0[SPREG_LASER_PCOUNTER]){
-						LASER_CH1_MODPIN_ON;LASER_CH2_MODPIN_ON;//翻转输出						
-					}
-				}
+			if(NVRAM0[SPREG_LASER_PCOUNTER] < NVRAM0[SPREG_LASER_PMATE]){//脉冲串输出
 				if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
-					LASER_CH1_MODPIN_OFF;LASER_CH2_MODPIN_OFF;//翻转输出	
+					NVRAM0[SPREG_DAC_0] = 0x0;//电流值写入DAC寄存器
+					UPDAC0();//DAC立即输出计时器值
+					NVRAM0[SPREG_DAC_1] = 0x0;//电流值写入DAC寄存器
+					UPDAC1();//DAC立即输出计时器值
+					LASER_980_MODPIN = false;
+					LASER_1470_MODPIN = false;//翻转输出		
 				}
-				if(NVRAM0[SPREG_LASER_TCOUNTER] == (NVRAM0[SPREG_LASER_TOVERFLOW] - 1)){//计时器溢出
-					NVRAM0[SPREG_LASER_TCOUNTER] = 0xFFFF;//清零
-					NVRAM0[SPREG_LASER_PCOUNTER] ++;//清零	
+				if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TOVERTIME]){//计时器溢出
+					NVRAM0[SPREG_LASER_TCOUNTER] = 0;//清零
+				}
+				if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转	
+					if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_980){//980激光通道
+						NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_980];//电流值写入DAC寄存器
+						UPDAC0();//DAC立即输出计时器值
+						LASER_980_MODPIN = true; 
+					}
+					else{
+						NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
+						UPDAC0();//DAC立即输出计时器值
+						LASER_980_MODPIN = false;
+					}
+					if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_1470){//1470激光通道
+						NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1470];//电流值写入DAC寄存器
+						UPDAC1();//DAC立即输出计时器值
+						LASER_1470_MODPIN = true; 
+					}
+					else{
+						NVRAM0[SPREG_DAC_1] = 0;//电流值写入DAC寄存器
+						UPDAC1();//DAC立即输出计时器值
+						LASER_1470_MODPIN = false; 
+					}
+					NVRAM0[SPREG_LASER_PCOUNTER] ++;
 				}
 				NVRAM0[SPREG_LASER_TCOUNTER] ++;
 			}
-			if((NVRAM0[SPREG_LASER_PCOUNTER] == NVRAM0[SPREG_LASER_PMATE]) && (NVRAM0[SPREG_LASER_TCOUNTER] == 0)){//脉冲个数发现匹配
-				LASER_CH1_MODPIN_OFF;LASER_CH2_MODPIN_OFF;//翻转输出
-				NVRAM0[SPREG_LASER_PCOUNTER] = 0xFFFF;
-				NVRAM0[SPREG_LASER_SCOUNTER] = 0x0000;
+			if((NVRAM0[SPREG_LASER_PCOUNTER] >= NVRAM0[SPREG_LASER_PMATE]) && 
+			   (NVRAM0[SPREG_LASER_PCOUNTER] < NVRAM0[SPREG_LASER_POVERTIME])){//多脉冲间隔		
+				NVRAM0[SPREG_LASER_PCOUNTER] ++;
 			}
-			if(NVRAM0[SPREG_LASER_PCOUNTER] == 0xFFFF){		
-				if( NVRAM0[SPREG_LASER_SCOUNTER] == NVRAM0[SPREG_LASER_SMATE]){
-					NVRAM0[SPREG_LASER_PCOUNTER] = 0;
-				}
-				NVRAM0[SPREG_LASER_SCOUNTER] ++;
+			if(NVRAM0[SPREG_LASER_PCOUNTER] >= NVRAM0[SPREG_LASER_POVERTIME]){//脉冲个数发现匹配
+				NVRAM0[SPREG_LASER_PCOUNTER] = 0x0;
+				NVRAM0[SPREG_LASER_TCOUNTER] = 0x0;
 			}
 			break;
 		}

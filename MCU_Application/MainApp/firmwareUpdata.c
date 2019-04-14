@@ -151,9 +151,6 @@ void upDateFirmware(void){//更新MCU 2nd 固件
 			goto UPDATE_FW_ERROR;
 		}
 	}
-#if CONFIG_DEBUG == 1
-	printf("Info:Update 2nd firmware successful.\n");
-#endif
 	mucReboot();//复位单片机
 	//return;
 UPDATE_FW_ERROR:

@@ -332,6 +332,9 @@ void sPlcInit(void){//软逻辑初始化
 #if CONFIG_SPLC_USING_PCA == 1
 	sPlcPcaInit();
 #endif
+#if CONFIG_SPLC_USING_LASER_TIMER == 1
+	sPlcLaserInit();
+#endif
 	SET(SPCOIL_ON);
 	SET(SPCOIL_START_UP);
 	NVRAM0[SPREG_IDENTITY] = CONFIG_SPLC_DEV;
@@ -389,11 +392,14 @@ void sPlcProcessStart(void){//sPLC轮询起始
 #if CONFIG_SPLC_USING_IO_INPUT == 1
 	inputRefresh();//读取X口输入
 #endif
+#if CONFIG_SPLC_USING_SPWM == 1
+	sPlcSpwmLoop();
+#endif
+#if CONFIG_SPLC_USING_BEEM == 1	
+	sPlcBeemLoop();	
+#endif
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();
-#endif
-#if CONFIG_SPLC_SPWM == 1
-	sPlcSpwmLoop();
 #endif
 }
 void sPlcProcessEnd(void){//sPLC轮询结束
@@ -412,7 +418,6 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 #if CONFIG_USING_USB == 1
 	sPlcUsbPoll();
 #endif	
-	
 	updataNvram();//更新NVRAM
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();//喂狗

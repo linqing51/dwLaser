@@ -11,25 +11,25 @@
 #define STATUS_LASER_READY				0x5A
 #define STATUS_LASER_STANDBY			0xA5
 /*****************************************************************************/
-#define EM_HMI_LASER_SCHEME_NAME		(EM_START + 0)//方案名称
-#define EM_HMI_LASER_POWER_980			(EM_START + 18)//980功率
-#define EM_HMI_LASER_POWER_1470			(EM_START + 19)//1470功率
-#define EM_HMI_LASER_PULSE_MODE			(EM_START + 20)//脉冲模式
-#define EM_HMI_LASER_POSWIDTH			(EM_START + 21)//正脉宽
-#define EM_HMI_LASER_NEGWIDTH			(EM_START + 22)//负脉宽
-#define EM_HMI_LASER_GROUP				(EM_START + 23)//脉冲数
-#define EM_HMI_LASER_SPACE				(EM_START + 24)//脉冲间隔
+#define EM_LASER_SCHEME_NAME			(EM_START + 0)//方案名称
+#define EM_LASER_POWER_980				(EM_START + 18)//980功率
+#define EM_LASER_POWER_1470				(EM_START + 19)//1470功率
+#define EM_LASER_PULSE_MODE				(EM_START + 20)//脉冲模式
+#define EM_LASER_POSWIDTH				(EM_START + 21)//正脉宽
+#define EM_LASER_NEGWIDTH				(EM_START + 22)//负脉宽
+#define EM_LASER_GROUP					(EM_START + 23)//脉冲数
+#define EM_LASER_SPACE					(EM_START + 24)//脉冲间隔
 
-#define EM_HMI_HMI_PAGE					(EM_START + 25)//HMI页面编号
-#define EM_HMI_START_PROGRESS_BAR		(EM_START + 26)//HMI开机进度条
-#define EM_HMI_NEW_PASSWORD0			(EM_START + 27)//HMI输入新密码0
-#define EM_HMI_NEW_PASSWORD1			(EM_START + 28)//HMI输入新密码1
-#define EM_HMI_NEW_PASSWORD2			(EM_START + 29)//HMI输入新密码2
-#define EM_HMI_NEW_PASSWORD3			(EM_START + 30)//HMI输入新密码3
-#define EM_HMI_DEFAULT_PASSWORD0		(EM_START + 31)//HMI进入默认密码0
-#define EM_HMI_DEFAULT_PASSWORD1		(EM_START + 32)//HMI进入默认密码1
-#define EM_HMI_DEFAULT_PASSWORD2		(EM_START + 33)//HMI进入默认密码2
-#define EM_HMI_DEFAULT_PASSWORD3		(EM_START + 34)//HMI进入默认密码3
+#define EM_HMI_PAGE					(EM_START + 25)//HMI页面编号
+#define EM_START_PROGRESS_BAR		(EM_START + 26)//HMI开机进度条
+#define EM_NEW_PASSWORD0			(EM_START + 27)//HMI输入新密码0
+#define EM_NEW_PASSWORD1			(EM_START + 28)//HMI输入新密码1
+#define EM_NEW_PASSWORD2			(EM_START + 29)//HMI输入新密码2
+#define EM_NEW_PASSWORD3			(EM_START + 30)//HMI输入新密码3
+#define EM_DEFAULT_PASSWORD0		(EM_START + 31)//HMI进入默认密码0
+#define EM_DEFAULT_PASSWORD1		(EM_START + 32)//HMI进入默认密码1
+#define EM_DEFAULT_PASSWORD2		(EM_START + 33)//HMI进入默认密码2
+#define EM_DEFAULT_PASSWORD3		(EM_START + 34)//HMI进入默认密码3
 
 #define EM_HMI_READY_STATUS				(EM_START + 35)
 #define EM_DIODE_TEMP0					(EM_START + 40)//二极管温度0
