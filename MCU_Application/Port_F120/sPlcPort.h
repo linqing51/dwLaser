@@ -21,9 +21,6 @@
 #if CONFIG_SPLC_USING_DAC == 1
 #include "sPlcChipDac.h"
 #endif
-#if CONFIG_SPLC_USING_LED == 1
-#include "sPlcLed.h"
-#endif
 #if CONFIG_SPLC_USING_IO_INPUT == 1
 #include "sPlcIo.h"
 #endif
@@ -50,9 +47,6 @@
 #endif
 #if CONFIG_SPLC_USING_LASER_TIMER == 1
 #include "sPlcLaser.h"
-#endif
-#if CONFIG_SPLC_USING_BEEM == 1
-#include "sPlcBeem.h"
 #endif
 /*****************************************************************************/
 

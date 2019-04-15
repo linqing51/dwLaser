@@ -55,6 +55,9 @@ static void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断
 		}
 		TimerCounter_10mS ++;
 		TimerCounter_1mS = 0;
+#if CONFIG_SPLC_USING_PCA == 1
+		NVRAM0[SPREG_BEEM_COUNTER] += 1;
+#endif
 	}
 	if(TimerCounter_10mS >= 10){//100ms计算
 		if(LD(SPCOIL_PS100MS)){//ON
@@ -70,17 +73,6 @@ static void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断
 		}
 		TimerCounter_100mS ++;
 		TimerCounter_10mS = 0;
-#if CONFIG_SPLC_USING_BEEM == 1
-		if((uint16_t)NVRAM0[SPREG_BEEM_PCOUNTER] < 0xFFFF){
-			NVRAM0[SPREG_BEEM_PCOUNTER] ++;
-		}
-		if((uint16_t)NVRAM0[SPREG_BEEM_TCOUNTER] < 0xFFFF){
-			NVRAM0[SPREG_BEEM_TCOUNTER] ++;
-		}
-#endif
-#if CONFIG_SPLC_USING_LED == 1
-		setLedRun(LD(SPCOIL_PS100MS));
-#endif
 	}
 	if(TimerCounter_100mS >= 10){//1000mS计算
 		if(LD(SPCOIL_PS1000MS)){//ON

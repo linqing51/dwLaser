@@ -20,7 +20,6 @@ static void saveScheme(void){//EM->DM
 	psrc = (uint8_t*)&NVRAM0[EM_LASER_SCHEME_NAME];
 	memcpy(pdist, psrc, ((DM_SCHEME_END_0 - DM_SCHEME_START_0 +1 ) * 2));
 }
-
 void hmiLoop(void){//HMI轮训程序
 	if(LD(SPCOIL_START_UP)){//执行一次的代码
 		NVRAM0[EM_HMI_PAGE] = 0x0;//HMI页面

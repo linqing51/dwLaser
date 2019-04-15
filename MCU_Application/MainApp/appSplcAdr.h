@@ -145,8 +145,11 @@
 
 #define Y_FAN0							(Y_START * 16 + 8)//YOUT8 风扇开关0
 #define Y_FAN1							(Y_START * 16 + 9)//YOUT9 风扇开关1
-#define Y_TEC0							(Y_START * 16 + 10)//TEC0 制冷开关0
-#define Y_TEC1							(Y_START * 16 + 11)//TEC1 制冷开关1
+#define Y_TEC0							(Y_START * 16 + 10)//YOUT10 制冷开关0
+#define Y_TEC1							(Y_START * 16 + 11)//YOUT11 制冷开关1
+#define Y_LED_RUN						(Y_START * 16 + 12)//YOUT12 制冷开关1
+#define Y_LED_ERROR						(Y_START * 16 + 13)//YOUT13 制冷开关1
+#define Y_LED_FLASH						(Y_START * 16 + 14)//YOUT14 制冷开关1
 /*****************************************************************************/
 #define R_FIBER_MANUFACT_0				(R_START * 16 + 0)
 #define R_FIBER_MANUFACT_1				(R_START * 16 + 0)

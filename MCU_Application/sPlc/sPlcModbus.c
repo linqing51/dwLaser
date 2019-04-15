@@ -72,16 +72,10 @@ uint8_t SendMessage(void){//This function start to sending messages
     return true;
 }
 void HandleModbusError(char ErrorCode){// Initialise the output buffer. The first byte in the buffer says how many registers we have read
-#if CONFIG_SPLC_USING_LED == 1
-    setLedError(true);
-#endif
 	Tx_Data.function = ErrorCode | 0x80;
     Tx_Data.address = ModbusSlaveAddress;
     Tx_Data.dataLen = 0; 
 	SendMessage();
-#if CONFIG_SPLC_USING_LED == 1
-	setLedError(false);
-#endif
 	SET(SPCOIL_MODBUS_S0_ERROR);
 }
 

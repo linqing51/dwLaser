@@ -1,12 +1,5 @@
 #include "sPlcLaser.h"
 /*****************************************************************************/
-//#define LASER_STEPNUM_INIT						0
-//#define LASER_STEPNUM_STANDBY					1
-//#define LASER_STEPNUM_INTO_READY				2
-//#define LASER_STEPNUM_READY						3
-//#define LASER_STEPNUM_LASERON					100
-//#define LASER_STEPNUM_FAULT						255
-/*****************************************************************************/
 sbit LASER_980_MODPIN = P2^7;
 sbit LASER_1470_MODPIN = P2^6;
 #if CONFIG_DEBUG_TIMER4 == 1
@@ -44,7 +37,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 600;
 		STLAR();
 	}
-	if(st ==3){//980 SP模式测试
+	if(st == 3){//980 SP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_SP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_980;
 		NVRAM0[SPREG_LASER_TMATE] = 50;//激光脉冲正脉宽 10mS
@@ -83,8 +76,8 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 	if(st == 7){//1470 MP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_MP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_1470;
-		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
-		NVRAM0[SPREG_LASER_TOVERTIME] = 90;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_TMATE] = 74;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 96;//激光脉冲周期 25mS
 		NVRAM0[SPREG_LASER_CURRENT_980] = 1500;
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 1600;
 		STLAR();
@@ -92,8 +85,8 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 	if(st == 8){//980+1470 MP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_MP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
-		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
-		NVRAM0[SPREG_LASER_TOVERTIME] = 90;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_TMATE] = 53;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 130;//激光脉冲周期 25mS
 		NVRAM0[SPREG_LASER_CURRENT_980] = 1700;
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 1800;
 		STLAR();
@@ -101,8 +94,10 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 	if(st == 9){//980 GP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_GP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_980;
-		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
-		NVRAM0[SPREG_LASER_TOVERTIME] = 90;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_TMATE] = 10;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 15;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_PMATE] = 10;//10个脉冲
+		NVRAM0[SPREG_LASER_POVERTIME] = 33;//间隔33mS
 		NVRAM0[SPREG_LASER_CURRENT_980] = 1900;
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 2000;
 		STLAR();
@@ -110,30 +105,31 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 	if(st == 10){//1470 GP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_GP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_1470;
-		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
-		NVRAM0[SPREG_LASER_TOVERTIME] = 90;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_TMATE] = 19;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 86;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_PMATE] = 12;//10个脉冲
+		NVRAM0[SPREG_LASER_POVERTIME] = 43;//间隔33mS
 		NVRAM0[SPREG_LASER_CURRENT_980] = 2100;
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 2200;
 		STLAR();
 	}
 	if(st == 11){//980+1470 GP模式测试
-		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_MP;
+		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_GP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
-		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
-		NVRAM0[SPREG_LASER_TOVERTIME] = 90;//激光脉冲周期 25mS
-		
+		NVRAM0[SPREG_LASER_TMATE] = 5;//激光脉冲正脉宽 10mS
+		NVRAM0[SPREG_LASER_TOVERTIME] = 24;//激光脉冲周期 25mS
+		NVRAM0[SPREG_LASER_PMATE] = 6;//10个脉冲
+		NVRAM0[SPREG_LASER_POVERTIME] = 60;//间隔33mS
 		NVRAM0[SPREG_LASER_CURRENT_980] = 2300;
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 2400;
 		STLAR();
 	}
 }
 
-void STLAR(void){//开始发射脉冲
+void STLAR(void) reentrant{//开始发射脉冲
 	uint8_t SFRPAGE_save;
 	NVRAM0[SPREG_LASER_PCOUNTER] = 0X0;
 	NVRAM0[SPREG_LASER_TCOUNTER] = 0X00;	
-	NVRAM0[SPREG_LASER_PMATE] = 0x00;//脉冲个数匹配值
-	NVRAM0[SPREG_LASER_TMATE] = 0x0;//脉个数溢出值
 	SFRPAGE = TMR4_PAGE;
 	TMR4CN &= ~(uint8_t)(1 << 7);//TF4 溢出标志清零
 	EIE2 |= (1 << 2);//T4 ET3中断使能
@@ -144,7 +140,7 @@ void STLAR(void){//开始发射脉冲
 	SET(SPCOIL_LASER_EMITING);//发射标志置位
 	RES(SPCOIL_LASER_EMITOVER);
 }
-void EDLAR(void){//停止发射脉冲
+void EDLAR(void) reentrant{//停止发射脉冲
 	uint8_t SFRPAGE_save;
 	SFRPAGE = TMR4_PAGE;
 	TMR4CN &= ~(uint8_t)(1 << 2);//Stop Timer 4
@@ -159,7 +155,10 @@ void EDLAR(void){//停止发射脉冲
 	RES(SPCOIL_LASER_EMITING);//发射标志置位
 }
 void sPlcLaserInit(void){//激光脉冲功能初始化
+	LASER_980_MODPIN = 0;
+	LASER_1470_MODPIN = 0;
 	initTimer4();
+	
 }
 static void initTimer4(void){//TIMER4初始化
 	xdata uint16_t temp;
@@ -171,9 +170,7 @@ static void initTimer4(void){//TIMER4初始化
 	RCAP4 = temp;// Reload value to be used in Timer3
 	TMR4 = RCAP4;// Init the Timer3 register
 	TMR4CN = 0;//16Bit AutoReload
-	TMR4CN |= 1 << 2;//TR3 RUN
-	SFRPAGE = SFRPAGE_SAVE;  
-	EIE2 |= (1 << 2);// Timer4 interrupt enabled 
+	SFRPAGE = SFRPAGE_SAVE;   
 }
 void timer4Isr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 	uint8_t SFRPAGE_save;	
@@ -189,7 +186,7 @@ void timer4Isr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 			if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_980){//980激光通道
 				NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_980];//电流值写入DAC寄存器
 				UPDAC0();//DAC立即输出计时器值
-				LASER_980_MODPIN = true; 
+				LASER_980_MODPIN = true;				
 			}
 			else{
 				NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
@@ -206,23 +203,61 @@ void timer4Isr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 				UPDAC1();//DAC立即输出计时器值
 				LASER_1470_MODPIN = false; 
 			}
+			if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){//980+1470激光通道
+				NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_980];//电流值写入DAC寄存器
+				NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1470];//电流值写入DAC寄存器
+				UPDAC0();//DAC立即输出计时器值
+				UPDAC1();//DAC立即输出计时器值
+				LASER_980_MODPIN = true;	
+				LASER_1470_MODPIN = false; 				
+			}
 			break;
 		}
 		case LASER_MODE_SP:{//SP单脉冲模式
-			break;
-		}
-		case LASER_MODE_MP:{//MP多脉冲模式	
-			if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
+			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转
+				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_980){//980激光通道
+					NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_980];//电流值写入DAC寄存器
+					UPDAC0();//DAC立即输出计时器值
+					LASER_980_MODPIN = true; 
+				}
+				else{
+					NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
+					UPDAC0();//DAC立即输出计时器值
+					LASER_980_MODPIN = false;
+				}
+				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_1470){//1470激光通道
+					NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1470];//电流值写入DAC寄存器
+					UPDAC1();//DAC立即输出计时器值
+					LASER_1470_MODPIN = true; 
+				}
+				else{
+					NVRAM0[SPREG_DAC_1] = 0;//电流值写入DAC寄存器
+					UPDAC1();//DAC立即输出计时器值
+					LASER_1470_MODPIN = false; 
+				}
+				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){//980+1470激光通道
+					NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_980];//电流值写入DAC寄存器
+					NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1470];//电流值写入DAC寄存器
+					UPDAC0();//DAC立即输出计时器值
+					UPDAC1();//DAC立即输出计时器值
+					LASER_980_MODPIN = true;	
+					LASER_1470_MODPIN = true; 	
+				}
+			}
+			if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
 				NVRAM0[SPREG_DAC_0] = 0x0;//电流值写入DAC寄存器
 				UPDAC0();//DAC立即输出计时器值
 				NVRAM0[SPREG_DAC_1] = 0x0;//电流值写入DAC寄存器
 				UPDAC1();//DAC立即输出计时器值
 				LASER_980_MODPIN = false;
-				LASER_1470_MODPIN = false;//翻转输出		
+				LASER_1470_MODPIN = false;//翻转输出
+				SET(SPCOIL_LASER_EMITOVER);
+				EDLAR();//停止脉冲发射
 			}
-			if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TOVERTIME]){//计时器溢出
-				NVRAM0[SPREG_LASER_TCOUNTER] = 0;//清零
-			}
+			NVRAM0[SPREG_LASER_TCOUNTER] ++;
+			break;
+		}
+		case LASER_MODE_MP:{//MP多脉冲模式	
 			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转	
 				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_980){//980激光通道
 					NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_980];//电流值写入DAC寄存器
@@ -244,23 +279,31 @@ void timer4Isr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 					UPDAC1();//DAC立即输出计时器值
 					LASER_1470_MODPIN = false; 
 				}
+				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){
+					NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_980];//电流值写入DAC寄存器
+					NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1470];//电流值写入DAC寄存器
+					UPDAC0();//DAC立即输出计时器值
+					UPDAC1();//DAC立即输出计时器值
+					LASER_980_MODPIN = true; 
+					LASER_1470_MODPIN = true; 
+				}
+			}
+			if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
+				NVRAM0[SPREG_DAC_0] = 0x0;//电流值写入DAC寄存器
+				UPDAC0();//DAC立即输出计时器值
+				NVRAM0[SPREG_DAC_1] = 0x0;//电流值写入DAC寄存器
+				UPDAC1();//DAC立即输出计时器值
+				LASER_980_MODPIN = false;
+				LASER_1470_MODPIN = false;//翻转输出		
+			}
+			if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TOVERTIME]){//计时器溢出
+				NVRAM0[SPREG_LASER_TCOUNTER] = -1;//清零
 			}
 			NVRAM0[SPREG_LASER_TCOUNTER] ++;
 			break;
 		}
 		case LASER_MODE_GP:{//GP可编程脉冲模式
 			if(NVRAM0[SPREG_LASER_PCOUNTER] < NVRAM0[SPREG_LASER_PMATE]){//脉冲串输出
-				if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
-					NVRAM0[SPREG_DAC_0] = 0x0;//电流值写入DAC寄存器
-					UPDAC0();//DAC立即输出计时器值
-					NVRAM0[SPREG_DAC_1] = 0x0;//电流值写入DAC寄存器
-					UPDAC1();//DAC立即输出计时器值
-					LASER_980_MODPIN = false;
-					LASER_1470_MODPIN = false;//翻转输出		
-				}
-				if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TOVERTIME]){//计时器溢出
-					NVRAM0[SPREG_LASER_TCOUNTER] = 0;//清零
-				}
 				if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转	
 					if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_980){//980激光通道
 						NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_980];//电流值写入DAC寄存器
@@ -282,17 +325,35 @@ void timer4Isr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 						UPDAC1();//DAC立即输出计时器值
 						LASER_1470_MODPIN = false; 
 					}
+					if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){//1470激光通道
+						NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_980];//电流值写入DAC寄存器
+						NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1470];//电流值写入DAC寄存器
+						UPDAC0();//DAC立即输出计时器值
+						UPDAC1();//DAC立即输出计时器值
+						LASER_980_MODPIN = true;
+						LASER_1470_MODPIN = true; 
+					}
+				}
+				if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
+					NVRAM0[SPREG_DAC_0] = 0x0;//电流值写入DAC寄存器
+					UPDAC0();//DAC立即输出计时器值
+					NVRAM0[SPREG_DAC_1] = 0x0;//电流值写入DAC寄存器
+					UPDAC1();//DAC立即输出计时器值
+					LASER_980_MODPIN = false;
+					LASER_1470_MODPIN = false;//翻转输出		
+				}
+				if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TOVERTIME]){//计时器溢出
+					NVRAM0[SPREG_LASER_TCOUNTER] = -1;//清零
 					NVRAM0[SPREG_LASER_PCOUNTER] ++;
 				}
 				NVRAM0[SPREG_LASER_TCOUNTER] ++;
 			}
-			if((NVRAM0[SPREG_LASER_PCOUNTER] >= NVRAM0[SPREG_LASER_PMATE]) && 
-			   (NVRAM0[SPREG_LASER_PCOUNTER] < NVRAM0[SPREG_LASER_POVERTIME])){//多脉冲间隔		
+			if(NVRAM0[SPREG_LASER_PCOUNTER] >= NVRAM0[SPREG_LASER_PMATE]){//多脉冲间隔		
+				if(NVRAM0[SPREG_LASER_PCOUNTER] >= (NVRAM0[SPREG_LASER_POVERTIME] + NVRAM0[SPREG_LASER_PMATE])){//脉冲个数发现匹配
+					NVRAM0[SPREG_LASER_PCOUNTER] = -1;
+					NVRAM0[SPREG_LASER_TCOUNTER] = 0;
+				}
 				NVRAM0[SPREG_LASER_PCOUNTER] ++;
-			}
-			if(NVRAM0[SPREG_LASER_PCOUNTER] >= NVRAM0[SPREG_LASER_POVERTIME]){//脉冲个数发现匹配
-				NVRAM0[SPREG_LASER_PCOUNTER] = 0x0;
-				NVRAM0[SPREG_LASER_TCOUNTER] = 0x0;
 			}
 			break;
 		}

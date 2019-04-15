@@ -3,13 +3,14 @@
 /*****************************************************************************/
 #define CONFIG_DEBUG_PID					0//PID调试功能
 #define CONFIG_DEBUG_TIMER4					1//TIMER4调试
+#define CONFIG_DEBUG_PCA					1//PCA调试
 /*****************************************************************************/
 #define CONFIG_UART0_BAUDRATE				115200//串口0 波特率
 #define CONFIG_UART1_BAUDRATE				115200//串口1 波特率
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_SPWM				1//使了软件PWM功能
+#define CONFIG_SPLC_USING_SPWM				0//使了软件PWM功能
 /*****************************************************************************/
-#define CONFIG_SPLC_FUN_EPID				1//使能SPLC扩展指令
+#define CONFIG_SPLC_FUN_EPID				0//使能SPLC扩展指令
 #define CONFIG_SPLC_FUNTEST					0//功能指令测试
 /*****************************************************************************/
 #define CONFIG_SPLC_ASSERT					1//检查地址范围
@@ -17,8 +18,6 @@
 #define CONFIG_SPLC_CLEAR_CODE				0xA58E
 #define CONFIG_SOFTPLC_TICK					1000L//1mS
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期 1mS * N
-/*****************************************************************************/
-#define CONFIG_SPLC_USING_LED				1//启用调试LED
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT				0//看门狗启用
 /*****************************************************************************/
@@ -76,9 +75,9 @@
 #define CONFIG_USING_HMI					0//使能MODBUS HMI
 #endif
 /*****************************************************************************/
-#define CONFIG_USING_SIMEPROM				1
-#define CONFIG_USING_USB					1
-#define CONFIG_USING_ONCHIPFLASH			1
+#define CONFIG_USING_SIMEPROM				0
+#define CONFIG_USING_USB					0
+#define CONFIG_USING_ONCHIPFLASH			0
 /*****************************************************************************/
 #define CONFIG_FIRMWARE_UPDATE_PAGE_SIZE	128//FLASH单次读写容量
 #define CONFIG_FW_CONFIG_ADR				0x0000//固件配置信息起始地址
@@ -97,10 +96,8 @@
 #define CONFIG_DEFAULT_PASSSWORD2			0x0000
 #define CONFIG_DEFAULT_PASSSWORD3			0x0000
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_LASER_TIMER		1
+#define CONFIG_SPLC_USING_LASER_TIMER		0
 #define CONFIG_LASER_TIMER_TICK				1000
-/*****************************************************************************/
-#define CONFIG_SPLC_USING_BEEM 				1//使能蜂鸣器
 /*****************************************************************************/
 //线圈 保持 16*8=256 
 #define MR_START							0
@@ -144,17 +141,17 @@
 #define C_START								1054
 #define C_END								1061
 //输入位寄存器 4*16
-#define X_START								1062
+#define X_START								1062//16692
 #define X_END								1065
 //输出位寄存器 4*16
-#define Y_START								1066
+#define Y_START								1066//17056
 #define Y_END								1069
 //特殊寄存器 64
-#define SPREG_START							1070
-#define SPREG_END							1134
-//特殊线圈 4*16
-#define SPCOIL_START						1135
-#define SPCOIL_END							1142
+#define SPREG_START							1070//
+#define SPREG_END							1133
+//特殊线圈 8*16
+#define SPCOIL_START						1134//18144
+#define SPCOIL_END							1149
 /*****************************************************************************/
 #define CONFIG_NVRAM_SIZE 					(SPCOIL_END + 1)
 /*****************************************************************************/
@@ -209,9 +206,12 @@
 #define SPCOIL_LASER_EMITING				(SPCOIL_START * 16 + 42)//激光发射中
 #define SPCOIL_LASER_EMITOVER				(SPCOIL_START * 16 + 43)//激光发射结束
 /*****************************************************************************/
+//指示激光有关线圈
+#define SPCOIL_AIM0_ENABLE					(SPCOIL_START * 16 + 44)//激光指示光0使能
+#define SPCOIL_AIM1_ENABLE					(SPCOIL_START * 16 + 45)//激光指示光1使能
+/*****************************************************************************/
 //蜂鸣器相关线圈
-#define SPCOIL_BEEM_EMITING					(SPCOIL_START * 16 + 44)//蜂鸣器发射中
-#define SPCOIL_BEEM_EMITOVER				(SPCOIL_START * 16 + 45)//蜂鸣器发射完毕
+#define SPCOIL_BEEM_ENABLE					(SPCOIL_START * 16 + 46)//蜂鸣器发射使能
 /*****************************************************************************/
 #define SPREG_RUNTIME_L						(SPREG_START + 0)//累计运行时间秒L 32BIT
 #define SPREG_RUNTIME_H						(SPREG_START + 1)//累计运行时间秒H 32BIT		
@@ -262,39 +262,30 @@
 #define SPREG_SPWM_CYCLE_SHADOW_3			(SPREG_START + 39)//软件PWM3周期阴影
 #define SPREG_SPWM_COUNTER_3				(SPREG_START + 40)//软件PWM3计数器
 /*****************************************************************************/
-#define SPREG_HPWM0_DUTYRATIO				(SPREG_START + 41)//指示光0亮度
-#define SPREG_HPWM1_DUTYRATIO				(SPREG_START + 42)//指示光1亮度
-#define SPREG_HPWM2_DUTYRATIO				(SPREG_START + 43)//蜂鸣器音量
-#define SPREG_HPWM3_DUTYRATIO				(SPREG_START + 44)//NULL
-#define SPREG_HPWM4_DUTYRATIO				(SPREG_START + 45)//NULL
-#define SPREG_HPWM5_DUTYRATIO				(SPREG_START + 46)//NULL
-#define SPREG_HPWM6_DUTYRATIO				(SPREG_START + 47)//NULL
-#define SPREG_HPWM7_DUTYRATIO				(SPREG_START + 48)//NULL
+#define SPREG_AIM0_BRIGHTNESS				(SPREG_START + 41)//PCA0->指示光0亮度
+#define SPREG_AIM1_BRIGHTNESS				(SPREG_START + 42)//PCA1->指示光1亮度
 /*****************************************************************************/
-#define SPREG_IDENTITY						(SPREG_START + 49)//平台ID号
-#define SPREG_CLEAR_NVRAM0					(SPREG_START + 50)//清除NVRAM后重新启动
+#define SPREG_IDENTITY						(SPREG_START + 43)//平台ID号
+#define SPREG_CLEAR_NVRAM0					(SPREG_START + 44)//清除NVRAM后重新启动
 /*****************************************************************************/
 //激光脉冲发射相关寄存器
-#define SPREG_LASER_MODE					(SPREG_START + 51)//激光发射模式
-#define SPREG_LASER_SELECT					(SPREG_START + 52)//激光通道选择
-#define SPREG_LASER_TCOUNTER				(SPREG_START + 53)//激光脉冲计时器计数值
-#define SPREG_LASER_TMATE					(SPREG_START + 54)//激光脉冲计时器器匹配值
-#define SPREG_LASER_TOVERTIME				(SPREG_START + 55)//激光脉冲计时器溢出值
-#define SPREG_LASER_PCOUNTER 				(SPREG_START + 56)//激光脉冲个数计数值
-#define SPREG_LASER_PMATE					(SPREG_START + 57)//激光脉冲个数匹配值
-#define SPREG_LASER_POVERTIME				(SPREG_START + 58)//激光脉冲间隔计时值
-#define SPREG_LASER_CURRENT_980				(SPREG_START + 59)//激光电流980
-#define SPREG_LASER_CURRENT_1470			(SPREG_START + 60)//激光电流1470
+#define SPREG_LASER_MODE					(SPREG_START + 45)//激光发射模式
+#define SPREG_LASER_SELECT					(SPREG_START + 46)//激光通道选择
+#define SPREG_LASER_TCOUNTER				(SPREG_START + 47)//激光脉冲计时器计数值
+#define SPREG_LASER_TMATE					(SPREG_START + 48)//激光脉冲计时器器匹配值
+#define SPREG_LASER_TOVERTIME				(SPREG_START + 49)//激光脉冲计时器溢出值
+#define SPREG_LASER_PCOUNTER 				(SPREG_START + 50)//激光脉冲个数计数值
+#define SPREG_LASER_PMATE					(SPREG_START + 51)//激光脉冲个数匹配值
+#define SPREG_LASER_POVERTIME				(SPREG_START + 52)//激光脉冲间隔计时值
+#define SPREG_LASER_RELEASETIME				(SPREG_START + 53)//激光持续时间
+#define SPREG_LASER_RELEASE_COUNTER			(SPREG_START + 54)//激光持续时间计时器
+#define SPREG_LASER_CURRENT_980				(SPREG_START + 55)//激光电流980
+#define SPREG_LASER_CURRENT_1470			(SPREG_START + 56)//激光电流1470
 /*****************************************************************************/
 //蜂鸣器相关寄存器
-#define SPREG_BEEM_VOLUME					(SPREG_START + 61)//蜂鸣器音量
-#define SPREG_BEEM_MODE						(SPREG_START + 62)//蜂鸣器模式
-#define SPREG_BEEM_TIME						(SPREG_START + 63)//蜂鸣器持续时间
-#define SPREG_BEEM_TCOUNTER					(SPREG_START + 64)//蜂鸣器脉冲计时器
-#define SPREG_BEEM_POS						(SPREG_START + 65)//蜂鸣器开时间
-#define SPREG_BEEM_CYCLE					(SPREG_START + 66)//蜂鸣器周期时间
-#define SPREG_BEEM_PCOUNTER					(SPREG_START + 67)//蜂鸣器持续计时器
-#define SPREG_BEEM_RELEASE					(SPREG_START + 68)//蜂鸣器持续时间
+#define SPREG_BEEM_VOLUME					(SPREG_START + 57)//蜂鸣器音量
+#define SPREG_BEEM_MODE						(SPREG_START + 58)//蜂鸣器模式
+#define SPREG_BEEM_COUNTER					(SPREG_START + 59)//蜂鸣器计时器
 /*****************************************************************************/
 #define T10MS_USBDISK_CONNECT_DELAY			0
 #define T10MS_USBDISK_MOUNT_DELAY			1

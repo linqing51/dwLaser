@@ -36,14 +36,20 @@ void outputInit(void){//IO输出初始化
 	P2 &= ~(1 << 4);//Y7
 	P6 &= ~(1 << 3);//Y8
 	P6 &= ~(1 << 4);//Y9
+	P6 &= ~(1 << 2);//Y10
+	P6 &= ~(1 << 1);//Y11
+	P6 &= ~(1 << 0);//Y12
+	P5 &= ~(1 << 7);//Y13
+	P5 &= ~(1 << 6);//Y14
 	SFRPAGE = SFRPAGE_SAVE;
 }
 void inputRefresh(void){//获取输入IO
 	uint8_t SFRPAGE_SAVE, temp; 
-	//XIN0
+	//XIN0 P3_3
 	SFRPAGE_SAVE = SFRPAGE;
 	SFRPAGE = CONFIG_PAGE;
 	temp = ((P3 >> 3) & 0x01);
+	SFRPAGE = SFRPAGE_SAVE;
 	if(temp){
 		if(inputFilter[0] < CONFIG_INPUT_FILTER_TIME){
 			inputFilter[0] ++;
@@ -60,8 +66,10 @@ void inputRefresh(void){//获取输入IO
 			NVRAM0[X_START] &= ~(uint16_t)(1 << 0);
 		}
 	}
-	//XIN1
+	//XIN1 P3_2
+	SFRPAGE = CONFIG_PAGE;
 	temp = ((P3 >> 2) & 0x01);
+	SFRPAGE = SFRPAGE_SAVE;
 	if(temp){
 		if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
 			inputFilter[1] ++;
@@ -78,8 +86,10 @@ void inputRefresh(void){//获取输入IO
 			NVRAM0[X_START] &= ~(uint16_t)(1 << 1);
 		}
 	}
-	//XIN2
+	//XIN2 P3_1
+	SFRPAGE = CONFIG_PAGE;
 	temp = ((P3 >> 1) & 0x01);
+	SFRPAGE = SFRPAGE_SAVE;
 	if(temp){
 		if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
 			inputFilter[1] ++;
@@ -96,8 +106,10 @@ void inputRefresh(void){//获取输入IO
 			NVRAM0[X_START] &= ~(uint16_t)(1 << 2);
 		}
 	}
-	//XIN3
-	temp = ((P3 >> 3) & 0x01);
+	//XIN3 P3_0
+	SFRPAGE = CONFIG_PAGE;
+	temp = ((P3 >> 0) & 0x01);
+	SFRPAGE = SFRPAGE_SAVE;
 	if(temp){
 		if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
 			inputFilter[1] ++;
@@ -115,7 +127,9 @@ void inputRefresh(void){//获取输入IO
 		}
 	}
 	//XIN4
+	SFRPAGE = CONFIG_PAGE;
 	temp = ((P4 >> 1) & 0x01);
+	SFRPAGE = SFRPAGE_SAVE;
 	if(temp){
 		if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
 			inputFilter[1] ++;
@@ -133,7 +147,9 @@ void inputRefresh(void){//获取输入IO
 		}
 	}	
 	//XIN5
+	SFRPAGE = CONFIG_PAGE;
 	temp = ((P4 >> 0) & 0x01);
+	SFRPAGE = SFRPAGE_SAVE;
 	if(temp){
 		if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
 			inputFilter[1] ++;
@@ -265,18 +281,39 @@ void outputRefresh(void){//设置输出IO
 		P6 &= ~(uint8_t)(1 << 4);
 	}
 	//YOUT10
-	if((NVRAM0[Y_START] >> 9) & 0x01){//P6_2
+	if((NVRAM0[Y_START] >> 10) & 0x01){//P6_2
 		P6 |= (uint8_t)(1 << 2);
 	}
 	else{
 		P6 &= ~(uint8_t)(1 << 2);
 	}	
 	//YOUT11
-	if((NVRAM0[Y_START] >> 9) & 0x01){//P6_1
+	if((NVRAM0[Y_START] >> 11) & 0x01){//P6_1
 		P6 |= (uint8_t)(1 << 1);
 	}
 	else{
 		P6 &= ~(uint8_t)(1 << 1);
+	}
+	//YOUT12
+	if((NVRAM0[Y_START] >> 12) & 0x01){//P6_0
+		P6 |= (uint8_t)(1 << 0);
+	}
+	else{
+		P6 &= ~(uint8_t)(1 << 0);
+	}
+	//YOUT13
+	if((NVRAM0[Y_START] >> 13) & 0x01){//P5_7
+		P5 |= (uint8_t)(1 << 7);
+	}
+	else{
+		P5 &= ~(uint8_t)(1 << 7);
+	}
+	//YOUT14
+	if((NVRAM0[Y_START] >> 13) & 0x01){//P5_6
+		P5 |= (uint8_t)(1 << 6);
+	}
+	else{
+		P5 &= ~(uint8_t)(1 << 6);
 	}
 	SFRPAGE = SFRPAGE_SAVE;
 }
