@@ -25,7 +25,7 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_OUTPUT			1//输出IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_PCA				1//片内计数器阵列
+#define CONFIG_SPLC_USING_PCA				0//片内计数器阵列
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_EPROM				0//EPROM 
 #define CONFIG_SPLC_USING_CLEAR_NVRAM		0//启用清除NVRAM功能
@@ -44,7 +44,7 @@
 #define CONFIG_UART1_TBUF_SIZE				256//发送缓冲
 #endif
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ADC				1//使能ADC模块
+#define CONFIG_SPLC_USING_ADC				0//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			14//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE				9//ADC通道数
 #define CONFIG_ADC_TEMP_SENSOR_GAIN    		3330L// Temp Sensor Gain in (uV / degC)
@@ -56,7 +56,7 @@
 #define CONFIG_NTC_RB						10000L
 #define CONFIG_NTC_VREF						5000L
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_DAC				1//是能DAC模块
+#define CONFIG_SPLC_USING_DAC				0//是能DAC模块
 /*****************************************************************************/
 #define CONFIG_USING_RTU_SLAVE				1//使能MODBUS RTU从站
 #define CONFIG_MB_PORT						UART0
@@ -141,7 +141,7 @@
 #define C_START								1054
 #define C_END								1061
 //输入位寄存器 4*16
-#define X_START								1062//16692
+#define X_START								1062//16992
 #define X_END								1065
 //输出位寄存器 4*16
 #define Y_START								1066//17056

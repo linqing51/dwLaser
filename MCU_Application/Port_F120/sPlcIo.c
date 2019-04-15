@@ -91,16 +91,16 @@ void inputRefresh(void){//获取输入IO
 	temp = ((P3 >> 1) & 0x01);
 	SFRPAGE = SFRPAGE_SAVE;
 	if(temp){
-		if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
-			inputFilter[1] ++;
+		if(inputFilter[2] < CONFIG_INPUT_FILTER_TIME){
+			inputFilter[2] ++;
 		}
 		else{
 			NVRAM0[X_START] |= (int16_t)(1 << 2);
 		}
 	}
 	else{
-		if(inputFilter[1] > (CONFIG_INPUT_FILTER_TIME * -1)){
-			inputFilter[1] --;
+		if(inputFilter[2] > (CONFIG_INPUT_FILTER_TIME * -1)){
+			inputFilter[2] --;
 		}
 		else{
 			NVRAM0[X_START] &= ~(uint16_t)(1 << 2);
@@ -111,16 +111,16 @@ void inputRefresh(void){//获取输入IO
 	temp = ((P3 >> 0) & 0x01);
 	SFRPAGE = SFRPAGE_SAVE;
 	if(temp){
-		if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
-			inputFilter[1] ++;
+		if(inputFilter[3] < CONFIG_INPUT_FILTER_TIME){
+			inputFilter[3] ++;
 		}
 		else{
 			NVRAM0[X_START] |= (int16_t)(1 << 3);
 		}
 	}
 	else{
-		if(inputFilter[1] > (CONFIG_INPUT_FILTER_TIME * -1)){
-			inputFilter[1] --;
+		if(inputFilter[3] > (CONFIG_INPUT_FILTER_TIME * -1)){
+			inputFilter[3] --;
 		}
 		else{
 			NVRAM0[X_START] &= ~(uint16_t)(1 << 3);
@@ -131,16 +131,16 @@ void inputRefresh(void){//获取输入IO
 	temp = ((P4 >> 1) & 0x01);
 	SFRPAGE = SFRPAGE_SAVE;
 	if(temp){
-		if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
-			inputFilter[1] ++;
+		if(inputFilter[4] < CONFIG_INPUT_FILTER_TIME){
+			inputFilter[4] ++;
 		}
 		else{
 			NVRAM0[X_START] |= (int16_t)(1 << 4);
 		}
 	}
 	else{
-		if(inputFilter[1] > (CONFIG_INPUT_FILTER_TIME * -1)){
-			inputFilter[1] --;
+		if(inputFilter[4] > (CONFIG_INPUT_FILTER_TIME * -1)){
+			inputFilter[4] --;
 		}
 		else{
 			NVRAM0[X_START] &= ~(uint16_t)(1 << 4);
@@ -151,16 +151,16 @@ void inputRefresh(void){//获取输入IO
 	temp = ((P4 >> 0) & 0x01);
 	SFRPAGE = SFRPAGE_SAVE;
 	if(temp){
-		if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
-			inputFilter[1] ++;
+		if(inputFilter[5] < CONFIG_INPUT_FILTER_TIME){
+			inputFilter[5] ++;
 		}
 		else{
 			NVRAM0[X_START] |= (int16_t)(1 << 5);
 		}
 	}
 	else{
-		if(inputFilter[1] > (CONFIG_INPUT_FILTER_TIME * -1)){
-			inputFilter[1] --;
+		if(inputFilter[5] > (CONFIG_INPUT_FILTER_TIME * -1)){
+			inputFilter[5] --;
 		}
 		else{
 			NVRAM0[X_START] &= ~(uint16_t)(1 << 5);
@@ -170,16 +170,16 @@ void inputRefresh(void){//获取输入IO
 	SFRPAGE = CPT0_PAGE;  
 	temp = ((CPT0CN >> 6) & 0x01);
 	if(temp){
-		if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
-			inputFilter[1] ++;
+		if(inputFilter[6] < CONFIG_INPUT_FILTER_TIME){
+			inputFilter[6] ++;
 		}
 		else{
 			NVRAM0[X_START] |= (int16_t)(1 << 6);
 		}
 	}
 	else{
-		if(inputFilter[1] > (CONFIG_INPUT_FILTER_TIME * -1)){
-			inputFilter[1] --;
+		if(inputFilter[6] > (CONFIG_INPUT_FILTER_TIME * -1)){
+			inputFilter[6] --;
 		}
 		else{
 			NVRAM0[X_START] &= ~(uint16_t)(1 << 6);
@@ -189,16 +189,16 @@ void inputRefresh(void){//获取输入IO
 	SFRPAGE = CPT1_PAGE;  
 	temp = ((CPT1CN >> 6) & 0x01);
 	if(temp){
-		if(inputFilter[1] < CONFIG_INPUT_FILTER_TIME){
-			inputFilter[1] ++;
+		if(inputFilter[7] < CONFIG_INPUT_FILTER_TIME){
+			inputFilter[7] ++;
 		}
 		else{
 			NVRAM0[X_START] |= (int16_t)(1 << 7);
 		}
 	}
 	else{
-		if(inputFilter[1] > (CONFIG_INPUT_FILTER_TIME * -1)){
-			inputFilter[1] --;
+		if(inputFilter[7] > (CONFIG_INPUT_FILTER_TIME * -1)){
+			inputFilter[7] --;
 		}
 		else{
 			NVRAM0[X_START] &= ~(uint16_t)(1 << 7);

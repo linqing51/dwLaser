@@ -102,11 +102,7 @@ void HandleModbusReadCoils(void){//Modbus function 01 - ¶ÁÈ¡ÏßÈ¦×´Ì¬
 			for(j = 0; j < 8; j ++){
 				tempData = (NVRAM0[(tempAddr / 16)] >> (tempAddr % 16)) & 0x01;
 				Tx_Data.dataBuf[Tx_Data.dataLen] |= (uint8_t)(tempData << j);
-				tempAddr++;	
-				//if(tempAddr >= startAddress + numberOfCoil){//¶ÁÍê
-				//	exit = 1;
-				//	break;
-				//} 
+				tempAddr++;
 			}
 			Tx_Data.dataLen ++;	
 		}
