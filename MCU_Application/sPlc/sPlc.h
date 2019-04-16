@@ -6,7 +6,7 @@
 #include "sPlcPort.h"
 #include "lib.h"
 #if CONFIG_SPLC_FUN_EPID == 1
-#include "splcFun_EPID.h"
+#include "splcFunEPID.h"
 #endif
 /*****************************************************************************/
 #define SPLC_FP32					*(fp32_t*)//指针取单精度浮点

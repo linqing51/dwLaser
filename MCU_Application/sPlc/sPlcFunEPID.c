@@ -1,4 +1,4 @@
-include "sPlcFun_EPID.h"
+#include "sPlcFunEPID.h"
 /*****************************************************************************/
 #define EPID_TAB_OUT				0//输出值地址
 #define EPID_TAB_REF				1//反馈值

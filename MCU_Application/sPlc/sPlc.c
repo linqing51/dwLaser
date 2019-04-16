@@ -160,7 +160,6 @@ static void updataNvram(void){//¸üÐÂNVRAM->EPROM
 #endif
 		}	
 	}
-
 	for(i = (DM_START * 2);i < ((DM_END + 1) * 2);i ++){//´¢´æDM
 		if(*(sp0 + i) != *(sp1 + i)){
 #if CONFIG_SPLC_USING_EPROM == 1

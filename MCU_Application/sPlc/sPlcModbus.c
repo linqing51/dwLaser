@@ -262,7 +262,7 @@ uint8_t RxDataAvailable(void){//RxDataAvailable
 }
 uint8_t CheckRxTimeout(void){//CheckRxTimeout
     // A return value of true indicates there is a timeout    
-    if (modbusTimerValue >= CONFIG_MB_RTU_SLAVE_BUFFER_SIZE){
+    if (modbusTimerValue >= CONFIG_MB_TIMEOUTTIMER){
         modbusTimerValue = 0;
         modbusReceiveCounter = 0;
         return true;

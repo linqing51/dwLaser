@@ -1,10 +1,13 @@
-#ifndef __HMI_H__
-#define __HMI_H__
+#ifndef __BACKAPP_H__
+#define __BACKAPP_H__
 /*****************************************************************************/
 #include "sPlc.h"
 #include "appSplcAdr.h"
-#include "backApp.h"
 /*****************************************************************************/
-void hmiLoop(void);//HMIÂÖÑµ³ÌÐò
-void hmiLoopInit(void);
+void backApp(void);
+void bcakAppInit(void);
+void loadScheme(void);
+void saveScheme(void);
 #endif
+
+

@@ -33,10 +33,12 @@ void main(void){
 		debugLed0 = ~debugLed0;
 		sPlcProcessStart();
 		if(LD(SPCOIL_START_UP)){//执行一次的代码
-			//testBenchLaserTimer(11);
+			bcakAppInit();
+			hmiLoopInit();
 			//testBenchBeem(50, 1);
 			
 		}
+		backApp();
 #if CONFIG_USING_HMI == 1
 		hmiLoop();
 #endif
