@@ -15,4 +15,6 @@ void sPlcLaserInit(void);
 void testBenchLaserTimer(uint8_t st);//LASER激光发射测试
 void EDLAR(void) reentrant;//停止发射脉冲
 void STLAR(void) reentrant;//开始发射脉冲
+void PCLAR0(uint16_t POW, uint16_t CUR);//功率->DAC CODE
+void PCLAR1(uint16_t POW, uint16_t CUR);//功率->DAC CODE
 #endif

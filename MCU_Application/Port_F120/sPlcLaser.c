@@ -154,6 +154,10 @@ void EDLAR(void) reentrant{//停止发射脉冲
 	UPDAC1();
 	RES(SPCOIL_LASER_EMITING);//发射标志置位
 }
+void PCLAR0(uint16_t POW, uint16_t CUR){//功率->DAC CODE
+}
+void PCLAR1(uint16_t POW, uint16_t CUR){//功率->DAC CODE
+}
 void sPlcLaserInit(void){//激光脉冲功能初始化
 	LASER_980_MODPIN = 0;
 	LASER_1470_MODPIN = 0;

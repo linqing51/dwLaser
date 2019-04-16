@@ -16,8 +16,8 @@
 #define EM_LASER_SCHEME_NAME					(EM_START + 0)//方案名称
 #define EM_LASER_SELECT							(EM_START + 0)//通道选择
 #define EM_LASER_PULSE_MODE						(EM_START + 18)//脉冲模式
-#define EM_LASER_POWER_980						(EM_START + 19)//980功率
-#define EM_LASER_POWER_1470						(EM_START + 20)//1470功率
+#define EM_LASER_POWER_CH0						(EM_START + 19)//通道0功率
+#define EM_LASER_POWER_CH1						(EM_START + 20)//通道1功率
 #define EM_LASER_POSWIDTH						(EM_START + 21)//正脉宽
 #define EM_LASER_NEGWIDTH						(EM_START + 22)//负脉宽
 #define EM_LASER_GROUP							(EM_START + 23)//脉冲数
@@ -138,11 +138,11 @@
 #define DM_OLD_PASSWORD3						(DM_START + 1)
 
 /*****************************************************************************/
-#define X_INTERLOCK						(X_START * 16 + 0)//XIN0 安全连锁
-#define X_ESTOP							(X_START * 16 + 1)//XIN1 紧急停止开关
-#define X_FOOTSWITCH_OC					(X_START * 16 + 2)//XIN2 脚踏常开
-#define X_FOOTSWITCH_ON					(X_START * 16 + 3)//XIN3 脚踏常闭
-#define X_LDR_FAULT0					(X_START * 16 + 4)//XIN4 驱动器故障0
+#define X_INTERLOCK								(X_START * 16 + 0)//XIN0 安全连锁
+#define X_ESTOP									(X_START * 16 + 1)//XIN1 紧急停止开关
+#define X_FOOTSWITCH_OC							(X_START * 16 + 2)//XIN2 脚踏常开
+#define X_FOOTSWITCH_ON							(X_START * 16 + 3)//XIN3 脚踏常闭
+#define X_LDR_FAULT0							(X_START * 16 + 4)//XIN4 驱动器故障0
 #define X_LDR_FAULT1					(X_START * 16 + 5)//XIN5 驱动器故障1
 #define X_FBD0							(X_START * 16 + 6)//XIN6 光纤探测0
 #define X_FBD1							(X_START * 16 + 7)//XIN7 光纤探测1
@@ -171,7 +171,7 @@
 #define R_ENVI_TEMP_HIGH				(R_START * 16 + 5)
 #define R_DRIVE_FAULT_0					(R_START * 16 + 6)
 #define R_DRIVE_FAULT_1					(R_START * 16 + 7)
-#define R_SAFE_READY					(R_START * 16 + 8)//安全就绪
+#define R_SAFE_FAULT					(R_START * 16 + 8)//故障
 #define R_SCHEME_LOAD_REQ				(R_START * 16 + 9)//方案载入请求
 #define R_SHCEME_SAVE_REQ				(R_START * 16 + 10)//方案储存请求
 #define R_KEY_READY						(R_START * 16 + 11)//准备

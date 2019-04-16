@@ -73,7 +73,7 @@
 #define ENABLE_INTERRUPT					EA = 1;
 /*****************************************************************************/
 #if CONFIG_USING_RTU_SLAVE == 1
-#define CONFIG_USING_HMI					0//使能MODBUS HMI
+#define CONFIG_USING_HMI					1//使能MODBUS HMI
 #endif
 /*****************************************************************************/
 #define CONFIG_USING_SIMEPROM				1

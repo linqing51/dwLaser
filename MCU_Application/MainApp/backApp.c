@@ -88,10 +88,10 @@ void backApp(void){//背景应用
 	if(LD(X_FBD0) || LD(X_FBD1) || LD(R_FIBER_MANUFACT_0) || LD(R_FIBER_MANUFACT_1) ||
 	LD(R_DIODE_TEMP_HIGH_0) || LD(R_DIODE_TEMP_HIGH_1) || LD(R_DRIVE_TEMP_HIGH) || LD(R_ENVI_TEMP_HIGH) ||
 	LD(R_DRIVE_FAULT_0)	|| LD(R_DRIVE_FAULT_1)){
-		SET(R_SAFE_READY);
+		SET(R_SAFE_FAULT);
 	}
 	else{
-		RES(R_SAFE_READY);
+		RES(R_SAFE_FAULT);
 	}
 	/************************************************************************/
 	if(LDP(R_SCHEME_LOAD_REQ)){//载入请求
@@ -106,10 +106,10 @@ void backApp(void){//背景应用
 	if(LD(X_FBD0) || LD(X_FBD1) || LD(R_FIBER_MANUFACT_0) || LD(R_FIBER_MANUFACT_1) ||
 	   LD(R_DIODE_TEMP_HIGH_0) || LD(R_DIODE_TEMP_HIGH_1) || LD(R_DRIVE_FAULT_0) || LD(R_DRIVE_FAULT_1) ||
 	   LD(R_DRIVE_TEMP_HIGH) || LD(R_ENVI_TEMP_HIGH)){
-		SET(R_SAFE_READY);
+		SET(R_SAFE_FAULT);
 	}
 	else{
-		RES(R_SAFE_READY);
+		RES(R_SAFE_FAULT);
 	}
 	//************************************************************************/
 

@@ -6,15 +6,6 @@
 //T3->MODBUS
 //T4->LASER
 //*****************************************************************************/
-//#define STEPNUM_FAULT					-1//故障
-//#define STEPNUM_INIT					0//初始化
-//#define STEPNUM_STANDBY					1//待机
-//#define STEPNUM_INTO_READY				2//进入准备
-//#define STEPNUM_READY					3//准备
-//#define STEPNUM_LASERON					4//激光开始
-
-
-
 bit debugLed0, debugLed1, debugLed2, debugLed3;
 
 void main(void){ 
