@@ -1,29 +1,28 @@
 #include "i2c1.h"
-/*****************************************************************************/
-sbit SDA1 = P3^1;
-sbit SCL1 = P3^2;				
+/*****************************************************************************/			
 /*****************************************************************************/
 void iic1Init(void){
 
 }
-static void setSCL1(uint8_t s){
+static void setSCL1(uint8_t s){//P5_1
 	if(s)
-		SCL1 = 1;
+		P5 |= (1 << 1);
 	else
-		SCL1 = 0;
+		P5 &= ~((uint8_t)(1 << 1));
 }
-static void setSDA1(uint8_t s){
+static void setSDA1(uint8_t s){//P5_2
 	if(s)
-		SDA1 = 1;
+		P5 |= (uint8_t)(1 << 2);
 	else
-		SDA1 = 0;
+		P5 &= ~((uint8_t)(1 << 2));
 }
 static uint8_t getSCL1(void){
-	return SCL1;
+	return (P5 >> 1) & 0x01;
 }
 static uint8_t getSDA1(void){
-	return SDA1; 
+	return (P5 >> 2) & 0x01;
 }
+
 void iic1Start(void){//产生IIC起始信号
 	setSDA1(1);	  	  
 	setSCL1(1);

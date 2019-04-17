@@ -1,7 +1,8 @@
-#ifndef __EPROMSIMULATION_H__
-#define __EPROMSIMULATION_H__
+#ifndef __EPROM_H__
+#define __EPROM_H__
 /*****************************************************************************/
-#include "device.h"
+#include "lib.h"
+#include "sPlcConfig.h"
 /*****************************************************************************/
 void epromInit(void);
 uint8_t epromReadOneByte(uint16_t ReadAddr);

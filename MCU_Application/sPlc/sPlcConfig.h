@@ -8,6 +8,31 @@
 #define CONFIG_UART0_BAUDRATE				115200//串口0 波特率
 #define CONFIG_UART1_BAUDRATE				115200//串口1 波特率
 /*****************************************************************************/
+#define CONFIG_SPLC_USING_I2C0				1//使能I2C0
+#define CONFIG_SPLC_USING_I2C1				1//使能I2C1
+#define CONFIG_SPLC_USING_I2C2				1//使能I2C2
+#define CONFIG_SPLC_USING_I2C3				1//使能I2C3
+/*****************************************************************************/
+#define CONFIG_I2C0_FREQ 					1            
+#define CONFIG_I2C1_FREQ 					1
+#define CONFIG_I2C2_FREQ 					1
+#define CONFIG_I2C3_FREQ 					1
+#define CONFIG_I2C_WAITACT_TIME				250
+/*****************************************************************************/
+#define CONFIG_EPROM_DEBUG					0
+#define CONFIG_EPROM_SIZE 					CONFIG_AT24C08_SIZE
+#define	CONFIG_AT24C02_SIZE 				256
+#define	CONFIG_AT24C04_SIZE  				512
+#define	CONFIG_AT24C08_SIZE 				1024
+#define	CONFIG_AT24C16_SIZE 				2048
+#define	CONFIG_AT24C32_SIZE 				4096
+#define	CONFIG_AT24C64_SIZE					8192
+#define	CONFIG_AT24C128_SIZE 				16384
+#define	CONFIG_AT24C256_SIZE 				32768
+#define CONFIG_EPROM_ADDRESS				0x50
+#define CONFIG_EPROM_FRAM					0//铁电存储体无写入等待
+#define CONFIG_EPROM_PAGEWRITE				0//页写入
+/*****************************************************************************/
 #define CONFIG_SPLC_USING_SPWM				1//使了软件PWM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_FUN_EPID				1//使能SPLC扩展指令
@@ -27,8 +52,8 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_PCA				1//片内计数器阵列
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM				0//EPROM 
-#define CONFIG_SPLC_USING_CLEAR_NVRAM		0//启用清除NVRAM功能
+#define CONFIG_SPLC_USING_EPROM				1//EPROM 
+#define CONFIG_SPLC_USING_CLEAR_NVRAM		1//启用清除NVRAM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_UART0				1//UART 0串口启用
 #if CONFIG_SPLC_USING_UART0 == 1
@@ -99,6 +124,10 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_LASER_TIMER		1
 #define CONFIG_LASER_TIMER_TICK				1000
+/*****************************************************************************/
+//#define CONFIG_SPLC_USING_NFC				1
+//#define RW_SUPPORT	
+//#endif
 /*****************************************************************************/
 //线圈 保持 16*8=256 
 #define MR_START							0

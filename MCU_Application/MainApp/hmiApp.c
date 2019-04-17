@@ -88,8 +88,7 @@ void hmiLoop(void){//HMIÂÖÑµ³ÌÐò
 					SET(SPCOIL_BEEM_ENABLE);//´ò¿ª·äÃùÆ÷		
 					STLAR();
 					NVRAM0[EM_HMI_OPERA_STEP] = WORKSTEP_LASER_EMITING;	
-				}
-					
+				}		
 			}
 			else{
 				NVRAM0[EM_HMI_OPERA_STEP] = WORKSTEP_STANDBY;	

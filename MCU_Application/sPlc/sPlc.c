@@ -176,9 +176,9 @@ static void clearNvram(void){//清除NVRAM数据
 #if CONFIG_SPLC_USING_EPROM == 1
 	for(i = 0; i<= CONFIG_EPROM_SIZE;i ++){
 		epromWriteOneByte(i, 0x0);
-#if CONFIG_SPLC_USING_LED == 1
-		setLedEprom(false);
-#endif
+//#if CONFIG_SPLC_USING_LED == 1
+//		setLedEprom(false);
+//#endif
 	}
 #endif
 	exitSplcIsr();//恢复中断
@@ -312,17 +312,17 @@ void sPlcProcessStart(void){//sPLC轮询起始
 #if CONFIG_SPLC_USING_CLEAR_NVRAM == 1
 	if(NVRAM0[SPREG_CLEAR_NVRAM0] == CONFIG_SPLC_CLEAR_CODE){
 		DISABLE_INTERRUPT;//关闭中断
-#if CONFIG_SPLC_USING_LED == 1	
-		setLedRun(true);//
-		setLedEprom(true);
-#endif
+//#if CONFIG_SPLC_USING_LED == 1	
+//		setLedRun(true);//
+//		setLedEprom(true);
+//#endif
 		if(epromTest()){//EPROM测试成功
-#if CONFIG_SPLC_USING_LED == 1			
-			setLedEprom(false);
-			setLedError(true);
-			delayMs(10);
-			setLedError(false);
-#endif
+//#if CONFIG_SPLC_USING_LED == 1			
+//			setLedEprom(false);
+//			setLedError(true);
+//			delayMs(10);
+//			setLedError(false);
+//#endif
 		}
 		else{//EPROM测试失败
 		}

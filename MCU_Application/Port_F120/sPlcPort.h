@@ -48,6 +48,22 @@
 #if CONFIG_SPLC_USING_LASER_TIMER == 1
 #include "sPlcLaser.h"
 #endif
+#if CONFIG_SPLC_USING_I2C0 == 1
+#include "i2c0.h"
+#if CONFIG_SPLC_USING_EPROM == 1
+#include "eprom.h"
+#endif
+#endif
+#if CONFIG_SPLC_USING_I2C1 == 1
+#include "i2c1.h"
+#endif
+#if CONFIG_SPLC_USING_I2C2 == 1
+#include "i2c2.h"
+#endif
+#if CONFIG_SPLC_USING_I2C3 == 1
+#include "i2c3.h"
+#endif
+
 /*****************************************************************************/
 
 

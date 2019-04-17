@@ -194,7 +194,7 @@
             <UseOnchipRom>1</UseOnchipRom>
             <UseOnchipArithmetic>1</UseOnchipArithmetic>
             <UseMultipleDPTR>0</UseMultipleDPTR>
-            <UseOnchipXram>1</UseOnchipXram>
+            <UseOnchipXram>0</UseOnchipXram>
             <HadIRAM>1</HadIRAM>
             <HadXRAM>1</HadXRAM>
             <HadIROM>1</HadIROM>
@@ -258,7 +258,7 @@
               <Ocr1>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
+                <Size>0x47d0</Size>
               </Ocr1>
               <Ocr2>
                 <Type>0</Type>
@@ -322,9 +322,9 @@
             <InterruptVectorAddress>0</InterruptVectorAddress>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>C8051F120</Define>
+              <Define>C8051F120,RW_SUPPORT</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Lib;..\sPlc;..\Port_F120;.\UsbHost;.\SimEprom;.\OnChipFlash;..\MainApp</IncludePath>
+              <IncludePath>..\Lib;..\Driver;..\NfcLibrary;..\NfcLibrary\inc;..\NfcLibrary\NdefLibrary\inc;..\NfcLibrary\NxpNci\inc;..\sPlc;..\Port_F120;.\UsbHost;.\SimEprom;.\OnChipFlash;..\MainApp</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -390,6 +390,36 @@
               <FileName>crc16.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Lib\crc16.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>Drive</GroupName>
+          <Files>
+            <File>
+              <FileName>i2c0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\i2c0.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\i2c1.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\i2c2.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c3.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\i2c3.c</FilePath>
+            </File>
+            <File>
+              <FileName>eprom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\eprom.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -545,6 +575,56 @@
               <FileName>flash.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\SimEprom\flash.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>NfcLib</GroupName>
+          <Files>
+            <File>
+              <FileName>P2P_NDEF.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\NfcLibrary\NdefLibrary\src\P2P_NDEF.c</FilePath>
+            </File>
+            <File>
+              <FileName>RW_NDEF.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\NfcLibrary\NdefLibrary\src\RW_NDEF.c</FilePath>
+            </File>
+            <File>
+              <FileName>RW_NDEF_T1T.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\NfcLibrary\NdefLibrary\src\RW_NDEF_T1T.c</FilePath>
+            </File>
+            <File>
+              <FileName>RW_NDEF_T2T.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\NfcLibrary\NdefLibrary\src\RW_NDEF_T2T.c</FilePath>
+            </File>
+            <File>
+              <FileName>RW_NDEF_T3T.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\NfcLibrary\NdefLibrary\src\RW_NDEF_T3T.c</FilePath>
+            </File>
+            <File>
+              <FileName>RW_NDEF_T4T.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\NfcLibrary\NdefLibrary\src\RW_NDEF_T4T.c</FilePath>
+            </File>
+            <File>
+              <FileName>T4T_NDEF_emu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\NfcLibrary\NdefLibrary\src\T4T_NDEF_emu.c</FilePath>
+            </File>
+            <File>
+              <FileName>tml.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\NfcLibrary\tml.c</FilePath>
+            </File>
+            <File>
+              <FileName>NxpNci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\NfcLibrary\NxpNci\src\NxpNci.c</FilePath>
             </File>
           </Files>
         </Group>
