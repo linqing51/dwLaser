@@ -38,9 +38,6 @@ void outputInit(void){//IO输出初始化
 	P6 &= ~(1 << 4);//Y9
 	P6 &= ~(1 << 2);//Y10
 	P6 &= ~(1 << 1);//Y11
-	P6 &= ~(1 << 0);//Y12
-	P5 &= ~(1 << 7);//Y13
-	P5 &= ~(1 << 6);//Y14
 	SFRPAGE = SFRPAGE_SAVE;
 }
 void inputRefresh(void){//获取输入IO
@@ -293,27 +290,6 @@ void outputRefresh(void){//设置输出IO
 	}
 	else{
 		P6 &= ~(uint8_t)(1 << 1);
-	}
-	//YOUT12
-	if((NVRAM0[Y_START] >> 12) & 0x01){//P6_0
-		P6 |= (uint8_t)(1 << 0);
-	}
-	else{
-		P6 &= ~(uint8_t)(1 << 0);
-	}
-	//YOUT13
-	if((NVRAM0[Y_START] >> 13) & 0x01){//P5_7
-		P5 |= (uint8_t)(1 << 7);
-	}
-	else{
-		P5 &= ~(uint8_t)(1 << 7);
-	}
-	//YOUT14
-	if((NVRAM0[Y_START] >> 13) & 0x01){//P5_6
-		P5 |= (uint8_t)(1 << 6);
-	}
-	else{
-		P5 &= ~(uint8_t)(1 << 6);
 	}
 	SFRPAGE = SFRPAGE_SAVE;
 }

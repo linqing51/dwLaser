@@ -100,20 +100,20 @@ void epromWritePage(uint16_t data pageAddr, uint8_t *pBuffer,uint8_t data NumToW
 }
 #endif
 uint8_t epromTest(void){//EPROM ¶ÁĞ´×Ô²âÊÔ
-	idata uint32_t i;	
-	idata uint8_t result;
+	xdata uint32_t i;	
+	xdata uint8_t result;
 	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
-		//SET_LED_EPROM(DEBUG_LED_ON);
+		//setLedEprom(true);
 		epromWriteOneByte(i, (i & 0xFF));
-		//SET_LED_EPROM(DEBUG_LED_OFF);
+		//setLedEprom(false);
 	}
 	result = 0;
 	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
-		//SET_LED_EPROM(DEBUG_LED_ON);
+		//setLedEprom(true);
 		if(epromReadOneByte(i) != (i & 0xFF)){
 			return false;
 		}
-		//SET_LED_EPROM(DEBUG_LED_OFF);
+		//setLedEprom(false);
 	}
 	return true;
 }

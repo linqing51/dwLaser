@@ -102,7 +102,7 @@
 #endif
 /*****************************************************************************/
 #define CONFIG_USING_SIMEPROM				1
-#define CONFIG_USING_USB					1
+#define CONFIG_USING_USB					0
 #define CONFIG_USING_ONCHIPFLASH			1
 /*****************************************************************************/
 #define CONFIG_FIRMWARE_UPDATE_PAGE_SIZE	128//FLASHµ¥´Î¶ÁÐ´ÈÝÁ¿
@@ -125,7 +125,7 @@
 #define CONFIG_SPLC_USING_LASER_TIMER		1
 #define CONFIG_LASER_TIMER_TICK				1000
 /*****************************************************************************/
-//#define CONFIG_SPLC_USING_NFC				1
+//#define CONFIG_SPLC_USING_NFC				0
 //#define RW_SUPPORT	
 //#endif
 /*****************************************************************************/

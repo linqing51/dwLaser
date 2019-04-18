@@ -5,6 +5,7 @@
 #include "sPlcFun.h"
 #include "sPlcPort.h"
 #include "lib.h"
+#include "debugLed.h"
 #if CONFIG_SPLC_FUN_EPID == 1
 #include "splcFunEPID.h"
 #endif
@@ -37,17 +38,6 @@ extern void enableWatchDog(void);//使能看门狗
 extern void disableWatchDog(void);//关闭看门狗(未锁定)
 extern void checkWatchDog(void);//检查看门狗状态
 extern void mucReboot(void) reentrant;//软件复位
-//extern uint8_t getGlobalInterrupt(void);
-extern void setLedRun(uint8_t st);
-extern uint8_t getLedRun(void);
-extern void setLedEprom(uint8_t st);
-extern uint8_t getLedEprom(void);
-extern void setLedDac(uint8_t st);
-extern uint8_t getLedDac(void);
-extern void setLedError(uint8_t st);
-extern uint8_t getLedError(void);
-extern void setLedAdc(uint8_t st);
-extern uint8_t getLedAdc(void);
 /*****************************************************************************/
 void assertCoilAddress(uint16_t adr) reentrant;
 void assertRegisterAddress(uint16_t adr) reentrant;

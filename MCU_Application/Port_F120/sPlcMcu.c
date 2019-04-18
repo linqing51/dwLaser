@@ -1,6 +1,7 @@
 #include "sPlcMcu.h"
 /*****************************************************************************/
 static uint8_t sPlcInterrupt;
+
 void initWatchDog(void){//看门狗初始化
 	WDTCN = 0x07;//47mS
 }

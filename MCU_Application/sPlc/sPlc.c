@@ -14,6 +14,9 @@ idata volatile uint8_t TimerCounter_1mS = 0;
 idata volatile uint8_t TimerCounter_10mS = 0;
 idata volatile uint8_t TimerCounter_100mS = 0;
 /******************************************************************************/
+void testled(void)
+{
+}
 void assertCoilAddress(uint16_t adr) reentrant{//检查线圈地址
 #if CONFIG_SPLC_ASSERT == 1
 	uint16_t maxCoilAdr = SPCOIL_END * 16;
@@ -170,15 +173,13 @@ static void updataNvram(void){//更新NVRAM->EPROM
 	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
 static void clearNvram(void){//清除NVRAM数据	
-	idata uint16_t i = 0;
+	xdata uint16_t i = 0;
 	enterSplcIsr();
 	disableWatchDog();
 #if CONFIG_SPLC_USING_EPROM == 1
 	for(i = 0; i<= CONFIG_EPROM_SIZE;i ++){
 		epromWriteOneByte(i, 0x0);
-//#if CONFIG_SPLC_USING_LED == 1
-//		setLedEprom(false);
-//#endif
+		//setLedEprom(false);
 	}
 #endif
 	exitSplcIsr();//恢复中断
@@ -191,7 +192,7 @@ void sPlcSpwmLoop(void){//SPWM轮询
 			RES(SPCOIL_SPWM_RESET_0);
 		}
 		if(NVRAM0[SPREG_SPWM_COUNTER_0] == NVRAM0[SPREG_SPWM_POS_SHADOW_0]){//发生匹配翻转输出
-			NVRAM0[SPREG_SPWM_COUNTER_0] ++;
+			NVRAM0[SPREG_SPWM_COUNTER_0] = NVRAM0[SPREG_SPWM_COUNTER_0] + 1;
 			RES(SPCOIL_SPWM_OUT_0);
 		}
 		else if(NVRAM0[SPREG_SPWM_COUNTER_0] >= NVRAM0[SPREG_SPWM_CYCLE_SHADOW_0]){//发生溢出
@@ -201,7 +202,7 @@ void sPlcSpwmLoop(void){//SPWM轮询
 			SET(SPCOIL_SPWM_OUT_0);
 		}
 		else{
-			NVRAM0[SPREG_SPWM_COUNTER_0]++;
+			NVRAM0[SPREG_SPWM_COUNTER_0] = NVRAM0[SPREG_SPWM_COUNTER_0] + 1;
 		}
 		//SPWM1
 		if(LD(SPCOIL_SPWM_RESET_1)){//复位
@@ -209,7 +210,7 @@ void sPlcSpwmLoop(void){//SPWM轮询
 			RES(SPCOIL_SPWM_RESET_1);
 		}
 		if(NVRAM0[SPREG_SPWM_COUNTER_1] == NVRAM0[SPREG_SPWM_POS_SHADOW_1]){//发生匹配翻转输出
-			NVRAM0[SPREG_SPWM_COUNTER_1] ++;
+			NVRAM0[SPREG_SPWM_COUNTER_1] = NVRAM0[SPREG_SPWM_COUNTER_1] + 1;
 			RES(SPCOIL_SPWM_OUT_1);
 		}
 		else if(NVRAM0[SPREG_SPWM_COUNTER_1] >= NVRAM0[SPREG_SPWM_CYCLE_SHADOW_1]){//发生溢出
@@ -219,7 +220,7 @@ void sPlcSpwmLoop(void){//SPWM轮询
 			SET(SPCOIL_SPWM_OUT_1);
 		}
 		else{
-			NVRAM0[SPREG_SPWM_COUNTER_1]++;
+			NVRAM0[SPREG_SPWM_COUNTER_1] = NVRAM0[SPREG_SPWM_COUNTER_1] + 1;
 		}
 		//SPWM2
 		if(LD(SPCOIL_SPWM_RESET_2)){//复位
@@ -227,7 +228,7 @@ void sPlcSpwmLoop(void){//SPWM轮询
 			RES(SPCOIL_SPWM_RESET_2);
 		}
 		if(NVRAM0[SPREG_SPWM_COUNTER_2] == NVRAM0[SPREG_SPWM_POS_SHADOW_2]){//发生匹配翻转输出
-			NVRAM0[SPREG_SPWM_COUNTER_2] ++;
+			NVRAM0[SPREG_SPWM_COUNTER_2] = NVRAM0[SPREG_SPWM_COUNTER_2] + 1;
 			RES(SPCOIL_SPWM_OUT_2);
 		}
 		else if(NVRAM0[SPREG_SPWM_COUNTER_2] >= NVRAM0[SPREG_SPWM_CYCLE_SHADOW_2]){//发生溢出
@@ -237,7 +238,7 @@ void sPlcSpwmLoop(void){//SPWM轮询
 			SET(SPCOIL_SPWM_OUT_2);
 		}
 		else{
-			NVRAM0[SPREG_SPWM_COUNTER_2]++;
+			NVRAM0[SPREG_SPWM_COUNTER_2] = NVRAM0[SPREG_SPWM_COUNTER_2] + 1;
 		}
 		//SPWM3
 		if(LD(SPCOIL_SPWM_RESET_3)){//复位
@@ -245,7 +246,7 @@ void sPlcSpwmLoop(void){//SPWM轮询
 			RES(SPCOIL_SPWM_RESET_3);
 		}
 		if(NVRAM0[SPREG_SPWM_COUNTER_3] == NVRAM0[SPREG_SPWM_POS_SHADOW_3]){//发生匹配翻转输出
-			NVRAM0[SPREG_SPWM_COUNTER_3] ++;
+			NVRAM0[SPREG_SPWM_COUNTER_3] = NVRAM0[SPREG_SPWM_COUNTER_3] + 1;
 			RES(SPCOIL_SPWM_OUT_3);
 		}
 		else if(NVRAM0[SPREG_SPWM_COUNTER_3] >= NVRAM0[SPREG_SPWM_CYCLE_SHADOW_3]){//发生溢出
@@ -255,12 +256,27 @@ void sPlcSpwmLoop(void){//SPWM轮询
 			SET(SPCOIL_SPWM_OUT_3);
 		}
 		else{
-			NVRAM0[SPREG_SPWM_COUNTER_3]++;
+			NVRAM0[SPREG_SPWM_COUNTER_3] = NVRAM0[SPREG_SPWM_COUNTER_3] + 1;
 		}
 	}
 }
 /*****************************************************************************/
 void sPlcInit(void){//软逻辑初始化
+	setLedRun(false);
+	setLedError(false);
+	setLedEprom(false);
+	
+	setLedRun(true);
+	setLedError(true);
+	setLedEprom(true);
+	delayMs(50);
+	setLedRun(false);
+	setLedError(false);
+	setLedRun(false);
+	delayMs(50);
+	setLedRun(true);
+	
+	
 #if CONFIG_SPLC_USING_IO_INPUT == 1
 	inputInit();
 #endif
@@ -307,22 +323,19 @@ void sPlcInit(void){//软逻辑初始化
 	mStopIfError(usbHostInit());//默认初始化为HOST
 #endif
 	ENABLE_INTERRUPT;
+
 }
 void sPlcProcessStart(void){//sPLC轮询起始
 #if CONFIG_SPLC_USING_CLEAR_NVRAM == 1
 	if(NVRAM0[SPREG_CLEAR_NVRAM0] == CONFIG_SPLC_CLEAR_CODE){
-		DISABLE_INTERRUPT;//关闭中断
-//#if CONFIG_SPLC_USING_LED == 1	
-//		setLedRun(true);//
-//		setLedEprom(true);
-//#endif
+		DISABLE_INTERRUPT;//关闭中断	
+		//setLedRun(true);//
+		//setLedEprom(true);
 		if(epromTest()){//EPROM测试成功
-//#if CONFIG_SPLC_USING_LED == 1			
-//			setLedEprom(false);
-//			setLedError(true);
-//			delayMs(10);
-//			setLedError(false);
-//#endif
+			//setLedEprom(false);
+			//setLedError(true);
+			delayMs(10);
+			//setLedError(false);
 		}
 		else{//EPROM测试失败
 		}

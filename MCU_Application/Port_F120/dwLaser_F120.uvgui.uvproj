@@ -49,7 +49,7 @@
           <OutputName>dwLaser.uvgui</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>1</CreateHexFile>
+          <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>..\Listings\</ListingPath>
@@ -125,7 +125,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>1</UseSimulator>
+            <UseSimulator>0</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -137,9 +137,9 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
-            <UseTarget>0</UseTarget>
+            <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>0</RunToMain>
+            <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -149,7 +149,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>-1</TargetSelection>
+          <TargetSelection>10</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -163,7 +163,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver></Driver>
+            <Driver>BIN\SiC8051F.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -172,7 +172,7 @@
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
-            <Capability>0</Capability>
+            <Capability>1</Capability>
             <DriverSelection>-1</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
@@ -194,7 +194,7 @@
             <UseOnchipRom>1</UseOnchipRom>
             <UseOnchipArithmetic>1</UseOnchipArithmetic>
             <UseMultipleDPTR>0</UseMultipleDPTR>
-            <UseOnchipXram>0</UseOnchipXram>
+            <UseOnchipXram>1</UseOnchipXram>
             <HadIRAM>1</HadIRAM>
             <HadXRAM>1</HadXRAM>
             <HadIROM>1</HadIROM>
@@ -206,8 +206,8 @@
             <Mode2>0</Mode2>
             <useCB>0</useCB>
             <useXB>0</useXB>
-            <useL251>1</useL251>
-            <useA251>1</useA251>
+            <useL251>0</useL251>
+            <useA251>0</useA251>
             <Mx51>0</Mx51>
             <ModC812>0</ModC812>
             <ModCont>0</ModCont>
@@ -258,7 +258,7 @@
               <Ocr1>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x47d0</Size>
+                <Size>0x0</Size>
               </Ocr1>
               <Ocr2>
                 <Type>0</Type>
@@ -308,7 +308,7 @@
             </OnChipMemories>
           </Target51Misc>
           <C51>
-            <RegisterColoring>0</RegisterColoring>
+            <RegisterColoring>1</RegisterColoring>
             <VariablesInOrder>0</VariablesInOrder>
             <IntegerPromotion>0</IntegerPromotion>
             <uAregs>0</uAregs>
@@ -322,13 +322,13 @@
             <InterruptVectorAddress>0</InterruptVectorAddress>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>C8051F120,RW_SUPPORT</Define>
+              <Define>C8051F120</Define>
               <Undefine></Undefine>
               <IncludePath>..\Lib;..\Driver;..\NfcLibrary;..\NfcLibrary\inc;..\NfcLibrary\NdefLibrary\inc;..\NfcLibrary\NxpNci\inc;..\sPlc;..\Port_F120;.\UsbHost;.\SimEprom;.\OnChipFlash;..\MainApp</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
-            <UseMpl>0</UseMpl>
+            <UseMpl>1</UseMpl>
             <UseStandard>1</UseStandard>
             <UseCase>0</UseCase>
             <UseMod51>0</UseMod51>
@@ -421,6 +421,11 @@
               <FileType>1</FileType>
               <FilePath>..\Driver\eprom.c</FilePath>
             </File>
+            <File>
+              <FileName>debugLed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\debugLed.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -506,11 +511,6 @@
               <FileType>1</FileType>
               <FilePath>.\sPlcSimEprom.c</FilePath>
             </File>
-            <File>
-              <FileName>sPlcUsb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcUsb.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -550,18 +550,6 @@
         </Group>
         <Group>
           <GroupName>sPlc_F120_USBHost</GroupName>
-          <Files>
-            <File>
-              <FileName>FILE_SYS.C</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\UsbHost\FILE_SYS.C</FilePath>
-            </File>
-            <File>
-              <FileName>usbSpi.C</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\UsbHost\usbSpi.C</FilePath>
-            </File>
-          </Files>
         </Group>
         <Group>
           <GroupName>sPlc_F120_SimEprom</GroupName>
@@ -580,53 +568,6 @@
         </Group>
         <Group>
           <GroupName>NfcLib</GroupName>
-          <Files>
-            <File>
-              <FileName>P2P_NDEF.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\NfcLibrary\NdefLibrary\src\P2P_NDEF.c</FilePath>
-            </File>
-            <File>
-              <FileName>RW_NDEF.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\NfcLibrary\NdefLibrary\src\RW_NDEF.c</FilePath>
-            </File>
-            <File>
-              <FileName>RW_NDEF_T1T.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\NfcLibrary\NdefLibrary\src\RW_NDEF_T1T.c</FilePath>
-            </File>
-            <File>
-              <FileName>RW_NDEF_T2T.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\NfcLibrary\NdefLibrary\src\RW_NDEF_T2T.c</FilePath>
-            </File>
-            <File>
-              <FileName>RW_NDEF_T3T.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\NfcLibrary\NdefLibrary\src\RW_NDEF_T3T.c</FilePath>
-            </File>
-            <File>
-              <FileName>RW_NDEF_T4T.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\NfcLibrary\NdefLibrary\src\RW_NDEF_T4T.c</FilePath>
-            </File>
-            <File>
-              <FileName>T4T_NDEF_emu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\NfcLibrary\NdefLibrary\src\T4T_NDEF_emu.c</FilePath>
-            </File>
-            <File>
-              <FileName>tml.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\NfcLibrary\tml.c</FilePath>
-            </File>
-            <File>
-              <FileName>NxpNci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\NfcLibrary\NxpNci\src\NxpNci.c</FilePath>
-            </File>
-          </Files>
         </Group>
       </Groups>
     </Target>

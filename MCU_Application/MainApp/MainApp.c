@@ -12,13 +12,6 @@ void main(void){
 	initDevice();
 	sPlcInit();//初始化软逻辑
 	//指示灯全亮
-	SET(Y_LED_POWERON);SET(Y_LED_EMIT);SET(Y_LED_ALARM);
-	delayMs(20);
-	RES(Y_LED_POWERON);RES(Y_LED_EMIT);RES(Y_LED_ALARM);
-	delayMs(20);
-	SET(Y_LED_POWERON);SET(Y_LED_EMIT);SET(Y_LED_ALARM);
-	delayMs(20);
-	SET(Y_LED_POWERON);RES(Y_LED_EMIT);RES(Y_LED_ALARM);
 	//Cache_ISR_Entry( (unsigned int) Timer0_ISR, Timer0_ISR_NUM);
 	while(1){
 		debugLed0 = ~debugLed0;

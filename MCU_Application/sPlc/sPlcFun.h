@@ -52,5 +52,7 @@ void IMDIO(void) reentrant;//立即更新IO点状态含输入输出
 void TPCTL(int16_t *ref, int16_t *fb, int16_t buf) reentrant;//温控PID指令
 void HSPWM(int16_t *pos, int16_t *neg, int16_t pot) reentrant;//硬件PWM输出
 /*****************************************************************************/
-//void RAMP()reentrant;
+
 #endif
+
+
