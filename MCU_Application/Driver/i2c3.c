@@ -42,7 +42,7 @@ uint8_t iic3WaitAck(void){
 //发送数据后，等待应答信号到来
 //返回值：1，接收应答失败，IIC直接退出
 //        0，接收应答成功，什么都不做
-	uint8_t ucErrTime=0;  
+	xdata uint8_t ucErrTime=0;  
 	setSDA3(1);
 	delayUs(1);	   
 	setSCL3(1);
@@ -78,7 +78,7 @@ void iic3SendByte(uint8_t txd){//IIC发送一个字节
 //返回从机有无应答
 //1，有应答
 //0，无应答                        
-    uint8_t t;    	    
+	xdata  uint8_t t;    	    
     setSCL3(0);//拉低时钟开始数据传输
     for(t = 0;t < 8;t ++)
     {              
@@ -97,7 +97,7 @@ void iic3SendByte(uint8_t txd){//IIC发送一个字节
 } 	    
   
 uint8_t iic3ReadByte(uint8_t ack){//读1个字节，ack=1时，发送ACK，ack=0，发送nACK 
-	uint8_t i, receive=0;
+	xdata uint8_t i, receive=0;
     for(i=0;i<8;i++ ){
         setSCL3(0); 
         delayUs(CONFIG_I2C3_FREQ);

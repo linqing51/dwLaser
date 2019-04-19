@@ -1,13 +1,11 @@
-#ifndef __BACKAPP_H__
-#define __BACKAPP_H__
+#ifndef __BACKGROUNDAPP_H__
+#define __BACKGROUNDAPP_H__
 /*****************************************************************************/
 #include "sPlc.h"
 #include "appSplcAdr.h"
 /*****************************************************************************/
-void backApp(void);
-void bcakAppInit(void);
-void loadScheme(void);
-void saveScheme(void);
+void loadScheme(void);//DM->EM
+void saveScheme(void);//EM->DM
+void backgroundAppInit(void);
+void backgroundApp(void);
 #endif
-
-

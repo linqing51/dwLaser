@@ -8,7 +8,7 @@ void epromInit(void){//³õÊ¼»¯IIC½Ó¿Ú
 uint8_t epromReadOneByte(uint16_t ReadAddr){//ÔÚAT24CXXÖ¸¶¨µØÖ·¶Á³öÒ»¸öÊı¾İ
 //ReadAddr:¿ªÊ¼¶ÁÊıµÄµØÖ·  
 //·µ»ØÖµ  :¶Áµ½µÄÊı¾İ				  
-	data uint8_t temp=0;		  	    																 
+	xdata uint8_t temp=0;		  	    																 
 	iic0Start();  
 #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
 //¼æÈİ24CxxÖĞÆäËûµÄ°æ±¾
@@ -56,7 +56,7 @@ void epromWriteLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len){//
 //WriteAddr  :¿ªÊ¼Ğ´ÈëµÄµØÖ·  
 //DataToWrite:Êı¾İÊı×éÊ×µØÖ·
 //Len        :ÒªĞ´ÈëÊı¾İµÄ³¤¶È2,4  	
-	data uint8_t t;
+	xdata uint8_t t;
 	for(t = 0;t < Len;t ++){
 		epromWriteOneByte(WriteAddr + t, (DataToWrite >> (8 * t)) & 0xff);
 	}												    
@@ -66,7 +66,7 @@ uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µ
 //ReadAddr   :¿ªÊ¼¶Á³öµÄµØÖ· 
 //·µ»ØÖµ     :Êı¾İ
 //Len        :Òª¶Á³öÊı¾İµÄ³¤¶È2,4  	
-	data uint8_t t;
+	xdata uint8_t t;
 	uint32_t temp=0;
 	for(t = 0;t < Len;t ++){
 		temp <<= 8;

@@ -66,9 +66,9 @@ void FLASH_PageErase (FLADDR addr, bit SFLE);
 //
 void FLASH_ByteWrite (FLADDR addr, char byte, bit SFLE)
 {
-   char SFRPAGE_SAVE = SFRPAGE;        // preserve SFRPAGE
+   xdata char SFRPAGE_SAVE = SFRPAGE;        // preserve SFRPAGE
    bit EA_SAVE = EA;                   // preserve EA
-   char PSBANK_SAVE = PSBANK;          // preserve PSBANK
+   xdata char PSBANK_SAVE = PSBANK;          // preserve PSBANK
    char xdata * data pwrite;           // FLASH write pointer
 
    EA = 0;                             // disable interrupts
@@ -117,11 +117,11 @@ void FLASH_ByteWrite (FLADDR addr, char byte, bit SFLE)
 //
 unsigned char FLASH_ByteRead (FLADDR addr, bit SFLE)
 {
-   char SFRPAGE_SAVE = SFRPAGE;        // preserve SFRPAGE
+   xdata char SFRPAGE_SAVE = SFRPAGE;        // preserve SFRPAGE
    bit EA_SAVE = EA;                   // preserve EA
-   char PSBANK_SAVE = PSBANK;          // preserve PSBANK
+   xdata char PSBANK_SAVE = PSBANK;          // preserve PSBANK
    char code * data pread;             // FLASH read pointer
-   unsigned char byte;
+   xdata unsigned char byte;
 
    EA = 0;                             // disable interrupts
 
@@ -166,9 +166,9 @@ unsigned char FLASH_ByteRead (FLADDR addr, bit SFLE)
 //
 void FLASH_PageErase (FLADDR addr, bit SFLE)
 {
-   char SFRPAGE_SAVE = SFRPAGE;        // preserve SFRPAGE
+   xdata char SFRPAGE_SAVE = SFRPAGE;        // preserve SFRPAGE
    bit EA_SAVE = EA;                   // preserve EA
-   char PSBANK_SAVE = PSBANK;          // preserve PSBANK
+   xdata char PSBANK_SAVE = PSBANK;          // preserve PSBANK
    char xdata * data pwrite;           // FLASH write pointer
 
    EA = 0;                             // disable interrupts

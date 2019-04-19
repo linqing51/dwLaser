@@ -1,10 +1,10 @@
 #ifndef __SPLC_H__
 #define __SPLC_H__
 /*****************************************************************************/
+#include "lib.h"
 #include "sPlcConfig.h"
 #include "sPlcFun.h"
 #include "sPlcPort.h"
-#include "lib.h"
 #include "debugLed.h"
 #if CONFIG_SPLC_FUN_EPID == 1
 #include "splcFunEPID.h"
@@ -24,9 +24,9 @@ extern xdata uint8_t volatile UART0_RXBUF[CONFIG_UART0_TBUF_SIZE];//UART0Ω” ’ª∫≥
 extern xdata uint8_t volatile UART1_TXBUF[CONFIG_UART1_RBUF_SIZE];//UART1∑¢ÀÕª∫≥Â
 extern xdata uint8_t volatile UART1_RXBUF[CONFIG_UART1_TBUF_SIZE];//UART1Ω” ’ª∫≥Â
 #endif
-extern idata volatile uint8_t TimerCounter_1mS;
-extern idata volatile uint8_t TimerCounter_10mS;
-extern idata volatile uint8_t TimerCounter_100mS;
+extern xdata volatile uint8_t TimerCounter_1mS;
+extern xdata volatile uint8_t TimerCounter_10mS;
+extern xdata volatile uint8_t TimerCounter_100mS;
 /*****************************************************************************/
 void sPlcInit(void);//»Ì¬ﬂº≠≥ı ºªØ
 void sPlcProcessStart(void);//sPLC¬÷—Ø∆ º

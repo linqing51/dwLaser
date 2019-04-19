@@ -3,8 +3,8 @@
 /*****************************************************************************/
 #include "sPlc.h"
 #include "appSplcAdr.h"
-#include "backApp.h"
+#include "backgroundApp.h"
 /*****************************************************************************/
-void hmiLoop(void);//HMIÂÖÑµ³ÌÐò
-void hmiLoopInit(void);
+void dcHmiLoop(void);//HMIÂÖÑµ³ÌÐò
+void dcHmiLoopInit(void);
 #endif

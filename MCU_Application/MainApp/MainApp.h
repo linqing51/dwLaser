@@ -3,9 +3,11 @@
 /*****************************************************************************/
 #include "sPlc.h"
 #include "appSplcAdr.h"
-#include "backApp.h"
-#if CONFIG_USING_HMI == 1
-#include "hmiApp.h"
+#if CONFIG_USING_BACKGROUND_APP == 1
+#include "backgroundApp.h"
+#endif
+#if CONFIG_USING_DCHMI_APP == 1
+#include "dcHmiApp.h"
 #endif
 /*****************************************************************************/
 

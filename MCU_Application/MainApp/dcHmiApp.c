@@ -1,4 +1,4 @@
-#include "hmiApp.h"
+#include "dcHmiApp.h"
 /*****************************************************************************/
 #define WORKSTEP_IDLE								0//初始状态
 #define WORKSTEP_STANDBY							1//等待状态	
@@ -8,9 +8,8 @@
 #define WORKSTEP_LASER_EMITING						5//激光发射中
 #define WORKSTEP_LASER_STOP							6//激光发射结束
 #define WORKSTEP_FAULT								255//故障状态
-
 /*****************************************************************************/
-void hmiLoopInit(void){//初始化模块
+void dcHmiLoopInit(void){//初始化模块
 	NVRAM0[EM_HMI_OPERA_STEP] = 0;
 	NVRAM0[EM_HMI_PAGE] = 0x0;//HMI页面
 	NVRAM0[EM_START_PROGRESS_BAR] = 0x0;//开机进度条
@@ -21,7 +20,7 @@ void hmiLoopInit(void){//初始化模块
 	NVRAM0[EM_DEFAULT_PASSWORD3] = 0x0; 
 	loadScheme();//从掉电存储寄存器中恢复方案参数
 }
-void hmiLoop(void){//HMI轮训程序
+void dcHmiLoop(void){//HMI轮训程序
 	if(NVRAM0[EM_HMI_OPERA_STEP] == WORKSTEP_FAULT){//故障步骤
 		if(LD(R_SAFE_FAULT)){
 			NVRAM0[EM_HMI_OPERA_STEP] = WORKSTEP_FAULT;

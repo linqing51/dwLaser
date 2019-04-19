@@ -1,10 +1,11 @@
 #include "sPlcPca.h"
 /*****************************************************************************/
+#if CONFIG_SPLC_USING_PCA == 1
 #if CONFIG_DEBUG_PCA == 1
 bit debugAim0, debugAim1, debugBeem;
 #endif
 void sPlcPcaInit(void){//º∆ ±∆˜’Û¡–≥ı ºªØ
-	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
+	xdata uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
 	SFRPAGE = PCA0_PAGE;
 	PCA0CN = 0;
 	PCA0MD = 0;
@@ -134,7 +135,7 @@ void sPlcBeemLoop(void){//∑‰√˘∆˜¬÷—Ø
 	}
 }
 void testBenchBeem(uint8_t volume, uint8_t mode){//∑‰√˘∆˜≤‚ ‘
-	uint16_t dc;
+	xdata uint16_t dc;
 	if(volume > 100)
 		volume = 100;
 	dc = volume * 65534 / 100;
@@ -143,7 +144,7 @@ void testBenchBeem(uint8_t volume, uint8_t mode){//∑‰√˘∆˜≤‚ ‘
 	SET(SPCOIL_BEEM_ENABLE);
 }
 void testBenchAim(uint8_t port, uint8_t brightness){//÷∏ æπ‚≤‚ ‘
-	uint16_t dc;
+	xdata uint16_t dc;
 	if(brightness > 100)
 		brightness = 100;
 	dc = brightness * 65535 / 100;
@@ -155,7 +156,7 @@ void testBenchAim(uint8_t port, uint8_t brightness){//÷∏ æπ‚≤‚ ‘
 	}
 }
 
-
+#endif
 
 
 

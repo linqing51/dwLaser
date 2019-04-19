@@ -10,9 +10,9 @@ xdata uint8_t volatile UART0_RXBUF[CONFIG_UART0_TBUF_SIZE];//UART0接收缓冲
 xdata uint8_t volatile UART1_TXBUF[CONFIG_UART1_RBUF_SIZE];//UART1发送缓冲
 xdata uint8_t volatile UART1_RXBUF[CONFIG_UART1_TBUF_SIZE];//UART1接收缓冲
 #endif
-idata volatile uint8_t TimerCounter_1mS = 0;
-idata volatile uint8_t TimerCounter_10mS = 0;
-idata volatile uint8_t TimerCounter_100mS = 0;
+xdata volatile uint8_t TimerCounter_1mS = 0;
+xdata volatile uint8_t TimerCounter_10mS = 0;
+xdata volatile uint8_t TimerCounter_100mS = 0;
 /******************************************************************************/
 void testled(void)
 {
@@ -265,18 +265,20 @@ void sPlcInit(void){//软逻辑初始化
 	setLedRun(false);
 	setLedError(false);
 	setLedEprom(false);
-	
 	setLedRun(true);
 	setLedError(true);
 	setLedEprom(true);
-	delayMs(50);
+	delayMs(100);
 	setLedRun(false);
 	setLedError(false);
 	setLedRun(false);
-	delayMs(50);
+	delayMs(100);
 	setLedRun(true);
-	
-	
+	setLedError(true);
+	setLedEprom(true);
+	delayMs(100);
+	setLedError(false);
+	setLedEprom(false);
 #if CONFIG_SPLC_USING_IO_INPUT == 1
 	inputInit();
 #endif

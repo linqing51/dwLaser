@@ -1,4 +1,5 @@
 #include "sPlcSimEprom.h"
+#if CONFIG_USING_SIMEPROM == 1
 /*****************************************************************************/
 void sPlcSimEpromInit(void){
 	SFRPAGE_SWITCH()
@@ -7,3 +8,4 @@ void sPlcSimEpromInit(void){
     SFRPAGE_RESTORE()
     eeprom_init();
 }
+#endif

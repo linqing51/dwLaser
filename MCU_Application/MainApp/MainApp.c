@@ -17,14 +17,20 @@ void main(void){
 		debugLed0 = ~debugLed0;
 		sPlcProcessStart();
 		if(LD(SPCOIL_START_UP)){//执行一次的代码
-			bcakAppInit();
-			hmiLoopInit();
+#if CONFIG_USING_BACKGROUND_APP == 1 
+			backgroundAppInit();
+#endif
+#if CONFIG_USING_DCHMI_APP == 1			
+			dcHmiLoopInit();
+#endif			
 			//testBenchBeem(50, 1);
 			
 		}
-		backApp();
-#if CONFIG_USING_HMI == 1
-		hmiLoop();
+#if CONFIG_USING_BACKGROUND_APP == 1 
+		backgroundApp();
+#endif		
+#if CONFIG_USING_DCHMI_APP == 1
+		dcHmiLoop();
 #endif
 #if CONFIG_SPLC_FUNTEST == 1
 #endif

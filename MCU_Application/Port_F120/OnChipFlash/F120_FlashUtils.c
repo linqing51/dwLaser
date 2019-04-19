@@ -70,22 +70,22 @@ void FLASH_Fill (FLADDR addr, ULONG length, UCHAR fill, bit SFLE);
 //
 void FLASH_Clear (FLADDR dest, unsigned numbytes, bit SFLE)
 {
-   FLADDR dest_1_page_start;           // first address in 1st page
+   xdata FLADDR dest_1_page_start;           // first address in 1st page
                                        // containing <dest>
-   FLADDR dest_1_page_end;             // last address in 1st page
+   xdata FLADDR dest_1_page_end;             // last address in 1st page
                                        // containing <dest>
-   FLADDR dest_2_page_start;           // first address in 2nd page
+   xdata FLADDR dest_2_page_start;           // first address in 2nd page
                                        // containing <dest>
-   FLADDR dest_2_page_end;             // last address in 2nd page
+   xdata FLADDR dest_2_page_end;             // last address in 2nd page
                                        // containing <dest>
-   unsigned numbytes_remainder;        // when crossing page boundary,
+   xdata unsigned numbytes_remainder;        // when crossing page boundary,
                                        // number of <src> bytes on 2nd page
-   unsigned FLASH_pagesize;            // size of FLASH page to update
+   xdata unsigned FLASH_pagesize;            // size of FLASH page to update
 
-   FLADDR  wptr;                       // write address
-   FLADDR  rptr;                       // read address
+   xdata FLADDR  wptr;                       // write address
+   xdata FLADDR  rptr;                       // read address
 
-   unsigned length;
+   xdata unsigned length;
 
    if (SFLE) {                         // update Scratchpad
       FLASH_pagesize = FLASH_SCRATCHSIZE;
@@ -201,7 +201,7 @@ void FLASH_Update (FLADDR dest, char *src, unsigned numbytes, bit SFLE)
 //
 void FLASH_Write (FLADDR dest, char *src, unsigned numbytes, bit SFLE)
 {
-   FLADDR i;
+   xdata FLADDR i;
 
    for (i = dest; i < dest+numbytes; i++) {
       FLASH_ByteWrite (i, *src++, SFLE);
@@ -217,7 +217,7 @@ void FLASH_Write (FLADDR dest, char *src, unsigned numbytes, bit SFLE)
 //
 char * FLASH_Read (char *dest, FLADDR src, unsigned numbytes, bit SFLE)
 {
-   FLADDR i;
+   xdata FLADDR i;
 
    for (i = 0; i < numbytes; i++) {
       *dest++ = FLASH_ByteRead (src+i, SFLE);
@@ -235,7 +235,7 @@ char * FLASH_Read (char *dest, FLADDR src, unsigned numbytes, bit SFLE)
 void FLASH_Copy (FLADDR dest, bit destSFLE, FLADDR src, bit srcSFLE,
                  unsigned numbytes)
 {
-   FLADDR i;
+   xdata FLADDR i;
 
    for (i = 0; i < numbytes; i++) {
 
@@ -254,7 +254,7 @@ void FLASH_Copy (FLADDR dest, bit destSFLE, FLADDR src, bit srcSFLE,
 //
 void FLASH_Fill (FLADDR addr, ULONG length, unsigned char fill, bit SFLE)
 {
-   FLADDR i;
+   xdata FLADDR i;
 
    for (i = 0; i < length; i++) {
       FLASH_ByteWrite (addr+i, fill, SFLE);

@@ -22,9 +22,10 @@
 #include "sPlcChipDac.h"
 #endif
 #if CONFIG_SPLC_USING_IO_INPUT == 1
-#include "sPlcIo.h"
+#include "sPlcIoIn.h"
 #endif
 #if CONFIG_SPLC_USING_IO_OUTPUT == 1
+#include "sPlcIoOut.h"
 #endif
 #if CONFIG_SPLC_USING_EPROM == 1
 #include "eprom.h"

@@ -30,8 +30,8 @@ void refreshChipDac(void){//刷新DAC
 	SFRPAGE = SFRPAGE_SAVE;
 }
 
-void UPDAC0(void){//立即更新DAC0
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;
+void UPDAC0(void) reentrant{//立即更新DAC0
+	uint8_t SFRPAGE_SAVE = SFRPAGE;
 	SFRPAGE = DAC0_PAGE;
 	NVRAM0[SPREG_DAC_0] &= 0xFFF;
 	if(DAC0 != NVRAM0[SPREG_DAC_0]){
@@ -40,8 +40,8 @@ void UPDAC0(void){//立即更新DAC0
 	}
 	SFRPAGE = SFRPAGE_SAVE;	
 }
-void UPDAC1(void){//立即更新DAC1
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;
+void UPDAC1(void) reentrant{//立即更新DAC1
+	uint8_t SFRPAGE_SAVE = SFRPAGE;
 	SFRPAGE = DAC1_PAGE;
 	NVRAM0[SPREG_DAC_1] &= 0xFFF;
 	if(DAC1 != NVRAM0[SPREG_DAC_1]){

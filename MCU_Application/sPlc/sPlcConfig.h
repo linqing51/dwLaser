@@ -2,8 +2,8 @@
 #define __SPLCCONFIG_H__
 /*****************************************************************************/
 #define CONFIG_DEBUG_PID					0//PID调试功能
-#define CONFIG_DEBUG_TIMER4					1//TIMER4调试
-#define CONFIG_DEBUG_PCA					1//PCA调试
+#define CONFIG_DEBUG_TIMER4					0//TIMER4调试
+#define CONFIG_DEBUG_PCA					0//PCA调试
 /*****************************************************************************/
 #define CONFIG_UART0_BAUDRATE				115200//串口0 波特率
 #define CONFIG_UART1_BAUDRATE				115200//串口1 波特率
@@ -97,13 +97,9 @@
 #define DISABLE_INTERRUPT					EA = 0;
 #define ENABLE_INTERRUPT					EA = 1;
 /*****************************************************************************/
-#if CONFIG_USING_RTU_SLAVE == 1
-#define CONFIG_USING_HMI					1//使能MODBUS HMI
-#endif
-/*****************************************************************************/
-#define CONFIG_USING_SIMEPROM				1
+#define CONFIG_USING_SIMEPROM				0
 #define CONFIG_USING_USB					0
-#define CONFIG_USING_ONCHIPFLASH			1
+#define CONFIG_USING_ONCHIPFLASH			0
 /*****************************************************************************/
 #define CONFIG_FIRMWARE_UPDATE_PAGE_SIZE	128//FLASH单次读写容量
 #define CONFIG_FW_CONFIG_ADR				0x0000//固件配置信息起始地址
@@ -123,7 +119,10 @@
 #define CONFIG_DEFAULT_PASSSWORD3			0x0000
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_LASER_TIMER		1
+#define CONFIG_SPLC_USING_LASER_TIMER_TEST	0
 #define CONFIG_LASER_TIMER_TICK				1000
+#define CONFIG_USING_DCHMI_APP				1//广东大彩人机交互应用
+#define CONFIG_USING_BACKGROUND_APP			1//背景应用
 /*****************************************************************************/
 //#define CONFIG_SPLC_USING_NFC				0
 //#define RW_SUPPORT	

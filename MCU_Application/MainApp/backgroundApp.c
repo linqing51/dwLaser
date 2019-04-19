@@ -1,5 +1,6 @@
-#include "backApp.h"
+#include "backgroundApp.h"
 /*****************************************************************************/
+#if CONFIG_USING_BACKGROUND_APP == 1
 void loadScheme(void){//DM->EM
 	xdata uint8_t *psrc, *pdist;
 	if(NVRAM0[DM_SCHEME_NUM] > CONFIG_HMI_SCHEME_NUM)
@@ -21,7 +22,7 @@ void saveScheme(void){//EM->DM
 	memcpy(pdist, psrc, ((DM_SCHEME_END_0 - DM_SCHEME_START_0 +1 ) * 2));
 }
 
-void bcakAppInit(void){
+void backgroundAppInit(void){
 	SET(R_FIBER_MANUFACT_0);
 	SET(R_FIBER_MANUFACT_1);
 	SET(X_FBD1);
@@ -36,11 +37,11 @@ void bcakAppInit(void){
 	NVRAM0[EM_EPID0_TAB_BIAS] = 0;//输出偏置
 	NVRAM0[EM_EPID0_TAB_TSC] = 0;//间隔计时器
 }
-void backApp(void){//背景应用
+void backgroundApp(void){//背景应用
 	if(LDP(SPCOIL_PS10MS)){//每100mS更新一次温度
-		TNTC(&NVRAM0[EM_DIODE_TEMP0], &NVRAM0[SPREG_ADC_2]);//CODE转换为NTC测量温度温度
-		TNTC(&NVRAM0[EM_DIODE_TEMP1], &NVRAM0[SPREG_ADC_3]);//CODE转换为NTC测量温度温度
-		TENV(&NVRAM0[EM_ENVI_TEMP], &NVRAM0[SPREG_ADC_8]);//CODE转换为环境温度	
+		TNTC(EM_DIODE_TEMP0, SPREG_ADC_2);//CODE转换为NTC测量温度温度
+		TNTC(EM_DIODE_TEMP1, SPREG_ADC_3);//CODE转换为NTC测量温度温度
+		TENV(EM_ENVI_TEMP, SPREG_ADC_8);//CODE转换为环境温度	
 	}
 	//执行温控PID
 	NVRAM0[EM_EPID0_TAB_VFB] = NVRAM0[EM_DIODE_TEMP0];//采集温度传入EPID参数表
@@ -114,3 +115,4 @@ void backApp(void){//背景应用
 	//************************************************************************/
 
 }
+#endif

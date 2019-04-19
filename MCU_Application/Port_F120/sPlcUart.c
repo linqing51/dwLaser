@@ -64,7 +64,7 @@ void USSTP(uint8_t port){//串口强制停止发送
 #endif
 }
 void URSTP(uint8_t port){//串口强制停止接收
-	uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
+	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
 	SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE
 #if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_MB_PORT != UART0)
 	if(port == UART0){
@@ -90,7 +90,7 @@ void URSTP(uint8_t port){//串口强制停止接收
 #endif
 }
 void USEND(uint8_t port, uint8_t length){//串口启动发送
-	uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
+	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
 	SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE
 #if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_MB_PORT != UART0)
 	if(port == UART0){
@@ -116,7 +116,7 @@ void USEND(uint8_t port, uint8_t length){//串口启动发送
 #endif
 }
 void URECV(uint8_t port, uint8_t length){//串口接收
-	uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
+	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
 	SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE
 #if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_MB_PORT != UART0)
 	if(port == UART0){
