@@ -20,7 +20,7 @@ void feedWatchDog(void) reentrant{//喂狗
 	WDTCN = 0xA5;
 }
 void mucReboot(void) reentrant {//复位
-	RSTSRC |= 1 << 4;//强制复位
+	RSTSRC |= 1 << 4;//Forces a Power-On Reset. RST is driven low.
 }
 void enterSplcIsr(void) reentrant{//SPLC 进入中断
 	sPlcInterrupt = EA;

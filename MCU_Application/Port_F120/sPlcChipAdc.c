@@ -6,7 +6,7 @@ static uint8_t volatile idata adcSelect;//ADC通道选择
 static void initAdcData(adcTempDat_t *s);
 /*****************************************************************************/
 static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
-	xdata uint8_t i;
+    uint8_t i;
 	for(i = 0;i < CONFIG_SPLC_ADC_FILTER_TAP; i++){
 		s->dat[i] = 0x0;
 	}
@@ -14,14 +14,14 @@ static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
 	s->wIndex = 0;
 }
 void initChipAdc(void){//ADC模块初始化
-	xdata uint8_t i;
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	uint8_t i;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
 	SFRPAGE = ADC0_PAGE;
 	ADC0CN = 0x0;//软件触发
 	ADC0CN |= (1 << 6);//AD0TM = 1 启用跟踪
 	ADC0CN |= (1 << 7);//AD0EN = 1 
 	ADC0CF = 0x0;
-	ADC0CF |= (CONFIG_SYSCLK / CONFIG_SARCLK) << 3;// ADC conversion clock = 2.5MHz
+	ADC0CF |= ((CONFIG_SYSCLK / CONFIG_SARCLK / 2) - 1) << 3;// ADC conversion clock = 2.5MHz
 	AMX0CF = 0x00;// AIN inputs are single-ended (default)
 	AMX0SL = 0x00;// Select AIN0.1 pin as ADC mux input
 	AD0INT = 1;
@@ -33,15 +33,15 @@ void initChipAdc(void){//ADC模块初始化
 	}
 }
 void chipAdcProcess(void){//循环采集ADC
-	xdata uint16_t result = 0;
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
-	xdata uint8_t adcOverTime = 0;
+	uint16_t result = 0;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	uint8_t adcOverTime = 0;
 	SFRPAGE = ADC0_PAGE;
-	while(1){
-		adcOverTime ++;
-		if(AD0INT != 1 || (adcOverTime > 250))
-			break;
-	}
+//	while(1){
+//		adcOverTime ++;
+//		if(AD0INT != 1 || (adcOverTime > 250))
+//			break;
+//	}
 	result = (ADC0 & 0x0FFF);
 	refreshAdcData(&adcTempDat[adcSelect], result);
 	NVRAM0[SPREG_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
@@ -97,9 +97,9 @@ void chipAdcProcess(void){//循环采集ADC
 	SFRPAGE = SFRPAGE_SAVE;
 }
 void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值 
-	xdata uint8_t i;
-	xdata uint16_t temp;
-	xdata uint32_t sum;
+	uint8_t i;
+	uint16_t temp;
+	uint32_t sum;
 	s->dat[s->wIndex] = dat;
 	s->wIndex ++;
 	if(s->wIndex >= CONFIG_SPLC_ADC_FILTER_TAP){

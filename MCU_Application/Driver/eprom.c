@@ -100,20 +100,27 @@ void epromWritePage(uint16_t data pageAddr, uint8_t *pBuffer,uint8_t data NumToW
 }
 #endif
 uint8_t epromTest(void){//EPROM ¶ÁĞ´×Ô²âÊÔ
-	xdata uint32_t i;	
-	xdata uint8_t result;
+	xdata uint32_t i, crc32Read = 0, crc32Write = 0;	
+	xdata uint8_t temp;
+	crc32Clear();
 	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
-		//setLedEprom(true);
-		epromWriteOneByte(i, (i & 0xFF));
-		//setLedEprom(false);
+		temp = rand()%0xFF;
+		crc32Write = crc32CalculateAdd(temp);
+		setLedEprom(true);
+		epromWriteOneByte(i, temp);
+		setLedEprom(false);
 	}
-	result = 0;
+	crc32Clear();
 	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
-		//setLedEprom(true);
-		if(epromReadOneByte(i) != (i & 0xFF)){
-			return false;
-		}
-		//setLedEprom(false);
+		setLedEprom(true);
+		temp = epromReadOneByte(i);
+		setLedEprom(false);
+		crc32Read = crc32CalculateAdd(temp);
 	}
-	return true;
+	if(crc32Write == crc32Read){
+		return true;
+	}
+	else{
+		return false;
+	}
 }

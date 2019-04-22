@@ -130,7 +130,9 @@ static void loadNvram(void){//从EPROM中载入NVRAM
 	enterSplcIsr();
 	memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
 #if CONFIG_SPLC_USING_EPROM == 1
+	setLedEprom(true);
 	epromRead(0, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
+	setLedEprom(false);
 #endif
 	clearEM();
 	clearR();
@@ -147,39 +149,46 @@ static void loadNvram(void){//从EPROM中载入NVRAM
 static void saveNvram(void){//强制将NVRAM存入EPROM
 	enterSplcIsr();
 #if CONFIG_SPLC_USING_EPROM == 1
+	setLedEprom(true);
 	epromWrite(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));
+	setLedEprom(false);
 #endif
 	exitSplcIsr();
 }
 static void updataNvram(void){//更新NVRAM->EPROM
-	data uint8_t *sp0, *sp1;
-	data uint16_t i;
+	uint8_t *sp0, *sp1;
+	uint16_t i;
 	sp0 = (uint8_t*)NVRAM0;
 	sp1 = (uint8_t*)NVRAM1;
 	for(i = (MR_START * 2);i < ((MR_END + 1) * 2);i ++){//储存MR
 		if(*(sp0 + i) != *(sp1 + i)){
 #if CONFIG_SPLC_USING_EPROM == 1
+			setLedEprom(true);
 			epromWriteOneByte(i, *(sp0 + i));
+			setLedEprom(false);
 #endif
 		}	
 	}
 	for(i = (DM_START * 2);i < ((DM_END + 1) * 2);i ++){//储存DM
 		if(*(sp0 + i) != *(sp1 + i)){
 #if CONFIG_SPLC_USING_EPROM == 1
+			setLedEprom(true);
 			epromWriteOneByte(i, *(sp0 + i));
+			setLedEprom(false);
 #endif
 		}
 	}
 	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
 static void clearNvram(void){//清除NVRAM数据	
-	xdata uint16_t i = 0;
+	uint16_t i = 0;
 	enterSplcIsr();
 	disableWatchDog();
 #if CONFIG_SPLC_USING_EPROM == 1
 	for(i = 0; i<= CONFIG_EPROM_SIZE;i ++){
+		setLedEprom(true);
 		epromWriteOneByte(i, 0x0);
-		//setLedEprom(false);
+		setLedEprom(false);
 	}
 #endif
 	exitSplcIsr();//恢复中断
@@ -328,20 +337,27 @@ void sPlcInit(void){//软逻辑初始化
 
 }
 void sPlcProcessStart(void){//sPLC轮询起始
+	if(LD(SPCOIL_PS1000MS)){
+		setLedRun(true);
+	}
+	else{
+		setLedRun(false);
+	}
 #if CONFIG_SPLC_USING_CLEAR_NVRAM == 1
 	if(NVRAM0[SPREG_CLEAR_NVRAM0] == CONFIG_SPLC_CLEAR_CODE){
 		DISABLE_INTERRUPT;//关闭中断	
-		//setLedRun(true);//
-		//setLedEprom(true);
+		setLedRun(true);//
+		setLedEprom(true);
 		if(epromTest()){//EPROM测试成功
-			//setLedEprom(false);
-			//setLedError(true);
+			setLedEprom(false);
+			setLedError(true);
 			delayMs(10);
-			//setLedError(false);
+			setLedError(false);
 		}
 		else{//EPROM测试失败
 		}
 		clearNvram();
+		NVRAM0[SPREG_CLEAR_NVRAM0] = 0x0;
 		REBOOT();	
 	}
 #endif
@@ -378,7 +394,7 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 #if CONFIG_USING_USB == 1
 	sPlcUsbPoll();
 #endif	
-	updataNvram();//更新NVRAM
+	//updataNvram();//更新NVRAM
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();//喂狗
 #endif

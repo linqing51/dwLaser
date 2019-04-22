@@ -5,20 +5,22 @@
 // Peripheral specific initialization functions,
 // Called from the Init_Device() function
 static void Reset_Sources_Init(){
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	SFRPAGE = LEGACY_PAGE;
+    RSTSRC    = 0x06;
     WDTCN     = 0xDE;
     WDTCN     = 0xAD;
+	SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE	
 }
-
-static void DAC_Init(){
-    DAC0CN    = 0x80;
-}
-
 static void Voltage_Reference_Init(void){
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	SFRPAGE = LEGACY_PAGE;
     REF0CN    = 0x07;
+	SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
 }
 
-void Port_IO_Init(){
-    // P0.0  -  TX0 (UART0), Open-Drain, Digital
+void Port_IO_Init(){ 
+	// P0.0  -  TX0 (UART0), Open-Drain, Digital
     // P0.1  -  RX0 (UART0), Open-Drain, Digital
     // P0.2  -  SCK  (SPI0), Open-Drain, Digital
     // P0.3  -  MISO (SPI0), Open-Drain, Digital
@@ -53,7 +55,7 @@ void Port_IO_Init(){
     // P3.5  -  Unassigned,  Push-Pull,  Digital
     // P3.6  -  Unassigned,  Push-Pull,  Digital
     // P3.7  -  Unassigned,  Push-Pull,  Digital
-
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
     SFRPAGE   = CONFIG_PAGE;
     P2MDOUT   = 0xFF;
     P3MDOUT   = 0xF0;
@@ -62,6 +64,7 @@ void Port_IO_Init(){
     P7MDOUT   = 0x11;
     XBR0      = 0x2F;
     XBR2      = 0x44;
+	SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
 }
 
 static void Oscillator_Init()
@@ -108,17 +111,11 @@ static void Oscillator_Init()
 	CLKSEL = 0x02;                      // Select PLL as SYSTEMCLOCK source
 	SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
 }
-
-static void Interrupts_Init(){
-}
-
 // Initialization function for device,
 // Call Init_Device() from your main program
 void initDevice(void){
     Reset_Sources_Init();
-    DAC_Init();
     Voltage_Reference_Init();
     Port_IO_Init();
     Oscillator_Init();
-    Interrupts_Init();
 }

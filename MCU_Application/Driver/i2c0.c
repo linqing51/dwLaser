@@ -4,22 +4,38 @@ void iic0Init(void){
 
 }
 static void setSCL0(uint8_t s){//P7_2
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+    SFRPAGE   = CONFIG_PAGE;
 	if(s)
 		P7 |= (1 << 2);
 	else
 		P7 &= ~((uint8_t)(1 << 2));
+	SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
 }
 static void setSDA0(uint8_t s){//P7_3
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+    SFRPAGE   = CONFIG_PAGE;
 	if(s)
 		P7 |= (uint8_t)(1 << 3);
 	else
 		P7 &= ~((uint8_t)(1 << 3));
+	SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
 }
 static uint8_t getSCL0(void){
-	return (P7 >> 2) & 0x01;
+	uint8_t temp;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+    SFRPAGE   = CONFIG_PAGE;
+	temp = (P7 >> 2) & 0x01;
+	SFRPAGE = SFRPAGE_SAVE;        
+	return temp;
 }
 static uint8_t getSDA0(void){
-	return (P7 >> 3) & 0x01;
+	uint8_t temp;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+    SFRPAGE   = CONFIG_PAGE;
+	temp = (P7 >> 3) & 0x01;
+	SFRPAGE = SFRPAGE_SAVE;        
+	return temp;
 }
 void iic0Start(void){//产生IIC起始信号
 	setSDA0(1);	  	  

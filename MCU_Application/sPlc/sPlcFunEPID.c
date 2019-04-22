@@ -18,6 +18,7 @@
 #define EPID_TAB_KD_SUM				19//微分累加值 FP32
 #define EPID_TAB_FOUT				21//输出累加值 FP32
 /*****************************************************************************/
+#if CONFIG_SPLC_FUN_EPID == 1
 void EPID(int16_t *tab){//泛用PID指令
 	if(*(tab + EPID_TAB_TS) > 3000){//限制间隔时间不大于3000
 		*(tab + EPID_TAB_TS) = 3000;
@@ -54,3 +55,4 @@ void EPID(int16_t *tab){//泛用PID指令
 		*(tab + EPID_TAB_TSC) += 1;//TSC = 1
 	}	
 }
+#endif

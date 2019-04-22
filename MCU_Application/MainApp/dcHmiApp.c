@@ -9,6 +9,7 @@
 #define WORKSTEP_LASER_STOP							6//激光发射结束
 #define WORKSTEP_FAULT								255//故障状态
 /*****************************************************************************/
+#if CONFIG_USING_DCHMI_APP == 1
 void dcHmiLoopInit(void){//初始化模块
 	NVRAM0[EM_HMI_OPERA_STEP] = 0;
 	NVRAM0[EM_HMI_PAGE] = 0x0;//HMI页面
@@ -116,3 +117,4 @@ void dcHmiLoop(void){//HMI轮训程序
 	return;
 }
 
+#endif
