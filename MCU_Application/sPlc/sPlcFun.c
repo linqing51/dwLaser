@@ -149,26 +149,35 @@ void DECS1(uint16_t Sa){//16位饱和自减
 	}
 }
 void ADL1(uint16_t Sa){//32位非饱和自加
-	int32_t temp;
-	temp = NVRAM0[Sa] << 16 + NVRAM0[(Sa+1)];
-	temp ++;
-	NVRAM0[Sa] = (temp >> 16) & 0xFFFF;
-	NVRAM0[(Sa+1)] = temp ^ 0xFFFF;
+	xdata int32_t temp = 0;
+	temp = NVRAM0[(Sa + 1)];
+	temp = (temp << 16) & 0xFFFF0000;
+	temp |= NVRAM0[Sa];
+	temp += 1;
+	NVRAM0[Sa] = temp & 0x0000FFFF;
+	NVRAM0[(Sa+1)] = (temp >> 16) & 0x0000FFFF;
 }
 void ADLS1(uint16_t Sa){//32位饱和自加
-	int32_t temp = 0;
-	temp |= (NVRAM0[Sa] >> 16) & 0x0000FFFF;
-	temp = temp << 16;
-	temp |= NVRAM0[(Sa+1)];
+	xdata int32_t temp = 0;
+	temp = NVRAM0[(Sa + 1)];
+	temp = (temp << 16) & 0xFFFF0000;
+	temp |= NVRAM0[Sa];
 	if(temp < LONG_MAX){
 		temp ++;
-		NVRAM0[Sa] = (int16_t)(temp >> 16);
-		NVRAM0[(Sa+1)] = (int16_t)(temp & 0x0000FFFF);
+		NVRAM0[Sa] = temp & 0x0000FFFF;
+		NVRAM0[(Sa+1)] = (temp >> 16) & 0x0000FFFF;
 	}
 }
 void DEL1(uint16_t Sa){//32位非饱和自减
+	*((int32_t*)(&NVRAM0[Sa])) = *((int32_t*)(&NVRAM0[Sa])) - 1;
 }
 void DELS1(uint16_t Sa){//32位饱和自减
+	int32_t temp = 0;
+	temp = *((int32_t*)(&NVRAM0[Sa]));
+	if(temp < LONG_MAX){
+		temp --;
+		*((int32_t*)(&NVRAM0[Sa])) = temp;
+	}
 }
 void ADD16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//16位非饱和加法 D = Sa + Sb
 	NVRAM0[D] = NVRAM0[Sa] + NVRAM0[Sb];
@@ -287,6 +296,7 @@ void SWAP(uint16_t dist, uint16_t src) reentrant{//交换A的高低字节
 	tmpH |= tmpL;
 	NVRAM0[dist] = tmpH;
 }
+
 /*****************************************************************************/
 //IO指令
 void IMDIO(void) reentrant{//立即更新IO点状态含输入输出

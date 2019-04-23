@@ -148,12 +148,12 @@
 #define X_FOOTSWITCH_OC							(X_START * 16 + 2)//XIN2 脚踏常开
 #define X_FOOTSWITCH_ON							(X_START * 16 + 3)//XIN3 脚踏常闭
 #define X_LDR_FAULT0							(X_START * 16 + 4)//XIN4 驱动器故障0
-#define X_LDR_FAULT1					(X_START * 16 + 5)//XIN5 驱动器故障1
-#define X_FBD0							(X_START * 16 + 6)//XIN6 光纤探测0
-#define X_FBD1							(X_START * 16 + 7)//XIN7 光纤探测1
+#define X_LDR_FAULT1							(X_START * 16 + 5)//XIN5 驱动器故障1
+#define X_FBD0									(X_START * 16 + 6)//XIN6 光纤探测0
+#define X_FBD1									(X_START * 16 + 7)//XIN7 光纤探测1
 /*****************************************************************************/
 #define Y_LED_POWERON					(Y_START * 16 + 0)//YOUT0 电源灯
-#define Y_LED_EMIT						(Y_START * 16 + 1)//YOUT1 激光指示灯
+#define Y_LED_EMIT								(Y_START * 16 + 1)//YOUT1 激光指示灯
 #define Y_LED_ALARM						(Y_START * 16 + 2)//YOUT2 故障指示灯
 #define Y_OUT3							(Y_START * 16 + 3)//YOUT3
 #define Y_OUT4							(Y_START * 16 + 4)//YOUT4
