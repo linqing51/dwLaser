@@ -53,7 +53,6 @@ static void modbusHandle() interrupt INTERRUPT_TIMER3
 
 #if (CONFIG_USING_RTU_SLAVE == 1 && CONFIG_MB_PORT == UART0)
 static void Uart0Isr(void) interrupt INTERRUPT_UART0 {//UART0中断
-	enterSplcIsr();	
 	if(RI0){
 		RI0 = 0;	
 		receiveInterrupt(SBUF0);
@@ -68,14 +67,18 @@ static void Uart0Isr(void) interrupt INTERRUPT_UART0 {//UART0中断
 			SET(SPCOIL_UART0_SEND_DONE);//发送完成
 			RES(SPCOIL_UART0_SEND_BUSY);
 		}
+	}	
+}
+void Uart0DIR(uint8_t dir){
+	if(dir){
 	}
-	exitSplcIsr();	
+	else{
+	}
 }
 #endif
 
 #if (CONFIG_USING_RTU_SLAVE == 1 && CONFIG_MB_PORT == UART1)
-static void Uart1Isr(void) interrupt INTERRUPT_UART1 {//UART0中断
-	enterSplcIsr();	
+static void Uart1Isr(void) interrupt INTERRUPT_UART1 {//UART1中断
 	if(SCON1 & 0x01){//RI1 == 1
 		SCON1 &= 0xFE;//RI1 = 0	
 		receiveInterrupt(SBUF1);
@@ -93,4 +96,5 @@ static void Uart1Isr(void) interrupt INTERRUPT_UART1 {//UART0中断
 	}
 }
 #endif
+
 

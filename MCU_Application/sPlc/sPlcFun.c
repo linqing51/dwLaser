@@ -16,8 +16,8 @@ void RES(uint16_t A) reentrant{//线圈置零
 	assertCoilAddress(A);//检查地址范围
 	NVRAM0[(A / 16)] &= ~(1 << (A % 16));
 }
-void FLIP(uint16_t A) reentrant{//翻转
-	uint16_t temp;
+void FLIP(uint16_t A){//翻转
+	xdata uint16_t temp;
 	assertCoilAddress(A);//检查地址范围
 	temp= NVRAM0[(A / 16)] & (1 << (A % 16));
 	if(temp)
@@ -131,6 +131,44 @@ void TENV(uint16_t dist, uint16_t src) reentrant{//CODE转换为环境温度
 	temp = (int16_t)(CONFIG_ADC_INTERNAL_VREF * NVRAM0[src] / 4096);//单位mV
 	temp = (int16_t)((temp - CONFIG_ADC_TEMP_SENSOR_OFFSET) * 1000 / CONFIG_ADC_TEMP_SENSOR_GAIN);
 	NVRAM0[dist] = temp;
+}
+void ADD1(uint16_t Sa){//16位非饱和自加
+	NVRAM0[Sa] += 1;
+}
+void ADDS1(uint16_t Sa){//16位饱和自加
+	if(NVRAM0[Sa] < SHRT_MAX){
+		NVRAM0[Sa] += 1;
+	}
+}
+void DEC1(uint16_t Sa){//16位非饱和自减
+	NVRAM0[Sa] -= 1;
+}
+void DECS1(uint16_t Sa){//16位饱和自减
+	if(NVRAM0[Sa] > SHRT_MIN){
+		NVRAM0[Sa] -= 1;
+	}
+}
+void ADL1(uint16_t Sa){//32位非饱和自加
+	int32_t temp;
+	temp = NVRAM0[Sa] << 16 + NVRAM0[(Sa+1)];
+	temp ++;
+	NVRAM0[Sa] = (temp >> 16) & 0xFFFF;
+	NVRAM0[(Sa+1)] = temp ^ 0xFFFF;
+}
+void ADLS1(uint16_t Sa){//32位饱和自加
+	int32_t temp = 0;
+	temp |= (NVRAM0[Sa] >> 16) & 0x0000FFFF;
+	temp = temp << 16;
+	temp |= NVRAM0[(Sa+1)];
+	if(temp < LONG_MAX){
+		temp ++;
+		NVRAM0[Sa] = (int16_t)(temp >> 16);
+		NVRAM0[(Sa+1)] = (int16_t)(temp & 0x0000FFFF);
+	}
+}
+void DEL1(uint16_t Sa){//32位非饱和自减
+}
+void DELS1(uint16_t Sa){//32位饱和自减
 }
 void ADD16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//16位非饱和加法 D = Sa + Sb
 	NVRAM0[D] = NVRAM0[Sa] + NVRAM0[Sb];

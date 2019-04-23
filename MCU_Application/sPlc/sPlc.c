@@ -13,10 +13,11 @@ xdata uint8_t volatile UART1_RXBUF[CONFIG_UART1_TBUF_SIZE];//UART1接收缓冲
 xdata volatile uint8_t TimerCounter_1mS = 0;
 xdata volatile uint8_t TimerCounter_10mS = 0;
 xdata volatile uint8_t TimerCounter_100mS = 0;
+xdata volatile uint8_t TD_1MS_SP = 0;
+xdata volatile uint8_t TD_10MS_SP = 0;
+xdata volatile uint8_t TD_100MS_SP = 0;
+xdata volatile uint8_t TD_1000MS_SP = 0;
 /******************************************************************************/
-void testled(void)
-{
-}
 void assertCoilAddress(uint16_t adr) reentrant{//检查线圈地址
 #if CONFIG_SPLC_ASSERT == 1
 	uint16_t maxCoilAdr = SPCOIL_END * 16;
@@ -337,12 +338,29 @@ void sPlcInit(void){//软逻辑初始化
 
 }
 void sPlcProcessStart(void){//sPLC轮询起始
+	if(TD_1MS_SP >= 1){
+		FLIP(SPCOIL_PS1MS);
+		TD_1MS_SP = 0;
+	}
+	if(TD_10MS_SP >= 1){
+		FLIP(SPCOIL_PS10MS);
+		TD_10MS_SP = 0;
+	}
+	if(TD_100MS_SP >= 1){
+		FLIP(SPCOIL_PS100MS);
+		TD_100MS_SP = 0;
+	}
+	if(TD_1000MS_SP >= 1){
+		FLIP(SPCOIL_PS1000MS);
+		TD_1000MS_SP = 0;
+	}
 	if(LD(SPCOIL_PS1000MS)){
 		setLedRun(true);
 	}
 	else{
 		setLedRun(false);
 	}
+	
 #if CONFIG_SPLC_USING_CLEAR_NVRAM == 1
 	if(NVRAM0[SPREG_CLEAR_NVRAM0] == CONFIG_SPLC_CLEAR_CODE){
 		DISABLE_INTERRUPT;//关闭中断	
@@ -393,8 +411,8 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 #endif
 #if CONFIG_USING_USB == 1
 	sPlcUsbPoll();
-#endif	
-	//updataNvram();//更新NVRAM
+#endif
+	updataNvram();//更新NVRAM
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();//喂狗
 #endif

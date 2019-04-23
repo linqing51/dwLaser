@@ -38,10 +38,18 @@ void backgroundAppInit(void){
 	NVRAM0[EM_EPID0_TAB_TSC] = 0;//间隔计时器
 }
 void backgroundApp(void){//背景应用
-	if(LDP(SPCOIL_PS10MS)){//每100mS更新一次温度
+	if(LDP(SPCOIL_PS100MS)){//每100mS更新一次温度
+		setLedVar(true);
 		TNTC(EM_DIODE_TEMP0, SPREG_ADC_2);//CODE转换为NTC测量温度温度
 		TNTC(EM_DIODE_TEMP1, SPREG_ADC_3);//CODE转换为NTC测量温度温度
 		TENV(EM_ENVI_TEMP, SPREG_ADC_8);//CODE转换为环境温度	
+		ADLS1(DM_SYS_RUNTIME_L);
+		if(LD(SPCOIL_LASER_EMITING)){
+			ADLS1(DM_LAR_RUNTIME_L);
+		}
+	}
+	else{
+		setLedVar(false);
 	}
 	//执行温控PID
 	NVRAM0[EM_EPID0_TAB_VFB] = NVRAM0[EM_DIODE_TEMP0];//采集温度传入EPID参数表

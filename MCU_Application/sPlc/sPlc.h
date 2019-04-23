@@ -27,6 +27,10 @@ extern xdata uint8_t volatile UART1_RXBUF[CONFIG_UART1_TBUF_SIZE];//UART1Ω” ’ª∫≥
 extern xdata volatile uint8_t TimerCounter_1mS;
 extern xdata volatile uint8_t TimerCounter_10mS;
 extern xdata volatile uint8_t TimerCounter_100mS;
+extern xdata volatile uint8_t TD_1MS_SP;
+extern xdata volatile uint8_t TD_10MS_SP;
+extern xdata volatile uint8_t TD_100MS_SP;
+extern xdata volatile uint8_t TD_1000MS_SP;
 /*****************************************************************************/
 void sPlcInit(void);//»Ì¬ﬂº≠≥ı ºªØ
 void sPlcProcessStart(void);//sPLC¬÷—Ø∆ º

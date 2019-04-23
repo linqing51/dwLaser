@@ -183,9 +183,6 @@ static void initTimer4(void){//TIMER4初始化
 }
 void timer4Isr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 	xdata uint8_t SFRPAGE_save;	
-#if CONFIG_DEBUG_TIMER4 == 1
-	debugTimer4 = ~debugTimer4;
-#endif
 	SFRPAGE_save = SFRPAGE;
 	SFRPAGE = TMR4_PAGE;
 	TMR4CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag

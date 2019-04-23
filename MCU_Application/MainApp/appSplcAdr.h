@@ -125,18 +125,23 @@
 #define DM_SCHEME_START_15						(DM_START + 375)//方案15存储区
 #define DM_SCHEME_END_15						(DM_START + 399)
 
-#define DM_CORR_TAB980_POWER					(DM_START + 400)//功率校正表功率
-#define DM_CORR_TAB980_CURRENT					(DM_START + 410)//功率校正表电流
-#define DM_CORR_TAB1470_POWER					(DM_START + 420)//功率校正表功率			
-#define DM_CORR_TAB1470_CURRENT					(DM_START + 430)//功率校正表电流
+#define DM_CORR_TAB980_POWER					(DM_START + 400)//功率校正表功率 固定功率写DAC CODE
 
-#define DM_SCHEME_NUM							(DM_START + 400)//选择的方案编号
-#define DM_BEEM_VOLUME							(DM_START + 400)
-#define DM_OLD_PASSWORD0						(DM_START + 0)
-#define DM_OLD_PASSWORD1						(DM_START + 1)
-#define DM_OLD_PASSWORD2						(DM_START + 0)
-#define DM_OLD_PASSWORD3						(DM_START + 1)
+#define DM_CORR_TAB1470_POWER					(DM_START + 420)//功率校正表功率 固定功率写DAC CODE			
 
+#define DM_SCHEME_NUM							(DM_START + 440)//选择的方案编号
+#define DM_BEEM_VOLUME							(DM_START + 441)
+#define DM_OLD_PASSWORD0						(DM_START + 442)
+#define DM_OLD_PASSWORD1						(DM_START + 443)
+#define DM_OLD_PASSWORD2						(DM_START + 444)
+#define DM_OLD_PASSWORD3						(DM_START + 445)
+#define DM_SYS_RUNTIME_L						(DM_START + 446)//系统累计运行时间秒L 32BIT
+#define DM_SYS_RUNTIME_H						(DM_START + 447)//系统累计运行时间秒H 32BIT
+#define DM_LAR_RUNTIME_L						(DM_START + 448)//激光累计发射时间秒L 32BIT
+#define DM_LAR_RUNTIME_H						(DM_START + 449)//激光累计发射时间秒L 32BIT
+#define DM_RELEASE_DATA_YEAR					(DM_START + 450)//出厂日期年		
+#define DM_RELEASE_DATA_MONTH					(DM_START + 451)//出厂日期月
+#define DM_RELEASE_DATA_DAY						(DM_START + 452)//出厂如期日
 /*****************************************************************************/
 #define X_INTERLOCK								(X_START * 16 + 0)//XIN0 安全连锁
 #define X_ESTOP									(X_START * 16 + 1)//XIN1 紧急停止开关

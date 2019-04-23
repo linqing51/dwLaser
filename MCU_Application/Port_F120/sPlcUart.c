@@ -17,6 +17,7 @@ void initUart0(uint32_t baudrate){//初始化串口0
 	SSTA0 |= (1 << 2);//Timer 2 Overflow generates UART0 TX baud rate
 	SSTA0 |= (1 << 0);//Timer 2 Overflow generates UART0 RX baud rate
 	SSTA0 |= 1 << 4;//UART0 baud rate divide-by-two disabled.
+	IP |= (1 << 4);//UART0 Interrupt Priority Control
 	ES0 = 1;
 	TI0 = 0;//清除发送完成   		
 	RI0 = 0;//清除接收完成	
@@ -144,7 +145,6 @@ void URECV(uint8_t port, uint8_t length){//串口接收
 
 #if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_MB_PORT != UART0)
 void Uart0Isr(void) interrupt INTERRUPT_UART0 {//UART0中断
-	enterSplcIsr();	
 	if(TI0){  
 		TI0 = 0;
 		if(NVRAM0[SPREG_UART0_SEND_NUM] < NVRAM0[SPREG_UART0_SEND_LENGTH]){//
@@ -170,13 +170,11 @@ void Uart0Isr(void) interrupt INTERRUPT_UART0 {//UART0中断
 			}
 		}
 	}	
-	exitSplcIsr();	
 }
 #endif
 
 #if (CONFIG_SPLC_USING_UART1 == 1 && CONFIG_MB_PORT != UART1)
 void Uart1Isr(void) interrupt INTERRUPT_UART1 {//UART1中断
-	enterSplcIsr();	
 	if(SCON1 & 0x02){//TI1 == 1  
 		SCON1 &= 0xFD;//TI1 = 0
 		if(NVRAM0[SPREG_UART1_SEND_NUM] < NVRAM0[SPREG_UART1_SEND_LENGTH]){//
@@ -200,7 +198,6 @@ void Uart1Isr(void) interrupt INTERRUPT_UART1 {//UART1中断
 			NVRAM0[SPREG_UART1_RECV_NUM] ++;
 		}
 	} 
-	exitSplcIsr();
 }
 #endif
 

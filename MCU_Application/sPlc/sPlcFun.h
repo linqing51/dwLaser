@@ -7,7 +7,7 @@ void REBOOT(void) reentrant;//复位
 //位指令
 void SET(uint16_t A) reentrant;//线圈置位
 void RES(uint16_t A) reentrant;//线圈复位
-void FLIP(uint16_t A) reentrant;//翻转
+void FLIP(uint16_t A);//翻转
 uint8_t LD(uint16_t A) reentrant;//载入
 uint8_t LDB(uint16_t A) reentrant;//方向载入
 uint8_t LDP(uint16_t A) reentrant;//脉冲上升沿
@@ -35,6 +35,14 @@ void SUB16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant;//16位非饱和减法 D = 
 void ADD32(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant;//32位非饱加法 D = Sa + Sb
 void ADDS16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant;//16位饱和加法 D = Sa + Sb
 void ADD16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant;//16位非饱和加法 D = Sa + Sb
+void ADD1(uint16_t Sa);//16位非饱和自加
+void ADDS1(uint16_t Sa);//16位饱和自加
+void DEC1(uint16_t Sa);//16位非饱和自减
+void DECS1(uint16_t Sa);//16位饱和自减
+void ADL1(uint16_t Sa);//32位非饱和自加
+void ADLS1(uint16_t Sa);//32位饱和自加
+void DEL1(uint16_t Sa);//32位非饱和自减
+void DELS1(uint16_t Sa);//32位饱和自减
 void TNTC(uint16_t dist, uint16_t src) reentrant;//CODE转换为环境温度
 void TENV(uint16_t dist, uint16_t src) reentrant;//CODE转换为NTC测量温度温度
 /*****************************************************************************/
