@@ -16,8 +16,8 @@ void RES(uint16_t A) reentrant{//ÏßÈ¦ÖÃÁã
 	assertCoilAddress(A);//¼ì²éµØÖ··¶Î§
 	NVRAM0[(A / 16)] &= ~(1 << (A % 16));
 }
-void FLIP(uint16_t A){//·­×ª
-	xdata uint16_t temp;
+void FLIP(uint16_t A) reentrant{//·­×ª
+	uint16_t temp;
 	assertCoilAddress(A);//¼ì²éµØÖ··¶Î§
 	temp= NVRAM0[(A / 16)] & (1 << (A % 16));
 	if(temp)
@@ -65,7 +65,7 @@ uint8_t LDN(uint16_t A) reentrant{//Âö³åÏÂ½µÑØ
 }
 /*****************************************************************************/
 //ÑÓÊ±Æ÷Ö¸Áî
-//void T100US(uint8_t A, uint8_t start, uint16_t value) reentrant{//100USÑÓÊ±Æ÷
+//void T100US(uint8_t A, uint8_t start, uint16_t value){//100USÑÓÊ±Æ÷
 //}
 void T1MS(uint8_t A, uint8_t start, uint16_t value) reentrant{//1MSÑÓÊ±Æ÷
 	if(start){
@@ -132,51 +132,60 @@ void TENV(uint16_t dist, uint16_t src) reentrant{//CODE×ª»»Îª»·¾³ÎÂ¶È
 	temp = (int16_t)((temp - CONFIG_ADC_TEMP_SENSOR_OFFSET) * 1000 / CONFIG_ADC_TEMP_SENSOR_GAIN);
 	NVRAM0[dist] = temp;
 }
-void ADD1(uint16_t Sa){//16Î»·Ç±¥ºÍ×Ô¼Ó
+void ADD1(uint16_t Sa) reentrant{//16Î»·Ç±¥ºÍ×Ô¼Ó
 	NVRAM0[Sa] += 1;
 }
-void ADDS1(uint16_t Sa){//16Î»±¥ºÍ×Ô¼Ó
+void ADDS1(uint16_t Sa) reentrant{//16Î»±¥ºÍ×Ô¼Ó
 	if(NVRAM0[Sa] < SHRT_MAX){
 		NVRAM0[Sa] += 1;
 	}
 }
-void DEC1(uint16_t Sa){//16Î»·Ç±¥ºÍ×Ô¼õ
+void DEC1(uint16_t Sa) reentrant{//16Î»·Ç±¥ºÍ×Ô¼õ
 	NVRAM0[Sa] -= 1;
 }
-void DECS1(uint16_t Sa){//16Î»±¥ºÍ×Ô¼õ
+void DECS1(uint16_t Sa) reentrant{//16Î»±¥ºÍ×Ô¼õ
 	if(NVRAM0[Sa] > SHRT_MIN){
 		NVRAM0[Sa] -= 1;
 	}
 }
-void ADL1(uint16_t Sa){//32Î»·Ç±¥ºÍ×Ô¼Ó
-	xdata int32_t temp = 0;
+void ADL1(uint16_t Sa) reentrant{//32Î»·Ç±¥ºÍ×Ô¼Ó
+	int32_t temp = 0;
 	temp = NVRAM0[(Sa + 1)];
 	temp = (temp << 16) & 0xFFFF0000;
 	temp |= NVRAM0[Sa];
 	temp += 1;
 	NVRAM0[Sa] = temp & 0x0000FFFF;
-	NVRAM0[(Sa+1)] = (temp >> 16) & 0x0000FFFF;
+	NVRAM0[(Sa + 1)] = (temp >> 16) & 0x0000FFFF;
 }
-void ADLS1(uint16_t Sa){//32Î»±¥ºÍ×Ô¼Ó
-	xdata int32_t temp = 0;
+void ADLS1(uint16_t Sa) reentrant{//32Î»±¥ºÍ×Ô¼Ó
+	int32_t temp = 0;
 	temp = NVRAM0[(Sa + 1)];
 	temp = (temp << 16) & 0xFFFF0000;
 	temp |= NVRAM0[Sa];
 	if(temp < LONG_MAX){
 		temp ++;
 		NVRAM0[Sa] = temp & 0x0000FFFF;
-		NVRAM0[(Sa+1)] = (temp >> 16) & 0x0000FFFF;
+		NVRAM0[(Sa + 1)] = (temp >> 16) & 0x0000FFFF;
 	}
 }
-void DEL1(uint16_t Sa){//32Î»·Ç±¥ºÍ×Ô¼õ
-	*((int32_t*)(&NVRAM0[Sa])) = *((int32_t*)(&NVRAM0[Sa])) - 1;
-}
-void DELS1(uint16_t Sa){//32Î»±¥ºÍ×Ô¼õ
+void DEL1(uint16_t Sa) reentrant{//32Î»·Ç±¥ºÍ×Ô¼õ
 	int32_t temp = 0;
-	temp = *((int32_t*)(&NVRAM0[Sa]));
+	temp = NVRAM0[(Sa + 1)];
+	temp = (temp << 16) & 0xFFFF0000;
+	temp |= NVRAM0[Sa];
+	temp -= 1;
+	NVRAM0[Sa] = temp & 0x0000FFFF;
+	NVRAM0[(Sa + 1)] = (temp >> 16) & 0x0000FFFF;
+}
+void DELS1(uint16_t Sa) reentrant{//32Î»±¥ºÍ×Ô¼õ
+	int32_t temp = 0;
+	temp = NVRAM0[(Sa + 1)];
+	temp = (temp << 16) & 0xFFFF0000;
+	temp |= NVRAM0[Sa];
 	if(temp < LONG_MAX){
 		temp --;
-		*((int32_t*)(&NVRAM0[Sa])) = temp;
+		NVRAM0[Sa] = temp & 0x0000FFFF;
+		NVRAM0[(Sa + 1)] = (temp >> 16) & 0x0000FFFF;
 	}
 }
 void ADD16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//16Î»·Ç±¥ºÍ¼Ó·¨ D = Sa + Sb
@@ -192,7 +201,18 @@ void ADDS16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//16Î»±¥ºÍ¼Ó·¨ D = S
 	NVRAM0[D] = tmp;
 }
 void ADD32(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//32Î»·Ç±¥¼Ó·¨ D = Sa + Sb
-	*((int32_t*)&NVRAM0[D]) = *((int32_t*)&NVRAM0[Sa]) + *((int32_t*)&NVRAM0[Sb]);
+	int32_t tmpSa = 0, tmpSb = 0, tmpD = 0;
+	tmpSa = NVRAM0[(Sa + 1)];
+	tmpSa = (tmpSa << 16) & 0xFFFF0000;
+	tmpSa |= NVRAM0[Sa];
+	
+	tmpSb = NVRAM0[(Sb + 1)];
+	tmpSb = (tmpSb << 16) & 0xFFFF0000;
+	tmpSb |= NVRAM0[Sb];
+	
+	tmpD = tmpSa + tmpSb;
+	NVRAM0[D] = tmpD & 0x0000FFFF;
+	NVRAM0[(D + 1)] = (tmpD >> 16) & 0x0000FFFF;
 }
 void SUB16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//16Î»·Ç±¥ºÍ¼õ·¨ D = Sa - Sb
 	NVRAM0[D] = NVRAM0[Sa] - NVRAM0[Sb];
@@ -207,7 +227,18 @@ void SUBS16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//16Î»±¥ºÍ¼õ·¨ D = S
 	NVRAM0[D] = tmp;
 }
 void SUB32(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//32Î»·Ç±¥ºÍ¼õ·¨ D = Sa - Sb
-	*((int32_t*)&NVRAM0[D])	 = *((int32_t*)&NVRAM0[Sa]) - *((int32_t*)&NVRAM0[Sb]);
+	int32_t tmpSa = 0, tmpSb = 0, tmpD = 0;
+	tmpSa = NVRAM0[(Sa + 1)];
+	tmpSa = (tmpSa << 16) & 0xFFFF0000;
+	tmpSa |= NVRAM0[Sa];
+	
+	tmpSb = NVRAM0[(Sb + 1)];
+	tmpSb = (tmpSb << 16) & 0xFFFF0000;
+	tmpSb |= NVRAM0[Sb];
+	
+	tmpD = tmpSa - tmpSb;
+	NVRAM0[D] = tmpD & 0x0000FFFF;
+	NVRAM0[(D + 1)] = (tmpD >> 16) & 0x0000FFFF;
 }
 void MULT16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//16*16->16·Ç±¥ºÍ³Ë·¨ D = Sa * Sb
 	int32_t tmp = (int32_t)NVRAM0[Sa] * (int32_t)NVRAM0[Sb];
@@ -222,7 +253,18 @@ void MULTS16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//16*16->16±¥ºÍ³Ë·¨
 	NVRAM0[D] = (int16_t)tmp;
 }
 void MULT32(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//16*16->32·Ç±¥ºÍ³Ë·¨ D = Sa * Sb
-	*((int32_t*)&NVRAM0[D]) = *((int32_t*)&NVRAM0[Sa]) * *((int32_t*)&NVRAM0[Sb]);
+	int32_t tmpSa = 0, tmpSb = 0, tmpD = 0;
+	tmpSa = NVRAM0[(Sa + 1)];
+	tmpSa = (tmpSa << 16) & 0xFFFF0000;
+	tmpSa |= NVRAM0[Sa];
+	
+	tmpSb = NVRAM0[(Sb + 1)];
+	tmpSb = (tmpSb << 16) & 0xFFFF0000;
+	tmpSb |= NVRAM0[Sb];
+	
+	tmpD = tmpSa * tmpSb;
+	NVRAM0[D] = tmpD & 0x0000FFFF;
+	NVRAM0[(D + 1)] = (tmpD >> 16) & 0x0000FFFF;
 }
 void SUM16(uint16_t index, uint16_t length, uint16_t sum) reentrant{//16BITÊýÇóºÍ->32BIT
 	int32_t tmp = 0;
@@ -243,7 +285,7 @@ void UMAX16(uint16_t index, uint16_t length, uint16_t max) reentrant{//16Î»ÎÞ·ûº
 	}
 	NVRAM0[max] = tmp;
 }
-void UMIN16(uint16_t index, uint16_t length, uint16_t min)reentrant{//16Î»ÎÞ·ûºÅÊý×éÕÒ×îÐ¡Öµ
+void UMIN16(uint16_t index, uint16_t length, uint16_t min) reentrant{//16Î»ÎÞ·ûºÅÊý×éÕÒ×îÐ¡Öµ
 	uint16_t i = 0;
 	uint16_t tmp = 0;
 	for(i = 0;i < NVRAM0[length];i ++){
