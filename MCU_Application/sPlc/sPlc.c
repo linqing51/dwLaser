@@ -360,7 +360,7 @@ void sPlcProcessStart(void){//sPLC轮询起始
 	else{
 		setLedRun(false);
 	}
-#if CONFIG_SPLC_USING_CLEAR_NVRAM == 1
+#if CONFIG_SPLC_USING_CLEAR_NVRAM == 1 && CONFIG_SPLC_USING_EPROM == 1
 	if(NVRAM0[SPREG_CLEAR_NVRAM0] == CONFIG_SPLC_CLEAR_CODE){
 		DISABLE_INTERRUPT;//关闭中断	
 		setLedRun(true);//

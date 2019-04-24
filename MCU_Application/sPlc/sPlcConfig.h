@@ -52,7 +52,7 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_PCA				1//片内计数器阵列
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM				1//EPROM 
+#define CONFIG_SPLC_USING_EPROM				0//EPROM 
 #define CONFIG_SPLC_USING_CLEAR_NVRAM		1//启用清除NVRAM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_UART0				1//UART 0串口启用
@@ -114,8 +114,6 @@
 /*****************************************************************************/
 #define CONFIG_DEFAULT_PASSSWORD0			0x3031
 #define CONFIG_DEFAULT_PASSSWORD1			0x3233
-#define CONFIG_DEFAULT_PASSSWORD2			0x0000
-#define CONFIG_DEFAULT_PASSSWORD3			0x0000
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_LASER_TIMER		1
 #define CONFIG_SPLC_USING_LASER_TIMER_TEST	0
