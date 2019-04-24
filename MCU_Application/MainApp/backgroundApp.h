@@ -8,4 +8,6 @@ void loadScheme(void);//DM->EM
 void saveScheme(void);//EM->DM
 void backgroundAppInit(void);
 void backgroundApp(void);
+void PCLAR0(uint16_t POW, uint16_t CUR) reentrant;//功率->DAC CODE
+void PCLAR1(uint16_t POW, uint16_t CUR) reentrant;//功率->DAC CODE
 #endif

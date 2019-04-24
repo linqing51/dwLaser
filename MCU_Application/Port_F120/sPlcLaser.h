@@ -7,14 +7,12 @@
 #define LASER_MODE_SP							0x2B61//单脉冲模式
 #define LASER_MODE_MP							0x3C72//多脉冲模式
 #define LASER_MODE_GP							0x4D83//群脉冲模式
-#define LASER_SELECT_980						0x005A
-#define LASER_SELECT_1470						0xA500
+#define LASER_SELECT_CH0						0x005A
+#define LASER_SELECT_CH1						0xA500
 #define LASER_SELECT_BOTH						0xA55A
 /*****************************************************************************/
 void sPlcLaserInit(void);
 void testBenchLaserTimer(uint8_t st);//LASER激光发射测试
 void EDLAR(void) reentrant;//停止发射脉冲
 void STLAR(void) reentrant;//开始发射脉冲
-void PCLAR0(uint16_t POW, uint16_t CUR) reentrant;//功率->DAC CODE
-void PCLAR1(uint16_t POW, uint16_t CUR) reentrant;//功率->DAC CODE
 #endif

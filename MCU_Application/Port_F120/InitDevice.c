@@ -86,15 +86,15 @@ static void Oscillator_Init()
 	FLSCL |=  0x30;                     // Initially set FLASH read timing for
 									   // 100MHz SYSTEMCLOCK (most conservative
 									   // setting)
-	if(CONFIG_SYSCLK <= 25000000){//Set FLASH read timing for <=25MHz
-		FLSCL &= ~0x30;
-	}else if (CONFIG_SYSCLK <= 50000000){//Set FLASH read timing for <=50MHz
-		FLSCL &= ~0x20;
-	}else if (CONFIG_SYSCLK <= 75000000){//Set FLASH read timing for <=75MHz
-		FLSCL &= ~0x10;
-	} else {                            // set FLASH read timing for <=100MHz
-		FLSCL &= ~0x00;
-	}
+#if	CONFIG_SYSCLK <= 25000000
+		FLSCL &= ~0x30;//Set FLASH read timing for <=25MHz
+#elseif CONFIG_SYSCLK <= 50000000
+		FLSCL &= ~0x20;//Set FLASH read timing for <=50MHz
+#elseif CONFIG_SYSCLK <= 75000000
+		FLSCL &= ~0x10;//Set FLASH read timing for <=75MHz
+#else                            
+		FLSCL &= ~0x00;// set FLASH read timing for <=100MHz
+#endif
 	// Start PLL for 50MHz operation
 	SFRPAGE = PLL0_PAGE;
 	PLL0CN = 0x04;                      // Select EXTOSC as clk source

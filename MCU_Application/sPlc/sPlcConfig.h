@@ -38,7 +38,7 @@
 #define CONFIG_SPLC_FUN_EPID				1//使能SPLC扩展指令
 #define CONFIG_SPLC_FUNTEST					0//功能指令测试
 /*****************************************************************************/
-#define CONFIG_SPLC_ASSERT					0//检查地址范围
+#define CONFIG_SPLC_ASSERT					1//检查地址范围
 #define CONFIG_SPLC_DEV						0x0A01//设备号
 #define CONFIG_SPLC_CLEAR_CODE				0xA58E
 #define CONFIG_SOFTPLC_TICK					1000L//1mS
@@ -120,7 +120,7 @@
 #define CONFIG_SPLC_USING_LASER_TIMER		1
 #define CONFIG_SPLC_USING_LASER_TIMER_TEST	0
 #define CONFIG_LASER_TIMER_TICK				1000
-#define CONFIG_USING_DCHMI_APP				0//广东大彩人机交互应用
+#define CONFIG_USING_DCHMI_APP				1//广东大彩人机交互应用
 #define CONFIG_USING_BACKGROUND_APP			1//背景应用
 /*****************************************************************************/
 //#define CONFIG_SPLC_USING_NFC				0
@@ -304,8 +304,8 @@
 #define SPREG_LASER_POVERTIME				(SPREG_START + 50)//激光脉冲间隔计时值
 #define SPREG_LASER_RELEASETIME				(SPREG_START + 51)//激光持续时间
 #define SPREG_LASER_RELEASE_COUNTER			(SPREG_START + 52)//激光持续时间计时器
-#define SPREG_LASER_CURRENT_980				(SPREG_START + 53)//激光电流980
-#define SPREG_LASER_CURRENT_1470			(SPREG_START + 54)//激光电流1470
+#define SPREG_LASER_CURRENT_0				(SPREG_START + 53)//激光电流0
+#define SPREG_LASER_CURRENT_1				(SPREG_START + 54)//激光电流1
 /*****************************************************************************/
 //蜂鸣器相关寄存器
 #define SPREG_BEEM_VOLUME					(SPREG_START + 55)//蜂鸣器音量
