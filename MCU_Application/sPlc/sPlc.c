@@ -20,7 +20,7 @@ xdata volatile uint8_t TD_1000MS_SP = 0;
 /******************************************************************************/
 void assertCoilAddress(uint16_t adr) reentrant{//检查线圈地址
 #if CONFIG_SPLC_ASSERT == 1
-	uint16_t maxCoilAdr = SPCOIL_END * 16;
+	uint16_t maxCoilAdr = CONFIG_NVRAM_SIZE * 16 - 1;
 	if(adr > (maxCoilAdr)){
 		while(1);
 	}
@@ -28,7 +28,7 @@ void assertCoilAddress(uint16_t adr) reentrant{//检查线圈地址
 }
 void assertRegisterAddress(uint16_t adr) reentrant{//检查寄存器地址
 #if CONFIG_SPLC_ASSERT == 1
-	if(adr > SPCOIL_END){
+	if(adr > (CONFIG_NVRAM_SIZE - 1)){
 		while(1);
 	}
 #endif
@@ -92,13 +92,6 @@ void clearTD(void){//清除TD寄存器
 		NVRAM1[i] = 0x0;
 	}
 }
-void clearC(void){//清除C寄存器
-	uint16_t i;
-	for(i = C_START;i <= C_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-}
 void clearX(void){//清除X寄存器
 	uint16_t i;
 	for(i = X_START;i <= X_END;i ++){
@@ -120,9 +113,16 @@ void clearSPREG(void){//清除特殊寄存器
 		NVRAM1[i] = 0x0;
 	}
 }
-void clearSPCOIL(){//清除特特殊线圈
+void clearSPCOIL(void){//清除特特殊线圈
 	uint16_t i;
 	for(i = SPCOIL_START;i <= SPCOIL_END;i ++){
+		NVRAM0[i] = 0x0;
+		NVRAM1[i] = 0x0;
+	}
+}
+void clearTENA(void){//清楚计时器使能线圈
+	uint16_t i;
+	for(i = T_1MS_ENA_START;i <= T_100MS_ENA_END;i ++){
 		NVRAM0[i] = 0x0;
 		NVRAM1[i] = 0x0;
 	}
@@ -139,11 +139,11 @@ static void loadNvram(void){//从EPROM中载入NVRAM
 	clearR();
 	clearT();
 	clearTD();
-	clearC();
 	clearX();
 	clearY();
 	clearSPREG();
 	clearSPCOIL();
+	clearTENA();
 	memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 	exitSplcIsr();
 }
@@ -361,7 +361,7 @@ void sPlcProcessStart(void){//sPLC轮询起始
 		setLedRun(false);
 	}
 #if CONFIG_SPLC_USING_CLEAR_NVRAM == 1 && CONFIG_SPLC_USING_EPROM == 1
-	if(NVRAM0[SPREG_CLEAR_NVRAM0] == CONFIG_SPLC_CLEAR_CODE){
+	if(NVRAM0[SPREG_CLEAR_NVRAM] == CONFIG_SPLC_CLEAR_CODE){
 		DISABLE_INTERRUPT;//关闭中断	
 		setLedRun(true);//
 		setLedEprom(true);
@@ -374,7 +374,9 @@ void sPlcProcessStart(void){//sPLC轮询起始
 		else{//EPROM测试失败
 		}
 		clearNvram();
-		NVRAM0[SPREG_CLEAR_NVRAM0] = 0x0;
+		//清空NVRAM0和NVRAM1
+		memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
+		memset(NVRAM1, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
 		REBOOT();	
 	}
 #endif

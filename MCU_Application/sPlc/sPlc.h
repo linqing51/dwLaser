@@ -53,7 +53,6 @@ void clearEM(void);
 void clearR(void);
 void clearT(void);
 void clearTD(void);
-void clearC(void);
 void clearSPCOIL();
 void clearSPREG(void);
 /*****************************************************************************/

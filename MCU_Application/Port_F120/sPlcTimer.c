@@ -30,14 +30,24 @@ static void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断
 		TD_1MS_SP ++;
 	}	
 	for(i = TD_1MS_START;i <= TD_1MS_END;i ++){//1mS计时
-		if(NVRAM0[i] < SHRT_MAX){
-			NVRAM0[i] ++;
+		if(LD(T_1MS_ENA_START * 16 + (i - TD_1MS_START))){
+			if(NVRAM0[i] < SHRT_MAX){
+				NVRAM0[i] ++;
+			}
+		}
+		else{
+			NVRAM0[i] = 0;
 		}
 	}
 	if(TimerCounter_1mS >= 10){//10mS计算
 		for(i = TD_10MS_START;i <= TD_10MS_END;i ++){
-			if(NVRAM0[i] < SHRT_MAX){
-				NVRAM0[i] ++;
+			if(LD(T_10MS_ENA_START * 16 + (i - TD_10MS_START))){
+				if(NVRAM0[i] < SHRT_MAX){
+					NVRAM0[i] ++;
+				}
+			}
+			else{
+				NVRAM0[i] = 0;
 			}
 		}
 		if(TD_10MS_SP < CHAR_MAX){
@@ -51,8 +61,13 @@ static void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断
 	}
 	if(TimerCounter_10mS >= 10){//100ms计算
 		for(i = TD_100MS_START;i < TD_100MS_END;i ++){
-			if(NVRAM0[i] < SHRT_MAX){
-				NVRAM0[i] ++;
+			if(LD(T_100MS_ENA_START * 16 + (i - TD_100MS_START))){
+				if(NVRAM0[i] < SHRT_MAX){
+					NVRAM0[i] ++;
+				}
+			}
+			else{
+				NVRAM0[i] = 0;
 			}
 		}
 		if(TD_100MS_SP < CHAR_MAX){

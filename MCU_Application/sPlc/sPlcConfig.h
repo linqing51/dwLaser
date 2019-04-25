@@ -52,7 +52,7 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_PCA				1//片内计数器阵列
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM				0//EPROM 
+#define CONFIG_SPLC_USING_EPROM				1//EPROM 
 #define CONFIG_SPLC_USING_CLEAR_NVRAM		1//启用清除NVRAM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_UART0				1//UART 0串口启用
@@ -131,55 +131,56 @@
 //线圈寄存器 非保持 16*8=256
 #define R_START								8
 #define R_END								15
-//数据寄存器 保持 512
+//数据寄存器 保持 576
 #define DM_START							16
-#define DM_END								527
+#define DM_END								591
 //数据寄存器 非保持 256
-#define EM_START							528
-#define EM_END								783
+#define EM_START							592
+#define EM_END								847
 //延时线圈
-//100US 2 * 16
-#define T_100US_START						784
-#define T_100US_END							785
 //1MS 4*16
-#define T_1MS_START							786
-#define T_1MS_END							789
+#define T_1MS_START							848
+#define T_1MS_END							851
 //10MS 4*16
-#define T_10MS_START						790
-#define T_10MS_END							793
+#define T_10MS_START						852
+#define T_10MS_END							855
 //100MS 4*16
-#define T_100MS_START						794
-#define T_100MS_END							797
+#define T_100MS_START						856
+#define T_100MS_END							859
 //延时计时器 
-//100US 4*16
-#define TD_100US_START						798
-#define TD_100US_END						861	
 //1MS 4*16
-#define TD_1MS_START						862
-#define TD_1MS_END							925
+#define TD_1MS_START						860
+#define TD_1MS_END							923
 //10MS 4*16
-#define TD_10MS_START						926
-#define TD_10MS_END							989
+#define TD_10MS_START						924
+#define TD_10MS_END							987
 //100MS 4*16
-#define TD_100MS_START						990
-#define TD_100MS_END						1053
-//计数器 8
-#define C_START								1054
-#define C_END								1061
+#define TD_100MS_START						988
+#define TD_100MS_END						1051
 //输入位寄存器 4*16
-#define X_START								1062//16992
-#define X_END								1065
+#define X_START								1052
+#define X_END								1055
 //输出位寄存器 4*16
-#define Y_START								1066//17056
-#define Y_END								1069
+#define Y_START								1056
+#define Y_END								1059
 //特殊寄存器 64
-#define SPREG_START							1070//
-#define SPREG_END							1133
+#define SPREG_START							1060
+#define SPREG_END							1123
 //特殊线圈 8*16
-#define SPCOIL_START						1134//18144
-#define SPCOIL_END							1149
+#define SPCOIL_START						1124
+#define SPCOIL_END							1131
+//延时器使能
+//1MS 4*16
+#define T_1MS_ENA_START						1132						
+#define T_1MS_ENA_END						1135
+//10MS 4*16
+#define T_10MS_ENA_START					1136
+#define T_10MS_ENA_END						1139
+//100MS 4*16
+#define T_100MS_ENA_START					1140
+#define T_100MS_ENA_END						1143
 /*****************************************************************************/
-#define CONFIG_NVRAM_SIZE 					(SPCOIL_END + 1)
+#define CONFIG_NVRAM_SIZE 					(T_100MS_ENA_END + 1)
 /*****************************************************************************/
 #define SPCOIL_ON							(SPCOIL_START * 16 + 0)//长通线圈
 #define SPCOIL_START_UP						(SPCOIL_START * 16 + 1)//初次上电
@@ -240,7 +241,7 @@
 #define SPCOIL_BEEM_ENABLE					(SPCOIL_START * 16 + 46)//蜂鸣器发射使能		
 /*****************************************************************************/
 #define SPREG_IDENTITY						(SPREG_START + 0)//平台ID号
-#define SPREG_CLEAR_NVRAM0					(SPREG_START + 1)//清除NVRAM后重新启动
+#define SPREG_CLEAR_NVRAM					(SPREG_START + 1)//清除NVRAM后重新启动
 /*****************************************************************************/
 #define SPREG_UART0_SEND_LENGTH				(SPREG_START + 2)//UART0 发送数据长度
 #define SPREG_UART0_SEND_NUM				(SPREG_START + 3)//UART0 已经发送数据长度
@@ -269,19 +270,16 @@
 #define SPREG_SPWM_CYCLE_0					(SPREG_START + 23)//软件PWM0周期设置
 #define SPREG_SPWM_CYCLE_SHADOW_0			(SPREG_START + 24)//软件PWM0周期阴影
 #define SPREG_SPWM_COUNTER_0				(SPREG_START + 25)//软件PWM0计数器
-
 #define SPREG_SPWM_POS_1					(SPREG_START + 26)//软件PWM1正脉宽设置
 #define SPREG_SPWM_POS_SHADOW_1				(SPREG_START + 27)//软件PWM1正脉宽阴影
 #define SPREG_SPWM_CYCLE_1					(SPREG_START + 28)//软件PWM1周期设置
 #define SPREG_SPWM_CYCLE_SHADOW_1			(SPREG_START + 29)//软件PWM1周期阴影
 #define SPREG_SPWM_COUNTER_1				(SPREG_START + 30)//软件PWM1计数器
-
 #define SPREG_SPWM_POS_2					(SPREG_START + 31)//软件PWM2正脉宽设置
 #define SPREG_SPWM_POS_SHADOW_2				(SPREG_START + 32)//软件PWM2正脉宽阴影
 #define SPREG_SPWM_CYCLE_2					(SPREG_START + 33)//软件PWM2周期设置
 #define SPREG_SPWM_CYCLE_SHADOW_2			(SPREG_START + 34)//软件PWM2周期阴影
 #define SPREG_SPWM_COUNTER_2				(SPREG_START + 35)//软件PWM2计数器
-
 #define SPREG_SPWM_POS_3					(SPREG_START + 36)//软件PWM3正脉宽设置
 #define SPREG_SPWM_POS_SHADOW_3				(SPREG_START + 37)//软件PWM3正脉宽阴影
 #define SPREG_SPWM_CYCLE_3					(SPREG_START + 38)//软件PWM3周期设置

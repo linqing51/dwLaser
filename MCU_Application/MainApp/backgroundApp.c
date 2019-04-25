@@ -23,8 +23,8 @@ void saveScheme(void){//EM->DM
 }
 
 void backgroundAppInit(void){
-	SET(R_FIBER_MANUFACT_0);
-	SET(R_FIBER_MANUFACT_1);
+	SET(R_FIBER_ID_PASS_0);
+	SET(R_FIBER_ID_PASS_1);
 	SET(X_FBD1);
 	//初始化EPID参数
 	NVRAM0[EM_EPID0_TAB_REF] = 250;
@@ -95,7 +95,7 @@ void backgroundApp(void){//背景应用
 		RES(R_ENVI_TEMP_HIGH);
 	}
 	//************************************************************************/
-	if(LD(X_FBD0) || LD(X_FBD1) || LD(R_FIBER_MANUFACT_0) || LD(R_FIBER_MANUFACT_1) ||
+	if(LD(X_FBD0) || LD(X_FBD1) || LD(R_FIBER_ID_PASS_0) || LD(R_FIBER_ID_PASS_1) ||
 	LD(R_DIODE_TEMP_HIGH_0) || LD(R_DIODE_TEMP_HIGH_1) || LD(R_DRIVE_TEMP_HIGH) || LD(R_ENVI_TEMP_HIGH) ||
 	LD(R_DRIVE_FAULT_0)	|| LD(R_DRIVE_FAULT_1)){
 		SET(R_SAFE_FAULT);
@@ -113,7 +113,7 @@ void backgroundApp(void){//背景应用
 		RES(R_SHCEME_SAVE_REQ);
 	}
 	//
-	if(LD(X_FBD0) || LD(X_FBD1) || LD(R_FIBER_MANUFACT_0) || LD(R_FIBER_MANUFACT_1) ||
+	if(LD(X_FBD0) || LD(X_FBD1) || LD(R_FIBER_ID_PASS_0) || LD(R_FIBER_ID_PASS_1) ||
 	   LD(R_DIODE_TEMP_HIGH_0) || LD(R_DIODE_TEMP_HIGH_1) || LD(R_DRIVE_FAULT_0) || LD(R_DRIVE_FAULT_1) ||
 	   LD(R_DRIVE_TEMP_HIGH) || LD(R_ENVI_TEMP_HIGH)){
 		SET(R_SAFE_FAULT);
@@ -170,11 +170,11 @@ void PCLAR0(uint16_t POW, uint16_t CUR) reentrant{//功率->DAC CODE
 		index = 0;
 	}
 	if(index >= 20){
-		NVRAM0[CUR] = NVRAM0[DM_CORR_TAB0_POWER + 19];
+		NVRAM0[CUR] = NVRAM0[DM_CORR_TAB0_POWER20];
 	}
 	else{
-		k = ((fp32_t)NVRAM0[(DM_CORR_TAB0_POWER + index + 1)] - (fp32_t)NVRAM0[DM_CORR_TAB0_POWER + index]) / 2;
-		b = NVRAM0[DM_CORR_TAB0_POWER + index] - (k * index * 2);		
+		k = ((fp32_t)NVRAM0[(DM_CORR_TAB0_POWER0 + index + 1)] - (fp32_t)NVRAM0[DM_CORR_TAB0_POWER0 + index]) / 2;
+		b = NVRAM0[DM_CORR_TAB0_POWER0 + index] - (k * index * 2);		
 	}
 	NVRAM0[CUR] = (int16_t)(k * (fp32_t)NVRAM0[POW] - b);
 }
@@ -225,11 +225,11 @@ void PCLAR1(uint16_t POW, uint16_t CUR) reentrant{//功率->DAC CODE
 		index = 0;
 	}
 	if(index >= 20){
-		NVRAM0[CUR] = NVRAM0[DM_CORR_TAB1_POWER + 19];
+		NVRAM0[CUR] = NVRAM0[DM_CORR_TAB1_POWER20];
 	}
 	else{
-		k = ((fp32_t)NVRAM0[(DM_CORR_TAB1_POWER + index + 1)] - (fp32_t)NVRAM0[DM_CORR_TAB1_POWER + index]) / 2;
-		b = NVRAM0[DM_CORR_TAB1_POWER + index] - (k * index * 2);		
+		k = ((fp32_t)NVRAM0[(DM_CORR_TAB1_POWER0 + index + 1)] - (fp32_t)NVRAM0[DM_CORR_TAB1_POWER0 + index]) / 2;
+		b = NVRAM0[DM_CORR_TAB1_POWER0 + index] - (k * index * 2);		
 	}
 	NVRAM0[CUR] = (int16_t)(k * (fp32_t)NVRAM0[POW] - b);
 }

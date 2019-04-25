@@ -1,5 +1,7 @@
 #include "sPlcFun.h"
 /*****************************************************************************/
+
+
 void REBOOT(void) reentrant{//Èí¼þ¸´Î»	
 	mucReboot();
 }
@@ -65,10 +67,9 @@ uint8_t LDN(uint16_t A) reentrant{//Âö³åÏÂ½µÑØ
 }
 /*****************************************************************************/
 //ÑÓÊ±Æ÷Ö¸Áî
-//void T100US(uint8_t A, uint8_t start, uint16_t value){//100USÑÓÊ±Æ÷
-//}
 void T1MS(uint8_t A, uint8_t start, uint16_t value) reentrant{//1MSÑÓÊ±Æ÷
 	if(start){
+		SET(T_1MS_ENA_START * 16 + A);
 		if(NVRAM0[(TD_1MS_START + A)] >= value){
 			NVRAM0[(T_1MS_START + (A / 16))] |= 1 << (A % 16);
 		}
@@ -77,12 +78,14 @@ void T1MS(uint8_t A, uint8_t start, uint16_t value) reentrant{//1MSÑÓÊ±Æ÷
 		}		
 	}
 	else{
+		RES(T_1MS_ENA_START * 16 + A);
 		NVRAM0[(T_1MS_START + (A / 16))] &= ~(1 << (A % 16));
 		NVRAM0[(TD_1MS_START + A)] = 0x0;
 	}	
 }
 void T10MS(uint8_t A, uint8_t start, uint16_t value) reentrant{//10MSÑÓÊ±Æ÷
 	if(start){
+		SET(T_10MS_ENA_START * 16 + A);
 		if(NVRAM0[(TD_10MS_START + A)] >= value){
 			NVRAM0[(T_10MS_START + (A / 16))] |= 1 << (A % 16);
 		}
@@ -91,20 +94,23 @@ void T10MS(uint8_t A, uint8_t start, uint16_t value) reentrant{//10MSÑÓÊ±Æ÷
 		}
 	}
 	else{
+		RES(T_10MS_ENA_START * 16 + A);
 		NVRAM0[(T_10MS_START + (A / 16))] &= ~(1 << (A % 16));
 		NVRAM0[(TD_10MS_START + A)] = 0x0;
 	}	
 }
 void T100MS(uint8_t A, uint8_t start, uint16_t value) reentrant{//100MSÑÓÊ±Æ÷
 	if(start){
+		SET(T_100MS_ENA_START * 16 + A);
 		if(NVRAM0[(TD_100MS_START + A)] >= value){
 			NVRAM0[(T_100MS_START + (A / 16))] |= 1 << (A % 16);
 		}
-		else{
+		else{		
 			NVRAM0[(T_100MS_START + (A / 16))] &= ~(1 << (A % 16));
 		}	
 	}
 	else{
+		RES(T_100MS_ENA_START * 16 + A);
 		NVRAM0[(T_100MS_START + (A / 16))] &= ~(1 << (A % 16));
 		NVRAM0[(TD_100MS_START + A)] = 0x0;
 	}
