@@ -1,20 +1,28 @@
 #include "dcHmiApp.h"
 /*****************************************************************************/
 #define WORKSTEP_POWERUP							0//上电
-#define WORKSTEP_CHECK_EPROM						1//单片机自检
-#define WORKSTEP_CHECK_INTBUS						2//触摸屏通信自检
-#define WORKSTEP_CHECK_LDR							3//激光驱动器自检
-#define WORKSTEP_CHECK_TEMPER						4//温度自检
-#define WORKSTEP_CHECK_USBHOST						5//USBHOST模块自检
-#define WORKSTEP_CHECK_NFC							6//NFC模块自检
-#define WORKSTEP_CHECK_NRF24L01						7//无线脚踏RF自检
-#define WORKSTEP_STANDBY							8//等待状态	
-#define WORKSTEP_READY_LOAD_PARA					9//载入参数
-#define WORKSTEP_READY_LOAD_DONE					10//载入参数完毕
-#define WORKSTEP_LASER_TRIGGER						11//激光触发
-#define WORKSTEP_LASER_EMITING						12//激光发射中
-#define WORKSTEP_LASER_STOP							13//激光发射结束
-#define WORKSTEP_FAULT								255//故障状态
+//自检状态
+#define WORKSTEP_CHECK_EPROM						100//单片机自检
+#define WORKSTEP_CHECK_INTBUS						101//触摸屏通信自检
+#define WORKSTEP_CHECK_LDR							102//激光驱动器自检
+#define WORKSTEP_CHECK_TEMPER						103//温度自检
+#define WORKSTEP_CHECK_USBHOST						104//USBHOST模块自检
+#define WORKSTEP_CHECK_NFC							105//NFC模块自检
+#define WORKSTEP_CHECK_NRF24L01						106//无线脚踏RF自检
+//密码输入状态
+#define WORKSTEP_PASSWORD_INPUT						200//密码输入状态
+#define WORKSTEP_PASSWORD_NEW						201//密码更改状态
+
+
+#define WORKSTEP_STANDBY							100//等待状态
+#define WORKSTEP_READY_LOAD_PARA					101//载入参数
+#define WORKSTEP_READY_LOAD_DONE					102//载入参数完毕
+#define WORKSTEP_LASER_TRIGGER						103//激光触发
+#define WORKSTEP_LASER_EMITING						104//激光发射中
+#define WORKSTEP_LASER_STOP							105//激光发射结束
+
+#define WORKSTEP_OPTION								200//选项菜单
+#define WORKSTEP_FAULT								-1//故障状态
 /*****************************************************************************/
 #if CONFIG_USING_DCHMI_APP == 1
 void dcHmiLoopInit(void){//初始化模块
@@ -97,9 +105,9 @@ void dcHmiLoop(void){//HMI轮训程序
 #endif
 		}
 		if(LD(R_CHECK_EPROM_PASS)){
-			T100MS(T100MS_CHECK_EPROM_DELAY, true, 3);
-			if(LD(T_100MS_START * 16 + T100MS_CHECK_EPROM_DELAY)){
-				T100MS(T100MS_CHECK_EPROM_DELAY, false, 3);
+			T100MS(T100MS_CHECK_FLASH_DELAY, true, 3);
+			if(LD(T_100MS_START * 16 + T100MS_CHECK_FLASH_DELAY)){
+				T100MS(T100MS_CHECK_FLASH_DELAY, false, 3);
 				NVRAM0[EM_HMI_OPERA_STEP] = WORKSTEP_CHECK_INTBUS;
 				SET(R_CHECK_EPROM_DONE);
 			}
