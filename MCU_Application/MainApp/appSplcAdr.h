@@ -33,57 +33,60 @@
 #define EM_LASER_NEGWIDTH						(EM_START + 22)//负脉宽
 #define EM_LASER_GROUP							(EM_START + 23)//脉冲数
 #define EM_LASER_SPACE							(EM_START + 24)//脉冲间隔
-#define EM_HMI_PAGE								(EM_START + 25)//HMI页面编号
-#define EM_START_PROGRESS_BAR					(EM_START + 26)//HMI开机进度条
-#define EM_NEW_PASSWORD0						(EM_START + 27)//HMI输入新密码0
-#define EM_NEW_PASSWORD1						(EM_START + 28)//HMI输入新密码1
-#define EM_DEFAULT_PASSWORD0					(EM_START + 29)//HMI进入默认密码0
-#define EM_DEFAULT_PASSWORD1					(EM_START + 30)//HMI进入默认密码1
-#define EM_DIODE_TEMP0							(EM_START + 31)//二极管温度0
-#define EM_DIODE_TEMP1							(EM_START + 32)//二极管温度1
-#define EM_DRIVE_TEMP							(EM_START + 33)//驱动器温度
-#define EM_ENVI_TEMP							(EM_START + 34)//环境温度
-#define EM_DIODE_HIGH_TEMP						(EM_START + 35)//二极管过热阈值
-#define EM_DRIVE_HIGH_TEMP						(EM_START + 36)//驱动器过热阈值
-#define EM_ENVI_HIGH_TEMP						(EM_START + 37)//环境过热阈值
+#define EM_DIODE_TEMP0							(EM_START + 25)//二极管温度0
+#define EM_DIODE_TEMP1							(EM_START + 26)//二极管温度1
+#define EM_DRIVE_TEMP							(EM_START + 27)//驱动器温度
+#define EM_ENVI_TEMP							(EM_START + 28)//环境温度
+#define EM_DIODE_HIGH_TEMP						(EM_START + 29)//二极管过热阈值
+#define EM_DRIVE_HIGH_TEMP						(EM_START + 30)//驱动器过热阈值
+#define EM_ENVI_HIGH_TEMP						(EM_START + 31)//环境过热阈值
 /*****************************************************************************/
-#define EM_EPID0_TAB_OUT						(EM_START + 38)//EPID输出值地址
-#define EM_EPID0_TAB_REF						(EM_START + 39)//EPID设置定值
-#define EM_EPID0_TAB_VFB						(EM_START + 40)//EPID反馈值
-#define EM_EPID0_TAB_KP							(EM_START + 41)//EPID比例常数 XX.XXX 0-65.535
-#define	EM_EPID0_TAB_KI							(EM_START +	42)//EPID积分常数 XX.XXX 0-65.535		
-#define EM_EPID0_TAB_TD 						(EM_START + 43)//EPID微分时间常数 XX.XXX 0-65.535
-#define EM_EPID0_TAB_TS							(EM_START + 44)//EPID运算时间间隔 1-3000 单位0.01S
-#define EM_EPID0_TAB_EN_FP32L					(EM_START +	45)//EPID当前误差值 FP32 
-#define EM_EPID0_TAB_EN_FP32H					(EM_START +	46)//EPID当前误差值 FP32 
-#define EM_EPID0_TAB_VFB1_FP32L 				(EM_START +	47)//EPID前1次误差值 FP32
-#define EM_EPID0_TAB_VFB1_FP32H					(EM_START +	48)//EPID前1次误差值 FP32
-#define EM_EPID0_TAB_MAX						(EM_START + 49)//EPID输出最大限制		
-#define EM_EPID0_TAB_MIN						(EM_START + 50)//EPID输出最小限制
-#define EM_EPID0_TAB_BIAS						(EM_START +	51)//EPID输出偏置
-#define EM_EPID0_TAB_TSC						(EM_START + 52)//EPID间隔计时器
-#define EM_EPID0_TAB_KP_SUM_FP32L				(EM_START +	53)//EPID比例累加值 FP32
-#define EM_EPID0_TAB_KP_SUM_FP32H				(EM_START +	54)//EPID比例累加值 FP32
-#define EM_EPID0_TAB_KI_SUM_FP32L				(EM_START +	55)//EPID微分累加值 FP32
-#define EM_EPID0_TAB_KI_SUM_FP32H				(EM_START +	56)//EPID微分累加值 FP32
-#define EM_EPID0_TAB_KD_SUM_FP32L				(EM_START +	57)//EPID微分累加值 FP32
-#define EM_EPID0_TAB_KD_SUM_FP32H				(EM_START +	58)//EPID微分累加值 FP32
-#define EM_EPID0_TAB_FOUT_FP32L					(EM_START +	59)//EPID输出累加值 FP32
-#define EM_EPID0_TAB_FOUT_FP32H					(EM_START +	60)//EPID输出累加值 FP32
-#define EM_LASER_CURRENT_0						(EM_START +	61)//激光器电流0
-#define EM_LASER_CURRENT_1						(EM_START +	62)//激光器电流1
-#define EM_HMI_OPERA_STEP						(EM_START +	63)//操作步骤
-#define EM_ERROR_CODE							(EM_START + 64)//错误码
+#define EM_EPID0_TAB_OUT						(EM_START + 32)//EPID输出值地址
+#define EM_EPID0_TAB_REF						(EM_START + 33)//EPID设置定值
+#define EM_EPID0_TAB_VFB						(EM_START + 34)//EPID反馈值
+#define EM_EPID0_TAB_KP							(EM_START + 35)//EPID比例常数 XX.XXX 0-65.535
+#define	EM_EPID0_TAB_KI							(EM_START +	36)//EPID积分常数 XX.XXX 0-65.535		
+#define EM_EPID0_TAB_TD 						(EM_START + 37)//EPID微分时间常数 XX.XXX 0-65.535
+#define EM_EPID0_TAB_TS							(EM_START + 38)//EPID运算时间间隔 1-3000 单位0.01S
+#define EM_EPID0_TAB_EN_FP32L					(EM_START +	39)//EPID当前误差值 FP32 
+#define EM_EPID0_TAB_EN_FP32H					(EM_START +	40)//EPID当前误差值 FP32 
+#define EM_EPID0_TAB_VFB1_FP32L 				(EM_START +	41)//EPID前1次误差值 FP32
+#define EM_EPID0_TAB_VFB1_FP32H					(EM_START +	42)//EPID前1次误差值 FP32
+#define EM_EPID0_TAB_MAX						(EM_START + 43)//EPID输出最大限制		
+#define EM_EPID0_TAB_MIN						(EM_START + 44)//EPID输出最小限制
+#define EM_EPID0_TAB_BIAS						(EM_START +	45)//EPID输出偏置
+#define EM_EPID0_TAB_TSC						(EM_START + 46)//EPID间隔计时器
+#define EM_EPID0_TAB_KP_SUM_FP32L				(EM_START +	47)//EPID比例累加值 FP32
+#define EM_EPID0_TAB_KP_SUM_FP32H				(EM_START +	48)//EPID比例累加值 FP32
+#define EM_EPID0_TAB_KI_SUM_FP32L				(EM_START +	49)//EPID微分累加值 FP32
+#define EM_EPID0_TAB_KI_SUM_FP32H				(EM_START +	50)//EPID微分累加值 FP32
+#define EM_EPID0_TAB_KD_SUM_FP32L				(EM_START +	51)//EPID微分累加值 FP32
+#define EM_EPID0_TAB_KD_SUM_FP32H				(EM_START +	52)//EPID微分累加值 FP32
+#define EM_EPID0_TAB_FOUT_FP32L					(EM_START +	53)//EPID输出累加值 FP32
+#define EM_EPID0_TAB_FOUT_FP32H					(EM_START +	54)//EPID输出累加值 FP32
+#define EM_LASER_CURRENT_0						(EM_START +	55)//激光器电流0
+#define EM_LASER_CURRENT_1						(EM_START +	56)//激光器电流1
+#define EM_HMI_OPERA_STEP						(EM_START +	57)//操作步骤
+#define EM_ERROR_CODE							(EM_START + 58)//错误码
+
+#define EM_DC_PAGE								(EM_START + 128)//HMI页面编号
+#define EM_DC_PASSCODE_INDEX					(EM_START + 129)//密码输入位索引
+#define EM_DC_PASSCODE0_DISPLAY					(EM_START + 130)//密码显示屏
+#define EM_DC_PASSCODE1_DISPLAY					(EM_START + 131)//密码显示屏
+#define EM_DC_NEWPASSWORD0						(EM_START + 132)//输入新密码0
+#define EM_DC_NEWPASSWORD1						(EM_START + 133)//输入新密码1
+#define EM_DC_DEFAULT_PASSCODE0					(EM_START + 134)//默认密码0
+#define EM_DC_DEFAULT_PASSCODE1					(EM_START + 135)//默认密码1
 /*****************************************************************************/
-#define DM_LASER_SCHEME_NAME					(DM_START + 0)//方案名称
-#define DM_LASER_SELECT							(DM_START + 17)//通道选择
-#define DM_LASER_PULSE_MODE						(DM_START + 18)//脉冲模式
-#define DM_LASER_POWER_0						(DM_START + 19)//通道0功率
-#define DM_LASER_POWER_1						(DM_START + 20)//通道1功率
-#define DM_LASER_POSWIDTH						(DM_START + 21)//正脉宽
-#define DM_LASER_NEGWIDTH						(DM_START + 22)//负脉宽
-#define DM_LASER_GROUP							(DM_START + 23)//脉冲数
-#define DM_LASER_SPACE							(DM_START + 24)//脉冲间隔
+#define DM_LASER_SCHEME_NAME					(DM_START +  0)//方案名称
+#define DM_LASER_SELECT							(DM_START +  17)//通道选择
+#define DM_LASER_PULSE_MODE						(DM_START +  18)//脉冲模式
+#define DM_LASER_POWER_0						(DM_START +  19)//通道0功率
+#define DM_LASER_POWER_1						(DM_START +  20)//通道1功率
+#define DM_LASER_POSWIDTH						(DM_START +  21)//正脉宽
+#define DM_LASER_NEGWIDTH						(DM_START +  22)//负脉宽
+#define DM_LASER_GROUP							(DM_START +  23)//脉冲数
+#define DM_LASER_SPACE							(DM_START +  24)//脉冲间隔
 
 #define DM_SCHEME_START_0						(DM_START +   0)//方案0存储区起始
 #define DM_SCHEME_END_0							(DM_START +  24)//方案0存储区结束
@@ -222,7 +225,6 @@
 #define R_SAFE_FAULT							(R_START * 16 + 8)//安全标志
 #define R_SCHEME_LOAD_REQ						(R_START * 16 + 9)//方案载入请求
 #define R_SHCEME_SAVE_REQ						(R_START * 16 + 10)//方案储存请求
-#define R_KEY_READY								(R_START * 16 + 11)//准备按键
 
 #define R_CHECK_EPROM_DONE						(R_START * 16 + 128)//存储器自检完毕
 #define R_CHECK_INTBUS_DONE						(R_START * 16 + 129)//HMI通信自检完毕
@@ -245,6 +247,9 @@
 #define R_CHECK_USBHOST_FAIL					(R_START * 16 + 146)//USBHOST模块失败
 #define R_CHECK_NFC_FAIL						(R_START * 16 + 147)//NFC模块失败
 #define R_CHECK_NRF24L01_FAIL					(R_START * 16 + 148)//NRF24L01模块自检失败
+
+#define R_DC_READY_KEY							(R_START * 16 + 149)//准备按键
+#define R_DC_PASSCODE_SAVE_KEY					(R_START * 16 + 150)//新密码保存按键
 /*****************************************************************************/
 #define T100MS_READY_BEEM_DELAY					0//进入READY状态后蜂鸣器响延迟
 #define T100MS_CHECK_FLASH_DELAY				1//存储器自检等待延迟

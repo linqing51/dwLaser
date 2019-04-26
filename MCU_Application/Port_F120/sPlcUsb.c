@@ -1,5 +1,6 @@
 #include "sPlcUsb.h"
 /*****************************************************************************/
+#if CONFIG_USING_USB == 1
 static void sPlcUsbDiskConnectPoll(void){//USB DISK连接轮询 周期200mS	
 	T10MS(T10MS_USBDISK_CONNECT_DELAY, true, 20);//启动计时器延时
 	if(LD(T_10MS_START * 16U + T10MS_USBDISK_CONNECT_DELAY)){
@@ -62,3 +63,4 @@ void sPlcUsbPoll(void){//USB 控制轮询
 		sPlcUsbDiskRemove();
 	}
 }	
+#endif

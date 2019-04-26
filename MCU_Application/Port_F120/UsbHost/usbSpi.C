@@ -1,5 +1,6 @@
 #include "usbSpi.h"
 /*****************************************************************************/
+#if CONFIG_USING_USB == 1
 void usbSpiInit(void){//USB CH376初始化
 	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE	    
 	//SPI总线初始化
@@ -98,3 +99,4 @@ void mStopIfError(uint8_t iError){
 		SET(SPCOIL_USB_INT_ERROR);
 	}
 }
+#endif
