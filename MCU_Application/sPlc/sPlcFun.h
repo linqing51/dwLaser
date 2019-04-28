@@ -49,6 +49,7 @@ void DEL1(uint16_t Sa) reentrant;//32位非饱和自减
 void DELS1(uint16_t Sa) reentrant;//32位饱和自减
 void TNTC(uint16_t dist, uint16_t src) reentrant;//CODE转换为环境温度
 void TENV(uint16_t dist, uint16_t src) reentrant;//CODE转换为NTC测量温度温度
+void BCPY(uint16_t dist, uint16_t src, uint16_t length) reentrant;//块复制
 /*****************************************************************************/
 //void XTAB(int16_t *distY, int16_t *srcX, int16_t *index, int16_t *length) reentrant;//线性查表从X计算Y值
 //void YTAB(int16_t *distX, int16_t *srcY, int16_t *index, int16_t *length) reentrant;//线性查表从Y计算X值

@@ -397,7 +397,13 @@ void SWAP(uint16_t dist, uint16_t src) reentrant{//交换A的高低字节
 	tmpH |= tmpL;
 	NVRAM0[dist] = tmpH;
 }
-
+/*****************************************************************************/
+void BCPY(uint16_t dist, uint16_t src, uint16_t length) reentrant{//块复制
+	uint16_t i;
+	for(i = 0;i < length;i ++){
+		NVRAM0[dist + i] = NVRAM0[src + i];
+	}
+}
 /*****************************************************************************/
 //IO指令
 void IMDIO(void) reentrant{//立即更新IO点状态含输入输出

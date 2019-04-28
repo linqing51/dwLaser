@@ -247,19 +247,44 @@
 #define R_CHECK_USBHOST_FAIL					(R_START * 16 + 146)//USBHOST模块失败
 #define R_CHECK_NFC_FAIL						(R_START * 16 + 147)//NFC模块失败
 #define R_CHECK_NRF24L01_FAIL					(R_START * 16 + 148)//NRF24L01模块自检失败
-
+//
 #define R_DC_PASSCODE_ENTER_REQ					(R_START * 16 + 149)//密码确认请求
 #define R_DC_PASSCODE_CHANGE_REQ				(R_START * 16 + 150)//密码修改请求
 #define R_DC_PASSCODE_CANCEL_REQ				(R_START * 16 + 151)//密码输入清空
 #define R_DC_PASSCODE_BACKSPACE					(R_START * 16 + 152)//密码输入退格
+//
 #define R_DC_NEW_PASSCODE_INPUT_SAVE			(R_START * 16 + 153)//密码修改储存
 #define R_DC_NEW_PASSCODE0_INPUT_DONE			(R_START * 16 + 154)//新密码匹配第一次
 #define R_DC_NEW_PASSCODE1_INPUT_DONE			(R_START * 16 + 155)//新密码匹配第二次
 #define R_DC_NEW_PASSCODE_INPUT_ABANDON			(R_START * 16 + 156)//放弃密码修改
 #define R_DC_NEW_PASSCODE_CANCEL_REQ			(R_START * 16 + 157)//新密码输入清空
 #define R_DC_NEW_PASSCODE_BACKSPACE				(R_START * 16 + 158)//新密码输入退格
-
-#define R_DC_READY_KEY							(R_START * 16 + 159)//准备按键
+//
+#define R_DC_STANDBY_READY						(R_START * 16 + 159)//准备按键
+#define R_DC_STANDBY_RESET_REQ					(R_START * 16 + 160)//能量和时间计时
+#define R_DC_STANDBY_SELECT_CH0_REQ				(R_START * 16 + 161)//激光通道选择0
+#define R_DC_STANDBY_SELECT_CH1_REQ				(R_START * 16 + 162)//激光通道选择1
+#define R_DC_STANDBY_SELECT_CH01_REQ			(R_START * 16 + 163)//激光通道选择0+1
+#define R_DC_STANDBY_MODE_CW_REQ				(R_START * 16 + 164)//激光发射模式连续CW
+#define R_DC_STANDBY_MODE_SP_REQ				(R_START * 16 + 165)//激光发射模式单脉冲SP
+#define R_DC_STANDBY_MODE_MP_REQ				(R_START * 16 + 166)//激光发射模式多脉冲MP
+#define R_DC_STANDBY_MODE_GP_REQ				(R_START * 16 + 167)//激光发射模式间隔脉冲GP
+#define R_DC_STANDBY_POSWIDTH_ADD_REQ			(R_START * 16 + 168)//正脉宽增加
+#define R_DC_STANDBY_POSWIDTH_DEC_REQ			(R_START * 16 + 169)//正脉宽减小
+#define R_DC_STANDBY_NEGWIDTH_ADD_REQ			(R_START * 16 + 170)//负脉宽增加
+#define R_DC_STANDBY_NEGWIDTH_DEC_REQ			(R_START * 16 + 171)//负脉宽减小
+#define R_DC_STANDBY_TIMER_ADD_REQ				(R_START * 16 + 172)//脉冲个数增加
+#define R_DC_STANDBY_TIMER_DEC_REQ				(R_START * 16 + 173)//脉冲个数减小
+#define R_DC_STANDBY_SPACE_ADD_REQ				(R_START * 16 + 174)//脉冲间隔增加
+#define R_DC_STANDBY_SPACE_DEC_REQ				(R_START * 16 + 175)//脉冲间隔减小
+#define R_DC_STANDBY_SCHEME_SAVE_REQ			(R_START * 16 + 176)//方案储存
+#define R_DC_STANDBY_LASERPOWER0_ADD_REQ		(R_START * 16 + 177)//激光功率增加0
+#define R_DC_STANDBY_LASERPOWER1_ADD_REQ		(R_START * 16 + 178)//激光功率增加1
+#define R_DC_STANDBY_LASERPOWER0_DEC_REQ		(R_START * 16 + 179)//激光功率减小0
+#define R_DC_STANDBY_LASERPOWER1_DEC_REQ		(R_START * 16 + 180)//激光功率减小1
+#define R_DC_STANDBY_OPTION						(R_START * 16 + 181)//选项按键
+//
+#define R_DC_OPTION_BEEM_TONE					(R_START * 16 + 182)//蜂鸣器声光同步
 /*****************************************************************************/
 #define T100MS_READY_BEEM_DELAY					0//进入READY状态后蜂鸣器响延迟
 #define T100MS_CHECK_FLASH_DELAY				1//存储器自检等待延迟

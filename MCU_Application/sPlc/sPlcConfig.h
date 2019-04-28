@@ -117,6 +117,12 @@
 #define CONFIG_LASER_TIMER_TICK				1000
 #define CONFIG_USING_DCHMI_APP				1//广东大彩人机交互应用
 #define CONFIG_USING_BACKGROUND_APP			1//背景应用
+#define CONFIG_MAX_LASERPOWER_CH0			300
+#define CONFIG_MAX_LASERPOWER_CH1			150
+#define CONFIG_MAX_LASER_POSWIDTH			999
+#define CONFIG_MAX_LASER_NEGWIDTH			999
+#define CONFIG_MAX_LASER_TIMER				999
+#define CONFIG_MAX_LASER_SPACE				999
 /*****************************************************************************/
 //#define CONFIG_SPLC_USING_NFC				0
 //#define RW_SUPPORT	
