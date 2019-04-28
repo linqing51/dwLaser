@@ -73,8 +73,8 @@
 #define EM_DC_PASSCODE_INDEX					(EM_START + 129)//密码输入位索引
 #define EM_DC_PASSCODE0_DISPLAY					(EM_START + 130)//密码显示屏
 #define EM_DC_PASSCODE1_DISPLAY					(EM_START + 131)//密码显示屏
-#define EM_DC_NEWPASSWORD0						(EM_START + 132)//输入新密码0
-#define EM_DC_NEWPASSWORD1						(EM_START + 133)//输入新密码1
+#define EM_DC_NEW_PASSCODE0						(EM_START + 132)//输入新密码0
+#define EM_DC_NEW_PASSCODE1						(EM_START + 133)//输入新密码1
 #define EM_DC_DEFAULT_PASSCODE0					(EM_START + 134)//默认密码0
 #define EM_DC_DEFAULT_PASSCODE1					(EM_START + 135)//默认密码1
 /*****************************************************************************/
@@ -182,8 +182,8 @@
 
 #define DM_SCHEME_NUM							(DM_START + 442)//选择的方案编号
 #define DM_BEEM_VOLUME							(DM_START + 443)//蜂鸣器音量
-#define DM_OLD_PASSWORD0						(DM_START + 444)//旧密码0-1
-#define DM_OLD_PASSWORD1						(DM_START + 445)//旧密码2-3
+#define DM_DC_OLD_PASSCODE0						(DM_START + 444)//屏旧密码0-1
+#define DM_DC_OLD_PASSCODE1						(DM_START + 445)//屏旧密码2-3
 #define DM_SYS_RUNTIME_L						(DM_START + 446)//系统累计运行时间秒L 32BIT
 #define DM_SYS_RUNTIME_H						(DM_START + 447)//系统累计运行时间秒H 32BIT
 #define DM_LAR_RUNTIME_L						(DM_START + 448)//激光累计发射时间秒L 32BIT
@@ -248,8 +248,18 @@
 #define R_CHECK_NFC_FAIL						(R_START * 16 + 147)//NFC模块失败
 #define R_CHECK_NRF24L01_FAIL					(R_START * 16 + 148)//NRF24L01模块自检失败
 
-#define R_DC_READY_KEY							(R_START * 16 + 149)//准备按键
-#define R_DC_PASSCODE_SAVE_KEY					(R_START * 16 + 150)//新密码保存按键
+#define R_DC_PASSCODE_ENTER_REQ					(R_START * 16 + 149)//密码确认请求
+#define R_DC_PASSCODE_CHANGE_REQ				(R_START * 16 + 150)//密码修改请求
+#define R_DC_PASSCODE_CANCEL_REQ				(R_START * 16 + 151)//密码输入清空
+#define R_DC_PASSCODE_BACKSPACE					(R_START * 16 + 152)//密码输入退格
+#define R_DC_NEW_PASSCODE_INPUT_SAVE			(R_START * 16 + 153)//密码修改储存
+#define R_DC_NEW_PASSCODE0_INPUT_DONE			(R_START * 16 + 154)//新密码匹配第一次
+#define R_DC_NEW_PASSCODE1_INPUT_DONE			(R_START * 16 + 155)//新密码匹配第二次
+#define R_DC_NEW_PASSCODE_INPUT_ABANDON			(R_START * 16 + 156)//放弃密码修改
+#define R_DC_NEW_PASSCODE_CANCEL_REQ			(R_START * 16 + 157)//新密码输入清空
+#define R_DC_NEW_PASSCODE_BACKSPACE				(R_START * 16 + 158)//新密码输入退格
+
+#define R_DC_READY_KEY							(R_START * 16 + 159)//准备按键
 /*****************************************************************************/
 #define T100MS_READY_BEEM_DELAY					0//进入READY状态后蜂鸣器响延迟
 #define T100MS_CHECK_FLASH_DELAY				1//存储器自检等待延迟

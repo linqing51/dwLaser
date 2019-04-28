@@ -18,6 +18,10 @@ void T1MS(uint8_t A, uint8_t start, uint16_t value) reentrant;//1mS计时器启动
 void T10MS(uint8_t A, uint8_t start, uint16_t value) reentrant;//10mS计时器启动
 void T100MS(uint8_t A, uint8_t start, uint16_t value) reentrant;//100mS计时器启动
 //运算指令
+void CLR(uint16_t A) reentrant;//寄存器清零
+void CLRD(uint16_t A) reentrant;//32位寄存器清零
+void MOV(uint16_t dist, uint16_t src) reentrant;//16位寄存器传输
+void MOVD(uint16_t dist, uint16_t src) reentrant;//32位寄存器传输
 void SWAP(uint16_t dist, uint16_t src) reentrant;//交换A的高低字节
 void ABS16(uint16_t dist, uint16_t src) reentrant;//16位数球绝对值
 void ABS32(uint16_t dist, uint16_t src) reentrant;//32位数求绝对值
