@@ -8,11 +8,11 @@ void delayUs(uint8_t us) reentrant{//Œ¢√Î—” ±
 		NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 		feedWatchDog();
 #eles
-		//NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
-        //NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
-		//NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
-		//NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
-		//NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();	
+		NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
+		NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
+		NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
+		NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
+		NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();	
 #endif
 		us --;	
 	}

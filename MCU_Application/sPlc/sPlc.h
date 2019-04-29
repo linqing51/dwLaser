@@ -62,6 +62,6 @@ void disableSplcIsr(void) reentrant;
 void enableSplcIsr(void) reentrant;
 /*****************************************************************************/
 void sPlcInit(void);
-
+void updataNvram(void);//¸üÐÂNVRAM->EPROM
 /*****************************************************************************/
 #endif

@@ -125,7 +125,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>1</UseSimulator>
+            <UseSimulator>0</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -137,7 +137,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
-            <UseTarget>0</UseTarget>
+            <UseTarget>1</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -206,8 +206,8 @@
             <Mode2>0</Mode2>
             <useCB>0</useCB>
             <useXB>0</useXB>
-            <useL251>0</useL251>
-            <useA251>0</useA251>
+            <useL251>1</useL251>
+            <useA251>1</useA251>
             <Mx51>0</Mx51>
             <ModC812>0</ModC812>
             <ModCont>0</ModCont>
@@ -218,12 +218,14 @@
             <Mx51P>0</Mx51P>
             <hadXRAM2>0</hadXRAM2>
             <uocXram2>0</uocXram2>
+            <hadXRAM3>0</hadXRAM3>
             <ModC2>0</ModC2>
             <ModH2>0</ModH2>
             <Mdu_R515>0</Mdu_R515>
             <Mdu_F120>1</Mdu_F120>
             <Psoc>0</Psoc>
             <hadIROM2>0</hadIROM2>
+            <hadIROM3>0</hadIROM3>
             <ModSmx2>0</ModSmx2>
             <cBanks>0</cBanks>
             <xBanks>0</xBanks>
@@ -293,6 +295,16 @@
                 <StartAddress>0x0</StartAddress>
                 <Size>0x0</Size>
               </IROM512>
+              <XRA513>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </XRA513>
+              <IROM513>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </IROM513>
             </OnChipMemories>
           </Target51Misc>
           <C51>
@@ -434,11 +446,6 @@
               <FileType>1</FileType>
               <FilePath>..\sPlc\sPlcModbus.c</FilePath>
             </File>
-            <File>
-              <FileName>sPlcFunEPID.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\sPlc\sPlcFunEPID.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -465,39 +472,14 @@
               <FilePath>.\sPlcModbusPort.c</FilePath>
             </File>
             <File>
-              <FileName>sPlcUart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcUart.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcIoOut.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcIoOut.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcIoIn.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcIoIn.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcLaser.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcLaser.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcChipDac.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcChipDac.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcChipAdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcChipAdc.c</FilePath>
-            </File>
-            <File>
               <FileName>sPlcPac.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sPlcPac.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcUart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcUart.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -508,57 +490,6 @@
               <FileName>MainApp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MainApp\MainApp.c</FilePath>
-            </File>
-            <File>
-              <FileName>backgroundApp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\backgroundApp.c</FilePath>
-            </File>
-            <File>
-              <FileName>dcHmiApp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\dcHmiApp.c</FilePath>
-              <FileOption>
-                <CommonProperty>
-                  <UseCPPCompiler>2</UseCPPCompiler>
-                  <RVCTCodeConst>0</RVCTCodeConst>
-                  <RVCTZI>0</RVCTZI>
-                  <RVCTOtherData>0</RVCTOtherData>
-                  <ModuleSelection>0</ModuleSelection>
-                  <IncludeInBuild>2</IncludeInBuild>
-                  <AlwaysBuild>2</AlwaysBuild>
-                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
-                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
-                  <PublicsOnly>2</PublicsOnly>
-                  <StopOnExitCode>11</StopOnExitCode>
-                  <CustomArgument></CustomArgument>
-                  <IncludeLibraryModules></IncludeLibraryModules>
-                  <ComprImg>1</ComprImg>
-                  <BankNo>65535</BankNo>
-                </CommonProperty>
-                <File51>
-                  <C51>
-                    <RegisterColoring>2</RegisterColoring>
-                    <VariablesInOrder>2</VariablesInOrder>
-                    <IntegerPromotion>2</IntegerPromotion>
-                    <uAregs>2</uAregs>
-                    <UseInterruptVector>2</UseInterruptVector>
-                    <Fuzzy>8</Fuzzy>
-                    <Optimize>6</Optimize>
-                    <WarningLevel>3</WarningLevel>
-                    <SizeSpeed>2</SizeSpeed>
-                    <ObjectExtend>2</ObjectExtend>
-                    <ACallAJmp>2</ACallAJmp>
-                    <InterruptVectorAddress>0</InterruptVectorAddress>
-                    <VariousControls>
-                      <MiscControls></MiscControls>
-                      <Define></Define>
-                      <Undefine></Undefine>
-                      <IncludePath></IncludePath>
-                    </VariousControls>
-                  </C51>
-                </File51>
-              </FileOption>
             </File>
           </Files>
         </Group>

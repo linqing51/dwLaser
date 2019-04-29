@@ -31,7 +31,9 @@ void initUart0(uint32_t baudrate){//初始化串口0
 void initUart1(uint32_t baudrate){
 	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
 	SFRPAGE = UART1_PAGE;
-	SCON1 = 0x10;                     // SCON1: mode 0, 8-bit UART, enable RX
+	SCON1 = 0x10; 
+	SCON1 |= 1 << 1;//TI1 = 1
+	// SCON1: mode 0, 8-bit UART, enable RX
 	SFRPAGE = TIMER01_PAGE;
 	TMOD &= ~0xF0;
 	TMOD |=  0x20;                    // TMOD: timer 1, mode 2, 8-bit reload
@@ -39,35 +41,32 @@ void initUart1(uint32_t baudrate){
 	CKCON &= ~0x13;                  // Clear all T1 related bits
     CKCON |=  0x02;                  // T1M = 0; SCA1:0 = 10
 	TL1 = TH1;                          // init Timer1
-	TR1 = 1;                            // START Timer1
+	TR1 = 1;                            // START Timer1	
 	SFRPAGE = SFRPAGE_SAVE;             // Restore SFR page
-	EIE2 = 0x40;                   // Enable UART1 interrupts
+	EIE2 = 0x40;// Enable UART1 interrupts
 	RES(SPCOIL_UART1_SEND_BUSY);
 	RES(SPCOIL_UART1_SEND_DONE);
 }
 #endif
+
+
 void USSTP(uint8_t port){//串口强制停止发送
-#if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_MB_PORT != UART0)
 	if(port == UART0){
 		NVRAM0[SPREG_UART0_SEND_LENGTH] = 0x0;
 		NVRAM0[SPREG_UART0_SEND_NUM] = 0x0;
 		RES(SPCOIL_UART0_SEND_BUSY);
 		RES(SPCOIL_UART0_SEND_DONE);
 	}
-#endif
-#if (CONFIG_SPLC_USING_UART1 == 1 && CONFIG_MB_PORT != UART1)
 	if(port == UART1){
 		NVRAM0[SPREG_UART1_SEND_LENGTH] = 0x0;
 		NVRAM0[SPREG_UART1_SEND_NUM] = 0x0;
 		RES(SPCOIL_UART1_SEND_BUSY);
 		RES(SPCOIL_UART1_SEND_DONE);	
 	}
-#endif
 }
 void URSTP(uint8_t port){//串口强制停止接收
 	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
 	SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE
-#if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_MB_PORT != UART0)
 	if(port == UART0){
 		NVRAM0[SPREG_UART0_RECV_LENGTH] = 0x0;
 		NVRAM0[SPREG_UART0_RECV_NUM] = 0x0;
@@ -77,8 +76,6 @@ void URSTP(uint8_t port){//串口强制停止接收
 		RI0 = false;//关闭接收
 		SFRPAGE = SFRPAGE_SAVE;
 	}
-#endif
-#if (CONFIG_SPLC_USING_UART1 == 1 && CONFIG_MB_PORT != UART1)
 	if(port == UART1){
 		NVRAM0[SPREG_UART1_RECV_LENGTH] = 0x0;
 		NVRAM0[SPREG_UART1_RECV_NUM] = 0x0;
@@ -88,12 +85,10 @@ void URSTP(uint8_t port){//串口强制停止接收
 		SCON1 &=0xEF;//REN1 = 0关闭接收
 		SFRPAGE = SFRPAGE_SAVE;
 	}
-#endif
 }
 void USEND(uint8_t port, uint8_t length){//串口启动发送
 	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
 	SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE
-#if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_MB_PORT != UART0)
 	if(port == UART0){
 		NVRAM0[SPREG_UART0_SEND_LENGTH] = length;
 		NVRAM0[SPREG_UART0_SEND_NUM] = 0x0;
@@ -103,8 +98,6 @@ void USEND(uint8_t port, uint8_t length){//串口启动发送
 		TI0 = 1;//发送
 		SFRPAGE = SFRPAGE_SAVE;
 	}
-#endif
-#if (CONFIG_SPLC_USING_UART1 == 1 && CONFIG_MB_PORT != UART1)
 	if(port == UART1){
 		NVRAM0[SPREG_UART1_SEND_LENGTH] = length;
 		NVRAM0[SPREG_UART1_SEND_NUM] = 0x0;
@@ -114,12 +107,10 @@ void USEND(uint8_t port, uint8_t length){//串口启动发送
 		SCON1 |= 0x02;//开始发送
 		SFRPAGE = SFRPAGE_SAVE;		
 	}
-#endif
 }
 void URECV(uint8_t port, uint8_t length){//串口接收
 	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
 	SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE
-#if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_MB_PORT != UART0)
 	if(port == UART0){
 		NVRAM0[SPREG_UART0_RECV_LENGTH] = length;
 		NVRAM0[SPREG_UART0_RECV_NUM] = 0x0;
@@ -129,8 +120,6 @@ void URECV(uint8_t port, uint8_t length){//串口接收
 		RI0 = 1;//接收
 		SFRPAGE = SFRPAGE_SAVE;
 	}
-#endif
-#if (CONFIG_SPLC_USING_UART1 == 1 && CONFIG_MB_PORT != UART1)
 	if(port == UART1){
 		NVRAM0[SPREG_UART1_RECV_LENGTH] = length;
 		NVRAM0[SPREG_UART1_RECV_NUM] = 0x0;
@@ -140,10 +129,9 @@ void URECV(uint8_t port, uint8_t length){//串口接收
 		SCON1 |=0x10;//REN1 = 1 开发接收
 		SFRPAGE = SFRPAGE_SAVE;
 	}
-#endif
 }
 
-#if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_MB_PORT != UART0)
+#if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_SPLC_USING_UART0_ISR == 1)
 void Uart0Isr(void) interrupt INTERRUPT_UART0 {//UART0中断
 	if(TI0){  
 		TI0 = 0;
@@ -173,7 +161,7 @@ void Uart0Isr(void) interrupt INTERRUPT_UART0 {//UART0中断
 }
 #endif
 
-#if (CONFIG_SPLC_USING_UART1 == 1 && CONFIG_MB_PORT != UART1)
+#if (CONFIG_SPLC_USING_UART1 == 1 && CONFIG_SPLC_USING_UART1_ISR == 1)
 void Uart1Isr(void) interrupt INTERRUPT_UART1 {//UART1中断
 	if(SCON1 & 0x02){//TI1 == 1  
 		SCON1 &= 0xFD;//TI1 = 0
@@ -203,36 +191,27 @@ void Uart1Isr(void) interrupt INTERRUPT_UART1 {//UART1中断
 
 void UDIRX(uint8_t port){//关闭串口接收中断
 	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE
-#if CONFIG_SPLC_USING_UART0 == 1
 	if(port == UART0){
 		SFRPAGE = UART0_PAGE;
 		SCON0 &= 0xEF;//UART0 reception disabled
 		SFRPAGE = SFRPAGE_SAVE;		
 	}
-#endif
-#if CONFIG_SPLC_USING_UART1 == 1
 	if(port == UART1){
 		SFRPAGE = UART1_PAGE;
 		SCON1 &= 0xEF;//UART0 reception disabled
 		SFRPAGE = SFRPAGE_SAVE;
 	}
-#endif
 }
-
 void UENRX(uint8_t port){//打开串口接收中断
 	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE	
-#if CONFIG_SPLC_USING_UART0 == 1
 	if(port == UART0){
 		SFRPAGE = UART0_PAGE;
 		SCON0 |= 0x10;//UART0 reception enabled.
 		SFRPAGE = SFRPAGE_SAVE;
 	}
-#endif
-#if CONFIG_SPLC_USING_UART1 == 1
 	if(port == UART1){
 		SFRPAGE = UART1_PAGE;
 		SCON1 |= 0x10;//UART1 reception enabled.
 		SFRPAGE = SFRPAGE_SAVE;
 	}
-#endif
 }

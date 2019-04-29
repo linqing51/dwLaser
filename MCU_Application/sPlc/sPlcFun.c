@@ -404,6 +404,11 @@ void BCPY(uint16_t dist, uint16_t src, uint16_t length) reentrant{//块复制
 		NVRAM0[dist + i] = NVRAM0[src + i];
 	}
 }
+void FSAV(void){//强制立即更新NVRAM
+	disableSplcIsr();
+	updataNvram();
+	enableSplcIsr();
+}
 /*****************************************************************************/
 //IO指令
 void IMDIO(void) reentrant{//立即更新IO点状态含输入输出

@@ -1,9 +1,20 @@
 #ifndef __SPLCCONFIG_H__
 #define __SPLCCONFIG_H__
 /*****************************************************************************/
+#define CONFIG_DEBUG						0//使能调试
+#if CONFIG_DEBUG == 1
+#define CONFIG_EPROM_DEBUG					0
+#define CONFIG_DEBUG_CONSOLE				0//
 #define CONFIG_DEBUG_PID					0//PID调试功能
 #define CONFIG_DEBUG_TIMER4					0//TIMER4调试
 #define CONFIG_DEBUG_PCA					0//PCA调试
+#else
+#define CONFIG_EPROM_DEBUG					0
+#define CONFIG_DEBUG_CONSOLE				0//
+#define CONFIG_DEBUG_PID					0//PID调试功能
+#define CONFIG_DEBUG_TIMER4					0//TIMER4调试
+#define CONFIG_DEBUG_PCA					0//PCA调试
+#endif
 /*****************************************************************************/
 #define CONFIG_UART0_BAUDRATE				115200//串口0 波特率
 #define CONFIG_UART1_BAUDRATE				115200//串口1 波特率
@@ -13,13 +24,12 @@
 #define CONFIG_SPLC_USING_I2C2				1//使能I2C2
 #define CONFIG_SPLC_USING_I2C3				1//使能I2C3
 /*****************************************************************************/
-#define CONFIG_I2C0_FREQ 					1            
+#define CONFIG_I2C0_FREQ 					5            
 #define CONFIG_I2C1_FREQ 					1
 #define CONFIG_I2C2_FREQ 					1
 #define CONFIG_I2C3_FREQ 					1
-#define CONFIG_I2C_WAITACT_TIME				10
+#define CONFIG_I2C_WAITACT_TIME				100
 /*****************************************************************************/
-#define CONFIG_EPROM_DEBUG					0
 #define CONFIG_EPROM_SIZE 					CONFIG_AT24C64_SIZE
 #define	CONFIG_AT24C02_SIZE 				256
 #define	CONFIG_AT24C04_SIZE  				512
@@ -33,9 +43,9 @@
 #define CONFIG_EPROM_FRAM					1//铁电存储体无写入等待
 #define CONFIG_EPROM_PAGEWRITE				0//页写入
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_SPWM				1//使了软件PWM功能
+#define CONFIG_SPLC_USING_SPWM				0//使了软件PWM功能
 /*****************************************************************************/
-#define CONFIG_SPLC_FUN_EPID				1//使能SPLC扩展指令
+#define CONFIG_SPLC_FUN_EPID				0//使能SPLC扩展指令
 #define CONFIG_SPLC_FUNTEST					0//功能指令测试
 /*****************************************************************************/
 #define CONFIG_SPLC_ASSERT					1//检查地址范围
@@ -46,30 +56,28 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT				0//看门狗启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_INPUT			1//输入IO刷新启用
+#define CONFIG_SPLC_USING_IO_INPUT			0//输入IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_OUTPUT			1//输出IO刷新启用
+#define CONFIG_SPLC_USING_IO_OUTPUT			0//输出IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_PCA				1//片内计数器阵列
+#define CONFIG_SPLC_USING_PCA				0//片内计数器阵列
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM				0//EPROM 
+#define CONFIG_SPLC_USING_EPROM				1//EPROM 
 #define CONFIG_SPLC_USING_CLEAR_NVRAM		1//启用清除NVRAM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_UART0				1//UART 0串口启用
-#if CONFIG_SPLC_USING_UART0 == 1
+#define CONFIG_SPLC_USING_UART0_ISR			0
 #define UART0								0
 #define CONFIG_UART0_RBUF_SIZE				256//接收缓冲
 #define CONFIG_UART0_TBUF_SIZE				256//发送缓冲
-#endif
 
 #define CONFIG_SPLC_USING_UART1				1//UART 1串口启用
-#if CONFIG_SPLC_USING_UART1 == 1
+#define CONFIG_SPLC_USING_UART1_ISR			1
 #define UART1								1
 #define CONFIG_UART1_RBUF_SIZE				256//接收缓冲
 #define CONFIG_UART1_TBUF_SIZE				256//发送缓冲
-#endif
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ADC				1//使能ADC模块
+#define CONFIG_SPLC_USING_ADC				0//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			8//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE				9//ADC通道数
 #define CONFIG_ADC_TEMP_SENSOR_GAIN    		3330L// Temp Sensor Gain in (uV / degC)
@@ -81,7 +89,7 @@
 #define CONFIG_NTC_RB						10000L
 #define CONFIG_NTC_VREF						5000L
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_DAC				1//是能DAC模块
+#define CONFIG_SPLC_USING_DAC				0//是能DAC模块
 /*****************************************************************************/
 #define CONFIG_USING_RTU_SLAVE				1//使能MODBUS RTU从站
 #define CONFIG_MB_PORT						UART0
@@ -112,78 +120,86 @@
 #define CONFIG_FW_MCU_FILE_LOAD_NAME		"/dwLaserNE.bin"//单片机固件名称
 #define CONFIG_FW_MCU_FILE_SAVE_NAME		"/dwLaserOD.bib"//
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_LASER_TIMER		1
+#define CONFIG_SPLC_USING_LASER_TIMER		0
 #define CONFIG_SPLC_USING_LASER_TIMER_TEST	0
 #define CONFIG_LASER_TIMER_TICK				1000
-#define CONFIG_USING_DCHMI_APP				1//广东大彩人机交互应用
-#define CONFIG_USING_BACKGROUND_APP			1//背景应用
-#define CONFIG_MAX_LASERPOWER_CH0			300
-#define CONFIG_MAX_LASERPOWER_CH1			150
-#define CONFIG_MAX_LASER_POSWIDTH			999
-#define CONFIG_MAX_LASER_NEGWIDTH			999
-#define CONFIG_MAX_LASER_TIMER				999
-#define CONFIG_MAX_LASER_SPACE				999
+#define CONFIG_USING_DCHMI_APP				0//广东大彩人机交互应用
+#define CONFIG_USING_BACKGROUND_APP			0//背景应用
+
+#define CONFIG_MAX_LASERPOWER_CH0			300//通道0最大激光功率
+#define CONFIG_MIN_LASERPOWRR_CH0			0//通道0最小激光功率
+#define CONFIG_MAX_LASERPOWER_CH1			150//通道1最大激光功率
+#define CONFIG_MIN_LASERPOWER_CH1			0//通道1最小激光功率
+#define CONFIG_MAX_LASER_POSWIDTH			999//最大正脉宽时间
+#define CONFIG_MIN_LASER_POSWIDTH			0//最小正脉宽时间
+#define CONFIG_MAX_LASER_NEGWIDTH			999//最大负脉宽时间
+#define CONFIG_MIN_LASER_NEGWIDTH			0//最小正脉宽时间
+#define CONFIG_MAX_LASER_TIMER				999//最大可计数脉冲数
+#define CONFIG_MIN_LASER_TIMER				10//最小可计数脉冲数
+#define CONFIG_MAX_LASER_SPACE				999//最大脉冲间隔时间
+#define CONFIG_MIN_LASER_SPACE				10//最小脉冲间隔时间
 /*****************************************************************************/
-//#define CONFIG_SPLC_USING_NFC				0
-//#define RW_SUPPORT	
-//#endif
+#define CONFIG_SPLC_USING_NFC				0
 /*****************************************************************************/
 //线圈 保持 16*8=256 
 #define MR_START							0
 #define MR_END   							7
-//线圈寄存器 非保持 16*8=256
+//线圈寄存器 非保持 16*64=1024
 #define R_START								8
-#define R_END								15
+#define R_END								71
 //数据寄存器 保持 576
-#define DM_START							16
-#define DM_END								591
+#define DM_START							72
+#define DM_END								647
 //数据寄存器 非保持 256
-#define EM_START							592
-#define EM_END								847
+#define EM_START							648
+#define EM_END								903
 //延时线圈
-//1MS 4*16
-#define T_1MS_START							848
-#define T_1MS_END							851
-//10MS 4*16
-#define T_10MS_START						852
-#define T_10MS_END							855
-//100MS 4*16
-#define T_100MS_START						856
-#define T_100MS_END							859
-//延时计时器 
-//1MS 4*16
-#define TD_1MS_START						860
-#define TD_1MS_END							923
-//10MS 4*16
-#define TD_10MS_START						924
-#define TD_10MS_END							987
-//100MS 4*16
-#define TD_100MS_START						988
-#define TD_100MS_END						1051
-//输入位寄存器 4*16
-#define X_START								1052
-#define X_END								1055
-//输出位寄存器 4*16
-#define Y_START								1056
-#define Y_END								1059
-//特殊寄存器 64
-#define SPREG_START							1060
-#define SPREG_END							1123
-//特殊线圈 8*16
-#define SPCOIL_START						1124
-#define SPCOIL_END							1131
+//1MS 16*4=64
+#define T_1MS_START							904
+#define T_1MS_END							907
+//10MS 16*4=64
+#define T_10MS_START						908
+#define T_10MS_END							911
+//100MS 16*4=64
+#define T_100MS_START						912
+#define T_100MS_END							915
 //延时器使能
-//1MS 4*16
-#define T_1MS_ENA_START						1132						
-#define T_1MS_ENA_END						1135
-//10MS 4*16
-#define T_10MS_ENA_START					1136
-#define T_10MS_ENA_END						1139
-//100MS 4*16
-#define T_100MS_ENA_START					1140
-#define T_100MS_ENA_END						1143
+//1MS 16*4=64
+#define T_1MS_ENA_START						916						
+#define T_1MS_ENA_END						919
+//10MS 16*4=64
+#define T_10MS_ENA_START					920
+#define T_10MS_ENA_END						923
+//100MS 16*4=64
+#define T_100MS_ENA_START					924
+#define T_100MS_ENA_END						927
+//延时计时器 
+//1MS 16*4=64
+#define TD_1MS_START						928
+#define TD_1MS_END							991
+//10MS 16*4=64
+#define TD_10MS_START						992
+#define TD_10MS_END							1055
+//100MS 16*4=64
+#define TD_100MS_START						1056
+#define TD_100MS_END						1119
+//输入位寄存器 16*4=64
+#define X_START								1120
+#define X_END								1123
+//输出位寄存器 16*4=64
+#define Y_START								1124
+#define Y_END								1127
+//特殊寄存器 64
+#define SPREG_START							1128
+#define SPREG_END							1191
+//特殊线圈 16*16=256
+#define SPCOIL_START						1192
+#define SPCOIL_END							1207
+//临时寄存器 16
+#define TM_START							1208
+#define TM_END								1223
 /*****************************************************************************/
-#define CONFIG_NVRAM_SIZE 					(T_100MS_ENA_END + 1)
+#define CONFIG_NVRAM_SIZE 					(TM_END + 1)
 /*****************************************************************************/
 #define SPCOIL_ON							(SPCOIL_START * 16 + 0)//长通线圈
 #define SPCOIL_START_UP						(SPCOIL_START * 16 + 1)//初次上电

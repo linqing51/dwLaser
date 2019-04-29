@@ -156,7 +156,7 @@ static void saveNvram(void){//强制将NVRAM存入EPROM
 #endif
 	exitSplcIsr();
 }
-static void updataNvram(void){//更新NVRAM->EPROM
+void updataNvram(void){//更新NVRAM->EPROM
 	uint8_t *sp0, *sp1;
 	uint16_t i;
 	sp0 = (uint8_t*)NVRAM0;

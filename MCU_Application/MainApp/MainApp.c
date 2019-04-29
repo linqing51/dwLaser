@@ -1,16 +1,15 @@
 #include "MainApp.h"
 /*****************************************************************************/
-//T0->SPLC
-//T1->UART1
-//T2->UART0
-//T3->MODBUS
-//T4->LASER
 //*****************************************************************************/
 bit debugLed0, debugLed1, debugLed2, debugLed3;
 
 void main(void){ 
 	initDevice();
 	sPlcInit();
+#if CONFIG_DEBUG == 1
+	printf("sPLC->main:Debug Port->UART1\n");
+	printf("sPLC->main:sPlcInit Done\n");
+#endif
 	//Cache_ISR_Entry( (unsigned int) Timer0_ISR, Timer0_ISR_NUM);
 	while(1){
 		debugLed0 = ~debugLed0;
