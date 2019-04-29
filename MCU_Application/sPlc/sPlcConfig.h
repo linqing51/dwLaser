@@ -134,8 +134,8 @@
 #define CONFIG_MIN_LASER_POSWIDTH			0//最小正脉宽时间
 #define CONFIG_MAX_LASER_NEGWIDTH			999//最大负脉宽时间
 #define CONFIG_MIN_LASER_NEGWIDTH			0//最小正脉宽时间
-#define CONFIG_MAX_LASER_TIMER				999//最大可计数脉冲数
-#define CONFIG_MIN_LASER_TIMER				10//最小可计数脉冲数
+#define CONFIG_MAX_LASER_GROUP				999//最大可计数脉冲数
+#define CONFIG_MIN_LASER_GROUP				10//最小可计数脉冲数
 #define CONFIG_MAX_LASER_SPACE				999//最大脉冲间隔时间
 #define CONFIG_MIN_LASER_SPACE				10//最小脉冲间隔时间
 /*****************************************************************************/

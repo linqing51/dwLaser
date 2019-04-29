@@ -75,6 +75,9 @@
 #define EM_DC_NEW_PASSCODE1						(EM_START + 131)//输入新密码1
 #define EM_DC_DEFAULT_PASSCODE0					(EM_START + 132)//默认密码0
 #define EM_DC_DEFAULT_PASSCODE1					(EM_START + 133)//默认密码1
+#define EM_DC_DISPLAY_RELEASE_TIME				(EM_START + 134)//显示发射时间
+#define EM_DC_DISPLAY_RELEASE_ENERGY			(EM_START + 135)//显示发射能量
+
 /*****************************************************************************/
 #define DM_LASER_SCHEME_NAME					(DM_START +  0)//方案名称 72+0=72
 #define DM_LASER_SELECT							(DM_START +  17)//通道选择
@@ -271,8 +274,8 @@
 #define R_DC_STANDBY_POSWIDTH_DEC_REQ			(R_START * 16 + 180)//正脉宽减小
 #define R_DC_STANDBY_NEGWIDTH_ADD_REQ			(R_START * 16 + 181)//负脉宽增加
 #define R_DC_STANDBY_NEGWIDTH_DEC_REQ			(R_START * 16 + 182)//负脉宽减小
-#define R_DC_STANDBY_TIMER_ADD_REQ				(R_START * 16 + 183)//脉冲个数增加
-#define R_DC_STANDBY_TIMER_DEC_REQ				(R_START * 16 + 184)//脉冲个数减小
+#define R_DC_STANDBY_GROUP_ADD_REQ				(R_START * 16 + 183)//脉冲个数增加
+#define R_DC_STANDBY_GROUP_DEC_REQ				(R_START * 16 + 184)//脉冲个数减小
 #define R_DC_STANDBY_SPACE_ADD_REQ				(R_START * 16 + 185)//脉冲间隔增加
 #define R_DC_STANDBY_SPACE_DEC_REQ				(R_START * 16 + 186)//脉冲间隔减小
 #define R_DC_STANDBY_SCHEME_SAVE_REQ			(R_START * 16 + 187)//方案储存
@@ -281,8 +284,16 @@
 #define R_DC_STANDBY_LASERPOWER0_DEC_REQ		(R_START * 16 + 190)//激光功率减小0
 #define R_DC_STANDBY_LASERPOWER1_DEC_REQ		(R_START * 16 + 191)//激光功率减小1
 #define R_DC_STANDBY_OPTION						(R_START * 16 + 192)//选项按键
+#define R_DC_STANDBY_LAST_SCHEME				(R_START * 16 + 193)//选择上一个方案
+#define R_DC_STANDBY_NEXT_SCHEME				(R_START * 16 + 194)//选择下一个方案
 /*****************************************************************************/
 #define R_DC_OPTION_BEEM_TONE					(R_START * 16 + 200)//蜂鸣器声光同步
+#define R_DC_OPTION_AIM_ON						(R_START * 16 + 201)//指示激光
+#define R_DC_OPTION_RETURN						(R_START * 16 + 202)//返回
+#define R_DC_OPTION_SCHEME						(R_START * 16 + 203)//方案界面
+#define R_DC_OPTION_INFO						(R_START * 16 + 204)//信息界面
+/*****************************************************************************/
+
 /*****************************************************************************/
 #define T100MS_READY_BEEM_DELAY					0//进入READY状态后蜂鸣器响延迟
 #define T100MS_CHECK_FLASH_DELAY				1//存储器自检等待延迟
