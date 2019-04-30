@@ -20,7 +20,7 @@ void initSplcTimer(void){//硬件sTimer计时器初始化
 	ET0 = 1;// Timer0 interrupt enabled
 	SFRPAGE = SFRPAGE_SAVE;// Restore SFR page
 }
-static void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
+void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
 	uint16_t i;
 	TF0 = false;
 	TH0 = Timer0_H;

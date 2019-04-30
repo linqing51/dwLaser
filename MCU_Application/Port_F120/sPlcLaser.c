@@ -177,7 +177,7 @@ static void initTimer4(void){//TIMER4初始化
 	TMR4CN = 0;//16Bit AutoReload
 	SFRPAGE = SFRPAGE_SAVE;   
 }
-void timer4Isr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
+void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 	xdata uint8_t SFRPAGE_save;	
 	SFRPAGE_save = SFRPAGE;
 	SFRPAGE = TMR4_PAGE;

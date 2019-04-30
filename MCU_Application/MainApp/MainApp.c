@@ -2,7 +2,6 @@
 /*****************************************************************************/
 //*****************************************************************************/
 bit debugLed0, debugLed1, debugLed2, debugLed3;
-
 void main(void){ 
 	initDevice();
 	sPlcInit();
@@ -10,7 +9,10 @@ void main(void){
 	printf("sPLC->main:Debug Port->UART1\n");
 	printf("sPLC->main:sPlcInit Done\n");
 #endif
-	//Cache_ISR_Entry( (unsigned int) Timer0_ISR, Timer0_ISR_NUM);
+	Cache_ISR_Entry((unsigned int)sPlcTimerIsr, INTERRUPT_TIMER0);
+	Cache_ISR_Entry((unsigned int)laserTimerIsr, INTERRUPT_TIMER4);
+	Cache_ISR_Entry((unsigned int)Uart0Isr, INTERRUPT_UART0);
+	
 	while(1){
 		debugLed0 = ~debugLed0;
 		sPlcProcessStart();

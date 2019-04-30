@@ -7,7 +7,7 @@ void delayUs(uint8_t us) reentrant{//Œ¢√Î—” ±
         NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 		NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 		feedWatchDog();
-#eles
+#else
 		NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 		NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
 		NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
@@ -19,7 +19,7 @@ void delayUs(uint8_t us) reentrant{//Œ¢√Î—” ±
 }
 void delayMs(uint8_t ms) reentrant{//∫¡√Î—” ±
 	while(ms--){
-		delayUs(100);
+		delayUs(1000);
 	}
 }
 
