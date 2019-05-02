@@ -52,9 +52,15 @@ void backgroundApp(void){//背景应用
 	}
 	else{
 	}
+
 	//执行温控PID
 	NVRAM0[EM_EPID0_TAB_VFB] = NVRAM0[EM_DIODE_TEMP0];//采集温度传入EPID参数表
+#if CONFIG_SPLC_FUN_EPID == 1
 	EPID(&NVRAM0[EM_EPID0_TAB_OUT]);//执行温控PID
+#else
+	NVRAM0[EM_EPID0_TAB_OUT] = 300;
+	NVRAM0[EM_EPID0_TAB_MAX] = 1000;
+#endif
 	//PID输出传入SPWM0
 	NVRAM0[SPREG_SPWM_CYCLE_0] = NVRAM0[EM_EPID0_TAB_MAX];
 	NVRAM0[SPREG_SPWM_POS_0] = NVRAM0[EM_EPID0_TAB_OUT]; 
@@ -65,7 +71,7 @@ void backgroundApp(void){//背景应用
 	else{
 		RES(Y_TEC0);RES(Y_TEC1);
 	}
-	
+
 	//判断二极管0是否过热
 	if(NVRAM0[EM_DIODE_TEMP0] > CONFIG_APP_DIODE_HIGH_TEMP){
 		SET(R_DIODE_TEMP_HIGH_0);

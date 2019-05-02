@@ -43,12 +43,12 @@
 #define CONFIG_EPROM_FRAM					1//铁电存储体无写入等待
 #define CONFIG_EPROM_PAGEWRITE				0//页写入
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_SPWM				1//使了软件PWM功能
+#define CONFIG_SPLC_USING_SPWM				0//使了软件PWM功能
 /*****************************************************************************/
-#define CONFIG_SPLC_FUN_EPID				1//使能SPLC扩展指令
+#define CONFIG_SPLC_FUN_EPID				0//使能SPLC扩展指令
 #define CONFIG_SPLC_FUNTEST					0//功能指令测试
 /*****************************************************************************/
-#define CONFIG_SPLC_ASSERT					1//检查地址范围
+#define CONFIG_SPLC_ASSERT					0//检查地址范围
 #define CONFIG_SPLC_DEV						0x0A01//设备号
 #define CONFIG_SPLC_CLEAR_CODE				0xA58E
 #define CONFIG_SOFTPLC_TICK					1000L//1mS
@@ -56,14 +56,14 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT				0//看门狗启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_INPUT			1//输入IO刷新启用
+#define CONFIG_SPLC_USING_IO_INPUT			0//输入IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_OUTPUT			1//输出IO刷新启用
+#define CONFIG_SPLC_USING_IO_OUTPUT			0//输出IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_PCA				1//片内计数器阵列
+#define CONFIG_SPLC_USING_PCA				0//片内计数器阵列
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM				1//EPROM 
-#define CONFIG_SPLC_USING_CLEAR_NVRAM		1//启用清除NVRAM功能
+#define CONFIG_SPLC_USING_EPROM				0//EPROM 
+#define CONFIG_SPLC_USING_CLEAR_NVRAM		0//启用清除NVRAM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_UART0				1//UART 0串口启用
 #define CONFIG_SPLC_USING_UART0_ISR			0
@@ -77,7 +77,7 @@
 #define CONFIG_UART1_RBUF_SIZE				256//接收缓冲
 #define CONFIG_UART1_TBUF_SIZE				256//发送缓冲
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ADC				1//使能ADC模块
+#define CONFIG_SPLC_USING_ADC				0//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			8//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE				9//ADC通道数
 #define CONFIG_ADC_TEMP_SENSOR_GAIN    		3330L// Temp Sensor Gain in (uV / degC)
@@ -89,7 +89,7 @@
 #define CONFIG_NTC_RB						10000L
 #define CONFIG_NTC_VREF						5000L
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_DAC				1//是能DAC模块
+#define CONFIG_SPLC_USING_DAC				0//是能DAC模块
 /*****************************************************************************/
 #define CONFIG_USING_RTU_SLAVE				1//使能MODBUS RTU从站
 #define CONFIG_MB_PORT						UART0
@@ -98,11 +98,6 @@
 #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE		256//发送接收缓冲区
 #define CONFIG_MB_RTU_SLAVE_TIMEOUT			20//接收通讯超时 10mS
 #define CONFIG_MB_RTU_SLAVE_IO_DELAY		1//RX TX切换延时
-/*****************************************************************************/
-#define DISABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 0;
-#define ENABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 1;
-#define DISABLE_INTERRUPT					EA = 0;
-#define ENABLE_INTERRUPT					EA = 1;
 /*****************************************************************************/
 #define CONFIG_USING_SIMEPROM				0
 #define CONFIG_USING_USB					0
@@ -120,8 +115,9 @@
 #define CONFIG_FW_MCU_FILE_LOAD_NAME		"/dwLaserNE.bin"//单片机固件名称
 #define CONFIG_FW_MCU_FILE_SAVE_NAME		"/dwLaserOD.bib"//
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_LASER_TIMER		1
+#define CONFIG_SPLC_USING_LASER_TIMER		0
 #define CONFIG_SPLC_USING_LASER_TIMER_TEST	0
+/*****************************************************************************/
 #define CONFIG_LASER_TIMER_TICK				1000
 #define CONFIG_USING_DCHMI_APP				1//广东大彩人机交互应用
 #define CONFIG_USING_BACKGROUND_APP			1//背景应用

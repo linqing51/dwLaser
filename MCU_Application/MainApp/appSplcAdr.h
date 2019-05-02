@@ -50,22 +50,22 @@
 #define EM_EPID0_TAB_EN_FP32H					(EM_START +	40)//EPID当前误差值 FP32 
 #define EM_EPID0_TAB_VFB1_FP32L 				(EM_START +	41)//EPID前1次误差值 FP32
 #define EM_EPID0_TAB_VFB1_FP32H					(EM_START +	42)//EPID前1次误差值 FP32
-#define EM_EPID0_TAB_MAX						(EM_START + 43)//EPID输出最大限制		
-#define EM_EPID0_TAB_MIN						(EM_START + 44)//EPID输出最小限制
-#define EM_EPID0_TAB_BIAS						(EM_START +	45)//EPID输出偏置
-#define EM_EPID0_TAB_TSC						(EM_START + 46)//EPID间隔计时器
-#define EM_EPID0_TAB_KP_SUM_FP32L				(EM_START +	47)//EPID比例累加值 FP32
-#define EM_EPID0_TAB_KP_SUM_FP32H				(EM_START +	48)//EPID比例累加值 FP32
-#define EM_EPID0_TAB_KI_SUM_FP32L				(EM_START +	49)//EPID微分累加值 FP32
-#define EM_EPID0_TAB_KI_SUM_FP32H				(EM_START +	50)//EPID微分累加值 FP32
-#define EM_EPID0_TAB_KD_SUM_FP32L				(EM_START +	51)//EPID微分累加值 FP32
-#define EM_EPID0_TAB_KD_SUM_FP32H				(EM_START +	52)//EPID微分累加值 FP32
-#define EM_EPID0_TAB_FOUT_FP32L					(EM_START +	53)//EPID输出累加值 FP32
-#define EM_EPID0_TAB_FOUT_FP32H					(EM_START +	54)//EPID输出累加值 FP32
-#define EM_LASER_CURRENT_0						(EM_START +	55)//激光器电流0
-#define EM_LASER_CURRENT_1						(EM_START +	56)//激光器电流1
-#define EM_HMI_OPERA_STEP						(EM_START +	57)//操作步骤
-#define EM_ERROR_CODE							(EM_START + 58)//错误码					
+#define EM_EPID0_TAB_MAX						(EM_START + 43)//EPID输出最大限制		691
+#define EM_EPID0_TAB_MIN						(EM_START + 44)//EPID输出最小限制		692
+#define EM_EPID0_TAB_BIAS						(EM_START +	45)//EPID输出偏置			693
+#define EM_EPID0_TAB_TSC						(EM_START + 46)//EPID间隔计时器			694
+#define EM_EPID0_TAB_KP_SUM_FP32L				(EM_START +	47)//EPID比例累加值 FP32	695
+#define EM_EPID0_TAB_KP_SUM_FP32H				(EM_START +	48)//EPID比例累加值 FP32	696
+#define EM_EPID0_TAB_KI_SUM_FP32L				(EM_START +	49)//EPID微分累加值 FP32	697
+#define EM_EPID0_TAB_KI_SUM_FP32H				(EM_START +	50)//EPID微分累加值 FP32	698
+#define EM_EPID0_TAB_KD_SUM_FP32L				(EM_START +	51)//EPID微分累加值 FP32	699
+#define EM_EPID0_TAB_KD_SUM_FP32H				(EM_START +	52)//EPID微分累加值 FP32	700
+#define EM_EPID0_TAB_FOUT_FP32L					(EM_START +	53)//EPID输出累加值 FP32	701
+#define EM_EPID0_TAB_FOUT_FP32H					(EM_START +	54)//EPID输出累加值 FP32	702
+#define EM_LASER_CURRENT_0						(EM_START +	55)//激光器电流0			703
+#define EM_LASER_CURRENT_1						(EM_START +	56)//激光器电流1			704
+#define EM_HMI_OPERA_STEP						(EM_START +	57)//操作步骤				705				
+#define EM_ERROR_CODE							(EM_START + 58)//错误码					706
 
 #define EM_DC_PAGE								(EM_START + 128)//HMI页面编号 			776
 #define EM_DC_PASSCODE_INDEX					(EM_START + 129)//密码输入位索引		777

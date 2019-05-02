@@ -9,12 +9,10 @@
 #include "delay.h"
 #include "sPlcMcu.h"
 #include "sPlcTimer.h"
-#include "sPlcSimEprom.h"
-/*****************************************************************************/
-#include "sPlcUart.h"
-#if CONFIG_SPLC_USING_PCA == 1
+#include "sPlcLaser.h"
 #include "sPlcPca.h"
-#endif
+#include "sPlcUart.h"
+/*****************************************************************************/
 #if CONFIG_SPLC_USING_ADC == 1
 #include "sPlcChipAdc.h"
 #endif
@@ -45,9 +43,6 @@
 #if CONFIG_USING_ONCHIPFLASH == 1
 #include "F120_FlashPrimitives.h"
 #include "F120_FlashUtils.h"
-#endif
-#if CONFIG_SPLC_USING_LASER_TIMER == 1
-#include "sPlcLaser.h"
 #endif
 #if CONFIG_SPLC_USING_I2C0 == 1
 #include "i2c0.h"

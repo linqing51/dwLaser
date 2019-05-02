@@ -334,7 +334,7 @@ void sPlcInit(void){//软逻辑初始化
 	usbSpiInit();//初始化 USB SPI	
 	mStopIfError(usbHostInit());//默认初始化为HOST
 #endif
-	ENABLE_INTERRUPT;
+	enableSplcIsr();
 
 }
 void sPlcProcessStart(void){//sPLC轮询起始

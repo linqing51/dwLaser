@@ -35,6 +35,12 @@ void disableSplcIsr(void) reentrant{//SPLC关闭全局中断
 void enableSplcIsr(void) reentrant{//SPLC打开全局中断
 	EA = 1;
 }
+void disalbeModbusSerialIsr(void){
+	ES0 = 0;
+}
+void enableModbusSerialIsr(void){
+	ES0 = 1;
+}
 
 //-----------------------------------------------------------------------------
 // Cache_ISR_Entry

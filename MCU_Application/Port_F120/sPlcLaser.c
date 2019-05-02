@@ -165,7 +165,7 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 	initTimer4();
 	
 }
-static void initTimer4(void){//TIMER4初始化
+static void initLaserTimer(void){//TIMER4初始化
 	xdata uint16_t temp;
 	xdata uint8_t SFRPAGE_SAVE;
 	SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE

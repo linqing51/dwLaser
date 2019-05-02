@@ -1,9 +1,9 @@
 #ifndef __SPLCBEEM_H__
 #define __SPLCBEEM_H__
 /*****************************************************************************/
-#define BEEM_MODE_0				0
-#define BEEM_MODE_1				1
-#define BEEM_MODE_2				2
+#define BEEM_TIMER_MODE_0						0
+#define BEEM_TIMER_MODE_1						1
+#define BEEM_TIMER_MODE_2						2
 /*****************************************************************************/
 #include "sPlcPort.h"
 /*****************************************************************************/
