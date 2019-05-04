@@ -186,7 +186,7 @@
         </Utilities>
         <Target51>
           <Target51Misc>
-            <MemoryModel>0</MemoryModel>
+            <MemoryModel>2</MemoryModel>
             <RTOS>0</RTOS>
             <RomSize>2</RomSize>
             <DataHold>0</DataHold>
@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define>C8051F120</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Lib;..\Driver;..\NfcLibrary;..\NfcLibrary\inc;..\NfcLibrary\NdefLibrary\inc;..\NfcLibrary\NxpNci\inc;..\sPlc;..\Port_F120;.\UsbHost;.\SimEprom;.\OnChipFlash;..\MainApp</IncludePath>
+              <IncludePath>..\Lib;..\Driver;..\NfcLibrary;..\NfcLibrary\inc;..\NfcLibrary\NdefLibrary\inc;..\NfcLibrary\NxpNci\inc;..\sPlc;..\Port_F120;.\UsbHost;.\SimEprom;.\OnChipFlash;..\dcHMI;..\MainApp</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -441,11 +441,6 @@
               <FileType>1</FileType>
               <FilePath>..\sPlc\sPlcFun.c</FilePath>
             </File>
-            <File>
-              <FileName>sPlcModbus.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\sPlc\sPlcModbus.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -465,11 +460,6 @@
               <FileName>sPlcMcu.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sPlcMcu.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcModbusPort.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcModbusPort.c</FilePath>
             </File>
             <File>
               <FileName>sPlcUart.c</FileName>
@@ -497,14 +487,14 @@
               <FilePath>..\MainApp\MainApp.c</FilePath>
             </File>
             <File>
-              <FileName>backgroundApp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\backgroundApp.c</FilePath>
-            </File>
-            <File>
               <FileName>dcHmiApp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MainApp\dcHmiApp.c</FilePath>
+            </File>
+            <File>
+              <FileName>backgroundApp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MainApp\backgroundApp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -519,6 +509,31 @@
         </Group>
         <Group>
           <GroupName>NfcLib</GroupName>
+        </Group>
+        <Group>
+          <GroupName>dcHMI</GroupName>
+          <Files>
+            <File>
+              <FileName>hmiCmdQueue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\dcHMI\hmiCmdQueue.c</FilePath>
+            </File>
+            <File>
+              <FileName>hmiDriver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\dcHMI\hmiDriver.c</FilePath>
+            </File>
+            <File>
+              <FileName>hmiLib.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\dcHMI\hmiLib.c</FilePath>
+            </File>
+            <File>
+              <FileName>hmiUserUart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\dcHMI\hmiUserUart.c</FilePath>
+            </File>
+          </Files>
         </Group>
       </Groups>
     </Target>

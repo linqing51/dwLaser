@@ -314,13 +314,14 @@
 /*****************************************************************************/
 
 /*****************************************************************************/
-#define T100MS_READY_BEEM_DELAY					0//进入READY状态后蜂鸣器响延迟
-#define T100MS_CHECK_FLASH_DELAY				1//存储器自检等待延迟
-#define T100MS_CHECK_INTBUS_DELAY				2//总线自检等待延迟
-#define T100MS_CHECK_LDR_DELAY					3//激光驱动器自检等待延迟
-#define T100MS_CHECK_TEMPER_DELAY				4//温度自检等待延迟
-#define T100MS_CHECK_USBHOST_DELAY				5//USBHOST模块等待延迟
-#define T100MS_CHECK_NFC_DELAY					6//NFC读卡模块等待延迟
-#define T100MS_CHECK_NRF24L01_DELAY				7//NRF24L01脚踏模块等待延迟
+#define T100MS_READY_HMI_RESET_DELAY			0//HMI复位延时
+#define T100MS_READY_BEEM_DELAY					1//进入READY状态后蜂鸣器响延迟
+#define T100MS_CHECK_FLASH_DELAY				2//存储器自检等待延迟
+#define T100MS_CHECK_INTBUS_DELAY				3//总线自检等待延迟
+#define T100MS_CHECK_LDR_DELAY					4//激光驱动器自检等待延迟
+#define T100MS_CHECK_TEMPER_DELAY				5//温度自检等待延迟
+#define T100MS_CHECK_USBHOST_DELAY				6//USBHOST模块等待延迟
+#define T100MS_CHECK_NFC_DELAY					7//NFC读卡模块等待延迟
+#define T100MS_CHECK_NRF24L01_DELAY				8//NRF24L01脚踏模块等待延迟
 
 #endif

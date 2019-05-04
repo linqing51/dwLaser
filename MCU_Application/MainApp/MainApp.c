@@ -13,7 +13,7 @@ void main(void){
 #if CONFIG_SPLC_USING_LASER_TIMER == 1
 	Cache_ISR_Entry((unsigned int)laserTimerIsr, INTERRUPT_TIMER4);
 #endif
-	Cache_ISR_Entry((unsigned int)Uart0Isr, INTERRUPT_UART0);
+	//Cache_ISR_Entry((unsigned int)Uart0Isr, INTERRUPT_UART0);
 	
 	while(1){
 		debugLed0 = ~debugLed0;

@@ -72,7 +72,7 @@
 #define CONFIG_UART0_TBUF_SIZE				256//发送缓冲
 
 #define CONFIG_SPLC_USING_UART1				1//UART 1串口启用
-#define CONFIG_SPLC_USING_UART1_ISR			1
+#define CONFIG_SPLC_USING_UART1_ISR			0
 #define UART1								1
 #define CONFIG_UART1_RBUF_SIZE				256//接收缓冲
 #define CONFIG_UART1_TBUF_SIZE				256//发送缓冲
@@ -91,7 +91,7 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DAC				0//是能DAC模块
 /*****************************************************************************/
-#define CONFIG_USING_RTU_SLAVE				1//使能MODBUS RTU从站
+#define CONFIG_USING_RTU_SLAVE				0//使能MODBUS RTU从站
 #define CONFIG_MB_PORT						UART0
 #define CONFIG_MB_RTU_SLAVE_TICK			1000L//1000uS
 #define CONFIG_MB_RTU_SLAVE_ADDRESS			0x01//从设备地址
@@ -255,6 +255,17 @@
 //蜂鸣器相关线圈
 #define SPCOIL_BEEM_ENABLE					(SPCOIL_START * 16 + 46)//蜂鸣器发射使能		
 /*****************************************************************************/
+//HMI相关线圈
+#define SPCOIL_DCHMI_RESET_REQ				(SPCOIL_START * 16 + 47)//HMI复位请求
+#define SPCOIL_DCHMI_RESET_DOING			(SPCOIL_START * 16 + 48)//HMI复位中
+#define SPCOIL_DCHMI_RESET_DONE				(SPCOIL_START * 16 + 49)//HMI复位完成
+#define SPCOIL_DCHMI_UPDATE_REQ				(SPCOIL_START * 16 + 50)//HMI内容更新请求
+#define SPCOIL_DCHMI_UPDATE_DOING			(SPCOIL_START * 16 + 51)//HMI内容更新中
+#define SPCOIL_DCHMO_UPDATE_DONE			(SPCOIL_START * 16 + 52)//HMI内容更新请求完成
+#define SPCOIL_DCHMI_RESTORE_REQ			(SPCOIL_START * 16 + 53)//HMI从FLASH中恢复设置请求
+#define SPCOIL_DCHMI_RESTORE_DOING			(SPCOIL_START * 16 + 54)//HMI从FLASH中恢复中
+#define SPCOIL_DCHMI_RESTORE_DONE			(SPCOIL_START * 16 + 55)//HMI从FLASH中恢复设置完成
+/*****************************************************************************/
 #define SPREG_IDENTITY						(SPREG_START + 0)//平台ID号
 #define SPREG_CLEAR_NVRAM					(SPREG_START + 1)//清除NVRAM后重新启动
 /*****************************************************************************/
@@ -322,6 +333,9 @@
 #define SPREG_BEEM_VOLUME					(SPREG_START + 55)//蜂鸣器音量
 #define SPREG_BEEM_MODE						(SPREG_START + 56)//蜂鸣器模式
 #define SPREG_BEEM_COUNTER					(SPREG_START + 57)//蜂鸣器计时器
+/*****************************************************************************/
+//HMI相关寄存器
+#define SPREG_HMI_CMDSIZE					(SPREG_START + 58)//HMI命令数
 /*****************************************************************************/
 #define T10MS_USBDISK_CONNECT_DELAY			0
 #define T10MS_USBDISK_MOUNT_DELAY			1

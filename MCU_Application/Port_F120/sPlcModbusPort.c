@@ -1,4 +1,5 @@
 #include "sPlcModbusPort.h"
+#if CONFIG_USING_RTU_SLAVE == 1
 /*****************************************************************************/
 static uint8_t *pSendBuf;
 bit modbusTimerDebug;
@@ -97,4 +98,5 @@ void Uart1Isr(void) interrupt INTERRUPT_UART1 {//UART1中断
 }
 #endif
 
+#endif
 

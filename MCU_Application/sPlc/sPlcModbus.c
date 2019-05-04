@@ -1,4 +1,5 @@
 #include "sPlcModbus.h"
+#if CONFIG_USING_RTU_SLAVE == 1
 /*******************************ModBus Functions*******************************/
 #define MODBUS_READ_COILS                  				1
 #define MODBUS_READ_DISCRETE_INPUTS        				2
@@ -409,3 +410,5 @@ void InitModbus(uint8_t modbusSlaveAddress, uint32_t baudrate){//ModBus slave in
     modBusUartInitialise(baudrate);
     modBusTimerInitialise();
 }
+
+#endif

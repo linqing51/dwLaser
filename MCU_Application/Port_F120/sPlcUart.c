@@ -1,9 +1,17 @@
 #include "sPlcUart.h"
 /*****************************************************************************/
 #if CONFIG_SPLC_USING_UART0 == 1
+/*****************************************************************************/
+uint8_t (*UART0_TX_CALLBACK)(void);//发送回调 
+void (*UART0_RX_CALLBACK)(uint8_t dat);
+uint8_t (*UART1_TX_CALLBACK)(void);//发送回调 
+void (*UART1_RX_CALLBACK)(uint8_t dat);
+/*****************************************************************************/
 void initUart0(uint32_t baudrate){//初始化串口0
 	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE	
 	xdata uint16_t temp;
+	UART0_TX_CALLBACK = NULL;
+	UART0_RX_CALLBACK = NULL;
 	SFRPAGE = TMR2_PAGE;// Set SFR page
 	temp =(uint16_t)(65536 - CONFIG_SYSCLK / 12 /16 / baudrate);
 	TMR2CF = 0;//	
@@ -30,6 +38,8 @@ void initUart0(uint32_t baudrate){//初始化串口0
 #if CONFIG_SPLC_USING_UART1 == 1
 void initUart1(uint32_t baudrate){
 	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
+	UART1_TX_CALLBACK = NULL;
+	UART1_RX_CALLBACK = NULL;
 	SFRPAGE = UART1_PAGE;
 	SCON1 = 0x10; 
 	SCON1 |= 1 << 1;//TI1 = 1
@@ -131,59 +141,35 @@ void URECV(uint8_t port, uint8_t length){//串口接收
 	}
 }
 
-#if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_SPLC_USING_UART0_ISR == 1)
+#if CONFIG_SPLC_USING_UART0 == 1
 void Uart0Isr(void) interrupt INTERRUPT_UART0 {//UART0中断
 	if(TI0){  
 		TI0 = 0;
-		if(NVRAM0[SPREG_UART0_SEND_NUM] < NVRAM0[SPREG_UART0_SEND_LENGTH]){//
-			SBUF0 = UART0_TXBUF[((uint8_t)NVRAM0[SPREG_UART0_SEND_NUM])];          
-			NVRAM0[SPREG_UART0_SEND_NUM] ++;						                   
-        }
-		else{
-			SET(SPCOIL_UART0_SEND_DONE);//发送完成
-			RES(SPCOIL_UART0_SEND_BUSY);
+		if(UART0_TX_CALLBACK != NULL){
+			SBUF0 = (*UART0_TX_CALLBACK)();//发送回调
 		}
     }
     if(RI0){
 		RI0 = 0;
-	    if(NVRAM0[SPREG_UART0_RECV_NUM] < NVRAM0[SPREG_UART0_RECV_LENGTH]){
-			UART0_RXBUF[((uint8_t)NVRAM0[SPREG_UART0_RECV_NUM])] = SBUF0;		
-			if(NVRAM0[SPREG_UART0_RECV_NUM] >= (NVRAM0[SPREG_UART0_RECV_LENGTH] - 1)){
-				REN0 = 0;//关闭接收
-				SET(SPCOIL_UART0_RECV_DONE);//接收完成
-				RES(SPCOIL_UART0_RECV_BUSY);
-			}
-			else{
-				NVRAM0[SPREG_UART0_RECV_NUM] ++;	
-			}
+		if(UART0_RX_CALLBACK != NULL){
+			(*UART0_RX_CALLBACK)(SBUF0);//接收回调
 		}
 	}	
 }
 #endif
 
-#if (CONFIG_SPLC_USING_UART1 == 1 && CONFIG_SPLC_USING_UART1_ISR == 1)
+#if CONFIG_SPLC_USING_UART1 == 1
 void Uart1Isr(void) interrupt INTERRUPT_UART1 {//UART1中断
 	if(SCON1 & 0x02){//TI1 == 1  
 		SCON1 &= 0xFD;//TI1 = 0
-		if(NVRAM0[SPREG_UART1_SEND_NUM] < NVRAM0[SPREG_UART1_SEND_LENGTH]){//
-			SBUF1 = UART1_TXBUF[(uint8_t)NVRAM0[SPREG_UART1_SEND_NUM]];          
-			NVRAM0[SPREG_UART1_SEND_NUM] ++;						                   
-        }
-		else{
-			SET(SPCOIL_UART1_SEND_DONE);//发送完成
-			RES(SPCOIL_UART1_SEND_BUSY);
+		if(UART1_TX_CALLBACK != NULL){
+			SBUF0 = (*UART1_TX_CALLBACK)();
 		}
     }
 	if(SCON1 & 0x01){//RI1 == 1
 		SCON1 &= 0xFE;//RI1 = 0
-		if(NVRAM0[SPREG_UART1_RECV_NUM] < NVRAM0[SPREG_UART1_RECV_LENGTH]){
-			UART1_TXBUF[SPREG_UART1_RECV_NUM] = (uint16_t)SBUF1;	
-			SCON1 &= 0xEF;//REN1 = 0 关闭接收
-			SET(SPCOIL_UART1_RECV_DONE);//接收完成
-			RES(SPCOIL_UART1_RECV_BUSY);
-		}
-		else{
-			NVRAM0[SPREG_UART1_RECV_NUM] ++;
+		if(UART1_RX_CALLBACK != NULL){
+			(*UART1_RX_CALLBACK)(SBUF0);
 		}
 	} 
 }

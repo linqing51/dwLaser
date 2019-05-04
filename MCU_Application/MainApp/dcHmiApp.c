@@ -13,13 +13,14 @@
 
 #define FSMSTEP_POWERUP								0//上电
 //自检状态
-#define FSMSTEP_CHECK_EPROM							100//单片机自检
-#define FSMSTEP_CHECK_INTBUS						101//触摸屏通信自检
-#define FSMSTEP_CHECK_LDR							102//激光驱动器自检
-#define FSMSTEP_CHECK_TEMPER						103//温度自检
-#define FSMSTEP_CHECK_USBHOST						104//USBHOST模块自检
-#define FSMSTEP_CHECK_NFC							105//NFC模块自检
-#define FSMSTEP_CHECK_NRF24L01						106//无线脚踏RF自检
+#define FSMSTEP_CHECK_HMI							100//HMI自检
+#define FSMSTEP_CHECK_EPROM							101//单片机自检
+#define FSMSTEP_CHECK_INTBUS						102//触摸屏通信自检
+#define FSMSTEP_CHECK_LDR							103//激光驱动器自检
+#define FSMSTEP_CHECK_TEMPER						104//温度自检
+#define FSMSTEP_CHECK_USBHOST						105//USBHOST模块自检
+#define FSMSTEP_CHECK_NFC							106//NFC模块自检
+#define FSMSTEP_CHECK_NRF24L01						107//无线脚踏RF自检
 //密码输入状态
 #define FSMSTEP_PASSCODE_INPUT						200//密码输入状态
 #define FSMSTEP_PASSCODE_NEW0						201//密码更改状态第一次输入
@@ -90,7 +91,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		CLR(EM_ERROR_CODE);
 		CLR(EM_DC_NEW_PASSCODE0);
 		CLR(EM_DC_NEW_PASSCODE0);
-		NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_CHECK_EPROM;
+		
 		NVRAM0[EM_DC_DEFAULT_PASSCODE0] = CONFIG_HMI_DEFAULT_PASSSWORD0;
 		NVRAM0[EM_DC_DEFAULT_PASSCODE1] = CONFIG_HMI_DEFAULT_PASSSWORD1;
 		//检查储存密码是否合规
@@ -105,7 +106,38 @@ void dcHmiLoop(void){//HMI轮训程序
 			NVRAM0[DM_DC_OLD_PASSCODE0] = CONFIG_HMI_DEFAULT_PASSSWORD0;
 			NVRAM0[DM_DC_OLD_PASSCODE1] = CONFIG_HMI_DEFAULT_PASSSWORD1;  
 		}
-		NVRAM0[EM_DC_PAGE] = GDDC_PAGE_POWERUP;//HMI页面		
+		RES(SPCOIL_DCHMI_RESET_REQ);
+		SET(SPCOIL_DCHMI_RESET_DOING);
+		RES(SPCOIL_DCHMI_RESET_DONE);
+
+		RES(SPCOIL_DCHMI_UPDATE_REQ);
+		RES(SPCOIL_DCHMI_UPDATE_DOING);
+		RES(SPCOIL_DCHMO_UPDATE_DONE);
+		queue_reset();//清空HMI指令接收缓冲区	
+		NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_CHECK_HMI;
+		
+		return;
+	}
+	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_CHECK_HMI){//等待HMI复位
+		T100MS(T100MS_READY_HMI_RESET_DELAY, true, 3);
+		if(LD(T_100MS_START * 16 + T100MS_READY_HMI_RESET_DELAY)){
+			T100MS(T100MS_READY_HMI_RESET_DELAY, false, 3);
+			RES(SPCOIL_DCHMI_RESET_DOING);
+			SET(SPCOIL_DCHMI_RESET_DONE);	
+			//HMI从内置FLASH中恢复设置	
+			SET(SPCOIL_DCHMI_UPDATE_DOING);
+			//FlashRestoreControl(FLASH_DATA_VERSION,FLASH_DATA_ADDR);
+			RES(SPCOIL_DCHMI_UPDATE_DOING);
+			SET(SPCOIL_DCHMO_UPDATE_DONE);
+			//设置HMI页面
+			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_POWERUP;//HMI页面
+			SetScreen(NVRAM0[EM_DC_PAGE]);
+			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_CHECK_EPROM;
+				
+		}
+		else{
+			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_CHECK_HMI;//EPROM自检失败	
+		}
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_CHECK_EPROM){//EPROM自检步骤
@@ -156,7 +188,6 @@ void dcHmiLoop(void){//HMI轮训程序
 			}
 			else{
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_CHECK_EPROM;//EPROM自检失败
-				
 			}
 		}
 		else{
@@ -228,6 +259,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_PASSCODE_INPUT;
 			SET(R_CHECK_NRF24L01_DONE);
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_PASSCODE;//HMI页面
+			SetScreen(NVRAM0[EM_DC_PAGE]);
 		}
 		else{
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_CHECK_NRF24L01;
@@ -478,6 +510,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		}
 		else{		
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_PASSCODE;
+			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_PASSCODE_INPUT;	
 		}
 		return;
@@ -968,6 +1001,16 @@ void dcHmiLoop(void){//HMI轮训程序
 //		}
 //		return;
 //	}
+	if(LDB(SPCOIL_DCHMI_RESTORE_DOING) && LD(SPCOIL_DCHMI_RESTORE_DONE)){//HMI复位完成后处理串口指令
+		NVRAM0[SPREG_HMI_CMDSIZE] = queue_find_cmd(hmiCmdBuffer, CMD_MAX_SIZE);//从缓冲区中获取一条指令         
+        if(NVRAM0[SPREG_HMI_CMDSIZE] > 0){//接收到指令及判断是否为开机提示                                                            
+            ProcessMessage((PCTRL_MSG)hmiCmdBuffer, NVRAM0[SPREG_HMI_CMDSIZE]);//指令处理  
+        }                                                                             
+        if(LDP(SPCOIL_PS100MS) && LD(SPCOIL_DCHMI_UPDATE_REQ)){//每100mS刷新一次UI
+            RES(SPCOIL_DCHMI_UPDATE_REQ);   
+            UpdateUI();
+        } 
+	}
 }
 
 #endif

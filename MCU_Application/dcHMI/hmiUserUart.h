@@ -1,12 +1,9 @@
-#ifndef __HMI_H__
-#define __HMI_H__
+#ifndef __HMIUSERUART_H__
+#define __HMIUSERUART_H__
 /*****************************************************************************/
-#include "sPlc.h"
-#include "appSplcAdr.h"
-#include "backgroundApp.h"
-//
 #include "hmiLib.h"
 /*****************************************************************************/
-void dcHmiLoop(void);//HMIÂÖÑµ³ÌÐò
-void dcHmiLoopInit(void);
+void hmiUartSendChar(uint8_t t);
+void hmiInitUart(uint32_t baudrate);
+
 #endif

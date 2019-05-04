@@ -24,6 +24,8 @@ void assertCoilAddress(uint16_t adr) reentrant{//¼ì²éÏßÈ¦µØÖ·
 	if(adr > (maxCoilAdr)){
 		while(1);
 	}
+#else
+	adr = ~adr;
 #endif
 }
 void assertRegisterAddress(uint16_t adr) reentrant{//¼ì²é¼Ä´æÆ÷µØÖ·
@@ -31,6 +33,8 @@ void assertRegisterAddress(uint16_t adr) reentrant{//¼ì²é¼Ä´æÆ÷µØÖ·
 	if(adr > (CONFIG_NVRAM_SIZE - 1)){
 		while(1);
 	}
+#else
+	adr = ~adr;
 #endif
 }
 /*****************************************************************************/
