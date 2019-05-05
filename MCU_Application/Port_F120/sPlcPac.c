@@ -1,9 +1,6 @@
 #include "sPlcPca.h"
 /*****************************************************************************/
 #if CONFIG_SPLC_USING_PCA == 1
-#if CONFIG_DEBUG_PCA == 1
-bit debugAim0, debugAim1, debugBeem;
-#endif
 void sPlcPcaInit(void){//计时器阵列初始化
 	xdata uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
 	SFRPAGE = PCA0_PAGE;

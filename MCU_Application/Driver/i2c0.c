@@ -4,7 +4,7 @@ void iic0Init(void){
 
 }
 static void setSCL0(uint8_t s){//P7_2
-	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
     SFRPAGE   = CONFIG_PAGE;
 	if(s)
 		P7 |= (1 << 2);
@@ -22,16 +22,16 @@ static void setSDA0(uint8_t s){//P7_3
 	SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
 }
 static uint8_t getSCL0(void){
-	uint8_t temp;
-	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	xdata uint8_t temp;
+	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
     SFRPAGE   = CONFIG_PAGE;
 	temp = (P7 >> 2) & 0x01;
 	SFRPAGE = SFRPAGE_SAVE;        
 	return temp;
 }
 static uint8_t getSDA0(void){
-	uint8_t temp;
-	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	xdata uint8_t temp;
+	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
     SFRPAGE   = CONFIG_PAGE;
 	temp = (P7 >> 3) & 0x01;
 	SFRPAGE = SFRPAGE_SAVE;        

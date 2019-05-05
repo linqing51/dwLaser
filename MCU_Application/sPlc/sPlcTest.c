@@ -1,5 +1,6 @@
 #include "sPlcTest.h"
 //÷∏¡Ó≤‚ ‘≥Ã–Ú
+#if CONFIG_SPLC_FUNTEST == 1
 static void sPlcTest_XTAB(void){
 	//ÃÓ≥‰X÷·
 	int16_t srcX, distY, length;
@@ -47,3 +48,5 @@ void sPlcTest_TENV(void){
 void sPlcTest(void){
 	sPlcTest_XTAB();
 }
+
+#endif

@@ -57,7 +57,7 @@ code uint32_t crc32Tab[] = { /* CRC polynomial 0xedb88320 */
 static xdata uint32_t oldcrc32;
 
 uint32_t crc32Calculate(uint8_t *buf, uint32_t len){//CRC32 ¼ÆËãÊı×é
-    uint32_t i;  
+    xdata uint32_t i;  
     for (i = 0; i < len; i++){  
        oldcrc32 = crc32Tab[(oldcrc32 ^ buf[i]) & 0xff] ^ (oldcrc32 >> 8);  
     }  

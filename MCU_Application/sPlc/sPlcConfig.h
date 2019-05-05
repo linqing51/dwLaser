@@ -28,7 +28,7 @@
 #define CONFIG_I2C1_FREQ 					1
 #define CONFIG_I2C2_FREQ 					1
 #define CONFIG_I2C3_FREQ 					1
-#define CONFIG_I2C_WAITACT_TIME				100
+#define CONFIG_I2C_WAITACT_TIME				50
 /*****************************************************************************/
 #define CONFIG_EPROM_SIZE 					CONFIG_AT24C64_SIZE
 #define	CONFIG_AT24C02_SIZE 				256

@@ -9,6 +9,9 @@
 #if CONFIG_SPLC_FUN_EPID == 1
 #include "splcFunEPID.h"
 #endif
+#if CONFIG_SPLC_FUNTEST == 1
+#include "sPlcTest.h"
+#endif
 /*****************************************************************************/
 #define SPLC_FP32					*(fp32_t*)//指针取单精度浮点
 #define SPLC_FP64					*(fp64_t*)//指针取双精度浮点

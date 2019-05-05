@@ -2,11 +2,11 @@
 #if CONFIG_SPLC_USING_ADC == 1
 /*****************************************************************************/
 static xdata adcTempDat_t volatile adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
-static uint8_t volatile idata adcSelect;//ADC通道选择
+static xdata uint8_t volatile adcSelect;//ADC通道选择
 static void initAdcData(adcTempDat_t *s);
 /*****************************************************************************/
 static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
-    uint8_t i;
+    xdata uint8_t i;
 	for(i = 0;i < CONFIG_SPLC_ADC_FILTER_TAP; i++){
 		s->dat[i] = 0x0;
 	}
@@ -14,8 +14,8 @@ static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
 	s->wIndex = 0;
 }
 void initChipAdc(void){//ADC模块初始化
-	uint8_t i;
-	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	xdata uint8_t i;
+	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
 	SFRPAGE = ADC0_PAGE;
 	ADC0CN = 0x0;//软件触发
 	ADC0CN |= (1 << 6);//AD0TM = 1 启用跟踪
@@ -33,9 +33,9 @@ void initChipAdc(void){//ADC模块初始化
 	}
 }
 void chipAdcProcess(void){//循环采集ADC
-	uint16_t result = 0;
-	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
-	uint8_t adcOverTime = 0;
+	xdata uint16_t result = 0;
+	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	xdata uint8_t adcOverTime = 0;
 	SFRPAGE = ADC0_PAGE;
 //	while(1){
 //		adcOverTime ++;
@@ -97,9 +97,9 @@ void chipAdcProcess(void){//循环采集ADC
 	SFRPAGE = SFRPAGE_SAVE;
 }
 void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值 
-	uint8_t i;
-	uint16_t temp;
-	uint32_t sum;
+	xdata uint8_t i;
+	xdata uint16_t temp;
+	xdata uint32_t sum;
 	s->dat[s->wIndex] = dat;
 	s->wIndex ++;
 	if(s->wIndex >= CONFIG_SPLC_ADC_FILTER_TAP){

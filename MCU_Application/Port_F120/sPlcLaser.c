@@ -3,16 +3,13 @@
 #if CONFIG_SPLC_USING_LASER_TIMER == 1
 sbit LASER_980_MODPIN = P2^7;
 sbit LASER_1470_MODPIN = P2^6;
-#if CONFIG_DEBUG_TIMER4 == 1
-bit debugTimer4;
-#endif
 /*****************************************************************************/
 static void initTimer4(void);
 /*****************************************************************************/
 #if CONFIG_SPLC_USING_LASER_TIMER_TEST == 1
 void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 	EDLAR();
-	if(st == 0){//980 CW模式测试
+	if(st == 0){//CH0 CW模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_CW;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_980;
 		NVRAM0[SPREG_LASER_TMATE] = 0;//激光脉冲正脉宽 10mS
@@ -21,7 +18,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 300;
 		STLAR();
 	}
-	if(st == 1){//1470 CW模式测试
+	if(st == 1){//CH1 CW模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_CW;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_CH1470;
 		NVRAM0[SPREG_LASER_TMATE] = 5;//激光脉冲正脉宽 10mS
@@ -30,7 +27,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 400;
 		STLAR();
 	}
-	if(st == 2){//980+1470 CW模式测试
+	if(st == 2){//CH0+CH1 CW模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_CW;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
 		NVRAM0[SPREG_LASER_TMATE] = 12;//激光脉冲正脉宽 10mS
@@ -39,7 +36,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 600;
 		STLAR();
 	}
-	if(st == 3){//980 SP模式测试
+	if(st == 3){//CH0 SP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_SP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_980;
 		NVRAM0[SPREG_LASER_TMATE] = 50;//激光脉冲正脉宽 10mS
@@ -48,7 +45,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 800;
 		STLAR();
 	}
-	if(st == 4){//1480 SP模式测试
+	if(st == 4){//CH1 SP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_SP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_CH1470;
 		NVRAM0[SPREG_LASER_TMATE] = 25;//激光脉冲正脉宽 10mS
@@ -57,7 +54,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 1000;
 		STLAR();
 	}
-	if(st == 5){//980+1470 SP模式测试
+	if(st == 5){//CH0+CH1 SP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_SP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
 		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
@@ -66,7 +63,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 1200;
 		STLAR();
 	}
-	if(st == 6){//980 MP模式测试
+	if(st == 6){//CH0 MP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_MP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_980;
 		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
@@ -75,7 +72,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 1400;
 		STLAR();
 	}
-	if(st == 7){//1470 MP模式测试
+	if(st == 7){//CH1 MP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_MP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_CH1470;
 		NVRAM0[SPREG_LASER_TMATE] = 74;//激光脉冲正脉宽 10mS
@@ -84,7 +81,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 1600;
 		STLAR();
 	}
-	if(st == 8){//980+1470 MP模式测试
+	if(st == 8){//CH0+CH1 MP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_MP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
 		NVRAM0[SPREG_LASER_TMATE] = 53;//激光脉冲正脉宽 10mS
@@ -93,7 +90,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 1800;
 		STLAR();
 	}
-	if(st == 9){//980 GP模式测试
+	if(st == 9){//CH0 GP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_GP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_980;
 		NVRAM0[SPREG_LASER_TMATE] = 10;//激光脉冲正脉宽 10mS
@@ -104,7 +101,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 2000;
 		STLAR();
 	}
-	if(st == 10){//1470 GP模式测试
+	if(st == 10){//CH1 GP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_GP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_CH1470;
 		NVRAM0[SPREG_LASER_TMATE] = 19;//激光脉冲正脉宽 10mS
@@ -130,7 +127,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 
 #endif
 void STLAR(void) reentrant{//开始发射脉冲
-	uint8_t SFRPAGE_save;
+	xdata uint8_t SFRPAGE_save;
 	NVRAM0[SPREG_LASER_PCOUNTER] = 0X0;
 	NVRAM0[SPREG_LASER_TCOUNTER] = 0X00;	
 	SFRPAGE = TMR4_PAGE;
@@ -144,7 +141,7 @@ void STLAR(void) reentrant{//开始发射脉冲
 	RES(SPCOIL_LASER_EMITOVER);
 }
 void EDLAR(void) reentrant{//停止发射脉冲
-	uint8_t SFRPAGE_save;
+	xdata uint8_t SFRPAGE_save;
 	SFRPAGE = TMR4_PAGE;
 	TMR4CN &= ~(uint8_t)(1 << 2);//Stop Timer 4
 	TMR4CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag.

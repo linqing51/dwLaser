@@ -206,8 +206,8 @@
             <Mode2>0</Mode2>
             <useCB>0</useCB>
             <useXB>0</useXB>
-            <useL251>1</useL251>
-            <useA251>1</useA251>
+            <useL251>0</useL251>
+            <useA251>0</useA251>
             <Mx51>0</Mx51>
             <ModC812>0</ModC812>
             <ModCont>0</ModCont>
@@ -218,14 +218,12 @@
             <Mx51P>0</Mx51P>
             <hadXRAM2>0</hadXRAM2>
             <uocXram2>0</uocXram2>
-            <hadXRAM3>0</hadXRAM3>
             <ModC2>0</ModC2>
             <ModH2>0</ModH2>
             <Mdu_R515>0</Mdu_R515>
             <Mdu_F120>1</Mdu_F120>
             <Psoc>0</Psoc>
             <hadIROM2>0</hadIROM2>
-            <hadIROM3>0</hadIROM3>
             <ModSmx2>0</ModSmx2>
             <cBanks>0</cBanks>
             <xBanks>0</xBanks>
@@ -295,16 +293,6 @@
                 <StartAddress>0x0</StartAddress>
                 <Size>0x0</Size>
               </IROM512>
-              <XRA513>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </XRA513>
-              <IROM513>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </IROM513>
             </OnChipMemories>
           </Target51Misc>
           <C51>
@@ -382,20 +370,30 @@
               <FilePath>..\Lib\delay.c</FilePath>
             </File>
             <File>
-              <FileName>crc32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Lib\crc32.c</FilePath>
-            </File>
-            <File>
               <FileName>crc16.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Lib\crc16.c</FilePath>
+            </File>
+            <File>
+              <FileName>crc32.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Lib\crc32.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
           <GroupName>Drive</GroupName>
           <Files>
+            <File>
+              <FileName>eprom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\eprom.c</FilePath>
+            </File>
+            <File>
+              <FileName>debugLed.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Driver\debugLed.c</FilePath>
+            </File>
             <File>
               <FileName>i2c0.c</FileName>
               <FileType>1</FileType>
@@ -416,16 +414,6 @@
               <FileType>1</FileType>
               <FilePath>..\Driver\i2c3.c</FilePath>
             </File>
-            <File>
-              <FileName>eprom.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\eprom.c</FilePath>
-            </File>
-            <File>
-              <FileName>debugLed.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\debugLed.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -441,6 +429,21 @@
               <FileType>1</FileType>
               <FilePath>..\sPlc\sPlcFun.c</FilePath>
             </File>
+            <File>
+              <FileName>sPlcFunEPID.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\sPlc\sPlcFunEPID.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcModbus.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\sPlc\sPlcModbus.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcTest.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\sPlc\sPlcTest.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -452,19 +455,24 @@
               <FilePath>.\InitDevice.c</FilePath>
             </File>
             <File>
-              <FileName>sPlcTimer.c</FileName>
+              <FileName>sPlcChipAdc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlcTimer.c</FilePath>
+              <FilePath>.\sPlcChipAdc.c</FilePath>
             </File>
             <File>
-              <FileName>sPlcMcu.c</FileName>
+              <FileName>sPlcChipDac.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlcMcu.c</FilePath>
+              <FilePath>.\sPlcChipDac.c</FilePath>
             </File>
             <File>
-              <FileName>sPlcUart.c</FileName>
+              <FileName>sPlcIoIn.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\sPlcUart.c</FilePath>
+              <FilePath>.\sPlcIoIn.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcIoOut.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcIoOut.c</FilePath>
             </File>
             <File>
               <FileName>sPlcLaser.c</FileName>
@@ -472,9 +480,39 @@
               <FilePath>.\sPlcLaser.c</FilePath>
             </File>
             <File>
+              <FileName>sPlcMcu.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcMcu.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcModbusPort.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcModbusPort.c</FilePath>
+            </File>
+            <File>
               <FileName>sPlcPac.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sPlcPac.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcSimEprom.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcSimEprom.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcTimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcTimer.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcUart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcUart.c</FilePath>
+            </File>
+            <File>
+              <FileName>sPlcUsb.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\sPlcUsb.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -482,14 +520,19 @@
           <GroupName>MainApp</GroupName>
           <Files>
             <File>
-              <FileName>MainApp.c</FileName>
+              <FileName>backgroundApp.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\MainApp\MainApp.c</FilePath>
+              <FilePath>..\MainApp\backgroundApp.c</FilePath>
             </File>
             <File>
               <FileName>dcHmiApp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MainApp\dcHmiApp.c</FilePath>
+            </File>
+            <File>
+              <FileName>MainApp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MainApp\MainApp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -514,14 +557,14 @@
               <FilePath>..\dcHMI\hmiCmdQueue.c</FilePath>
             </File>
             <File>
-              <FileName>hmiDriver.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\dcHMI\hmiDriver.c</FilePath>
-            </File>
-            <File>
               <FileName>hmiUserUart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\dcHMI\hmiUserUart.c</FilePath>
+            </File>
+            <File>
+              <FileName>hmiDriver.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\dcHMI\hmiDriver.c</FilePath>
             </File>
           </Files>
         </Group>

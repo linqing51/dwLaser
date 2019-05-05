@@ -1,8 +1,7 @@
 #include "sPlcModbusPort.h"
 #if CONFIG_USING_RTU_SLAVE == 1
 /*****************************************************************************/
-static uint8_t *pSendBuf;
-bit modbusTimerDebug;
+xdata uint8_t *pSendBuf;
 /*****************************************************************************/
 void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER1
 	xdata uint16_t temp;

@@ -22,22 +22,20 @@ cmd_queue.c中共5个函数：清空指令数据queue_reset()、从串口添加指令数据queue_push(
 #define CMD_HEAD 0XEE                                                  //帧头
 #define CMD_TAIL 0XFFFCFFFF                                            //帧尾
 
-typedef struct _QUEUE                                             
-{                                                                 
+typedef struct _QUEUE{                                                                 
     qsize _head;                                                       //队列头
     qsize _tail;                                                       //队列尾
     qdata _data[QUEUE_MAX_SIZE];                                       //队列数据缓存区
 }QUEUE;                                                           
 
-static QUEUE que = {0,0,0};                                            //指令队列
-static uint32_t cmd_state = 0;                                           //队列帧尾检测状态
-static qsize cmd_pos = 0;                                              //当前指令指针位置
+xdata QUEUE que = {0,0,0};                                            //指令队列
+xdata uint32_t cmd_state = 0;                                           //队列帧尾检测状态
+xdata qsize cmd_pos = 0;                                              //当前指令指针位置
 
 /*! 
 *  \brief  清空指令数据
 */
-void queue_reset()
-{
+void queue_reset(){
     que._head = que._tail = 0;
     cmd_pos = cmd_state = 0;
 }
@@ -46,9 +44,8 @@ void queue_reset()
 * \detial 串口接收的数据，通过此函数放入指令队列 
 *  \param  _data 指令数据
 */
-void queue_push(qdata _data)
-{
-    qsize pos = (que._head+1)%QUEUE_MAX_SIZE;
+void queue_push(qdata _data){
+    xdata qsize pos = (que._head+1)%QUEUE_MAX_SIZE;
     if(pos!=que._tail)                                                //非满状态
     {
         que._data[que._head] = _data;
@@ -57,18 +54,16 @@ void queue_push(qdata _data)
 }
 
 //从队列中取一个数据
-static void queue_pop(qdata* _data)
-{
+void queue_pop(qdata* _data){
     if(que._tail!=que._head)                                          //非空状态
-    {
+	{
         *_data = que._data[que._tail];
         que._tail = (que._tail+1)%QUEUE_MAX_SIZE;
     }
 }
 
 //获取队列中有效数据个数
-static qsize queue_size()
-{
+qsize queue_size(){
     return ((que._head+QUEUE_MAX_SIZE-que._tail)%QUEUE_MAX_SIZE);
 }
 /*! 
@@ -77,11 +72,10 @@ static qsize queue_size()
 *  \param  buf_len 指令接收缓存区大小
 *  \return  指令长度，0表示队列中无完整指令
 */
-qsize queue_find_cmd(qdata *buffer,qsize buf_len)
+qsize queue_find_cmd(qdata *buffer, qsize buf_len)
 {
-    qsize cmd_size = 0;
-    qdata _data = 0;
-
+    xdata qsize cmd_size = 0;
+    xdata qdata _data = 0;
     while(queue_size()>0)
     {
         //取一个数据

@@ -9,7 +9,7 @@ void enableWatchDog(void){//使能看门狗
 	WDTCN = 0xA5;
 }
 void disableWatchDog(void){//关闭看门狗(未锁定)
-	uint8_t flagEA;
+	xdata uint8_t flagEA;
 	flagEA = EA;
 	EA = 0;
 	WDTCN = 0xDE;
@@ -49,17 +49,14 @@ void enableModbusSerialIsr(void){
 // This routine pushes and locks an interrupt vector and the first one or two
 // 4-byte FLASH segments of an ISR entry point into the cache. 
 //
-void Cache_ISR_Entry (   unsigned int start_address, 
-                         unsigned int interrupt_number   )
-{
-   char SFRPAGE_SAVE = SFRPAGE;        // Preserve current SFR page
-   char EA_SAVE = EA;                  // Preserve interrupt state
+void Cache_ISR_Entry(unsigned int start_address, unsigned int interrupt_number){
+   xdata char SFRPAGE_SAVE = SFRPAGE;        // Preserve current SFR page
+   xdata char EA_SAVE = EA;                  // Preserve interrupt state
 
-   unsigned char code* pread;          // Pointer used to generate MOVC 
+   xdata unsigned char code* pread;          // Pointer used to generate MOVC 
                                        // instructions to initiate a cache
                                        // push operation
-
-   unsigned char temp_char;            // Temporary char.
+   xdata unsigned char temp_char;            // Temporary char.
 
    // Set the <pread> pointer to the address of the interrupt vector.
    pread = ((interrupt_number * 8) + 3 ); 
