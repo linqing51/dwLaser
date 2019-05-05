@@ -71,10 +71,14 @@
 #define EM_DC_PASSCODE_INDEX					(EM_START + 129)//密码输入位索引		777
 #define EM_DC_NEW_PASSCODE0						(EM_START + 130)//输入新密码0			778
 #define EM_DC_NEW_PASSCODE1						(EM_START + 131)//输入新密码1			779
-#define EM_DC_DEFAULT_PASSCODE0					(EM_START + 132)//默认密码0				780
-#define EM_DC_DEFAULT_PASSCODE1					(EM_START + 133)//默认密码1				781
-#define EM_DC_DISPLAY_RELEASE_TIME				(EM_START + 134)//显示发射时间			782
-#define EM_DC_DISPLAY_RELEASE_ENERGY			(EM_START + 135)//显示发射能量			783
+#define EM_DC_NEW_PASSCODE2						(EM_START + 132)//输入新密码0			778
+#define EM_DC_NEW_PASSCODE3						(EM_START + 133)//输入新密码1			779
+#define EM_DC_DEFAULT_PASSCODE0					(EM_START + 134)//默认密码0				780
+#define EM_DC_DEFAULT_PASSCODE1					(EM_START + 135)//默认密码1				781
+#define EM_DC_DEFAULT_PASSCODE2					(EM_START + 136)//默认密码1				781
+#define EM_DC_DEFAULT_PASSCODE3					(EM_START + 137)//默认密码1				781
+#define EM_DC_DISPLAY_RELEASE_TIME				(EM_START + 138)//显示发射时间			782
+#define EM_DC_DISPLAY_RELEASE_ENERGY			(EM_START + 139)//显示发射能量			783
 
 /*****************************************************************************/
 #define DM_LASER_SCHEME_NAME					(DM_START +  0)//方案名称				72
@@ -183,13 +187,15 @@
 #define DM_BEEM_VOLUME							(DM_START + 443)//蜂鸣器音量
 #define DM_DC_OLD_PASSCODE0						(DM_START + 444)//屏旧密码0-1
 #define DM_DC_OLD_PASSCODE1						(DM_START + 445)//屏旧密码2-3
-#define DM_SYS_RUNTIME_L						(DM_START + 446)//系统累计运行时间秒L 32BIT
-#define DM_SYS_RUNTIME_H						(DM_START + 447)//系统累计运行时间秒H 32BIT
-#define DM_LAR_RUNTIME_L						(DM_START + 448)//激光累计发射时间秒L 32BIT
-#define DM_LAR_RUNTIME_H						(DM_START + 449)//激光累计发射时间秒H 32BIT
-#define DM_RELEASE_DATA_YEAR					(DM_START + 450)//出厂日期年		
-#define DM_RELEASE_DATA_MONTH					(DM_START + 451)//出厂日期月
-#define DM_RELEASE_DATA_DAY						(DM_START + 452)//出厂日期日
+#define DM_DC_OLD_PASSCODE2						(DM_START + 446)//屏旧密码0-1
+#define DM_DC_OLD_PASSCODE3						(DM_START + 447)//屏旧密码2-3
+#define DM_SYS_RUNTIME_L						(DM_START + 448)//系统累计运行时间秒L 32BIT
+#define DM_SYS_RUNTIME_H						(DM_START + 449)//系统累计运行时间秒H 32BIT
+#define DM_LAR_RUNTIME_L						(DM_START + 450)//激光累计发射时间秒L 32BIT
+#define DM_LAR_RUNTIME_H						(DM_START + 451)//激光累计发射时间秒H 32BIT
+#define DM_RELEASE_DATA_YEAR					(DM_START + 452)//出厂日期年		
+#define DM_RELEASE_DATA_MONTH					(DM_START + 453)//出厂日期月
+#define DM_RELEASE_DATA_DAY						(DM_START + 454)//出厂日期日
 /*****************************************************************************/
 #define X_INTERLOCK								(X_START * 16 + 0)//XIN0 安全连锁
 #define X_ESTOP									(X_START * 16 + 1)//XIN1 紧急停止开关
@@ -225,6 +231,17 @@
 #define R_SCHEME_LOAD_REQ						(R_START * 16 + 9)//方案载入请求
 #define R_SHCEME_SAVE_REQ						(R_START * 16 + 10)//方案储存请求
 
+//HMI相关状态
+#define R_DCHMI_RESET_REQ						(R_START * 16 + 47)//HMI复位请求
+#define R_DCHMI_RESET_DOING						(R_START * 16 + 48)//HMI复位中
+#define R_DCHMI_RESET_DONE						(R_START * 16 + 49)//HMI复位完成	
+#define R_DCHMI_UPDATE_REQ						(R_START * 16 + 50)//HMI内容更新请求
+#define R_DCHMI_UPDATE_DOING					(R_START * 16 + 51)//HMI内容更新中
+#define R_DCHMO_UPDATE_DONE						(R_START * 16 + 52)//HMI内容更新请求完成
+#define R_DCHMI_RESTORE_REQ						(R_START * 16 + 53)//HMI从FLASH中恢复设置请求
+#define R_DCHMI_RESTORE_DOING					(R_START * 16 + 54)//HMI从FLASH中恢复中
+#define R_DCHMI_RESTORE_DONE					(R_START * 16 + 55)//HMI从FLASH中恢复设置完成	
+//自检状态
 #define R_CHECK_EPROM_DONE						(R_START * 16 + 128)//存储器自检完毕
 #define R_CHECK_INTBUS_DONE						(R_START * 16 + 129)//HMI通信自检完毕
 #define R_CHECK_LDR_DONE						(R_START * 16 + 130)//激光驱动器自检完毕
@@ -247,74 +264,21 @@
 #define R_CHECK_NFC_FAIL						(R_START * 16 + 147)//NFC模块失败
 #define R_CHECK_NRF24L01_FAIL					(R_START * 16 + 148)//NRF24L01模块自检失败
 /*****************************************************************************/
-#define R_DC_PASSCODE_ENTER_REQ					(R_START * 16 + 150)//密码确认请求			278
-#define R_DC_PASSCODE_CHANGE_REQ				(R_START * 16 + 151)//密码修改请求			279
-#define R_DC_PASSCODE_CANCEL_REQ				(R_START * 16 + 152)//密码输入清空			280
-#define R_DC_PASSCODE_BACKSPACE_REQ				(R_START * 16 + 153)//密码输入退格			281
-#define R_DC_PASSCODE_KEY0						(R_START * 16 + 154)//密码输入按键0			282
-#define R_DC_PASSCODE_KEY1						(R_START * 16 + 155)//密码输入按键1			283
-#define R_DC_PASSCODE_KEY2						(R_START * 16 + 156)//密码输入按键2			284
-#define R_DC_PASSCODE_KEY3						(R_START * 16 + 157)//密码输入按键3			285
-#define R_DC_PASSCODE_KEY4						(R_START * 16 + 158)//密码输入按键4			286
-#define R_DC_PASSCODE_KEY5						(R_START * 16 + 159)//密码输入按键5			287
-#define R_DC_PASSCODE_KEY6						(R_START * 16 + 160)//密码输入按键6			288
-#define R_DC_PASSCODE_KEY7						(R_START * 16 + 161)//密码输入按键7			289
-#define R_DC_PASSCODE_KEY8						(R_START * 16 + 162)//密码输入按键8			290
-#define R_DC_PASSCODE_KEY9						(R_START * 16 + 163)//密码输入按键9			291
-/*****************************************************************************/
-#define R_DC_NEW_PASSCODE_SAVE_REQ				(R_START * 16 + 170)//密码修改储存			298
-#define R_DC_NEW_PASSCODE0_INPUT_DONE			(R_START * 16 + 171)//新密码匹配第一次		299
-#define R_DC_NEW_PASSCODE1_INPUT_DONE			(R_START * 16 + 172)//新密码匹配第二次		300
-#define R_DC_NEW_PASSCODE_ABANDON_REQ			(R_START * 16 + 173)//放弃密码修改			301
-#define R_DC_NEW_PASSCODE_CANCEL_REQ			(R_START * 16 + 174)//新密码输入清空		302
-#define R_DC_NEW_PASSCODE_BACKSPACE_REQ			(R_START * 16 + 175)//新密码输入退格		303
-#define R_DC_NEW_PASSCODE_KEY0					(R_START * 16 + 176)//新密码输入按键0		304
-#define R_DC_NEW_PASSCODE_KEY1					(R_START * 16 + 177)//新密码输入按键1		305
-#define R_DC_NEW_PASSCODE_KEY2					(R_START * 16 + 178)//新密码输入按键2		306
-#define R_DC_NEW_PASSCODE_KEY3					(R_START * 16 + 179)//新密码输入按键3		307
-#define R_DC_NEW_PASSCODE_KEY4					(R_START * 16 + 180)//新密码输入按键4		308
-#define R_DC_NEW_PASSCODE_KEY5					(R_START * 16 + 181)//新密码输入按键5		309
-#define R_DC_NEW_PASSCODE_KEY6					(R_START * 16 + 182)//新密码输入按键6		310
-#define R_DC_NEW_PASSCODE_KEY7					(R_START * 16 + 183)//新密码输入按键7		311
-#define R_DC_NEW_PASSCODE_KEY8					(R_START * 16 + 184)//新密码输入按键8		312
-#define R_DC_NEW_PASSCODE_KEY9					(R_START * 16 + 185)//新密码输入按键9		313
-/*****************************************************************************/
-#define R_DC_STANDBY_READY						(R_START * 16 + 190)//准备按键				318
-#define R_DC_STANDBY_RESET_REQ					(R_START * 16 + 191)//能量和时间计时		319
-#define R_DC_STANDBY_SELECT_CH0_REQ				(R_START * 16 + 192)//激光通道选择0			320
-#define R_DC_STANDBY_SELECT_CH1_REQ				(R_START * 16 + 193)//激光通道选择1			321
-#define R_DC_STANDBY_SELECT_CH01_REQ			(R_START * 16 + 194)//激光通道选择0+1		322
-#define R_DC_STANDBY_MODE_CW_REQ				(R_START * 16 + 195)//激光发射模式连续CW	323
-#define R_DC_STANDBY_MODE_SP_REQ				(R_START * 16 + 196)//激光发射模式单脉冲SP	324
-#define R_DC_STANDBY_MODE_MP_REQ				(R_START * 16 + 197)//激光发射模式多脉冲MP	325
-#define R_DC_STANDBY_MODE_GP_REQ				(R_START * 16 + 198)//激光发射模式间隔脉冲GP326
-#define R_DC_STANDBY_POSWIDTH_ADD_REQ			(R_START * 16 + 199)//正脉宽增加			327
-#define R_DC_STANDBY_POSWIDTH_DEC_REQ			(R_START * 16 + 200)//正脉宽减小			328
-#define R_DC_STANDBY_NEGWIDTH_ADD_REQ			(R_START * 16 + 201)//负脉宽增加			329
-#define R_DC_STANDBY_NEGWIDTH_DEC_REQ			(R_START * 16 + 202)//负脉宽减小			330
-#define R_DC_STANDBY_GROUP_ADD_REQ				(R_START * 16 + 203)//脉冲个数增加			331
-#define R_DC_STANDBY_GROUP_DEC_REQ				(R_START * 16 + 204)//脉冲个数减小			332
-#define R_DC_STANDBY_SPACE_ADD_REQ				(R_START * 16 + 205)//脉冲间隔增加			333
-#define R_DC_STANDBY_SPACE_DEC_REQ				(R_START * 16 + 206)//脉冲间隔减小			334
-#define R_DC_STANDBY_SCHEME_SAVE_REQ			(R_START * 16 + 207)//方案储存				335
-#define R_DC_STANDBY_LASERPOWER0_ADD_REQ		(R_START * 16 + 208)//激光功率增加0			336
-#define R_DC_STANDBY_LASERPOWER1_ADD_REQ		(R_START * 16 + 209)//激光功率增加1			337
-#define R_DC_STANDBY_LASERPOWER0_DEC_REQ		(R_START * 16 + 210)//激光功率减小0			338
-#define R_DC_STANDBY_LASERPOWER1_DEC_REQ		(R_START * 16 + 211)//激光功率减小1			339
-#define R_DC_STANDBY_OPTION						(R_START * 16 + 212)//选项按键				340
-#define R_DC_STANDBY_LAST_SCHEME				(R_START * 16 + 213)//选择上一个方案		341
-#define R_DC_STANDBY_NEXT_SCHEME				(R_START * 16 + 214)//选择下一个方案		342
-/*****************************************************************************/
-#define R_DC_OPTION_RETURN_REQ					(R_START * 16 + 220)//返回					348
-#define R_DC_OPTION_SCHEME_REQ					(R_START * 16 + 221)//方案界面				349
-#define R_DC_OPTION_INFO_REQ					(R_START * 16 + 222)//信息界面				350
-
-#define MR_DC_OPTION_BEEM_TONE					(MR_START * 16 +  0)//蜂鸣器声光同步		0
-#define MR_DC_OPTION_AIM_ON						(MR_START * 16 +  1)//指示激光				1
-/*****************************************************************************/
+#define R_KEY_POSWIDTH_ADD_DOWN					(R_START * 16 + 149)//自加
+#define R_KEY_POSWIDTH_DEC_DOWN					(R_START * 16 + 150)
+#define R_KEY_NEGWIDTH_ADD_DOWN					(R_START * 16 + 151)
+#define R_KEY_NEGWIDTH_DEC_DOWN					(R_START * 16 + 152)
+#define R_KEY_GROUP_ADD_DOWN					(R_START * 16 + 153)
+#define R_KEY_GROUP_DEC_DOWN					(R_START * 16 + 154)
+#define R_KEY_SPACE_ADD_DOWN					(R_START * 16 + 155)
+#define R_KEY_SPACE_DEC_DOWN					(R_START * 16 + 156)
+#define R_KEY_POWER_CH0_ADD_DOWN				(R_START * 16 + 157)
+#define R_KEY_POWER_CH0_DEC_DOWN				(R_START * 16 + 158)
+#define R_KEY_POWER_CH1_ADD_DOWN				(R_START * 16 + 159)
+#define R_KEY_POWER_CH1_DEC_DOWN				(R_START * 16 + 160)
 
 /*****************************************************************************/
-#define T100MS_READY_HMI_RESET_DELAY			0//HMI复位延时
+#define T100MS_HMI_POWERUP_DELAY				0//HMI启动复位延时
 #define T100MS_READY_BEEM_DELAY					1//进入READY状态后蜂鸣器响延迟
 #define T100MS_CHECK_FLASH_DELAY				2//存储器自检等待延迟
 #define T100MS_CHECK_INTBUS_DELAY				3//总线自检等待延迟
@@ -323,5 +287,13 @@
 #define T100MS_CHECK_USBHOST_DELAY				6//USBHOST模块等待延迟
 #define T100MS_CHECK_NFC_DELAY					7//NFC读卡模块等待延迟
 #define T100MS_CHECK_NRF24L01_DELAY				8//NRF24L01脚踏模块等待延迟
+
+
+#define T10MS_POSWIDTH_ADD_KEYDOWN_DELAY		3	
+#define T10MS_POSWIDTH_DEC_KEYDOWN_DELAY		4
+#define T10MS_NEGWIDTH_ADD_KEYDOWN_DELAY		5
+#define T10MS_NEGWIDTH_DEC_KEYDOWN_DELAY		6
+
+
 
 #endif

@@ -16,7 +16,7 @@
 #define CONFIG_DEBUG_PCA					0//PCA调试
 #endif
 /*****************************************************************************/
-#define CONFIG_UART0_BAUDRATE				115200//串口0 波特率
+#define CONFIG_UART0_BAUDRATE				19200//串口0 波特率
 #define CONFIG_UART1_BAUDRATE				115200//串口1 波特率
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_I2C0				1//使能I2C0
@@ -52,7 +52,7 @@
 #define CONFIG_SPLC_DEV						0x0A01//设备号
 #define CONFIG_SPLC_CLEAR_CODE				0xA58E
 #define CONFIG_SOFTPLC_TICK					1000L//1mS
-#define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期 1mS * N
+#define CONFIG_INPUT_FILTER_TIME			1//输入数字滤波扫描周期 1mS * N
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT				0//看门狗启用
 /*****************************************************************************/
@@ -120,7 +120,7 @@
 /*****************************************************************************/
 #define CONFIG_LASER_TIMER_TICK				1000
 #define CONFIG_USING_DCHMI_APP				1//广东大彩人机交互应用
-#define CONFIG_USING_BACKGROUND_APP			1//背景应用
+#define CONFIG_USING_BACKGROUND_APP			0//背景应用
 
 #define CONFIG_MAX_LASERPOWER_CH0			300//通道0最大激光功率
 #define CONFIG_MIN_LASERPOWRR_CH0			0//通道0最小激光功率
@@ -255,87 +255,74 @@
 //蜂鸣器相关线圈
 #define SPCOIL_BEEM_ENABLE					(SPCOIL_START * 16 + 46)//蜂鸣器发射使能		
 /*****************************************************************************/
-//HMI相关线圈
-#define SPCOIL_DCHMI_RESET_REQ				(SPCOIL_START * 16 + 47)//HMI复位请求
-#define SPCOIL_DCHMI_RESET_DOING			(SPCOIL_START * 16 + 48)//HMI复位中
-#define SPCOIL_DCHMI_RESET_DONE				(SPCOIL_START * 16 + 49)//HMI复位完成
-#define SPCOIL_DCHMI_UPDATE_REQ				(SPCOIL_START * 16 + 50)//HMI内容更新请求
-#define SPCOIL_DCHMI_UPDATE_DOING			(SPCOIL_START * 16 + 51)//HMI内容更新中
-#define SPCOIL_DCHMO_UPDATE_DONE			(SPCOIL_START * 16 + 52)//HMI内容更新请求完成
-#define SPCOIL_DCHMI_RESTORE_REQ			(SPCOIL_START * 16 + 53)//HMI从FLASH中恢复设置请求
-#define SPCOIL_DCHMI_RESTORE_DOING			(SPCOIL_START * 16 + 54)//HMI从FLASH中恢复中
-#define SPCOIL_DCHMI_RESTORE_DONE			(SPCOIL_START * 16 + 55)//HMI从FLASH中恢复设置完成
+#define SPREG_CLEAR_NVRAM					(SPREG_START + 0)//清除NVRAM后重新启动
 /*****************************************************************************/
-#define SPREG_IDENTITY						(SPREG_START + 0)//平台ID号
-#define SPREG_CLEAR_NVRAM					(SPREG_START + 1)//清除NVRAM后重新启动
+#define SPREG_ADC_0							(SPREG_START + 1)//ADC0采集值 PD0
+#define SPREG_ADC_1							(SPREG_START + 2)//ADC1采集值 PD1
+#define SPREG_ADC_2							(SPREG_START + 3)//ADC2采集值 NTC0
+#define SPREG_ADC_3							(SPREG_START + 4)//ADC3采集值 NTC1
+#define SPREG_ADC_4							(SPREG_START + 5)//ADC4采集值 ISMON0
+#define SPREG_ADC_5							(SPREG_START + 6)//ADC5采集值 IVINMON0
+#define SPREG_ADC_6							(SPREG_START + 7)//ADC6采集值 ISMON1
+#define SPREG_ADC_7							(SPREG_START + 8)//ADC7采集值 IVINMON1
+#define SPREG_ADC_8							(SPREG_START + 9)//ADC8采集值 Temperature Sensor
+#define SPREG_DAC_0							(SPREG_START + 10)//DAC0设定值 LSET0
+#define SPREG_DAC_1							(SPREG_START + 11)//DAC0设定值 LSET1
 /*****************************************************************************/
-#define SPREG_UART0_SEND_LENGTH				(SPREG_START + 2)//UART0 发送数据长度
-#define SPREG_UART0_SEND_NUM				(SPREG_START + 3)//UART0 已经发送数据长度
-#define SPREG_UART0_RECV_LENGTH				(SPREG_START + 4)//UART0 接收数据长度
-#define SPREG_UART0_RECV_NUM				(SPREG_START + 5)//UART0 已经接收数据长度
+#define SPREG_UART0_SEND_LENGTH				(SPREG_START + 12)//UART0 发送数据长度
+#define SPREG_UART0_SEND_NUM				(SPREG_START + 13)//UART0 已经发送数据长度
+#define SPREG_UART0_RECV_LENGTH				(SPREG_START + 14)//UART0 接收数据长度
+#define SPREG_UART0_RECV_NUM				(SPREG_START + 15)//UART0 已经接收数据长度
 /*****************************************************************************/		
-#define SPREG_UART1_SEND_LENGTH				(SPREG_START + 6)//UART1 发送数据长度
-#define SPREG_UART1_SEND_NUM				(SPREG_START + 7)//UART1 已经发送数据长度
-#define SPREG_UART1_RECV_LENGTH				(SPREG_START + 8)//UART1 接收数据长度
-#define SPREG_UART1_RECV_NUM				(SPREG_START + 9)//UART1 已经接收数据长度
+#define SPREG_UART1_SEND_LENGTH				(SPREG_START + 16)//UART1 发送数据长度
+#define SPREG_UART1_SEND_NUM				(SPREG_START + 17)//UART1 已经发送数据长度
+#define SPREG_UART1_RECV_LENGTH				(SPREG_START + 18)//UART1 接收数据长度
+#define SPREG_UART1_RECV_NUM				(SPREG_START + 19)//UART1 已经接收数据长度
 /*****************************************************************************/
-#define SPREG_ADC_0							(SPREG_START + 10)//ADC0采集值 PD0
-#define SPREG_ADC_1							(SPREG_START + 11)//ADC1采集值 PD1
-#define SPREG_ADC_2							(SPREG_START + 12)//ADC2采集值 NTC0
-#define SPREG_ADC_3							(SPREG_START + 13)//ADC3采集值 NTC1
-#define SPREG_ADC_4							(SPREG_START + 14)//ADC4采集值 ISMON0
-#define SPREG_ADC_5							(SPREG_START + 15)//ADC5采集值 IVINMON0
-#define SPREG_ADC_6							(SPREG_START + 16)//ADC6采集值 ISMON1
-#define SPREG_ADC_7							(SPREG_START + 17)//ADC7采集值 IVINMON1
-#define SPREG_ADC_8							(SPREG_START + 18)//ADC8采集值 Temperature Sensor
-#define SPREG_DAC_0							(SPREG_START + 19)//DAC0设定值 LSET0
-#define SPREG_DAC_1							(SPREG_START + 20)//DAC0设定值 LSET1
+#define SPREG_SPWM_POS_0					(SPREG_START + 20)//软件PWM0正脉宽设置
+#define SPREG_SPWM_POS_SHADOW_0				(SPREG_START + 21)//软件PWM0正脉宽阴影
+#define SPREG_SPWM_CYCLE_0					(SPREG_START + 22)//软件PWM0周期设置
+#define SPREG_SPWM_CYCLE_SHADOW_0			(SPREG_START + 23)//软件PWM0周期阴影
+#define SPREG_SPWM_COUNTER_0				(SPREG_START + 24)//软件PWM0计数器
+#define SPREG_SPWM_POS_1					(SPREG_START + 25)//软件PWM1正脉宽设置
+#define SPREG_SPWM_POS_SHADOW_1				(SPREG_START + 26)//软件PWM1正脉宽阴影
+#define SPREG_SPWM_CYCLE_1					(SPREG_START + 27)//软件PWM1周期设置
+#define SPREG_SPWM_CYCLE_SHADOW_1			(SPREG_START + 28)//软件PWM1周期阴影
+#define SPREG_SPWM_COUNTER_1				(SPREG_START + 29)//软件PWM1计数器
+#define SPREG_SPWM_POS_2					(SPREG_START + 30)//软件PWM2正脉宽设置
+#define SPREG_SPWM_POS_SHADOW_2				(SPREG_START + 31)//软件PWM2正脉宽阴影
+#define SPREG_SPWM_CYCLE_2					(SPREG_START + 32)//软件PWM2周期设置
+#define SPREG_SPWM_CYCLE_SHADOW_2			(SPREG_START + 33)//软件PWM2周期阴影
+#define SPREG_SPWM_COUNTER_2				(SPREG_START + 34)//软件PWM2计数器
+#define SPREG_SPWM_POS_3					(SPREG_START + 35)//软件PWM3正脉宽设置
+#define SPREG_SPWM_POS_SHADOW_3				(SPREG_START + 36)//软件PWM3正脉宽阴影
+#define SPREG_SPWM_CYCLE_3					(SPREG_START + 37)//软件PWM3周期设置
+#define SPREG_SPWM_CYCLE_SHADOW_3			(SPREG_START + 38)//软件PWM3周期阴影
+#define SPREG_SPWM_COUNTER_3				(SPREG_START + 39)//软件PWM3计数器
 /*****************************************************************************/
-#define SPREG_SPWM_POS_0					(SPREG_START + 21)//软件PWM0正脉宽设置
-#define SPREG_SPWM_POS_SHADOW_0				(SPREG_START + 22)//软件PWM0正脉宽阴影
-#define SPREG_SPWM_CYCLE_0					(SPREG_START + 23)//软件PWM0周期设置
-#define SPREG_SPWM_CYCLE_SHADOW_0			(SPREG_START + 24)//软件PWM0周期阴影
-#define SPREG_SPWM_COUNTER_0				(SPREG_START + 25)//软件PWM0计数器
-#define SPREG_SPWM_POS_1					(SPREG_START + 26)//软件PWM1正脉宽设置
-#define SPREG_SPWM_POS_SHADOW_1				(SPREG_START + 27)//软件PWM1正脉宽阴影
-#define SPREG_SPWM_CYCLE_1					(SPREG_START + 28)//软件PWM1周期设置
-#define SPREG_SPWM_CYCLE_SHADOW_1			(SPREG_START + 29)//软件PWM1周期阴影
-#define SPREG_SPWM_COUNTER_1				(SPREG_START + 30)//软件PWM1计数器
-#define SPREG_SPWM_POS_2					(SPREG_START + 31)//软件PWM2正脉宽设置
-#define SPREG_SPWM_POS_SHADOW_2				(SPREG_START + 32)//软件PWM2正脉宽阴影
-#define SPREG_SPWM_CYCLE_2					(SPREG_START + 33)//软件PWM2周期设置
-#define SPREG_SPWM_CYCLE_SHADOW_2			(SPREG_START + 34)//软件PWM2周期阴影
-#define SPREG_SPWM_COUNTER_2				(SPREG_START + 35)//软件PWM2计数器
-#define SPREG_SPWM_POS_3					(SPREG_START + 36)//软件PWM3正脉宽设置
-#define SPREG_SPWM_POS_SHADOW_3				(SPREG_START + 37)//软件PWM3正脉宽阴影
-#define SPREG_SPWM_CYCLE_3					(SPREG_START + 38)//软件PWM3周期设置
-#define SPREG_SPWM_CYCLE_SHADOW_3			(SPREG_START + 39)//软件PWM3周期阴影
-#define SPREG_SPWM_COUNTER_3				(SPREG_START + 40)//软件PWM3计数器
-/*****************************************************************************/
-#define SPREG_AIM0_BRIGHTNESS				(SPREG_START + 41)//PCA0->指示光0亮度
-#define SPREG_AIM1_BRIGHTNESS				(SPREG_START + 42)//PCA1->指示光1亮度
-/*****************************************************************************/
-//激光脉冲发射相关寄存器
-#define SPREG_LASER_MODE					(SPREG_START + 43)//激光发射模式
-#define SPREG_LASER_SELECT					(SPREG_START + 44)//激光通道选择
-#define SPREG_LASER_TCOUNTER				(SPREG_START + 45)//激光脉冲计时器计数值
-#define SPREG_LASER_TMATE					(SPREG_START + 46)//激光脉冲计时器器匹配值
-#define SPREG_LASER_TOVERTIME				(SPREG_START + 47)//激光脉冲计时器溢出值
-#define SPREG_LASER_PCOUNTER 				(SPREG_START + 48)//激光脉冲个数计数值
-#define SPREG_LASER_PMATE					(SPREG_START + 49)//激光脉冲个数匹配值
-#define SPREG_LASER_POVERTIME				(SPREG_START + 50)//激光脉冲间隔计时值
-#define SPREG_LASER_RELEASETIME				(SPREG_START + 51)//激光持续时间
-#define SPREG_LASER_RELEASE_COUNTER			(SPREG_START + 52)//激光持续时间计时器
-#define SPREG_LASER_CURRENT_0				(SPREG_START + 53)//激光电流0
-#define SPREG_LASER_CURRENT_1				(SPREG_START + 54)//激光电流1
+#define SPREG_AIM0_BRIGHTNESS				(SPREG_START + 40)//PCA0->指示光0亮度
+#define SPREG_AIM1_BRIGHTNESS				(SPREG_START + 41)//PCA1->指示光1亮度
 /*****************************************************************************/
 //蜂鸣器相关寄存器
-#define SPREG_BEEM_VOLUME					(SPREG_START + 55)//蜂鸣器音量
-#define SPREG_BEEM_MODE						(SPREG_START + 56)//蜂鸣器模式
-#define SPREG_BEEM_COUNTER					(SPREG_START + 57)//蜂鸣器计时器
+#define SPREG_BEEM_VOLUME					(SPREG_START + 42)//蜂鸣器音量
+#define SPREG_BEEM_MODE						(SPREG_START + 43)//蜂鸣器模式
+#define SPREG_BEEM_COUNTER					(SPREG_START + 44)//蜂鸣器计时器
 /*****************************************************************************/
-//HMI相关寄存器
-#define SPREG_HMI_CMDSIZE					(SPREG_START + 58)//HMI命令数
+//激光脉冲发射相关寄存器
+#define SPREG_LASER_MODE					(SPREG_START + 45)//激光发射模式
+#define SPREG_LASER_SELECT					(SPREG_START + 46)//激光通道选择
+#define SPREG_LASER_TCOUNTER				(SPREG_START + 47)//激光脉冲计时器计数值
+#define SPREG_LASER_TMATE					(SPREG_START + 48)//激光脉冲计时器器匹配值
+#define SPREG_LASER_TOVERTIME				(SPREG_START + 49)//激光脉冲计时器溢出值
+#define SPREG_LASER_PCOUNTER 				(SPREG_START + 50)//激光脉冲个数计数值
+#define SPREG_LASER_PMATE					(SPREG_START + 51)//激光脉冲个数匹配值
+#define SPREG_LASER_POVERTIME				(SPREG_START + 52)//激光脉冲间隔计时值
+#define SPREG_LASER_RELEASETIME				(SPREG_START + 53)//激光持续时间
+#define SPREG_LASER_RELEASE_COUNTER			(SPREG_START + 54)//激光持续时间计时器
+#define SPREG_LASER_CURRENT_0				(SPREG_START + 55)//激光电流0
+#define SPREG_LASER_CURRENT_1				(SPREG_START + 56)//激光电流1
+/*****************************************************************************/
+#define SPREG_IDENTITY						(SPREG_END + 0)//平台ID号
 /*****************************************************************************/
 #define T10MS_USBDISK_CONNECT_DELAY			0
 #define T10MS_USBDISK_MOUNT_DELAY			1

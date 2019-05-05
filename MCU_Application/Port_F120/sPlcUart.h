@@ -3,10 +3,14 @@
 /*****************************************************************************/
 #include "sPlcPort.h"
 /*****************************************************************************/
-//extern (*UART0_TX_CALLBACK)(void);//发送回调 
-//extern (*UART0_RX_CALLBACK)(uint8_t dat);
-//extern uint8_t (*UART1_TX_CALLBACK)(void);//发送回调 
-//extern void (*UART1_RX_CALLBACK)(uint8_t dat);
+//#if CONFIG_SPLC_USING_UART0 == 1
+//uint8_t (*UART0_TX_CALLBACK)(void);//发送回调 
+//void (*UART0_RX_CALLBACK)(uint8_t dat);
+//#endif
+//#if CONFIG_SPLC_USING_UART1 == 1
+//uint8_t (*UART1_TX_CALLBACK)(void);//发送回调 
+//void (*UART1_RX_CALLBACK)(uint8_t dat);
+//#endif
 /*****************************************************************************/
 void initUart0(uint32_t baudrate);//串口初始化
 void initUart1(uint32_t baudrate);//串口初始化

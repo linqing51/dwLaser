@@ -68,7 +68,7 @@ uint16_t CheckCRC16(uint8_t *buffer,uint16_t n)
 void SEND_DATA(uint8_t c)
 {
     AddCRC16(&c,1,&_crc16);
-    SendChar(c);
+    hmiUartSendChar(c);
 }
 /*! 
 *  \brief  ֡ͷ

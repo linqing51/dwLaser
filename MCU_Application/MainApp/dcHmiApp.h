@@ -3,8 +3,9 @@
 /*****************************************************************************/
 #include "sPlc.h"
 #include "appSplcAdr.h"
+#include "dcHmiRes.h"
 #include "backgroundApp.h"
-//
+
 #include "hmiLib.h"
 /*****************************************************************************/
 void dcHmiLoop(void);//HMIÂÖÑµ³ÌÐò
