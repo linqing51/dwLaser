@@ -55,7 +55,8 @@ void Port_IO_Init(){
     // P3.5  -  Unassigned,  Push-Pull,  Digital
     // P3.6  -  Unassigned,  Push-Pull,  Digital
     // P3.7  -  Unassigned,  Push-Pull,  Digital
-    SFRPAGE   = CONFIG_PAGE;
+  	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	SFRPAGE = CONFIG_PAGE;// Set SFR page
     P0MDOUT   = 0x35;
     P1MDOUT   = 0x7D;
     P2MDOUT   = 0xFF;
@@ -65,6 +66,7 @@ void Port_IO_Init(){
     P7MDOUT   = 0x11;
     XBR0      = 0x2F;
     XBR2      = 0x44;
+	SFRPAGE = LEGACY_PAGE;
 }
 
 static void Oscillator_Init()

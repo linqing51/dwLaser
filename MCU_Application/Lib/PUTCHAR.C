@@ -15,47 +15,74 @@
 /*                                                                     */
 /***********************************************************************/
 
-#include "lib.h"
+#include <lib.h>
 
 #define XON  0x11
 #define XOFF 0x13
+
+
 /*
  * putchar (full version):  expands '\n' into CR LF and handles
  *                          XON/XOFF (Ctrl+S/Ctrl+Q) protocol
  */
-#if CONFIG_DEBUG_CONSOLE == 1
-char putchar(char c){
-	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
-	SFRPAGE = UART1_PAGE;// Set SFR page
-	if(c == '\n'){
-		if(SCON1 & 0x01){
-			if(SBUF1 == XOFF){
-				do{
-					SCON1 &= 0xFE;//RI1 = 0	
-					while (!(SCON1 & 0x01));
-				}
-			while(SBUF1 != XON);
-			SCON1 &= 0xFE;//RI1 = 0	
-			}
-		}
-		while(!(SCON1 & 0x02));
-		SCON1 &= 0xFD;//TI1 = 0
-		SBUF1 = 0x0d;//output CR
-	}
-	if(SCON1 & 0x01){
-		if(SBUF1 == XOFF){
-		do{
-			SCON1 &= 0xFE;//RI1 = 0	
-			while (!(SCON1 & 0x01));
-		}
-		while (SBUF1 != XON);
-		SCON1 &= 0xFE;//RI1 = 0	
-		}
-	}
-	while (!(SCON1 & 0x02));
-	SCON1 &= 0xFD;//TI1 = 0
-	SBUF1 = c;
-	SFRPAGE = SFRPAGE_SAVE;// Restore SFR page
-	return c;
+char putchar (char c)  {
+
+  if (c == '\n')  {
+    if (RI)  {
+      if (SBUF == XOFF)  {
+        do  {
+          RI = 0;
+          while (!RI);
+        }
+        while (SBUF != XON);
+        RI = 0; 
+      }
+    }
+    while (!TI);
+    TI = 0;
+    SBUF = 0x0d;                         /* output CR  */
+  }
+  if (RI)  {
+    if (SBUF == XOFF)  {
+      do  {
+        RI = 0;
+        while (!RI);
+      }
+      while (SBUF != XON);
+      RI = 0; 
+    }
+  }
+  while (!TI);
+  TI = 0;
+  return (SBUF = c);
 }
+
+
+
+#if 0         // comment out versions below
+
+/*
+ * putchar (basic version): expands '\n' into CR LF
+ */
+char putchar (char c)  {
+  if (c == '\n')  {
+    while (!TI);
+    TI = 0;
+    SBUF = 0x0d;                         /* output CR  */
+  }
+  while (!TI);
+  TI = 0;
+  return (SBUF = c);
+}
+
+
+/*
+ * putchar (mini version): outputs charcter only
+ */
+char putchar (char c)  {
+  while (!TI);
+  TI = 0;
+  return (SBUF = c);
+}
+
 #endif

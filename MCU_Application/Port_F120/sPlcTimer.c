@@ -13,7 +13,8 @@ void initSplcTimer(void){//硬件sTimer计时器初始化
 	Timer0_L = temp & 0xFF;
 	TH0 = Timer0_H;
 	TL0 = Timer0_L;
-	
+	CKCON = 0;
+	CKCON |= 0x02;//System clock divided by 48
 	TMOD &= 0xF0;//Clear T0
 	TMOD |= (1 << 0);//16-bit counter/timer
 	TR0 = 1; 
@@ -21,7 +22,8 @@ void initSplcTimer(void){//硬件sTimer计时器初始化
 	SFRPAGE = SFRPAGE_SAVE;// Restore SFR page
 }
 void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
-	xdata uint16_t i;
+	uint16_t i;
+	//debugTimer = ~debugTimer;
 	TF0 = false;
 	TH0 = Timer0_H;
 	TL0 = Timer0_L;
@@ -86,4 +88,5 @@ void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
 	chipAdcProcess();//ADC扫描
 #endif
 	TimerCounter_1mS ++;
+	//SFRPAGE = LEGACY_PAGE;
 }

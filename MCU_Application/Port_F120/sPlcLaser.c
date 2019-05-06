@@ -1,8 +1,8 @@
 #include "sPlcLaser.h"
 /*****************************************************************************/
 #if CONFIG_SPLC_USING_LASER_TIMER == 1
-sbit LASER_980_MODPIN = P2^7;
-sbit LASER_1470_MODPIN = P2^6;
+sbit LASER_CH0_MODPIN = P2^7;
+sbit LASER_CH1_MODPIN = P2^6;
 /*****************************************************************************/
 static void initTimer4(void);
 /*****************************************************************************/
@@ -127,7 +127,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 
 #endif
 void STLAR(void) reentrant{//开始发射脉冲
-	xdata uint8_t SFRPAGE_save;
+	uint8_t SFRPAGE_save;
 	NVRAM0[SPREG_LASER_PCOUNTER] = 0X0;
 	NVRAM0[SPREG_LASER_TCOUNTER] = 0X00;	
 	SFRPAGE = TMR4_PAGE;
@@ -141,7 +141,7 @@ void STLAR(void) reentrant{//开始发射脉冲
 	RES(SPCOIL_LASER_EMITOVER);
 }
 void EDLAR(void) reentrant{//停止发射脉冲
-	xdata uint8_t SFRPAGE_save;
+	uint8_t SFRPAGE_save;
 	SFRPAGE = TMR4_PAGE;
 	TMR4CN &= ~(uint8_t)(1 << 2);//Stop Timer 4
 	TMR4CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag.
@@ -157,14 +157,14 @@ void EDLAR(void) reentrant{//停止发射脉冲
 	RES(SPCOIL_LASER_EMITING);//发射标志置位
 }
 void sPlcLaserInit(void){//激光脉冲功能初始化
-	LASER_980_MODPIN = 0;
-	LASER_1470_MODPIN = 0;
+	LASER_CH0_MODPIN = 0;
+	LASER_CH1_MODPIN = 0;
 	initTimer4();
 	
 }
 static void initLaserTimer(void){//TIMER4初始化
-	xdata uint16_t temp;
-	xdata uint8_t SFRPAGE_SAVE;
+	uint16_t temp;
+	uint8_t SFRPAGE_SAVE;
 	SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE
 	SFRPAGE = TMR4_PAGE;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_LASER_TIMER_TICK));
@@ -175,7 +175,7 @@ static void initLaserTimer(void){//TIMER4初始化
 	SFRPAGE = SFRPAGE_SAVE;   
 }
 void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
-	xdata uint8_t SFRPAGE_save;	
+	uint8_t SFRPAGE_save;	
 	SFRPAGE_save = SFRPAGE;
 	SFRPAGE = TMR4_PAGE;
 	TMR4CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag
@@ -187,28 +187,28 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 #if CONFIG_SPLC_USING_DAC == 1
 				UPDAC0();//DAC立即输出计时器值
 #endif
-				LASER_980_MODPIN = true;				
+				LASER_CH0_MODPIN = true;				
 			}
 			else{
 				NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
 				UPDAC0();//DAC立即输出计时器值
 #endif
-				LASER_980_MODPIN = false;
+				LASER_CH0_MODPIN = false;
 			}
 			if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH1){//1470激光通道
 				NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
 				UPDAC1();//DAC立即输出计时器值
 #endif
-				LASER_1470_MODPIN = true; 
+				LASER_CH1_MODPIN = true; 
 			}
 			else{
 				NVRAM0[SPREG_DAC_1] = 0;//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
 				UPDAC1();//DAC立即输出计时器值
 #endif
-				LASER_1470_MODPIN = false; 
+				LASER_CH1_MODPIN = false; 
 			}
 			if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){//0+1激光通道
 				NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
@@ -217,8 +217,8 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 				UPDAC0();//DAC立即输出计时器值
 				UPDAC1();//DAC立即输出计时器值
 #endif
-				LASER_980_MODPIN = true;	
-				LASER_1470_MODPIN = false; 				
+				LASER_CH0_MODPIN = true;	
+				LASER_CH1_MODPIN = false; 				
 			}
 			break;
 		}
@@ -229,28 +229,28 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 #if CONFIG_SPLC_USING_DAC == 1
 					UPDAC0();//DAC立即输出计时器值
 #endif
-					LASER_980_MODPIN = true; 
+					LASER_CH0_MODPIN = true; 
 				}
 				else{
 					NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
 					UPDAC0();//DAC立即输出计时器值
 #endif
-					LASER_980_MODPIN = false;
+					LASER_CH0_MODPIN = false;
 				}
 				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH1){//1激光通道
 					NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
 					UPDAC1();//DAC立即输出计时器值
 #endif
-					LASER_1470_MODPIN = true; 
+					LASER_CH1_MODPIN = true; 
 				}
 				else{
 					NVRAM0[SPREG_DAC_1] = 0;//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
 					UPDAC1();//DAC立即输出计时器值
 #endif
-					LASER_1470_MODPIN = false; 
+					LASER_CH1_MODPIN = false; 
 				}
 				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){//0+1激光通道
 					NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
@@ -259,8 +259,8 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 					UPDAC0();//DAC立即输出计时器值
 					UPDAC1();//DAC立即输出计时器值
 #endif
-					LASER_980_MODPIN = true;	
-					LASER_1470_MODPIN = true; 	
+					LASER_CH0_MODPIN = true;	
+					LASER_CH1_MODPIN = true; 	
 				}
 			}
 			if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
@@ -272,8 +272,8 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 #if CONFIG_SPLC_USING_DAC == 1
 				UPDAC1();//DAC立即输出计时器值
 #endif
-				LASER_980_MODPIN = false;
-				LASER_1470_MODPIN = false;//翻转输出
+				LASER_CH0_MODPIN = false;
+				LASER_CH1_MODPIN = false;//翻转输出
 				SET(SPCOIL_LASER_EMITOVER);
 				EDLAR();//停止脉冲发射
 			}
@@ -287,28 +287,28 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 #if CONFIG_SPLC_USING_DAC == 1
 					UPDAC0();//DAC立即输出计时器值
 #endif
-					LASER_980_MODPIN = true; 
+					LASER_CH0_MODPIN = true; 
 				}
 				else{
 					NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
 					UPDAC0();//DAC立即输出计时器值
 #endif
-					LASER_980_MODPIN = false;
+					LASER_CH0_MODPIN = false;
 				}
 				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH1){//1激光通道
 					NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
 					UPDAC1();//DAC立即输出计时器值
 #endif
-					LASER_1470_MODPIN = true; 
+					LASER_CH1_MODPIN = true; 
 				}
 				else{
 					NVRAM0[SPREG_DAC_1] = 0;//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
 					UPDAC1();//DAC立即输出计时器值
 #endif
-					LASER_1470_MODPIN = false; 
+					LASER_CH1_MODPIN = false; 
 				}
 				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){
 					NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
@@ -317,8 +317,8 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 					UPDAC0();//DAC立即输出计时器值
 					UPDAC1();//DAC立即输出计时器值
 #endif
-					LASER_980_MODPIN = true; 
-					LASER_1470_MODPIN = true; 
+					LASER_CH0_MODPIN = true; 
+					LASER_CH1_MODPIN = true; 
 				}
 			}
 			if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
@@ -330,8 +330,8 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 #if CONFIG_SPLC_USING_DAC == 1
 				UPDAC1();//DAC立即输出计时器值
 #endif
-				LASER_980_MODPIN = false;
-				LASER_1470_MODPIN = false;//翻转输出		
+				LASER_CH0_MODPIN = false;
+				LASER_CH1_MODPIN = false;//翻转输出		
 			}
 			if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TOVERTIME]){//计时器溢出
 				NVRAM0[SPREG_LASER_TCOUNTER] = -1;//清零
@@ -347,28 +347,28 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 #if CONFIG_SPLC_USING_DAC == 1
 						UPDAC0();//DAC立即输出计时器值
 #endif
-						LASER_980_MODPIN = true; 
+						LASER_CH0_MODPIN = true; 
 					}
 					else{
 						NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
 						UPDAC0();//DAC立即输出计时器值
 #endif
-						LASER_980_MODPIN = false;
+						LASER_CH0_MODPIN = false;
 					}
 					if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH1){//激光通道1
 						NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
 						UPDAC1();//DAC立即输出计时器值
 #endif
-						LASER_1470_MODPIN = true; 
+						LASER_CH1_MODPIN = true; 
 					}
 					else{
 						NVRAM0[SPREG_DAC_1] = 0;//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
 						UPDAC1();//DAC立即输出计时器值
 #endif
-						LASER_1470_MODPIN = false; 
+						LASER_CH1_MODPIN = false; 
 					}
 					if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){//0+1激光通道
 						NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
@@ -377,8 +377,8 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 						UPDAC0();//DAC立即输出计时器值
 						UPDAC1();//DAC立即输出计时器值
 #endif
-						LASER_980_MODPIN = true;
-						LASER_1470_MODPIN = true; 
+						LASER_CH0_MODPIN = true;
+						LASER_CH1_MODPIN = true; 
 					}
 				}
 				if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
@@ -390,8 +390,8 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 #if CONFIG_SPLC_USING_DAC == 1
 					UPDAC1();//DAC立即输出计时器值
 #endif
-					LASER_980_MODPIN = false;
-					LASER_1470_MODPIN = false;//翻转输出		
+					LASER_CH0_MODPIN = false;
+					LASER_CH1_MODPIN = false;//翻转输出		
 				}
 				if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TOVERTIME]){//计时器溢出
 					NVRAM0[SPREG_LASER_TCOUNTER] = -1;//清零

@@ -2,14 +2,6 @@
 /*****************************************************************************/
 xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
-#if (CONFIG_SPLC_USING_UART0 == 1 && CONFIG_MB_PORT != UART0)
-xdata uint8_t volatile UART0_TXBUF[CONFIG_UART0_RBUF_SIZE];//UART0发送缓冲
-xdata uint8_t volatile UART0_RXBUF[CONFIG_UART0_TBUF_SIZE];//UART0接收缓冲
-#endif
-#if (CONFIG_SPLC_USING_UART1 == 1 && CONFIG_MB_PORT != UART1)
-xdata uint8_t volatile UART1_TXBUF[CONFIG_UART1_RBUF_SIZE];//UART1发送缓冲
-xdata uint8_t volatile UART1_RXBUF[CONFIG_UART1_TBUF_SIZE];//UART1接收缓冲
-#endif
 xdata volatile uint8_t TimerCounter_1mS = 0;
 xdata volatile uint8_t TimerCounter_10mS = 0;
 xdata volatile uint8_t TimerCounter_100mS = 0;
@@ -293,6 +285,8 @@ void sPlcInit(void){//软逻辑初始化
 	delayMs(100);
 	setLedError(false);
 	setLedEprom(false);
+	initSplcTimer();//初始化硬件计时器模块
+	SET(SPCOIL_ON);
 #if CONFIG_SPLC_USING_IO_INPUT == 1
 	inputInit();
 #endif
@@ -320,8 +314,6 @@ void sPlcInit(void){//软逻辑初始化
 #if CONFIG_SPLC_USING_DAC == 1
 	initChipDac();//初始化DAC模块
 #endif
-	initSplcTimer();//初始化硬件计时器模块
-	SET(SPCOIL_ON);
 #if CONFIG_SPLC_USING_PCA == 1
 	sPlcPcaInit();
 #endif

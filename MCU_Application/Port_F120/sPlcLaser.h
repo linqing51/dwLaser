@@ -3,13 +3,13 @@
 /*****************************************************************************/
 #include "sPlc.h"
 /*****************************************************************************/
-#define LASER_TIMER_MODE_CW						0x1A50//连续模式
-#define LASER_TIMER_MODE_SP						0x2B61//单脉冲模式
-#define LASER_TIMER_MODE_MP						0x3C72//多脉冲模式
-#define LASER_TIMER_MODE_GP						0x4D83//群脉冲模式
-#define LASER_TIMER_SELECT_CH0					0x005A
-#define LASER_TIMER_SELECT_CH1					0xA500
-#define LASER_TIMER_SELECT_BOTH					0xA55A
+#define LASER_MODE_CW							0x1A50//连续模式
+#define LASER_MODE_SP							0x2B61//单脉冲模式
+#define LASER_MODE_MP							0x3C72//多脉冲模式
+#define LASER_MODE_GP							0x4D83//群脉冲模式
+#define LASER_SELECT_CH0						0x005A
+#define LASER_SELECT_CH1						0xA500
+#define LASER_SELECT_BOTH						0xA55A
 /*****************************************************************************/
 void sPlcLaserInit(void);
 void laserTimerIsr(void);//TIMER4 中断 激光发射

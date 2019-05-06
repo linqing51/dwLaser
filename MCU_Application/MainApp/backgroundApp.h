@@ -6,6 +6,7 @@
 /*****************************************************************************/
 void loadScheme(void);//DM->EM
 void saveScheme(void);//EM->DM
+void defaultScheme(void);//恢复默认设置
 void backgroundAppInit(void);
 void backgroundApp(void);
 void PCLAR0(uint16_t POW, uint16_t CUR) reentrant;//功率->DAC CODE

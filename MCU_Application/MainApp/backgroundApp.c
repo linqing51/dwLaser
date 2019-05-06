@@ -1,8 +1,20 @@
 #include "backgroundApp.h"
 /*****************************************************************************/
 #if CONFIG_USING_BACKGROUND_APP == 1
+void defaultScheme(void){//当前选择方案恢复默认值
+	sprintf((char*)(&NVRAM0[EM_LASER_SCHEME_NAME]),"Hello dwLaser S%d",NVRAM0[DM_SCHEME_NUM]);
+	NVRAM0[EM_LASER_SELECT]	= LASER_SELECT_BOTH;//通道选择
+	NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;//脉冲模式
+	NVRAM0[EM_LASER_POWER_CH0] = 199;//通道0功率
+	NVRAM0[EM_LASER_POWER_CH1] = 59;//通道1功率
+	NVRAM0[EM_LASER_POSWIDTH] = 999;//正脉宽
+	NVRAM0[EM_LASER_NEGWIDTH] = 999;//负脉宽
+	NVRAM0[EM_LASER_GROUP] = 20;//脉冲数
+	NVRAM0[EM_LASER_SPACE] = 100;//脉冲间隔
+}
+
 void loadScheme(void){//DM->EM
-	xdata uint8_t *psrc, *pdist;
+	uint8_t *psrc, *pdist;
 	if(NVRAM0[DM_SCHEME_NUM] > CONFIG_HMI_SCHEME_NUM)
 		NVRAM0[DM_SCHEME_NUM] = CONFIG_HMI_SCHEME_NUM;
 	if(NVRAM0[DM_SCHEME_NUM] < 0)
@@ -12,7 +24,7 @@ void loadScheme(void){//DM->EM
 	memcpy(pdist, psrc, ((DM_SCHEME_END_0 - DM_SCHEME_START_0 +1 ) * 2));
 }
 void saveScheme(void){//EM->DM
-	xdata uint8_t *psrc, *pdist;
+	uint8_t *psrc, *pdist;
 	if(NVRAM0[DM_SCHEME_NUM] > CONFIG_HMI_SCHEME_NUM)
 		NVRAM0[DM_SCHEME_NUM] = CONFIG_HMI_SCHEME_NUM;
 	if(NVRAM0[DM_SCHEME_NUM] < 0)

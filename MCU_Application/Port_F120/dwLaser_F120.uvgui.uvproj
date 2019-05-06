@@ -218,12 +218,14 @@
             <Mx51P>0</Mx51P>
             <hadXRAM2>0</hadXRAM2>
             <uocXram2>0</uocXram2>
+            <hadXRAM3>0</hadXRAM3>
             <ModC2>0</ModC2>
             <ModH2>0</ModH2>
             <Mdu_R515>0</Mdu_R515>
             <Mdu_F120>1</Mdu_F120>
             <Psoc>0</Psoc>
             <hadIROM2>0</hadIROM2>
+            <hadIROM3>0</hadIROM3>
             <ModSmx2>0</ModSmx2>
             <cBanks>0</cBanks>
             <xBanks>0</xBanks>
@@ -293,6 +295,16 @@
                 <StartAddress>0x0</StartAddress>
                 <Size>0x0</Size>
               </IROM512>
+              <XRA513>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </XRA513>
+              <IROM513>
+                <Type>0</Type>
+                <StartAddress>0x0</StartAddress>
+                <Size>0x0</Size>
+              </IROM513>
             </OnChipMemories>
           </Target51Misc>
           <C51>
@@ -344,8 +356,8 @@
             <UserClasses></UserClasses>
             <CSection></CSection>
             <UserSection></UserSection>
-            <CodeBaseAddress></CodeBaseAddress>
-            <XDataBaseAddress></XDataBaseAddress>
+            <CodeBaseAddress>0X0000-0XFFFF</CodeBaseAddress>
+            <XDataBaseAddress>0X0000-0X1FFF</XDataBaseAddress>
             <PDataBaseAddress></PDataBaseAddress>
             <BitBaseAddress></BitBaseAddress>
             <DataBaseAddress></DataBaseAddress>
@@ -378,6 +390,16 @@
               <FileName>crc32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Lib\crc32.c</FilePath>
+            </File>
+            <File>
+              <FileName>GETKEY.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Lib\GETKEY.C</FilePath>
+            </File>
+            <File>
+              <FileName>PUTCHAR.C</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Lib\PUTCHAR.C</FilePath>
             </File>
           </Files>
         </Group>
@@ -485,19 +507,9 @@
               <FilePath>.\sPlcMcu.c</FilePath>
             </File>
             <File>
-              <FileName>sPlcModbusPort.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcModbusPort.c</FilePath>
-            </File>
-            <File>
               <FileName>sPlcPac.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sPlcPac.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcSimEprom.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcSimEprom.c</FilePath>
             </File>
             <File>
               <FileName>sPlcTimer.c</FileName>
@@ -520,6 +532,11 @@
           <GroupName>MainApp</GroupName>
           <Files>
             <File>
+              <FileName>MainApp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\MainApp\MainApp.c</FilePath>
+            </File>
+            <File>
               <FileName>backgroundApp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MainApp\backgroundApp.c</FilePath>
@@ -528,11 +545,6 @@
               <FileName>dcHmiApp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\MainApp\dcHmiApp.c</FilePath>
-            </File>
-            <File>
-              <FileName>MainApp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\MainApp.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -557,14 +569,14 @@
               <FilePath>..\dcHMI\hmiCmdQueue.c</FilePath>
             </File>
             <File>
-              <FileName>hmiUserUart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\dcHMI\hmiUserUart.c</FilePath>
-            </File>
-            <File>
               <FileName>hmiDriver.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\dcHMI\hmiDriver.c</FilePath>
+            </File>
+            <File>
+              <FileName>hmiUserUart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\dcHMI\hmiUserUart.c</FilePath>
             </File>
           </Files>
         </Group>

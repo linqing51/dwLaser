@@ -16,7 +16,7 @@
 #define CONFIG_DEBUG_PCA					0//PCA调试
 #endif
 /*****************************************************************************/
-#define CONFIG_UART0_BAUDRATE				19200//串口0 波特率
+#define CONFIG_UART0_BAUDRATE				115200//串口0 波特率
 #define CONFIG_UART1_BAUDRATE				115200//串口1 波特率
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_I2C0				1//使能I2C0
@@ -28,7 +28,7 @@
 #define CONFIG_I2C1_FREQ 					1
 #define CONFIG_I2C2_FREQ 					1
 #define CONFIG_I2C3_FREQ 					1
-#define CONFIG_I2C_WAITACT_TIME				50
+#define CONFIG_I2C_WAITACT_TIME				10
 /*****************************************************************************/
 #define CONFIG_EPROM_SIZE 					CONFIG_AT24C64_SIZE
 #define	CONFIG_AT24C02_SIZE 				256
@@ -43,9 +43,9 @@
 #define CONFIG_EPROM_FRAM					1//铁电存储体无写入等待
 #define CONFIG_EPROM_PAGEWRITE				0//页写入
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_SPWM				0//使了软件PWM功能
+#define CONFIG_SPLC_USING_SPWM				1//使了软件PWM功能
 /*****************************************************************************/
-#define CONFIG_SPLC_FUN_EPID				0//使能SPLC扩展指令
+#define CONFIG_SPLC_FUN_EPID				1//使能SPLC扩展指令
 #define CONFIG_SPLC_FUNTEST					0//功能指令测试
 /*****************************************************************************/
 #define CONFIG_SPLC_ASSERT					0//检查地址范围
@@ -56,28 +56,25 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT				0//看门狗启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_INPUT			0//输入IO刷新启用
+#define CONFIG_SPLC_USING_IO_INPUT			1//输入IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_OUTPUT			0//输出IO刷新启用
+#define CONFIG_SPLC_USING_IO_OUTPUT			1//输出IO刷新启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_PCA				0//片内计数器阵列
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM				0//EPROM 
+#define CONFIG_SPLC_USING_EPROM				1//EPROM 
 #define CONFIG_SPLC_USING_CLEAR_NVRAM		0//启用清除NVRAM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_UART0				1//UART 0串口启用
-#define CONFIG_SPLC_USING_UART0_ISR			0
+#define CONFIG_SPLC_USING_UART0_ISR			1
 #define UART0								0
-#define CONFIG_UART0_RBUF_SIZE				256//接收缓冲
-#define CONFIG_UART0_TBUF_SIZE				256//发送缓冲
 
 #define CONFIG_SPLC_USING_UART1				1//UART 1串口启用
-#define CONFIG_SPLC_USING_UART1_ISR			0
+#define CONFIG_SPLC_USING_UART1_ISR			1
 #define UART1								1
-#define CONFIG_UART1_RBUF_SIZE				256//接收缓冲
-#define CONFIG_UART1_TBUF_SIZE				256//发送缓冲
+
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ADC				0//使能ADC模块
+#define CONFIG_SPLC_USING_ADC				1//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			8//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE				9//ADC通道数
 #define CONFIG_ADC_TEMP_SENSOR_GAIN    		3330L// Temp Sensor Gain in (uV / degC)
@@ -89,7 +86,7 @@
 #define CONFIG_NTC_RB						10000L
 #define CONFIG_NTC_VREF						5000L
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_DAC				0//是能DAC模块
+#define CONFIG_SPLC_USING_DAC				1//是能DAC模块
 /*****************************************************************************/
 #define CONFIG_USING_RTU_SLAVE				0//使能MODBUS RTU从站
 #define CONFIG_MB_PORT						UART0
@@ -115,21 +112,21 @@
 #define CONFIG_FW_MCU_FILE_LOAD_NAME		"/dwLaserNE.bin"//单片机固件名称
 #define CONFIG_FW_MCU_FILE_SAVE_NAME		"/dwLaserOD.bib"//
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_LASER_TIMER		0
+#define CONFIG_SPLC_USING_LASER_TIMER		1
 #define CONFIG_SPLC_USING_LASER_TIMER_TEST	0
 /*****************************************************************************/
 #define CONFIG_LASER_TIMER_TICK				1000
 #define CONFIG_USING_DCHMI_APP				1//广东大彩人机交互应用
-#define CONFIG_USING_BACKGROUND_APP			0//背景应用
+#define CONFIG_USING_BACKGROUND_APP			1//背景应用
 
 #define CONFIG_MAX_LASERPOWER_CH0			300//通道0最大激光功率
 #define CONFIG_MIN_LASERPOWRR_CH0			0//通道0最小激光功率
 #define CONFIG_MAX_LASERPOWER_CH1			150//通道1最大激光功率
 #define CONFIG_MIN_LASERPOWER_CH1			0//通道1最小激光功率
 #define CONFIG_MAX_LASER_POSWIDTH			999//最大正脉宽时间
-#define CONFIG_MIN_LASER_POSWIDTH			0//最小正脉宽时间
+#define CONFIG_MIN_LASER_POSWIDTH			10//最小正脉宽时间
 #define CONFIG_MAX_LASER_NEGWIDTH			999//最大负脉宽时间
-#define CONFIG_MIN_LASER_NEGWIDTH			0//最小正脉宽时间
+#define CONFIG_MIN_LASER_NEGWIDTH			10//最小正脉宽时间
 #define CONFIG_MAX_LASER_GROUP				999//最大可计数脉冲数
 #define CONFIG_MIN_LASER_GROUP				10//最小可计数脉冲数
 #define CONFIG_MAX_LASER_SPACE				999//最大脉冲间隔时间
@@ -207,15 +204,6 @@
 #define SPCOIL_NVRAM_FAIL					(SPCOIL_START * 16 + 7)//NVRAM校验码错误
 #define SPCOIL_WATCHDOG_OVERFLOW			(SPCOIL_START * 16 + 8)//看门狗溢出
 /*****************************************************************************/
-//串口
-#define SPCOIL_UART0_SEND_BUSY				(SPCOIL_START * 16 + 9)//UART1发送忙
-#define SPCOIL_UART0_RECV_BUSY				(SPCOIL_START * 16 + 10)//UART1接收忙
-#define SPCOIL_UART0_SEND_DONE				(SPCOIL_START * 16 + 11)//发送完成
-#define SPCOIL_UART0_RECV_DONE				(SPCOIL_START * 16 + 12)//接收完成
-#define SPCOIL_UART1_SEND_BUSY				(SPCOIL_START * 16 + 13)//UART1发送忙
-#define SPCOIL_UART1_RECV_BUSY				(SPCOIL_START * 16 + 14)//UART1接收忙
-#define SPCOIL_UART1_SEND_DONE				(SPCOIL_START * 16 + 15)//发送完成
-#define SPCOIL_UART1_RECV_DONE				(SPCOIL_START * 16 + 16)//接收完成
 //USB 
 #define SPCOIL_USB_INT_ERROR				(SPCOIL_START * 16 + 17)//USB 底层中断返回错误
 #define SPCOIL_USBHOST_CONNECT_REQ			(SPCOIL_START * 16 + 18)//USBHOST连接请求
@@ -268,16 +256,6 @@
 #define SPREG_ADC_8							(SPREG_START + 9)//ADC8采集值 Temperature Sensor
 #define SPREG_DAC_0							(SPREG_START + 10)//DAC0设定值 LSET0
 #define SPREG_DAC_1							(SPREG_START + 11)//DAC0设定值 LSET1
-/*****************************************************************************/
-#define SPREG_UART0_SEND_LENGTH				(SPREG_START + 12)//UART0 发送数据长度
-#define SPREG_UART0_SEND_NUM				(SPREG_START + 13)//UART0 已经发送数据长度
-#define SPREG_UART0_RECV_LENGTH				(SPREG_START + 14)//UART0 接收数据长度
-#define SPREG_UART0_RECV_NUM				(SPREG_START + 15)//UART0 已经接收数据长度
-/*****************************************************************************/		
-#define SPREG_UART1_SEND_LENGTH				(SPREG_START + 16)//UART1 发送数据长度
-#define SPREG_UART1_SEND_NUM				(SPREG_START + 17)//UART1 已经发送数据长度
-#define SPREG_UART1_RECV_LENGTH				(SPREG_START + 18)//UART1 接收数据长度
-#define SPREG_UART1_RECV_NUM				(SPREG_START + 19)//UART1 已经接收数据长度
 /*****************************************************************************/
 #define SPREG_SPWM_POS_0					(SPREG_START + 20)//软件PWM0正脉宽设置
 #define SPREG_SPWM_POS_SHADOW_0				(SPREG_START + 21)//软件PWM0正脉宽阴影

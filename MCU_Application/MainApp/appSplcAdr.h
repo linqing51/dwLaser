@@ -22,7 +22,7 @@
 #define ERROR_CODE_NRF24L01						0x0009//NRF24L01模块错误
 #define ERRPR_CODE_NOERR						0xFFFF//无错误
 /*****************************************************************************/
-#define EM_LASER_SCHEME_NAME					(EM_START + 0)//方案名称 648
+#define EM_LASER_SCHEME_NAME					(EM_START + 0)//方案名称
 #define EM_LASER_SELECT							(EM_START + 17)//通道选择
 #define EM_LASER_PULSE_MODE						(EM_START + 18)//脉冲模式
 #define EM_LASER_POWER_CH0						(EM_START + 19)//通道0功率
@@ -235,9 +235,9 @@
 #define R_DCHMI_RESET_REQ						(R_START * 16 + 47)//HMI复位请求
 #define R_DCHMI_RESET_DOING						(R_START * 16 + 48)//HMI复位中
 #define R_DCHMI_RESET_DONE						(R_START * 16 + 49)//HMI复位完成	
-#define R_DCHMI_UPDATE_REQ						(R_START * 16 + 50)//HMI内容更新请求
-#define R_DCHMI_UPDATE_DOING					(R_START * 16 + 51)//HMI内容更新中
-#define R_DCHMO_UPDATE_DONE						(R_START * 16 + 52)//HMI内容更新请求完成
+#define R_DCHMI_UPDATEUI_REQ					(R_START * 16 + 50)//HMI内容更新请求
+#define R_DCHMI_UPDATEUI_DOING					(R_START * 16 + 51)//HMI内容更新中
+#define R_DCHMO_UPDATEUI_DONE					(R_START * 16 + 52)//HMI内容更新请求完成
 #define R_DCHMI_RESTORE_REQ						(R_START * 16 + 53)//HMI从FLASH中恢复设置请求
 #define R_DCHMI_RESTORE_DOING					(R_START * 16 + 54)//HMI从FLASH中恢复中
 #define R_DCHMI_RESTORE_DONE					(R_START * 16 + 55)//HMI从FLASH中恢复设置完成	
@@ -264,19 +264,41 @@
 #define R_CHECK_NFC_FAIL						(R_START * 16 + 147)//NFC模块失败
 #define R_CHECK_NRF24L01_FAIL					(R_START * 16 + 148)//NRF24L01模块自检失败
 /*****************************************************************************/
-#define R_KEY_POSWIDTH_ADD_DOWN					(R_START * 16 + 149)//自加
-#define R_KEY_POSWIDTH_DEC_DOWN					(R_START * 16 + 150)
-#define R_KEY_NEGWIDTH_ADD_DOWN					(R_START * 16 + 151)
-#define R_KEY_NEGWIDTH_DEC_DOWN					(R_START * 16 + 152)
-#define R_KEY_GROUP_ADD_DOWN					(R_START * 16 + 153)
-#define R_KEY_GROUP_DEC_DOWN					(R_START * 16 + 154)
-#define R_KEY_SPACE_ADD_DOWN					(R_START * 16 + 155)
-#define R_KEY_SPACE_DEC_DOWN					(R_START * 16 + 156)
-#define R_KEY_POWER_CH0_ADD_DOWN				(R_START * 16 + 157)
-#define R_KEY_POWER_CH0_DEC_DOWN				(R_START * 16 + 158)
-#define R_KEY_POWER_CH1_ADD_DOWN				(R_START * 16 + 159)
-#define R_KEY_POWER_CH1_DEC_DOWN				(R_START * 16 + 160)
+#define R_KEY_POSWIDTH_ADD_DOWN					(R_START * 16 + 149)
+#define R_KEY_POSWIDTH_ADD_UP					(R_START * 16 + 150)
 
+#define R_KEY_POSWIDTH_DEC_DOWN					(R_START * 16 + 151)
+#define R_KEY_POSWIDTH_DEC_UP					(R_START * 16 + 152)
+
+#define R_KEY_NEGWIDTH_ADD_DOWN					(R_START * 16 + 153)
+#define R_KEY_NEGWIDTH_ADD_UP					(R_START * 16 + 154)
+
+#define R_KEY_NEGWIDTH_DEC_DOWN					(R_START * 16 + 155)
+#define R_KEY_NEGWIDTH_DEC_UP					(R_START * 16 + 156)
+
+#define R_KEY_GROUP_ADD_DOWN					(R_START * 16 + 157)
+#define R_KEY_GROUP_ADD_UP						(R_START * 16 + 158)
+
+#define R_KEY_GROUP_DEC_DOWN					(R_START * 16 + 159)
+#define R_KEY_GROUP_DEC_UP						(R_START * 16 + 160)
+
+#define R_KEY_SPACE_ADD_DOWN					(R_START * 16 + 161)
+#define R_KEY_SPACE_ADD_UP						(R_START * 16 + 162)
+
+#define R_KEY_SPACE_DEC_DOWN					(R_START * 16 + 163)
+#define R_KEY_SPACE_DEC_UP						(R_START * 16 + 164)
+
+#define R_KEY_POWER_CH0_ADD_DOWN				(R_START * 16 + 165)
+#define R_KEY_POWER_CH0_ADD_UP					(R_START * 16 + 166)
+
+#define R_KEY_POWER_CH0_DEC_DOWN				(R_START * 16 + 167)
+#define R_KEY_POWER_CH0_DEC_UP					(R_START * 16 + 168)
+
+#define R_KEY_POWER_CH1_ADD_DOWN				(R_START * 16 + 169)
+#define R_KEY_POWER_CH1_ADD_UP					(R_START * 16 + 170)
+
+#define R_KEY_POWER_CH1_DEC_DOWN				(R_START * 16 + 171)
+#define R_KEY_POWER_CH1_DEC_UP					(R_START * 16 + 172)
 /*****************************************************************************/
 #define T100MS_HMI_POWERUP_DELAY				0//HMI启动复位延时
 #define T100MS_READY_BEEM_DELAY					1//进入READY状态后蜂鸣器响延迟
@@ -294,6 +316,9 @@
 #define T10MS_NEGWIDTH_ADD_KEYDOWN_DELAY		5
 #define T10MS_NEGWIDTH_DEC_KEYDOWN_DELAY		6
 
-
+#define T10MS_GROUP_ADD_KEYDOWN_DELAY			7
+#define T10MS_GROUP_DEC_KEYDOWN_DELAY			8
+#define T10MS_SPACE_ADD_KEYDOWN_DELAY			9
+#define T10MS_SPACE_DEC_KEYDOWN_DELAY			10
 
 #endif
