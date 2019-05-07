@@ -1,27 +1,39 @@
 #include "i2c2.h"
+/*****************************************************************************/			
 /*****************************************************************************/
-sbit SDA2 = P3^3;
-sbit SCL2 = P3^4;				
-/*****************************************************************************/
-void iic2Init(void){
-}
-static void setSCL2(uint8_t s){
+static void setSCL2(uint8_t s){//P5.4
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+    SFRPAGE   = CONFIG_PAGE;
 	if(s)
-		SCL2 = 1;
+		P5 |= 0x10;
 	else
-		SCL2 = 0;
+		P5 &= 0xEF;
+	SFRPAGE = SFRPAGE_SAVE;// Restore SFRPAGE
 }
-static void setSDA2(uint8_t s){
+static void setSDA2(uint8_t s){//P5.5
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+    SFRPAGE   = CONFIG_PAGE;
 	if(s)
-		SDA2 = 1;
+		P5 |= 0x20;
 	else
-		SDA2 = 0;
+		P5 &= 0xDF;
+	SFRPAGE = SFRPAGE_SAVE;// Restore SFRPAGE
 }
-static uint8_t getSCL2(void){
-	return SCL2;
+static uint8_t getSCL2(void){//P5.4
+	uint8_t temp;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+    SFRPAGE = CONFIG_PAGE;
+	temp = (P5 >> 4) & 0x01;
+	SFRPAGE = SFRPAGE_SAVE;
+	return temp;
 }
-static uint8_t getSDA2(void){
-	return SDA2; 
+static uint8_t getSDA2(void){//P5.5
+	uint8_t temp;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+    SFRPAGE = CONFIG_PAGE;
+	temp = (P5 >> 5) & 0x01;
+	SFRPAGE = SFRPAGE_SAVE;
+	return temp; 
 }
 void iic2Start(void){//产生IIC起始信号
 	setSDA2(1);	  	  
@@ -44,7 +56,7 @@ uint8_t iic2WaitAck(void){
 //发送数据后，等待应答信号到来
 //返回值：1，接收应答失败，IIC直接退出
 //        0，接收应答成功，什么都不做
-	xdata uint8_t ucErrTime=0;  
+	uint8_t ucErrTime=0;  
 	setSDA2(1);
 	delayUs(1);	   
 	setSCL2(1);
@@ -80,7 +92,7 @@ void iic2SendByte(uint8_t txd){//IIC发送一个字节
 //返回从机有无应答
 //1，有应答
 //0，无应答                        
-    xdata uint8_t t;    	    
+    uint8_t t;    	    
     setSCL2(0);//拉低时钟开始数据传输
     for(t = 0;t < 8;t ++)
     {              
@@ -99,7 +111,7 @@ void iic2SendByte(uint8_t txd){//IIC发送一个字节
 } 	    
   
 uint8_t iic2ReadByte(uint8_t ack){//读1个字节，ack=1时，发送ACK，ack=0，发送nACK 
-	xdata uint8_t i, receive=0;
+	uint8_t i, receive=0;
     for(i=0;i<8;i++ ){
         setSCL2(0); 
         delayUs(CONFIG_I2C2_FREQ);

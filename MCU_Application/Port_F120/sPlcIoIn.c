@@ -4,7 +4,7 @@
 xdata volatile int8_t inputFilter[(X_END - X_START + 1) * 16];//IO输入滤波器缓冲区
 /*****************************************************************************/
 void inputInit(void){//IO输入滤波器初始化
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;
 	SFRPAGE = CPT0_PAGE;   
 	CPT0MD = 0;
 	CPT0CN = 0;
@@ -26,7 +26,7 @@ void inputInit(void){//IO输入滤波器初始化
 }
 
 void inputRefresh(void){//获取输入IO
-	xdata uint8_t SFRPAGE_SAVE, temp; 
+	uint8_t SFRPAGE_SAVE, temp; 
 	//XIN0 P3_3
 	SFRPAGE_SAVE = SFRPAGE;
 	SFRPAGE = CONFIG_PAGE;

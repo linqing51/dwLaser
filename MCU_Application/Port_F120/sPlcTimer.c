@@ -3,8 +3,8 @@
 bit debugTimer, OverTimer;
 static uint8_t Timer0_L, Timer0_H;
 void initSplcTimer(void){//硬件sTimer计时器初始化
-	xdata uint16_t temp;
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	uint16_t temp;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
 	SFRPAGE = TIMER01_PAGE;// Set SFR page
 	TimerCounter_1mS = 0;
 	TimerCounter_10mS = 0;

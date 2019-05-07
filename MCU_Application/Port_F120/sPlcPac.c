@@ -2,7 +2,7 @@
 /*****************************************************************************/
 #if CONFIG_SPLC_USING_PCA == 1
 void sPlcPcaInit(void){//¼ÆÊ±Æ÷ÕóÁÐ³õÊ¼»¯
-	xdata uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
+	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
 	SFRPAGE = PCA0_PAGE;
 	PCA0CN = 0;
 	PCA0MD = 0;
@@ -132,7 +132,7 @@ void sPlcBeemLoop(void){//·äÃùÆ÷ÂÖÑ¯
 	}
 }
 void testBenchBeem(uint8_t volume, uint8_t mode){//·äÃùÆ÷²âÊÔ
-	xdata uint16_t dc;
+	uint16_t dc;
 	if(volume > 100)
 		volume = 100;
 	dc = volume * 65534 / 100;
@@ -141,7 +141,7 @@ void testBenchBeem(uint8_t volume, uint8_t mode){//·äÃùÆ÷²âÊÔ
 	SET(SPCOIL_BEEM_ENABLE);
 }
 void testBenchAim(uint8_t port, uint8_t brightness){//Ö¸Ê¾¹â²âÊÔ
-	xdata uint16_t dc;
+	uint16_t dc;
 	if(brightness > 100)
 		brightness = 100;
 	dc = brightness * 65535 / 100;

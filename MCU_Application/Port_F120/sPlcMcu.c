@@ -9,7 +9,7 @@ void enableWatchDog(void){//使能看门狗
 	WDTCN = 0xA5;
 }
 void disableWatchDog(void){//关闭看门狗(未锁定)
-	xdata uint8_t flagEA;
+	uint8_t flagEA;
 	flagEA = EA;
 	EA = 0;
 	WDTCN = 0xDE;

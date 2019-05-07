@@ -2,13 +2,12 @@
 /*****************************************************************************/
 /*****************************************************************************/
 void epromInit(void){//³õÊ¼»¯IIC½Ó¿Ú
-	iic0Init();
 }
 
 uint8_t epromReadOneByte(uint16_t ReadAddr){//ÔÚAT24CXXÖ¸¶¨µØÖ·¶Á³öÒ»¸öÊı¾İ
 //ReadAddr:¿ªÊ¼¶ÁÊıµÄµØÖ·  
 //·µ»ØÖµ  :¶Áµ½µÄÊı¾İ				  
-	xdata uint8_t temp=0;		  	    																 
+	uint8_t temp=0;		  	    																 
 	iic0Start();  
 #if CONFIG_EPROM_SIZE > CONFIG_AT24C16_SIZE
 //¼æÈİ24CxxÖĞÆäËûµÄ°æ±¾
@@ -56,7 +55,7 @@ void epromWriteLenByte(uint16_t WriteAddr, uint32_t DataToWrite, uint8_t Len){//
 //WriteAddr  :¿ªÊ¼Ğ´ÈëµÄµØÖ·  
 //DataToWrite:Êı¾İÊı×éÊ×µØÖ·
 //Len        :ÒªĞ´ÈëÊı¾İµÄ³¤¶È2,4  	
-	xdata uint8_t t;
+	uint8_t t;
 	for(t = 0;t < Len;t ++){
 		epromWriteOneByte(WriteAddr + t, (DataToWrite >> (8 * t)) & 0xff);
 	}												    
@@ -66,7 +65,7 @@ uint32_t epromReadLenByte(uint16_t ReadAddr, uint8_t Len){//ÔÚAT24CXXÀïÃæµÄÖ¸¶¨µ
 //ReadAddr   :¿ªÊ¼¶Á³öµÄµØÖ· 
 //·µ»ØÖµ     :Êı¾İ
 //Len        :Òª¶Á³öÊı¾İµÄ³¤¶È2,4  	
-	xdata uint8_t t;
+	uint8_t t;
 	uint32_t temp=0;
 	for(t = 0;t < Len;t ++){
 		temp <<= 8;
@@ -100,8 +99,8 @@ void epromWritePage(uint16_t data pageAddr, uint8_t *pBuffer,uint8_t data NumToW
 }
 #endif
 uint8_t epromTest(void){//EPROM ¶ÁĞ´×Ô²âÊÔ
-	xdata uint32_t i, crc32Read = 0, crc32Write = 0;	
-	xdata uint8_t temp;
+	uint32_t i, crc32Read = 0, crc32Write = 0;	
+	uint8_t temp;
 	crc32Clear();
 	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
 		temp = rand()%0xFF;

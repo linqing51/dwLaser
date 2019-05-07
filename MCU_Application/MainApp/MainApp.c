@@ -1,8 +1,24 @@
 #include "MainApp.h"
 /*****************************************************************************/
+void hwTest(void){
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	disableSplcIsr();
+	SFRPAGE   = DAC0_PAGE;
+	DAC0 = 0xFFF;
+	SFRPAGE   = DAC1_PAGE;
+	DAC1 = 0xFFF;
+	SFRPAGE = CONFIG_PAGE;
+	P2 |= (1 << 6);
+	P2 |= (1 << 7);
+	SFRPAGE_SAVE = SFRPAGE;
+}
+
+
 void main(void){ 
 	initDevice();
 	sPlcInit();
+	hwTest();
+	while(1);
 #if CONFIG_DEBUG == 1
 	printf("sPLC->main:Debug Port->UART1\n");
 	printf("sPLC->main:sPlcInit Done\n");

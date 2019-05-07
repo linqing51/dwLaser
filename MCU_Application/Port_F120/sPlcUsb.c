@@ -14,7 +14,7 @@ static void sPlcUsbDiskConnectPoll(void){//USB DISK连接轮询 周期200mS
 	}
 }
 static void sPlcUsbDiskMountPoll(void){//USB DISK载入轮询 周期100mS
-	xdata uint8_t i;
+	uint8_t i;
 	for(i = 0;i < 5;i ++){
 		T10MS(T10MS_USBDISK_MOUNT_DELAY, true, 10);//启动计时器延时100mS
 		if(LD(T_10MS_START * 16 + T10MS_USBDISK_MOUNT_DELAY)){
@@ -29,7 +29,7 @@ static void sPlcUsbDiskMountPoll(void){//USB DISK载入轮询 周期100mS
 	}
 }
 static void sPlcUsbDiskRemove(void){//USB DISK安全移除
-	xdata uint8_t s;
+	uint8_t s;
 	if(LD(SPCOIL_USBDISK_CONNECT_DONE) && LDB(SPCOIL_USBDISK_REMOVE_DOING)){
 		RES(SPCOIL_USBDISK_REMOVE_DONE);
 		SET(SPCOIL_USBDISK_REMOVE_DOING);

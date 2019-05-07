@@ -2,8 +2,8 @@
 /*****************************************************************************/
 #if CONFIG_SPLC_USING_UART0 == 1
 void initUart0(uint32_t baudrate){//初始化串口0
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE	
-	xdata uint16_t temp;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE	
+	uint16_t temp;
 	SFRPAGE = TMR2_PAGE;// Set SFR page
 	temp =(uint16_t)(65536 - CONFIG_SYSCLK / 12 /16 / baudrate);
 	TMR2CF = 0;//	
@@ -26,7 +26,7 @@ void initUart0(uint32_t baudrate){//初始化串口0
 
 #if CONFIG_SPLC_USING_UART1 == 1
 void initUart1(uint32_t baudrate){
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
+	uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
 	SFRPAGE = UART1_PAGE;
 	SCON1 = 0x10;// SCON1: mode 0, 8-bit UART, enable RX
 

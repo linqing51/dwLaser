@@ -2,7 +2,7 @@
 /*****************************************************************************/
 #if CONFIG_SPLC_USING_IO_OUTPUT == 1
 void outputInit(void){//IO输出初始化
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;
 	SFRPAGE = CONFIG_PAGE;
 	P3 &= ~(1 << 5);//Y5
 	P3 &= ~(1 << 6);//Y6
@@ -21,7 +21,7 @@ void outputInit(void){//IO输出初始化
 
 void outputRefresh(void){//设置输出IO
 	//YOUT0
-	xdata uint8_t SFRPAGE_SAVE; 
+	uint8_t SFRPAGE_SAVE; 
 	SFRPAGE_SAVE = SFRPAGE;
 	SFRPAGE = CONFIG_PAGE;
 	if((NVRAM0[Y_START] >> 0) & 0x01){//P3_5

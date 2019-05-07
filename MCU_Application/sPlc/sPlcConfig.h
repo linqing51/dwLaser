@@ -25,9 +25,9 @@
 #define CONFIG_SPLC_USING_I2C3				1//使能I2C3
 /*****************************************************************************/
 #define CONFIG_I2C0_FREQ 					1            
-#define CONFIG_I2C1_FREQ 					1
-#define CONFIG_I2C2_FREQ 					1
-#define CONFIG_I2C3_FREQ 					1
+#define CONFIG_I2C1_FREQ 					4
+#define CONFIG_I2C2_FREQ 					4
+#define CONFIG_I2C3_FREQ 					4
 #define CONFIG_I2C_WAITACT_TIME				10
 /*****************************************************************************/
 #define CONFIG_EPROM_SIZE 					CONFIG_AT24C64_SIZE
@@ -60,7 +60,7 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_OUTPUT			1//输出IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_PCA				0//片内计数器阵列
+#define CONFIG_SPLC_USING_PCA				1//片内计数器阵列
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_EPROM				1//EPROM 
 #define CONFIG_SPLC_USING_CLEAR_NVRAM		0//启用清除NVRAM功能
@@ -75,7 +75,7 @@
 
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ADC				1//使能ADC模块
-#define CONFIG_SPLC_ADC_FILTER_TAP			8//ADC位移滤波次数
+#define CONFIG_SPLC_ADC_FILTER_TAP			4//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE				9//ADC通道数
 #define CONFIG_ADC_TEMP_SENSOR_GAIN    		3330L// Temp Sensor Gain in (uV / degC)
 #define CONFIG_ADC_TEMP_SENSOR_OFFSET  		856L// Temp Sensor Offset in mV

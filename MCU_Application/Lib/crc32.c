@@ -54,10 +54,10 @@ code uint32_t crc32Tab[] = { /* CRC polynomial 0xedb88320 */
 	0x54de5729, 0x23d967bf, 0xb3667a2e, 0xc4614ab8, 0x5d681b02, 0x2a6f2b94,
 	0xb40bbe37, 0xc30c8ea1, 0x5a05df1b, 0x2d02ef8d
 };
-static xdata uint32_t oldcrc32;
+static uint32_t oldcrc32;
 
 uint32_t crc32Calculate(uint8_t *buf, uint32_t len){//CRC32 ¼ÆËãÊý×é
-    xdata uint32_t i;  
+    uint32_t i;  
     for (i = 0; i < len; i++){  
        oldcrc32 = crc32Tab[(oldcrc32 ^ buf[i]) & 0xff] ^ (oldcrc32 >> 8);  
     }  

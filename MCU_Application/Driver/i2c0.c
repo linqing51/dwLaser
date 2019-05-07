@@ -1,16 +1,13 @@
 #include "i2c0.h"
 /*****************************************************************************/		
-void iic0Init(void){
-
-}
 static void setSCL0(uint8_t s){//P7_2
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
     SFRPAGE   = CONFIG_PAGE;
 	if(s)
 		P7 |= (1 << 2);
 	else
 		P7 &= ~((uint8_t)(1 << 2));
-	SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
+	SFRPAGE = SFRPAGE_SAVE;// Restore SFRPAGE
 }
 static void setSDA0(uint8_t s){//P7_3
 	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
@@ -22,16 +19,16 @@ static void setSDA0(uint8_t s){//P7_3
 	SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
 }
 static uint8_t getSCL0(void){
-	xdata uint8_t temp;
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	uint8_t temp;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
     SFRPAGE   = CONFIG_PAGE;
 	temp = (P7 >> 2) & 0x01;
 	SFRPAGE = SFRPAGE_SAVE;        
 	return temp;
 }
 static uint8_t getSDA0(void){
-	xdata uint8_t temp;
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	uint8_t temp;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
     SFRPAGE   = CONFIG_PAGE;
 	temp = (P7 >> 3) & 0x01;
 	SFRPAGE = SFRPAGE_SAVE;        
@@ -58,7 +55,7 @@ uint8_t iic0WaitAck(void){
 //发送数据后，等待应答信号到来
 //返回值：1，接收应答失败，IIC直接退出
 //        0，接收应答成功，什么都不做
-	xdata uint8_t ucErrTime=0;  
+	uint8_t ucErrTime=0;  
 	setSDA0(1);
 	delayUs(1);	   
 	setSCL0(1);
@@ -94,7 +91,7 @@ void iic0SendByte(uint8_t txd){//IIC发送一个字节
 //返回从机有无应答
 //1，有应答
 //0，无应答                        
-    xdata uint8_t t;    	    
+    uint8_t t;    	    
     setSCL0(0);//拉低时钟开始数据传输
     for(t = 0;t < 8;t ++)
     {              
@@ -113,7 +110,7 @@ void iic0SendByte(uint8_t txd){//IIC发送一个字节
 } 	    
   
 uint8_t iic0ReadByte(uint8_t ack){//读1个字节，ack=1时，发送ACK，ack=0，发送nACK 
-	xdata uint8_t i, receive=0;
+	uint8_t i, receive=0;
     for(i=0;i<8;i++ ){
         setSCL0(0); 
         delayUs(CONFIG_I2C0_FREQ);

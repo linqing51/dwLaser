@@ -46,10 +46,10 @@ code uint16_t crc16Tab[256]= {
 };
 
 
-static xdata uint16_t oldcrc16;
+static uint16_t oldcrc16;
 
 uint16_t crc16Calculate(uint8_t *buf, uint32_t len){//CRC16 ¼ÆËãÊı×é
-    xdata uint32_t i;  
+    uint32_t i;  
     for (i = 0; i < len; i++){  
        oldcrc16 = (oldcrc16<<8) ^ crc16Tab[((oldcrc16>>8) ^ *buf++)&0x00FF];
     }  

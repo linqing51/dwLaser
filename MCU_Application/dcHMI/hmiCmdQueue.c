@@ -28,9 +28,9 @@ typedef struct _QUEUE{
     qdata _data[QUEUE_MAX_SIZE];                                       //队列数据缓存区
 }QUEUE;                                                           
 
-xdata QUEUE que = {0,0,0};                                            //指令队列
-xdata uint32_t cmd_state = 0;                                           //队列帧尾检测状态
-xdata qsize cmd_pos = 0;                                              //当前指令指针位置
+QUEUE que = {0,0,0};                                            //指令队列
+uint32_t cmd_state = 0;                                           //队列帧尾检测状态
+qsize cmd_pos = 0;                                              //当前指令指针位置
 
 /*! 
 *  \brief  清空指令数据
@@ -45,7 +45,7 @@ void queue_reset(){
 *  \param  _data 指令数据
 */
 void queue_push(qdata _data){
-    xdata qsize pos = (que._head+1)%QUEUE_MAX_SIZE;
+    qsize pos = (que._head+1)%QUEUE_MAX_SIZE;
     if(pos!=que._tail)                                                //非满状态
     {
         que._data[que._head] = _data;
@@ -74,8 +74,8 @@ qsize queue_size(){
 */
 qsize queue_find_cmd(qdata *buffer, qsize buf_len)
 {
-    xdata qsize cmd_size = 0;
-    xdata qdata _data = 0;
+    qsize cmd_size = 0;
+    qdata _data = 0;
     while(queue_size()>0)
     {
         //取一个数据

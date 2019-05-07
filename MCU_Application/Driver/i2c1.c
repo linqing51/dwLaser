@@ -1,26 +1,40 @@
 #include "i2c1.h"
 /*****************************************************************************/			
 /*****************************************************************************/
-void iic1Init(void){
-
-}
 static void setSCL1(uint8_t s){//P5_1
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+    SFRPAGE = CONFIG_PAGE;
 	if(s)
-		P5 |= (1 << 1);
+		P5 |= 0x02;
 	else
-		P5 &= ~((uint8_t)(1 << 1));
+		P5 &= 0xFD;
+	SFRPAGE = SFRPAGE_SAVE;// Restore SFRPAGE
 }
 static void setSDA1(uint8_t s){//P5_2
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+    SFRPAGE = CONFIG_PAGE;
 	if(s)
-		P5 |= (uint8_t)(1 << 2);
+		P5 |= 0x04;
 	else
-		P5 &= ~((uint8_t)(1 << 2));
+		P5 &= 0xFB;
+	SFRPAGE = SFRPAGE_SAVE;// Restore SFRPAGE
 }
-static uint8_t getSCL1(void){
-	return (P5 >> 1) & 0x01;
+static uint8_t getSCL1(void){//p5.1
+	uint8_t temp;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+    SFRPAGE = CONFIG_PAGE;
+	temp = (P5 >> 1) & 0x01;
+	SFRPAGE = SFRPAGE_SAVE;        
+	return temp;
+	
 }
-static uint8_t getSDA1(void){
-	return (P5 >> 2) & 0x01;
+static uint8_t getSDA1(void){//p5.2
+	uint8_t temp;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+    SFRPAGE = CONFIG_PAGE;
+	temp = (P5 >> 2) & 0x01;
+	SFRPAGE = SFRPAGE_SAVE;        
+	return temp;
 }
 
 void iic1Start(void){//产生IIC起始信号
@@ -44,7 +58,7 @@ uint8_t iic1WaitAck(void){
 //发送数据后，等待应答信号到来
 //返回值：1，接收应答失败，IIC直接退出
 //        0，接收应答成功，什么都不做
-	xdata uint8_t ucErrTime=0;  
+	uint8_t ucErrTime=0;  
 	setSDA1(1);
 	delayUs(1);	   
 	setSCL1(1);
@@ -80,7 +94,7 @@ void iic1SendByte(uint8_t txd){//IIC发送一个字节
 //返回从机有无应答
 //1，有应答
 //0，无应答                        
-    xdata uint8_t t;    	    
+    uint8_t t;    	    
     setSCL1(0);//拉低时钟开始数据传输
     for(t = 0;t < 8;t ++)
     {              
@@ -99,7 +113,7 @@ void iic1SendByte(uint8_t txd){//IIC发送一个字节
 } 	    
   
 uint8_t iic1ReadByte(uint8_t ack){//读1个字节，ack=1时，发送ACK，ack=0，发送nACK 
-	xdata uint8_t i, receive=0;
+	uint8_t i, receive=0;
     for(i=0;i<8;i++ ){
         setSCL1(0); 
         delayUs(CONFIG_I2C1_FREQ);

@@ -112,7 +112,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 		NVRAM0[SPREG_LASER_CURRENT_1470] = 2200;
 		STLAR();
 	}
-	if(st == 11){//980+1470 GP模式测试
+	if(st == 11){//CH0+CH1 GP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_GP;
 		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
 		NVRAM0[SPREG_LASER_TMATE] = 5;//激光脉冲正脉宽 10mS
@@ -157,10 +157,17 @@ void EDLAR(void) reentrant{//停止发射脉冲
 	RES(SPCOIL_LASER_EMITING);//发射标志置位
 }
 void sPlcLaserInit(void){//激光脉冲功能初始化
+	uint16_t temp;
+	uint8_t SFRPAGE_SAVE;
 	LASER_CH0_MODPIN = 0;
 	LASER_CH1_MODPIN = 0;
-	initTimer4();
-	
+	SFRPAGE = TMR4_PAGE;
+	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_LASER_TIMER_TICK));
+	TMR4CF = 0;//	
+	RCAP4 = temp;// Reload value to be used in Timer3
+	TMR4 = RCAP4;// Init the Timer3 register
+	TMR4CN = 0;//16Bit AutoReload
+	SFRPAGE = SFRPAGE_SAVE;   
 }
 static void initLaserTimer(void){//TIMER4初始化
 	uint16_t temp;
@@ -222,7 +229,7 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 			}
 			break;
 		}
-		case LASER_MODE_SP:{//SP单脉冲模式
+		case LASER_MODE_EVLA_SIGNAL:{//SP单脉冲模式
 			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转
 				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH0){//0激光通道
 					NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
@@ -406,6 +413,12 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 				}
 				NVRAM0[SPREG_LASER_PCOUNTER] ++;
 			}
+			break;
+		}
+		case LASER_MODE_DERMA:{
+			break;
+		}
+		case LASER_MODE_EVLA_SEGMENT:{
 			break;
 		}
 		default:break;
