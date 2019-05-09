@@ -336,6 +336,9 @@
 #define R_STANDBY_KEY_MODE_DERMA_DOWN			(R_START * 16 + 195)
 #define R_STANDBY_KEY_MODE_DERMA_UP				(R_START * 16 + 196)
 /*****************************************************************************/
+#define R_OPTION_KEY_CORRECTION_DOWN			(R_START * 16 + 197)
+#define R_OPTION_KEY_CORRECTION	_UP				(R_START * 16 + 198)
+/*****************************************************************************/
 #define T100MS_HMI_POWERUP_DELAY				0//HMIÆô¶¯¸´Î»ÑÓÊ±
 #define T100MS_READY_BEEM_DELAY					1//½øÈëREADY×´Ì¬ºó·äÃùÆ÷ÏìÑÓ³Ù
 #define T100MS_CHECK_FLASH_DELAY				2//´æ´¢Æ÷×Ô¼ìµÈ´ýÑÓ³Ù
@@ -345,7 +348,6 @@
 #define T100MS_CHECK_USBHOST_DELAY				6//USBHOSTÄ£¿éµÈ´ýÑÓ³Ù
 #define T100MS_CHECK_NFC_DELAY					7//NFC¶Á¿¨Ä£¿éµÈ´ýÑÓ³Ù
 #define T100MS_CHECK_NRF24L01_DELAY				8//NRF24L01½ÅÌ¤Ä£¿éµÈ´ýÑÓ³Ù
-
 
 #define T10MS_POSWIDTH_ADD_KEYDOWN_DELAY		3	
 #define T10MS_POSWIDTH_DEC_KEYDOWN_DELAY		4

@@ -121,6 +121,8 @@
 
 #define CONFIG_MAX_LASERPOWER_CH0			300//通道0最大激光功率
 #define CONFIG_MIN_LASERPOWRR_CH0			0//通道0最小激光功率
+#define CONFIG_MAX_LASER_CURRENT_CH0		2000//
+#define CONFIG_MAX_LASER_CURRENT_CH1		3000//
 #define CONFIG_MAX_LASERPOWER_CH1			150//通道1最大激光功率
 #define CONFIG_MIN_LASERPOWER_CH1			0//通道1最小激光功率
 #define CONFIG_MAX_LASER_POSWIDTH			999//最大正脉宽时间
@@ -131,6 +133,7 @@
 #define CONFIG_MIN_LASER_GROUP				10//最小可计数脉冲数
 #define CONFIG_MAX_LASER_SPACE				999//最大脉冲间隔时间
 #define CONFIG_MIN_LASER_SPACE				10//最小脉冲间隔时间
+
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_NFC				0
 /*****************************************************************************/

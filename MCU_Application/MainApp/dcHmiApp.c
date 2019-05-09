@@ -11,6 +11,7 @@
 #define GDDC_PAGE_OPTION							5//选项页面
 #define GDDC_PAGE_INFO								6//信息页面
 #define GDDC_PAGE_SCHEME							7//方案页面
+#define GDDC_PAGE_POWER_CORRECTION					10//功率校正
 /*****************************************************************************/
 #define FSMSTEP_POWERUP								0//上电
 //HMI初始操作
@@ -43,13 +44,15 @@
 //
 #define FSMSTEP_SCHEME								700//方案菜单
 //
+#define FSMSTEP_CORRECTION							10000//功率校正
+//
 #define FSMSTEP_FAULT								-1//故障状态
 /*****************************************************************************/
 #define FLASH_DATA_VERSION  0XAABB0000
 #define FLASH_DATA_ADDR     0X00000000
 /*****************************************************************************/
-xdata uint8_t hmiCmdBuffer[CMD_MAX_SIZE];//指令缓存
-xdata uint16_t hmiCmdSize;//已缓冲的指令数
+uint8_t hmiCmdBuffer[CMD_MAX_SIZE];//指令缓存
+uint16_t hmiCmdSize;//已缓冲的指令数
 void UpdateUI(void);
 /*****************************************************************************/
 #if CONFIG_USING_DCHMI_APP == 1
@@ -60,7 +63,6 @@ void updateSchemeDisplay(void){//更新方案显示
 	SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_GROUP ,NVRAM0[EM_LASER_GROUP], 1, 0);
 	SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_SPACE ,NVRAM0[EM_LASER_SPACE], 1, 0);
 }
-
 
 void dcHmiLoopInit(void){//初始化模块
 	NVRAM0[EM_HMI_OPERA_STEP] = 0;
@@ -1523,6 +1525,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 			SET(R_STANDBY_KEY_MODE_DERMA_DOWN);
 		}	
 	}
+	//if(screen_id == GDDC_PAGE_OPTION && control_id == )
 }
 
 void NotifyScreen(uint16_t screen_id){

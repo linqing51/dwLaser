@@ -82,7 +82,7 @@ void hwTest(void){
 void main(void){ 
 	initDevice();
 	sPlcInit();
-	hwTest();
+	//hwTest();
 #if CONFIG_DEBUG == 1
 	printf("sPLC->main:Debug Port->UART1\n");
 	printf("sPLC->main:sPlcInit Done\n");
