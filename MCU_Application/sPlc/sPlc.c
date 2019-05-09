@@ -177,7 +177,7 @@ void updataNvram(void){//更新NVRAM->EPROM
 	}
 	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
-static void clearNvram(void){//清除NVRAM数据	
+void clearNvram(void){//清除NVRAM数据	
 	uint16_t i = 0;
 	enterSplcIsr();
 	disableWatchDog();

@@ -58,5 +58,6 @@ void enableSplcIsr(void) reentrant;
 /*****************************************************************************/
 void sPlcInit(void);
 void updataNvram(void);//更新NVRAM->EPROM
+void clearNvram(void);//清除NVRAM数据	
 /*****************************************************************************/
 #endif
