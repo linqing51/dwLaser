@@ -10,13 +10,13 @@ void hwTest(void){
 	setLedRun(false);//
 	setLedEprom(false);
 	setLedError(false);
-	if(epromTest()){//EPROM测试成功
-		setLedEprom(true);
-		clearNvram();
-	}
-		else{//EPROM测试失败
-		setLedError(true);	
-	}
+//	if(epromTest()){//EPROM测试成功
+//		setLedEprom(true);
+//		clearNvram();
+//	}
+//		else{//EPROM测试失败
+//		setLedError(true);	
+//	}
 	//清空NVRAM0和NVRAM1
 	memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
 	memset(NVRAM1, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM

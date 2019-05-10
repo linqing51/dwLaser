@@ -1,14 +1,14 @@
 #include "sPlc.h"
 /*****************************************************************************/
-xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
-xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
-xdata volatile uint8_t TimerCounter_1mS = 0;
-xdata volatile uint8_t TimerCounter_10mS = 0;
-xdata volatile uint8_t TimerCounter_100mS = 0;
-xdata volatile uint8_t TD_1MS_SP = 0;
-xdata volatile uint8_t TD_10MS_SP = 0;
-xdata volatile uint8_t TD_100MS_SP = 0;
-xdata volatile uint8_t TD_1000MS_SP = 0;
+int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
+int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+uint8_t TimerCounter_1mS = 0;
+uint8_t TimerCounter_10mS = 0;
+uint8_t TimerCounter_100mS = 0;
+uint8_t TD_1MS_SP = 0;
+uint8_t TD_10MS_SP = 0;
+uint8_t TD_100MS_SP = 0;
+uint8_t TD_1000MS_SP = 0;
 /******************************************************************************/
 void assertCoilAddress(uint16_t adr) reentrant{//检查线圈地址
 #if CONFIG_SPLC_ASSERT == 1

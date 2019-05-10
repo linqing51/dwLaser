@@ -17,15 +17,15 @@
 #define SPLC_FP64					*(fp64_t*)//指针取双精度浮点
 #define SPLC_INT32					*(int32_t*)//指针取长整数
 /*****************************************************************************/
-extern xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
-extern xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
-extern xdata volatile uint8_t TimerCounter_1mS;
-extern xdata volatile uint8_t TimerCounter_10mS;
-extern xdata volatile uint8_t TimerCounter_100mS;
-extern xdata volatile uint8_t TD_1MS_SP;
-extern xdata volatile uint8_t TD_10MS_SP;
-extern xdata volatile uint8_t TD_100MS_SP;
-extern xdata volatile uint8_t TD_1000MS_SP;
+extern int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
+extern int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+extern uint8_t TimerCounter_1mS;
+extern uint8_t TimerCounter_10mS;
+extern uint8_t TimerCounter_100mS;
+extern uint8_t TD_1MS_SP;
+extern uint8_t TD_10MS_SP;
+extern uint8_t TD_100MS_SP;
+extern uint8_t TD_1000MS_SP;
 /*****************************************************************************/
 void sPlcInit(void);//软逻辑初始化
 void sPlcProcessStart(void);//sPLC轮询起始

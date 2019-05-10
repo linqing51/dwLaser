@@ -62,7 +62,7 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_PCA				1//片内计数器阵列
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM				1//EPROM 
+#define CONFIG_SPLC_USING_EPROM				0//EPROM 
 #define CONFIG_SPLC_USING_CLEAR_NVRAM		0//启用清除NVRAM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_UART0				1//UART 0串口启用
@@ -120,7 +120,7 @@
 #define CONFIG_USING_BACKGROUND_APP			1//背景应用
 
 #define CONFIG_MAX_LASERPOWER_CH0			300//通道0最大激光功率
-#define CONFIG_MIN_LASERPOWRR_CH0			0//通道0最小激光功率
+#define CONFIG_MIN_LASERPOWER_CH0			0//通道0最小激光功率
 #define CONFIG_MAX_LASER_CURRENT_CH0		2000//
 #define CONFIG_MAX_LASER_CURRENT_CH1		3000//
 #define CONFIG_MAX_LASERPOWER_CH1			150//通道1最大激光功率
@@ -133,7 +133,14 @@
 #define CONFIG_MIN_LASER_GROUP				10//最小可计数脉冲数
 #define CONFIG_MAX_LASER_SPACE				999//最大脉冲间隔时间
 #define CONFIG_MIN_LASER_SPACE				10//最小脉冲间隔时间
-
+#define CONFIG_MAX_AIM_RED_BRG				100//红光最大调光占空比
+#define CONFIG_MIN_AIM_RED_BRG				0//红光最小调光占空比
+#define CONFIG_MAX_AIM_GREEN_BRG			100//绿光最大调光占空比
+#define CONFIG_MIN_AIM_GREEN_BRG			0//绿光最小调光占空比
+#define CONFIG_MAX_BEEM_VOLUME				100//蜂鸣器最大音量
+#define CONFIG_MIN_BEEM_VOLUME				0//蜂鸣器最小音量
+#define CONFIG_MAX_LCD_BRG					100//屏幕亮度最大值
+#define CONFIG_MIN_LCD_BRG					0//屏幕亮度最小值
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_NFC				0
 /*****************************************************************************/

@@ -32,25 +32,25 @@ typedef struct{
 	uint16_t dataLen;
 }modbusRxTxData_t;
 /**********************Slave Transmit and Receive Variables********************/
-xdata uint8_t ModbusSlaveAddress = 1;
-xdata modbusRxTxData_t Tx_Data;
-xdata uint32_t Tx_Current = 0;
-xdata uint32_t Tx_CRC16 = 0xFFFF;
-xdata MODBUS_RXTX_STATE Tx_State = RXTX_IDLE;
-xdata uint8_t Tx_Buf[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];
-xdata uint32_t Tx_Buf_Size = 0;
+uint8_t ModbusSlaveAddress = 1;
+modbusRxTxData_t Tx_Data;
+uint32_t Tx_Current = 0;
+uint32_t Tx_CRC16 = 0xFFFF;
+MODBUS_RXTX_STATE Tx_State = RXTX_IDLE;
+uint8_t Tx_Buf[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];
+uint32_t Tx_Buf_Size = 0;
 /*****************************************************************************/
-xdata modbusRxTxData_t Rx_Data;
-xdata uint32_t Rx_CRC16 = 0xFFFF;
-xdata MODBUS_RXTX_STATE Rx_State = RXTX_IDLE;
-xdata uint8_t Rx_Data_Available = false;
+modbusRxTxData_t Rx_Data;
+uint32_t Rx_CRC16 = 0xFFFF;
+MODBUS_RXTX_STATE Rx_State = RXTX_IDLE;
+uint8_t Rx_Data_Available = false;
 /*****************************************************************************/
-xdata volatile uint16_t modbusTimerValue = 0;
-xdata volatile uint8_t modbusReceiveCounter = 0;// Collected data number
-xdata volatile uint8_t modbusReceiveBuffer[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];// Buffer to collect data from hardware
+uint16_t modbusTimerValue = 0;
+uint8_t modbusReceiveCounter = 0;// Collected data number
+uint8_t modbusReceiveBuffer[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];// Buffer to collect data from hardware
 /*****************************************************************************/
 void modbusCrc16(const uint8_t Data, uint32_t* CRC){
-    xdata uint32_t i;
+    uint32_t i;
     *CRC = *CRC ^(uint32_t) Data;
     for (i = 8; i > 0; i--){
         if (*CRC & 0x0001)
@@ -81,8 +81,8 @@ void HandleModbusError(char ErrorCode){// Initialise the output buffer. The firs
 }
 
 void HandleModbusReadCoils(void){//Modbus function 01 - 读取线圈状态
-	xdata uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
-	xdata uint8_t tempData = 0;
+	uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
+	uint8_t tempData = 0;
 	// The message contains the requested start address and number of registers
     startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
     numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
@@ -114,7 +114,7 @@ void HandleModbusReadCoils(void){//Modbus function 01 - 读取线圈状态
 void HandleModbusReadInputCoil(void){//Modbus function 02 - 读取输入线圈状态
 }
 void HandleModbusReadHoldingRegisters(void){//Modbus function 03 - Read holding registers
-    xdata uint16_t startAddress, numberOfRegisters, i, currentData;
+    uint16_t startAddress, numberOfRegisters, i, currentData;
 	// The message contains the requested start address and number of registers
     startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
     numberOfRegisters = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
@@ -137,7 +137,7 @@ void HandleModbusReadHoldingRegisters(void){//Modbus function 03 - Read holding 
     }
 }
 void HandleModbusWriteSingleCoil(void){//Modbus function 05 -强置单线圈
-	xdata uint16_t startAddress, value;
+	uint16_t startAddress, value;
 	// The message contains the requested start address and number of registers
     startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
 	value = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
@@ -166,7 +166,7 @@ void HandleModbusWriteSingleCoil(void){//Modbus function 05 -强置单线圈
 	}
 }
 void HandleModbusWriteSingleRegister(void){//Modbus function 06 - Write single register
-    xdata uint16_t address, value,i;
+    uint16_t address, value,i;
     // The message contains the requested start address and number of registers
     address = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t)(Rx_Data.dataBuf[1]);
     value = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
@@ -186,8 +186,8 @@ void HandleModbusWriteSingleRegister(void){//Modbus function 06 - Write single r
     SendMessage();
 }
 void HandleModbusWriteMultipleCoils(void){//Modbus function 15 - Write multiple coils
-	xdata uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
-	xdata uint8_t tempData = 0;
+	uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
+	uint8_t tempData = 0;
 	// The message contains the requested start address and number of registers
     startAddress = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t) (Rx_Data.dataBuf[1]);
     numberOfCoil = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t) (Rx_Data.dataBuf[3]);
@@ -229,8 +229,8 @@ void HandleModbusWriteMultipleCoils(void){//Modbus function 15 - Write multiple 
 }
 void HandleModbusWriteMultipleRegisters(void){//Modbus function 16 - Write multiple registers
     // Write single numerical output
-    xdata uint16_t startAddress, numberOfRegisters, value;
-    xdata uint8_t byteCount , i;
+    uint16_t startAddress, numberOfRegisters, value;
+    uint8_t byteCount , i;
     // The message contains the requested start address and number of registers
     startAddress = ((uint16_t)(Rx_Data.dataBuf[0]) << 8) + (uint16_t)(Rx_Data.dataBuf[1]);
     numberOfRegisters = ((uint16_t)(Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
@@ -257,7 +257,7 @@ void HandleModbusWriteMultipleRegisters(void){//Modbus function 16 - Write multi
     }
 }
 uint8_t RxDataAvailable(void){//RxDataAvailable
-    xdata uint8_t Result = Rx_Data_Available;   
+    uint8_t Result = Rx_Data_Available;   
     Rx_Data_Available = false;
     return Result;
 }
@@ -271,7 +271,7 @@ uint8_t CheckRxTimeout(void){//CheckRxTimeout
     return false;
 }
 uint8_t checkModbusBufferComplete(void){//CheckBufferComplete
-    xdata int32_t expectedReceiveCount=0;
+    int32_t expectedReceiveCount=0;
     if(modbusReceiveCounter > 4)
     {
         if(modbusReceiveBuffer[0] == ModbusSlaveAddress)
@@ -306,8 +306,8 @@ uint8_t checkModbusBufferComplete(void){//CheckBufferComplete
     return DATA_NOT_READY;
 }
 void RxRTU(void){//Check for data ready, if it is good return answer
-    xdata uint8_t i;
-    xdata uint8_t receiveBufferControl=0;
+    uint8_t i;
+    uint8_t receiveBufferControl=0;
     receiveBufferControl = checkModbusBufferComplete();
     if(receiveBufferControl == DATA_READY){
         Rx_Data.address               =modbusReceiveBuffer[0];

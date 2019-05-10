@@ -1,8 +1,8 @@
 #include "sPlcChipAdc.h"
 #if CONFIG_SPLC_USING_ADC == 1
 /*****************************************************************************/
-static xdata adcTempDat_t volatile adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
-static xdata uint8_t volatile adcSelect;//ADC通道选择
+static adcTempDat_t volatile adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
+static uint8_t volatile adcSelect;//ADC通道选择
 static void initAdcData(adcTempDat_t *s);
 /*****************************************************************************/
 static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器

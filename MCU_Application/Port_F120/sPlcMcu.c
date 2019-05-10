@@ -50,13 +50,13 @@ void enableModbusSerialIsr(void){
 // 4-byte FLASH segments of an ISR entry point into the cache. 
 //
 void Cache_ISR_Entry(unsigned int start_address, unsigned int interrupt_number){
-   xdata char SFRPAGE_SAVE = SFRPAGE;        // Preserve current SFR page
-   xdata char EA_SAVE = EA;                  // Preserve interrupt state
+   char SFRPAGE_SAVE = SFRPAGE;        // Preserve current SFR page
+   char EA_SAVE = EA;                  // Preserve interrupt state
 
-   xdata unsigned char code* pread;          // Pointer used to generate MOVC 
+   unsigned char code* pread;          // Pointer used to generate MOVC 
                                        // instructions to initiate a cache
                                        // push operation
-   xdata unsigned char temp_char;            // Temporary char.
+   unsigned char temp_char;            // Temporary char.
 
    // Set the <pread> pointer to the address of the interrupt vector.
    pread = ((interrupt_number * 8) + 3 ); 

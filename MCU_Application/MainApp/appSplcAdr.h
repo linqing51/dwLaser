@@ -10,6 +10,10 @@
 #define CONFIG_HMI_DEFAULT_PASSSWORD1			0x3231//默认密码
 #define STATUS_LASER_READY						0x5A
 #define STATUS_LASER_STANDBY					0xA5
+#define BEEM_MODE_BEEP							0x1234
+#define BEEM_MODE_TONE							0x4321
+#define AIM_MODE_CW_GREEN						0x5678//连续绿色
+#define AIM_MODE_CW_RED							0x9ABC//连续红色
 //故障码
 #define ERROR_CODE_EPROM						0x0001//EPRON 错误
 #define ERROR_CODE_SPI_FLASH					0x0002//SPI FLSAH错误
@@ -185,17 +189,22 @@
 
 #define DM_SCHEME_NUM							(DM_START + 442)//选择的方案编号 低8位方案号 高8位方案使能
 #define DM_BEEM_VOLUME							(DM_START + 443)//蜂鸣器音量
-#define DM_DC_OLD_PASSCODE0						(DM_START + 444)//屏旧密码0-1
-#define DM_DC_OLD_PASSCODE1						(DM_START + 445)//屏旧密码2-3
-#define DM_DC_OLD_PASSCODE2						(DM_START + 446)//屏旧密码0-1
-#define DM_DC_OLD_PASSCODE3						(DM_START + 447)//屏旧密码2-3
-#define DM_SYS_RUNTIME_L						(DM_START + 448)//系统累计运行时间秒L 32BIT
-#define DM_SYS_RUNTIME_H						(DM_START + 449)//系统累计运行时间秒H 32BIT
-#define DM_LAR_RUNTIME_L						(DM_START + 450)//激光累计发射时间秒L 32BIT
-#define DM_LAR_RUNTIME_H						(DM_START + 451)//激光累计发射时间秒H 32BIT
-#define DM_RELEASE_DATA_YEAR					(DM_START + 452)//出厂日期年		
-#define DM_RELEASE_DATA_MONTH					(DM_START + 453)//出厂日期月
-#define DM_RELEASE_DATA_DAY						(DM_START + 454)//出厂日期日
+#define DM_BEEM_MODE							(DM_START + 444)//蜂鸣器模式
+#define DM_AIM_MODE								(DM_START + 445)//指示激光模式
+#define DM_AIM_RED_BRG							(DM_START + 446)//红色指示激光亮度
+#define DM_AIM_GREEN_BRG						(DM_START + 447)//绿色指示激光亮度
+#define DM_LCD_BRG								(DM_START + 448)//屏幕亮度
+#define DM_DC_OLD_PASSCODE0						(DM_START + 449)//屏旧密码0-1
+#define DM_DC_OLD_PASSCODE1						(DM_START + 450)//屏旧密码2-3
+#define DM_DC_OLD_PASSCODE2						(DM_START + 451)//屏旧密码0-1
+#define DM_DC_OLD_PASSCODE3						(DM_START + 452)//屏旧密码2-3
+#define DM_SYS_RUNTIME_L						(DM_START + 453)//系统累计运行时间秒L 32BIT
+#define DM_SYS_RUNTIME_H						(DM_START + 454)//系统累计运行时间秒H 32BIT
+#define DM_LAR_RUNTIME_L						(DM_START + 455)//激光累计发射时间秒L 32BIT
+#define DM_LAR_RUNTIME_H						(DM_START + 456)//激光累计发射时间秒H 32BIT
+#define DM_RELEASE_DATA_YEAR					(DM_START + 457)//出厂日期年		
+#define DM_RELEASE_DATA_MONTH					(DM_START + 458)//出厂日期月
+#define DM_RELEASE_DATA_DAY						(DM_START + 459)//出厂日期日
 /*****************************************************************************/
 #define X_INTERLOCK								(X_START * 16 + 0)//XIN0 安全连锁
 #define X_ESTOP									(X_START * 16 + 1)//XIN1 紧急停止开关
@@ -336,8 +345,11 @@
 #define R_STANDBY_KEY_MODE_DERMA_DOWN			(R_START * 16 + 195)
 #define R_STANDBY_KEY_MODE_DERMA_UP				(R_START * 16 + 196)
 /*****************************************************************************/
-#define R_OPTION_KEY_CORRECTION_DOWN			(R_START * 16 + 197)
-#define R_OPTION_KEY_CORRECTION	_UP				(R_START * 16 + 198)
+#define R_READY_KEY_READY_DOWN					(R_START * 16 + 197)
+#define R_READY_KEY_READY_UP					(R_START * 16 + 198)
+/*****************************************************************************/
+#define R_OPTION_KEY_CORRECTION_DOWN			(R_START * 16 + 199)
+#define R_OPTION_KEY_CORRECTION	_UP				(R_START * 16 + 200)
 /*****************************************************************************/
 #define T100MS_HMI_POWERUP_DELAY				0//HMI启动复位延时
 #define T100MS_READY_BEEM_DELAY					1//进入READY状态后蜂鸣器响延迟
