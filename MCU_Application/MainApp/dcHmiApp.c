@@ -556,6 +556,13 @@ void dcHmiLoop(void){//HMI轮训程序
 		NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
 		NVRAM0[EM_DC_PAGE] = GDDC_PAGE_READY;
 		SetScreen(NVRAM0[EM_DC_PAGE]);
+		SetProgressValue(GDDC_PAGE_READY, GDDC_PAGE_STANDBY_PROGRESS_CH0, NVRAM0[EM_LASER_POWER_CH0]);
+		SetProgressValue(GDDC_PAGE_READY, GDDC_PAGE_STANDBY_PROGRESS_CH1, NVRAM0[EM_LASER_POWER_CH1]);
+		SetTextInt32(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_POWER_CH0 ,NVRAM0[EM_LASER_POWER_CH0], 1, 0);
+		SetTextInt32(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_POWER_CH1 ,NVRAM0[EM_LASER_POWER_CH1], 1, 0);
+		SetTextValue(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_WARN , "All OK!");
+		CLR(GDDC_PAGE_READY_TEXTDISPLAY_TIME);//
+		CLR(GDDC_PAGE_READY_TEXTDISPLAY_ENERGY);
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_WAIT_TRIGGER){//等待触发激光
@@ -952,17 +959,29 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		if((NVRAM0[EM_DC_NEW_PASSCODE0] == NVRAM0[DM_DC_OLD_PASSCODE0]) && (NVRAM0[EM_DC_NEW_PASSCODE1] == NVRAM0[DM_DC_OLD_PASSCODE1])){
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY;
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
-			SetScreen(NVRAM0[EM_DC_PAGE]);				   
+			//SetScreen(NVRAM0[EM_DC_PAGE]);		
+			SetTextValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_WARN, "All Done!");
+			SetProgressValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_PROGRESS_CH0, NVRAM0[EM_LASER_POWER_CH0]);
+			SetProgressValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_PROGRESS_CH1, NVRAM0[EM_LASER_POWER_CH1]);
+			SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_TIME, NVRAM0[EM_DC_DISPLAY_RELEASE_TIME], 1, 0);
+			SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_ENERGY, NVRAM0[EM_DC_DISPLAY_RELEASE_ENERGY], 1, 0);
+			SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, NVRAM0[EM_LASER_POWER_CH0], 1, 0);
+			SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, NVRAM0[EM_LASER_POWER_CH1], 1, 0);
+			SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_POSWIDTH ,NVRAM0[EM_LASER_POSWIDTH], 1, 0);
+			SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_NEGWIDTH ,NVRAM0[EM_LASER_NEGWIDTH], 1, 0);
+			SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_GROUP ,NVRAM0[EM_LASER_GROUP], 1, 0);
+			SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_SPACE ,NVRAM0[EM_LASER_SPACE], 1, 0);
+			SetScreen(NVRAM0[EM_DC_PAGE]);					
 		}		
 		else if((NVRAM0[EM_DC_NEW_PASSCODE0] == NVRAM0[EM_DC_DEFAULT_PASSCODE0]) && (NVRAM0[EM_DC_NEW_PASSCODE1] == NVRAM0[EM_DC_DEFAULT_PASSCODE1])){
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY;
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
-			SetScreen(NVRAM0[EM_DC_PAGE]);	
+			SetScreen(NVRAM0[EM_DC_PAGE]);				
 		}
 		CLR(EM_DC_NEW_PASSCODE0);//清空已输入密码
 		CLR(EM_DC_NEW_PASSCODE1);
 		CLR(EM_DC_PASSCODE_INDEX);//清空密码显示位索引 
-		SetTextValue(screen_id, 15 , (uint8_t*)(&(NVRAM0[EM_DC_NEW_PASSCODE0])));
+		SetTextValue(screen_id, GDDC_PAGE_PASSCODE_TEXTDISPLAY, (uint8_t*)(&(NVRAM0[EM_DC_NEW_PASSCODE0])));
 		return;
 	}
 	//NEW PASSCODE新密码输入页面
@@ -1230,7 +1249,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		if(state == 0x01){
 			if(NVRAM0[EM_LASER_POWER_CH0] < CONFIG_MAX_LASERPOWER_CH0){
 				ADDS1(EM_LASER_POWER_CH0);
-				SetTextInt32(screen_id, GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD ,NVRAM0[EM_LASER_POWER_CH0], 1, 0);
+				SetTextInt32(screen_id, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0 ,NVRAM0[EM_LASER_POWER_CH0], 1, 0);	
 				SetProgressValue(screen_id, GDDC_PAGE_STANDBY_PROGRESS_CH0, NVRAM0[EM_LASER_POWER_CH0]);
 			}
 		}
@@ -1240,7 +1259,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		if(state == 0x01){
 			if(NVRAM0[EM_LASER_POWER_CH0] > CONFIG_MIN_LASERPOWER_CH0){
 				DECS1(EM_LASER_POWER_CH0);
-				SetTextInt32(screen_id, GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD , NVRAM0[EM_LASER_POWER_CH0], 1, 0);
+				SetTextInt32(screen_id, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0 , NVRAM0[EM_LASER_POWER_CH0], 1, 0);
 				SetProgressValue(screen_id, GDDC_PAGE_STANDBY_PROGRESS_CH0, NVRAM0[EM_LASER_POWER_CH0]);
 			}
 		}
@@ -1250,7 +1269,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		if(state == 0x01){
 			if(NVRAM0[EM_LASER_POWER_CH1] < CONFIG_MAX_LASERPOWER_CH1){
 				ADDS1(EM_LASER_POWER_CH1);
-				SetTextInt32(screen_id, GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD ,NVRAM0[EM_LASER_POWER_CH1], 1, 0);
+				SetTextInt32(screen_id, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1 ,NVRAM0[EM_LASER_POWER_CH1], 1, 0);
 				SetProgressValue(screen_id, GDDC_PAGE_STANDBY_PROGRESS_CH1, NVRAM0[EM_LASER_POWER_CH1]);
 			}
 		}
@@ -1260,13 +1279,12 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		if(state == 0x01){
 			if(NVRAM0[EM_LASER_POWER_CH1] > CONFIG_MIN_LASERPOWER_CH1){
 				DECS1(EM_LASER_POWER_CH1);
-				SetTextInt32(screen_id, GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC ,NVRAM0[EM_LASER_POWER_CH1], 1, 0);
+				SetTextInt32(screen_id, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1 ,NVRAM0[EM_LASER_POWER_CH1], 1, 0);
 				SetProgressValue(screen_id, GDDC_PAGE_STANDBY_PROGRESS_CH1, NVRAM0[EM_LASER_POWER_CH1]);
 			}
 		}
 		return;
 	}
-	
 	if(screen_id == GDDC_PAGE_STANDBY && control_id == GDDC_PAGE_STANDBY_KEY_POSWIDTH_ADD){
 		switch(state){
 			case 0x00:{//UP
@@ -1556,6 +1574,12 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		}
 		return;
 	}
+	if(screen_id == GDDC_PAGE_STANDBY && control_id == GDDC_PAGE_STANDBY_KEY_RESET){//累计能量与时间显示清空
+		if(state == 0x01){
+			CLR(EM_DC_DISPLAY_RELEASE_TIME);
+			CLR(EM_DC_DISPLAY_RELEASE_ENERGY);
+		}
+	}
 	//主界面READY
 	if(screen_id == GDDC_PAGE_READY && control_id == GDDC_PAGE_READY_KEY_READY){
 		if(state == 0x01){
@@ -1747,11 +1771,34 @@ void NotifyText(uint16_t screen_id, uint16_t control_id, uint8_t *str){
 *  \param screen_id 画面ID                                                      
 *  \param control_id 控件ID                                                     
 *  \param value 值                                                              
-*/                                                                              
+*/                       
+
+
 void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){                                                                                
+	if(screen_id == GDDC_PAGE_STANDBY && control_id == GDDC_PAGE_STANDBY_PROGRESS_CH0){
+		if(value > CONFIG_MAX_LASERPOWER_CH0){
+			value = CONFIG_MAX_LASERPOWER_CH0;
+		}
+		if(value < CONFIG_MIN_LASERPOWER_CH0){
+			value = CONFIG_MIN_LASERPOWER_CH0;
+		}
+		NVRAM0[EM_LASER_POWER_CH0] = (int16_t)value;
+		SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, NVRAM0[EM_LASER_POWER_CH0], 1, 0);
+	}
+	if(screen_id == GDDC_PAGE_STANDBY && control_id == GDDC_PAGE_STANDBY_PROGRESS_CH1){
+		if(value > CONFIG_MAX_LASERPOWER_CH1){
+			value = CONFIG_MAX_LASERPOWER_CH1;
+		}
+		if(value < CONFIG_MIN_LASERPOWER_CH1){
+			value = CONFIG_MIN_LASERPOWER_CH1;
+		}
+		NVRAM0[EM_LASER_POWER_CH1] = (int16_t)value;
+		SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, NVRAM0[EM_LASER_POWER_CH1], 1, 0);
+	}			
 	if(screen_id == GDDC_PAGE_OPTION && control_id == GDDC_PAGE_OPTION_PROGRESS_AIM_RED_BRG){
 		if(value >= CONFIG_MIN_AIM_RED_BRG && value <= CONFIG_MAX_AIM_RED_BRG){
 			NVRAM0[DM_AIM_RED_BRG] = (int16_t)value;
+			
 		}
 		else{
 			NVRAM0[DM_AIM_RED_BRG] = CONFIG_MAX_AIM_RED_BRG;
