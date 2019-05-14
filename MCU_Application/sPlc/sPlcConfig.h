@@ -62,8 +62,8 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_PCA				1//片内计数器阵列
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM				0//EPROM 
-#define CONFIG_SPLC_USING_CLEAR_NVRAM		0//启用清除NVRAM功能
+#define CONFIG_SPLC_USING_EPROM				1//EPROM 
+#define CONFIG_SPLC_USING_CLEAR_NVRAM		1//启用清除NVRAM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_UART0				1//UART 0串口启用
 #define CONFIG_SPLC_USING_UART0_ISR			1

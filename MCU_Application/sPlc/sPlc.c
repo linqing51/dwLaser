@@ -358,7 +358,7 @@ void sPlcProcessStart(void){//sPLC轮询起始
 	}
 #if CONFIG_SPLC_USING_CLEAR_NVRAM == 1 && CONFIG_SPLC_USING_EPROM == 1
 	if(NVRAM0[SPREG_CLEAR_NVRAM] == CONFIG_SPLC_CLEAR_CODE){
-		DISABLE_INTERRUPT;//关闭中断	
+		disableSplcIsr();//关闭中断	
 		setLedRun(true);//
 		setLedEprom(true);
 		if(epromTest()){//EPROM测试成功

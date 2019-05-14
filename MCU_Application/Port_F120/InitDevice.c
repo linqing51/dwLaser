@@ -20,7 +20,7 @@ static void Voltage_Reference_Init(void){
 }
 
 void Port_IO_Init(){ 
-    // P0.0  -  TX0 (UART0), Push-Pull,  Digital
+    // P0.0  -  TX0 (UART0), Open-Drain, Digital
     // P0.1  -  RX0 (UART0), Open-Drain, Digital
     // P0.2  -  SCK  (SPI0), Push-Pull,  Digital
     // P0.3  -  MISO (SPI0), Open-Drain, Digital
@@ -29,7 +29,7 @@ void Port_IO_Init(){
     // P0.6  -  SDA (SMBus), Open-Drain, Digital
     // P0.7  -  SCL (SMBus), Open-Drain, Digital
 
-    // P1.0  -  TX1 (UART1), Push-Pull,  Digital
+    // P1.0  -  TX1 (UART1), Open-Drain, Digital
     // P1.1  -  RX1 (UART1), Open-Drain, Digital
     // P1.2  -  CEX0 (PCA),  Push-Pull,  Digital
     // P1.3  -  CEX1 (PCA),  Push-Pull,  Digital
@@ -55,10 +55,11 @@ void Port_IO_Init(){
     // P3.5  -  Unassigned,  Push-Pull,  Digital
     // P3.6  -  Unassigned,  Push-Pull,  Digital
     // P3.7  -  Unassigned,  Push-Pull,  Digital
+
   	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
 	SFRPAGE = CONFIG_PAGE;// Set SFR page
-    P0MDOUT   = 0x35;
-    P1MDOUT   = 0x7D;
+    P0MDOUT   = 0x34;
+    P1MDOUT   = 0x7C;
     P2MDOUT   = 0xFF;
     P3MDOUT   = 0xF0;
     P4MDOUT   = 0x04;
