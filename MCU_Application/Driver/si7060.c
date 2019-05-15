@@ -28,9 +28,12 @@ void si7060WriteValue(const uint8_t registerAdd, const uint8_t value){
 }
 
 
-void si7060Init(void){
+uint8_t si7060Init(void){
 	uint8_t ret;
 	ret = si7060ReadValue(CMD_SI7060_ID);
+	if(ret != 0x14){
+		return false;
+	}
 	ret = si7060ReadValue(CMD_SI7060_meas);
 	si7060WriteValue(CMD_SI7060_meas, 0x04);
 	ret = si7060ReadValue(CMD_SI7060_meas);
@@ -64,6 +67,7 @@ void si7060Init(void){
 	si7060WriteValue(CMD_SI7060_opt_status, 0x02);
 	si7060WriteValue(CMD_SI7060_otp_addr,0x1B);
 	ret = si7060ReadValue(CMD_SI7060_otp_data);//READ Serial ID[7:0]
+	return true;
 	
 }
 int16_t si7060ReadTemperature(void){

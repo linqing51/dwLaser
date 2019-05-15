@@ -23,7 +23,7 @@
 #define SI7060_OPT_SERIAL_ID0700					0x1B
 
 /*****************************************************************************/
-void si7060Init(void);
+uint8_t si7060Init(void);
 uint8_t si7060ReadValue(const uint8_t registerAdd);
 void si7060WriteValue(const uint8_t registerAdd, const uint8_t value);
 int16_t si7060ReadTemperature(void);

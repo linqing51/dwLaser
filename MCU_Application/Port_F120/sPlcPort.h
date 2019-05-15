@@ -29,13 +29,10 @@
 #include "sPlcModbus.h"
 #include "sPlcModbusPort.h"
 #endif
-#if CONFIG_USING_USB == 1
+#if CONFIG_USING_CH376 == 1
 #include "usbSpi.h"
 #include "FILE_SYS.H"
 #include "sPlcUsb.h"
-#endif
-#if CONFIG_USING_SIMEPROM == 1
-#include "sPlcSimEprom.h"
 #endif
 #if CONFIG_USING_ONCHIPFLASH == 1
 #include "F120_FlashPrimitives.h"
@@ -43,17 +40,25 @@
 #endif
 #if CONFIG_SPLC_USING_I2C0 == 1
 #include "i2c0.h"
-#if CONFIG_SPLC_USING_EPROM == 1
-#include "eprom.h"
+	#if CONFIG_SPLC_USING_EPROM == 1
+	#include "eprom.h"
+	#endif
 #endif
-#endif
+
 #if CONFIG_SPLC_USING_I2C1 == 1
 #include "i2c1.h"
-#include "si7060.h"
+	#if CONFIG_USING_SI7060
+		#include "si7060.h"
+	#endif
 #endif
+
 #if CONFIG_SPLC_USING_I2C2 == 1
 #include "i2c2.h"
+	#if CONFIG_USING_MCP79412 == 1
+		#include "mcp79412.h"
+	#endif
 #endif
+
 #if CONFIG_SPLC_USING_I2C3 == 1
 #include "i2c3.h"
 #endif

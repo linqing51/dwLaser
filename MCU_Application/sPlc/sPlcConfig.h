@@ -72,7 +72,6 @@
 #define CONFIG_SPLC_USING_UART1				1//UART 1串口启用
 #define CONFIG_SPLC_USING_UART1_ISR			1
 #define UART1								1
-
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ADC				1//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			4//ADC位移滤波次数
@@ -96,8 +95,9 @@
 #define CONFIG_MB_RTU_SLAVE_TIMEOUT			20//接收通讯超时 10mS
 #define CONFIG_MB_RTU_SLAVE_IO_DELAY		1//RX TX切换延时
 /*****************************************************************************/
-#define CONFIG_USING_SIMEPROM				0
-#define CONFIG_USING_USB					0
+#define CONFIG_USING_SI7060					1
+#define CONFIG_USING_MCP79412				1
+#define CONFIG_USING_CH376					0
 #define CONFIG_USING_ONCHIPFLASH			0
 /*****************************************************************************/
 #define CONFIG_FIRMWARE_UPDATE_PAGE_SIZE	128//FLASH单次读写容量
@@ -252,6 +252,11 @@
 /*****************************************************************************/
 //蜂鸣器相关线圈
 #define SPCOIL_BEEM_ENABLE					(SPCOIL_START * 16 + 46)//蜂鸣器发射使能		
+/*****************************************************************************/
+#define SPCOIL_SI7060_INIT_FAIL				(SPCOIL_START * 16 + 47)//SI7060温度传感器初始化失败
+#define SPCOIL_MCP79412_INIT_FAIL			(SPCOIL_START * 16 + 48)//MCP794212 RTC初始化失败
+#define SPCOIL_CH376_INIT_FAIL				(SPCOIL_START * 16 + 48)//USB HOST CH376初始化失败
+#define SPCOIL_SPI_FLASH_INIT_FAIL			(SPCOIL_START * 16 + 49)//SPI FLASH初始化失败
 /*****************************************************************************/
 #define SPREG_CLEAR_NVRAM					(SPREG_START + 0)//清除NVRAM后重新启动
 /*****************************************************************************/

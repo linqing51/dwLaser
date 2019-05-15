@@ -17,13 +17,14 @@
 //故障码
 #define ERROR_CODE_EPROM						0x0001//EPRON 错误
 #define ERROR_CODE_SPI_FLASH					0x0002//SPI FLSAH错误
-#define ERROR_CODE_INTBUS						0x0003//总线通信错误
-#define ERROR_CODE_LDR0							0x0004//激光驱动器0错误
-#define ERROR_CODE_LDR1							0x0005//激光驱动器1错误
-#define ERROR_CODE_TEMPER						0x0006//温度传感器错误
-#define ERROR_CODE_USBHOST						0x0007//USB HOST模块错误
-#define ERROR_CODE_NFC							0x0008//NFC模块错误
-#define ERROR_CODE_NRF24L01						0x0009//NRF24L01模块错误
+#define ERROR_CODE_SI7060						0x0003//温度传感器通信错误
+#define ERROR_CODE_MCP79412						0x0004//RTC通信错误
+#define ERROR_CODE_LDR0							0x0005//激光驱动器0错误
+#define ERROR_CODE_LDR1							0x0006//激光驱动器1错误
+#define ERROR_CODE_TEMPER						0x0007//温度传感器错误
+#define ERROR_CODE_USBHOST						0x0008//USB HOST模块错误
+#define ERROR_CODE_NFC							0x0009//NFC模块错误
+#define ERROR_CODE_NRF24L01						0x0010//NRF24L01模块错误
 #define ERRPR_CODE_NOERR						0xFFFF//无错误
 /*****************************************************************************/
 #define EM_LASER_SCHEME_NAME					(EM_START + 0)//方案名称
@@ -205,6 +206,7 @@
 #define DM_RELEASE_DATA_YEAR					(DM_START + 457)//出厂日期年		
 #define DM_RELEASE_DATA_MONTH					(DM_START + 458)//出厂日期月
 #define DM_RELEASE_DATA_DAY						(DM_START + 459)//出厂日期日
+#define DM_LANGUAGE								(DM_START + 460)//语言选择
 /*****************************************************************************/
 #define X_INTERLOCK								(X_START * 16 + 0)//XIN0 安全连锁
 #define X_ESTOP									(X_START * 16 + 1)//XIN1 紧急停止开关
@@ -239,7 +241,6 @@
 #define R_SAFE_FAULT							(R_START * 16 + 8)//安全标志
 #define R_SCHEME_LOAD_REQ						(R_START * 16 + 9)//方案载入请求
 #define R_SHCEME_SAVE_REQ						(R_START * 16 + 10)//方案储存请求
-
 //HMI相关状态
 #define R_DCHMI_RESET_REQ						(R_START * 16 + 47)//HMI复位请求
 #define R_DCHMI_RESET_DOING						(R_START * 16 + 48)//HMI复位中
@@ -251,27 +252,53 @@
 #define R_DCHMI_RESTORE_DOING					(R_START * 16 + 54)//HMI从FLASH中恢复中
 #define R_DCHMI_RESTORE_DONE					(R_START * 16 + 55)//HMI从FLASH中恢复设置完成	
 //自检状态
-#define R_CHECK_EPROM_DONE						(R_START * 16 + 128)//存储器自检完毕
-#define R_CHECK_INTBUS_DONE						(R_START * 16 + 129)//HMI通信自检完毕
-#define R_CHECK_LDR_DONE						(R_START * 16 + 130)//激光驱动器自检完毕
-#define R_CHECK_TEMPER_DONE						(R_START * 16 + 131)//温度自检完毕
-#define R_CHECK_USBHOST_DONE					(R_START * 16 + 132)//USBHOST模块完毕
-#define R_CHECK_NFC_DONE						(R_START * 16 + 133)//NFC模块完毕
-#define R_CHECK_NRF24L01_DONE					(R_START * 16 + 134)//NRF24L01模块自检完毕
-#define R_CHECK_EPROM_PASS						(R_START * 16 + 135)//处理器自检通过
-#define R_CHECK_INTBUS_PASS						(R_START * 16 + 136)//HMI通信自检通过
-#define R_CHECK_LDR_PASS						(R_START * 16 + 137)//激光驱动器自检通过
-#define R_CHECK_TEMPER_PASS						(R_START * 16 + 138)//温度自检通过
-#define R_CHECK_USBHOST_PASS					(R_START * 16 + 139)//USBHOST模块通过
-#define R_CHECK_NFC_PASS						(R_START * 16 + 140)//NFC模块通过
-#define R_CHECK_NRF24L01_PASS					(R_START * 16 + 141)//NRF24L01模块自检通过
-#define R_CHECK_EPROM_FAIL						(R_START * 16 + 142)//处理器自检失败
-#define R_CHECK_INTBUS_FAIL						(R_START * 16 + 143)//HMI通信自检失败
-#define R_CHECK_LDR_FAIL						(R_START * 16 + 144)//激光驱动器自检失败
-#define R_CHECK_TEMPER_FAIL						(R_START * 16 + 145)//温度自检失败
-#define R_CHECK_USBHOST_FAIL					(R_START * 16 + 146)//USBHOST模块失败
-#define R_CHECK_NFC_FAIL						(R_START * 16 + 147)//NFC模块失败
-#define R_CHECK_NRF24L01_FAIL					(R_START * 16 + 148)//NRF24L01模块自检失败
+#define R_CHECK_HMI_DONE						(R_START * 16 + 100)//HMI通信自检完毕
+#define R_CHECK_EPROM_DONE						(R_START * 16 + 101)//存储器自检完毕
+#define R_CHECK_SI7060_DONE						(R_START * 16 + 102)//SI7060温度传感器自检完毕
+#define R_CHECK_MCP79412_DONE					(R_START * 16 + 103)//板载RTC自检完毕
+#define R_CHECK_SPI_FLASH_DONE					(R_START * 16 + 104)//外部FLASH自检完毕
+#define R_CHECK_CH376_DONE						(R_START * 16 + 105)//USB CH376自检完毕
+#define R_CHECK_NFC_PN7150B0HN_DONE				(R_START * 16 + 106)//NFC模块完毕
+#define R_CHECK_NRF24L01_DONE					(R_START * 16 + 107)//NRF24L01模块自检完毕
+#define R_CHECK_LDR_DONE						(R_START * 16 + 108)//激光驱动器自检完毕
+#define R_CHECK_TEMPER_DONE						(R_START * 16 + 109)//温度自检完毕
+#define R_CHECK_SAFETY_INTERLOCK_DONE			(R_START * 16 + 110)//安全连锁自检完毕
+#define R_CHECK_WIRE_FOOTCONTROL_DONE			(R_START * 16 + 111)//有线脚踏自检完毕
+#define R_CHECK_FIBER_SENSOR_DONE				(R_START * 16 + 112)//光纤传感器自检完毕
+#define R_CHECK_WIRELESS_FOOTCONTROL_DONE		(R_START * 16 + 113)//无线脚踏自检完毕
+#define R_CHECK_PROBATION_DONE					(R_START * 16 + 114)//试用期自检完毕
+ 
+#define R_CHECK_HMI_PASS						(R_START * 16 + 120)//HMI通信自检通过
+#define R_CHECK_EPROM_PASS						(R_START * 16 + 121)//存储器自检通过
+#define R_CHECK_SI7060_PASS						(R_START * 16 + 122)//SI7060温度传感器自检通过
+#define R_CHECK_MCP79412_PASS					(R_START * 16 + 123)//板载RTC自检通过
+#define R_CHECK_SPI_FLASH_PASS					(R_START * 16 + 124)//外部FLASH自检通过
+#define R_CHECK_CH376_PASS						(R_START * 16 + 125)//USB CH376自检自检通过
+#define R_CHECK_LDR_PASS						(R_START * 16 + 126)//激光驱动器自检通过
+#define R_CHECK_NRF24L01_PASS					(R_START * 16 + 127)//NRF24L01模块自检通过
+#define R_CHECK_NFC_PN7150B0HN_PASS				(R_START * 16 + 128)//NFC模块自检通过
+#define R_CHECK_TEMPER_PASS						(R_START * 16 + 129)//温度自检通过
+#define R_CHECK_SAFETY_INTERLOCK_PASS			(R_START * 16 + 130)//安全连锁自检通过
+#define R_CHECK_WIRE_FOOTCONTROL_PASS			(R_START * 16 + 131)//有线脚踏自检通过
+#define R_CHECK_FIBER_SENSOR_PASS				(R_START * 16 + 132)//光纤传感器自检通过
+#define R_CHECK_WIRELESS_FOOTCONTROL_PASS		(R_START * 16 + 133)//无线脚踏自检通过
+#define R_CHECK_PROBATION_PASS					(R_START * 16 + 134)//试用期自检通过
+
+#define R_CHECK_HMI_FAIL						(R_START * 16 + 140)//HMI通信自检失败
+#define R_CHECK_EPROM_FAIL						(R_START * 16 + 141)//存储器自检失败
+#define R_CHECK_SI7060_FAIL						(R_START * 16 + 142)//SI7060温度传感器自检失败
+#define R_CHECK_MCP79412_FAIL					(R_START * 16 + 143)//板载RTC自检失败
+#define R_CHECK_SPI_FLASH_FAIL					(R_START * 16 + 144)//外部FLASH自检失败
+#define R_CHECK_CH376_FAIL						(R_START * 16 + 145)//USB CH376自检自检失败
+#define R_CHECK_LDR_FAIL						(R_START * 16 + 146)//激光驱动器自检失败
+#define R_CHECK_NRF24L01_FAIL					(R_START * 16 + 147)//NRF24L01模块自检失败
+#define R_CHECK_NFC_PN7150B0HN_FAIL				(R_START * 16 + 148)//NFC模块自检失败
+#define R_CHECK_TEMPER_FAIL						(R_START * 16 + 149)//温度自检失败
+#define R_CHECK_SAFETY_INTERLOCK_FAIL			(R_START * 16 + 150)//安全连锁自检失败
+#define R_CHECK_WIRE_FOOTCONTROL_FAIL			(R_START * 16 + 151)//有线脚踏自检失败
+#define R_CHECK_FIBER_SENSOR_FAIL				(R_START * 16 + 152)//光纤传感器自检失败
+#define R_CHECK_WIRELESS_FOOTCONTROL_FAIL		(R_START * 16 + 153)//无线脚踏自检失败
+#define R_CHECK_PROBATION_FAIL					(R_START * 16 + 154)//试用期自检失败
 /*****************************************************************************/
 #define R_STANDBY_KEY_POSWIDTH_ADD_DOWN			(R_START * 16 + 149)
 #define R_STANDBY_KEY_POSWIDTH_ADD_UP			(R_START * 16 + 150)
@@ -348,17 +375,26 @@
 #define R_OPTION_KEY_CORRECTION_DOWN			(R_START * 16 + 197)
 #define R_OPTION_KEY_CORRECTION	_UP				(R_START * 16 + 198)
 /*****************************************************************************/
+/*****************************************************************************/
 #define T100MS_HMI_POWERUP_DELAY				0//HMI启动复位延时
-#define T100MS_READY_BEEM_DELAY					1//进入READY状态后蜂鸣器响延迟
-#define T100MS_CHECK_FLASH_DELAY				2//存储器自检等待延迟
-#define T100MS_CHECK_INTBUS_DELAY				3//总线自检等待延迟
-#define T100MS_CHECK_LDR_DELAY					4//激光驱动器自检等待延迟
-#define T100MS_CHECK_TEMPER_DELAY				5//温度自检等待延迟
-#define T100MS_CHECK_USBHOST_DELAY				6//USBHOST模块等待延迟
-#define T100MS_CHECK_NFC_DELAY					7//NFC读卡模块等待延迟
-#define T100MS_CHECK_NRF24L01_DELAY				8//NRF24L01脚踏模块等待延迟
-
-#define T10MS_POSWIDTH_ADD_KEYDOWN_DELAY		3	
+#define T100MS_CHECK_HMI_DELAY					1//存储器自检等待延迟
+#define T100MS_CHECK_EPROM_DELAY				2//总线自检等待延迟
+#define T100MS_CHECK_SI7060_DELAY				3//
+#define T100MS_CHECK_MCP79412_DELAY				4//
+#define T100MS_CHECK_SPI_FLASH_DELAY			5//
+#define T100MS_CHECK_USB_CH376_DELAY			6//
+#define T100MS_CHECK_LDR_DELAY					7
+#define T100MS_CHECK_NRF24L01_DELAY				8//激光驱动器自检等待延迟
+#define T100MS_CHECK_NFC_PN7150B0HN_DELAY		9//NFC读卡模块等待延迟
+#define T100MS_CHECK_TEMPERATURE_DELAY				10
+#define T100MS_CHECK_SAFETY_INTERLOCK_DELAY			11
+#define T100MS_CHECK_WIRE_FOOTCONTROL_DELAY			12
+#define T100MS_CHECK_FIBER_SENSOR_DELAY			13
+#define T100MS_CHECK_WIRELESS_FOOTCONTROL_DELAY	14
+#define T100MS_CHECK_PROBATION_DELAY			15//USBHOST模块等待延迟
+#define T100MS_READY_BEEM_DELAY					20//进入READY状态后蜂鸣器响延迟
+/*****************************************************************************/
+#define T10MS_POSWIDTH_ADD_KEYDOWN_DELAY		3
 #define T10MS_POSWIDTH_DEC_KEYDOWN_DELAY		4
 #define T10MS_NEGWIDTH_ADD_KEYDOWN_DELAY		5
 #define T10MS_NEGWIDTH_DEC_KEYDOWN_DELAY		6

@@ -83,10 +83,6 @@ void main(void){
 	initDevice();
 	sPlcInit();
 	//hwTest();
-#if CONFIG_DEBUG == 1
-	printf("sPLC->main:Debug Port->UART1\n");
-	printf("sPLC->main:sPlcInit Done\n");
-#endif
 	Cache_ISR_Entry((unsigned int)sPlcTimerIsr, INTERRUPT_TIMER0);
 #if CONFIG_SPLC_USING_LASER_TIMER == 1
 	//Cache_ISR_Entry((unsigned int)laserTimerIsr, INTERRUPT_TIMER4);
