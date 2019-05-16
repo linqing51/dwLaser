@@ -255,8 +255,10 @@
 /*****************************************************************************/
 #define SPCOIL_SI7060_INIT_FAIL				(SPCOIL_START * 16 + 47)//SI7060温度传感器初始化失败
 #define SPCOIL_MCP79412_INIT_FAIL			(SPCOIL_START * 16 + 48)//MCP794212 RTC初始化失败
-#define SPCOIL_CH376_INIT_FAIL				(SPCOIL_START * 16 + 48)//USB HOST CH376初始化失败
-#define SPCOIL_SPI_FLASH_INIT_FAIL			(SPCOIL_START * 16 + 49)//SPI FLASH初始化失败
+#define SPCOIL_CH376_INIT_FAIL				(SPCOIL_START * 16 + 49)//USB HOST CH376初始化失败
+#define SPCOIL_SPI_FLASH_INIT_FAIL			(SPCOIL_START * 16 + 50)//SPI FLASH初始化失败
+#define SPCOIL_PN7150B0HN_INIT_FAIL			(SPCOIL_START * 16 + 51)//NFC初始化失败
+#define SPCOIL_NRF24L01_INIT_FAIL			(SPCOIL_START * 16 + 52)//NFC初始化失败
 /*****************************************************************************/
 #define SPREG_CLEAR_NVRAM					(SPREG_START + 0)//清除NVRAM后重新启动
 /*****************************************************************************/

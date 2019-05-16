@@ -1,6 +1,22 @@
 #include "sPlcMcu.h"
 /*****************************************************************************/
 static uint8_t sPlcInterrupt;
+/*****************************************************************************/
+uint8_t floatSumTest(void){
+	uint32_t i;
+	float f = 0.1;
+	float sum = 0;
+	for(i=0; i<400000; i++){
+		sum += f;
+	}
+	if(sum >= 39999.9 && sum <= 40000.0){
+		return true;
+	}
+	else{
+		return false;
+	}
+}
+
 
 void initWatchDog(void){//看门狗初始化
 	WDTCN = 0x07;//47mS
