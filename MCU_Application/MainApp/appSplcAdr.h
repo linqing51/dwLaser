@@ -260,7 +260,7 @@
 #define R_CHECK_CH376_DONE						(R_START * 16 + 105)//USB CH376自检完毕
 #define R_CHECK_PN7150B0HN_DONE					(R_START * 16 + 106)//PN7150B0HN模块完毕
 #define R_CHECK_NRF24L01_DONE					(R_START * 16 + 107)//NRF24L01模块自检完毕
-#define R_CHECK_LDR_DONE						(R_START * 16 + 108)//激光驱动器自检完毕
+#define R_CHECK_LASER_DRIVER_DONE				(R_START * 16 + 108)//激光驱动器自检完毕
 #define R_CHECK_TEMPERATURE_DONE				(R_START * 16 + 109)//温度自检完毕
 #define R_CHECK_SAFETY_INTERLOCK_DONE			(R_START * 16 + 110)//安全连锁自检完毕
 #define R_CHECK_WIRE_FOOTCONTROL_DONE			(R_START * 16 + 111)//有线脚踏自检完毕
@@ -276,7 +276,7 @@
 #define R_CHECK_CH376_PASS						(R_START * 16 + 125)//USB CH376自检自检通过
 #define R_CHECK_PN7150B0HN_PASS					(R_START * 16 + 126)//NFC模块自检通过
 #define R_CHECK_NRF24L01_PASS					(R_START * 16 + 127)//NRF24L01模块自检通过
-#define R_CHECK_LDR_PASS						(R_START * 16 + 128)//激光驱动器自检通过
+#define R_CHECK_LASER_DRIVER_PASS				(R_START * 16 + 128)//激光驱动器自检通过
 #define R_CHECK_TEMPERATURE_PASS				(R_START * 16 + 129)//温度自检通过
 #define R_CHECK_SAFETY_INTERLOCK_PASS			(R_START * 16 + 130)//安全连锁自检通过
 #define R_CHECK_WIRE_FOOTCONTROL_PASS			(R_START * 16 + 131)//有线脚踏自检通过
@@ -292,7 +292,7 @@
 #define R_CHECK_CH376_FAIL						(R_START * 16 + 145)//USB CH376自检自检失败
 #define R_CHECK_PN7150B0HN_FAIL					(R_START * 16 + 146)//NFC模块自检失败
 #define R_CHECK_NRF24L01_FAIL					(R_START * 16 + 147)//NRF24L01模块自检失败
-#define R_CHECK_LDR_FAIL						(R_START * 16 + 148)//激光驱动器自检失败
+#define R_CHECK_LASER_DRIVER_FAIL				(R_START * 16 + 148)//激光驱动器自检失败
 #define R_CHECK_TEMPERATURE_FAIL				(R_START * 16 + 149)//温度自检失败
 #define R_CHECK_SAFETY_INTERLOCK_FAIL			(R_START * 16 + 150)//安全连锁自检失败
 #define R_CHECK_WIRE_FOOTCONTROL_FAIL			(R_START * 16 + 151)//有线脚踏自检失败
@@ -383,16 +383,16 @@
 #define T100MS_CHECK_MCP79412_DELAY				4//
 #define T100MS_CHECK_SPI_FLASH_DELAY			5//
 #define T100MS_CHECK_CH376_DELAY				6//
-#define T100MS_CHECK_PN7150B0HN_DELAY		7//NFC读卡模块等待延迟
+#define T100MS_CHECK_PN7150B0HN_DELAY			7//NFC读卡模块等待延迟
 #define T100MS_CHECK_NRF24L01_DELAY				8//激光驱动器自检等待延迟
 #define T100MS_CHECK_TEMPERATURE_DELAY			9
 #define T100MS_CHECK_LASER_DRIVER_DELAY			10
-
 #define T100MS_CHECK_SAFETY_INTERLOCK_DELAY		11
 #define T100MS_CHECK_WIRE_FOOTCONTROL_DELAY		12
 #define T100MS_CHECK_FIBER_SENSOR_DELAY			13
 #define T100MS_CHECK_WIRELESS_FOOTCONTROL_DELAY	14
 #define T100MS_CHECK_PROBATION_DELAY			15//USBHOST模块等待延迟
+#define T100MS_ENTER_PASSCODE_DELAY				16
 #define T100MS_READY_BEEM_DELAY					20//进入READY状态后蜂鸣器响延迟
 /*****************************************************************************/
 #define T10MS_POSWIDTH_ADD_KEYDOWN_DELAY		3

@@ -285,6 +285,8 @@ void sPlcInit(void){//软逻辑初始化
 	delayMs(100);
 	setLedError(false);
 	setLedEprom(false);
+	si7060Init();
+	si7060ReadTemperature();
 	initSplcTimer();//初始化硬件计时器模块
 	SET(SPCOIL_ON);
 #if CONFIG_SPLC_USING_IO_INPUT == 1
