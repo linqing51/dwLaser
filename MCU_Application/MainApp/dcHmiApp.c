@@ -1,15 +1,5 @@
 #include "dcHmiApp.h"
 /*****************************************************************************/
-#define GDDC_PAGE_POWERUP							0
-#define GDDC_PAGE_PASSCODE							1
-#define GDDC_PAGE_NEW_PASSCODE						2
-#define GDDC_PAGE_STANDBY							3
-#define GDDC_PAGE_READY								4
-#define GDDC_PAGE_OPTION							5//选项页面
-#define GDDC_PAGE_INFO_VIEW							6//信息页面
-#define GDDC_PAGE_SCHEME_EDIT						7//方案页面
-#define GDDC_PAGE_POWER_CORRECTION					10//功率校正
-/*****************************************************************************/
 #define FSMSTEP_POWERUP								0//上电
 //HMI初始操作
 #define FSMSTEP_RESTORE_HMI							100//HMI 恢复储存数据
@@ -47,9 +37,9 @@
 //选项状态
 #define FSMSTEP_OPTION								600//选项菜单
 //
-#define FSMSTEP_INFO_VIEW							600
+#define FSMSTEP_INFORMATION							700
 //
-#define FSMSTEP_SCHEME_EDIT							700//方案菜单
+#define FSMSTEP_SCHEME								800//方案菜单
 //
 #define FSMSTEP_CORRECTION							10000//功率校正
 //
@@ -348,6 +338,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			SetTextValue(GDDC_PAGE_POWERUP, GDDC_PAGE_POWERUP_TEXTDISPLAY_CHECK_INFO, "");
 			SetProgressValue(GDDC_PAGE_POWERUP, GDDC_PAGE_POWERUP_PROGRESS_CHECK_INFO, 0);			
 			SetScreen(NVRAM0[EM_DC_PAGE]);	
+			SetControlBackColor(GDDC_PAGE_POWERUP, 3, 0x8000);
 		}
 		else{
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_RESTORE_HMI;	
@@ -875,6 +866,12 @@ void dcHmiLoop(void){//HMI轮训程序
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_READY_LOAD_PARA;
 			RES(R_STANDBY_KEY_STANDBY_DOWN);
 		}
+		if(LD(R_STANDBY_KEY_OPTION_DOWN)){//点击OPTION
+			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_OPTION;
+			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_OPTION;
+			SetScreen(NVRAM0[EM_DC_PAGE]);
+			RES(R_STANDBY_KEY_OPTION_DOWN);
+		}
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_LOAD_PARA){//将发射参数载入运行寄存器并打开蜂鸣器
@@ -962,6 +959,33 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_OPTION){//选项界面
+		if(LD(R_OPTION_KEY_ENTER_INFORMATION_DOWN)){
+			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_INFORMATION;
+			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_INFORMATION;
+			SetScreen(NVRAM0[EM_DC_PAGE]);
+			RES(R_OPTION_KEY_ENTER_INFORMATION_DOWN);
+		}
+		if(LD(R_OPTION_KEY_ENTER_SCHEME_DOWN)){
+			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_SCHEME;
+			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_SCHEME;
+			SetScreen(NVRAM0[EM_DC_PAGE]);
+			RES(R_OPTION_KEY_ENTER_SCHEME_DOWN);
+		}
+		if(LD(R_OPTION_KEY_ENTER_OK_DOWN)){
+			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
+			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY;
+			SetScreen(NVRAM0[EM_DC_PAGE]);
+			RES(R_OPTION_KEY_ENTER_OK_DOWN);
+		}
+		return;
+	}
+	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_INFORMATION){
+		if(LD(R_INFORMATION_KEY_OK_DOWN)){
+			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_OPTION;
+			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_OPTION;
+			SetScreen(NVRAM0[EM_DC_PAGE]);
+			RES(R_INFORMATION_KEY_OK_DOWN);	
+		}
 		return;
 	}
 }
@@ -1921,6 +1945,15 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}	
+				case GDDC_PAGE_STANDBY_KEY_ENTER_OPTION:{
+					if(state == 0x01){
+						SET(R_STANDBY_KEY_OPTION_DOWN);
+					}
+					else if(state == 0x00){
+						SET(R_STANDBY_KEY_OPTION_UP);
+					}
+					break;
+				}
 				default:break;
 			}
 			break;
@@ -2041,30 +2074,181 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_OPTION_KEY_ENTER_SCHEEM:{//方案设定
 					if(state == 0x01){
-						NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_SCHEME_EDIT;
-						NVRAM0[EM_DC_PAGE] = GDDC_PAGE_SCHEME_EDIT;
-						SetScreen(NVRAM0[EM_DC_PAGE]);	
+						SET(R_OPTION_KEY_ENTER_SCHEME_DOWN);
+					}
+					else if(state == 0x00){
+						SET(R_OPTION_KEY_ENTER_SCHEME_UP);
 					}
 					break;
 				}
-				case GDDC_PAGE_OPTION_KEY_ENTER_STANDBY:{//待机
+				case GDDC_PAGE_OPTION_KEY_ENTER_INFORMATION:{//信息
 					if(state == 0x01){
-						NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
-						NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY;
-						SetScreen(NVRAM0[EM_DC_PAGE]);
+						SET(R_OPTION_KEY_ENTER_INFORMATION_DOWN);
 					}
-					break;	
-				}
-				case GDDC_PAGE_OPTION_KEY_ENTER_INFO:{//信息
-					if(state == 0x01){
-						NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_INFO_VIEW;
-						NVRAM0[EM_DC_PAGE] = GDDC_PAGE_INFO_VIEW;
-						SetScreen(NVRAM0[EM_DC_PAGE]);
+					else if(state == 0x00){
+						SET(R_OPTION_KEY_ENTER_INFORMATION_UP);
 					}
 					break;							
 				}
 				case GDDC_PAGE_OPTION_KEY_ENTER_CORRECTION:{//功率校正
+					if(state == 0x01){
+						SET(R_OPTION_KEY_ENTER_CORRECTION_DOWN);
+					}
+					else if(state == 0x00){
+						RES(R_OPTION_KEY_ENTER_CORRECTION_UP);
+					}
 					break;
+				}
+				case GDDC_PAGE_OPTION_KEY_ENTER_OK:{//OK
+					if(state == 0x01){
+						SET(R_OPTION_KEY_ENTER_OK_DOWN);
+					}
+					else if(state == 0x00){
+						RES(R_OPTION_KEY_ENTER_OK_UP);
+					}
+					break;
+				}
+				default:break;
+			}
+			break;
+		}
+		case GDDC_PAGE_INFORMATION:{
+			switch(control_id){
+				case GDDC_PAGE_INFORMATION_KEY_ENTER_OK:{
+					if(state == 0x1){
+						SET(R_INFORMATION_KEY_OK_DOWN);
+					}
+					else if(state == 0x0){
+						SET(R_INFORMATION_KEY_OK_UP);
+					}
+					break;
+				}
+				default:break;
+			}
+			break;
+		}
+		case GDDC_PAGE_SCHEME:{
+			switch(control_id){
+				case GDDC_PAGE_SCHEME_KEY_RENAME:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SAVE_USB:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_LOAD_USB:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_ENTER_STANDBY:{
+					
+					break;
+				}	
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_0:{
+					break;
+				}	
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_1:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_2:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_3:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_4:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_5:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_6:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_7:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_8:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_9:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_10:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_11:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_12:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_13:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_14:{	
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_15:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_1:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_2:{
+					break;
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_3:{	
+					break;
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_4:{	
+					break;
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_5:{	
+					break;
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_6:{		
+					break;
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_7:{		
+					break;
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_8:{
+					break;					
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_9:{	
+					break;					
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_10:{		
+					break;		
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_11:{		
+					break;		
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_12:{		
+					break;		
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_13:{		
+					break;		
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_14:{	
+					break;
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_15:{	
+					break;		
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_POSWIDTH:{		
+					break;		
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_NEGWIDTH:{		
+					break;		
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPLAY_GROUP:{		
+					break;		
+				}
+				case GDDC_PAGE_SCHEME_TEXTDISPALY_SPACE:{		
+					break;		
 				}
 				default:break;
 			}
@@ -2154,7 +2338,6 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 				case GDDC_PAGE_OPTION_PROGRESS_AIM_RED_BRG:{
 					if(value >= CONFIG_MIN_AIM_RED_BRG && value <= CONFIG_MAX_AIM_RED_BRG){
 						NVRAM0[DM_AIM_RED_BRG] = (int16_t)value;
-						
 					}
 					else{
 						NVRAM0[DM_AIM_RED_BRG] = CONFIG_MAX_AIM_RED_BRG;

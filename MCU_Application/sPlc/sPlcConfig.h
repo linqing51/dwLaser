@@ -145,6 +145,50 @@
 #define CONFIG_MAX_LCD_BRG					100//屏幕亮度最大值
 #define CONFIG_MIN_LCD_BRG					0//屏幕亮度最小值
 /*****************************************************************************/
+#define POWER_REAL_CH0_0P							0
+#define POWER_REAL_CH0_5P							50
+#define POWER_REAL_CH0_10P							100
+#define POWER_REAL_CH0_15P							200
+#define POWER_REAL_CH0_20P							300
+#define POWER_REAL_CH0_25P							400
+#define POWER_REAL_CH0_30P							500
+#define POWER_REAL_CH0_35P							600
+#define POWER_REAL_CH0_40P							700
+#define POWER_REAL_CH0_45P							900
+#define POWER_REAL_CH0_50P							1000
+#define POWER_REAL_CH0_55P							1200
+#define POWER_REAL_CH0_60P							1300
+#define POWER_REAL_CH0_65P							1400
+#define POWER_REAL_CH0_70P							1500
+#define POWER_REAL_CH0_75P							1600
+#define POWER_REAL_CH0_80P							1700
+#define POWER_REAL_CH0_85P							1800
+#define POWER_REAL_CH0_90P							1900
+#define POWER_REAL_CH0_95P							2000
+#define POWER_REAL_CH0_100P							2100
+/*****************************************************************************/
+#define POWER_REAL_CH1_0P							0
+#define POWER_REAL_CH1_5P							50
+#define POWER_REAL_CH1_10P							100
+#define POWER_REAL_CH1_15P							200
+#define POWER_REAL_CH1_20P							300
+#define POWER_REAL_CH1_25P							400
+#define POWER_REAL_CH1_30P							500
+#define POWER_REAL_CH1_35P							600
+#define POWER_REAL_CH1_40P							700
+#define POWER_REAL_CH1_45P							900
+#define POWER_REAL_CH1_50P							1000
+#define POWER_REAL_CH1_55P							1200
+#define POWER_REAL_CH1_60P							1300
+#define POWER_REAL_CH1_65P							1400
+#define POWER_REAL_CH1_70P							1500
+#define POWER_REAL_CH1_75P							1600
+#define POWER_REAL_CH1_80P							1700
+#define POWER_REAL_CH1_85P							1800
+#define POWER_REAL_CH1_90P							1900
+#define POWER_REAL_CH1_95P							2000
+#define POWER_REAL_CH1_100P							2100
+/*****************************************************************************/
 #define CONFIG_SPLC_USING_NFC				0
 /*****************************************************************************/
 //线圈 保持 16*8=256 
