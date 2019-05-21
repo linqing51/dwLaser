@@ -1,8 +1,17 @@
 #include "usbSpi.h"
 /*****************************************************************************/
-#if CONFIG_USING_USB == 1
+#if CONFIG_USING_CH376 == 1
+static void usbReset(uint8_t rst){
+	if(rst){
+		P7 |= 0x02;
+	}
+	else{
+		P7 &= 0xFD;
+	}
+}
+
 void usbSpiInit(void){//USB CH376初始化
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE	    
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE	    
 	//SPI总线初始化
 	SFRPAGE = SPI0_PAGE;
 	SPI0CKR = (CONFIG_SYSCLK / (2 * CONFIG_SPICLK));//设置SPI时钟频率
@@ -23,19 +32,20 @@ static void usbSpiNssSet(uint8_t nss){//SPI NSS设置
 	}
 }
 static uint8_t usbSpiTransmit(uint8_t txd){//CH376 SPI 收发
-	xdata uint8_t rxd;
-	xdata uint8_t SFRPAGE_SAVE = SFRPAGE;
-	xdata uint8_t counter;
+	uint8_t rxd;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;
+	//uint8_t counter;
 	SFRPAGE = SPI0_PAGE;
 	SPI0DAT = txd;         
-	while(!SPIF){
-		if(counter > 250){
-			break;
-		}
-		else{
-			counter ++;
-		}
-	}		
+	while(!SPIF);
+//		{
+//		if(counter > 250){
+//			break;
+//		}
+//		else{
+//			counter ++;
+//		}
+//	}		
 	SPIF = 0; 
 	rxd = SPI0DAT;
 	SFRPAGE = SFRPAGE_SAVE;
@@ -63,7 +73,12 @@ uint8_t	usbSpiIntQuery( void ){//查询CH376中断
 	return((P1 >> 7) & 0x01);//连接了CH376的中断引脚则直接查询中断引脚 */
 }
 uint8_t	usbHostInit(void){//初始化CH376
-	xdata uint8_t	res;
+	uint8_t	res;
+	usbSpiNssSet(true);
+	usbReset(true);
+	delayMs(10);
+	usbReset(false);//复位
+	delayMs(100);
 	xWriteCH376Cmd(CMD11_CHECK_EXIST);//测试单片机与CH376之间的通讯接口
 	xWriteCH376Data(0x65);
 	res = xReadCH376Data();

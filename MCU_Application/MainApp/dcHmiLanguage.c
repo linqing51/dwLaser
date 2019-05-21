@@ -120,3 +120,19 @@ code char LANG_CHECK_DISPLAY_PROBATION_FAIL[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY
 	"SELF-CHECK:Probation Fail",
 	"自检:试用期失败"
 };
+code char LANG_TEXT_BEAM[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] = {
+	"Beam",
+	"引导光"
+};
+code char LANG_TEXT_VOLUME[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] = {
+	"Volume",
+	"音量"
+};
+code char LANG_TEXT_LCD_BRIGHTNESS[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] = {
+	"Brightness",
+	"亮度"
+};
+code char LANG_TEXT_LANGUAGE[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] = {
+	"Language",
+	"语言"
+};

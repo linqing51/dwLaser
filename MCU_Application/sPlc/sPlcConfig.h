@@ -97,7 +97,7 @@
 /*****************************************************************************/
 #define CONFIG_USING_SI7060					1
 #define CONFIG_USING_MCP79412				1
-#define CONFIG_USING_CH376					0
+#define CONFIG_USING_CH376					1
 #define CONFIG_USING_ONCHIPFLASH			0
 /*****************************************************************************/
 #define CONFIG_FIRMWARE_UPDATE_PAGE_SIZE	128//FLASHµ¥´Î¶ÁÐ´ÈÝÁ¿

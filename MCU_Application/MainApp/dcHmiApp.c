@@ -53,6 +53,9 @@ uint16_t hmiCmdSize;//已缓冲的指令数
 void UpdateUI(void);
 /*****************************************************************************/
 #if CONFIG_USING_DCHMI_APP == 1
+static void updateLanguage(uint16_t lang){//更新语言
+	SetLanguage(NVRAM0[DM_LANGUAGE], 1);
+}
 static void unselectSchemeNum(sel){//反选方案条
 	switch(sel){
 		case 0:{
@@ -263,13 +266,28 @@ static void seletcSchemeNum(uint16_t sel){
 	
 }
 
-void updateSchemeDisplay(void){//更新方案显示
-	SetTextValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));
+static void updateSchemeEditDisplay(void){
+	SetTextValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_FULLNAME, (char*)(&NVRAM0[(DM_LASER_SCHEME_NAME + (NVRAM0[EM_SCHEME_NUM_TMP] * 25))]));
+	SetTextFloat(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_POWER_CH0, ((fp32_t)(NVRAM0[(DM_LASER_POWER_CH0 + (NVRAM0[EM_SCHEME_NUM_TMP] * 25))]) / 10), 1 , 1);
+	SetTextFloat(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_POWER_CH1, ((fp32_t)(NVRAM0[(DM_LASER_POWER_CH1 + (NVRAM0[EM_SCHEME_NUM_TMP] * 25))]) / 10), 1 , 1);
+	SetTextInt32(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_POSWIDTH ,NVRAM0[(DM_LASER_POSWIDTH + (NVRAM0[EM_SCHEME_NUM_TMP] * 25))], 1, 0);
+	SetTextInt32(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_NEGWIDTH ,NVRAM0[(DM_LASER_NEGWIDTH + (NVRAM0[EM_SCHEME_NUM_TMP] * 25))], 1, 0);
+	SetTextInt32(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_GROUP ,NVRAM0[(DM_LASER_GROUP + (NVRAM0[EM_SCHEME_NUM_TMP] * 25))], 1, 0);
+	SetTextInt32(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPALY_SPACE ,NVRAM0[(DM_LASER_SPACE + (NVRAM0[EM_SCHEME_NUM_TMP] * 25))], 1, 0);
+}
+static void updateReadyDisplay(void){
 	SetTextValue(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));
-	SetProgressValue(GDDC_PAGE_READY, GDDC_PAGE_READY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
-	SetProgressValue(GDDC_PAGE_READY, GDDC_PAGE_READY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
 	SetTextFloat(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_POWER_CH0, ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10), 1 , 1);
 	SetTextFloat(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_POWER_CH1, ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10), 1 , 1);
+	SetProgressValue(GDDC_PAGE_READY, GDDC_PAGE_READY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
+	SetProgressValue(GDDC_PAGE_READY, GDDC_PAGE_READY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
+}
+static void updateStandbyDisplay(void){//更新方案显示
+	SetTextFloat(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10), 1 , 1);
+	SetTextFloat(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10), 1 , 1);
+	SetProgressValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
+	SetProgressValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
+	SetTextValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));
 	SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_POSWIDTH ,NVRAM0[EM_LASER_POSWIDTH], 1, 0);
 	SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_NEGWIDTH ,NVRAM0[EM_LASER_NEGWIDTH], 1, 0);
 	SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_GROUP ,NVRAM0[EM_LASER_GROUP], 1, 0);
@@ -354,6 +372,8 @@ void updateSchemeDisplay(void){//更新方案显示
 	}
 }
 
+static void updateOptionDisplay(void){//更新选项显示
+}
 void dcHmiLoopInit(void){//初始化模块
 	NVRAM0[EM_HMI_OPERA_STEP] = 0;
 }
@@ -1075,11 +1095,15 @@ void dcHmiLoop(void){//HMI轮训程序
 			NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_VOLUME];
 			SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_READY_LOAD_PARA;
+			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_READY;
+			updateReadyDisplay();
+			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_STANDBY_KEY_ENTER_READY_DOWN);
 		}
 		if(LD(R_STANDBY_KEY_OPTION_DOWN)){//点击OPTION
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_OPTION;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_OPTION;
+			updateOptionDisplay();
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_STANDBY_KEY_OPTION_DOWN);
 		}
@@ -1110,19 +1134,8 @@ void dcHmiLoop(void){//HMI轮训程序
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_LOAD_DONE){//参数载入完毕并停止蜂鸣器
 		RES(SPCOIL_BEEM_ENABLE);//关闭蜂鸣器
 		NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
-		NVRAM0[EM_DC_PAGE] = GDDC_PAGE_READY;
 		CLR(GDDC_PAGE_READY_TEXTDISPLAY_TIME);//
 		CLR(GDDC_PAGE_READY_TEXTDISPLAY_ENERGY);
-		SetProgressValue(GDDC_PAGE_READY, GDDC_PAGE_READY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
-		SetProgressValue(GDDC_PAGE_READY, GDDC_PAGE_READY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));	
-		SetTextFloat(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_POWER_CH0, ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10), 1 , 1);
-		SetTextFloat(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_POWER_CH1, ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10), 1 , 1);
-		SetTextInt32(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_POSWIDTH ,NVRAM0[EM_LASER_POSWIDTH], 1, 0);
-		SetTextInt32(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_NEGWIDTH ,NVRAM0[EM_LASER_NEGWIDTH], 1, 0);
-		SetTextInt32(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_GROUP ,NVRAM0[EM_LASER_GROUP], 1, 0);
-		SetTextInt32(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_SPACE ,NVRAM0[EM_LASER_SPACE], 1, 0);
-		SetTextValue(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_WARN , "All OK!");	
-		SetScreen(NVRAM0[EM_DC_PAGE]);
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_WAIT_TRIGGER){//等待触发激光
@@ -1133,6 +1146,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			EDLAR();//停止发射			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY;//切换待机页面
+			updateStandbyDisplay();
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_READY_KEY_READY_DOWN);
 		}
@@ -1179,23 +1193,9 @@ void dcHmiLoop(void){//HMI轮训程序
 		if(LD(R_OPTION_KEY_ENTER_SCHEME_DOWN)){
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_SCHEME;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_SCHEME;
-			unselectSchemeNum(0);
-			unselectSchemeNum(1);
-			unselectSchemeNum(2);
-			unselectSchemeNum(3);
-			unselectSchemeNum(4);
-			unselectSchemeNum(5);
-			unselectSchemeNum(6);
-			unselectSchemeNum(7);
-			unselectSchemeNum(8);
-			unselectSchemeNum(9);
-			unselectSchemeNum(10);
-			unselectSchemeNum(11);
-			unselectSchemeNum(12);
-			unselectSchemeNum(13);
-			unselectSchemeNum(14);
-			unselectSchemeNum(15);
+
 			seletcSchemeNum(NVRAM0[DM_SCHEME_NUM]);//
+			updateSchemeEditDisplay();
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_OPTION_KEY_ENTER_SCHEME_DOWN);
 		}
@@ -1223,7 +1223,8 @@ void dcHmiLoop(void){//HMI轮训程序
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			NVRAM0[DM_SCHEME_NUM] = NVRAM0[EM_SCHEME_NUM_TMP];
 			loadScheme();
-			updateSchemeDisplay();
+			updateStandbyDisplay();
+			updateReadyDisplay();
 			RES(R_SCHEME_KEY_ENTER_STANDBY_DOWN);
 		}
 		return;
@@ -1576,27 +1577,16 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if((NVRAM0[EM_DC_NEW_PASSCODE0] == NVRAM0[DM_DC_OLD_PASSCODE0]) && (NVRAM0[EM_DC_NEW_PASSCODE1] == NVRAM0[DM_DC_OLD_PASSCODE1])){
 						NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY;
 						NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
-						SetTextValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_WARN, "All Done!");
-						SetProgressValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
-						SetProgressValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
-						SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_TIME, NVRAM0[EM_DC_DISPLAY_RELEASE_TIME], 1, 0);
-						SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_ENERGY, NVRAM0[EM_DC_DISPLAY_RELEASE_ENERGY], 1, 0);
-						SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_POSWIDTH ,NVRAM0[EM_LASER_POSWIDTH], 1, 0);
-						SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_NEGWIDTH ,NVRAM0[EM_LASER_NEGWIDTH], 1, 0);
-						SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_GROUP ,NVRAM0[EM_LASER_GROUP], 1, 0);
-						SetTextInt32(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_SPACE ,NVRAM0[EM_LASER_SPACE], 1, 0);
-						SetTextFloat(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, ((fp32_t)NVRAM0[EM_LASER_POWER_CH0] / 10.0F), 1 , 1);
-						SetTextFloat(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, ((fp32_t)NVRAM0[EM_LASER_POWER_CH1] / 10.0F), 1 , 1);
-
+						updateStandbyDisplay();
 						SetButtonValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_KEY_STANDBY, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_KEY_RESET, 0x00);
-			
 						SetScreen(NVRAM0[EM_DC_PAGE]);
 					}		
 					else if((NVRAM0[EM_DC_NEW_PASSCODE0] == NVRAM0[EM_DC_DEFAULT_PASSCODE0]) && (NVRAM0[EM_DC_NEW_PASSCODE1] == NVRAM0[EM_DC_DEFAULT_PASSCODE1])){
 						NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY;
 						NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
+						updateStandbyDisplay();
 						SetScreen(NVRAM0[EM_DC_PAGE]);				
 					}
 					CLR(EM_DC_NEW_PASSCODE0);//清空已输入密码
@@ -2052,7 +2042,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
 							FSAV();//立即更新NVRAM
-							updateSchemeDisplay();
+							updateStandbyDisplay();
+							updateReadyDisplay();
 						}
 					}
 					break;
@@ -2063,7 +2054,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 							ADDS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
 							FSAV();//立即更新NVRAM
-							updateSchemeDisplay();
+							updateStandbyDisplay();
+							updateReadyDisplay();
 						}
 					}
 					break;
@@ -2071,7 +2063,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_DEFAULT:{//还原默认配置
 					if(state == 0x01){
 						defaultScheme();
-						updateSchemeDisplay();
+						updateStandbyDisplay();
+						updateReadyDisplay();
 					}
 					break;
 				}
@@ -2348,6 +2341,24 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+				case GDDC_PAGE_OPTION_KEY_LANGUAGE_EN:{
+					if(state == 0x01){
+						NVRAM0[DM_LANGUAGE] = DEF_LANG_EN;
+						updateLanguage();//更新语言
+					}
+					else if(state == 0x0){
+					}
+					break;	
+				}
+				case GDDC_PAGE_OPTION_KEY_LANGUAGE_CN:{
+					if(state == 0x01){
+						NVRAM0[DM_LANGUAGE] = DEF_LANG_CN;
+						updateLanguage();
+					}
+					else if(state == 0x0){
+					}
+					break;
+				}
 				default:break;
 			}
 			break;
@@ -2410,6 +2421,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(0);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}
@@ -2420,6 +2432,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(1);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}
@@ -2430,6 +2443,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(2);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}					
@@ -2440,6 +2454,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(3);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}					
@@ -2450,6 +2465,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(4);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}					
@@ -2460,6 +2476,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(5);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}					
@@ -2470,6 +2487,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(6);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}					
@@ -2480,6 +2498,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(7);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}
@@ -2490,6 +2509,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(8);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}					
@@ -2500,6 +2520,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(9);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}					
@@ -2510,6 +2531,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(10);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}					
@@ -2520,6 +2542,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(11);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}					
@@ -2530,6 +2553,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(12);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}					
@@ -2540,6 +2564,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(13);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}					
@@ -2550,6 +2575,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(14);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}					
@@ -2560,6 +2586,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(15);
+						updateSchemeEditDisplay();
 					}
 					else if(state == 0x00){
 					}					

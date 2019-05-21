@@ -90,8 +90,8 @@
 #define DM_LASER_SCHEME_NAME					(DM_START +  0)//方案名称				72
 #define DM_LASER_SELECT							(DM_START +  17)//通道选择				89			
 #define DM_LASER_PULSE_MODE						(DM_START +  18)//脉冲模式				90
-#define DM_LASER_POWER_0						(DM_START +  19)//通道0功率				91
-#define DM_LASER_POWER_1						(DM_START +  20)//通道1功率				92
+#define DM_LASER_POWER_CH0						(DM_START +  19)//通道0功率				91
+#define DM_LASER_POWER_CH1						(DM_START +  20)//通道1功率				92
 #define DM_LASER_POSWIDTH						(DM_START +  21)//正脉宽				93
 #define DM_LASER_NEGWIDTH						(DM_START +  22)//负脉宽				94
 #define DM_LASER_GROUP							(DM_START +  23)//脉冲数				95
