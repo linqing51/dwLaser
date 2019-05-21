@@ -53,8 +53,219 @@ uint16_t hmiCmdSize;//已缓冲的指令数
 void UpdateUI(void);
 /*****************************************************************************/
 #if CONFIG_USING_DCHMI_APP == 1
+static void unselectSchemeNum(sel){//反选方案条
+	switch(sel){
+		case 0:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_0, 0x0);
+			break;
+		}
+		case 1:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_1 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_1, 0x0);
+			break;
+		}
+		case 2:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_2 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_2, 0x0);
+			break;
+		}
+		case 3:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_3 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_3, 0x0);
+			break;
+		}
+		case 4:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_4 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_4, 0x0);
+			break;
+		}
+		case 5:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_5 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_5, 0x0);
+			break;
+		}
+		case 6:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_6 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_6, 0x0);
+			break;
+		}
+		case 7:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_7 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_7, 0x0);
+			break;
+		}
+		case 8:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_8 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_8, 0x0);
+			break;
+		}
+		case 9:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_9 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_9, 0x0);
+			break;
+		}
+		case 10:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_10 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_10, 0x0);
+			break;
+		}
+		case 11:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_11 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_11, 0x0);
+			break;
+		}
+		case 12:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_12 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_12, 0x0);
+			break;
+		}
+		case 13:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_13 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_13, 0x0);
+			break;
+		}
+		case 14:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_14 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_14, 0x0);
+			break;
+		}
+		case 15:{
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_15 ,HMI_WHITE);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_15, 0x0);
+			break;
+		}
+		default:break;
+	}
+}
+static void unselectSchemeAll(void){
+	uint8_t i;
+	for(i = 0; i< 15;i++){
+		unselectSchemeNum(i);
+	}
+}
+static void seletcSchemeNum(uint16_t sel){
+	switch(sel){
+		case 0:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_0, 0x1);
+			NVRAM0[EM_SCHEME_NUM_TMP] = 0;
+			break;
+		}
+		case 1:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_1 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_1, 0x1);		
+			NVRAM0[EM_SCHEME_NUM_TMP] = 1;
+			break;
+		}
+		case 2:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_2 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_2, 0x1);
+			NVRAM0[EM_SCHEME_NUM_TMP] = 2;
+			break;
+		}
+		case 3:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_3 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_3, 0x1);
+			NVRAM0[EM_SCHEME_NUM_TMP] = 3;
+			break;
+		}
+		case 4:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_4 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_4, 0x1);
+			NVRAM0[EM_SCHEME_NUM_TMP] = 4;
+			break;
+		}
+		case 5:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_5 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_5, 0x1);
+			NVRAM0[EM_SCHEME_NUM_TMP] = 5;
+			break;
+		}
+		case 6:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_6 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_6, 0x1);
+			NVRAM0[EM_SCHEME_NUM_TMP] = 6;
+			break;
+		}
+		case 7:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_7 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_7, 0x1);
+			NVRAM0[EM_SCHEME_NUM_TMP] = 7;
+			break;
+		}
+		case 8:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_8 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_8, 0x1);
+			NVRAM0[EM_SCHEME_NUM_TMP] = 8;
+			break;
+		}
+		case 9:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_9 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_9, 0x1);	
+			NVRAM0[EM_SCHEME_NUM_TMP] = 9;
+			break;
+		}
+		case 10:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_10 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_10, 0x1);
+			NVRAM0[EM_SCHEME_NUM_TMP] = 10;
+			break;
+		}
+		case 11:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_11 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_11, 0x1);	
+			NVRAM0[EM_SCHEME_NUM_TMP] = 11;
+			break;
+		}
+		case 12:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_12 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_12, 0x1);	
+			NVRAM0[EM_SCHEME_NUM_TMP] = 12;
+			break;
+		}
+		case 13:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_13 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_13, 0x1);
+			NVRAM0[EM_SCHEME_NUM_TMP] = 13;
+			break;
+		}
+		case 14:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_14 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_14, 0x1);
+			NVRAM0[EM_SCHEME_NUM_TMP] = 14;
+			break;
+		}
+		case 15:{
+			unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+			SetControlBackColor(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_15 ,HMI_CYAN);
+			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_15, 0x1);
+			NVRAM0[EM_SCHEME_NUM_TMP] = 15;
+			break;
+		}
+		default:break;
+	}
+	
+}
+
 void updateSchemeDisplay(void){//更新方案显示
 	SetTextValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));
+	SetTextValue(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));
 	SetProgressValue(GDDC_PAGE_READY, GDDC_PAGE_READY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 	SetProgressValue(GDDC_PAGE_READY, GDDC_PAGE_READY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
 	SetTextFloat(GDDC_PAGE_READY, GDDC_PAGE_READY_TEXTDISPLAY_POWER_CH0, ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10), 1 , 1);
@@ -261,8 +472,8 @@ void dcHmiLoop(void){//HMI轮训程序
 		RES(R_STANDBY_KEY_POWER_CH1_ADD_UP);
 		RES(R_STANDBY_KEY_POWER_CH1_DEC_DOWN);
 		RES(R_STANDBY_KEY_POWER_CH1_DEC_UP);
-		RES(R_STANDBY_KEY_STANDBY_DOWN);
-		RES(R_STANDBY_KEY_STANDBY_UP);
+		RES(R_STANDBY_KEY_ENTER_READY_DOWN);
+		RES(R_STANDBY_KEY_ENTER_READY_UP);
 		RES(R_STANDBY_KEY_ENERGY_RESET_DOWN);
 		RES(R_STANDBY_KEY_ENERGY_RESET_UP);
 		RES(R_STANDBY_KEY_SELECT_CH0_DOWN);
@@ -859,12 +1070,12 @@ void dcHmiLoop(void){//HMI轮训程序
 			T10MS(T10MS_SPACE_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
 			RES(R_STANDBY_KEY_SPACE_DEC_UP);
 		}
-		if(LD(R_STANDBY_KEY_STANDBY_DOWN)){//点击READY			
+		if(LD(R_STANDBY_KEY_ENTER_READY_DOWN)){//点击READY			
 			NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_0;
 			NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_VOLUME];
 			SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_READY_LOAD_PARA;
-			RES(R_STANDBY_KEY_STANDBY_DOWN);
+			RES(R_STANDBY_KEY_ENTER_READY_DOWN);
 		}
 		if(LD(R_STANDBY_KEY_OPTION_DOWN)){//点击OPTION
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_OPTION;
@@ -942,8 +1153,8 @@ void dcHmiLoop(void){//HMI轮训程序
 			EDLAR();
 #endif
 			RES(SPCOIL_BEEM_ENABLE);//打开蜂鸣器	
-			SET(R_STANDBY_KEY_STANDBY_DOWN);
-			RES(R_STANDBY_KEY_STANDBY_UP);							
+			SET(R_STANDBY_KEY_ENTER_READY_DOWN);
+			RES(R_STANDBY_KEY_ENTER_READY_UP);							
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_FAULT;
 		}
 		else if(LD(X_FOOTSWITCH_OC) && LDB(X_FOOTSWITCH_ON)){//发射激光
@@ -968,6 +1179,23 @@ void dcHmiLoop(void){//HMI轮训程序
 		if(LD(R_OPTION_KEY_ENTER_SCHEME_DOWN)){
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_SCHEME;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_SCHEME;
+			unselectSchemeNum(0);
+			unselectSchemeNum(1);
+			unselectSchemeNum(2);
+			unselectSchemeNum(3);
+			unselectSchemeNum(4);
+			unselectSchemeNum(5);
+			unselectSchemeNum(6);
+			unselectSchemeNum(7);
+			unselectSchemeNum(8);
+			unselectSchemeNum(9);
+			unselectSchemeNum(10);
+			unselectSchemeNum(11);
+			unselectSchemeNum(12);
+			unselectSchemeNum(13);
+			unselectSchemeNum(14);
+			unselectSchemeNum(15);
+			seletcSchemeNum(NVRAM0[DM_SCHEME_NUM]);//
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_OPTION_KEY_ENTER_SCHEME_DOWN);
 		}
@@ -985,6 +1213,18 @@ void dcHmiLoop(void){//HMI轮训程序
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_OPTION;
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_INFORMATION_KEY_OK_DOWN);	
+		}
+		return;
+	}
+	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_SCHEME){
+		if(LD(R_SCHEME_KEY_ENTER_STANDBY_DOWN)){
+			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_OPTION;
+			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_OPTION;
+			SetScreen(NVRAM0[EM_DC_PAGE]);
+			NVRAM0[DM_SCHEME_NUM] = NVRAM0[EM_SCHEME_NUM_TMP];
+			loadScheme();
+			updateSchemeDisplay();
+			RES(R_SCHEME_KEY_ENTER_STANDBY_DOWN);
 		}
 		return;
 	}
@@ -1837,7 +2077,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
 					if(state == 0x01){
-						SET(R_STANDBY_KEY_STANDBY_DOWN);
+						SET(R_STANDBY_KEY_ENTER_READY_DOWN);
 					}
 					break;
 				}
@@ -2130,67 +2370,203 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		case GDDC_PAGE_SCHEME:{
 			switch(control_id){
 				case GDDC_PAGE_SCHEME_KEY_RENAME:{
+					if(state == 0x01){
+						SET(R_SCHEME_KEY_RENAME_DOWN);
+					}
+					else if(state == 0x00){
+						SET(R_SCHEME_KEY_RENAME_UP);
+					}	
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SAVE_USB:{
+					if(state == 0x01){
+						SET(R_SCHEME_KEY_SAVE_USB_DOWN);
+					}
+					else if(state == 0x00){
+						SET(R_SCHEME_KEY_SAVE_USB_UP);
+					}
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_LOAD_USB:{
+					if(state == 0x01){
+						SET(R_SCHEME_KEY_LOAD_USB_DOWN);
+					}
+					else if(state == 0x00){
+						SET(R_SCHEME_KEY_LOAD_USB_UP);
+					}
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_ENTER_STANDBY:{
-					
+					if(state == 0x01){
+						SET(R_SCHEME_KEY_ENTER_STANDBY_DOWN);
+					}
+					else if(state == 0x00){
+						SET(R_SCHEME_KEY_ENTER_STANDBY_UP);
+					}
 					break;
 				}	
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_0:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(0);
+					}
+					else if(state == 0x00){
+					}
 					break;
 				}	
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_1:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(1);
+					}
+					else if(state == 0x00){
+					}
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_2:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(2);
+					}
+					else if(state == 0x00){
+					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_3:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(3);
+					}
+					else if(state == 0x00){
+					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_4:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(4);
+					}
+					else if(state == 0x00){
+					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_5:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(5);
+					}
+					else if(state == 0x00){
+					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_6:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(6);
+					}
+					else if(state == 0x00){
+					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_7:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(7);
+					}
+					else if(state == 0x00){
+					}
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_8:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(8);
+					}
+					else if(state == 0x00){
+					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_9:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(9);
+					}
+					else if(state == 0x00){
+					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_10:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(10);
+					}
+					else if(state == 0x00){
+					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_11:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(11);
+					}
+					else if(state == 0x00){
+					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_12:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(12);
+					}
+					else if(state == 0x00){
+					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_13:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(13);
+					}
+					else if(state == 0x00){
+					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_14:{	
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(14);
+					}
+					else if(state == 0x00){
+					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_15:{
+					if(state == 0x01){
+						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
+						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+						seletcSchemeNum(15);
+					}
+					else if(state == 0x00){
+					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0:{
+					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_1:{

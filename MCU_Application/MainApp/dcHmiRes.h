@@ -1,6 +1,23 @@
 #ifndef __DCHMIRES_H__
 #define __DCHMIRES_H__
 /*****************************************************************************/
+#define HMI_BLACK     								0x0000//黑色    
+#define HMI_ NAVY      								0x000F//深蓝色  
+#define HMI_DGREEN    								0x03E0//深绿色  
+#define HMI_DCYAN     								0x03EF//深青色  
+#define HMI_MAROON    								0x7800//深红色      
+#define HMI_PURPLE    								0x780F//紫色  
+#define HMI_OLIVE     								0x7BE0//橄榄绿      
+#define HMI_LGRAY     								0xC618//灰白色
+#define HMI_DGRAY     								0x7BEF//深灰色      
+#define HMI_BLUE      								0x001F//蓝色    
+#define HMI_GREEN     								0x07E0//绿色          
+#define HMI_CYAN      								0x07FF//青色  
+#define HMI_RED       								0xF800//红色       
+#define HMI_MAGENTA   								0xF81F//品红    
+#define HMI_YELLOW    								0xFFE0//黄色        
+#define HMI_WHITE     								0xFFFF//白色  
+/*****************************************************************************/
 //HMI页面编号
 #define GDDC_PAGE_POWERUP							0
 #define GDDC_PAGE_PASSCODE							1
