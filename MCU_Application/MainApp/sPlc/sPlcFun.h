@@ -27,4 +27,6 @@ void DSUB(int32_t *Sa, int32_t *Sb, int32_t *D) reentrant;//32位非饱和减法
 void MULT(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant;//16*16非饱和乘法 D = Sa * Sb
 void MULTS(int16_t *Sa, int16_t *Sb, int32_t *D) reentrant;//16*16->32饱和乘法 D = Sa * Sb
 /*****************************************************************************/
+int16_t MAX(int16_t *s, uint8_t len) reentrant;//找出长度为len的数据s中的最大值
+int16_t MIN(int16_t *s, uint8_t len) reentrant;//找出长度为len的数据s中的最小值
 #endif

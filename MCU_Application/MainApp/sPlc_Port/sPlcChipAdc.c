@@ -1859,6 +1859,7 @@ void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值
 	idata uint8_t i;
 	idata uint16_t temp;
 	idata uint32_t sum;
+	idata uint16_t datMax, datMin;
 	s->dat[s->wIndex] = dat;
 	s->wIndex ++;
 	if(s->wIndex >= CONFIG_SPLC_ADC_FILTER_TAP){
@@ -1869,7 +1870,12 @@ void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值
 	for(i = 0;i < CONFIG_SPLC_ADC_FILTER_TAP;i ++){
 		sum += s->dat[i];
 	}
-	//去掉一个最大值和一个最小值
-	temp = (uint16_t)(sum / (uint32_t)CONFIG_SPLC_ADC_FILTER_TAP);
+	//去掉一个最大值和一个最小值 20190521 新增
+	datMax = MAX((int16_t*)&(s->dat[0]), CONFIG_SPLC_ADC_FILTER_TAP);
+	datMin = MIN((int16_t*)&(s->dat[0]), CONFIG_SPLC_ADC_FILTER_TAP);
+	sum -= datMax;
+	sum -= datMin;
+	temp = (uint16_t)(sum / (uint32_t)(CONFIG_SPLC_ADC_FILTER_TAP - 2));
+	//
 	s->out = temp;
 }
