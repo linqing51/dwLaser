@@ -11,6 +11,9 @@
 #if CONFIG_USING_DCHMI_APP == 1
 #include "dcHmiApp.h"
 #endif
+#if CONFIG_USING_USB_APP == 1
+#include "usbApp.h"
+#endif
 /*****************************************************************************/
 #endif
 

@@ -285,8 +285,9 @@ void sPlcInit(void){//软逻辑初始化
 	delayMs(100);
 	setLedError(false);
 	setLedEprom(false);
+#if CONFIG_USING_SI7060 == 1
 	si7060Init();
-	si7060ReadTemperature();
+#endif
 	initSplcTimer();//初始化硬件计时器模块
 	SET(SPCOIL_ON);
 #if CONFIG_SPLC_USING_IO_INPUT == 1
@@ -406,7 +407,7 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 	refreshChipDac();//更新DAC输出
 #endif
 #if CONFIG_USING_CH376 == 1
-	sPlcUsbPoll();
+	//sPlcUsbPoll();
 #endif
 	updataNvram();//更新NVRAM
 #if CONFIG_SPLC_USING_WDT == 1

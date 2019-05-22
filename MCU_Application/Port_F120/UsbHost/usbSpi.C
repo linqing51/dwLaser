@@ -1,51 +1,44 @@
 #include "usbSpi.h"
 /*****************************************************************************/
 #if CONFIG_USING_CH376 == 1
-static void usbReset(uint8_t rst){
+static void usbReset(uint8_t rst){//P7.1
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE	
+	SFRPAGE = CONFIG_PAGE;
 	if(rst){
 		P7 |= 0x02;
 	}
 	else{
 		P7 &= 0xFD;
 	}
+	SFRPAGE = SFRPAGE_SAVE; 
 }
 
 void usbSpiInit(void){//USB CH376初始化
 	uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE	    
 	//SPI总线初始化
 	SFRPAGE = SPI0_PAGE;
-	SPI0CKR = (CONFIG_SYSCLK / (2 * CONFIG_SPICLK));//设置SPI时钟频率
-	SPI0CFG = 0x0;//CKPOL=0, CKPHA=0
-	SPI0CFG |= (1 << 6);//MSTEN: Master Mode Enable.
-	SPI0CN = 0x0;
-	SPI0CN |= (1 << 2);
-	SPI0CN |= (1 << 3);
-	SPI0CN |= 1 << 0;//SPIEN: SPI0 Enable.
-    SFRPAGE = SFRPAGE_SAVE; 
+    SPI0CFG   = 0x40;
+    SPI0CN    = 0x0D;
+    SPI0CKR = (CONFIG_SYSCLK / (2 * CONFIG_SPICLK));//设置SPI时钟频率
+	SFRPAGE = SFRPAGE_SAVE; 
 }
-static void usbSpiNssSet(uint8_t nss){//SPI NSS设置
+static void usbSpiNssSet(uint8_t nss){//SPI NSS设置 P7.0
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE	
+	SFRPAGE = CONFIG_PAGE;
 	if(nss){
 		P7 |= 0x01;
 	}
 	else{
 		P7 &= 0xFE;
 	}
+	SFRPAGE = SFRPAGE_SAVE; 
 }
 static uint8_t usbSpiTransmit(uint8_t txd){//CH376 SPI 收发
 	uint8_t rxd;
 	uint8_t SFRPAGE_SAVE = SFRPAGE;
-	//uint8_t counter;
 	SFRPAGE = SPI0_PAGE;
 	SPI0DAT = txd;         
-	while(!SPIF);
-//		{
-//		if(counter > 250){
-//			break;
-//		}
-//		else{
-//			counter ++;
-//		}
-//	}		
+	while(!SPIF);	
 	SPIF = 0; 
 	rxd = SPI0DAT;
 	SFRPAGE = SFRPAGE_SAVE;
@@ -53,7 +46,6 @@ static uint8_t usbSpiTransmit(uint8_t txd){//CH376 SPI 收发
 }
 
 void xWriteCH376Cmd(uint8_t mCmd){//向CH376写命令
-	usbSpiNssSet(true);
 	usbSpiNssSet(false);
 	usbSpiTransmit(mCmd);//发出命令码
 	delayUs(2);//延时1.5uS确保读写周期大于1.5uS,或者用上面一行的状态查询代替
@@ -70,7 +62,11 @@ uint8_t	xReadCH376Data(void){//从CH376读数据
 	return(usbSpiTransmit(0xFF));
 }
 uint8_t	usbSpiIntQuery( void ){//查询CH376中断
-	return((P1 >> 7) & 0x01);//连接了CH376的中断引脚则直接查询中断引脚 */
+	uint8_t tmp;
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE	
+	SFRPAGE = CONFIG_PAGE;
+	tmp = (P1 >> 7) & 0x01;//连接了CH376的中断引脚则直接查询中断引脚
+	return tmp;
 }
 uint8_t	usbHostInit(void){//初始化CH376
 	uint8_t	res;

@@ -1,33 +1,29 @@
 #include "sPlcTimer.h"
 /*****************************************************************************/
-bit debugTimer, OverTimer;
-static uint8_t Timer0_L, Timer0_H;
 void initSplcTimer(void){//硬件sTimer计时器初始化
 	uint16_t temp;
-	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
-	SFRPAGE = TIMER01_PAGE;// Set SFR page
+	uint8_t SFRPAGE_SAVE;
+	SFRPAGE = TMR3_PAGE;
+	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_SOFTPLC_TICK));
+	TMR3CF = 0;//	
+	RCAP3 = temp;// Reload value to be used in Timer3
+	TMR3 = RCAP3;// Init the Timer3 register
+	TMR3CN &= ~(uint8_t)(1 << 7);//TF4 溢出标志清零
+	EIE2 |= (1 << 0);//T4 ET3中断使能
+	TMR3L = 0xFF;
+	TMR3H = 0xFF;
+	TMR3CN |= (1 << 2);//TR3 使能TIMER3计时器
+	SFRPAGE = SFRPAGE_SAVE;
 	TimerCounter_1mS = 0;
 	TimerCounter_10mS = 0;
-	temp = 65536 - (CONFIG_SYSCLK / 48 / CONFIG_SOFTPLC_TICK);	
-	Timer0_H = (temp >> 8) & 0xFF;
-	Timer0_L = temp & 0xFF;
-	TH0 = Timer0_H;
-	TL0 = Timer0_L;
-	CKCON = 0;
-	CKCON |= 0x02;//System clock divided by 48
-	TMOD &= 0xF0;//Clear T0
-	TMOD |= (1 << 0);//16-bit counter/timer
-	TR0 = 1; 
-	ET0 = 1;// Timer0 interrupt enabled
-	SFRPAGE = SFRPAGE_SAVE;// Restore SFR page
 }
-void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
+void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER3{//硬件sTimer计时器中断 1mS
 	uint16_t i;
-	//debugTimer = ~debugTimer;
-	TF0 = false;
-	TH0 = Timer0_H;
-	TL0 = Timer0_L;
-	TR0 = true;
+	uint8_t SFRPAGE_save;	
+	SFRPAGE_save = SFRPAGE;
+	SFRPAGE = TMR3_PAGE;
+	TMR3CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag
+	SFRPAGE = SFRPAGE_save;
 	if(TD_1MS_SP < CHAR_MAX){
 		TD_1MS_SP ++;
 	}	
@@ -88,5 +84,4 @@ void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 1mS
 	chipAdcProcess();//ADC扫描
 #endif
 	TimerCounter_1mS ++;
-	//SFRPAGE = LEGACY_PAGE;
 }

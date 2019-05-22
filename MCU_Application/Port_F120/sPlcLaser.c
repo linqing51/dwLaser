@@ -169,18 +169,7 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 	TMR4CN = 0;//16Bit AutoReload
 	SFRPAGE = SFRPAGE_SAVE;   
 }
-static void initLaserTimer(void){//TIMER4初始化
-	uint16_t temp;
-	uint8_t SFRPAGE_SAVE;
-	SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE
-	SFRPAGE = TMR4_PAGE;
-	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_LASER_TIMER_TICK));
-	TMR4CF = 0;//	
-	RCAP4 = temp;// Reload value to be used in Timer3
-	TMR4 = RCAP4;// Init the Timer3 register
-	TMR4CN = 0;//16Bit AutoReload
-	SFRPAGE = SFRPAGE_SAVE;   
-}
+
 void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 	uint8_t SFRPAGE_save;	
 	SFRPAGE_save = SFRPAGE;

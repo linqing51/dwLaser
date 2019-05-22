@@ -14,10 +14,9 @@
 /* 定义 EN_SECTOR_ACCESS 用于提供以扇区为单位读写文件的子程序,默认是不提供 */
 /* 定义 EN_LONG_NAME 用于提供支持长文件名的子程序,默认是不提供 */
 /* 定义 DEF_IC_V43_U 用于去掉支持低版本的程序代码,仅支持V4.3及以上版本的CH376芯片,默认是支持低版本 */
-
-#if 0
+#include "lib.h"
+#if CONFIG_USING_CH376 == 1
 #define		DEF_IC_V43_U	1	/* 推荐定义 DEF_IC_V43_U 以优化代码 */
-#endif
 /*****************************************************************************/
 #include "FILE_SYS.H"
 #include "usbSpi.h"
@@ -890,5 +889,7 @@ CH376CreateLongNameE:
 	CH376FileClose( FALSE );  /* 对于根目录则必须要关闭 */
 	return( s );
 }
+
+#endif
 
 #endif
