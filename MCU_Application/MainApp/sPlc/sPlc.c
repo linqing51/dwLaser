@@ -117,9 +117,11 @@ static void clearSPCOIL(){//清除特特殊线圈
 }
 static void loadNvram(void){//从EPROM中载入NVRAM
 	memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
+#if CONFIG_SPLC_USING_UART1 == 1
 	setLedEprom(DEBUG_LED_ON);
 	epromRead(0, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
 	setLedEprom(DEBUG_LED_OFF);
+#endif
 	clearEM();
 	clearR();
 	clearT();
@@ -153,6 +155,7 @@ static void saveNvram(void){//强制将NVRAM存入EPROM
 static void updataNvram(void){//更新NVRAM->EPROM
 	data uint8_t *sp0, *sp1;
 	data uint16_t i;
+#if CONFIG_SPLC_USING_EPROM == 1	
 	sp0 = (uint8_t*)NVRAM0;
 	sp1 = (uint8_t*)NVRAM1;
 	for(i = (MR_START * 2);i < ((MR_END + 1) * 2);i ++){//储存MR
@@ -171,6 +174,7 @@ static void updataNvram(void){//更新NVRAM->EPROM
 			setLedEprom(DEBUG_LED_OFF);
 		}
 	}
+#endif
 	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
 static void clearNvram(void){//清除NVRAM数据	
@@ -216,9 +220,7 @@ void sPlcInit(void){//软逻辑初始化
 #if CONFIG_SPLC_USING_UART1 == 1
 	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化
 #endif	
-#if CONFIG_SPLC_USING_EPROM == 1
 	loadNvram();//上电恢复NVRAM
-#endif
 #if CONFIG_SPLC_USING_CADC == 1
 	initChipAdc();//初始化ADC模块
 #endif
@@ -288,9 +290,7 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 #if CONFIG_SPLC_USING_DAC
 	refreshDac();//更新DAC输出
 #endif
-#if CONFIG_SPLC_USING_EPROM == 1
 	updataNvram();//更新NVRAM
-#endif
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();//喂狗
 #endif

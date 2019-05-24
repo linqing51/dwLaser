@@ -19,7 +19,7 @@
 #define CONFIG_UART1_STOPBIT				1
 #define CONFIG_UART1_DATABIT				8
 /*****************************************************************************/
-#define CONFIG_I2C0_FREQ 					1 
+#define CONFIG_I2C0_FREQ 					4 
 #define CONFIG_I2C_WAITACT_TIME				250
 /*****************************************************************************/
 #define CONFIG_EPROM_DEBUG					0
@@ -43,7 +43,7 @@
 #define CONFIG_SOFTPLC_HWTIME				1000L//1mS
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期 1mS * N
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_CLEAR_NVRAM		1//启用清除NVRAM功能
+#define CONFIG_SPLC_USING_CLEAR_NVRAM		0//启用清除NVRAM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT				1//看门狗启用
 /*****************************************************************************/
@@ -51,7 +51,7 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_OUTPUT			1//输出IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM				1//EPROM掉电存储启用
+#define CONFIG_SPLC_USING_EPROM				0//EPROM掉电存储启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_UART1				1//UART1串口启用
 #if CONFIG_SPLC_USING_UART1 == 1
