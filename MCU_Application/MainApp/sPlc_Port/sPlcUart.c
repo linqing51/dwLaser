@@ -56,7 +56,8 @@ void Uart1Isr() interrupt INTERRUPT_UART1{//UART1中断
 	}   
 	ENABLE_INTERRUPT;
 }
-                                                                                                                                       void initUart1(uint32_t baudrate){//指示盒串口初始化
+
+void initUart1(uint32_t baudrate){//指示盒串口初始化
 	CKCON &= (1 << 6);//Timer 4 uses the system clock
 	T4CON = 0;
 	T4CON |= 1 << 4;//Timer 4 overflows used for transmit clock.
