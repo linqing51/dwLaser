@@ -155,6 +155,8 @@
 #define GDDC_PAGE_OPTION_KEY_LANGUAGE_CN			21
 #define GDDC_PAGE_OPTION_KEY_LANGUAGE_JP			22
 #define GDDC_PAGE_OPTION_KEY_LANGUAGE_DE			23
+#define GDDC_PAGE_OPTION_KEY_HAND_SWITCH_ON			24
+#define GDDC_PAGE_OPTION_KEY_HAND_SWITCH_OFF		25
 #define GDDC_PAGE_OPTION_KEY_ENTER_CORRECTION		99//进入参数校正菜单
 /*****************************************************************************/
 //方案页面

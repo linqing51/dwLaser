@@ -29,12 +29,6 @@ static void sPlcTest_XTAB(void){
 	srcX = 3343;
 	length = 10;
 	XTAB(&distY, &srcX, (NVRAM0 + EM_START + 0), &length);
-	if(distY != 0){
-		SET(MR_START);
-	}
-	else{
-		RES(MR_START);
-	}
 }
 void sPlcTest_YTAB(void){
 	

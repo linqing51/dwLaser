@@ -3,37 +3,16 @@
 #if CONFIG_SPLC_USING_PCA == 1
 void sPlcPcaInit(void){//计时器阵列初始化
 	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
-	SFRPAGE = TIMER01_PAGE;// Set SFR page
-	//TH0 = 256 - (CONFIG_SYSCLK / 48 / CONFIG_PCA_TICK);	
-	TH0 = 246;
-	TL0 = TH0;// Set the intial Timer0 value
-	CKCON = 0;
-	CKCON |= 0x02;//System clock divided by 48
-	TMOD &= 0xF0;//Clear T0
-	TMOD |= (1 << 1);//Mode 2: 8-bit counter/timer with auto-reload
-	TR0 = 1; 
-	ET0 = 0;// Timer0 interrupt enabled
 	SFRPAGE = PCA0_PAGE;
-	PCA0CN = 0;
-	PCA0MD = 0x00;// Use SYSCLK as time base;//System clock
-	PCA0MD |= (1 << 2);
-	PCA0CPM0 = 0x42;//16-bit PWM mode
-	PCA0CPM1 = 0x42;//16-bit PWM mode
-	PCA0CPM2 = 0x42;//16-bit PWM mode
-	
-	//PCA0CPL0 = 0x00;
-	PCA0CPH0 = 0x80;
-	
-	//PCA0CPL1 = 0x00;
-	PCA0CPH1 = 0x80;
-	
-	//PCA0CPL2 = 0x00;
-	PCA0CPH2 = 0x80;
-	//CR = 1;
-	//PCA0CN |= (1 << 6);//Start PCA counter
-
+    PCA0MD    = 0x08;// Use SYSCLK as time base;
+    PCA0CPM0  = 0xC2;
+    PCA0CPM1  = 0xC2;
+    PCA0CPM2  = 0xC2;
+    PCA0CPH0  = 0x80;
+    PCA0CPH1  = 0x80;
+    PCA0CPH2  = 0x80;
+	PCA0CN    = 0x40;
 	SFRPAGE = SFRPAGE_save;
-	//while(1);
 }
 void sPlcAimInit(void){//指示光初始化
 	NVRAM0[SPREG_AIM0_BRIGHTNESS] = 0;

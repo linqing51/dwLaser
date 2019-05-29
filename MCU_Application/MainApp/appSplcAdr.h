@@ -511,6 +511,8 @@
 #define R_SCHEME_TEXTDISPALY_SPACE_DOWN			(R_START * 16 + 287)
 #define R_SCHEME_TEXTDISPALY_SPACE_UP			(R_START * 16 + 288)
 /*****************************************************************************/
+#define MR_FOOSWITCH_HAND_SWITCH				(MR_START * 16 + 100)//脚踏HandSwitch 脉冲控制
+/*****************************************************************************/
 #define T100MS_HMI_POWERUP_DELAY				0//HMI启动复位延时
 #define T100MS_CHECK_PROCESSOR_DELAY			1//存储器自检等待延迟
 #define T100MS_CHECK_EPROM_DELAY				2//总线自检等待延迟

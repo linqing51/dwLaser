@@ -127,6 +127,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 
 #endif
 void STLAR(void) reentrant{//开始发射脉冲
+#if CONFIG_SPLC_USING_LASER_TIMER == 1	
 	uint8_t SFRPAGE_save;
 	NVRAM0[SPREG_LASER_PCOUNTER] = 0X0;
 	NVRAM0[SPREG_LASER_TCOUNTER] = 0X00;	
@@ -139,8 +140,10 @@ void STLAR(void) reentrant{//开始发射脉冲
 	SFRPAGE = SFRPAGE_save;
 	SET(SPCOIL_LASER_EMITING);//发射标志置位
 	RES(SPCOIL_LASER_EMITOVER);
+#endif
 }
 void EDLAR(void) reentrant{//停止发射脉冲
+#if CONFIG_SPLC_USING_LASER_TIMER == 1 	
 	uint8_t SFRPAGE_save;
 	SFRPAGE = TMR4_PAGE;
 	TMR4CN &= ~(uint8_t)(1 << 2);//Stop Timer 4
@@ -155,6 +158,7 @@ void EDLAR(void) reentrant{//停止发射脉冲
 	UPDAC1();
 #endif
 	RES(SPCOIL_LASER_EMITING);//发射标志置位
+#endif
 }
 void sPlcLaserInit(void){//激光脉冲功能初始化
 	uint16_t temp;
