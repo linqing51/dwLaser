@@ -1,6 +1,6 @@
 #include "usbSpi.h"
 /*****************************************************************************/
-#if CONFIG_USING_CH376 == 1
+#if CONFIG_SPLC_USING_CH376 == 1
 static void usbReset(uint8_t rst){//P7.1
 	uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE	
 	SFRPAGE = CONFIG_PAGE;

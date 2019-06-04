@@ -326,7 +326,7 @@ void sPlcInit(void){//软逻辑初始化
 #if CONFIG_USING_RTU_SLAVE == 1	
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 #endif
-#if CONFIG_USING_CH376 == 1
+#if CONFIG_SPLC_USING_CH376 == 1
 	usbSpiInit();//初始化 USB SPI	
 	mStopIfError(usbHostInit());//默认初始化为HOST
 #endif
@@ -406,7 +406,7 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 #if CONFIG_SPLC_USING_DAC == 1
 	refreshChipDac();//更新DAC输出
 #endif
-#if CONFIG_USING_CH376 == 1
+#if CONFIG_SPLC_USING_CH376 == 1
 	//sPlcUsbPoll();
 #endif
 	updataNvram();//更新NVRAM

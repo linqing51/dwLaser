@@ -1,10 +1,12 @@
 #include "usbApp.h"
 /*****************************************************************************/
 void saveSchemeUsb(void){
+#if CONFIG_SPLC_USING_CH376 == 1
 	uint8_t filePageSize, fileRemainSize, st;
 	uint16_t fileCrc16, i;
 	uint32_t fileSize;
 	//FLADDR tempFAR;
+	
 	st = CH376DiskConnect();
 	
 	st = CH376DiskMount();
@@ -26,5 +28,6 @@ void saveSchemeUsb(void){
 	if(st != USB_INT_SUCCESS){//ÎÄ¼þ¹Ø±ÕÊ§°Ü
 		SET(SPCOIL_USBDISK_CLOSE_FILE_FAIL);
 		//goto UPDATE_FW_ERROR;
-	}	
+	}
+#endif	
 }

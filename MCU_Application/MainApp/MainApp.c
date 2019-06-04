@@ -82,7 +82,7 @@ void main(void){
 	initDevice();
 	sPlcInit();
 	EA = 0;
-	saveSchemeUsb();
+	//saveSchemeUsb();
 	//hwTest();
 	Cache_ISR_Entry((unsigned int)sPlcTimerIsr, INTERRUPT_TIMER0);
 #if CONFIG_SPLC_USING_LASER_TIMER == 1

@@ -29,7 +29,7 @@
 #include "sPlcModbus.h"
 #include "sPlcModbusPort.h"
 #endif
-#if CONFIG_USING_CH376 == 1
+#if CONFIG_SPLC_USING_CH376 == 1
 #include "usbSpi.h"
 #include "FILE_SYS.H"
 #include "sPlcUsb.h"
@@ -63,6 +63,9 @@
 #include "i2c3.h"
 #endif
 
+#if CONFIG_SPLC_USING_DK25L == 1
+#include "sPlcDK25L.h"
+#endif
 /*****************************************************************************/
 
 
