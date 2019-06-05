@@ -318,7 +318,9 @@
 #define SPCOIL_PROBATION_INIT_FAIL						(SPCOIL_START * 16 + 57)//有线脚踏初始化失败
 /*****************************************************************************/
 #define SPCOIL_DK25L_READY								(SPCOIL_START * 16 + 70)//DK25L模块就绪
-#define SPCOIL_DK25L_STATUS								(SPCOIL_START * 16 + 71)//寻到卡片
+#define SPCOIL_DK25L_VALID								(SPCOIL_START * 16 + 71)//寻到卡片
+#define SPCOIL_DK25L_REMOVE								(SPCOIL_START * 16 + 71)//卡片离开
+#define SPCOIL_DK25L_INVALID							(SPCOIL_START * 16 + 71)//卡片无效
 #define SPCOIL_DK25L_RXCMD_DONE							(SPCOIL_START * 16 + 72)//接收指令完成
 #define SPCOIL_DK25L_RXCMD_DOING						(SPCOIL_START * 16 + 73)//接收指令进行中
 #define SPCOIL_DK25L_TXCMD_DONE							(SPCOIL_START * 16 + 74)//写指令完成

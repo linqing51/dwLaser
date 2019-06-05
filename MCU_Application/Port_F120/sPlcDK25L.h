@@ -52,4 +52,13 @@
 #define CMD_ACK									0xFE//ACK»∑»œ√¸¡Ó
 #define CMD_NACK								0xFF//NACK∑Ò»œ√¸¡Ó
 
+
+
+#define CARD_UNKNOWN							0x00
+#define CARD_MIFARE								0x01
+#define CARD_ULTRALIGHT							0x02
+#define CARD_ISO14443B							0x03
+#define CARD_ISO14443A							0x04
+#define CARD_ISO15693							0x05
+
 #endif
