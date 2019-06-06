@@ -97,6 +97,8 @@
 #define CONFIG_MB_RTU_SLAVE_IO_DELAY					1//RX TX切换延时
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DK25L							1//SPLC使能NFC功能
+#define CONFIG_DK25L_RXBUF_SIZE							24
+#define CONFIG_DK25L_TXBUF_SIZE							24
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_CH376							0
 /*****************************************************************************/
@@ -318,23 +320,12 @@
 #define SPCOIL_PROBATION_INIT_FAIL						(SPCOIL_START * 16 + 57)//有线脚踏初始化失败
 /*****************************************************************************/
 #define SPCOIL_DK25L_READY								(SPCOIL_START * 16 + 70)//DK25L模块就绪
-#define SPCOIL_DK25L_VALID								(SPCOIL_START * 16 + 71)//寻到卡片
-#define SPCOIL_DK25L_REMOVE								(SPCOIL_START * 16 + 71)//卡片离开
-#define SPCOIL_DK25L_INVALID							(SPCOIL_START * 16 + 71)//卡片无效
-#define SPCOIL_DK25L_RXCMD_DONE							(SPCOIL_START * 16 + 72)//接收指令完成
-#define SPCOIL_DK25L_RXCMD_DOING						(SPCOIL_START * 16 + 73)//接收指令进行中
+#define SPCOIL_DK25L_RXCMD_DONE							(SPCOIL_START * 16 + 71)//接收指令完成
+#define SPCOIL_DK25L_RXCMD_DOING						(SPCOIL_START * 16 + 72)//接收指令进行中
+#define SPCOIL_DK25L_RXCMD_OVERFLOW						(SPCOIL_START * 16 + 73)//接收指令溢出
 #define SPCOIL_DK25L_TXCMD_DONE							(SPCOIL_START * 16 + 74)//写指令完成
 #define SPCOIL_DK25L_TXCMD_DOING						(SPCOIL_START * 16 + 75)//写指令进行中
-#define SPCOIL_DK25L_TXCMD_REQ							(SPCOIL_START * 16 + 76)//写指令请求
-#define SPCOIL_DK25L_RXCMD_REQ							(SPCOIL_START * 16 + 77)//接收指令请求
-#define SPCOIL_DK25L_ERR_TAG_TYPE						(SPCOIL_START * 16 + 78)//发送卡片操作指令与检测到的卡片类型不一致
-#define SPCOIL_DK25L_ERR_NO_FINE_TAG					(SPCOIL_START * 16 + 79)//未寻找卡错误
-#define SPCOIL_DK25L_ERR_KEY_NO_AUTH					(SPCOIL_START * 16 + 80)//M1卡密钥不匹配错误
-#define SPCOIL_DK25L_ERR_READ_BLOCK						(SPCOIL_START * 16 + 81)//读卡M1和UL卡不成功
-#define SPCOIL_DK25L_ERR_WRITE_BLOCK					(SPCOIL_START * 16 + 82)//写卡M1和UL卡不成功
-#define SPCOIL_DK25L_ERR_VALUE_INIT						(SPCOIL_START * 16 + 83)//M1卡初始错误
-#define SPCOIL_DK25L_ERR_VALUE_ADD						(SPCOIL_START * 16 + 84)//M1卡增错误
-#define SPCOIL_DK25L_ERR_VALUE_SUB						(SPCOIL_START * 16 + 85)//M1卡减错误
+#define SPCOIL_DK25L_TXCMD_OVERFLOW						(SPCOIL_START * 16 + 76)//写指令溢出						
 /*****************************************************************************/
 #define SPREG_CLEAR_NVRAM								(SPREG_START + 0)//清除NVRAM后重新启动
 /*****************************************************************************/
@@ -392,15 +383,6 @@
 #define SPREG_LASER_RELEASE_COUNTER						(SPREG_START + 54)//激光持续时间计时器
 #define SPREG_LASER_CURRENT_0							(SPREG_START + 55)//激光电流0
 #define SPREG_LASER_CURRENT_1							(SPREG_START + 56)//激光电流1
-/*****************************************************************************/
-#define SPREG_DK25L_RX_BUFFER							(SPREG_START + 60)
-#define SPREG_DK25L_TX_BUFFER							(SPREG_START + 80)
-#define SPREG_DK25L_RXCMD_INDEX							(SPREG_START + 100)//接收索引
-#define SPREG_DK25L_TXCMD_INDEX							(SPREG_START + 101)//发送索引
-#define SPREG_DK25L_CARD_TYPE							(SPREG_START + 102)//卡类型
-#define SPREG_DK25L_CARD_UID							(SPREG_START + 103)//卡UID 8Byte
-#define SPREG_DK25L_VER									(SPREG_START + 104)//模块版本号FW->15:8 HW->7:0
-
 /*****************************************************************************/
 #define SPREG_IDENTITY									(SPREG_END + 0)//平台ID号
 /*****************************************************************************/
