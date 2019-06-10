@@ -1,16 +1,16 @@
 #ifndef __DCHMIRES_H__
 #define __DCHMIRES_H__
 /*****************************************************************************/
-#define HMI_BLACK     								0x0000//黑色    
-#define HMI_ NAVY      								0x000F//深蓝色  
-#define HMI_DGREEN    								0x03E0//深绿色  
-#define HMI_DCYAN     								0x03EF//深青色  
-#define HMI_MAROON    								0x7800//深红色      
-#define HMI_PURPLE    								0x780F//紫色  
-#define HMI_OLIVE     								0x7BE0//橄榄绿      
-#define HMI_LGRAY     								0xC618//灰白色
-#define HMI_DGRAY     								0x7BEF//深灰色      
-#define HMI_BLUE      								0x001F//蓝色    
+#define HMI_BLACK     										0x0000//黑色    
+#define HMI_ NAVY      										0x000F//深蓝色  
+#define HMI_DGREEN    										0x03E0//深绿色  
+#define HMI_DCYAN     										0x03EF//深青色  
+#define HMI_MAROON    										0x7800//深红色      
+#define HMI_PURPLE    										0x780F//紫色  
+#define HMI_OLIVE     										0x7BE0//橄榄绿      
+#define HMI_LGRAY     										0xC618//灰白色
+#define HMI_DGRAY     										0x7BEF//深灰色      
+#define HMI_BLUE      										0x001F//蓝色    
 #define HMI_GREEN     								0x07E0//绿色          
 #define HMI_CYAN      								0x07FF//青色  
 #define HMI_RED       								0xF800//红色       
@@ -212,5 +212,8 @@
 #define GDDC_PAGE_CORRECTION_TEXTDISPLAY_CODE_CH1	4
 #define GDDC_PAGE_CORRECTION_TEXTDISPLAY_POWER0_CH0	5
 /*****************************************************************************/
-#define GDDC_PAGE_INFORMATION_KEY_ENTER_OK			1
+#define GDDC_PAGE_INFORMATION_KEY_ENTER_OK					1
+#define GDDC_PAGE_INFORMATION_TEXTDISPLAY_NFC_VER			2
+#define GDDC_PAGE_INFORMATION_TEXTDISPLAY_FIBER_CODE		3
+/*****************************************************************************/
 #endif

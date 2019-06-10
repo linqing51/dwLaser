@@ -8,20 +8,44 @@
 #define CARD_ISO15693					0x05
 /*****************************************************************************/
 #if CONFIG_SPLC_USING_DK25L == 1
-static uint8_t xdata DK25L_TxBuffer[CONFIG_DK25L_TXBUF_SIZE];//指令发送缓冲区
-static uint8_t xdata DK25L_RxBuffer[CONFIG_DK25L_RXBUF_SIZE];//指令接收缓冲区
-static uint16_t DL25L_TxIndex;//发送位置索引
-static uint16_t DL25L_RxIndex;//接收位置索引
-static uint16_t DL25L_TXLength;//发送长度
+uint8_t xdata DK25L_TxBuffer[CONFIG_DK25L_TXBUF_SIZE];//指令发送缓冲区
+uint8_t xdata DK25L_RxBuffer[CONFIG_DK25L_RXBUF_SIZE];//指令接收缓冲区
+static uint8_t DL25L_TxIndex;//发送位置索引
+static uint8_t DL25L_RxIndex;//接收位置索引
+static uint8_t DL25L_TXLength;//发送长度
 /*****************************************************************************/
-void DL25L_Init(void){
+void DL25L_Init(void){//DK25L NFC模块初始化
 	memset(DK25L_TxBuffer, 0x00, CONFIG_DK25L_TXBUF_SIZE);
 	memset(DK25L_RxBuffer, 0x00, CONFIG_DK25L_RXBUF_SIZE);
 	DL25L_TxIndex = 0;
 	DL25L_RxIndex = 0;
-	DL25L_TXLength = 0;
+	DL25L_TXLength = 0;							
+	RES(SPCOIL_DK25L_RXCMD_DONE);							
+	RES(SPCOIL_DK25L_RXCMD_DOING);						
+	RES(SPCOIL_DK25L_RXCMD_OVERFLOW);					
+	RES(SPCOIL_DK25L_TXCMD_DONE);						
+	RES(SPCOIL_DK25L_TXCMD_DOING);					
+	RES(SPCOIL_DK25L_TXCMD_OVERFLOW);
+	NVRAM0[SPREG_DK25L_VER] = 0;
+	DK25L_GET_HWVER();
+	delayMs(100);
+	if(LD(SPCOIL_DK25L_RXCMD_DONE)){//DK25L 返回成功
+		NVRAM0[SPREG_DK25L_VER] = DK25L_TxBuffer[2];
+		DK25L_GET_FWVER();//获取模块硬件版本号
+		delayMs(100);
+		if(LD(SPCOIL_DK25L_RXCMD_DONE)){//DK25L 返回成功
+			NVRAM0[SPREG_DK25L_VER] |= (DK25L_TxBuffer[2] << 8);
+			RES(SPCOIL_DK25L_INIT_FAIL);	
+		}
+		else{
+			SET(SPCOIL_DK25L_INIT_FAIL);	
+		}
+	}
+	else{
+		SET(SPCOIL_DK25L_INIT_FAIL);	
+	}
 }
-void DK25L_UartIsr() interrupt INTERRUPT_UART0{
+static void DK25L_UartIsr() interrupt INTERRUPT_UART0{
 	uint8_t rxDat, txDat;
 	uint16_t rxSize, txSize;
 	if(TI0){
@@ -76,7 +100,14 @@ void DK25L_UartIsr() interrupt INTERRUPT_UART0{
 }
 
 
-void DK25L_CmdSend(uint16_t sendLength){//发送DK25L指令
+static void DK25L_CmdSend(void){//发送DK25L指令
+	RES(SPCOIL_DK25L_RXCMD_DONE);
+	RES(SPCOIL_DK25L_RXCMD_DOING);	
+	RES(SPCOIL_DK25L_RXCMD_OVERFLOW);
+	RES(SPCOIL_DK25L_TXCMD_DONE);	
+	RES(SPCOIL_DK25L_TXCMD_DOING);	
+	RES(SPCOIL_DK25L_TXCMD_OVERFLOW);
+	DL25L_TXLength = (DK25L_TxBuffer[1] + 2);//第二位为发送长度
 }
 void DK25L_GET_UID(void){//获取卡片 UID
 	DK25L_TxBuffer[0] = DK25L_STX;

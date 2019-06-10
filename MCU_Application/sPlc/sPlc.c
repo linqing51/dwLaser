@@ -142,6 +142,17 @@ static void loadNvram(void){//从EPROM中载入NVRAM
 	clearTENA();
 	memcpy(NVRAM1, NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 	exitSplcIsr();
+	SET(SPCOIL_SI7060_INIT_FAIL);
+	SET(SPCOIL_MCP79412_INIT_FAIL);				
+	SET(SPCOIL_CH376_INIT_FAIL);					
+	SET(SPCOIL_SPI_FLASH_INIT_FAIL);				
+	SET(SPCOIL_DK25L_INIT_FAIL);				
+	SET(SPCOIL_NRF24L01_INIT_FAIL);		
+	SET(SPCOIL_LASER_DRIVER_INIT_FAIL);				
+	SET(SPCOIL_SAFETY_INTERLOCK_INIT_FAIL);
+	SET(SPCOIL_WIRE_FOOTCONTROL_INIT_FAIL);	
+	SET(SPCOIL_WIRELESS_FOOTCONTROL_INIT_FAIL);
+	SET(SPCOIL_PROBATION_INIT_FAIL);
 }
 static void saveNvram(void){//强制将NVRAM存入EPROM
 	enterSplcIsr();
@@ -331,7 +342,9 @@ void sPlcInit(void){//软逻辑初始化
 	mStopIfError(usbHostInit());//默认初始化为HOST
 #endif
 	enableSplcIsr();
-
+#if CONFIG_SPLC_USING_DK25L == 1
+	DL25L_Init();//打开中断后运行
+#endif
 }
 void sPlcProcessStart(void){//sPLC轮询起始
 	if(TD_1MS_SP >= 1){

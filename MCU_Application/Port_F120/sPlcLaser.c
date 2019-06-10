@@ -171,6 +171,7 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 	RCAP4 = temp;// Reload value to be used in Timer3
 	TMR4 = RCAP4;// Init the Timer3 register
 	TMR4CN = 0;//16Bit AutoReload
+	RES(SPCOIL_LASER_DRIVER_INIT_FAIL);
 	SFRPAGE = SFRPAGE_SAVE;   
 }
 

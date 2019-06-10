@@ -92,10 +92,12 @@ uint8_t	usbHostInit(void){//初始化CH376
 	res = xReadCH376Data();
 	xEndCH376Cmd();
 	if(res == CMD_RET_SUCCESS){
+		RES(SPCOIL_CH376_INIT_FAIL);
 		RES(SPCOIL_USB_INT_ERROR);
 		return(USB_INT_SUCCESS);
 	}
 	else{
+		SET(SPCOIL_CH376_INIT_FAIL);
 		SET(SPCOIL_USB_INT_ERROR);
 		return(ERR_USB_UNKNOWN);//设置模式错误
 	}

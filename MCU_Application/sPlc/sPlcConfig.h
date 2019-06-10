@@ -311,21 +311,20 @@
 #define SPCOIL_MCP79412_INIT_FAIL						(SPCOIL_START * 16 + 48)//MCP794212 RTC初始化失败
 #define SPCOIL_CH376_INIT_FAIL							(SPCOIL_START * 16 + 49)//USB HOST CH376初始化失败
 #define SPCOIL_SPI_FLASH_INIT_FAIL						(SPCOIL_START * 16 + 50)//SPI FLASH初始化失败
-#define SPCOIL_PN7150B0HN_INIT_FAIL						(SPCOIL_START * 16 + 51)//NFC初始化失败
-#define SPCOIL_NRF24L01_INIT_FAIL						(SPCOIL_START * 16 + 52)//NFC初始化失败
+#define SPCOIL_DK25L_INIT_FAIL							(SPCOIL_START * 16 + 51)//NFC模块初始化失败
+#define SPCOIL_NRF24L01_INIT_FAIL						(SPCOIL_START * 16 + 52)//NRF模块初始化失败
 #define SPCOIL_LASER_DRIVER_INIT_FAIL					(SPCOIL_START * 16 + 53)//激光驱动器初始化失败
 #define SPCOIL_SAFETY_INTERLOCK_INIT_FAIL				(SPCOIL_START * 16 + 54)//安全连锁始化失败
 #define SPCOIL_WIRE_FOOTCONTROL_INIT_FAIL				(SPCOIL_START * 16 + 55)//有线脚踏初始化失败
-#define SPCOIL_WIRELESS_FOOTCONTROL_INIT_FAIL			(SPCOIL_START * 16 + 56)//有线脚踏初始化失败
-#define SPCOIL_PROBATION_INIT_FAIL						(SPCOIL_START * 16 + 57)//有线脚踏初始化失败
+#define SPCOIL_WIRELESS_FOOTCONTROL_INIT_FAIL			(SPCOIL_START * 16 + 56)//无线脚踏初始化失败
+#define SPCOIL_PROBATION_INIT_FAIL						(SPCOIL_START * 16 + 57)//试用期初始化失败
 /*****************************************************************************/
-#define SPCOIL_DK25L_READY								(SPCOIL_START * 16 + 70)//DK25L模块就绪
-#define SPCOIL_DK25L_RXCMD_DONE							(SPCOIL_START * 16 + 71)//接收指令完成
-#define SPCOIL_DK25L_RXCMD_DOING						(SPCOIL_START * 16 + 72)//接收指令进行中
-#define SPCOIL_DK25L_RXCMD_OVERFLOW						(SPCOIL_START * 16 + 73)//接收指令溢出
-#define SPCOIL_DK25L_TXCMD_DONE							(SPCOIL_START * 16 + 74)//写指令完成
-#define SPCOIL_DK25L_TXCMD_DOING						(SPCOIL_START * 16 + 75)//写指令进行中
-#define SPCOIL_DK25L_TXCMD_OVERFLOW						(SPCOIL_START * 16 + 76)//写指令溢出						
+#define SPCOIL_DK25L_RXCMD_DONE							(SPCOIL_START * 16 + 70)//接收指令完成
+#define SPCOIL_DK25L_RXCMD_DOING						(SPCOIL_START * 16 + 71)//接收指令进行中
+#define SPCOIL_DK25L_RXCMD_OVERFLOW						(SPCOIL_START * 16 + 72)//接收指令溢出
+#define SPCOIL_DK25L_TXCMD_DONE							(SPCOIL_START * 16 + 73)//写指令完成
+#define SPCOIL_DK25L_TXCMD_DOING						(SPCOIL_START * 16 + 74)//写指令进行中
+#define SPCOIL_DK25L_TXCMD_OVERFLOW						(SPCOIL_START * 16 + 75)//写指令溢出						
 /*****************************************************************************/
 #define SPREG_CLEAR_NVRAM								(SPREG_START + 0)//清除NVRAM后重新启动
 /*****************************************************************************/
@@ -340,6 +339,8 @@
 #define SPREG_ADC_8										(SPREG_START + 9)//ADC8采集值 Temperature Sensor
 #define SPREG_DAC_0										(SPREG_START + 10)//DAC0设定值 LSET0
 #define SPREG_DAC_1										(SPREG_START + 11)//DAC0设定值 LSET1
+/*****************************************************************************/
+#define SPREG_DK25L_VER									(SPREG_START + 12)//DK25L模块版本
 /*****************************************************************************/
 #define SPREG_SPWM_POS_0								(SPREG_START + 20)//软件PWM0正脉宽设置
 #define SPREG_SPWM_POS_SHADOW_0							(SPREG_START + 21)//软件PWM0正脉宽阴影

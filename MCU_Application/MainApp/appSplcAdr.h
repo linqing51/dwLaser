@@ -1,9 +1,9 @@
 #ifndef __APPSPLCADR_H__
 #define __APPSPLCADR_H__
 /*****************************************************************************/
-#define CONFIG_APP_DIODE_HIGH_TEMP				400
-#define CONFIG_APP_DRIVE_HIGH_TEMP				650
-#define CONFIG_APP_ENVI_HIGH_TEMP				500
+#define CONFIG_APP_DIODE_HIGH_TEMP						400
+#define CONFIG_APP_DRIVE_HIGH_TEMP						650
+#define CONFIG_APP_ENVI_HIGH_TEMP						500
 /*****************************************************************************/
 #define CONFIG_HMI_SCHEME_NUM					16//方案数
 #define CONFIG_HMI_DEFAULT_PASSSWORD0			0x3433//默认密码
@@ -72,6 +72,7 @@
 #define EM_HMI_OPERA_STEP						(EM_START +	57)//操作步骤				705				
 #define EM_ERROR_CODE							(EM_START + 58)//错误码					706
 #define EM_SCHEME_NUM_TMP						(EM_START + 59)//待确认方案编号			707
+#define EM_DK25L_VER							(EM_START + 60)//DK25L模块版本			708  
 
 #define EM_DC_PAGE								(EM_START + 128)//HMI页面编号 			776
 #define EM_DC_PASSCODE_INDEX					(EM_START + 129)//密码输入位索引		777
@@ -520,7 +521,7 @@
 #define T100MS_CHECK_MCP79412_DELAY				4//
 #define T100MS_CHECK_SPI_FLASH_DELAY			5//
 #define T100MS_CHECK_CH376_DELAY				6//
-#define T100MS_CHECK_PN7150B0HN_DELAY			7//NFC读卡模块等待延迟
+#define T100MS_CHECK_DK25L_DELAY				7//NFC读卡模块等待延迟
 #define T100MS_CHECK_NRF24L01_DELAY				8//激光驱动器自检等待延迟
 #define T100MS_CHECK_TEMPERATURE_DELAY			9
 #define T100MS_CHECK_LASER_DRIVER_DELAY			10
