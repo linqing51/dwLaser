@@ -1,9 +1,9 @@
 #include "sPlcIoIn.h"
-#if CONFIG_SPLC_USING_IO_INPUT == 1
 /*****************************************************************************/
 xdata volatile int8_t inputFilter[(X_END - X_START + 1) * 16];//IO输入滤波器缓冲区
 /*****************************************************************************/
 void inputInit(void){//IO输入滤波器初始化
+#if CONFIG_SPLC_USING_IO_INPUT == 1
 	uint8_t SFRPAGE_SAVE = SFRPAGE;
 	SFRPAGE = CPT0_PAGE;   
 	CPT0MD = 0;
@@ -23,6 +23,7 @@ void inputInit(void){//IO输入滤波器初始化
 	CPT1CN |= 1 << 7;//Comparator0 Enabled.
 	SFRPAGE = SFRPAGE_SAVE;
 	memset(inputFilter, 0x0, (X_END - X_START + 1) * 16);
+#endif
 }
 
 void inputRefresh(void){//获取输入IO
@@ -188,5 +189,3 @@ void inputRefresh(void){//获取输入IO
 	}	
 	SFRPAGE = SFRPAGE_SAVE;
 }
-
-#endif

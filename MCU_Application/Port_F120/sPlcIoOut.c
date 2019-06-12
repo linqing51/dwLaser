@@ -1,7 +1,7 @@
 #include "sPlcIoOut.h"
 /*****************************************************************************/
-#if CONFIG_SPLC_USING_IO_OUTPUT == 1
 void outputInit(void){//IO输出初始化
+#if CONFIG_SPLC_USING_IO_OUTPUT == 1	
 	uint8_t SFRPAGE_SAVE = SFRPAGE;
 	SFRPAGE = CONFIG_PAGE;
 	P3 &= ~(1 << 5);//Y5
@@ -17,6 +17,7 @@ void outputInit(void){//IO输出初始化
 	P6 &= ~(1 << 2);//Y10
 	P6 &= ~(1 << 1);//Y11
 	SFRPAGE = SFRPAGE_SAVE;
+#endif
 }
 
 void outputRefresh(void){//设置输出IO
@@ -109,5 +110,3 @@ void outputRefresh(void){//设置输出IO
 	}
 	SFRPAGE = SFRPAGE_SAVE;
 }
-
-#endif

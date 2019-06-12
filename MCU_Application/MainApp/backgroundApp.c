@@ -162,25 +162,22 @@ void backgroundApp(void){//背景应用
 	else{
 		RES(R_ENVI_TEMP_HIGH);
 	}
+	
+	if(LDP(X_START + X_FBD0)){//上脉冲检测到光纤插入
+		//DL25L_MIFARE_WRITE_BLOCK(4, uint8_t *pdat)//检测NFC ID是否合规
+	}
+	if(LDN(X_START + X_FBD0)){//下脉冲检测到光纤拔出
+		//清除NFC ID
+	}
 	/************************************************************************/
-	if(LDP(R_SCHEME_LOAD_REQ)){//载入请求
-		loadScheme();
-		RES(R_SCHEME_LOAD_REQ);
-	}
-	if(LDP(R_SHCEME_SAVE_REQ)){//存储请求
-		saveScheme();
-		RES(R_SHCEME_SAVE_REQ);
-	}
-	//
-	if(LD(X_FBD0) || LD(X_FBD1) || LD(R_FIBER_ID_PASS_0) || LD(R_FIBER_ID_PASS_1) || LD(R_DIODE_TEMP_HIGH_0) || LD(R_DIODE_TEMP_HIGH_1) ||
-	   LD(R_DRIVE_TEMP_HIGH) || LD(R_ENVI_TEMP_HIGH) || LD(R_DRIVE_FAULT_0) || LD(R_DRIVE_FAULT_1) || LD(R_DRIVE_TEMP_HIGH)){
-		//SET(R_SAFE_FAULT);
-		 RES(R_SAFE_FAULT);  
+	if(LD(X_FBD0) || LD(R_FIBER_ID_PASS_0) || LD(R_DIODE_TEMP_HIGH_0) || LD(R_DRIVE_TEMP_HIGH) || LD(R_ENVI_TEMP_HIGH)){
+		SET(R_SAFE_FAULT);
+		 //RES(R_SAFE_FAULT);  
 	}
 	else{
 		RES(R_SAFE_FAULT);
 	}
-	//************************************************************************/
+	//************************************************************************/	
 }
 void PCLAR0(uint16_t POW, uint16_t CUR) reentrant{//功率->DAC CODE
 	uint8_t index;

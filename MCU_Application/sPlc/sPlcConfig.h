@@ -102,9 +102,11 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_CH376							0
 /*****************************************************************************/
-#define CONFIG_USING_SI7060								0
-#define CONFIG_USING_MCP79412							0
-#define CONFIG_USING_ONCHIPFLASH						0
+#define CONFIG_SPLC_USING_ONCHIPFLASH					0
+#define CONFIG_SPLC_USING_SI7060						0
+#define CONFIG_SPLC_USING_MCP79412						0
+#define CONFIG_SPLC_USING_SPI_FLASH						0
+#define CONFIG_SPLC_USING_NRF24L01						0
 /*****************************************************************************/
 #define CONFIG_FIRMWARE_UPDATE_PAGE_SIZE				128//FLASH单次读写容量
 #define CONFIG_FW_CONFIG_ADR							0x0000//固件配置信息起始地址
@@ -123,8 +125,8 @@
 /*****************************************************************************/
 #define CONFIG_LASER_TIMER_TICK							1000//1mS
 #define CONFIG_USING_USB_APP							0//USB应用
-#define CONFIG_USING_DCHMI_APP							0//广东大彩人机交互应用
-#define CONFIG_USING_BACKGROUND_APP						0//背景应用
+#define CONFIG_USING_DCHMI_APP							1//广东大彩人机交互应用
+#define CONFIG_USING_BACKGROUND_APP						1//背景应用
 /*****************************************************************************/
 #define CONFIG_CHECK_DELAY_TIME							5
 #define CONFIG_KEY_REPEAT_DELAY_TIME					50
@@ -314,8 +316,6 @@
 #define SPCOIL_DK25L_INIT_FAIL							(SPCOIL_START * 16 + 51)//NFC模块初始化失败
 #define SPCOIL_NRF24L01_INIT_FAIL						(SPCOIL_START * 16 + 52)//NRF模块初始化失败
 #define SPCOIL_LASER_DRIVER_INIT_FAIL					(SPCOIL_START * 16 + 53)//激光驱动器初始化失败
-#define SPCOIL_SAFETY_INTERLOCK_INIT_FAIL				(SPCOIL_START * 16 + 54)//安全连锁始化失败
-#define SPCOIL_WIRE_FOOTCONTROL_INIT_FAIL				(SPCOIL_START * 16 + 55)//有线脚踏初始化失败
 #define SPCOIL_WIRELESS_FOOTCONTROL_INIT_FAIL			(SPCOIL_START * 16 + 56)//无线脚踏初始化失败
 #define SPCOIL_PROBATION_INIT_FAIL						(SPCOIL_START * 16 + 57)//试用期初始化失败
 /*****************************************************************************/

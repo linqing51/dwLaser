@@ -1,7 +1,7 @@
 #include "sPlcPca.h"
 /*****************************************************************************/
-#if CONFIG_SPLC_USING_PCA == 1
 void sPlcPcaInit(void){//计时器阵列初始化
+#if CONFIG_SPLC_USING_PCA == 1
 	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
 	SFRPAGE = PCA0_PAGE;
     PCA0MD    = 0x08;// Use SYSCLK as time base;
@@ -13,6 +13,7 @@ void sPlcPcaInit(void){//计时器阵列初始化
     PCA0CPH2  = 0x80;
 	PCA0CN    = 0x40;
 	SFRPAGE = SFRPAGE_save;
+#endif
 }
 void sPlcAimInit(void){//指示光初始化
 	NVRAM0[SPREG_AIM0_BRIGHTNESS] = 0;
@@ -139,8 +140,6 @@ void testBenchAim(uint8_t port, uint8_t brightness){//指示光测试
 		NVRAM0[SPREG_AIM1_BRIGHTNESS] = 0xFFFF - dc;
 	}
 }
-
-#endif
 
 
 

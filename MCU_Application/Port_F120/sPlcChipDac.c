@@ -1,7 +1,7 @@
 #include "sPlcChipDac.h"
 /*****************************************************************************/
-#if CONFIG_SPLC_USING_DAC == 1
 void initChipDac(void){//DAC初始化
+#if CONFIG_SPLC_USING_DAC == 1
 	uint8_t SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE	
 	SFRPAGE = DAC0_PAGE;
     DAC0CN = 0x80;
@@ -12,6 +12,7 @@ void initChipDac(void){//DAC初始化
 	SFRPAGE = CONFIG_PAGE;
 	P4 &= 0xFB;//P4.2 = 0;//打开DAC输出
 	SFRPAGE = SFRPAGE_SAVE;
+#endif
 }
 void refreshChipDac(void){//刷新DAC
 	uint8_t SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE	
@@ -53,7 +54,6 @@ void UPDAC1(void) reentrant{//立即更新DAC1
 	}
 	SFRPAGE = SFRPAGE_SAVE;
 }
-#endif
 
 
 

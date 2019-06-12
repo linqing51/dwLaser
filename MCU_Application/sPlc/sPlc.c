@@ -149,8 +149,6 @@ static void loadNvram(void){//从EPROM中载入NVRAM
 	SET(SPCOIL_DK25L_INIT_FAIL);				
 	SET(SPCOIL_NRF24L01_INIT_FAIL);		
 	SET(SPCOIL_LASER_DRIVER_INIT_FAIL);				
-	SET(SPCOIL_SAFETY_INTERLOCK_INIT_FAIL);
-	SET(SPCOIL_WIRE_FOOTCONTROL_INIT_FAIL);	
 	SET(SPCOIL_WIRELESS_FOOTCONTROL_INIT_FAIL);
 	SET(SPCOIL_PROBATION_INIT_FAIL);
 }
@@ -296,41 +294,21 @@ void sPlcInit(void){//软逻辑初始化
 	delayMs(100);
 	setLedError(false);
 	setLedEprom(false);
-#if CONFIG_USING_SI7060 == 1
-	si7060Init();
-#endif
+	//si7060Init();
 	initSplcTimer();//初始化硬件计时器模块
 	SET(SPCOIL_ON);
-#if CONFIG_SPLC_USING_IO_INPUT == 1
 	inputInit();
-#endif
-#if CONFIG_SPLC_USING_IO_OUTPUT == 1
 	outputInit();
-#endif
-#if CONFIG_SPLC_USING_WDT == 1
-	checkWatchDog();//检查看门狗状态
+	//checkWatchDog();//检查看门狗状态
 	initWatchDog();//看门狗使能
 	disableWatchDog();//屏蔽看门狗
-#endif
-#if CONFIG_SPLC_USING_UART0 == 1
 	initUart0(CONFIG_UART0_BAUDRATE);//UART1初始化
-#endif
-#if CONFIG_SPLC_USING_UART1 == 1
-	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化
-#endif	
+	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化	
 	loadNvram();//上电恢复NVRAM
-#if CONFIG_SPLC_USING_ADC == 1
 	initChipAdc();//初始化ADC模块
-#endif
-#if CONFIG_SPLC_USING_DAC == 1
 	initChipDac();//初始化DAC模块
-#endif
-#if CONFIG_SPLC_USING_PCA == 1
 	sPlcPcaInit();
-#endif
-#if CONFIG_SPLC_USING_LASER_TIMER == 1
 	sPlcLaserInit();
-#endif
 	SET(SPCOIL_ON);
 	SET(SPCOIL_START_UP);
 	NVRAM0[SPREG_IDENTITY] = CONFIG_SPLC_DEV;

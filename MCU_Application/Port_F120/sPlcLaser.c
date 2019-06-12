@@ -1,6 +1,5 @@
 #include "sPlcLaser.h"
 /*****************************************************************************/
-#if CONFIG_SPLC_USING_LASER_TIMER == 1
 sbit LASER_CH0_MODPIN = P2^7;
 sbit LASER_CH1_MODPIN = P2^6;
 /*****************************************************************************/
@@ -161,6 +160,7 @@ void EDLAR(void) reentrant{//停止发射脉冲
 #endif
 }
 void sPlcLaserInit(void){//激光脉冲功能初始化
+#if CONFIG_SPLC_USING_LASER_TIMER ==1
 	uint16_t temp;
 	uint8_t SFRPAGE_SAVE;
 	LASER_CH0_MODPIN = 0;
@@ -172,7 +172,8 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 	TMR4 = RCAP4;// Init the Timer3 register
 	TMR4CN = 0;//16Bit AutoReload
 	RES(SPCOIL_LASER_DRIVER_INIT_FAIL);
-	SFRPAGE = SFRPAGE_SAVE;   
+	SFRPAGE = SFRPAGE_SAVE; 
+#endif
 }
 
 void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
@@ -418,4 +419,3 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 		default:break;
 	}
 }
-#endif

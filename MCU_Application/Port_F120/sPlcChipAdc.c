@@ -1,5 +1,4 @@
 #include "sPlcChipAdc.h"
-#if CONFIG_SPLC_USING_ADC == 1
 /*****************************************************************************/
 static adcTempDat_t volatile adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
 static uint8_t volatile adcSelect;//ADC通道选择
@@ -14,6 +13,7 @@ static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
 	s->wIndex = 0;
 }
 void initChipAdc(void){//ADC模块初始化
+#if CONFIG_SPLC_USING_ADC == 1
 	uint8_t i;
 	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
 	SFRPAGE = ADC0_PAGE;
@@ -31,6 +31,7 @@ void initChipAdc(void){//ADC模块初始化
 	for(i = 0;i <= CONFIG_SPLC_ADC_CHANNLE;i ++){
 		initAdcData(&adcTempDat[i]);
 	}
+#endif
 }
 void chipAdcProcess(void){//循环采集ADC
 	uint16_t result = 0;
@@ -114,4 +115,3 @@ void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值
 	temp = (uint16_t)(sum / (uint32_t)CONFIG_SPLC_ADC_FILTER_TAP);
 	s->out = temp;
 }
-#endif

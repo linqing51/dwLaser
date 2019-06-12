@@ -1,7 +1,7 @@
 #include "sPlcUart.h"
 /*****************************************************************************/
-#if CONFIG_SPLC_USING_UART0 == 1
 void initUart0(uint32_t baudrate){//初始化串口0
+#if CONFIG_SPLC_USING_UART0 == 1	
 	uint8_t SFRPAGE_SAVE = SFRPAGE;             // Preserve SFRPAGE	
 	uint16_t temp;
 	SFRPAGE = TMR2_PAGE;// Set SFR page
@@ -21,11 +21,11 @@ void initUart0(uint32_t baudrate){//初始化串口0
 	TI0 = 0;//清除发送完成   		
 	RI0 = 0;//清除接收完成	
 	SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
-}
 #endif
+}
 
-#if CONFIG_SPLC_USING_UART1 == 1
 void initUart1(uint32_t baudrate){
+#if CONFIG_SPLC_USING_UART1 == 1
 	uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
 	SFRPAGE = UART1_PAGE;
 	SCON1 = 0x10;// SCON1: mode 0, 8-bit UART, enable RX
@@ -40,5 +40,5 @@ void initUart1(uint32_t baudrate){
 	//EIE2 &= 0xBF;//关闭串口1中断
 	EIE2 |= 1 << 6;
 	EIP2 |= 1<<6;//UART1高优先级
-}
 #endif
+}
