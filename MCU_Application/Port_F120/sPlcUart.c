@@ -29,8 +29,10 @@ void initUart1(uint32_t baudrate){
 	uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
 	SFRPAGE = UART1_PAGE;
 	SCON1 = 0x10;// SCON1: mode 0, 8-bit UART, enable RX
-
 	SFRPAGE = TIMER01_PAGE;
+	CKCON &= 0xFC;
+	CKCON |= 1 << 1;//System clock divided by 48
+	CKCON &= 0xEF;//Timer 1 uses the clock defined by the prescale bits, SCA1¡VSCA0
 	TMOD &= ~0xF0;
 	TMOD |=  0x20;                    // TMOD: timer 1, mode 2, 8-bit reload
 	TH1 = -(CONFIG_SYSCLK / baudrate / 2 / 48);

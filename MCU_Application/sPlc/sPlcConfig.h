@@ -43,7 +43,7 @@
 #define CONFIG_EPROM_FRAM								1//铁电存储体无写入等待
 #define CONFIG_EPROM_PAGEWRITE							0//页写入
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_SPWM							0//使了软件PWM功能
+#define CONFIG_SPLC_USING_SPWM							1//使了软件PWM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_FUN_EPID							0//使能SPLC扩展指令
 #define CONFIG_SPLC_FUNTEST								0//功能指令测试
@@ -56,15 +56,19 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT							0//看门狗启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_INPUT						0//输入IO刷新启用
+#define CONFIG_SPLC_USING_IO_INPUT						1//输入IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_OUTPUT						0//输出IO刷新启用
+#define CONFIG_SPLC_USING_IO_OUTPUT						1//输出IO刷新启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_PCA							0//片内计数器阵列
 #define CONFIG_PCA_TICK									8000
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM							0//EPROM 
+#define CONFIG_SPLC_USING_EPROM							1//EPROM
+#if CONFIG_SPLC_USING_EPROM == 1
+#define CONFIG_SPLC_USING_CLEAR_NVRAM					1//启用清除NVRAM功能
+#else
 #define CONFIG_SPLC_USING_CLEAR_NVRAM					0//启用清除NVRAM功能
+#endif
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_UART0							1//UART 0串口启用
 #define CONFIG_SPLC_USING_UART0_ISR						1
@@ -74,8 +78,8 @@
 #define CONFIG_SPLC_USING_UART1_ISR						1
 #define UART1											1
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ADC							0//使能ADC模块
-#define CONFIG_SPLC_ADC_FILTER_TAP						16//ADC位移滤波次数
+#define CONFIG_SPLC_USING_ADC							1//使能ADC模块
+#define CONFIG_SPLC_ADC_FILTER_TAP						10//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE							9//ADC通道数
 #define CONFIG_ADC_TEMP_SENSOR_GAIN    					3330L// Temp Sensor Gain in (uV / degC)
 #define CONFIG_ADC_TEMP_SENSOR_OFFSET  					856L// Temp Sensor Offset in mV
@@ -86,7 +90,7 @@
 #define CONFIG_NTC_RB									10000L
 #define CONFIG_NTC_VREF									5000L
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_DAC							0//是能DAC模块
+#define CONFIG_SPLC_USING_DAC							1//是能DAC模块
 /*****************************************************************************/
 #define CONFIG_USING_RTU_SLAVE							0//使能MODBUS RTU从站
 #define CONFIG_MB_PORT									UART0
@@ -96,17 +100,19 @@
 #define CONFIG_MB_RTU_SLAVE_TIMEOUT						20//接收通讯超时 10mS
 #define CONFIG_MB_RTU_SLAVE_IO_DELAY					1//RX TX切换延时
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_DK25L							1//SPLC使能NFC功能
+#define CONFIG_SPLC_USING_DK25L							0//SPLC使能NFC功能
 #define CONFIG_DK25L_RXBUF_SIZE							24
 #define CONFIG_DK25L_TXBUF_SIZE							24
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_CH376							0
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ONCHIPFLASH					0
-#define CONFIG_SPLC_USING_SI7060						0
+#define CONFIG_SPLC_USING_SI7060						1
 #define CONFIG_SPLC_USING_MCP79412						0
 #define CONFIG_SPLC_USING_SPI_FLASH						0
 #define CONFIG_SPLC_USING_NRF24L01						0
+#define CONFIG_SPLC_USING_WIRELESS_FOOTCONTROL			0//使能无线脚踏
+#define CONFIG_SPLC_USING_ROBATION						0//使能试用期功能
 /*****************************************************************************/
 #define CONFIG_FIRMWARE_UPDATE_PAGE_SIZE				128//FLASH单次读写容量
 #define CONFIG_FW_CONFIG_ADR							0x0000//固件配置信息起始地址
@@ -120,7 +126,7 @@
 #define CONFIG_FW_MCU_FILE_LOAD_NAME					"/dwLaserNE.bin"//单片机固件名称
 #define CONFIG_FW_MCU_FILE_SAVE_NAME					"/dwLaserOD.bib"//
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_LASER_TIMER					0
+#define CONFIG_SPLC_USING_LASER_TIMER					1
 #define CONFIG_SPLC_USING_LASER_TIMER_TEST				0
 /*****************************************************************************/
 #define CONFIG_LASER_TIMER_TICK							1000//1mS

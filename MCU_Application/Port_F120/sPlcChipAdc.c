@@ -1,7 +1,7 @@
 #include "sPlcChipAdc.h"
 /*****************************************************************************/
-static adcTempDat_t volatile adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
-static uint8_t volatile adcSelect;//ADC通道选择
+static adcTempDat_t adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
+static uint8_t adcSelect;//ADC通道选择
 static void initAdcData(adcTempDat_t *s);
 /*****************************************************************************/
 static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
@@ -28,7 +28,7 @@ void initChipAdc(void){//ADC模块初始化
 	AD0BUSY = 1;//AD0BUSY写入1
 	SFRPAGE = SFRPAGE_SAVE;             // Restore SFR page
 	adcSelect = 0;
-	for(i = 0;i <= CONFIG_SPLC_ADC_CHANNLE;i ++){
+	for(i = 0;i < CONFIG_SPLC_ADC_CHANNLE;i ++){
 		initAdcData(&adcTempDat[i]);
 	}
 #endif

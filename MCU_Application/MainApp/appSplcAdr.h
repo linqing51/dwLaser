@@ -377,6 +377,9 @@
 
 #define R_OPTION_KEY_ENTER_OK_DOWN				(R_START * 16 + 205)
 #define R_OPTION_KEY_ENTER_OK_UP				(R_START * 16 + 206)
+
+#define R_OPTION_KEY_ENTER_DIAG_DOWN			(R_START * 16 + 206)
+#define R_OPTION_KEY_ENTER_DIAG_UP				(R_START * 16 + 206)
 /*****************************************************************************/
 #define R_INFORMATION_KEY_OK_DOWN				(R_START * 16 + 207)
 #define R_INFORMATION_KEY_OK_UP					(R_START * 16 + 208)

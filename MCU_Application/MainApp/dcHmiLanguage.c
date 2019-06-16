@@ -148,3 +148,27 @@ code char LANG_WARN_MSG_ESTOP_PRESS[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] =
 	"ESTOP Press",
 	"急停开关按下"
 };
+code char LANG_WARN_MSG_FIBER_UNPLUG[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] = {
+	"Fiber Unplug",
+	"光纤未插入"
+};
+code char LANG_WARN_MSG_FIBER_MISSMATE[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] = {
+	"Fiber Unmate",
+	"光纤不匹配"
+};
+code char LANG_WARN_MSG_DIODE0_HTEMP[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] = {
+	"Diode 0 High Temperature",
+	"激光器 0 高温"
+};
+code char LANG_WARN_MSG_DIODE1_HTEMP[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] = {
+	"Diode 1 High Temperature",
+	"激光器 1 高温"
+};
+code char LANG_WARN_MSG_ENVI_HTEMP[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] = {
+	"Envi High Temperature",
+	"环境高温"
+};
+code char LANG_WARN_MSG_DRIVE_HTEMP[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] = {
+	"PowerSupply High Temperature",
+	"电源高温"
+};
