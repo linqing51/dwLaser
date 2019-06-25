@@ -238,9 +238,7 @@
 #define R_DIODE_TEMP_HIGH_1						(R_START * 16 + 3)//通道1二极管高温标志
 #define R_DRIVE_TEMP_HIGH						(R_START * 16 + 4)//驱动器高温标志
 #define R_ENVI_TEMP_HIGH						(R_START * 16 + 5)//环境温度标度
-#define R_DRIVE_FAULT_0							(R_START * 16 + 6)//通道0驱动器故障标志
-#define R_DRIVE_FAULT_1							(R_START * 16 + 7)//通道1驱动器故障标志
-#define R_SAFE_FAULT							(R_START * 16 + 8)//安全标志
+#define R_FAULT									(R_START * 16 + 8)//故障标志
 //HMI相关状态
 #define R_DCHMI_RESET_REQ						(R_START * 16 + 47)//HMI复位请求
 #define R_DCHMI_RESET_DOING						(R_START * 16 + 48)//HMI复位中

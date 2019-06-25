@@ -136,6 +136,10 @@ code char LANG_TEXT_LANGUAGE[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] = {
 	"Language",
 	"语言"
 };
+code char LANG_WARN_MSG_NO_ERROR[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] = {
+	"No Error",
+	"无故障"
+};
 code char LANG_WARN_MSG_INTERLOCK_UNPLUG[DEF_LANG_NUM][DEF_LANG_CHECK_DISPLAY_SIZE] = {
 	"InterLock UnPlug",
 	"安全连锁拔出"

@@ -170,13 +170,13 @@ void backgroundApp(void){//背景应用
 		//清除NFC ID
 	}
 	/************************************************************************/
-	if(LD(X_FBD0) || LD(R_FIBER_ID_PASS_0) || LD(R_DIODE_TEMP_HIGH_0) || LD(R_DRIVE_TEMP_HIGH) || LD(R_ENVI_TEMP_HIGH)){
-		SET(R_SAFE_FAULT);
-		 //RES(R_SAFE_FAULT);  
-	}
-	else{
-		RES(R_SAFE_FAULT);
-	}
+//	if(LD(X_FBD0) || LD(R_FIBER_ID_PASS_0) || LD(R_DIODE_TEMP_HIGH_0) || LD(R_DRIVE_TEMP_HIGH) || LD(R_ENVI_TEMP_HIGH)){
+//		SET(R_SAFE_FAULT);
+//		 //RES(R_SAFE_FAULT);  
+//	}
+//	else{
+//		RES(R_SAFE_FAULT);
+//	}
 	//************************************************************************/	
 }
 void PCLAR0(uint16_t POW, uint16_t CUR) reentrant{//功率->DAC CODE
