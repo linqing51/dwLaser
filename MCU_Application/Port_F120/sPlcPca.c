@@ -58,6 +58,7 @@ void sPlcAimLoop(void){//
 void sPlcBeemInit(void){//·äÃùÆ÷³õÊ¼»¯
 	NVRAM0[SPREG_BEEM_VOLUME] = 0;
 	NVRAM0[SPREG_BEEM_MODE] = 0;
+	NVRAM0[SPREG_BEEM_COUNTER] = 0;
 	RES(SPCOIL_BEEM_ENABLE);
 }
 void sPlcBeemLoop(void){//·äÃùÆ÷ÂÖÑ¯
@@ -67,53 +68,49 @@ void sPlcBeemLoop(void){//·äÃùÆ÷ÂÖÑ¯
 				if(NVRAM0[SPREG_BEEM_VOLUME] != NVRAM1[SPREG_BEEM_VOLUME]){
 					PCA0CP2 = 0xFFFF - (uint16_t)NVRAM0[SPREG_BEEM_VOLUME];
 					NVRAM1[SPREG_BEEM_VOLUME] = NVRAM0[SPREG_BEEM_VOLUME];
-					#if CONFIG_DEBUG_PCA == 1
-					debugBeem = true;
-					#endif
 				}
 			}
 			else{
 				PCA0CP2 = 0xFFFF;
-				#if CONFIG_DEBUG_PCA == 1
-				debugBeem = false;
-				#endif
 			}
 			break;
 		}
-		case BEEM_MODE_1:{//Ä£Ê½1 ¶Ì¼ä¸ô
-			if(NVRAM0[SPREG_BEEM_COUNTER] >= 50){
-				if(PCA0CP2 == 0xFFFF){//BEEM OFF
-					PCA0CP2 = 0xFFFF - (uint16_t)NVRAM0[SPREG_BEEM_VOLUME];			
-					#if CONFIG_DEBUG_PCA == 1
-					debugBeem = true;
-					#endif
+		case BEEM_MODE_1:{//Ä£Ê½1 µÎµÎÁ½ÏÂÒ»Í£
+			if(LD(SPCOIL_BEEM_ENABLE)){
+				if(NVRAM0[SPREG_BEEM_COUNTER] == 1){//1
+					PCA0CP2 = 0xFFFF - (uint16_t)NVRAM0[SPREG_BEEM_VOLUME];	
 				}
-				else{
+				else if(NVRAM0[SPREG_BEEM_COUNTER] == 100){//0
 					PCA0CP2 = 0xFFFF;
-					#if CONFIG_DEBUG_PCA == 1
-					debugBeem = false;
-					#endif
 				}
+				else if(NVRAM0[SPREG_BEEM_COUNTER] == 200){//1
+					PCA0CP2 = 0xFFFF - (uint16_t)NVRAM0[SPREG_BEEM_VOLUME];	
+				}
+				else if(NVRAM0[SPREG_BEEM_COUNTER] == 300){//0
+					PCA0CP2 = 0xFFFF;
+				}
+				else if(NVRAM0[SPREG_BEEM_COUNTER] >= 1500){//Í£1Ãë
+					NVRAM0[SPREG_BEEM_COUNTER] = 0;
+				}
+				NVRAM0[SPREG_BEEM_COUNTER] ++;
+			}
+			else{
+				PCA0CP2 = 0xFFFF;
 				NVRAM0[SPREG_BEEM_COUNTER] = 0;
 			}
 			break;
 		}
 		case BEEM_MODE_2:{//Ä£Ê½2 ³¤¼ä¸ô
-			if(NVRAM0[SPREG_BEEM_COUNTER] >= 200){
-				if(PCA0CP2 == 0xFFFF){//BEEM OFF
-					PCA0CP2 = 0xFFFF - (uint16_t)NVRAM0[SPREG_BEEM_VOLUME];
-					#if CONFIG_DEBUG_PCA == 1
-					debugBeem = true;
-					#endif
-				}
-				else{
-					PCA0CP2 = 0xFFFF;
-					#if CONFIG_DEBUG_PCA == 1
-					debugBeem = true;
-					#endif
-				}
+			if(NVRAM0[SPREG_BEEM_COUNTER] == 1){//1
+				PCA0CP2 = 0xFFFF - (uint16_t)NVRAM0[SPREG_BEEM_VOLUME];
+			}
+			else if(NVRAM0[SPREG_BEEM_COUNTER] == 500){//0
+				PCA0CP2 = 0xFFFF;
+			}
+			else if(NVRAM0[SPREG_BEEM_COUNTER] == 1000){
 				NVRAM0[SPREG_BEEM_COUNTER] = 0;
 			}
+			NVRAM0[SPREG_BEEM_COUNTER] ++;
 			break;
 		}
 		default:break;

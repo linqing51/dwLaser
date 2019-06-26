@@ -326,6 +326,10 @@ void sPlcInit(void){//软逻辑初始化
 }
 void sPlcProcessStart(void){//sPLC轮询起始
 	if(TD_1MS_SP >= 1){
+#if CONFIG_SPLC_USING_PCA == 1	
+		sPlcBeemLoop();	
+		sPlcAimLoop();
+#endif
 		FLIP(SPCOIL_PS1MS);
 		TD_1MS_SP = 0;
 	}
@@ -378,10 +382,6 @@ void sPlcProcessStart(void){//sPLC轮询起始
 #endif
 #if CONFIG_SPLC_USING_SPWM == 1
 	sPlcSpwmLoop();
-#endif
-#if CONFIG_SPLC_USING_PCA == 1	
-	sPlcBeemLoop();	
-	sPlcAimLoop();
 #endif
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();

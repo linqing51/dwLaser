@@ -37,8 +37,6 @@
 #define FSMSTEP_SCHEME								800//方案菜单
 #define FSMSTEP_DIAGNOSIS  							900//诊断菜单
 #define FSMSTEP_CORRECTION							10000//功率校正
-//
-#define FSMSTEP_FAULT								-1//故障状态
 /*****************************************************************************/
 #define FLASH_DATA_VERSION  						0XAABB0000
 #define FLASH_DATA_ADDR     						0X00000000
@@ -418,20 +416,31 @@ void dcHmiLoop(void){//HMI轮训程序
         } 
 	}
 	//状态机
-	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_FAULT){//故障步骤
-		if(LD(R_SAFE_FAULT)){
-			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_FAULT;
-			SET(Y_LED_ALARM);//故障灯亮
-			SET(SPCOIL_BEEM_ENABLE);//蜂鸣器常响
-			
-		}
-		else{
-			RES(Y_LED_ALARM);//故障灯亮
-			RES(SPCOIL_BEEM_ENABLE);//蜂鸣器常响
-			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
-		}
+	//检查故障状态
+	if(LD(X_INTERLOCK)){
+		SET(R_FAULT);
 	}
+	else if(LD(X_FOOTSWITCH_NC)){
+		SET(R_FAULT);
+	}
+	else if(LD(X_FBD0)){
+		SET(R_FAULT);
+	}
+	else if(LD(R_FIBER_ID_PASS_0)){
+		SET(R_FAULT);
+	}
+	else if(LD(R_DIODE_TEMP_HIGH_0)){
+		SET(R_FAULT);
+	}
+	else if(LD(R_ENVI_TEMP_HIGH)){
+		SET(R_FAULT);
+	}
+	else if(LD(R_DRIVE_TEMP_HIGH)){
+		SET(R_FAULT);
+	}
+	
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_POWERUP){//上电步骤	
+		SET(Y_LED_POWERON);//电源灯常亮
 #if CONFIG_USING_BACKGROUND_APP == 1
 		loadScheme();//从掉电存储寄存器中恢复方案参数
 #endif
@@ -1088,28 +1097,6 @@ void dcHmiLoop(void){//HMI轮训程序
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_STANDBY_KEY_OPTION_DOWN);
 		}
-		//检查故障状态
-		if(LD(X_INTERLOCK)){
-			SET(R_FAULT);
-		}
-		else if(LD(X_FOOTSWITCH_NC)){
-			SET(R_FAULT);
-		}
-		else if(LD(X_FBD0)){
-			SET(R_FAULT);
-		}
-		else if(LD(R_FIBER_ID_PASS_0)){
-			SET(R_FAULT);
-		}
-		else if(LD(R_DIODE_TEMP_HIGH_0)){
-			SET(R_FAULT);
-		}
-		else if(LD(R_ENVI_TEMP_HIGH)){
-			SET(R_FAULT);
-		}
-		else if(LD(R_DRIVE_TEMP_HIGH)){
-			SET(R_FAULT);
-		}
 		//刷新故障显示
 		if(LDP(X_INTERLOCK)){//安全连锁拔出
 			SetTextValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_WARN, LANG_WARN_MSG_INTERLOCK_UNPLUG[NVRAM0[DM_LANGUAGE]]);
@@ -1132,9 +1119,16 @@ void dcHmiLoop(void){//HMI轮训程序
 		else if(LDP(R_DRIVE_TEMP_HIGH)){//驱动器过热
 			SetTextValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_WARN, LANG_WARN_MSG_DRIVE_HTEMP[NVRAM0[DM_LANGUAGE]]);
 		}
-		if(LDB(R_FAULT)){
+		if(LDP(R_FAULT)){
+			SET(Y_LED_ALARM);//报警灯
+			NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_2;
+			NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_VOLUME];
+			SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器	//打开故障警示蜂鸣器
+		}
+		if(LDN(R_FAULT)){
+			RES(Y_LED_ALARM);
 			SetTextValue(GDDC_PAGE_STANDBY, GDDC_PAGE_STANDBY_TEXTDISPLAY_WARN, LANG_WARN_MSG_NO_ERROR[NVRAM0[DM_LANGUAGE]]);
-		}		
+		}
 		if(LD(R_STANDBY_KEY_ENTER_READY_DOWN) && LDB(R_FAULT)){//点击READY			
 			NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_0;
 			NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_VOLUME];
@@ -1177,10 +1171,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_WAIT_TRIGGER){//等待触发激光
-		if(LD(R_SAFE_FAULT)){
-			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_FAULT;	
-		}
-		else if(LD(R_READY_KEY_READY_DOWN)){//回到等待状态
+		if(LD(R_READY_KEY_READY_DOWN) || LD(R_FAULT)){//回到等待状态
 			EDLAR();//停止发射			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY;//切换待机页面
@@ -1210,12 +1201,15 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_EMITING){//发激光中
-		if(LD(R_SAFE_FAULT)){//发现故障
-			EDLAR();
-			RES(SPCOIL_BEEM_ENABLE);//打开蜂鸣器	
-			SET(R_STANDBY_KEY_ENTER_READY_DOWN);
-			RES(R_STANDBY_KEY_ENTER_READY_UP);							
-			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_FAULT;
+		if(LD(R_FAULT)){//发现故障
+			EDLAR();			
+			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
+			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY;//切换待机页面
+			updateStandbyDisplay();
+			SetScreen(NVRAM0[EM_DC_PAGE]);
+			SetButtonValue(GDDC_PAGE_READY, GDDC_PAGE_READY_KEY_READY, 0);
+			RES(R_READY_KEY_READY_DOWN);
+			
 		}
 		else if(LD(MR_FOOSWITCH_HAND_SWITCH)){//上升沿触发
 			if(LDP(X_FOOTSWITCH_NO)){//关闭激光
