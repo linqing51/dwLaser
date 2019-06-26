@@ -10,7 +10,7 @@
 #define CONFIG_HMI_DEFAULT_PASSSWORD1			0x3231//默认密码
 #define STATUS_LASER_READY						0x5A
 #define STATUS_LASER_STANDBY					0xA5
-#define BEEM_MODE_BEEP							0x1234
+#define BEEM_MODE_SYNC							0x1234//声光同步
 #define BEEM_MODE_TONE							0x4321
 #define AIM_MODE_CW_GREEN						0x5678//连续绿色
 #define AIM_MODE_CW_RED							0x9ABC//连续红色
@@ -239,6 +239,8 @@
 #define R_DRIVE_TEMP_HIGH						(R_START * 16 + 4)//驱动器高温标志
 #define R_ENVI_TEMP_HIGH						(R_START * 16 + 5)//环境温度标度
 #define R_FAULT									(R_START * 16 + 8)//故障标志
+#define R_LASER_EMIT_0							(R_START * 16 + 8)//激光通道0发射指示
+#define R_LASER_EMIT_1							(R_START * 16 + 8)//激光通道1发射指示
 //HMI相关状态
 #define R_DCHMI_RESET_REQ						(R_START * 16 + 47)//HMI复位请求
 #define R_DCHMI_RESET_DOING						(R_START * 16 + 48)//HMI复位中

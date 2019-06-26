@@ -2,6 +2,8 @@
 /*****************************************************************************/
 sbit LASER_CH0_MODPIN = P2^7;
 sbit LASER_CH1_MODPIN = P2^6;
+static fp32_t LaserReleaseTime;//激光发射时间
+static fp32_t LaserReleaseEnergy;//激光发射能量
 /*****************************************************************************/
 static void initTimer4(void);
 /*****************************************************************************/
@@ -158,6 +160,7 @@ void EDLAR(void) reentrant{//停止发射脉冲
 #endif
 	RES(SPCOIL_LASER_EMITING);//发射标志置位
 #endif
+	
 }
 void sPlcLaserInit(void){//激光脉冲功能初始化
 #if CONFIG_SPLC_USING_LASER_TIMER ==1
@@ -191,26 +194,12 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 #endif
 				LASER_CH0_MODPIN = true;				
 			}
-			else{
-				NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-				UPDAC0();//DAC立即输出计时器值
-#endif
-				LASER_CH0_MODPIN = false;
-			}
 			if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH1){//1470激光通道
 				NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
 				UPDAC1();//DAC立即输出计时器值
 #endif
 				LASER_CH1_MODPIN = true; 
-			}
-			else{
-				NVRAM0[SPREG_DAC_1] = 0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-				UPDAC1();//DAC立即输出计时器值
-#endif
-				LASER_CH1_MODPIN = false; 
 			}
 			if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){//0+1激光通道
 				NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器

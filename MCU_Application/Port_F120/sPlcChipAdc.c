@@ -38,11 +38,11 @@ void chipAdcProcess(void){//Ñ­»·²É¼¯ADC
 	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
 	uint8_t adcOverTime = 0;
 	SFRPAGE = ADC0_PAGE;
-//	while(1){
-//		adcOverTime ++;
-//		if(AD0INT != 1 || (adcOverTime > 250))
-//			break;
-//	}
+	while(1){
+		adcOverTime ++;
+		if(AD0INT != 1 || (adcOverTime > 250))
+			break;
+	}
 	result = (ADC0 & 0x0FFF);
 	refreshAdcData(&adcTempDat[adcSelect], result);
 	NVRAM0[SPREG_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;

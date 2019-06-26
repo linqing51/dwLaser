@@ -64,11 +64,8 @@ void sPlcBeemInit(void){//·äÃùÆ÷³õÊ¼»¯
 void sPlcBeemLoop(void){//·äÃùÆ÷ÂÖÑ¯
 	switch(NVRAM0[SPREG_BEEM_MODE]){
 		case BEEM_MODE_0:{//Ä£Ê½0 CW
-			if(LD(SPCOIL_BEEM_ENABLE)){
-				if(NVRAM0[SPREG_BEEM_VOLUME] != NVRAM1[SPREG_BEEM_VOLUME]){
-					PCA0CP2 = 0xFFFF - (uint16_t)NVRAM0[SPREG_BEEM_VOLUME];
-					NVRAM1[SPREG_BEEM_VOLUME] = NVRAM0[SPREG_BEEM_VOLUME];
-				}
+			if(LD(SPCOIL_BEEM_ENABLE)){	
+				PCA0CP2 = 0xFFFF - (uint16_t)NVRAM0[SPREG_BEEM_VOLUME];		
 			}
 			else{
 				PCA0CP2 = 0xFFFF;
@@ -101,16 +98,22 @@ void sPlcBeemLoop(void){//·äÃùÆ÷ÂÖÑ¯
 			break;
 		}
 		case BEEM_MODE_2:{//Ä£Ê½2 ³¤¼ä¸ô
-			if(NVRAM0[SPREG_BEEM_COUNTER] == 1){//1
-				PCA0CP2 = 0xFFFF - (uint16_t)NVRAM0[SPREG_BEEM_VOLUME];
+			if(LD(SPCOIL_BEEM_ENABLE)){
+				if(NVRAM0[SPREG_BEEM_COUNTER] == 1){//1
+					PCA0CP2 = 0xFFFF - (uint16_t)NVRAM0[SPREG_BEEM_VOLUME];
+				}
+				else if(NVRAM0[SPREG_BEEM_COUNTER] == 500){//0
+					PCA0CP2 = 0xFFFF;
+				}
+				else if(NVRAM0[SPREG_BEEM_COUNTER] == 1000){
+					NVRAM0[SPREG_BEEM_COUNTER] = 0;
+				}
+				NVRAM0[SPREG_BEEM_COUNTER] ++;
 			}
-			else if(NVRAM0[SPREG_BEEM_COUNTER] == 500){//0
+			else{
 				PCA0CP2 = 0xFFFF;
-			}
-			else if(NVRAM0[SPREG_BEEM_COUNTER] == 1000){
 				NVRAM0[SPREG_BEEM_COUNTER] = 0;
 			}
-			NVRAM0[SPREG_BEEM_COUNTER] ++;
 			break;
 		}
 		default:break;
