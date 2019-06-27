@@ -107,6 +107,7 @@
 #define GDDC_PAGE_STANDBY_PROGRESS_CH0				38
 #define GDDC_PAGE_STANDBY_PROGRESS_CH1				39
 #define GDDC_PAGE_STANDBY_ICO_WARNING				40
+#define GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER	41
 #define GDDC_PAGE_STANDBY_KEY_SCHEME_DEFAULT		99
 /*****************************************************************************/
 #define GDDC_PAGE_READY_KEY_READY							1
