@@ -9,8 +9,8 @@ void defaultScheme(void){//当前选择方案恢复默认值
 	NVRAM0[EM_LASER_POWER_CH1] = 59;//通道1功率
 	NVRAM0[EM_LASER_POSWIDTH] = 500;//正脉宽
 	NVRAM0[EM_LASER_NEGWIDTH] = 400;//负脉宽
-	NVRAM0[EM_LASER_GROUP] = 20;//脉冲数
-	NVRAM0[EM_LASER_SPACE] = 100;//脉冲间隔
+	NVRAM0[EM_LASER_TIMES] = 20;//脉冲数
+	NVRAM0[EM_LASER_GROUP_OFF] = 100;//脉冲间隔
 }
 void reloadCorrTab(void){//恢复功率校正参数
 	NVRAM0[DM_CORR_TAB0_POWER0] = POWER_REAL_CH0_0P;
