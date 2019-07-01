@@ -3,14 +3,21 @@
 void sPlcPcaInit(void){//计时器阵列初始化
 #if CONFIG_SPLC_USING_PCA == 1
 	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
+	SFRPAGE = TIMER01_PAGE
+	//T0 CLK = SYSCLK /48
+	TH0 = 0xFF;         
+	TL0 = TH0;
+	TMOD &= 0xF0;
+	TMOD |= 0x02;// Timer0 in 8-bit reload mode
+	TCON |= 0x10;// Timer0 ON
 	SFRPAGE = PCA0_PAGE;
-    PCA0MD    = 0x08;// Use SYSCLK as time base;
-    PCA0CPM0  = 0xC2;
-    PCA0CPM1  = 0xC2;
-    PCA0CPM2  = 0xC2;
-    PCA0CPH0  = 0x80;
-    PCA0CPH1  = 0x80;
-    PCA0CPH2  = 0x80;
+    PCA0MD    = 0x04;// Use Timer 0 overflow
+	PCA0CPM0  = 0x42;//8BIT PWM
+    PCA0CPM1  = 0x42;//8BIT PWM
+    PCA0CPM2  = 0x42;//8BIT PWM
+    PCA0CPH0  = 0xFF;
+    PCA0CPH1  = 0xFF;
+    PCA0CPH2  = 0xFF;
 	PCA0CN    = 0x40;
 	SFRPAGE = SFRPAGE_save;
 #endif

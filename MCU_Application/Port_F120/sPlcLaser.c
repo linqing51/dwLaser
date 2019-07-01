@@ -178,7 +178,58 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 	SFRPAGE = SFRPAGE_SAVE; 
 #endif
 }
-
+static void laserStart(void){//按通道选择打开激光
+	if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH0){//0激光通道
+		NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
+#if CONFIG_SPLC_USING_DAC == 1
+		UPDAC0();//DAC立即输出计时器值
+#endif
+		LASER_CH0_MODPIN = true; 
+	}
+	else{
+		NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
+#if CONFIG_SPLC_USING_DAC == 1
+		UPDAC0();//DAC立即输出计时器值
+#endif
+		LASER_CH0_MODPIN = false;
+	}
+	if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH1){//1激光通道
+		NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
+#if CONFIG_SPLC_USING_DAC == 1
+		UPDAC1();//DAC立即输出计时器值
+#endif
+		LASER_CH1_MODPIN = true; 
+	}
+	else{
+		NVRAM0[SPREG_DAC_1] = 0;//电流值写入DAC寄存器
+#if CONFIG_SPLC_USING_DAC == 1
+		UPDAC1();//DAC立即输出计时器值
+#endif
+		LASER_CH1_MODPIN = false; 
+	}
+	if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){
+		NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
+		NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
+#if CONFIG_SPLC_USING_DAC == 1
+		UPDAC0();//DAC立即输出计时器值
+		UPDAC1();//DAC立即输出计时器值
+#endif
+		LASER_CH0_MODPIN = true; 
+		LASER_CH1_MODPIN = true; 
+	}	
+}
+static void laserStop(void){//按通道选择关闭激光
+	NVRAM0[SPREG_DAC_0] = 0x0;//电流值写入DAC寄存器
+#if CONFIG_SPLC_USING_DAC == 1
+	UPDAC0();//DAC立即输出计时器值
+#endif
+	NVRAM0[SPREG_DAC_1] = 0x0;//电流值写入DAC寄存器
+#if CONFIG_SPLC_USING_DAC == 1
+	UPDAC1();//DAC立即输出计时器值
+#endif
+	LASER_CH0_MODPIN = false;
+	LASER_CH1_MODPIN = false;//翻转输出		
+}
 void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 	uint8_t SFRPAGE_save;	
 	SFRPAGE_save = SFRPAGE;
@@ -187,142 +238,67 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 	SFRPAGE = SFRPAGE_save;
 	switch(NVRAM0[SPREG_LASER_MODE]){
 		case LASER_MODE_CW:{//CW连续模式
-			if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH0){//0激光通道
-				NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-				UPDAC0();//DAC立即输出计时器值
-#endif
-				LASER_CH0_MODPIN = true;				
+			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){
+				laserStart();
+				if(NVRAM0[DM_BEEM_MODE] == BEEM_MODE_SYNC){//声光同步模式
+					NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_1;	
+				}
+				else{//固定滴滴
+					NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_2;
+				}
+				NVRAM0[SPREG_BEEM_FREQ] = CONFIG_BEEM_FREQ;
+				NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_VOLUME];
+				SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
+				NVRAM0[SPREG_LASER_TCOUNTER] ++;
 			}
-			if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH1){//1470激光通道
-				NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-				UPDAC1();//DAC立即输出计时器值
+			else{
+#if CONFIG_USING_DCHMI_APP == 1
+				ADLS1(EM_RELEASE_TOTAL_TIME);//发射时间累计
+				ADDS32(EM_RELEASE_TOTAL_ENERGY, EM_TOTAL_POWER, EM_RELEASE_TOTAL_ENERGY);
 #endif
-				LASER_CH1_MODPIN = true; 
-			}
-			if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){//0+1激光通道
-				NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
-				NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-				UPDAC0();//DAC立即输出计时器值
-				UPDAC1();//DAC立即输出计时器值
-#endif
-				LASER_CH0_MODPIN = true;	
-				LASER_CH1_MODPIN = false; 				
 			}
 			break;
 		}
-		case LASER_MODE_EVLA_SIGNAL:{//SP单脉冲模式
-			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转
-				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH0){//0激光通道
-					NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-					UPDAC0();//DAC立即输出计时器值
-#endif
-					LASER_CH0_MODPIN = true; 
-				}
-				else{
-					NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-					UPDAC0();//DAC立即输出计时器值
-#endif
-					LASER_CH0_MODPIN = false;
-				}
-				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH1){//1激光通道
-					NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-					UPDAC1();//DAC立即输出计时器值
-#endif
-					LASER_CH1_MODPIN = true; 
-				}
-				else{
-					NVRAM0[SPREG_DAC_1] = 0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-					UPDAC1();//DAC立即输出计时器值
-#endif
-					LASER_CH1_MODPIN = false; 
-				}
-				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){//0+1激光通道
-					NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
-					NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-					UPDAC0();//DAC立即输出计时器值
-					UPDAC1();//DAC立即输出计时器值
-#endif
-					LASER_CH0_MODPIN = true;	
-					LASER_CH1_MODPIN = true; 	
-				}
-			}
-			if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
-				NVRAM0[SPREG_DAC_0] = 0x0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-				UPDAC0();//DAC立即输出计时器值
-#endif
-				NVRAM0[SPREG_DAC_1] = 0x0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-				UPDAC1();//DAC立即输出计时器值
-#endif
-				LASER_CH0_MODPIN = false;
-				LASER_CH1_MODPIN = false;//翻转输出
-				SET(SPCOIL_LASER_EMITOVER);
-				EDLAR();//停止脉冲发射
-			}
+		case LASER_MODE_EVLA_SIGNAL:{
+			laserStart();
+#if CONFIG_USING_DCHMI_APP == 1
+			ADLS1(EM_RELEASE_TOTAL_TIME);//发射时间累计
+			ADDS32(EM_RELEASE_TOTAL_ENERGY, EM_TOTAL_POWER, EM_RELEASE_TOTAL_ENERGY);
+#endif	
+			
+#if CONFIG_SPLC_USING_PCA == 1
+			//单发射能量达到整数倍时改变声音频率
+			
+#endif			
 			NVRAM0[SPREG_LASER_TCOUNTER] ++;
 			break;
 		}
 		case LASER_MODE_MP:{//MP多脉冲模式	
 			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转	
-				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH0){//0激光通道
-					NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-					UPDAC0();//DAC立即输出计时器值
+				laserStart();
+			}
+			if((NVRAM0[SPREG_LASER_TCOUNTER] > 0) && (NVRAM0[SPREG_LASER_TCOUNTER] < NVRAM0[SPREG_LASER_TMATE])){//激光发射中
+#if CONFIG_USING_DCHMI_APP == 1
+				ADLS1(EM_RELEASE_TOTAL_TIME);//发射时间累计
+				ADDS32(EM_RELEASE_TOTAL_ENERGY, EM_TOTAL_POWER, EM_RELEASE_TOTAL_ENERGY);
 #endif
-					LASER_CH0_MODPIN = true; 
+				if(NVRAM0[DM_BEEM_MODE] == BEEM_MODE_SYNC){//声光同步模式
+					NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_1;	
 				}
-				else{
-					NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-					UPDAC0();//DAC立即输出计时器值
-#endif
-					LASER_CH0_MODPIN = false;
+				else{//固定滴滴
+					NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_2;
 				}
-				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH1){//1激光通道
-					NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-					UPDAC1();//DAC立即输出计时器值
-#endif
-					LASER_CH1_MODPIN = true; 
-				}
-				else{
-					NVRAM0[SPREG_DAC_1] = 0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-					UPDAC1();//DAC立即输出计时器值
-#endif
-					LASER_CH1_MODPIN = false; 
-				}
-				if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){
-					NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
-					NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-					UPDAC0();//DAC立即输出计时器值
-					UPDAC1();//DAC立即输出计时器值
-#endif
-					LASER_CH0_MODPIN = true; 
-					LASER_CH1_MODPIN = true; 
-				}
+				NVRAM0[SPREG_BEEM_FREQ] = CONFIG_BEEM_FREQ;
+				NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_VOLUME];
+				SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
 			}
 			if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
-				NVRAM0[SPREG_DAC_0] = 0x0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-				UPDAC0();//DAC立即输出计时器值
+#if CONFIG_USING_DCHMI_APP == 1
+				ADLS1(EM_RELEASE_TOTAL_TIME);//发射时间累计
+				ADDS32(EM_RELEASE_TOTAL_ENERGY, EM_TOTAL_POWER, EM_RELEASE_TOTAL_ENERGY);
 #endif
-				NVRAM0[SPREG_DAC_1] = 0x0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-				UPDAC1();//DAC立即输出计时器值
-#endif
-				LASER_CH0_MODPIN = false;
-				LASER_CH1_MODPIN = false;//翻转输出		
+				laserStop();
+				RES(SPCOIL_BEEM_ENABLE);
 			}
 			if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TOVERTIME]){//计时器溢出
 				NVRAM0[SPREG_LASER_TCOUNTER] = -1;//清零
@@ -333,56 +309,30 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 		case LASER_MODE_GP:{//GP可编程脉冲模式
 			if(NVRAM0[SPREG_LASER_PCOUNTER] < NVRAM0[SPREG_LASER_PMATE]){//脉冲串输出
 				if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转	
-					if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH0){//激光通道0
-						NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-						UPDAC0();//DAC立即输出计时器值
-#endif
-						LASER_CH0_MODPIN = true; 
+					laserStart();
+				}
+				if((NVRAM0[SPREG_LASER_TCOUNTER] > 0) && (NVRAM0[SPREG_LASER_TCOUNTER] < NVRAM0[SPREG_LASER_PMATE])){//激光发射中
+#if CONFIG_USING_DCHMI_APP == 1
+					ADLS1(EM_RELEASE_TOTAL_TIME);//发射时间累计
+					ADDS32(EM_RELEASE_TOTAL_ENERGY, EM_TOTAL_POWER, EM_RELEASE_TOTAL_ENERGY);
+#endif				
+					if(NVRAM0[DM_BEEM_MODE] == BEEM_MODE_SYNC){//声光同步模式
+						NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_1;	
 					}
-					else{
-						NVRAM0[SPREG_DAC_0] = 0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-						UPDAC0();//DAC立即输出计时器值
-#endif
-						LASER_CH0_MODPIN = false;
+					else{//固定滴滴
+						NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_2;
 					}
-					if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_CH1){//激光通道1
-						NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-						UPDAC1();//DAC立即输出计时器值
-#endif
-						LASER_CH1_MODPIN = true; 
-					}
-					else{
-						NVRAM0[SPREG_DAC_1] = 0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-						UPDAC1();//DAC立即输出计时器值
-#endif
-						LASER_CH1_MODPIN = false; 
-					}
-					if(NVRAM0[SPREG_LASER_SELECT] == LASER_SELECT_BOTH){//0+1激光通道
-						NVRAM0[SPREG_DAC_0] = NVRAM0[SPREG_LASER_CURRENT_0];//电流值写入DAC寄存器
-						NVRAM0[SPREG_DAC_1] = NVRAM0[SPREG_LASER_CURRENT_1];//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-						UPDAC0();//DAC立即输出计时器值
-						UPDAC1();//DAC立即输出计时器值
-#endif
-						LASER_CH0_MODPIN = true;
-						LASER_CH1_MODPIN = true; 
-					}
+					NVRAM0[SPREG_BEEM_FREQ] = CONFIG_BEEM_FREQ;
+					NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_VOLUME];
+					SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
 				}
 				if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
-					NVRAM0[SPREG_DAC_0] = 0x0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-					UPDAC0();//DAC立即输出计时器值
-#endif
-					NVRAM0[SPREG_DAC_1] = 0x0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-					UPDAC1();//DAC立即输出计时器值
-#endif
-					LASER_CH0_MODPIN = false;
-					LASER_CH1_MODPIN = false;//翻转输出		
+#if CONFIG_USING_DCHMI_APP == 1
+					ADLS1(EM_RELEASE_TOTAL_TIME);//发射时间累计
+					ADDS32(EM_RELEASE_TOTAL_ENERGY, EM_TOTAL_POWER, EM_RELEASE_TOTAL_ENERGY);
+#endif	
+					laserStop();
+					RES(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
 				}
 				if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TOVERTIME]){//计时器溢出
 					NVRAM0[SPREG_LASER_TCOUNTER] = -1;//清零
@@ -402,7 +352,35 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 		case LASER_MODE_DERMA:{
 			break;
 		}
-		case LASER_MODE_EVLA_SEGMENT:{
+		case LASER_MODE_SP:{//单脉冲模式
+			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转	
+				laserStart();
+			}
+			if((NVRAM0[SPREG_LASER_TCOUNTER] > 0) && (NVRAM0[SPREG_LASER_TCOUNTER] < NVRAM0[SPREG_LASER_TMATE])){
+#if CONFIG_USING_DCHMI_APP == 1
+				ADLS1(EM_RELEASE_TOTAL_TIME);//发射时间累计
+				ADDS32(EM_RELEASE_TOTAL_ENERGY, EM_TOTAL_POWER, EM_RELEASE_TOTAL_ENERGY);
+#endif		
+				if(NVRAM0[DM_BEEM_MODE] == BEEM_MODE_SYNC){//声光同步模式
+						NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_1;	
+				}
+				else{//固定滴滴
+					NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_2;
+				}
+				NVRAM0[SPREG_BEEM_FREQ] = CONFIG_BEEM_FREQ;
+				NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_VOLUME];
+				SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
+			}
+			if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
+				laserStop();
+#if CONFIG_USING_DCHMI_APP == 1
+				ADLS1(EM_RELEASE_TOTAL_TIME);//发射时间累计
+				ADDS32(EM_RELEASE_TOTAL_ENERGY, EM_TOTAL_POWER, EM_RELEASE_TOTAL_ENERGY);
+#endif
+				SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
+				EDLAR();
+			}
+			NVRAM0[SPREG_LASER_TCOUNTER] ++;
 			break;
 		}
 		default:break;

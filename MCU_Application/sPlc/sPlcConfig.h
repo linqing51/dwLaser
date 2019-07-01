@@ -159,6 +159,7 @@
 #define CONFIG_MIN_BEEM_VOLUME							0//蜂鸣器最小音量
 #define CONFIG_MAX_LCD_BRG								100//屏幕亮度最大值
 #define CONFIG_MIN_LCD_BRG								0//屏幕亮度最小值
+#define CONFIG_BEEM_FREQ								1000//蜂鸣器频率
 /*****************************************************************************/
 #define POWER_REAL_CH0_0P								0
 #define POWER_REAL_CH0_5P								50
@@ -374,22 +375,23 @@
 /*****************************************************************************/
 //蜂鸣器相关寄存器
 #define SPREG_BEEM_VOLUME								(SPREG_START + 42)//蜂鸣器音量
-#define SPREG_BEEM_MODE									(SPREG_START + 43)//蜂鸣器模式
-#define SPREG_BEEM_COUNTER								(SPREG_START + 44)//蜂鸣器计时器
+#define SPREG_BEEM_FREQ									(SPREG_START + 43)//蜂鸣器频率
+#define SPREG_BEEM_MODE									(SPREG_START + 44)//蜂鸣器模式
+#define SPREG_BEEM_COUNTER								(SPREG_START + 45)//蜂鸣器计时器
 /*****************************************************************************/
 //激光脉冲发射相关寄存器
-#define SPREG_LASER_MODE								(SPREG_START + 45)//激光发射模式
-#define SPREG_LASER_SELECT								(SPREG_START + 46)//激光通道选择
-#define SPREG_LASER_TCOUNTER							(SPREG_START + 47)//激光脉冲计时器计数值
-#define SPREG_LASER_TMATE								(SPREG_START + 48)//激光脉冲计时器器匹配值
-#define SPREG_LASER_TOVERTIME							(SPREG_START + 49)//激光脉冲计时器溢出值
-#define SPREG_LASER_PCOUNTER 							(SPREG_START + 50)//激光脉冲个数计数值
-#define SPREG_LASER_PMATE								(SPREG_START + 51)//激光脉冲个数匹配值
-#define SPREG_LASER_POVERTIME							(SPREG_START + 52)//激光脉冲间隔计时值
-#define SPREG_LASER_RELEASETIME							(SPREG_START + 53)//激光持续时间
-#define SPREG_LASER_RELEASE_COUNTER						(SPREG_START + 54)//激光持续时间计时器
-#define SPREG_LASER_CURRENT_0							(SPREG_START + 55)//激光电流0
-#define SPREG_LASER_CURRENT_1							(SPREG_START + 56)//激光电流1
+#define SPREG_LASER_MODE								(SPREG_START + 46)//激光发射模式
+#define SPREG_LASER_SELECT								(SPREG_START + 47)//激光通道选择
+#define SPREG_LASER_TCOUNTER							(SPREG_START + 48)//激光脉冲计时器计数值
+#define SPREG_LASER_TMATE								(SPREG_START + 49)//激光脉冲计时器器匹配值
+#define SPREG_LASER_TOVERTIME							(SPREG_START + 50)//激光脉冲计时器溢出值
+#define SPREG_LASER_PCOUNTER 							(SPREG_START + 51)//激光脉冲个数计数值
+#define SPREG_LASER_PMATE								(SPREG_START + 52)//激光脉冲个数匹配值
+#define SPREG_LASER_POVERTIME							(SPREG_START + 53)//激光脉冲间隔计时值
+#define SPREG_LASER_RELEASETIME							(SPREG_START + 54)//激光持续时间
+#define SPREG_LASER_RELEASE_COUNTER						(SPREG_START + 55)//激光持续时间计时器
+#define SPREG_LASER_CURRENT_0							(SPREG_START + 56)//激光电流0
+#define SPREG_LASER_CURRENT_1							(SPREG_START + 57)//激光电流1                                                                                                                             
 /*****************************************************************************/
 #define SPREG_IDENTITY									(SPREG_END + 0)//平台ID号
 /*****************************************************************************/

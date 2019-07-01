@@ -37,6 +37,7 @@ void SUB32(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant;//32位非饱和减法 D = 
 void SUBS16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant;//16位饱和减法 D = Sa - Sb
 void SUB16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant;//16位非饱和减法 D = Sa - Sb
 void ADD32(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant;//32位非饱加法 D = Sa + Sb
+void ADDS32(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant;//32位饱和加法 D = Sa + Sb
 void ADDS16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant;//16位饱和加法 D = Sa + Sb
 void ADD16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant;//16位非饱和加法 D = Sa + Sb
 void ADD1(uint16_t Sa) reentrant;//16位非饱和自加
