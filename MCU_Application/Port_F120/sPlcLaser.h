@@ -4,10 +4,11 @@
 #include "sPlc.h"
 /*****************************************************************************/
 #define LASER_MODE_CW							0x1A50//连续模式
+#define LASER_MODE_SP							0x65A5//单脉冲模式
 #define LASER_MODE_MP							0x3C72//多脉冲模式
 #define LASER_MODE_GP							0x4D83//群脉冲模式
 #define LASER_MODE_DERMA						0x5F43//
-#define LASER_MODE_EVLA_SEGMENT					0x65A5//
+
 #define LASER_MODE_EVLA_SIGNAL					0x2B61//单脉冲模式
 
 #define LASER_SELECT_CH0						0x005A
