@@ -294,6 +294,24 @@ void ADDS32(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//32位饱和加法 D = S
 	NVRAM0[(D + 1)] = (tmpD >> 16) & 0x0000FFFF;
 	
 }
+void ADDS32D(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//32位饱和加法 D(32) = Sa(32) + Sb(16)
+	int32_t tmpSa = 0, tmpD = 0;
+	fp64_t fD;
+	tmpSa = NVRAM0[(Sa + 1)];
+	tmpSa = (tmpSa << 16) & 0xFFFF0000;
+	tmpSa |= NVRAM0[Sa];
+	
+	fD = (fp64_t)tmpSa + (fp64_t)NVRAM0[Sb];
+	if(fD >= LONG_MAX){
+		fD = LONG_MAX;
+	}
+	if(fD <= LONG_MIN){
+		fD = LONG_MIN;
+	}
+	tmpD = (int32_t)fD;
+	NVRAM0[D] = tmpD & 0x0000FFFF;
+	NVRAM0[(D + 1)] = (tmpD >> 16) & 0x0000FFFF;
+}
 void SUB16(uint16_t Sa, uint16_t Sb, uint16_t D) reentrant{//16位非饱和减法 D = Sa - Sb
 	NVRAM0[D] = NVRAM0[Sa] - NVRAM0[Sb];
 }

@@ -2,15 +2,22 @@
 /*****************************************************************************/
 #if CONFIG_USING_BACKGROUND_APP == 1
 void defaultScheme(void){//当前选择方案恢复默认值
-	sprintf((char*)(&NVRAM0[EM_LASER_SCHEME_NAME]),"Hello dwLaser S%d",NVRAM0[DM_SCHEME_NUM]);
+	sprintf((char*)(&NVRAM0[EM_LASER_SCHEME_NAME]),"Hello dwLaser S%d",NVRAM0[DM_SCHEME_NUM]);		
 	NVRAM0[EM_LASER_SELECT]	= LASER_SELECT_BOTH;//通道选择
-	NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;//脉冲模式
+	NVRAM0[EM_LASER_PULSE_MODE]	= LASER_MODE_CW;//脉冲模式
 	NVRAM0[EM_LASER_POWER_CH0] = 199;//通道0功率
 	NVRAM0[EM_LASER_POWER_CH1] = 59;//通道1功率
-	NVRAM0[EM_LASER_POSWIDTH] = 500;//正脉宽
-	NVRAM0[EM_LASER_NEGWIDTH] = 400;//负脉宽
-	NVRAM0[EM_LASER_TIMES] = 20;//脉冲数
-	NVRAM0[EM_LASER_GROUP_OFF] = 100;//脉冲间隔
+	NVRAM0[EM_LASER_SP_POSWIDTH]= 500;//单脉冲正脉宽
+	NVRAM0[EM_LASER_MP_POSWIDTH]= 400;//多脉冲正脉宽
+	NVRAM0[EM_LASER_MP_NEGWIDTH]= 20;//多脉冲负脉宽
+	NVRAM0[EM_LASER_GP_POSWIDTH]= 300;//Group脉冲正脉宽
+	NVRAM0[EM_LASER_GP_NEGWIDTH]= 600;//Group脉冲负脉宽
+	NVRAM0[EM_LASER_GP_TIMES] =	10;//Group脉冲数
+	NVRAM0[EM_LASER_GP_GROUP_OFF] = 700;//Group脉冲间隔
+	NVRAM0[EM_LASER_EVLA_SIGNAL_ENERGY_INTERVAL] = 100;//EVLA_SIGNAL能量间隔
+	NVRAM0[EM_LASER_DERMA_POSWIDTH]	= 250;//DERMA正脉宽
+	NVRAM0[EM_LASER_DERMA_NEGWIDTH]	= 550;//DERMA负脉宽
+	NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_0MM5;//DERMA光斑直径
 }
 void reloadCorrTab(void){//恢复功率校正参数
 	NVRAM0[DM_CORR_TAB0_POWER0] = POWER_REAL_CH0_0P;
@@ -71,7 +78,7 @@ void loadScheme(void){//DM->EM
 		NVRAM0[DM_SCHEME_NUM] = 0;
 	psrc = (uint8_t*)&NVRAM0[(DM_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 25)];
 	pdist = (uint8_t*)&NVRAM0[EM_LASER_SCHEME_NAME];
-	memcpy(pdist, psrc, ((DM_SCHEME_END_0 - DM_SCHEME_START_0 +1 ) * 2));
+	memcpy(pdist, psrc, ((DM_SCHEME_END_0 - DM_SCHEME_START_0 + 1) * 2));
 }
 void saveScheme(void){//EM->DM
 	uint8_t *psrc, *pdist;
@@ -81,26 +88,15 @@ void saveScheme(void){//EM->DM
 		NVRAM0[DM_SCHEME_NUM] = 0;
 	pdist = (uint8_t*)&NVRAM0[(DM_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 25)];
 	psrc = (uint8_t*)&NVRAM0[EM_LASER_SCHEME_NAME];
-	memcpy(pdist, psrc, ((DM_SCHEME_END_0 - DM_SCHEME_START_0 +1 ) * 2));
+	memcpy(pdist, psrc, ((DM_SCHEME_END_0 - DM_SCHEME_START_0 + 1) * 2));
 }
 
 void backgroundAppInit(void){
 	SET(R_FIBER_ID_PASS_0);
 	SET(R_FIBER_ID_PASS_1);
 	SET(X_FBD1);
-	//初始化EPID参数
-	NVRAM0[EM_EPID0_TAB_REF] = 250;
-	NVRAM0[EM_EPID0_TAB_KP] = 1000;//比例常数 XX.XXX 0-65.535
-	NVRAM0[EM_EPID0_TAB_KI] = 1000;//积分常数 XX.XXX 0-65.535		
-	NVRAM0[EM_EPID0_TAB_TD] = 10;//微分时间常数 XX.XXX 0-65.535
-	NVRAM0[EM_EPID0_TAB_TS]	= 100;//PID运算时间间隔 1-3000 单位0.01S
-	NVRAM0[EM_EPID0_TAB_MAX] = 1000;//输出最大限制		
-	NVRAM0[EM_EPID0_TAB_MIN] = 0;//输出最小限制
-	NVRAM0[EM_EPID0_TAB_BIAS] = 0;//输出偏置
-	NVRAM0[EM_EPID0_TAB_TSC] = 0;//间隔计时器
-	NVRAM0[DM_RELEASE_DATA_YEAR] = 2019;
-	NVRAM0[DM_RELEASE_DATA_MONTH] = 04;
-	NVRAM0[DM_RELEASE_DATA_DAY] = 25;
+	NVRAM0[EM_COOL_SET_TEMP] = CONFIG_COOL_SET_TEMP;
+	NVRAM0[EM_COOL_DIFF_TEMP] = CONFIG_COOL_DIFF_TEMP;
 }
 void backgroundApp(void){//背景应用
 	if(LDP(SPCOIL_PS100MS)){//每100mS更新一次温度
@@ -114,26 +110,8 @@ void backgroundApp(void){//背景应用
 	}
 	else{
 	}
-
-	//执行温控PID
-	NVRAM0[EM_EPID0_TAB_VFB] = NVRAM0[EM_DIODE_TEMP0];//采集温度传入EPID参数表
-#if CONFIG_SPLC_FUN_EPID == 1
-	EPID(&NVRAM0[EM_EPID0_TAB_OUT]);//执行温控PID
-#else
-	NVRAM0[EM_EPID0_TAB_OUT] = 300;
-	NVRAM0[EM_EPID0_TAB_MAX] = 1000;
-#endif
-	//PID输出传入SPWM0
-	NVRAM0[SPREG_SPWM_CYCLE_0] = NVRAM0[EM_EPID0_TAB_MAX];
-	NVRAM0[SPREG_SPWM_POS_0] = NVRAM0[EM_EPID0_TAB_OUT]; 
-	//SPWM0绑定IO
-	if(LD(SPCOIL_SPWM_OUT_0)){
-		SET(Y_TEC0);SET(Y_TEC1);
-	}
-	else{
-		RES(Y_TEC0);RES(Y_TEC1);
-	}
-
+	//执行温控
+	
 	//判断二极管0是否过热
 	if(NVRAM0[EM_DIODE_TEMP0] > CONFIG_APP_DIODE_HIGH_TEMP){
 		SET(R_DIODE_TEMP_HIGH_0);
