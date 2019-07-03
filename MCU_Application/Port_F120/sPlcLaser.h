@@ -11,11 +11,13 @@
 #define LASER_MODE_MP							0x3C72//多脉冲模式
 #define LASER_MODE_GP							0x4D83//群脉冲模式
 #define LASER_MODE_DERMA						0x5F43//
-#define LASER_MODE_EVLA_SIGNAL					0x2B61//单脉冲模式
+#define LASER_MODE_SIGNAL						0x2B61//单脉冲模式
 #define LASER_SELECT_CH0						0x005A
 #define LASER_SELECT_CH1						0xA500
 #define LASER_SELECT_BOTH						0xA55A
 /*****************************************************************************/
+extern fp32_t LaserReleaseTime;//激光发射时间
+extern fp32_t LaserReleaseEnergy;//激光发射能量
 void sPlcLaserInit(void);
 void laserTimerIsr(void);//TIMER4 中断 激光发射
 void testBenchLaserTimer(uint8_t st);//LASER激光发射测试

@@ -151,6 +151,9 @@
 #define CONFIG_MIN_LASER_TIMES							10//最小可计数脉冲数
 #define CONFIG_MAX_LASER_GROUP_OFF							999//最大脉冲间隔时间
 #define CONFIG_MIN_LASER_GROUP_OFF							10//最小脉冲间隔时间
+#define CONFIG_MAX_LASER_ENERGY_INTERVAL				2000
+#define CONFIG_MIN_LASER_ENERGY_INTERVAL				100
+#define CONFIG_LASER_ENERGY_INTERVAL					100
 #define CONFIG_MAX_AIM_RED_BRG							100//红光最大调光占空比
 #define CONFIG_MIN_AIM_RED_BRG							0//红光最小调光占空比
 #define CONFIG_MAX_AIM_GREEN_BRG						100//绿光最大调光占空比
