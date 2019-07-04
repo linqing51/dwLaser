@@ -45,7 +45,7 @@
 #define EM_LASER_GP_NEGWIDTH					(EM_START + 23)//Group脉冲负脉宽
 #define EM_LASER_GP_TIMES						(EM_START + 24)//Group脉冲数
 #define EM_LASER_GP_GROUP_OFF					(EM_START + 25)//Group脉冲间隔
-#define EM_LASER_SIGNAL_ENERGY_INTERVAL	(EM_START + 26)//SIGNAL能量间隔
+#define EM_LASER_SIGNAL_ENERGY_INTERVAL			(EM_START + 26)//SIGNAL能量间隔
 #define EM_LASER_DERMA_POSWIDTH					(EM_START + 27)//DERMA正脉宽
 #define EM_LASER_DERMA_NEGWIDTH					(EM_START + 28)//DERMA负脉宽
 #define EM_LASER_DERMA_SPOT_SIZE				(EM_START + 29)//DERMA光斑直径
@@ -196,21 +196,20 @@
 #define DM_BEEM_VOLUME							(DM_START + 552)//蜂鸣器音量
 #define DM_BEEM_MODE							(DM_START + 553)//蜂鸣器模式
 #define DM_AIM_MODE								(DM_START + 554)//指示激光模式
-#define DM_AIM_RED_BRG							(DM_START + 555)//红色指示激光亮度
-#define DM_AIM_GREEN_BRG						(DM_START + 556)//绿色指示激光亮度
-#define DM_LCD_BRG								(DM_START + 557)//屏幕亮度
-#define DM_DC_OLD_PASSCODE0						(DM_START + 558)//屏旧密码0-1
-#define DM_DC_OLD_PASSCODE1						(DM_START + 559)//屏旧密码2-3
-#define DM_DC_OLD_PASSCODE2						(DM_START + 560)//屏旧密码0-1
-#define DM_DC_OLD_PASSCODE3						(DM_START + 561)//屏旧密码2-3
-#define DM_SYS_RUNTIME_L						(DM_START + 562)//系统累计运行时间秒L 32BIT
-#define DM_SYS_RUNTIME_H						(DM_START + 563)//系统累计运行时间秒H 32BIT
-#define DM_LAR_RUNTIME_L						(DM_START + 564)//激光累计发射时间秒L 32BIT
-#define DM_LAR_RUNTIME_H						(DM_START + 565)//激光累计发射时间秒H 32BIT
-#define DM_RELEASE_DATA_YEAR					(DM_START + 566)//出厂日期年		
-#define DM_RELEASE_DATA_MONTH					(DM_START + 567)//出厂日期月
-#define DM_RELEASE_DATA_DAY						(DM_START + 568)//出厂日期日
-#define DM_LANGUAGE								(DM_START + 569)//语言选择
+#define DM_AIM_BRG								(DM_START + 555)//指示激光亮度
+#define DM_LCD_BRG								(DM_START + 556)//屏幕亮度
+#define DM_DC_OLD_PASSCODE0						(DM_START + 557)//屏旧密码0-1
+#define DM_DC_OLD_PASSCODE1						(DM_START + 558)//屏旧密码2-3
+#define DM_DC_OLD_PASSCODE2						(DM_START + 559)//屏旧密码0-1
+#define DM_DC_OLD_PASSCODE3						(DM_START + 560)//屏旧密码2-3
+#define DM_SYS_RUNTIME_L						(DM_START + 561)//系统累计运行时间秒L 32BIT
+#define DM_SYS_RUNTIME_H						(DM_START + 562)//系统累计运行时间秒H 32BIT
+#define DM_LAR_RUNTIME_L						(DM_START + 563)//激光累计发射时间秒L 32BIT
+#define DM_LAR_RUNTIME_H						(DM_START + 564)//激光累计发射时间秒H 32BIT
+#define DM_RELEASE_DATA_YEAR					(DM_START + 565)//出厂日期年		
+#define DM_RELEASE_DATA_MONTH					(DM_START + 566)//出厂日期月
+#define DM_RELEASE_DATA_DAY						(DM_START + 567)//出厂日期日
+#define DM_LANGUAGE								(DM_START + 568)//语言选择
 /*****************************************************************************/
 #define X_INTERLOCK								(X_START * 16 + 0)//XIN0 安全连锁
 #define X_ESTOP									(X_START * 16 + 1)//XIN1 紧急停止开关
@@ -338,8 +337,8 @@
 #define R_STANDBY_KEY_POWER_CH1_DEC_DOWN						(R_START * 16 + 206)
 #define R_STANDBY_KEY_POWER_CH1_DEC_UP							(R_START * 16 + 207)
 
-#define R_STANDBY_KEY_ENTER_READY_DOWN							(R_START * 16 + 208)
-#define R_STANDBY_KEY_ENTER_READY_UP							(R_START * 16 + 209)
+#define R_STANDBY_KEY_STNADBY_DOWN							(R_START * 16 + 208)
+#define R_STANDBY_KEY_STNADBY_UP							(R_START * 16 + 209)
 
 #define R_STANDBY_KEY_ENERGY_RESET_DOWN							(R_START * 16 + 210)
 #define R_STANDBY_KEY_ENERGY_RESET_UP							(R_START * 16 + 211)
@@ -376,9 +375,6 @@
 
 #define R_STANDBY_KEY_ENTER_SCHEME_DOWN							(R_START * 16 + 232)
 #define R_STANDBY_KEY_ENTER_SCHEME_UP							(R_START * 16 + 233)
-/*****************************************************************************/
-#define R_READY_KEY_READY_DOWN									(R_START * 16 + 220)
-#define R_READY_KEY_READY_UP									(R_START * 16 + 221)
 /*****************************************************************************/
 #define R_OPTION_KEY_ENTER_CORRECTION_DOWN						(R_START * 16 + 230)
 #define R_OPTION_KEY_ENTER_CORRECTION_UP						(R_START * 16 + 231)

@@ -2,7 +2,7 @@
 #define __DCHMILANGUAGE_H__
 /*****************************************************************************/
 #define DEF_LANG_NUM					2
-#define DEF_LANG_CHECK_DISPLAY_SIZE		64
+#define DEF_LANG_CHECK_DISPLAY_SIZE		40
 /*****************************************************************************/
 #define DEF_LANG_EN						0	
 #define	DEF_LANG_CN						1

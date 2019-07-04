@@ -1,22 +1,22 @@
 #ifndef __DCHMIRES_H__
 #define __DCHMIRES_H__
 /*****************************************************************************/
-#define HMI_BLACK     											0x0000//黑色    
-#define HMI_ NAVY      											0x000F//深蓝色  
-#define HMI_DGREEN    											0x03E0//深绿色  
-#define HMI_DCYAN     											0x03EF//深青色  
-#define HMI_MAROON    											0x7800//深红色      
-#define HMI_PURPLE    											0x780F//紫色  
-#define HMI_OLIVE     											0x7BE0//橄榄绿      
-#define HMI_LGRAY     											0xC618//灰白色
-#define HMI_DGRAY     											0x7BEF//深灰色      
-#define HMI_BLUE      											0x001F//蓝色    
-#define HMI_GREEN     											0x07E0//绿色          
-#define HMI_CYAN      											0x07FF//青色  
-#define HMI_RED       											0xF800//红色       
-#define HMI_MAGENTA   											0xF81F//品红    
-#define HMI_YELLOW    											0xFFE0//黄色        
-#define HMI_WHITE     											0xFFFF//白色  
+#define HMI_BLACK     													0x0000//黑色    
+#define HMI_ NAVY      													0x000F//深蓝色  
+#define HMI_DGREEN    													0x03E0//深绿色  
+#define HMI_DCYAN     													0x03EF//深青色  
+#define HMI_MAROON    													0x7800//深红色      
+#define HMI_PURPLE    													0x780F//紫色  
+#define HMI_OLIVE     													0x7BE0//橄榄绿      
+#define HMI_LGRAY     													0xC618//灰白色
+#define HMI_DGRAY     													0x7BEF//深灰色      
+#define HMI_BLUE      													0x001F//蓝色    
+#define HMI_GREEN     													0x07E0//绿色          
+#define HMI_CYAN      													0x07FF//青色  
+#define HMI_RED       													0xF800//红色       
+#define HMI_MAGENTA   													0xF81F//品红    
+#define HMI_YELLOW    													0xFFE0//黄色        
+#define HMI_WHITE     													0xFFFF//白色  
 /*****************************************************************************/
 //HMI页面编号
 #define GDDC_PAGE_POWERUP												0
@@ -28,35 +28,35 @@
 #define GDDC_PAGE_STANDBY_GP											6
 #define GDDC_PAGE_STANDBY_SIGNAL										7
 #define GDDC_PAGE_STANDBY_DERMA											8
-#define GDDC_PAGE_OPTION												27//选项页面
-#define GDDC_PAGE_SCHEME												28//方案页面
-#define GDDC_PAGE_POWER_CORRECTION										29//功率校正
-#define GDDC_PAGE_INFORMATION											30//信息页面
-#define GDDC_PAGE_DIAGNOSIS												31//诊断页面
+#define GDDC_PAGE_OPTION												9//选项页面
+#define GDDC_PAGE_SCHEME												10//方案页面
+#define GDDC_PAGE_POWER_CORRECTION										11//功率校正
+#define GDDC_PAGE_INFORMATION											12//信息页面
+#define GDDC_PAGE_DIAGNOSIS												13//诊断页面
 /*****************************************************************************/
 //GDDC页面控件编号
 /*****************************************************************************/
-#define GDDC_PAGE_POWERUP_TEXTDISPLAY_CHECK_INFO				1
-#define GDDC_PAGE_POWERUP_PROGRESS_CHECK_INFO					2
+#define GDDC_PAGE_POWERUP_TEXTDISPLAY_CHECK_INFO						1
+#define GDDC_PAGE_POWERUP_PROGRESS_CHECK_INFO							2
 /*****************************************************************************/
-#define GDDC_PAGE_PASSCODE_KEY_NUM1								1
-#define GDDC_PAGE_PASSCODE_KEY_NUM2								2
-#define GDDC_PAGE_PASSCODE_KEY_NUM3								3
-#define GDDC_PAGE_PASSCODE_KEY_NUM4								4
-#define GDDC_PAGE_PASSCODE_KEY_NUM5								5
-#define GDDC_PAGE_PASSCODE_KEY_NUM6								6
-#define GDDC_PAGE_PASSCODE_KEY_NUM7								7
-#define GDDC_PAGE_PASSCODE_KEY_NUM8								8
-#define GDDC_PAGE_PASSCODE_KEY_NUM9								9
-#define GDDC_PAGE_PASSCODE_KEY_NUM0								10
-#define GDDC_PAGE_PASSCODE_KEY_CANCEL							11
-#define GDDC_PAGE_PASSCODE_KEY_BACKSPACE						12
-#define GDDC_PAGE_PASSCODE_KEY_CHANGEPASSCODE					13
-#define GDDC_PAGE_PASSCODE_KEY_ENTER							14
-#define GDDC_PAGE_PASSCODE_TEXTDISPLAY							15
+#define GDDC_PAGE_PASSCODE_KEY_NUM1										1
+#define GDDC_PAGE_PASSCODE_KEY_NUM2										2
+#define GDDC_PAGE_PASSCODE_KEY_NUM3										3
+#define GDDC_PAGE_PASSCODE_KEY_NUM4										4
+#define GDDC_PAGE_PASSCODE_KEY_NUM5										5
+#define GDDC_PAGE_PASSCODE_KEY_NUM6										6
+#define GDDC_PAGE_PASSCODE_KEY_NUM7										7
+#define GDDC_PAGE_PASSCODE_KEY_NUM8										8
+#define GDDC_PAGE_PASSCODE_KEY_NUM9										9
+#define GDDC_PAGE_PASSCODE_KEY_NUM0										10
+#define GDDC_PAGE_PASSCODE_KEY_CANCEL									11
+#define GDDC_PAGE_PASSCODE_KEY_BACKSPACE								12
+#define GDDC_PAGE_PASSCODE_KEY_CHANGEPASSCODE							13
+#define GDDC_PAGE_PASSCODE_KEY_ENTER									14
+#define GDDC_PAGE_PASSCODE_TEXTDISPLAY									15
 /*****************************************************************************/
-#define GDDC_PAGE_NEWPASSCODE_KEY_NUM1							1
-#define GDDC_PAGE_NEWPASSCODE_KEY_NUM2							2
+#define GDDC_PAGE_NEWPASSCODE_KEY_NUM1									1
+#define GDDC_PAGE_NEWPASSCODE_KEY_NUM2									2
 #define GDDC_PAGE_NEWPASSCODE_KEY_NUM3							3
 #define GDDC_PAGE_NEWPASSCODE_KEY_NUM4							4
 #define GDDC_PAGE_NEWPASSCODE_KEY_NUM5							5
@@ -113,7 +113,7 @@
 #define	GDDC_PAGE_STANDBY_SP_KEY_MODE_MP						9
 #define GDDC_PAGE_STANDBY_SP_KEY_MODE_GP						10
 #define GDDC_PAGE_STANDBY_SP_KEY_MODE_SP						11
-#define GDDC_PAGE_STANDBY_SP_KEY_MODE_SIGNAL				12
+#define GDDC_PAGE_STANDBY_SP_KEY_MODE_SIGNAL					12
 #define GDDC_PAGE_STANDBY_SP_KEY_MODE_DERMA						13
 #define GDDC_PAGE_STANDBY_SP_KEY_ENTER_OPTION					14
 #define GDDC_PAGE_STANDBY_SP_KEY_ENTER_SCHEME					15
@@ -190,7 +190,7 @@
 #define	GDDC_PAGE_STANDBY_GP_KEY_MODE_MP						15
 #define GDDC_PAGE_STANDBY_GP_KEY_MODE_GP						16
 #define GDDC_PAGE_STANDBY_GP_KEY_MODE_SP						17
-#define GDDC_PAGE_STANDBY_GP_KEY_MODE_SIGNAL				18
+#define GDDC_PAGE_STANDBY_GP_KEY_MODE_SIGNAL							18
 #define GDDC_PAGE_STANDBY_GP_KEY_MODE_DERMA						19
 #define GDDC_PAGE_STANDBY_GP_KEY_ENTER_OPTION					20
 #define GDDC_PAGE_STANDBY_GP_KEY_ENTER_SCHEME					21
@@ -238,7 +238,7 @@
 #define GDDC_PAGE_STANDBY_SIGNAL_KEY_SELECT_CH1					20
 #define GDDC_PAGE_STANDBY_SIGNAL_KEY_SELECT_BOTH				21
 #define GDDC_PAGE_STANDBY_SIGNAL_KEY_RESET						22
-#define GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_ENERGY_INT			23//能量间隔
+#define GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_ENERGY_INTERVAL	23//能量间隔
 #define GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_NAME				24//方案名称显示
 #define GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_POWER_CH0			25//CH0功率显示
 #define GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_POWER_CH1			26//CH1功率显示
