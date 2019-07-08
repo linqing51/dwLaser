@@ -160,7 +160,7 @@
 #define CONFIG_MIN_BEEM_VOLUME									0//蜂鸣器最小音量
 #define CONFIG_MAX_LCD_BRG										100//屏幕亮度最大值
 #define CONFIG_MIN_LCD_BRG										0//屏幕亮度最小值
-#define CONFIG_BEEM_FREQ										1000//蜂鸣器频率
+#define CONFIG_BEEM_FREQ										10//蜂鸣器频率
 #define CONFIG_COOL_SET_TEMP									280//冷却温度
 #define CONFIG_COOL_DIFF_TEMP									20//冷却温度变化范围
 /*****************************************************************************/

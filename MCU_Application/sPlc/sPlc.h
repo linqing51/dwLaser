@@ -32,14 +32,14 @@ void sPlcProcessStart(void);//sPLC轮询起始
 void sPlcProcessEnd(void);//sPLC轮询结束
 extern void sPlcPortProcess(void);//sPLC平台程序
 extern void initWatchDog(void);//看门狗初始化
-extern void feedWatchDog(void) reentrant;//喂狗
+extern void feedWatchDog(void);//喂狗
 extern void enableWatchDog(void);//使能看门狗
 extern void disableWatchDog(void);//关闭看门狗(未锁定)
 extern void checkWatchDog(void);//检查看门狗状态
-extern void mucReboot(void) reentrant;//软件复位
+extern void mucReboot(void);//软件复位
 /*****************************************************************************/
-void assertCoilAddress(uint16_t adr) reentrant;
-void assertRegisterAddress(uint16_t adr) reentrant;
+void assertCoilAddress(uint16_t adr);
+void assertRegisterAddress(uint16_t adr);
 /*****************************************************************************/
 void clearX(void);
 void clearY(void);
@@ -51,10 +51,10 @@ void clearTD(void);
 void clearSPCOIL();
 void clearSPREG(void);
 /*****************************************************************************/
-void enterSplcIsr(void) reentrant;
-void exitSplcIsr(void) reentrant;
-void disableSplcIsr(void) reentrant;
-void enableSplcIsr(void) reentrant;
+void enterSplcIsr(void);
+void exitSplcIsr(void);
+void disableSplcIsr(void);
+void enableSplcIsr(void);
 /*****************************************************************************/
 void sPlcInit(void);
 void updataNvram(void);//更新NVRAM->EPROM

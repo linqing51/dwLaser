@@ -54,7 +54,7 @@
           <BrowseInformation>1</BrowseInformation>
           <ListingPath>..\Listings\</ListingPath>
           <HexFormatSelection>0</HexFormatSelection>
-          <Merge32K>0</Merge32K>
+          <Merge32K>1</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
           <BeforeCompile>
             <RunUserProg1>0</RunUserProg1>
@@ -125,7 +125,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>0</UseSimulator>
+            <UseSimulator>1</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -137,7 +137,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
-            <UseTarget>1</UseTarget>
+            <UseTarget>0</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -204,8 +204,8 @@
             <Mod517dp>0</Mod517dp>
             <Mod517au>0</Mod517au>
             <Mode2>0</Mode2>
-            <useCB>1</useCB>
-            <useXB>1</useXB>
+            <useCB>0</useCB>
+            <useXB>0</useXB>
             <useL251>1</useL251>
             <useA251>1</useA251>
             <Mx51>0</Mx51>
@@ -232,7 +232,7 @@
             <OnChipMemories>
               <RCB>
                 <Type>0</Type>
-                <StartAddress>0x8000</StartAddress>
+                <StartAddress>0x0</StartAddress>
                 <Size>0xffff</Size>
               </RCB>
               <RXB>
@@ -310,7 +310,7 @@
           <C51>
             <RegisterColoring>0</RegisterColoring>
             <VariablesInOrder>0</VariablesInOrder>
-            <IntegerPromotion>0</IntegerPromotion>
+            <IntegerPromotion>1</IntegerPromotion>
             <uAregs>0</uAregs>
             <UseInterruptVector>1</UseInterruptVector>
             <Fuzzy>3</Fuzzy>
@@ -328,7 +328,7 @@
             </VariousControls>
           </C51>
           <Ax51>
-            <UseMpl>1</UseMpl>
+            <UseMpl>0</UseMpl>
             <UseStandard>1</UseStandard>
             <UseCase>0</UseCase>
             <UseMod51>0</UseMod51>
@@ -387,14 +387,9 @@
               <FilePath>..\Lib\crc16.c</FilePath>
             </File>
             <File>
-              <FileName>crc32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Lib\crc32.c</FilePath>
-            </File>
-            <File>
-              <FileName>L51_BANK.A51</FileName>
+              <FileName>STARTUP.A51</FileName>
               <FileType>2</FileType>
-              <FilePath>..\Lib\L51_BANK.A51</FilePath>
+              <FilePath>..\Lib\STARTUP.A51</FilePath>
             </File>
           </Files>
         </Group>
@@ -422,24 +417,9 @@
               <FilePath>..\Driver\i2c1.c</FilePath>
             </File>
             <File>
-              <FileName>i2c2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\i2c2.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c3.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\i2c3.c</FilePath>
-            </File>
-            <File>
               <FileName>si7060.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Driver\si7060.c</FilePath>
-            </File>
-            <File>
-              <FileName>mcp79412.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\mcp79412.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -455,21 +435,6 @@
               <FileName>sPlcFun.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\sPlc\sPlcFun.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcFunEPID.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\sPlc\sPlcFunEPID.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcModbus.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\sPlc\sPlcModbus.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcTest.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\sPlc\sPlcTest.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -522,11 +487,6 @@
               <FilePath>.\sPlcUart.c</FilePath>
             </File>
             <File>
-              <FileName>sPlcUsb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcUsb.c</FilePath>
-            </File>
-            <File>
               <FileName>sPlcPca.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\sPlcPca.c</FilePath>
@@ -561,36 +521,10 @@
               <FileType>1</FileType>
               <FilePath>..\MainApp\dcHmiLanguage.c</FilePath>
             </File>
-            <File>
-              <FileName>usbApp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\usbApp.c</FilePath>
-            </File>
           </Files>
-        </Group>
-        <Group>
-          <GroupName>sPlc_F120_OnChipFlash</GroupName>
         </Group>
         <Group>
           <GroupName>sPlc_F120_USBHost</GroupName>
-          <Files>
-            <File>
-              <FileName>FILE_SYS.C</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\UsbHost\FILE_SYS.C</FilePath>
-            </File>
-            <File>
-              <FileName>usbSpi.C</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\UsbHost\usbSpi.C</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sPlc_F120_SimEprom</GroupName>
-        </Group>
-        <Group>
-          <GroupName>NfcLib</GroupName>
         </Group>
         <Group>
           <GroupName>dcHMI</GroupName>

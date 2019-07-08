@@ -69,6 +69,9 @@ void sPlcBeemInit(void){//蜂鸣器初始化
 	RES(SPCOIL_BEEM_ENABLE);
 }
 void sPlcBeemLoop(void){//蜂鸣器轮询
+	if(NVRAM0[SPREG_BEEM_FREQ] != NVRAM1[SPREG_BEEM_FREQ]){//检测到频率设定改变
+		TH0 = NVRAM0[SPREG_BEEM_FREQ];
+	}
 	switch(NVRAM0[SPREG_BEEM_MODE]){
 		case BEEM_MODE_0:{//模式0 CW
 			if(LD(SPCOIL_BEEM_ENABLE)){	

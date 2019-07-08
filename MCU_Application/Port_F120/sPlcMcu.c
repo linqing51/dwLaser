@@ -37,25 +37,25 @@ void disableWatchDog(void){//关闭看门狗(未锁定)
 	EA = flagEA;
 #endif
 }
-void feedWatchDog(void) reentrant{//喂狗
+void feedWatchDog(void) {//喂狗
 #if CONFIG_SPLC_USING_WDT == 1
 	WDTCN = 0xA5;
 #endif
 }
-void mucReboot(void) reentrant {//复位
+void mucReboot(void)  {//复位
 	RSTSRC |= 1 << 4;//Forces a Power-On Reset. RST is driven low.
 }
-void enterSplcIsr(void) reentrant{//SPLC 进入中断
+void enterSplcIsr(void) {//SPLC 进入中断
 	sPlcInterrupt = EA;
 	EA = false;
 }
-void exitSplcIsr(void) reentrant{//SPLC 退出中断
+void exitSplcIsr(void) {//SPLC 退出中断
 	EA = sPlcInterrupt;
 }
-void disableSplcIsr(void) reentrant{//SPLC关闭全局中断
+void disableSplcIsr(void) {//SPLC关闭全局中断
 	EA = 0;
 }
-void enableSplcIsr(void) reentrant{//SPLC打开全局中断
+void enableSplcIsr(void) {//SPLC打开全局中断
 	EA = 1;
 }
 void disalbeModbusSerialIsr(void){

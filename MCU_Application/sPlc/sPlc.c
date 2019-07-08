@@ -10,7 +10,7 @@ uint8_t TD_10MS_SP = 0;
 uint8_t TD_100MS_SP = 0;
 uint8_t TD_1000MS_SP = 0;
 /******************************************************************************/
-void assertCoilAddress(uint16_t adr) reentrant{//检查线圈地址
+void assertCoilAddress(uint16_t adr){//检查线圈地址
 #if CONFIG_SPLC_ASSERT == 1
 	uint16_t maxCoilAdr = CONFIG_NVRAM_SIZE * 16 - 1;
 	if(adr > (maxCoilAdr)){
@@ -20,7 +20,7 @@ void assertCoilAddress(uint16_t adr) reentrant{//检查线圈地址
 	adr = ~adr;
 #endif
 }
-void assertRegisterAddress(uint16_t adr) reentrant{//检查寄存器地址
+void assertRegisterAddress(uint16_t adr){//检查寄存器地址
 #if CONFIG_SPLC_ASSERT == 1
 	if(adr > (CONFIG_NVRAM_SIZE - 1)){
 		while(1);

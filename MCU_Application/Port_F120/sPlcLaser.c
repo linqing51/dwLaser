@@ -4,6 +4,7 @@ sbit LASER_CH0_MODPIN = P2^7;
 sbit LASER_CH1_MODPIN = P2^6;
 fp32_t LaserReleaseTime;//激光发射时间
 fp32_t LaserReleaseEnergy;//激光发射能量
+fp32_t BeemChangeEnergy;//蜂鸣器频率改变能量
 /*****************************************************************************/
 static void initTimer4(void);
 /*****************************************************************************/
@@ -252,36 +253,47 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 				NVRAM0[SPREG_LASER_TCOUNTER] ++;
 			}
 			else{
-#if CONFIG_USING_DCHMI_APP == 1
 				LaserReleaseTime += 1;//发射时间累计
-				LaserReleaseEnergy += NVRAM0[EM_TOTAL_POWER];
-#endif
+				LaserReleaseEnergy += (fp32_t)NVRAM0[EM_TOTAL_POWER];
 			}
 			break;
 		}
 		case LASER_MODE_SIGNAL:{
-			laserStart();
-#if CONFIG_USING_DCHMI_APP == 1
+			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){
+				laserStart();
+				NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_0;
+				NVRAM0[SPREG_BEEM_FREQ] = CONFIG_BEEM_FREQ;
+				NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_VOLUME];
+				SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
+				NVRAM0[SPREG_LASER_TCOUNTER] ++;
+				BeemChangeEnergy = 0;
+			}
+			else{
+				BeemChangeEnergy += 1;
 				LaserReleaseTime += 1;//发射时间累计
-				LaserReleaseEnergy += NVRAM0[EM_TOTAL_POWER];
-#endif	
-			
-#if CONFIG_SPLC_USING_PCA == 1
-			//单发射能量达到整数倍时改变声音频率
-			
-#endif			
+				LaserReleaseEnergy += (fp32_t)NVRAM0[EM_TOTAL_POWER];
+				if(BeemChangeEnergy > (fp32_t)NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL] * 10000){
+					BeemChangeEnergy = 0;
+					if(NVRAM0[SPREG_BEEM_FREQ] == CONFIG_BEEM_FREQ){
+						NVRAM0[SPREG_BEEM_FREQ] = CONFIG_BEEM_FREQ + 500;
+					}
+					else{
+						NVRAM0[SPREG_BEEM_FREQ] = CONFIG_BEEM_FREQ;
+					}
+				}
+			}		
 			NVRAM0[SPREG_LASER_TCOUNTER] ++;
 			break;
+		}
+		case LASER_MODE_DERMA:{
 		}
 		case LASER_MODE_MP:{//MP多脉冲模式	
 			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转	
 				laserStart();
 			}
 			if((NVRAM0[SPREG_LASER_TCOUNTER] > 0) && (NVRAM0[SPREG_LASER_TCOUNTER] < NVRAM0[SPREG_LASER_TMATE])){//激光发射中
-#if CONFIG_USING_DCHMI_APP == 1
 				LaserReleaseTime += 1;//发射时间累计
-				LaserReleaseEnergy += NVRAM0[EM_TOTAL_POWER];
-#endif
+				LaserReleaseEnergy += (fp32_t)NVRAM0[EM_TOTAL_POWER];
 				if(NVRAM0[DM_BEEM_MODE] == BEEM_MODE_SYNC){//声光同步模式
 					NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_1;	
 				}
@@ -293,10 +305,8 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 				SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
 			}
 			if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
-#if CONFIG_USING_DCHMI_APP == 1
 				LaserReleaseTime += 1;//发射时间累计
-				LaserReleaseEnergy += NVRAM0[EM_TOTAL_POWER];
-#endif
+				LaserReleaseEnergy += (fp32_t)NVRAM0[EM_TOTAL_POWER];
 				laserStop();
 				RES(SPCOIL_BEEM_ENABLE);
 			}
@@ -312,10 +322,8 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 					laserStart();
 				}
 				if((NVRAM0[SPREG_LASER_TCOUNTER] > 0) && (NVRAM0[SPREG_LASER_TCOUNTER] < NVRAM0[SPREG_LASER_PMATE])){//激光发射中
-#if CONFIG_USING_DCHMI_APP == 1
 					LaserReleaseTime += 1;//发射时间累计
-					LaserReleaseEnergy += NVRAM0[EM_TOTAL_POWER];
-#endif				
+					LaserReleaseEnergy += (fp32_t)NVRAM0[EM_TOTAL_POWER];
 					if(NVRAM0[DM_BEEM_MODE] == BEEM_MODE_SYNC){//声光同步模式
 						NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_1;	
 					}
@@ -327,10 +335,8 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 					SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
 				}
 				if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
-#if CONFIG_USING_DCHMI_APP == 1
 					LaserReleaseTime += 1;//发射时间累计
 					LaserReleaseEnergy += NVRAM0[EM_TOTAL_POWER];
-#endif	
 					laserStop();
 					RES(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
 				}
@@ -349,18 +355,13 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 			}
 			break;
 		}
-		case LASER_MODE_DERMA:{
-			break;
-		}
 		case LASER_MODE_SP:{//单脉冲模式
 			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转	
 				laserStart();
 			}
 			if((NVRAM0[SPREG_LASER_TCOUNTER] > 0) && (NVRAM0[SPREG_LASER_TCOUNTER] < NVRAM0[SPREG_LASER_TMATE])){
-#if CONFIG_USING_DCHMI_APP == 1
 				LaserReleaseTime += 1;//发射时间累计
-				LaserReleaseEnergy += NVRAM0[EM_TOTAL_POWER];
-#endif		
+				LaserReleaseEnergy += NVRAM0[EM_TOTAL_POWER];	
 				if(NVRAM0[DM_BEEM_MODE] == BEEM_MODE_SYNC){//声光同步模式
 						NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_1;	
 				}
@@ -373,10 +374,8 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 			}
 			if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
 				laserStop();
-#if CONFIG_USING_DCHMI_APP == 1
 				LaserReleaseTime += 1;//发射时间累计
 				LaserReleaseEnergy += NVRAM0[EM_TOTAL_POWER];
-#endif
 				SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
 				EDLAR();
 			}
