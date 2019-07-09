@@ -81,9 +81,9 @@
 #define CONFIG_SPLC_USING_ADC							1//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP						10//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE							9//ADC通道数
-#define CONFIG_ADC_TEMP_SENSOR_GAIN    					3330L// Temp Sensor Gain in (uV / degC)
-#define CONFIG_ADC_TEMP_SENSOR_OFFSET  					856L// Temp Sensor Offset in mV
-#define CONFIG_ADC_INTERNAL_VREF     					2400L// ADC Voltage Reference (mV)
+#define CONFIG_ADC_TEMP_SENSOR_SLOPE					2.86F
+#define CONFIG_ADC_TEMP_SENSOR_OFFSET  					776L// Temp Sensor Offset in mV
+#define CONFIG_ADC_INTERNAL_VREF     					2430L// ADC Voltage Reference (mV)
 #define CONFIG_ADC_AMBIENT             					25L// Ambient temp in deg C
 #define CONFIG_NTC_RS									3300L
 #define CONFIG_NTC_B									3500L
@@ -161,7 +161,7 @@
 #define CONFIG_MAX_LCD_BRG										100//屏幕亮度最大值
 #define CONFIG_MIN_LCD_BRG										0//屏幕亮度最小值
 #define CONFIG_BEEM_FREQ										10//蜂鸣器频率
-#define CONFIG_COOL_SET_TEMP									280//冷却温度
+#define CONFIG_COOL_SET_TEMP									250//冷却温度
 #define CONFIG_COOL_DIFF_TEMP									20//冷却温度变化范围
 /*****************************************************************************/
 #define POWER_REAL_CH0_0P								0

@@ -99,19 +99,32 @@ void backgroundAppInit(void){
 	NVRAM0[EM_COOL_DIFF_TEMP] = CONFIG_COOL_DIFF_TEMP;
 }
 void backgroundApp(void){//背景应用
+	int16_t temp;
 	if(LDP(SPCOIL_PS100MS)){//每100mS更新一次温度
+		temp = NVRAM0[SPREG_ADC_2];
 		TNTC(EM_DIODE_TEMP0, SPREG_ADC_2);//CODE转换为NTC测量温度温度
+		temp = NVRAM0[EM_DIODE_TEMP0];
+		temp = NVRAM0[SPREG_ADC_3];
 		TNTC(EM_DIODE_TEMP1, SPREG_ADC_3);//CODE转换为NTC测量温度温度
-		TENV(EM_ENVI_TEMP, SPREG_ADC_8);//CODE转换为环境温度	
+		temp = NVRAM0[EM_DIODE_TEMP1];
+		temp = NVRAM0[SPREG_ADC_8];
+		TENV(EM_ENVI_TEMP, SPREG_ADC_8);//CODE转换为环境温度
+		temp = NVRAM0[EM_ENVI_TEMP];
 		ADLS1(DM_SYS_RUNTIME_L);
 		if(LD(SPCOIL_LASER_EMITING)){
 			ADLS1(DM_LAR_RUNTIME_L);
 		}
+//		if(NVRAM0[EM_DIODE_TEMP0] > (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
+//			SET(Y_TEC0);
+//			setLedVar(true);
+//		}
+//		if(NVRAM0[EM_DIODE_TEMP0] < (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
+//			RES(Y_TEC0);
+//			setLedVar(false);
+//		}
 	}
 	else{
 	}
-	//执行温控
-	
 	//判断二极管0是否过热
 	if(NVRAM0[EM_DIODE_TEMP0] > CONFIG_APP_DIODE_HIGH_TEMP){
 		SET(R_DIODE_TEMP_HIGH_0);

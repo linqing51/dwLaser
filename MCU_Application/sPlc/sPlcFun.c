@@ -186,7 +186,7 @@ void TNTC(uint16_t dist, uint16_t src){//CODE转换为NTC测量温度温度
 void TENV(uint16_t dist, uint16_t src){//CODE转换为环境温度
 	int16_t temp;
 	temp = (int16_t)(CONFIG_ADC_INTERNAL_VREF * NVRAM0[src] / 4096);//单位mV
-	temp = (int16_t)((temp - CONFIG_ADC_TEMP_SENSOR_OFFSET) * 1000 / CONFIG_ADC_TEMP_SENSOR_GAIN);
+	temp = (int16_t)(((fp32_t)temp - CONFIG_ADC_TEMP_SENSOR_OFFSET) / CONFIG_ADC_TEMP_SENSOR_SLOPE * 10);
 	NVRAM0[dist] = temp;
 }
 void ADD1(uint16_t Sa){//16位非饱和自加

@@ -7,13 +7,13 @@
 /*****************************************************************************/
 #define CONFIG_HMI_SCHEME_NUM								16//方案数
 #define CONFIG_HMI_DEFAULT_PASSSWORD0						0x3433//默认密码
-#define CONFIG_HMI_DEFAULT_PASSSWORD1			0x3231//默认密码
-#define STATUS_LASER_READY						0x5A
-#define STATUS_LASER_STANDBY					0xA5
-#define BEEM_MODE_SYNC							0x1234//声光同步
-#define BEEM_MODE_TONE							0x4321
-#define AIM_MODE_CW_GREEN						0x5678//连续绿色
-#define AIM_MODE_CW_RED							0x9ABC//连续红色
+#define CONFIG_HMI_DEFAULT_PASSSWORD1						0x3231//默认密码
+#define STATUS_LASER_READY									0x5A
+#define STATUS_LASER_STANDBY								0xA5
+#define BEEM_MODE_SYNC										0x1234//声光同步
+#define BEEM_MODE_TONE										0x4321
+#define AIM_MODE_CW_GREEN									0x5678//连续绿色
+#define AIM_MODE_CW_RED										0x9ABC//连续红色
 //故障码
 #define ERROR_CODE_EPROM						0x0001//EPRON 错误
 #define ERROR_CODE_SPI_FLASH					0x0002//SPI FLSAH错误

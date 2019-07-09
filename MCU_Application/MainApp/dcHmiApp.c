@@ -704,17 +704,12 @@ static void updateOptionDisplay(void){//更新选项显示
 
 void dcHmiLoopInit(void){//初始化模块
 	NVRAM0[EM_HMI_OPERA_STEP] = 0;
+	RES(Y_TEC0);
+	RES(Y_TEC1);
+	SET(Y_FAN0);
+	SET(Y_FAN1);
 }
 void dcHmiLoop(void){//HMI轮训程序
-	//温度控制
-	if(LDP(SPCOIL_PS100MS)){
-		if(NVRAM0[EM_DIODE_TEMP0] > (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
-			SET(Y_TEC0);
-		}
-		if(NVRAM0[EM_DIODE_TEMP0] < (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
-			RES(Y_TEC0);
-		}
-	}
 	NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
 	if(LD(R_DCHMI_RESET_DONE) && LD(R_DCHMI_RESTORE_DONE)){//HMI复位完成后处理串口指令
 		hmiCmdSize = queue_find_cmd(hmiCmdBuffer, CMD_MAX_SIZE);//从缓冲区中获取一条指令         
