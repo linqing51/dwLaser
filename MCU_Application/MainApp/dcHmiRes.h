@@ -20,33 +20,33 @@
 /*****************************************************************************/
 //HMI页面编号
 #define GDDC_PAGE_POWERUP_0												0
-#define GDDC_PAGE_POWERUP_1												1
-#define GDDC_PAGE_PASSCODE_0											2
-#define GDDC_PAGE_PASSCODE_1											3
-#define GDDC_PAGE_NEW_PASSCODE_0										4
-#define GDDC_PAGE_NEW_PASSCODE_1										5
-#define GDDC_PAGE_STANDBY_CW_0											6
-#define GDDC_PAGE_STANDBY_CW_1											7
-#define GDDC_PAGE_STANDBY_SP_0											8
-#define GDDC_PAGE_STANDBY_SP_1											9
-#define GDDC_PAGE_STANDBY_MP_0											10
-#define GDDC_PAGE_STANDBY_MP_1											11
-#define GDDC_PAGE_STANDBY_GP_0											12
-#define GDDC_PAGE_STANDBY_GP_1											13
-#define GDDC_PAGE_STANDBY_SIGNAL_0										14
-#define GDDC_PAGE_STANDBY_SIGNAL_1										15
-#define GDDC_PAGE_STANDBY_DERMA_0										16
-#define GDDC_PAGE_STANDBY_DERMA_1										17
-#define GDDC_PAGE_OPTION_0												18//选项页面
-#define GDDC_PAGE_OPTION_1												19//选项页面
-#define GDDC_PAGE_SCHEME_0												20//方案页面
-#define GDDC_PAGE_SCHEME_1												21//方案页面
-#define GDDC_PAGE_POWER_CORRECTION_0									22//功率校正
-#define GDDC_PAGE_POWER_CORRECTION_1									23//功率校正
-#define GDDC_PAGE_INFORMATION_0											24//信息页面
-#define GDDC_PAGE_INFORMATION_1											25//信息页面
-#define GDDC_PAGE_DIAGNOSIS_0											26//诊断页面
-#define GDDC_PAGE_DIAGNOSIS_1											27//诊断页面
+#define GDDC_PAGE_POWERUP_1												100
+#define GDDC_PAGE_PASSCODE_0											1
+#define GDDC_PAGE_PASSCODE_1											101
+#define GDDC_PAGE_NEW_PASSCODE_0										2
+#define GDDC_PAGE_NEW_PASSCODE_1										102
+#define GDDC_PAGE_STANDBY_CW_0											3
+#define GDDC_PAGE_STANDBY_CW_1											103
+#define GDDC_PAGE_STANDBY_SP_0											4
+#define GDDC_PAGE_STANDBY_SP_1											104
+#define GDDC_PAGE_STANDBY_MP_0											5
+#define GDDC_PAGE_STANDBY_MP_1											105
+#define GDDC_PAGE_STANDBY_GP_0											6
+#define GDDC_PAGE_STANDBY_GP_1											106
+#define GDDC_PAGE_STANDBY_SIGNAL_0										7
+#define GDDC_PAGE_STANDBY_SIGNAL_1										107
+#define GDDC_PAGE_STANDBY_DERMA_0										8
+#define GDDC_PAGE_STANDBY_DERMA_1										108
+#define GDDC_PAGE_OPTION_0												9//选项页面
+#define GDDC_PAGE_OPTION_1												109//选项页面
+#define GDDC_PAGE_SCHEME_0												10//方案页面
+#define GDDC_PAGE_SCHEME_1												110//方案页面
+#define GDDC_PAGE_INFORMATION_0											11//信息页面
+#define GDDC_PAGE_INFORMATION_1											111//信息页面
+#define GDDC_PAGE_DIAGNOSIS_0											12//诊断页面
+#define GDDC_PAGE_DIAGNOSIS_1											112//诊断页面
+#define GDDC_PAGE_POWER_CORRECTION_0									13//功率校正
+#define GDDC_PAGE_POWER_CORRECTION_1									114//功率校正
 /*****************************************************************************/
 //GDDC页面控件编号
 /*****************************************************************************/
@@ -114,7 +114,6 @@
 #define GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_TOTAL_POWER					27
 #define GDDC_PAGE_STANDBY_CW_PROGRESS_CH0								28
 #define GDDC_PAGE_STANDBY_CW_PROGRESS_CH1								29
-#define GDDC_PAGE_STANDBY_CW_ICO_WARNING								30
 /*****************************************************************************/
 #define GDDC_PAGE_STANDBY_SP_KEY_POWER_CH0_ADD					1						
 #define GDDC_PAGE_STANDBY_SP_KEY_POWER_CH0_DEC					2
@@ -148,7 +147,6 @@
 #define GDDC_PAGE_STANDBY_SP_TEXTDISPLAY_TOTAL_POWER			30
 #define GDDC_PAGE_STANDBY_SP_PROGRESS_CH0						31
 #define GDDC_PAGE_STANDBY_SP_PROGRESS_CH1						32
-#define GDDC_PAGE_STANDBY_SP_ICO_WARNING						33
 /*****************************************************************************/
 #define GDDC_PAGE_STANDBY_MP_KEY_POWER_CH0_ADD					1						
 #define GDDC_PAGE_STANDBY_MP_KEY_POWER_CH0_DEC					2
@@ -185,7 +183,6 @@
 #define GDDC_PAGE_STANDBY_MP_TEXTDISPLAY_TOTAL_POWER			33
 #define GDDC_PAGE_STANDBY_MP_PROGRESS_CH0						34
 #define GDDC_PAGE_STANDBY_MP_PROGRESS_CH1						35
-#define GDDC_PAGE_STANDBY_MP_ICO_WARNING						36
 /*****************************************************************************/
 #define GDDC_PAGE_STANDBY_GP_KEY_POWER_CH0_ADD					1						
 #define GDDC_PAGE_STANDBY_GP_KEY_POWER_CH0_DEC					2
@@ -228,7 +225,6 @@
 #define GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TOTAL_POWER			39
 #define GDDC_PAGE_STANDBY_GP_PROGRESS_CH0						40
 #define GDDC_PAGE_STANDBY_GP_PROGRESS_CH1						41
-#define GDDC_PAGE_STANDBY_GP_ICO_WARNING						42
 /*****************************************************************************/
 #define GDDC_PAGE_STANDBY_SIGNAL_KEY_POWER_CH0_ADD				1						
 #define GDDC_PAGE_STANDBY_SIGNAL_KEY_POWER_CH0_DEC				2
@@ -262,7 +258,6 @@
 #define GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_TOTAL_POWER		30
 #define GDDC_PAGE_STANDBY_SIGNAL_PROGRESS_CH0					31
 #define GDDC_PAGE_STANDBY_SIGNAL_PROGRESS_CH1					32
-#define GDDC_PAGE_STANDBY_SIGNAL_ICO_WARNING					33
 /*****************************************************************************/
 #define GDDC_PAGE_STANDBY_DERMA_KEY_POWER_CH0_ADD				1						
 #define GDDC_PAGE_STANDBY_DERMA_KEY_POWER_CH0_DEC				2
@@ -304,7 +299,6 @@
 #define GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_ENERGY_DENSITY		38
 #define GDDC_PAGE_STANDBY_DERMA_PROGRESS_CH0					39
 #define GDDC_PAGE_STANDBY_DERMA_PROGRESS_CH1					40
-#define GDDC_PAGE_STANDBY_DERMA_ICO_WARNING						41
 /*****************************************************************************/
 #define GDDC_PAGE_OPTION_KEY_BEEP								1//蜂鸣器声光同步				
 #define GDDC_PAGE_OPTION_KEY_TONE								2//蜂鸣器
@@ -365,13 +359,7 @@
 #define GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_13					34
 #define GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_14					35
 #define GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_15					36
-#define GDDC_PAGE_SCHEME_TEXTDISPLAY_FULLNAME					37
-#define GDDC_PAGE_SCHEME_TEXTDISPLAY_POSWIDTH					38
-#define GDDC_PAGE_SCHEME_TEXTDISPLAY_NEGWIDTH					39
-#define GDDC_PAGE_SCHEME_TEXTDISPLAY_TIMES						40
-#define GDDC_PAGE_SCHEME_TEXTDISPALY_GROUP_OFF					41
-#define GDDC_PAGE_SCHEME_TEXTDISPLAY_POWER_CH0					42
-#define GDDC_PAGE_SCHEME_TEXTDISPLAY_POWER_CH1					43
+#define GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL						37
 /*****************************************************************************/
 //更名界面
 #define GDDC_PAGE_RENAME_OK										1//确定

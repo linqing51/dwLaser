@@ -50,6 +50,30 @@ uint16_t hmiCmdSize;//已缓冲的指令数
 void UpdateUI(void);
 /*****************************************************************************/
 #if CONFIG_USING_DCHMI_APP == 1
+static void checkScheme(void){//方案合规检测
+	uint8_t index;
+	for(index = 0;index < CONFIG_HMI_SCHEME_NUM;index ++){
+		if((NVRAM0[(DM_LASER_SELECT + (index * 30))] !=  LASER_SELECT_CH0) && 
+		   (NVRAM0[(DM_LASER_SELECT + (index * 30))] !=  LASER_SELECT_CH1) &&
+   		   (NVRAM0[(DM_LASER_SELECT + (index * 30))] !=  LASER_SELECT_BOTH)){
+			   NVRAM0[(DM_LASER_SELECT + (index * 30))] = LASER_SELECT_BOTH;
+		}
+		if((NVRAM0[(DM_LASER_PULSE_MODE + (index * 30))] != LASER_MODE_CW) &&
+		   (NVRAM0[(DM_LASER_PULSE_MODE + (index * 30))] != LASER_MODE_SP) &&
+		   (NVRAM0[(DM_LASER_PULSE_MODE + (index * 30))] != LASER_MODE_MP) &&
+		   (NVRAM0[(DM_LASER_PULSE_MODE + (index * 30))] != LASER_MODE_GP) &&
+		   (NVRAM0[(DM_LASER_PULSE_MODE + (index * 30))] != LASER_MODE_SIGNAL) &&
+		   (NVRAM0[(DM_LASER_PULSE_MODE + (index * 30))] != LASER_MODE_DERMA)){
+			NVRAM0[(DM_LASER_PULSE_MODE + (index * 30))] = LASER_MODE_CW;
+		}
+		if(NVRAM0[DM_LASER_POWER_CH0 + (index * 30)] > CONFIG_MAX_LASERPOWER_CH0){
+			NVRAM0[DM_LASER_POWER_CH0 + (index * 30)] = 0;
+		}
+		if(NVRAM0[DM_LASER_POWER_CH1 + (index * 30)] > CONFIG_MAX_LASERPOWER_CH1){
+			NVRAM0[DM_LASER_POWER_CH1 + (index * 30)] = 0;
+		}
+	}
+}
 static void updateLanguage(uint16_t lang){//更新语言
 	NVRAM0[DM_LANGUAGE] = lang;
 	SetLanguage(lang, 1);
@@ -751,6 +775,7 @@ void dcHmiLoop(void){//HMI轮训程序
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_POWERUP){//上电步骤	
 		SET(Y_LED_POWERON);//电源灯常亮
 #if CONFIG_USING_BACKGROUND_APP == 1
+		checkScheme();
 		loadScheme();//从掉电存储寄存器中恢复方案参数
 #endif		
 		NVRAM0[EM_DC_DEFAULT_PASSCODE0] = CONFIG_HMI_DEFAULT_PASSSWORD0;
@@ -1757,15 +1782,15 @@ void dcHmiLoop(void){//HMI轮训程序
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_OPTION_KEY_ENTER_INFORMATION_DOWN);
 		}
-		if(LD(R_OPTION_KEY_ENTER_SCHEME_DOWN)){
-			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_SCHEME;
-			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_SCHEME_0;
+//		if(LD(R_OPTION_KEY_ENTER_SCHEME_DOWN)){
+//			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_SCHEME;
+//			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_SCHEME_0;
 
-			seletcSchemeNum(NVRAM0[DM_SCHEME_NUM]);//
-			updateSchemeEditDisplay();
-			SetScreen(NVRAM0[EM_DC_PAGE]);
-			RES(R_OPTION_KEY_ENTER_SCHEME_DOWN);
-		}
+//			seletcSchemeNum(NVRAM0[DM_SCHEME_NUM]);//
+//			updateSchemeEditDisplay();
+//			SetScreen(NVRAM0[EM_DC_PAGE]);
+//			RES(R_OPTION_KEY_ENTER_SCHEME_DOWN);
+//		}
 		if(LD(R_OPTION_KEY_ENTER_OK_DOWN)){
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			updateStandbyDisplay();
@@ -2358,7 +2383,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						updateStandbyDisplay();
 					}		
 					else if((NVRAM0[EM_DC_NEW_PASSCODE0] == NVRAM0[EM_DC_DEFAULT_PASSCODE0]) && (NVRAM0[EM_DC_NEW_PASSCODE1] == NVRAM0[EM_DC_DEFAULT_PASSCODE1])){
-						NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
+						SET(R_ADMIN);//工程师密码登录
+						
 						updateStandbyDisplay();				
 					}
 					CLR(EM_DC_NEW_PASSCODE0);//清空已输入密码
@@ -4412,18 +4438,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_15:{	
-					break;		
-				}
-				case GDDC_PAGE_SCHEME_TEXTDISPLAY_POSWIDTH:{		
-					break;		
-				}
-				case GDDC_PAGE_SCHEME_TEXTDISPLAY_NEGWIDTH:{		
-					break;		
-				}
-				case GDDC_PAGE_SCHEME_TEXTDISPLAY_TIMES:{		
-					break;		
-				}
-				case GDDC_PAGE_SCHEME_TEXTDISPALY_GROUP_OFF:{		
 					break;		
 				}
 				default:break;
