@@ -336,7 +336,7 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 				}
 				if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
 					LaserReleaseTime += 1;//发射时间累计
-					LaserReleaseEnergy += NVRAM0[EM_TOTAL_POWER];
+					LaserReleaseEnergy += (fp32_t)NVRAM0[EM_TOTAL_POWER];
 					laserStop();
 					RES(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
 				}
@@ -361,7 +361,7 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 			}
 			if((NVRAM0[SPREG_LASER_TCOUNTER] > 0) && (NVRAM0[SPREG_LASER_TCOUNTER] < NVRAM0[SPREG_LASER_TMATE])){
 				LaserReleaseTime += 1;//发射时间累计
-				LaserReleaseEnergy += NVRAM0[EM_TOTAL_POWER];	
+				LaserReleaseEnergy += (fp32_t)NVRAM0[EM_TOTAL_POWER];	
 				if(NVRAM0[DM_BEEM_MODE] == BEEM_MODE_SYNC){//声光同步模式
 						NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_1;	
 				}
@@ -375,7 +375,7 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 			if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
 				laserStop();
 				LaserReleaseTime += 1;//发射时间累计
-				LaserReleaseEnergy += NVRAM0[EM_TOTAL_POWER];
+				LaserReleaseEnergy += (fp32_t)NVRAM0[EM_TOTAL_POWER];
 				SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
 				EDLAR();
 			}

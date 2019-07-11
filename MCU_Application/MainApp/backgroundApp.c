@@ -76,9 +76,33 @@ void loadScheme(void){//DM->EM
 		NVRAM0[DM_SCHEME_NUM] = CONFIG_HMI_SCHEME_NUM;
 	if(NVRAM0[DM_SCHEME_NUM] < 0)
 		NVRAM0[DM_SCHEME_NUM] = 0;
-	psrc = (uint8_t*)&NVRAM0[(DM_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 25)];
+	psrc = (uint8_t*)&NVRAM0[(DM_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 30)];
 	pdist = (uint8_t*)&NVRAM0[EM_LASER_SCHEME_NAME];
 	memcpy(pdist, psrc, ((DM_SCHEME_END_0 - DM_SCHEME_START_0 + 1) * 2));
+	switch(NVRAM0[EM_LASER_PULSE_MODE]){
+		case LASER_MODE_CW:{
+			break;
+		}
+		case LASER_MODE_SP:{
+			break;
+		}
+		case LASER_MODE_MP:{
+			break;
+		}
+		case LASER_MODE_GP:{
+			break;
+		}
+		case LASER_MODE_SIGNAL:{
+			break;
+		}
+		case LASER_MODE_DERMA:{
+			break;
+		}
+		default:{
+			defaultScheme();
+			break;
+		}
+	}
 }
 void saveScheme(void){//EM->DM
 	uint8_t *psrc, *pdist;
@@ -86,11 +110,10 @@ void saveScheme(void){//EM->DM
 		NVRAM0[DM_SCHEME_NUM] = CONFIG_HMI_SCHEME_NUM;
 	if(NVRAM0[DM_SCHEME_NUM] < 0)
 		NVRAM0[DM_SCHEME_NUM] = 0;
-	pdist = (uint8_t*)&NVRAM0[(DM_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 25)];
+	pdist = (uint8_t*)&NVRAM0[(DM_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 30)];
 	psrc = (uint8_t*)&NVRAM0[EM_LASER_SCHEME_NAME];
 	memcpy(pdist, psrc, ((DM_SCHEME_END_0 - DM_SCHEME_START_0 + 1) * 2));
 }
-
 void backgroundAppInit(void){
 	SET(R_FIBER_ID_PASS_0);
 	SET(R_FIBER_ID_PASS_1);
@@ -114,14 +137,14 @@ void backgroundApp(void){//±³¾°Ó¦ÓÃ
 		if(LD(SPCOIL_LASER_EMITING)){
 			ADLS1(DM_LAR_RUNTIME_L);
 		}
-//		if(NVRAM0[EM_DIODE_TEMP0] > (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
-//			SET(Y_TEC0);
-//			setLedVar(true);
-//		}
-//		if(NVRAM0[EM_DIODE_TEMP0] < (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
-//			RES(Y_TEC0);
-//			setLedVar(false);
-//		}
+		if(NVRAM0[EM_DIODE_TEMP0] > (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
+			SET(Y_TEC0);
+			setLedVar(true);
+		}
+		if(NVRAM0[EM_DIODE_TEMP0] < (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
+			RES(Y_TEC0);
+			setLedVar(false);
+		}
 	}
 	else{
 	}

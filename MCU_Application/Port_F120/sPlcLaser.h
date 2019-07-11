@@ -6,15 +6,15 @@
 #include "appSplcAdr.h"
 #endif
 /*****************************************************************************/
-#define LASER_MODE_CW							0x1A50//连续模式
-#define LASER_MODE_SP							0x65A5//单脉冲模式
-#define LASER_MODE_MP							0x3C72//多脉冲模式
-#define LASER_MODE_GP							0x4D83//群脉冲模式
-#define LASER_MODE_DERMA						0x5F43//
-#define LASER_MODE_SIGNAL						0x2B61//单脉冲模式
-#define LASER_SELECT_CH0						0x005A
-#define LASER_SELECT_CH1						0xA500
-#define LASER_SELECT_BOTH						0xA55A
+#define LASER_MODE_CW							0x0001//连续模式
+#define LASER_MODE_SP							0x0002//单脉冲模式
+#define LASER_MODE_MP							0x0004//多脉冲模式
+#define LASER_MODE_GP							0x0008//群脉冲模式
+#define LASER_MODE_DERMA						0x0010//
+#define LASER_MODE_SIGNAL						0x0020//单脉冲模式
+#define LASER_SELECT_CH0						0x0001
+#define LASER_SELECT_CH1						0x0002
+#define LASER_SELECT_BOTH						0x0004
 /*****************************************************************************/
 extern fp32_t LaserReleaseTime;//激光发射时间
 extern fp32_t LaserReleaseEnergy;//激光发射能量
