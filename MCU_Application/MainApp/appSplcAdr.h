@@ -61,7 +61,6 @@
 /*****************************************************************************/
 #define EM_LASER_CURRENT_0						(EM_START +	40)//激光器电流0			
 #define EM_LASER_CURRENT_1						(EM_START +	41)//激光器电流1			
-#define EM_TOTAL_POWER							(EM_START + 42)//设定总功率
 #define EM_RELEASE_TOTAL_TIME					(EM_START + 43)//发射总时间			
 #define EM_RELEASE_TOTAL_ENERGY					(EM_START + 44)//发射总能量			
 #define EM_HMI_OPERA_STEP						(EM_START +	48)//操作步骤								
@@ -80,7 +79,8 @@
 #define EM_DC_DEFAULT_PASSCODE2					(EM_START + 136)//默认密码1	
 #define EM_DC_DEFAULT_PASSCODE3					(EM_START + 137)//默认密码1				
 #define EM_DC_DISPLAY_RELEASE_TIME				(EM_START + 138)//显示发射时间			
-#define EM_DC_DISPLAY_RELEASE_ENERGY			(EM_START + 139)//显示发射能量			
+#define EM_DC_DISPLAY_RELEASE_ENERGY			(EM_START + 139)//显示发射能量	
+		
 /*****************************************************************************/
 #define DM_LASER_SCHEME_NAME					(DM_START +  0)//方案名称
 #define DM_LASER_SELECT							(DM_START +  15)//通道选择
@@ -191,33 +191,28 @@
 #define DM_CORR_TAB1_POWER19					(DM_START + 549)//功率校正表1功率38
 #define DM_CORR_TAB1_POWER20					(DM_START + 550)//功率校正表1功率40
 /*****************************************************************************/
-#define DM_SCHEME_NUM							(DM_START + 551)//选择的方案编号 低8位方案号 高8位方案使能
-#define DM_BEEM_VOLUME							(DM_START + 552)//蜂鸣器音量
-#define DM_BEEM_MODE							(DM_START + 553)//蜂鸣器模式
-#define DM_AIM_MODE								(DM_START + 554)//指示激光模式
-#define DM_AIM_BRG								(DM_START + 555)//指示激光亮度
-#define DM_LCD_BRG								(DM_START + 556)//屏幕亮度
-#define DM_DC_OLD_PASSCODE0						(DM_START + 557)//屏旧密码0-1
-#define DM_DC_OLD_PASSCODE1						(DM_START + 558)//屏旧密码2-3
-#define DM_DC_OLD_PASSCODE2						(DM_START + 559)//屏旧密码0-1
-#define DM_DC_OLD_PASSCODE3						(DM_START + 560)//屏旧密码2-3
-#define DM_SYS_RUNTIME_L						(DM_START + 561)//系统累计运行时间秒L 32BIT
-#define DM_SYS_RUNTIME_H						(DM_START + 562)//系统累计运行时间秒H 32BIT
-#define DM_LAR_RUNTIME_L						(DM_START + 563)//激光累计发射时间秒L 32BIT
-#define DM_LAR_RUNTIME_H						(DM_START + 564)//激光累计发射时间秒H 32BIT
-#define DM_RELEASE_DATA_YEAR					(DM_START + 565)//出厂日期年		
-#define DM_RELEASE_DATA_MONTH					(DM_START + 566)//出厂日期月
-#define DM_RELEASE_DATA_DAY						(DM_START + 567)//出厂日期日
-#define DM_LANGUAGE								(DM_START + 568)//语言选择
+#define DM_SCHEME_NUM											(DM_START + 551)//选择的方案编号 低8位方案号 高8位方案使能
+#define DM_BEEM_VOLUME											(DM_START + 552)//蜂鸣器音量
+#define DM_BEEM_MODE											(DM_START + 553)//蜂鸣器模式
+#define DM_AIM_BRG												(DM_START + 555)//指示激光亮度
+#define DM_LCD_BRG												(DM_START + 556)//屏幕亮度
+#define DM_DC_OLD_PASSCODE0										(DM_START + 557)//屏旧密码0-1
+#define DM_DC_OLD_PASSCODE1										(DM_START + 558)//屏旧密码2-3
+#define DM_DC_OLD_PASSCODE2										(DM_START + 559)//屏旧密码0-1
+#define DM_DC_OLD_PASSCODE3										(DM_START + 560)//屏旧密码2-3
+#define DM_SYS_RUNTIME_L										(DM_START + 561)//系统累计运行时间秒L 32BIT
+#define DM_SYS_RUNTIME_H										(DM_START + 562)//系统累计运行时间秒H 32BIT
+#define DM_LAR_RUNTIME_L										(DM_START + 563)//激光累计发射时间秒L 32BIT
+#define DM_LAR_RUNTIME_H										(DM_START + 564)//激光累计发射时间秒H 32BIT
 /*****************************************************************************/
-#define X_INTERLOCK								(X_START * 16 + 0)//XIN0 安全连锁
-#define X_ESTOP									(X_START * 16 + 1)//XIN1 紧急停止开关
-#define X_FOOTSWITCH_NO							(X_START * 16 + 2)//XIN2 脚踏常开
-#define X_FOOTSWITCH_NC							(X_START * 16 + 3)//XIN3 脚踏常闭
-#define X_LDR_FAULT0							(X_START * 16 + 4)//XIN4 驱动器故障0
-#define X_LDR_FAULT1							(X_START * 16 + 5)//XIN5 驱动器故障1
-#define X_FBD0									(X_START * 16 + 6)//XIN6 光纤探测0
-#define X_FBD1									(X_START * 16 + 7)//XIN7 光纤探测1
+#define X_INTERLOCK												(X_START * 16 + 0)//XIN0 安全连锁
+#define X_ESTOP													(X_START * 16 + 1)//XIN1 紧急停止开关
+#define X_FOOTSWITCH_NO											(X_START * 16 + 2)//XIN2 脚踏常开
+#define X_FOOTSWITCH_NC											(X_START * 16 + 3)//XIN3 脚踏常闭
+#define X_LDR_FAULT0											(X_START * 16 + 4)//XIN4 驱动器故障0
+#define X_LDR_FAULT1											(X_START * 16 + 5)//XIN5 驱动器故障1
+#define X_FBD0													(X_START * 16 + 6)//XIN6 光纤探测0
+#define X_FBD1													(X_START * 16 + 7)//XIN7 光纤探测1
 /*****************************************************************************/
 #define Y_LED_POWERON											(Y_START * 16 + 0)//YOUT0 电源灯
 #define Y_LED_EMIT												(Y_START * 16 + 1)//YOUT1 激光指示灯
