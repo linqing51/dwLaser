@@ -60,7 +60,7 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_OUTPUT						1//输出IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_PCA							0//片内计数器阵列
+#define CONFIG_SPLC_USING_PCA							1//片内计数器阵列
 #define CONFIG_PCA_TICK									8000
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_EPROM							1//EPROM
@@ -134,6 +134,7 @@
 #define CONFIG_USING_DCHMI_APP							1//广东大彩人机交互应用
 #define CONFIG_USING_BACKGROUND_APP						1//背景应用
 /*****************************************************************************/
+#define CONFIG_SKIP_FAULT 										1
 #define CONFIG_CHECK_DELAY_TIME									5
 #define CONFIG_KEY_REPEAT_DELAY_TIME							50
 #define CONFIG_SCHEME_FILE_NAME									"/dwLaser.txt"
@@ -274,11 +275,12 @@
 #define SPCOIL_START_UP									(SPCOIL_START * 16 + 1)//初次上电
 #define SPCOIL_PS1MS									(SPCOIL_START * 16 + 2)//1mS间隔 50%占空比脉冲
 #define SPCOIL_PS10MS									(SPCOIL_START * 16 + 3)//10mS
-#define SPCOIL_PS100MS									(SPCOIL_START * 16 + 4)//100mS	
-#define SPCOIL_PS1000MS									(SPCOIL_START * 16 + 5)//1000mS	
-#define SPCOIL_MODBUS_S0_ERROR							(SPCOIL_START * 16 + 6)//Modbus Slave->Uart0 错误
-#define SPCOIL_NVRAM_FAIL								(SPCOIL_START * 16 + 7)//NVRAM校验码错误
-#define SPCOIL_WATCHDOG_OVERFLOW						(SPCOIL_START * 16 + 8)//看门狗溢出
+#define SPCOIL_PS100MS									(SPCOIL_START * 16 + 4)//100mS
+#define SPCOIL_PS500MS									(SPCOIL_START * 16 + 5)//500mS
+#define SPCOIL_PS1000MS									(SPCOIL_START * 16 + 6)//1000mS
+#define SPCOIL_MODBUS_S0_ERROR							(SPCOIL_START * 16 + 7)//Modbus Slave->Uart0 错误
+#define SPCOIL_NVRAM_FAIL								(SPCOIL_START * 16 + 8)//NVRAM校验码错误
+#define SPCOIL_WATCHDOG_OVERFLOW						(SPCOIL_START * 16 + 9)//看门狗溢出
 /*****************************************************************************/
 //USB 
 #define SPCOIL_USB_INT_ERROR							(SPCOIL_START * 16 + 17)//USB 底层中断返回错误

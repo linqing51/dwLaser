@@ -3,7 +3,7 @@
 void sPlcPcaInit(void){//计时器阵列初始化
 #if CONFIG_SPLC_USING_PCA == 1
 	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
-	SFRPAGE = TIMER01_PAGE
+	SFRPAGE = TIMER01_PAGE;
 	//T0 CLK = SYSCLK /48
 	TH0 = 0xFF;         
 	TL0 = TH0;
