@@ -60,7 +60,7 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_OUTPUT						1//输出IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_PCA							0//片内计数器阵列
+#define CONFIG_SPLC_USING_PCA							1//片内计数器阵列
 #define CONFIG_PCA_TICK									8000
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_EPROM							0//EPROM
@@ -78,7 +78,7 @@
 #define CONFIG_SPLC_USING_UART1_ISR						1
 #define UART1											1
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ADC							0//使能ADC模块
+#define CONFIG_SPLC_USING_ADC							1//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP						10//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE							9//ADC通道数
 #define CONFIG_ADC_TEMP_SENSOR_SLOPE					2.86F
@@ -90,7 +90,7 @@
 #define CONFIG_NTC_RB									10000L
 #define CONFIG_NTC_VREF									5000L
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_DAC							0//是能DAC模块
+#define CONFIG_SPLC_USING_DAC							1//是能DAC模块
 /*****************************************************************************/
 #define CONFIG_USING_RTU_SLAVE							0//使能MODBUS RTU从站
 #define CONFIG_MB_PORT									UART0
