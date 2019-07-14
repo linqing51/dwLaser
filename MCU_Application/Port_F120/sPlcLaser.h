@@ -2,9 +2,7 @@
 #define __SPLCLASER_H__
 /*****************************************************************************/
 #include "sPlc.h"
-#if CONFIG_USING_DCHMI_APP == 1
 #include "appSplcAdr.h"
-#endif
 /*****************************************************************************/
 #define LASER_MODE_CW							0x0001//连续模式
 #define LASER_MODE_SP							0x0002//单脉冲模式

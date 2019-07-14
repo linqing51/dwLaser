@@ -60,10 +60,10 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_OUTPUT						1//输出IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_PCA							1//片内计数器阵列
+#define CONFIG_SPLC_USING_PCA							0//片内计数器阵列
 #define CONFIG_PCA_TICK									8000
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM							1//EPROM
+#define CONFIG_SPLC_USING_EPROM							0//EPROM
 #if CONFIG_SPLC_USING_EPROM == 1
 #define CONFIG_SPLC_USING_CLEAR_NVRAM					1//启用清除NVRAM功能
 #else
@@ -78,7 +78,7 @@
 #define CONFIG_SPLC_USING_UART1_ISR						1
 #define UART1											1
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ADC							1//使能ADC模块
+#define CONFIG_SPLC_USING_ADC							0//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP						10//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_CHANNLE							9//ADC通道数
 #define CONFIG_ADC_TEMP_SENSOR_SLOPE					2.86F
@@ -90,7 +90,7 @@
 #define CONFIG_NTC_RB									10000L
 #define CONFIG_NTC_VREF									5000L
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_DAC							1//是能DAC模块
+#define CONFIG_SPLC_USING_DAC							0//是能DAC模块
 /*****************************************************************************/
 #define CONFIG_USING_RTU_SLAVE							0//使能MODBUS RTU从站
 #define CONFIG_MB_PORT									UART0
@@ -107,7 +107,7 @@
 #define CONFIG_SPLC_USING_CH376							0
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ONCHIPFLASH					0
-#define CONFIG_SPLC_USING_SI7060						1
+#define CONFIG_SPLC_USING_SI7060						0
 #define CONFIG_SPLC_USING_MCP79412						0
 #define CONFIG_SPLC_USING_SPI_FLASH						0
 #define CONFIG_SPLC_USING_NRF24L01						0
@@ -131,8 +131,8 @@
 /*****************************************************************************/
 #define CONFIG_LASER_TIMER_TICK							1000//1mS
 #define CONFIG_USING_USB_APP							0//USB应用
-#define CONFIG_USING_DCHMI_APP							1//广东大彩人机交互应用
-#define CONFIG_USING_BACKGROUND_APP						1//背景应用
+#define CONFIG_USING_DCHMI_APP							0//广东大彩人机交互应用
+#define CONFIG_USING_BACKGROUND_APP						0//背景应用
 /*****************************************************************************/
 #define CONFIG_SKIP_FAULT 										1
 #define CONFIG_CHECK_DELAY_TIME									5
@@ -214,12 +214,12 @@
 //线圈 保持 16*8=256 
 #define MR_START										0
 #define MR_END   										7
-//线圈寄存器 非保持 16*64=1024
-#define R_START											8
-#define R_END											71
 //数据寄存器 保持 576
-#define DM_START										72
-#define DM_END											647
+#define DM_START										8
+#define DM_END											583
+//线圈寄存器 非保持 16*64=1024
+#define R_START											584
+#define R_END											647						
 //数据寄存器 非保持 256
 #define EM_START										648
 #define EM_END											903

@@ -166,25 +166,19 @@ void updataNvram(void){//更新NVRAM->EPROM
 	uint16_t i;
 	sp0 = (uint8_t*)NVRAM0;
 	sp1 = (uint8_t*)NVRAM1;
-	for(i = (MR_START * 2);i < ((MR_END + 1) * 2);i ++){//储存MR
-		if(*(sp0 + i) != *(sp1 + i)){
+	//储存MR和DM
+	for(i = (MR_START * 2);i < ((DM_END + 1) * 2);i ++){//储存MR
+		if(*sp0 != *sp1){
 #if CONFIG_SPLC_USING_EPROM == 1
 			setLedEprom(true);
 			epromWriteOneByte(i, *(sp0 + i));
 			setLedEprom(false);
-#endif
-		}	
-	}
-	for(i = (DM_START * 2);i < ((DM_END + 1) * 2);i ++){//储存DM
-		if(*(sp0 + i) != *(sp1 + i)){
-#if CONFIG_SPLC_USING_EPROM == 1
-			setLedEprom(true);
-			epromWriteOneByte(i, *(sp0 + i));
-			setLedEprom(false);
+			sp0 ++;
+			sp1 ++;
 #endif
 		}
 	}
-	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
+	memcpy((uint8_t*)(NVRAM1), (uint8_t*)(NVRAM0), ((TM_END - MR_START + 1)* 2));//更新NVRAM1 非保持寄存器
 }
 void clearNvram(void){//清除NVRAM数据	
 	uint16_t i = 0;
