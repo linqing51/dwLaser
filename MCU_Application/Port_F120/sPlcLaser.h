@@ -14,8 +14,6 @@
 #define LASER_SELECT_CH1						0x0002
 #define LASER_SELECT_BOTH						0x0004
 /*****************************************************************************/
-extern fp32_t LaserReleaseTime;//激光发射时间
-extern fp32_t LaserReleaseEnergy;//激光发射能量
 void sPlcLaserInit(void);
 void laserTimerIsr(void);//TIMER4 中断 激光发射
 void testBenchLaserTimer(uint8_t st);//LASER激光发射测试

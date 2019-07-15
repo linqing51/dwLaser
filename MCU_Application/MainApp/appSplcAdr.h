@@ -58,16 +58,16 @@
 #define EM_ENVI_HIGH_TEMP						(EM_START + 36)//环境过热阈值
 #define EM_COOL_SET_TEMP						(EM_START + 37)//设定冷却温度
 #define EM_COOL_DIFF_TEMP						(EM_START + 38)//设定冷却回差调节
-/*****************************************************************************/
-#define EM_LASER_CURRENT_0						(EM_START +	40)//激光器电流0			
-#define EM_LASER_CURRENT_1						(EM_START +	41)//激光器电流1			
-#define EM_RELEASE_TOTAL_TIME					(EM_START + 43)//发射总时间			
-#define EM_RELEASE_TOTAL_ENERGY					(EM_START + 44)//发射总能量		
-#define EM_TOTAL_POWER							(EM_START + 45)//发射总功率
-#define EM_HMI_OPERA_STEP						(EM_START +	46)//操作步骤								
-#define EM_ERROR_CODE							(EM_START + 47)//错误码					
-#define EM_SCHEME_NUM_TMP						(EM_START + 48)//待确认方案编号			
-#define EM_DK25L_VER							(EM_START + 49)//DK25L模块版本			
+/*****************************************************************************/			
+#define EM_RELEASE_TOTAL_TIME					(EM_START + 40)//发射总时间			
+#define EM_RELEASE_TOTAL_ENERGY					(EM_START + 41)//发射总能量		
+#define EM_TOTAL_POWER							(EM_START + 42)//发射总功率
+#define EM_HMI_OPERA_STEP						(EM_START +	43)//操作步骤								
+#define EM_ERROR_CODE							(EM_START + 44)//错误码					
+#define EM_SCHEME_NUM_TMP						(EM_START + 45)//待确认方案编号			
+#define EM_DK25L_VER							(EM_START + 46)//DK25L模块版本
+#define EM_LASER_SIGNAL_TIME_INTERVAL			(EM_START + 47)//SIGNAL蜂鸣器改变的时间间隔
+#define EM_BEEM_ON_TIME							(EM_START + 48)//蜂鸣器开启时间
 /*****************************************************************************/
 #define EM_DC_PAGE								(EM_START + 128)//HMI页面编号 			
 #define EM_DC_PASSCODE_INDEX					(EM_START + 129)//密码输入位索引		

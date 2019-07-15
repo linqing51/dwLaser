@@ -11,8 +11,6 @@ void main(void){
 	while(1){
 		sPlcProcessStart();
 		if(LD(SPCOIL_START_UP)){//
-			
-			testBenchBeem(50, BEEM_MODE_0);
 #if CONFIG_USING_BACKGROUND_APP == 1 
 			backgroundAppInit();
 #endif

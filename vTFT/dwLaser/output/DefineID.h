@@ -116,6 +116,9 @@
 //»­Ãæ6_GDDC_PAGE_STANDBY_CW_0µÄ±³¾°Í¼Æ¬
 #define  _IMG_6_GDDC_PAGE_STANDBY_CW_0                                         3
 
+//È«¾ÖÍ¼Æ¬7_gddc_page_standby_cw_1.jpg
+#define  _IMG_7_GDDC_PAGE_STANDBY_CW_1_JPG                                     4
+
 #define  _BTN_6_GDDC_PAGE_STANDBY_CW_0_GDDC_PAGE_STANDBY_CW_KEY_POWER_CH0_DEC          2
 
 #define  _BTN_6_GDDC_PAGE_STANDBY_CW_0_GDDC_PAGE_STANDBY_CW_KEY_POWER_CH0_ADD          1
@@ -153,12 +156,12 @@
 #define  _BTN_6_GDDC_PAGE_STANDBY_CW_0_GDDC_PAGE_STANDBY_CW_KEY_RESET         20
 
 //»­Ãæ6_GDDC_PAGE_STANDBY_CW_0ÖÐ½ø¶ÈÌõGDDC_PAGE_STANDBY_CW_PROGRESS_CH0µÄ±³¾°Í¼Æ¬
-#define  _IMG_6_GDDC_PAGE_STANDBY_CW_0_GDDC_PAGE_STANDBY_CW_PROGRESS_CH0          4
+#define  _IMG_6_GDDC_PAGE_STANDBY_CW_0_GDDC_PAGE_STANDBY_CW_PROGRESS_CH0          5
 
 #define  _PROGRESS_6_GDDC_PAGE_STANDBY_CW_0_GDDC_PAGE_STANDBY_CW_PROGRESS_CH0         28
 
 //»­Ãæ6_GDDC_PAGE_STANDBY_CW_0ÖÐ½ø¶ÈÌõGDDC_PAGE_STANDBY_CW_PROGRESS_CH1µÄ±³¾°Í¼Æ¬
-#define  _IMG_6_GDDC_PAGE_STANDBY_CW_0_GDDC_PAGE_STANDBY_CW_PROGRESS_CH1          4
+#define  _IMG_6_GDDC_PAGE_STANDBY_CW_0_GDDC_PAGE_STANDBY_CW_PROGRESS_CH1          5
 
 #define  _PROGRESS_6_GDDC_PAGE_STANDBY_CW_0_GDDC_PAGE_STANDBY_CW_PROGRESS_CH1         29
 
@@ -181,7 +184,7 @@
 #define  _TXT_DIS__6_GDDC_PAGE_STANDBY_CW_0_GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_TOTAL_POWER         27
 
 //»­Ãæ8_GDDC_PAGE_STANDBY_SP_0µÄ±³¾°Í¼Æ¬
-#define  _IMG_8_GDDC_PAGE_STANDBY_SP_0                                         5
+#define  _IMG_8_GDDC_PAGE_STANDBY_SP_0                                         6
 
 #define  _BTN_8_GDDC_PAGE_STANDBY_SP_0_GDDC_PAGE_STANDBY_SP_KEY_POSWIDTH_DEC          6
 
@@ -248,7 +251,7 @@
 #define  _BTN_8_GDDC_PAGE_STANDBY_SP_0_GDDC_PAGE_STANDBY_SP_KEY_SCHEME_SAVE         15
 
 //»­Ãæ10_GDDC_PAGE_STANDBY_MP_0µÄ±³¾°Í¼Æ¬
-#define  _IMG_10_GDDC_PAGE_STANDBY_MP_0                                        6
+#define  _IMG_10_GDDC_PAGE_STANDBY_MP_0                                        7
 
 #define  _BTN_10_GDDC_PAGE_STANDBY_MP_0_GDDC_PAGE_STANDBY_MP_KEY_POSWIDTH_DEC          6
 
@@ -321,7 +324,7 @@
 #define  _BTN_10_GDDC_PAGE_STANDBY_MP_0_GDDC_PAGE_STANDBY_MP_KEY_ENTER_SCHEME         17
 
 //»­Ãæ12_GDDC_PAGE_STANDBY_GP_0µÄ±³¾°Í¼Æ¬
-#define  _IMG_12_GDDC_PAGE_STANDBY_GP_0                                        7
+#define  _IMG_12_GDDC_PAGE_STANDBY_GP_0                                        8
 
 #define  _BTN_12_GDDC_PAGE_STANDBY_GP_0_GDDC_PAGE_STANDBY_GP_KEY_POSWIDTH_DEC          6
 
@@ -406,7 +409,7 @@
 #define  _BTN_12_GDDC_PAGE_STANDBY_GP_0_GDDC_PAGE_STANDBY_GP_KEY_ENTER_SCHEME         21
 
 //»­Ãæ14_GDDC_PAGE_STNADBY_DERMA_0µÄ±³¾°Í¼Æ¬
-#define  _IMG_14_GDDC_PAGE_STNADBY_DERMA_0                                     8
+#define  _IMG_14_GDDC_PAGE_STNADBY_DERMA_0                                     9
 
 #define  _BTN_14_GDDC_PAGE_STNADBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_POSWIDTH_DEC          6
 
@@ -489,7 +492,7 @@
 #define  _BTN_14_GDDC_PAGE_STNADBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0         28
 
 //»­Ãæ16_GDDC_PAGE_STANDBY_SIGNAL_0µÄ±³¾°Í¼Æ¬
-#define  _IMG_16_GDDC_PAGE_STANDBY_SIGNAL_0                                    9
+#define  _IMG_16_GDDC_PAGE_STANDBY_SIGNAL_0                                   10
 
 #define  _BTN_16_GDDC_PAGE_STANDBY_SIGNAL_0_GDDC_PAGE_STANDBY_SIGNAL_KEY_ENERGY_INTERVAL_DEC          6
 

@@ -90,49 +90,49 @@
 #define CONFIG_NTC_RB									10000L
 #define CONFIG_NTC_VREF									5000L
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_DAC							1//是能DAC模块
+#define CONFIG_SPLC_USING_DAC									1//是能DAC模块
 /*****************************************************************************/
-#define CONFIG_USING_RTU_SLAVE							0//使能MODBUS RTU从站
-#define CONFIG_MB_PORT									UART0
-#define CONFIG_MB_RTU_SLAVE_TICK						1000L//1000uS
-#define CONFIG_MB_RTU_SLAVE_ADDRESS						0x01//从设备地址
-#define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE					256//发送接收缓冲区
-#define CONFIG_MB_RTU_SLAVE_TIMEOUT						20//接收通讯超时 10mS
-#define CONFIG_MB_RTU_SLAVE_IO_DELAY					1//RX TX切换延时
+#define CONFIG_USING_RTU_SLAVE									0//使能MODBUS RTU从站
+#define CONFIG_MB_PORT											UART0
+#define CONFIG_MB_RTU_SLAVE_TICK								1000L//1000uS
+#define CONFIG_MB_RTU_SLAVE_ADDRESS								0x01//从设备地址
+#define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE							256//发送接收缓冲区
+#define CONFIG_MB_RTU_SLAVE_TIMEOUT								20//接收通讯超时 10mS
+#define CONFIG_MB_RTU_SLAVE_IO_DELAY							1//RX TX切换延时
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_DK25L							0//SPLC使能NFC功能
-#define CONFIG_DK25L_RXBUF_SIZE							24
-#define CONFIG_DK25L_TXBUF_SIZE							24
+#define CONFIG_SPLC_USING_DK25L									0//SPLC使能NFC功能
+#define CONFIG_DK25L_RXBUF_SIZE									24
+#define CONFIG_DK25L_TXBUF_SIZE									24
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_CH376							0
+#define CONFIG_SPLC_USING_CH376									0
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ONCHIPFLASH					0
-#define CONFIG_SPLC_USING_SI7060						0
-#define CONFIG_SPLC_USING_MCP79412						0
-#define CONFIG_SPLC_USING_SPI_FLASH						0
-#define CONFIG_SPLC_USING_NRF24L01						0
-#define CONFIG_SPLC_USING_WIRELESS_FOOTCONTROL			0//使能无线脚踏
-#define CONFIG_SPLC_USING_ROBATION						0//使能试用期功能
+#define CONFIG_SPLC_USING_ONCHIPFLASH							0
+#define CONFIG_SPLC_USING_SI7060								0
+#define CONFIG_SPLC_USING_MCP79412								0
+#define CONFIG_SPLC_USING_SPI_FLASH								0
+#define CONFIG_SPLC_USING_NRF24L01								0
+#define CONFIG_SPLC_USING_WIRELESS_FOOTCONTROL					0//使能无线脚踏
+#define CONFIG_SPLC_USING_ROBATION								0//使能试用期功能
 /*****************************************************************************/
-#define CONFIG_FIRMWARE_UPDATE_PAGE_SIZE				128//FLASH单次读写容量
-#define CONFIG_FW_CONFIG_ADR							0x0000//固件配置信息起始地址
-#define CONFIG_FW_CONFIG_SIZE							0x0000//固件配置信息容量
-#define CONFIG_FW_STORAGE_ADR							0x0000//固件暂存区起始地址
-#define CONFIG_FW_STORAGE_SIZE							0x0000//固件暂存区容量
+#define CONFIG_FIRMWARE_UPDATE_PAGE_SIZE						128//FLASH单次读写容量
+#define CONFIG_FW_CONFIG_ADR									0x0000//固件配置信息起始地址
+#define CONFIG_FW_CONFIG_SIZE									0x0000//固件配置信息容量
+#define CONFIG_FW_STORAGE_ADR									0x0000//固件暂存区起始地址
+#define CONFIG_FW_STORAGE_SIZE									0x0000//固件暂存区容量
 /*****************************************************************************/
-#define CONFIG_FW_ORIGINAL_SAVE							1//更新前保存旧固件
-#define CONFIG_FW_UPDATE_REQ_FLAG						0x5A//固件更新标志
-#define CONFIG_FW_CONFIG_FILE_NAME						"/fwConfig.ini"//固件配置文件名称
-#define CONFIG_FW_MCU_FILE_LOAD_NAME					"/dwLaserNE.bin"//单片机固件名称
-#define CONFIG_FW_MCU_FILE_SAVE_NAME					"/dwLaserOD.bib"//
+#define CONFIG_FW_ORIGINAL_SAVE									1//更新前保存旧固件
+#define CONFIG_FW_UPDATE_REQ_FLAG								0x5A//固件更新标志
+#define CONFIG_FW_CONFIG_FILE_NAME								"/fwConfig.ini"//固件配置文件名称
+#define CONFIG_FW_MCU_FILE_LOAD_NAME							"/dwLaserNE.bin"//单片机固件名称
+#define CONFIG_FW_MCU_FILE_SAVE_NAME							"/dwLaserOD.bib"//
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_LASER_TIMER					1
-#define CONFIG_SPLC_USING_LASER_TIMER_TEST				0
+#define CONFIG_SPLC_USING_LASER_TIMER							1
+#define CONFIG_SPLC_USING_LASER_TIMER_TEST						1
 /*****************************************************************************/
-#define CONFIG_LASER_TIMER_TICK							1000//1mS
-#define CONFIG_USING_USB_APP							0//USB应用
-#define CONFIG_USING_DCHMI_APP							0//广东大彩人机交互应用
-#define CONFIG_USING_BACKGROUND_APP						0//背景应用
+#define CONFIG_LASER_TIMER_TICK									1000//1mS
+#define CONFIG_USING_USB_APP									0//USB应用
+#define CONFIG_USING_DCHMI_APP									1//广东大彩人机交互应用
+#define CONFIG_USING_BACKGROUND_APP								1//背景应用
 /*****************************************************************************/
 #define CONFIG_SKIP_FAULT 										1
 #define CONFIG_CHECK_DELAY_TIME									5
@@ -152,16 +152,14 @@
 #define CONFIG_MIN_LASER_TIMES									10//最小可计数脉冲数
 #define CONFIG_MAX_LASER_GROUP_OFF								999//最大脉冲间隔时间
 #define CONFIG_MIN_LASER_GROUP_OFF								10//最小脉冲间隔时间
-#define CONFIG_MAX_LASER_ENERGY_INTERVAL						10
-#define CONFIG_MIN_LASER_ENERGY_INTERVAL						1
-#define CONFIG_LASER_ENERGY_INTERVAL							100
+#define CONFIG_MAX_LASER_ENERGY_INTERVAL						1000
+#define CONFIG_MIN_LASER_ENERGY_INTERVAL						100
 #define CONFIG_MAX_AIM_BRG										100//红光最大调光占空比
 #define CONFIG_MIN_AIM_BRG										0//红光最小调光占空比
 #define CONFIG_MAX_BEEM_VOLUME									100//蜂鸣器最大音量
 #define CONFIG_MIN_BEEM_VOLUME									0//蜂鸣器最小音量
-#define CONFIG_MAX_LCD_BRG										100//屏幕亮度最大值
+#define CONFIG_MAX_LCD_BRG										9//屏幕亮度最大值
 #define CONFIG_MIN_LCD_BRG										0//屏幕亮度最小值
-#define CONFIG_BEEM_FREQ										10//蜂鸣器频率
 #define CONFIG_COOL_SET_TEMP									220//冷却温度
 #define CONFIG_COOL_DIFF_TEMP									20//冷却温度变化范围
 /*****************************************************************************/
