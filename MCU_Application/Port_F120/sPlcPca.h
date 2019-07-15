@@ -5,7 +5,7 @@
 #define BEEM_MODE_1											1//声光同步
 #define BEEM_MODE_2											2//激光发射固定间隔
 #define BEEM_MODE_3											3//异常报警
-#define BEEM_FREQ_0											0xF6//正常频率
+#define BEEM_FREQ_0											0xEE//正常频率
 #define BEEM_FREQ_1											0xFA
 #define BEEM_FREQ_2											0xFC
 #define BEEM_FREQ_3											0xFF

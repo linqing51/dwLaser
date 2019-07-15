@@ -63,7 +63,7 @@
 #define CONFIG_SPLC_USING_PCA							1//片内计数器阵列
 #define CONFIG_PCA_TICK									8000
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM							0//EPROM
+#define CONFIG_SPLC_USING_EPROM							1//EPROM
 #if CONFIG_SPLC_USING_EPROM == 1
 #define CONFIG_SPLC_USING_CLEAR_NVRAM					1//启用清除NVRAM功能
 #else
@@ -160,7 +160,7 @@
 #define CONFIG_MIN_BEEM_VOLUME									0//蜂鸣器最小音量
 #define CONFIG_MAX_LCD_BRG										9//屏幕亮度最大值
 #define CONFIG_MIN_LCD_BRG										0//屏幕亮度最小值
-#define CONFIG_COOL_SET_TEMP									220//冷却温度
+#define CONFIG_COOL_SET_TEMP									120//冷却温度
 #define CONFIG_COOL_DIFF_TEMP									20//冷却温度变化范围
 /*****************************************************************************/
 #define POWER_REAL_CH0_0P								0

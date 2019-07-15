@@ -763,6 +763,7 @@ static void updateOptionDisplay(void){//更新选项显示
 
 void dcHmiLoopInit(void){//初始化模块
 	NVRAM0[EM_HMI_OPERA_STEP] = 0;
+	NVRAM0[DM_AIM_BRG] = 0x80;
 	RES(Y_TEC0);
 	RES(Y_TEC1);
 	SET(Y_FAN0);
@@ -1693,7 +1694,11 @@ void dcHmiLoop(void){//HMI轮训程序
 				NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_0;
 				NVRAM0[SPREG_BEEM_FREQ] = BEEM_FREQ_0;
 				NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_VOLUME];
-				SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器			
+				SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器
+
+				//打开指示激光
+				NVRAM0[SPREG_AIM0_BRIGHTNESS] = NVRAM0[DM_AIM_BRG];
+				SET(SPCOIL_AIM0_ENABLE);	
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_READY_LOAD_PARA;	
 			}
 			else{
@@ -1733,7 +1738,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		PCLAR0(SPREG_LASER_CURRENT_0, SPREG_DAC_0);//功率->DAC CODE
 		PCLAR1(SPREG_LASER_CURRENT_1, SPREG_DAC_1);//功率->DAC CODE
 #endif
-		T100MS(T100MS_READY_BEEM_DELAY, true, 3);//启动计时器延时500mS//打开计时器
+		T100MS(T100MS_READY_BEEM_DELAY, true, 10);//启动计时器延时500mS//打开计时器
 		//清空计时器
 		if(LD(T_100MS_START * 16 + T100MS_READY_BEEM_DELAY)){
 			T100MS(T100MS_READY_BEEM_DELAY, false, 3);
@@ -1757,12 +1762,14 @@ void dcHmiLoop(void){//HMI轮训程序
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_WAIT_TRIGGER){//等待触发激光
 		if(LD(R_FAULT)){
-			EDLAR();//停止发射			
+			EDLAR();//停止发射
+			RES(SPCOIL_AIM0_ENABLE);
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyTouchEnable(true);
 		}
 		else if(LD(R_STANDBY_KEY_STNADBY_UP)){//回到等待状态
-			EDLAR();//停止发射			
+			EDLAR();//停止发射
+			RES(SPCOIL_AIM0_ENABLE);			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyTouchEnable(true);
 			RES(R_STANDBY_KEY_STNADBY_UP);
@@ -1805,6 +1812,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		MULTS16(EM_RELEASE_TOTAL_TIME, TM_START, EM_RELEASE_TOTAL_TIME);//计算发射能量
 		if(LD(R_FAULT)){//发现故障
 			EDLAR();
+			RES(SPCOIL_AIM0_ENABLE);
 			RES(SPCOIL_BEEM_ENABLE);//关闭蜂鸣器			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyTouchEnable(true);
