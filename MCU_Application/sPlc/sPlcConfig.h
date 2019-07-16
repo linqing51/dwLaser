@@ -140,8 +140,8 @@
 #define CONFIG_SCHEME_FILE_NAME									"/dwLaser.txt"
 #define CONFIG_MAX_LASERPOWER_CH0								300//通道0最大激光功率
 #define CONFIG_MIN_LASERPOWER_CH0								0//通道0最小激光功率
-#define CONFIG_MAX_LASER_CURRENT_CH0							2000//
-#define CONFIG_MAX_LASER_CURRENT_CH1							3000//
+#define CONFIG_MAX_LASER_DAC_CH0								0xFFF//
+#define CONFIG_MAX_LASER_DAC_CH1								0xFFF//
 #define CONFIG_MAX_LASERPOWER_CH1								150//通道1最大激光功率
 #define CONFIG_MIN_LASERPOWER_CH1								0//通道1最小激光功率
 #define CONFIG_MAX_LASER_POSWIDTH								999//最大正脉宽时间
@@ -160,7 +160,7 @@
 #define CONFIG_MIN_BEEM_VOLUME									0//蜂鸣器最小音量
 #define CONFIG_MAX_LCD_BRG										9//屏幕亮度最大值
 #define CONFIG_MIN_LCD_BRG										0//屏幕亮度最小值
-#define CONFIG_COOL_SET_TEMP									120//冷却温度
+#define CONFIG_COOL_SET_TEMP									280//冷却温度
 #define CONFIG_COOL_DIFF_TEMP									20//冷却温度变化范围
 /*****************************************************************************/
 #define POWER_REAL_CH0_0P								0
@@ -392,9 +392,7 @@
 #define SPREG_LASER_PMATE								(SPREG_START + 52)//激光脉冲个数匹配值
 #define SPREG_LASER_POVERTIME							(SPREG_START + 53)//激光脉冲间隔计时值
 #define SPREG_LASER_RELEASETIME							(SPREG_START + 54)//激光持续时间
-#define SPREG_LASER_RELEASE_COUNTER						(SPREG_START + 55)//激光持续时间计时器
-#define SPREG_LASER_CURRENT_0							(SPREG_START + 56)//激光电流0
-#define SPREG_LASER_CURRENT_1							(SPREG_START + 57)//激光电流1                                                                                                                             
+#define SPREG_LASER_RELEASE_COUNTER						(SPREG_START + 55)//激光持续时间计时器                                                                                                                            
 /*****************************************************************************/
 #define SPREG_IDENTITY									(SPREG_END + 0)//平台ID号
 /*****************************************************************************/

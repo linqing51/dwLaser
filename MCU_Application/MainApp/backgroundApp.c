@@ -42,9 +42,6 @@ void reloadCorrTab(void){//恢复功率校正参数
 	NVRAM0[DM_CORR_TAB0_POWER18] = POWER_REAL_CH0_90P;
 	NVRAM0[DM_CORR_TAB0_POWER19] = POWER_REAL_CH0_95P;
 	NVRAM0[DM_CORR_TAB0_POWER20] = POWER_REAL_CH0_100P;
-	if(NVRAM0[DM_CORR_TAB0_POWER20] > CONFIG_MAX_LASER_CURRENT_CH0){
-		NVRAM0[DM_CORR_TAB0_POWER20] = CONFIG_MAX_LASER_CURRENT_CH0;
-	}
 	NVRAM0[DM_CORR_TAB1_POWER0] = POWER_REAL_CH1_0P;
 	NVRAM0[DM_CORR_TAB1_POWER1] = POWER_REAL_CH1_5P;
 	NVRAM0[DM_CORR_TAB1_POWER2] = POWER_REAL_CH1_10P;
@@ -66,9 +63,6 @@ void reloadCorrTab(void){//恢复功率校正参数
 	NVRAM0[DM_CORR_TAB1_POWER18] = POWER_REAL_CH1_90P;
 	NVRAM0[DM_CORR_TAB1_POWER19] = POWER_REAL_CH1_95P;
 	NVRAM0[DM_CORR_TAB0_POWER20] = POWER_REAL_CH1_100P;
-	if(NVRAM0[DM_CORR_TAB1_POWER20] > CONFIG_MAX_LASER_CURRENT_CH1){
-		NVRAM0[DM_CORR_TAB1_POWER20] = CONFIG_MAX_LASER_CURRENT_CH1;
-	}
 	FSAV();//立即存储
 }
 void loadScheme(void){//DM->EM
@@ -121,6 +115,7 @@ void backgroundAppInit(void){
 	SET(X_FBD1);
 	NVRAM0[EM_COOL_SET_TEMP] = CONFIG_COOL_SET_TEMP;
 	NVRAM0[EM_COOL_DIFF_TEMP] = CONFIG_COOL_DIFF_TEMP;
+	reloadCorrTab();
 }
 void backgroundApp(void){//背景应用
 	int16_t temp;
@@ -196,7 +191,7 @@ void backgroundApp(void){//背景应用
 }
 void PCLAR0(uint16_t POW, uint16_t CUR) reentrant{//功率->DAC CODE
 	uint8_t index;
-	fp32_t k, b;
+	fp32_t k, b, out;
 	if(NVRAM0[POW] >= 400){
 		index = 20;
 	}else if(NVRAM0[POW] < 400 && NVRAM0[POW] >= 380){
@@ -247,11 +242,15 @@ void PCLAR0(uint16_t POW, uint16_t CUR) reentrant{//功率->DAC CODE
 		k = ((fp32_t)NVRAM0[(DM_CORR_TAB0_POWER0 + index + 1)] - (fp32_t)NVRAM0[DM_CORR_TAB0_POWER0 + index]) / 2;
 		b = NVRAM0[DM_CORR_TAB0_POWER0 + index] - (k * index * 2);		
 	}
-	NVRAM0[CUR] = (int16_t)(k * (fp32_t)NVRAM0[POW] - b);
+	out = k * (fp32_t)NVRAM0[POW] - b;
+	if(out > CONFIG_MAX_LASER_DAC_CH0){
+		out = CONFIG_MAX_LASER_DAC_CH0;
+	}
+	NVRAM0[CUR] = (int16_t)out;
 }
 void PCLAR1(uint16_t POW, uint16_t CUR) reentrant{//功率->DAC CODE
 	uint8_t index;
-	fp32_t k, b;
+	fp32_t k, b, out;
 	if(NVRAM0[POW] >= 400){
 		index = 20;
 	}else if(NVRAM0[POW] < 400 && NVRAM0[POW] >= 380){
@@ -302,6 +301,10 @@ void PCLAR1(uint16_t POW, uint16_t CUR) reentrant{//功率->DAC CODE
 		k = ((fp32_t)NVRAM0[(DM_CORR_TAB1_POWER0 + index + 1)] - (fp32_t)NVRAM0[DM_CORR_TAB1_POWER0 + index]) / 2;
 		b = NVRAM0[DM_CORR_TAB1_POWER0 + index] - (k * index * 2);		
 	}
-	NVRAM0[CUR] = (int16_t)(k * (fp32_t)NVRAM0[POW] - b);
+	out = k * (fp32_t)NVRAM0[POW] - b;
+	if(out > CONFIG_MAX_LASER_DAC_CH1){
+		out = CONFIG_MAX_LASER_DAC_CH1;
+	}
+	NVRAM0[CUR] = (int16_t)out;
 }
 #endif

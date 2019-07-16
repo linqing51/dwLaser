@@ -183,8 +183,8 @@ void sPlcInit(void){//软逻辑初始化
 	initUart0(CONFIG_UART0_BAUDRATE);//UART1初始化
 	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化	
 	loadNvram();//上电恢复NVRAM
-	initChipAdc();//初始化ADC模块
 	initChipDac();//初始化DAC模块
+	initChipAdc();//初始化ADC模块
 	sPlcPcaInit();
 	sPlcLaserInit();
 	SET(SPCOIL_ON);
