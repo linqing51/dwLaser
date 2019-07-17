@@ -103,31 +103,52 @@ void sPlcBeemInit(void){//蜂鸣器初始化
 	NVRAM0[SPREG_BEEM_COUNTER] = 0;
 	RES(SPCOIL_BEEM_ENABLE);
 }
+uint8_t data BeemFreq;//蜂鸣器频率
+uint8_t data BeemMode;//蜂鸣器模式
+uint8_t data BeemVolume;//蜂鸣器音量
+uint16_t data BeemCounter;
+bit BeemEnable;
 void sPlcBeemLoop(void){//蜂鸣器轮询
 	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
-	SFRPAGE = TIMER01_PAGE;
-	if(NVRAM0[SPREG_BEEM_FREQ] != NVRAM1[SPREG_BEEM_FREQ]){//检测到频率设定改变
-		TH0 = (NVRAM0[SPREG_BEEM_FREQ] & 0x00FF);
-	}
 	SFRPAGE = PCA0_PAGE;
-	switch(NVRAM0[SPREG_BEEM_MODE]){
-		case BEEM_MODE_0:{//模式0 CW
-			if(LD(SPCOIL_BEEM_ENABLE)){	
-				PCA0CPM2 = 0x42;
-				PCA0CPH2 = setBeemVolume();
+	if(BeemEnable){
+		switch(BeemMode){
+			case BEEM_MODE_0:{
+				if(BeemCounter == 0x0){	
+					PCA0CPM2 = 0x42;
+					PCA0CPH2 = BeemVolume;
+					BeemCounter ++;
+				}
+				break;
 			}
-			else{
-				PCA0CPM2 = 0x00;
-				PCA0CPH2 = 0xFF;
-				NVRAM0[SPREG_BEEM_COUNTER] = 0;
-			}
-			break;
-		}
-		case BEEM_MODE_1:{//模式1 声光同步
-			if(LD(SPCOIL_BEEM_ENABLE)){
+			case BEEM_MODE_1:{
 				if(LD(SPCOIL_LASER_EMITING)){
 					PCA0CPM2 = 0x42;		
-					PCA0CPH2 = setBeemVolume();
+					PCA0CPH2 = BeemVolume;
+				}
+					else{
+						PCA0CPM2 = 0x00;
+						PCA0CPH2 = 0xFF;
+					}
+				}
+				else{
+					PCA0CPM2 = 0x00;
+					PCA0CPH2 = 0xFF;
+					NVRAM0[SPREG_BEEM_COUNTER] = 0;
+				}
+			break;	
+		}
+		else{
+			PCA0CPM2 = 0x00;
+			PCA0CPH2 = 0xFF;
+			BeemCounter = 0;	
+		}
+		
+		case BEEM_MODE_1:{//模式1 声光同步
+			if(BeemEnable){
+				if(LD(SPCOIL_LASER_EMITING)){
+					PCA0CPM2 = 0x42;		
+					PCA0CPH2 = BeemVolume;
 				}
 				else{
 					PCA0CPM2 = 0x00;
