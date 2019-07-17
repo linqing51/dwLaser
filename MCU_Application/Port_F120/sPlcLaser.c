@@ -167,11 +167,8 @@ void EDLAR(void){//停止发射脉冲
 	EIE2 &= ~(uint8_t)(1 << 2);//关闭Timer4中断
 	SFRPAGE = SFRPAGE_save;
 	//关闭DAC输出
-	NVRAM0[SPREG_DAC_0] = 0;
-	NVRAM0[SPREG_DAC_1] = 1;
 #if CONFIG_SPLC_USING_DAC == 1
-	UPDAC0();
-	UPDAC1();
+	CLDAC();
 #endif
 	RES(SPCOIL_LASER_EMITING);//发射标志置位
 #endif
@@ -198,7 +195,6 @@ static void laserStart(void){//按通道选择打开激光
 		case LASER_SELECT_CH0:{//0激光通道
 #if CONFIG_SPLC_USING_DAC == 1
 			UPDAC0();//DAC立即输出计时器值
-			UPDAC1();
 #endif
 			LASER_CH0_MODPIN = true; 
 			LASER_CH1_MODPIN = false;
@@ -206,7 +202,6 @@ static void laserStart(void){//按通道选择打开激光
 		}
 		case LASER_SELECT_CH1:{ 
 #if CONFIG_SPLC_USING_DAC == 1
-			UPDAC0();//DAC立即输出计时器值
 			UPDAC1();//DAC立即输出计时器值
 #endif
 			LASER_CH0_MODPIN = false;
@@ -225,13 +220,8 @@ static void laserStart(void){//按通道选择打开激光
 	}		
 }
 static void laserStop(void){//按通道选择关闭激光
-	NVRAM0[SPREG_DAC_0] = 0x0;//电流值写入DAC寄存器
 #if CONFIG_SPLC_USING_DAC == 1
-	UPDAC0();//DAC立即输出计时器值
-#endif
-	NVRAM0[SPREG_DAC_1] = 0x0;//电流值写入DAC寄存器
-#if CONFIG_SPLC_USING_DAC == 1
-	UPDAC1();//DAC立即输出计时器值
+	CLDAC();//DAC立即输出计时器值
 #endif
 	LASER_CH0_MODPIN = false;
 	LASER_CH1_MODPIN = false;//翻转输出		

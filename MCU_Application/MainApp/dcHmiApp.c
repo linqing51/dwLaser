@@ -1896,12 +1896,16 @@ void dcHmiLoop(void){//HMI轮训程序
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_WAIT_TRIGGER){//等待触发激光
 		if(LD(R_FAULT)){
 			EDLAR();//停止发射
+			NVRAM0[SPREG_DAC_0] = 0;
+		NVRAM0[SPREG_DAC_1] = 1;
 			RES(SPCOIL_AIM0_ENABLE);
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyTouchEnable(true);
 		}
 		else if(LD(R_STANDBY_KEY_STNADBY_UP)){//回到等待状态
 			EDLAR();//停止发射
+			NVRAM0[SPREG_DAC_0] = 0;
+			NVRAM0[SPREG_DAC_1] = 1;
 			RES(SPCOIL_AIM0_ENABLE);			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyTouchEnable(true);
@@ -1926,6 +1930,8 @@ void dcHmiLoop(void){//HMI轮训程序
 		MULTS16(EM_RELEASE_TOTAL_TIME, TM_START, EM_RELEASE_TOTAL_TIME);//计算发射能量
 		if(LD(R_FAULT)){//发现故障
 			EDLAR();
+			NVRAM0[SPREG_DAC_0] = 0;
+			NVRAM0[SPREG_DAC_1] = 1;
 			RES(SPCOIL_AIM0_ENABLE);
 			RES(SPCOIL_BEEM_ENABLE);//关闭蜂鸣器			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;

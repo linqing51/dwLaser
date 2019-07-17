@@ -173,6 +173,7 @@ void sPlcSpwmLoop(void){//SPWM轮询
 }
 /*****************************************************************************/
 void sPlcInit(void){//软逻辑初始化
+	CLDAC();
 	initSplcTimer();//初始化硬件计时器模块
 	SET(SPCOIL_ON);
 	inputInit();
@@ -270,9 +271,6 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 	}
 #if CONFIG_SPLC_USING_IO_OUTPUT == 1
 	outputRefresh();//更新Y口输出
-#endif
-#if CONFIG_SPLC_USING_DAC == 1
-	refreshChipDac();//更新DAC输出
 #endif
 #if CONFIG_SPLC_USING_CH376 == 1
 	//sPlcUsbPoll();
