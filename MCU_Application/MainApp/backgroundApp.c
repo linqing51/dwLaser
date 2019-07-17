@@ -191,58 +191,17 @@ void backgroundApp(void){//背景应用
 }
 void PCLAR0(uint16_t POW, uint16_t CUR) reentrant{//功率->DAC CODE
 	uint8_t index;
-	fp32_t k, b, out;
-	if(NVRAM0[POW] >= 400){
-		index = 20;
-	}else if(NVRAM0[POW] < 400 && NVRAM0[POW] >= 380){
-		index = 19;
-	}else if(NVRAM0[POW] < 380 && NVRAM0[POW] >= 360){
-		index = 18;
-	}else if(NVRAM0[POW] < 360 && NVRAM0[POW] >= 340){
-		index = 17;
-	}else if(NVRAM0[POW] < 340 && NVRAM0[POW] >= 320){
-		index = 16;
-	}else if(NVRAM0[POW] < 320 && NVRAM0[POW] >= 300){
-		index = 15;
-	}else if(NVRAM0[POW] < 300 && NVRAM0[POW] >= 280){
-		index = 14;
-	}else if(NVRAM0[POW] < 280 && NVRAM0[POW] >= 260){
-		index = 13;
-	}else if(NVRAM0[POW] < 260 && NVRAM0[POW] >= 240){
-		index = 12;
-	}else if(NVRAM0[POW] < 240 && NVRAM0[POW] >= 220){
-		index = 11;
-	}else if(NVRAM0[POW] < 220 && NVRAM0[POW] >= 200){
-		index = 10;
-	}else if(NVRAM0[POW] < 200 && NVRAM0[POW] >= 180){
-		index = 9;
-	}else if(NVRAM0[POW] < 180 && NVRAM0[POW] >= 160){
-		index = 8;
-	}else if(NVRAM0[POW] < 160 && NVRAM0[POW] >= 140){
-		index = 7;
-	}else if(NVRAM0[POW] < 140 && NVRAM0[POW] >= 120){
-		index = 6;
-	}else if(NVRAM0[POW] < 120 && NVRAM0[POW] >= 100){
-		index = 5;
-	}else if(NVRAM0[POW] < 100 && NVRAM0[POW] >=  80){
-		index = 4;
-	}else if(NVRAM0[POW] <  80 && NVRAM0[POW] >=  60){
-		index = 3;
-	}else if(NVRAM0[POW] <  60 && NVRAM0[POW] >=  40){
-		index = 2;
-	}else if(NVRAM0[POW] <  40 && NVRAM0[POW] >=  20){
-		index = 1;
-	}else if(NVRAM0[POW] <  20 && NVRAM0[POW] >=   0){
-		index = 0;
-	}
+	fp32_t pert, k, b, out;
+	pert = (fp32_t)NVRAM0[POW] / CONFIG_MAX_LASERPOWER_CH0;
+	index = (uint8_t)(pert / 0.05);	
 	if(index >= 20){
 		NVRAM0[CUR] = NVRAM0[DM_CORR_TAB0_POWER20];
 	}
 	else{
-		k = ((fp32_t)NVRAM0[(DM_CORR_TAB0_POWER0 + index + 1)] - (fp32_t)NVRAM0[DM_CORR_TAB0_POWER0 + index]) / 2;
-		b = NVRAM0[DM_CORR_TAB0_POWER0 + index] - (k * index * 2);		
+		k = ((fp32_t)NVRAM0[(DM_CORR_TAB0_POWER0 + index + 1)] - (fp32_t)NVRAM0[DM_CORR_TAB0_POWER0 + index]) / 0.05;
+		b = NVRAM0[DM_CORR_TAB0_POWER0 + index] - (k * index * 0.05);		
 	}
-	out = k * (fp32_t)NVRAM0[POW] - b;
+	out = k * (fp32_t)pert - b;
 	if(out > CONFIG_MAX_LASER_DAC_CH0){
 		out = CONFIG_MAX_LASER_DAC_CH0;
 	}
@@ -250,58 +209,17 @@ void PCLAR0(uint16_t POW, uint16_t CUR) reentrant{//功率->DAC CODE
 }
 void PCLAR1(uint16_t POW, uint16_t CUR) reentrant{//功率->DAC CODE
 	uint8_t index;
-	fp32_t k, b, out;
-	if(NVRAM0[POW] >= 400){
-		index = 20;
-	}else if(NVRAM0[POW] < 400 && NVRAM0[POW] >= 380){
-		index = 19;
-	}else if(NVRAM0[POW] < 380 && NVRAM0[POW] >= 360){
-		index = 18;
-	}else if(NVRAM0[POW] < 360 && NVRAM0[POW] >= 340){
-		index = 17;
-	}else if(NVRAM0[POW] < 340 && NVRAM0[POW] >= 320){
-		index = 16;
-	}else if(NVRAM0[POW] < 320 && NVRAM0[POW] >= 300){
-		index = 15;
-	}else if(NVRAM0[POW] < 300 && NVRAM0[POW] >= 280){
-		index = 14;
-	}else if(NVRAM0[POW] < 280 && NVRAM0[POW] >= 260){
-		index = 13;
-	}else if(NVRAM0[POW] < 260 && NVRAM0[POW] >= 240){
-		index = 12;
-	}else if(NVRAM0[POW] < 240 && NVRAM0[POW] >= 220){
-		index = 11;
-	}else if(NVRAM0[POW] < 220 && NVRAM0[POW] >= 200){
-		index = 10;
-	}else if(NVRAM0[POW] < 200 && NVRAM0[POW] >= 180){
-		index = 9;
-	}else if(NVRAM0[POW] < 180 && NVRAM0[POW] >= 160){
-		index = 8;
-	}else if(NVRAM0[POW] < 160 && NVRAM0[POW] >= 140){
-		index = 7;
-	}else if(NVRAM0[POW] < 140 && NVRAM0[POW] >= 120){
-		index = 6;
-	}else if(NVRAM0[POW] < 120 && NVRAM0[POW] >= 100){
-		index = 5;
-	}else if(NVRAM0[POW] < 100 && NVRAM0[POW] >=  80){
-		index = 4;
-	}else if(NVRAM0[POW] <  80 && NVRAM0[POW] >=  60){
-		index = 3;
-	}else if(NVRAM0[POW] <  60 && NVRAM0[POW] >=  40){
-		index = 2;
-	}else if(NVRAM0[POW] <  40 && NVRAM0[POW] >=  20){
-		index = 1;
-	}else if(NVRAM0[POW] <  20 && NVRAM0[POW] >=   0){
-		index = 0;
-	}
+	fp32_t pert, k, b, out;
+	pert = (fp32_t)NVRAM0[POW] / CONFIG_MAX_LASERPOWER_CH1;
+	index = (uint8_t)(pert / 0.05);	
 	if(index >= 20){
 		NVRAM0[CUR] = NVRAM0[DM_CORR_TAB1_POWER20];
 	}
 	else{
-		k = ((fp32_t)NVRAM0[(DM_CORR_TAB1_POWER0 + index + 1)] - (fp32_t)NVRAM0[DM_CORR_TAB1_POWER0 + index]) / 2;
-		b = NVRAM0[DM_CORR_TAB1_POWER0 + index] - (k * index * 2);		
+		k = ((fp32_t)NVRAM0[(DM_CORR_TAB1_POWER0 + index + 1)] - (fp32_t)NVRAM0[DM_CORR_TAB1_POWER0 + index]) / 0.05;
+		b = NVRAM0[DM_CORR_TAB1_POWER0 + index] - (k * index * 0.05);		
 	}
-	out = k * (fp32_t)NVRAM0[POW] - b;
+	out = k * (fp32_t)pert - b;
 	if(out > CONFIG_MAX_LASER_DAC_CH1){
 		out = CONFIG_MAX_LASER_DAC_CH1;
 	}

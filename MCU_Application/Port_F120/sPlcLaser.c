@@ -154,7 +154,7 @@ void STLAR(void){//开始发射脉冲
 	EIE2 |= (1 << 2);//T4 ET3中断使能
 	TMR4L = 0xFF;
 	TMR4H = 0xFF;
-	TMR4CN |= (1 << 2);//TR3 使能TIMER3计时器
+	TMR4CN |= (1 << 2);//TR4 使能TIMER4计时器
 	SFRPAGE = SFRPAGE_save;
 #endif
 }
@@ -169,6 +169,9 @@ void EDLAR(void){//停止发射脉冲
 	//关闭DAC输出
 #if CONFIG_SPLC_USING_DAC == 1
 	CLDAC();
+	LASER_CH0_MODPIN = false;
+	LASER_CH1_MODPIN = false;
+	setLedEmit(false);
 #endif
 	RES(SPCOIL_LASER_EMITING);//发射标志置位
 #endif
@@ -231,7 +234,8 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 	switch(NVRAM0[SPREG_LASER_MODE]){
 		case LASER_MODE_CW:{//CW连续模式
 			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){
-				laserStart();	
+				laserStart();
+				setLedEmit(true);
 				NVRAM0[SPREG_LASER_TCOUNTER] ++;
 			}
 			else{
@@ -248,6 +252,7 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 		case LASER_MODE_SIGNAL:{
 			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){
 				laserStart();
+				setLedEmit(true);
 				NVRAM0[SPREG_LASER_TCOUNTER] ++;
 				BeemChangeEnergy = 0;
 			}
@@ -278,6 +283,7 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 		case LASER_MODE_MP:{//MP多脉冲模式	
 			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转
 				laserStart();
+				setLedEmit(true);
 			}
 			if((NVRAM0[SPREG_LASER_TCOUNTER] > 0) && (NVRAM0[SPREG_LASER_TCOUNTER] < NVRAM0[SPREG_LASER_TMATE])){//激光发射中
 				if(LaserReleaseTime < 1000){
@@ -290,6 +296,7 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 			}
 			if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
 				laserStop();
+				setLedEmit(false);
 				if(LaserReleaseTime < 1000){
 					LaserReleaseTime ++;//发射时间累计
 				}
@@ -309,6 +316,7 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 			if(NVRAM0[SPREG_LASER_PCOUNTER] < NVRAM0[SPREG_LASER_PMATE]){//脉冲串输出
 				if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转	
 					laserStart();
+					setLedEmit(true);
 				}
 				if((NVRAM0[SPREG_LASER_TCOUNTER] > 0) && (NVRAM0[SPREG_LASER_TCOUNTER] < NVRAM0[SPREG_LASER_PMATE])){//激光发射中
 					if(LaserReleaseTime < 1000){
@@ -321,6 +329,7 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 				}
 				if(NVRAM0[SPREG_LASER_TCOUNTER] == NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
 					laserStop();
+					setLedEmit(false);
 					if(LaserReleaseTime < 1000){
 						LaserReleaseTime ++;//发射时间累计
 					}
@@ -347,6 +356,7 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 		case LASER_MODE_SP:{//单脉冲模式
 			if(NVRAM0[SPREG_LASER_TCOUNTER] == 0){//翻转	
 				laserStart();
+				setLedEmit(true);
 			}
 			if((NVRAM0[SPREG_LASER_TCOUNTER] > 0) && (NVRAM0[SPREG_LASER_TCOUNTER] < NVRAM0[SPREG_LASER_TMATE])){
 				if(LaserReleaseTime < 1000){
@@ -359,6 +369,7 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 			}
 			if(NVRAM0[SPREG_LASER_TCOUNTER] >= NVRAM0[SPREG_LASER_TMATE]){//计时器匹配
 				laserStop();
+				setLedEmit(false);
 				if(LaserReleaseTime < 1000){
 					LaserReleaseTime ++;//发射时间累计
 				}
