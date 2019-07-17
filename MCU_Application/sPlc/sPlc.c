@@ -233,9 +233,6 @@ void sPlcProcessStart(void){//sPLC轮询起始
 		setLedEprom(true);
 		if(epromTest()){//EPROM测试成功
 			setLedEprom(false);
-			setLedError(true);
-			delayMs(10);
-			setLedError(false);
 		}
 		else{//EPROM测试失败
 		}

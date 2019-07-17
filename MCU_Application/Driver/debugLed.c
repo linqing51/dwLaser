@@ -11,7 +11,7 @@ void setLedRun(uint8_t st){//P6_0
 	}
 	SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE
 }
-void setLedError(uint8_t st){//P5_7
+void setLedEmit(uint8_t st){//P5_7
 	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
     SFRPAGE   = CONFIG_PAGE;
 	if(st){

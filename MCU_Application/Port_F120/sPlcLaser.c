@@ -172,7 +172,6 @@ void EDLAR(void){//停止发射脉冲
 #endif
 	RES(SPCOIL_LASER_EMITING);//发射标志置位
 #endif
-	
 }
 void sPlcLaserInit(void){//激光脉冲功能初始化
 #if CONFIG_SPLC_USING_LASER_TIMER ==1
@@ -217,14 +216,15 @@ static void laserStart(void){//按通道选择打开激光
 			LASER_CH1_MODPIN = true; 
 			break;
 		}
-	}		
+	}
 }
 static void laserStop(void){//按通道选择关闭激光
 #if CONFIG_SPLC_USING_DAC == 1
 	CLDAC();//DAC立即输出计时器值
 #endif
 	LASER_CH0_MODPIN = false;
-	LASER_CH1_MODPIN = false;//翻转输出		
+	LASER_CH1_MODPIN = false;//翻转输出	
+	setLedEmit(false);	
 }
 void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射	
 	TMR4CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag

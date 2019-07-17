@@ -1915,12 +1915,14 @@ void dcHmiLoop(void){//HMI轮训程序
 			if(LDP(X_FOOTSWITCH_NO)){//发射激光
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_EMITING;				
 				STLAR();
+				setLedEmit(true);
 			}
 		}
 		else{//电平触发
 			if(LD(X_FOOTSWITCH_NO)){//发射激光			
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_EMITING;				
 				STLAR();
+				setLedEmit(true);
 			}	
 		}
 		return;
@@ -1930,6 +1932,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		MULTS16(EM_RELEASE_TOTAL_TIME, TM_START, EM_RELEASE_TOTAL_TIME);//计算发射能量
 		if(LD(R_FAULT)){//发现故障
 			EDLAR();
+			setLedEmit(false);
 			NVRAM0[SPREG_DAC_0] = 0;
 			NVRAM0[SPREG_DAC_1] = 1;
 			RES(SPCOIL_AIM0_ENABLE);
@@ -1946,6 +1949,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		else if(LD(MR_FOOSWITCH_HAND_SWITCH)){//上升沿触发
 			if(LDP(X_FOOTSWITCH_NO)){//关闭激光
 				EDLAR();
+				setLedEmit(false);
 				RES(SPCOIL_BEEM_ENABLE);//关闭蜂鸣器	
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
 			}
@@ -1953,6 +1957,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		else{
 			if(LDB(X_FOOTSWITCH_NO)){//关闭激光
 				EDLAR();
+				setLedEmit(false);
 				RES(SPCOIL_BEEM_ENABLE);//关闭蜂鸣器	
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
 			}
