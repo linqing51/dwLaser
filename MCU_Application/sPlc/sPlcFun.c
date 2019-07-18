@@ -427,16 +427,25 @@ void BCPY(uint16_t dist, uint16_t src, uint16_t length) {//块复制
 		NVRAM0[dist + i] = NVRAM0[src + i];
 	}
 }
-void FSAV(void){//强制立即更新NVRAM
+void NVSAV(void){//强制立即更新NVRAM
 	disableSplcIsr();
 	updataNvram();
 	enableSplcIsr();
 }
+void NVLOAD(void){
+	disableSplcIsr();
+	loadNvram();
+	enableSplcIsr();	
+}
 void FDSAV(void){//FDRAM->EPROM
-	
+	disableSplcIsr();
+	saveFdram();
+	enableSplcIsr();
 }
 void FDLAD(void){//FDRAM<-EPROM
-
+	disableSplcIsr();
+	loadFdram();
+	enableSplcIsr();
 }
 
 /*****************************************************************************/

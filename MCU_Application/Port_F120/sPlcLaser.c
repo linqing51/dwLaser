@@ -134,13 +134,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 #endif
 void STLAR(void){//开始发射脉冲
 #if CONFIG_SPLC_USING_LASER_TIMER == 1	
-	uint8_t SFRPAGE_save;
-//	uint8_t data BeemFreq;//蜂鸣器频率
-//uint8_t data BeemMode;//蜂鸣器模式
-//uint8_t data BeemDuty;//蜂鸣器占空比
-//uint16_t data BeemCounter;
-//int8_t data BeemEnable;
-	
+	uint8_t SFRPAGE_save;	
 	if((NVRAM0[DM_BEEM_MODE] == BEEM_MODE_SYNC) || (NVRAM0[EM_LASER_PULSE_MODE] == LASER_MODE_SIGNAL)){
 		BeemMode = BEEM_MODE_1;	
 	}

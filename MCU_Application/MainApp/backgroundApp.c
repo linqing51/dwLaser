@@ -110,7 +110,6 @@ void reloadCorrTab(void){//恢复功率校正参数
 	NVRAM0[DM_CORR_TAB1_POWER18] = POWER_REAL_CH1_90P;
 	NVRAM0[DM_CORR_TAB1_POWER19] = POWER_REAL_CH1_95P;
 	NVRAM0[DM_CORR_TAB0_POWER20] = POWER_REAL_CH1_100P;
-	FSAV();//立即存储
 }
 void loadScheme(void){//FD->EM
 	uint8_t *psrc, *pdist;

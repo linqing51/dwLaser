@@ -158,7 +158,7 @@
 #define CONFIG_MIN_LASER_ENERGY_INTERVAL						100
 #define CONFIG_MAX_AIM_BRG										100//红光最大调光占空比
 #define CONFIG_MIN_AIM_BRG										0//红光最小调光占空比
-#define CONFIG_MAX_BEEM_VOLUME									100//蜂鸣器最大音量
+#define CONFIG_MAX_BEEM_VOLUME									255//蜂鸣器最大音量
 #define CONFIG_MIN_BEEM_VOLUME									0//蜂鸣器最小音量
 #define CONFIG_MAX_LCD_BRG										9//屏幕亮度最大值
 #define CONFIG_MIN_LCD_BRG										0//屏幕亮度最小值
@@ -269,13 +269,13 @@
 #define CONFIG_FDRAM_SIZE										(FD_END + 1)
 /*****************************************************************************/
 #define SPCOIL_ON												(SPCOIL_START * 16 + 0)//长通线圈
-#define SPCOIL_START_UP									(SPCOIL_START * 16 + 1)//初次上电
-#define SPCOIL_PS10MS									(SPCOIL_START * 16 + 2)//10mS
-#define SPCOIL_PS100MS									(SPCOIL_START * 16 + 3)//100mS
-#define SPCOIL_PS1000MS									(SPCOIL_START * 16 + 4)//1000mS
-#define SPCOIL_MODBUS_S0_ERROR							(SPCOIL_START * 16 + 5)//Modbus Slave->Uart0 错误
-#define SPCOIL_NVRAM_FAIL								(SPCOIL_START * 16 + 6)//NVRAM校验码错误
-#define SPCOIL_WATCHDOG_OVERFLOW						(SPCOIL_START * 16 + 7)//看门狗溢出
+#define SPCOIL_START_UP											(SPCOIL_START * 16 + 1)//初次上电
+#define SPCOIL_PS10MS											(SPCOIL_START * 16 + 2)//10mS
+#define SPCOIL_PS100MS											(SPCOIL_START * 16 + 3)//100mS
+#define SPCOIL_PS1000MS											(SPCOIL_START * 16 + 4)//1000mS
+#define SPCOIL_MODBUS_S0_ERROR									(SPCOIL_START * 16 + 5)//Modbus Slave->Uart0 错误
+#define SPCOIL_NVRAM_FAIL										(SPCOIL_START * 16 + 6)//NVRAM校验码错误
+#define SPCOIL_WATCHDOG_OVERFLOW								(SPCOIL_START * 16 + 7)//看门狗溢出
 /*****************************************************************************/
 //USB 
 #define SPCOIL_USB_INT_ERROR							(SPCOIL_START * 16 + 17)//USB 底层中断返回错误

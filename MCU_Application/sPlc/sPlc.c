@@ -29,7 +29,7 @@ void assertRegisterAddress(uint16_t adr){//检查寄存器地址
 	adr = ~adr;
 #endif
 }
-static void loadNvram(void){//从EPROM中载入NVRAM
+void loadNvram(void){//从EPROM中载入NVRAM
 	uint16_t i;
 #if CONFIG_SPLC_USING_EPROM == 1
 	epromRead(CONFIG_EPROM_NVRAM_START, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
@@ -39,17 +39,17 @@ static void loadNvram(void){//从EPROM中载入NVRAM
 	}
 	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
-static void loadFdram(void){//从EPROM中载入FDRAM
+void loadFdram(void){//从EPROM中载入FDRAM
 #if CONFIG_SPLC_USING_EPROM == 1
 	epromRead(CONFIG_EPROM_FDRAM_START, (uint8_t*)FDRAM, CONFIG_FDRAM_SIZE);//从EPROM中恢复MR
 #endif
 }
-static void saveFdram(void){//强制将FDRAM存入EPROM
+void saveFdram(void){//强制将FDRAM存入EPROM
 #if CONFIG_SPLC_USING_EPROM == 1
 	epromWrite(CONFIG_EPROM_FDRAM_START, (uint8_t*)FDRAM, CONFIG_FDRAM_SIZE);
 #endif
 }
-static void saveNvram(void){//强制将NVRAM存入EPROM
+void saveNvram(void){//强制将NVRAM存入EPROM
 #if CONFIG_SPLC_USING_EPROM == 1
 	epromWrite(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));
 #endif
@@ -171,6 +171,8 @@ void sPlcSpwmLoop(void){//SPWM轮询
 		}
 	}
 }
+
+
 /*****************************************************************************/
 void sPlcInit(void){//软逻辑初始化
 	CLDAC();
@@ -184,6 +186,7 @@ void sPlcInit(void){//软逻辑初始化
 	initUart0(CONFIG_UART0_BAUDRATE);//UART1初始化
 	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化	
 	loadNvram();//上电恢复NVRAM
+	loadFdram();//上电恢复NVRAM
 	initChipDac();//初始化DAC模块
 	initChipAdc();//初始化ADC模块
 	sPlcPcaInit();

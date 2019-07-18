@@ -57,7 +57,10 @@ void IMDIO(void) ;//立即更新IO点状态含输入输出
 void TPCTL(int16_t *ref, int16_t *fb, int16_t buf) ;//温控PID指令
 void HSPWM(int16_t *pos, int16_t *neg, int16_t pot) ;//硬件PWM输出
 /*****************************************************************************/
-void FSAV(void);//强制立即更新NVRAM
+void NVSAV(void);//强制立即更新NVRAM
+void NVLOAD(void);
+void FDSAV(void);
+void FDLAD(void);
 #endif
 
 

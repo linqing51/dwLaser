@@ -884,6 +884,9 @@ static void updateOptionDisplay(void){//更新选项显示
 void dcHmiLoopInit(void){//初始化模块
 	NVRAM0[EM_HMI_OPERA_STEP] = 0;
 	NVRAM0[DM_AIM_BRG] = 0x80;
+	NVRAM0[DM_BEEM_DUTY] = BEEM_VOLUME_9;
+	NVRAM0[DM_BEEM_MODE] = BEEM_MODE_TONE;
+	BeemFreq = BEEM_FREQ_0;
 	RES(Y_TEC0);
 	RES(Y_TEC1);
 	SET(Y_FAN0);
@@ -895,13 +898,6 @@ void dcHmiLoop(void){//HMI轮训程序
         if(hmiCmdSize > 0){//接收到指令及判断是否为开机提示                                                            
             ProcessMessage((PCTRL_MSG)hmiCmdBuffer, hmiCmdSize);//指令处理  
         }                                                                             
-        if(LDP(SPCOIL_PS100MS) || LD(R_DCHMI_UPDATEUI_REQ)){//每100mS刷新一次UI           
-            SET(R_DCHMI_UPDATEUI_DOING);
-			UpdateUI();
-			RES(R_DCHMI_UPDATEUI_REQ);
-			RES(R_DCHMI_UPDATEUI_DOING);
-			SET(R_DCHMO_UPDATEUI_DONE);
-        } 
 	}
 	//状态机
 	//检查故障状态
@@ -1857,6 +1853,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			BeemMode = BEEM_MODE_0;
 			BeemDuty = NVRAM0[DM_BEEM_DUTY];
 			BeemCounter = 0;
+			BeemFreq = BEEM_FREQ_0;
 			BeemEnable = 1;
 			//打开指示激光
 			NVRAM0[SPREG_AIM0_BRIGHTNESS] = NVRAM0[DM_AIM_BRG];
@@ -1867,7 +1864,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_LOAD_PARA){//等待蜂鸣器
-		T100MS(T100MS_READY_BEEM_DELAY, true, 10);//启动计时器延时500mS//打开计时器
+		T100MS(T100MS_READY_BEEM_DELAY, true, 10);//启动计时器延时2000mS//打开计时器
 		//清空计时器
 		if(LD(T_100MS_START * 16 + T100MS_READY_BEEM_DELAY)){
 			T100MS(T100MS_READY_BEEM_DELAY, false, 3);
@@ -1879,7 +1876,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_LOAD_DONE){//参数载入完毕并停止蜂鸣器
-		BeemEnable = false;//关闭蜂鸣器
+		BeemEnable = 0;//关闭蜂鸣器
 		NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
 		SetControlEnable(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_CW_KEY_STANDBY, true);
 		SetControlEnable(GDDC_PAGE_STANDBY_SP_0, GDDC_PAGE_STANDBY_SP_KEY_STANDBY, true);
@@ -2658,7 +2655,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if((NVRAM0[EM_DC_PASSCODE_INDEX] >= 4) && (NVRAM0[EM_DC_NEW_PASSCODE0] != 0x0000) && (NVRAM0[EM_DC_NEW_PASSCODE0] != 0x0000)){
 						MOV(DM_DC_OLD_PASSCODE0, EM_DC_NEW_PASSCODE0);
 						MOV(DM_DC_OLD_PASSCODE1, EM_DC_NEW_PASSCODE1);
-						FSAV();//立即更新NVRAM
 						CLR(EM_DC_PASSCODE_INDEX);//清空密码显示位索引 
 						CLR(EM_DC_NEW_PASSCODE0);
 						CLR(EM_DC_NEW_PASSCODE1);
@@ -2739,7 +2735,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_CW_KEY_SCHEME_SAVE:{
 					if(state == 0x01){
 						saveScheme();
-						FSAV();//立即更新NVRAM
+						FDSAV();//FDRAM->EPROM
 					}
 					else if(state == 0x00){
 					}
@@ -2750,7 +2746,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_SCHEME_NUM] > 0){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
-							FSAV();//立即更新NVRAM
+							NVSAV();//立即更新NVRAM
 							updateStandbyDisplay();
 						}
 					}
@@ -2761,7 +2757,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_SCHEME_NUM] < (CONFIG_HMI_SCHEME_NUM - 1)){
 							ADDS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
-							FSAV();//立即更新NVRAM
 							updateStandbyDisplay();
 						}
 					}
@@ -2943,7 +2938,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_SP_KEY_SCHEME_SAVE:{
 					if(state == 0x01){
 						saveScheme();
-						FSAV();//立即更新NVRAM
+						FDSAV();//立即更新NVRAM
 					}
 					else if(state == 0x00){
 					}
@@ -2954,7 +2949,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_SCHEME_NUM] > 0){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
-							FSAV();//立即更新NVRAM
 							updateStandbyDisplay();
 						}
 					}
@@ -2965,7 +2959,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_SCHEME_NUM] < (CONFIG_HMI_SCHEME_NUM - 1)){
 							ADDS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
-							FSAV();//立即更新NVRAM
 							updateStandbyDisplay();
 						}
 					}
@@ -3173,7 +3166,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_MP_KEY_SCHEME_SAVE:{
 					if(state == 0x01){
 						saveScheme();
-						FSAV();//立即更新NVRAM
+						NVSAV();//立即更新NVRAM
 					}
 					else if(state == 0x00){
 					}
@@ -3184,7 +3177,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_SCHEME_NUM] > 0){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
-							FSAV();//立即更新NVRAM
 							updateStandbyDisplay();
 						}
 					}
@@ -3195,7 +3187,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_SCHEME_NUM] < (CONFIG_HMI_SCHEME_NUM - 1)){
 							ADDS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
-							FSAV();//立即更新NVRAM
 							updateStandbyDisplay();
 						}
 					}
@@ -3463,7 +3454,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_GP_KEY_SCHEME_SAVE:{
 					if(state == 0x01){
 						saveScheme();
-						FSAV();//立即更新NVRAM
+						FDSAV();//FDRAM->EPROM
 					}
 					else if(state == 0x00){
 					}
@@ -3474,7 +3465,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_SCHEME_NUM] > 0){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
-							FSAV();//立即更新NVRAM
 							updateStandbyDisplay();
 						}
 					}
@@ -3485,7 +3475,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_SCHEME_NUM] < (CONFIG_HMI_SCHEME_NUM - 1)){
 							ADDS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
-							FSAV();//立即更新NVRAM
 							updateStandbyDisplay();
 						}
 					}
@@ -3651,7 +3640,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_SIGNAL_KEY_SCHEME_SAVE:{
 					if(state == 0x01){
 						saveScheme();
-						FSAV();//立即更新NVRAM
+						FDSAV();//立即更新NVRAM
 					}
 					else if(state == 0x00){
 					}
@@ -3662,7 +3651,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_SCHEME_NUM] > 0){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
-							FSAV();//立即更新NVRAM
 							updateStandbyDisplay();
 						}
 					}
@@ -3673,7 +3661,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_SCHEME_NUM] < (CONFIG_HMI_SCHEME_NUM - 1)){
 							ADDS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
-							FSAV();//立即更新NVRAM
 							updateStandbyDisplay();
 						}
 					}
@@ -3921,7 +3908,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_DERMA_KEY_SCHEME_SAVE:{
 					if(state == 0x01){
 						saveScheme();
-						FSAV();//立即更新NVRAM
+						FDSAV();//FDRAM->EPROM
 					}
 					else if(state == 0x00){
 					}
@@ -3932,7 +3919,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_SCHEME_NUM] > 0){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
-							FSAV();//立即更新NVRAM
 							updateStandbyDisplay();
 						}
 					}
@@ -3943,7 +3929,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_SCHEME_NUM] < (CONFIG_HMI_SCHEME_NUM - 1)){
 							ADDS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
-							FSAV();//立即更新NVRAM
 							updateStandbyDisplay();
 						}
 					}
@@ -4078,17 +4063,18 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_OPTION_KEY_BEEM_VOLUME_ADD:{
 					if(state == 0x01){
-						if(NVRAM0[DM_BEEM_DUTY] > CONFIG_MAX_BEEM_VOLUME){
-							ADDS1(DM_BEEM_DUTY);
+						if(NVRAM0[DM_BEEM_DUTY] < CONFIG_MAX_BEEM_VOLUME){
+							NVRAM0[DM_BEEM_DUTY] += 1;
 							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_DUTY]);//更新进度条
+							
 						}
 					}
 					break;					
 				}
 				case GDDC_PAGE_OPTION_KEY_BEEM_VOLUME_DEC:{
 					if(state == 0x01){
-						if(NVRAM0[DM_BEEM_DUTY] < CONFIG_MIN_BEEM_VOLUME){
-							DECS1(DM_BEEM_DUTY);
+						if(NVRAM0[DM_BEEM_DUTY] > CONFIG_MIN_BEEM_VOLUME){
+							NVRAM0[DM_BEEM_DUTY] -= 1;
 							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_DUTY]);//更新进度条
 						}
 					}
