@@ -2,8 +2,8 @@
 /*****************************************************************************/
 sbit LASER_CH0_MODPIN = P2^7;
 sbit LASER_CH1_MODPIN = P2^6;
-int32_t LaserReleaseTime;//激光发射时间
-int32_t BeemChangeEnergy;//蜂鸣器频率改变能量
+int32_t data LaserReleaseTime;//激光发射时间
+int32_t data BeemChangeEnergy;//蜂鸣器频率改变能量
 /*****************************************************************************/
 static void initTimer4(void);
 /*****************************************************************************/
@@ -135,15 +135,22 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 void STLAR(void){//开始发射脉冲
 #if CONFIG_SPLC_USING_LASER_TIMER == 1	
 	uint8_t SFRPAGE_save;
+//	uint8_t data BeemFreq;//蜂鸣器频率
+//uint8_t data BeemMode;//蜂鸣器模式
+//uint8_t data BeemDuty;//蜂鸣器占空比
+//uint16_t data BeemCounter;
+//int8_t data BeemEnable;
+	
 	if((NVRAM0[DM_BEEM_MODE] == BEEM_MODE_SYNC) || (NVRAM0[EM_LASER_PULSE_MODE] == LASER_MODE_SIGNAL)){
-		NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_1;	
+		BeemMode = BEEM_MODE_1;	
 	}
 	else{
-		NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_2;
+		BeemMode = BEEM_MODE_2;
 	}
-	NVRAM0[SPREG_BEEM_FREQ] = BEEM_FREQ_0;
-	NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_VOLUME];
-	SET(SPCOIL_BEEM_ENABLE);
+	BeemFreq = BEEM_FREQ_0;
+	BeemDuty = NVRAM0[DM_BEEM_DUTY];
+	BeemCounter = 0;
+	BeemEnable = true;
 	SET(SPCOIL_LASER_EMITING);//发射标志置位
 	RES(SPCOIL_LASER_EMITOVER);
 	NVRAM0[SPREG_LASER_PCOUNTER] = 0X0;
@@ -230,6 +237,7 @@ static void laserStop(void){//按通道选择关闭激光
 	setLedEmit(false);	
 }
 void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射	
+	uint8_t SFRPAGE_save = SFRPAGE;
 	TMR4CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag
 	switch(NVRAM0[SPREG_LASER_MODE]){
 		case LASER_MODE_CW:{//CW连续模式
@@ -267,12 +275,17 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 				}
 				if(BeemChangeEnergy >= NVRAM0[EM_LASER_SIGNAL_TIME_INTERVAL]){
 					BeemChangeEnergy = 0;
-					if(NVRAM0[SPREG_BEEM_FREQ] == BEEM_FREQ_0){
-						NVRAM0[SPREG_BEEM_FREQ] = BEEM_FREQ_1;
+		
+					SFRPAGE = TIMER01_PAGE;
+					if(TH0 == BEEM_FREQ_0){
+						TH0 = BEEM_FREQ_0;
+						TL0 = TH0;
 					}
 					else{
-						NVRAM0[SPREG_BEEM_FREQ] = BEEM_FREQ_0;
+						TH0 = BEEM_FREQ_1;
+						TL0 = TH0;
 					}
+					SFRPAGE = SFRPAGE_save;
 				}
 			}		
 			NVRAM0[SPREG_LASER_TCOUNTER] ++;

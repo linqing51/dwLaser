@@ -192,7 +192,7 @@
 #define DM_CORR_TAB1_POWER20					(DM_START + 550)//功率校正表1功率40
 /*****************************************************************************/
 #define DM_SCHEME_NUM											(DM_START + 551)//选择的方案编号 低8位方案号 高8位方案使能
-#define DM_BEEM_VOLUME											(DM_START + 552)//蜂鸣器音量
+#define DM_BEEM_DUTY											(DM_START + 552)//蜂鸣器音量
 #define DM_BEEM_MODE											(DM_START + 553)//蜂鸣器模式
 #define DM_AIM_BRG												(DM_START + 555)//指示激光亮度
 #define DM_LCD_BRG												(DM_START + 556)//屏幕亮度

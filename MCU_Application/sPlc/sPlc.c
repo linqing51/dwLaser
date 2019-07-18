@@ -260,7 +260,7 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();//喂狗
 #endif
-	if(LDP(SPCOIL_PS1MS)){
+	if(LDP(SPCOIL_PS10MS)){
 #if CONFIG_SPLC_USING_PCA == 1	
 		sPlcBeemLoop();	
 		sPlcAimLoop();
@@ -270,7 +270,7 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 	outputRefresh();//更新Y口输出
 #endif
 #if CONFIG_SPLC_USING_CH376 == 1
-	//sPlcUsbPoll();
+	sPlcUsbPoll();
 #endif
 	updataNvram();//更新NVRAM
 #if CONFIG_SPLC_USING_WDT == 1

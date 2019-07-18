@@ -53,9 +53,6 @@ void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER3{//硬件sTimer计时器中断 1mS
 		}
 		TimerCounter_10mS ++;
 		TimerCounter_1mS = 0;
-#if CONFIG_SPLC_USING_PCA == 1
-		NVRAM0[SPREG_BEEM_COUNTER] += 1;
-#endif
 	}
 	if(TimerCounter_10mS >= 10){//100ms计算
 		for(i = TD_100MS_START;i < TD_100MS_END;i ++){
@@ -83,5 +80,5 @@ void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER3{//硬件sTimer计时器中断 1mS
 #if CONFIG_SPLC_USING_ADC == 1
 	chipAdcProcess();//ADC扫描
 #endif
-	TimerCounter_1mS ++;
+	TimerCounter_1mS ++;	
 }

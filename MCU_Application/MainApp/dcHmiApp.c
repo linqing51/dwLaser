@@ -877,7 +877,7 @@ static void updateOptionDisplay(void){//更新选项显示
 	else{
 		SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_HAND_SWITCH_ON, 0x00);
 	}
-	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
+	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_DUTY]);//更新进度条
 	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新进度条
 }
 
@@ -1812,7 +1812,7 @@ void dcHmiLoop(void){//HMI轮训程序
 //			SET(Y_LED_ALARM);//报警灯
 //			NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_3;
 //			NVRAM0[SPREG_BEEM_FREQ] = BEEM_FREQ_0;
-//			NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_VOLUME];
+//			NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_DUTY];
 //			SET(SPCOIL_BEEM_ENABLE);//打开蜂鸣器	//打开故障警示蜂鸣器
 //		}
 		if(LD(R_STANDBY_KEY_STNADBY_DOWN)){//点击READY			
@@ -1854,10 +1854,10 @@ void dcHmiLoop(void){//HMI轮训程序
 			PCLAR1(EM_LASER_POWER_CH1, SPREG_DAC_1);//功率->DAC CODE
 #endif
 			//打开蜂鸣器
-			NVRAM0[SPREG_BEEM_MODE] = BEEM_MODE_0;
-			NVRAM0[SPREG_BEEM_FREQ] = BEEM_FREQ_0;
-			NVRAM0[SPREG_BEEM_VOLUME] = NVRAM0[DM_BEEM_VOLUME];
-			SET(SPCOIL_BEEM_ENABLE);
+			BeemMode = BEEM_MODE_0;
+			BeemDuty = NVRAM0[DM_BEEM_DUTY];
+			BeemCounter = 0;
+			BeemEnable = 1;
 			//打开指示激光
 			NVRAM0[SPREG_AIM0_BRIGHTNESS] = NVRAM0[DM_AIM_BRG];
 			SET(SPCOIL_AIM0_ENABLE);	
@@ -1879,7 +1879,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_LOAD_DONE){//参数载入完毕并停止蜂鸣器
-		RES(SPCOIL_BEEM_ENABLE);//关闭蜂鸣器
+		BeemEnable = false;//关闭蜂鸣器
 		NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
 		SetControlEnable(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_CW_KEY_STANDBY, true);
 		SetControlEnable(GDDC_PAGE_STANDBY_SP_0, GDDC_PAGE_STANDBY_SP_KEY_STANDBY, true);
@@ -1929,7 +1929,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			NVRAM0[SPREG_DAC_0] = 0;
 			NVRAM0[SPREG_DAC_1] = 1;
 			RES(SPCOIL_AIM0_ENABLE);
-			RES(SPCOIL_BEEM_ENABLE);//关闭蜂鸣器			
+			BeemEnable =false;//关闭蜂鸣器			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyTouchEnable(true);
 			SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_CW_KEY_STANDBY, false);
@@ -1942,14 +1942,14 @@ void dcHmiLoop(void){//HMI轮训程序
 		else if(LD(MR_FOOSWITCH_HAND_SWITCH)){//上升沿触发
 			if(LDP(X_FOOTSWITCH_NO)){//关闭激光
 				EDLAR();
-				RES(SPCOIL_BEEM_ENABLE);//关闭蜂鸣器	
+				BeemEnable = false;//关闭蜂鸣器	
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
 			}
 		}
 		else{
 			if(LDB(X_FOOTSWITCH_NO)){//关闭激光
 				EDLAR(); 
-				RES(SPCOIL_BEEM_ENABLE);//关闭蜂鸣器	
+				BeemEnable = false;//关闭蜂鸣器	
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
 			}
 		}
@@ -4078,18 +4078,18 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_OPTION_KEY_BEEM_VOLUME_ADD:{
 					if(state == 0x01){
-						if(NVRAM0[DM_BEEM_VOLUME] > CONFIG_MAX_BEEM_VOLUME){
-							ADDS1(DM_BEEM_VOLUME);
-							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
+						if(NVRAM0[DM_BEEM_DUTY] > CONFIG_MAX_BEEM_VOLUME){
+							ADDS1(DM_BEEM_DUTY);
+							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_DUTY]);//更新进度条
 						}
 					}
 					break;					
 				}
 				case GDDC_PAGE_OPTION_KEY_BEEM_VOLUME_DEC:{
 					if(state == 0x01){
-						if(NVRAM0[DM_BEEM_VOLUME] < CONFIG_MIN_BEEM_VOLUME){
-							DECS1(DM_BEEM_VOLUME);
-							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
+						if(NVRAM0[DM_BEEM_DUTY] < CONFIG_MIN_BEEM_VOLUME){
+							DECS1(DM_BEEM_DUTY);
+							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_DUTY]);//更新进度条
 						}
 					}
 					break;					
@@ -4587,10 +4587,10 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 				}
 				case GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME:{
 					if(value >= CONFIG_MIN_BEEM_VOLUME && value <= CONFIG_MAX_BEEM_VOLUME){
-						NVRAM0[DM_BEEM_VOLUME] = (int16_t)value;
+						NVRAM0[DM_BEEM_DUTY] = (int16_t)value;
 					}
 					else{
-						NVRAM0[DM_BEEM_VOLUME] = CONFIG_MAX_BEEM_VOLUME;
+						NVRAM0[DM_BEEM_DUTY] = CONFIG_MAX_BEEM_VOLUME;
 					}
 					break;
 				}

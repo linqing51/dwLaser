@@ -1,52 +1,11 @@
 #include "sPlcPca.h"
 /*****************************************************************************/
-static uint8_t setBeemVolume(void){//设置蜂鸣器音量
-	switch(NVRAM0[SPREG_BEEM_VOLUME]){
-		case 0:{
-			return BEEM_VOLUME_0;
-			break;
-		}
-		case 1:{
-			return BEEM_VOLUME_1;
-			break;
-		}
-		case 2:{
-			return BEEM_VOLUME_2;
-			break;
-		}
-		case 3:{
-			return BEEM_VOLUME_3;
-			break;
-		}
-		case 4:{
-			return BEEM_VOLUME_4;
-			break;
-		}
-		case 5:{
-			return BEEM_VOLUME_5;
-			break;
-		}
-		case 6:{
-			return BEEM_VOLUME_6;
-			break;
-		}
-		case 7:{
-			return BEEM_VOLUME_7;
-			break;
-		}
-		case 8:{
-			return BEEM_VOLUME_8;
-			break;
-		}
-		case 9:{
-			return BEEM_VOLUME_9;
-			break;
-		}
-		default:{
-			return 0;
-		}break;
-	}
-}	
+uint8_t data BeemFreq;//蜂鸣器频率
+uint8_t data BeemMode;//蜂鸣器模式
+uint8_t data BeemDuty;//蜂鸣器占空比
+uint16_t data BeemCounter;
+int8_t data BeemEnable;
+/*****************************************************************************/
 void sPlcPcaInit(void){//计时器阵列初始化
 #if CONFIG_SPLC_USING_PCA == 1
 	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
@@ -97,124 +56,84 @@ void sPlcAimLoop(void){//
 	SFRPAGE = SFRPAGE_save;
 }
 /*****************************************************************************/
-void sPlcBeemInit(void){//蜂鸣器初始化
-	NVRAM0[SPREG_BEEM_VOLUME] = 0;
-	NVRAM0[SPREG_BEEM_MODE] = 0;
-	NVRAM0[SPREG_BEEM_COUNTER] = 0;
-	RES(SPCOIL_BEEM_ENABLE);
-}
-uint8_t data BeemFreq;//蜂鸣器频率
-uint8_t data BeemMode;//蜂鸣器模式
-uint8_t data BeemVolume;//蜂鸣器音量
-uint16_t data BeemCounter;
-bit BeemEnable;
 void sPlcBeemLoop(void){//蜂鸣器轮询
 	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
-	SFRPAGE = PCA0_PAGE;
 	if(BeemEnable){
-		switch(BeemMode){
+		SFRPAGE = TIMER01_PAGE;
+		if(TH0 != BeemDuty){//调频率
+			TH0 = BeemDuty;
+			TL0 = BeemDuty;
+		}
+		SFRPAGE = PCA0_PAGE;
+		switch(BeemMode){//调模式
 			case BEEM_MODE_0:{
-				if(BeemCounter == 0x0){	
+				if(PCA0CPM2 != 0x42){
 					PCA0CPM2 = 0x42;
-					PCA0CPH2 = BeemVolume;
-					BeemCounter ++;
+				}
+				if(PCA0CPH2 != BeemDuty){
+					PCA0CPH2 = BeemDuty;
 				}
 				break;
 			}
-			case BEEM_MODE_1:{
-				if(LD(SPCOIL_LASER_EMITING)){
-					PCA0CPM2 = 0x42;		
-					PCA0CPH2 = BeemVolume;
-				}
-					else{
-						PCA0CPM2 = 0x00;
-						PCA0CPH2 = 0xFF;
+			case BEEM_MODE_1:{//模式1 声光同步
+				if(P2 & 0xC0){//LT3763 ON
+					if(PCA0CPM2 != 0x42){
+						PCA0CPM2 = 0x42;
+					}
+					if(PCA0CPH2 != BeemDuty){
+						PCA0CPH2 = BeemDuty;
 					}
 				}
 				else{
 					PCA0CPM2 = 0x00;
 					PCA0CPH2 = 0xFF;
-					NVRAM0[SPREG_BEEM_COUNTER] = 0;
 				}
-			break;	
-		}
-		else{
-			PCA0CPM2 = 0x00;
-			PCA0CPH2 = 0xFF;
-			BeemCounter = 0;	
-		}
-		
-		case BEEM_MODE_1:{//模式1 声光同步
-			if(BeemEnable){
-				if(LD(SPCOIL_LASER_EMITING)){
-					PCA0CPM2 = 0x42;		
-					PCA0CPH2 = BeemVolume;
-				}
-				else{
-					PCA0CPM2 = 0x00;
-					PCA0CPH2 = 0xFF;
-				}
+				break;
 			}
-			else{
-				PCA0CPM2 = 0x00;
-				PCA0CPH2 = 0xFF;
-				NVRAM0[SPREG_BEEM_COUNTER] = 0;
-			}
-			break;
-		}
-		case BEEM_MODE_2:{//模式2 滴滴两下一停
-			if(LD(SPCOIL_BEEM_ENABLE)){
-				if(NVRAM0[SPREG_BEEM_COUNTER] == 0){//1
+			case BEEM_MODE_2:{//模式2 滴滴两下一停
+				if(BeemCounter == 0){//1
 					PCA0CPM2 = 0x42;		
-					PCA0CPH2 = setBeemVolume();
+					PCA0CPH2 = BeemDuty;
 				}
-				else if(NVRAM0[SPREG_BEEM_COUNTER] == 100){//0
+				else if(BeemCounter == 300){//0
 					PCA0CPM2 = 0x00;			
 					PCA0CPH2 = 0xFF;
 				}
-				else if(NVRAM0[SPREG_BEEM_COUNTER] == 200){//1
+				else if(BeemCounter == 600){//1
 					PCA0CPM2 = 0x42;		
-					PCA0CPH2 = setBeemVolume();
+					PCA0CPH2 = BeemDuty;
 				}
-				else if(NVRAM0[SPREG_BEEM_COUNTER] == 300){//0
+				else if(BeemCounter == 900){//0
 					PCA0CPM2 = 0x00;			
 					PCA0CPH2 = 0xFF;
 				}
-				else if(NVRAM0[SPREG_BEEM_COUNTER] >= 1500){//停1秒
-					NVRAM0[SPREG_BEEM_COUNTER] = 0;
+				else if(BeemCounter == 1900){//停1秒
+					BeemCounter = 0xffff;
 				}
-				NVRAM0[SPREG_BEEM_COUNTER] ++;
+				BeemCounter ++;
+				break;
 			}
-			else{
-				PCA0CPM2 = 0x00;			
-				PCA0CPH2 = 0xFF;
-				NVRAM0[SPREG_BEEM_COUNTER] = 0;
-			}
-			break;
-		}
-		case BEEM_MODE_3:{//模式3 长间隔
-			if(LD(SPCOIL_BEEM_ENABLE)){
-				if(NVRAM0[SPREG_BEEM_COUNTER] == 0){//1
+			case BEEM_MODE_3:{//模式3 长间隔
+				if(BeemCounter == 0){//1
 					PCA0CPM2 = 0x42;		
-					PCA0CPH2 = setBeemVolume();
+					PCA0CPH2 = BeemDuty;
 				}
-				else if(NVRAM0[SPREG_BEEM_COUNTER] == 500){//0
+				else if(BeemCounter == 500){//0
 					PCA0CPM2 = 0x00;			
 					PCA0CPH2 = 0xFF;
 				}
-				else if(NVRAM0[SPREG_BEEM_COUNTER] == 1000){
-					NVRAM0[SPREG_BEEM_COUNTER] = 0;
+				else if(BeemCounter == 1500){
+					BeemCounter = 0xffff;
 				}
-				NVRAM0[SPREG_BEEM_COUNTER] ++;
+				break;
 			}
-			else{
-				PCA0CPM2 = 0x00;			
-				PCA0CPH2 = 0xFF;
-				NVRAM0[SPREG_BEEM_COUNTER] = 0;
-			}
-			break;
+			default:break;
 		}
-		default:break;
+	}
+	else{
+		PCA0CPM2 = 0x00;			
+		PCA0CPH2 = 0xFF;
+		BeemCounter = 0;
 	}
 	SFRPAGE = SFRPAGE_save;
 }

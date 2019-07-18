@@ -4,6 +4,7 @@
 #include "sPlc.h"
 #include "appSplcAdr.h"
 /*****************************************************************************/
+uint8_t getBeemVolumeDuty(int16_t volume);
 void loadScheme(void);//DM->EM
 void saveScheme(void);//EM->DM
 void checkScheme(void);//·½°¸¼ì²â

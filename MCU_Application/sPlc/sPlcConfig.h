@@ -314,10 +314,7 @@
 /*****************************************************************************/
 //指示激光有关线圈
 #define SPCOIL_AIM0_ENABLE								(SPCOIL_START * 16 + 44)//激光指示光0使能
-#define SPCOIL_AIM1_ENABLE								(SPCOIL_START * 16 + 45)//激光指示光1使能
-/*****************************************************************************/
-//蜂鸣器相关线圈
-#define SPCOIL_BEEM_ENABLE								(SPCOIL_START * 16 + 46)//蜂鸣器发射使能		
+#define SPCOIL_AIM1_ENABLE								(SPCOIL_START * 16 + 45)//激光指示光1使能		
 /*****************************************************************************/
 #define SPCOIL_SI7060_INIT_FAIL							(SPCOIL_START * 16 + 47)//SI7060温度传感器初始化失败
 #define SPCOIL_MCP79412_INIT_FAIL						(SPCOIL_START * 16 + 48)//MCP794212 RTC初始化失败
@@ -375,12 +372,6 @@
 /*****************************************************************************/
 #define SPREG_AIM0_BRIGHTNESS							(SPREG_START + 40)//PCA0->指示光0亮度
 #define SPREG_AIM1_BRIGHTNESS							(SPREG_START + 41)//PCA1->指示光1亮度
-/*****************************************************************************/
-//蜂鸣器相关寄存器
-#define SPREG_BEEM_VOLUME								(SPREG_START + 42)//蜂鸣器音量
-#define SPREG_BEEM_FREQ									(SPREG_START + 43)//蜂鸣器频率
-#define SPREG_BEEM_MODE									(SPREG_START + 44)//蜂鸣器模式
-#define SPREG_BEEM_COUNTER								(SPREG_START + 45)//蜂鸣器计时器
 /*****************************************************************************/
 //激光脉冲发射相关寄存器
 #define SPREG_LASER_MODE								(SPREG_START + 46)//激光发射模式
