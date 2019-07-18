@@ -112,15 +112,15 @@ void reloadCorrTab(void){//恢复功率校正参数
 	NVRAM0[DM_CORR_TAB0_POWER20] = POWER_REAL_CH1_100P;
 	FSAV();//立即存储
 }
-void loadScheme(void){//DM->EM
+void loadScheme(void){//FD->EM
 	uint8_t *psrc, *pdist;
 	if(NVRAM0[DM_SCHEME_NUM] > CONFIG_HMI_SCHEME_NUM)
 		NVRAM0[DM_SCHEME_NUM] = CONFIG_HMI_SCHEME_NUM;
 	if(NVRAM0[DM_SCHEME_NUM] < 0)
 		NVRAM0[DM_SCHEME_NUM] = 0;
-	psrc = (uint8_t*)&NVRAM0[(DM_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 30)];
+	psrc = (uint8_t*)&FDRAM[(FD_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 30)];
 	pdist = (uint8_t*)&NVRAM0[EM_LASER_SCHEME_NAME];
-	memcpy(pdist, psrc, ((DM_SCHEME_END_0 - DM_SCHEME_START_0 + 1) * 2));
+	memcpy(pdist, psrc, ((FD_SCHEME_END_0 - FD_SCHEME_START_0 + 1) * 2));
 	switch(NVRAM0[EM_LASER_PULSE_MODE]){
 		case LASER_MODE_CW:{
 			break;
@@ -146,15 +146,15 @@ void loadScheme(void){//DM->EM
 		}
 	}
 }
-void saveScheme(void){//EM->DM
+void saveScheme(void){//EM->FD
 	uint8_t *psrc, *pdist;
 	if(NVRAM0[DM_SCHEME_NUM] > CONFIG_HMI_SCHEME_NUM)
 		NVRAM0[DM_SCHEME_NUM] = CONFIG_HMI_SCHEME_NUM;
 	if(NVRAM0[DM_SCHEME_NUM] < 0)
 		NVRAM0[DM_SCHEME_NUM] = 0;
-	pdist = (uint8_t*)&NVRAM0[(DM_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 30)];
+	pdist = (uint8_t*)&FDRAM[(FD_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 30)];
 	psrc = (uint8_t*)&NVRAM0[EM_LASER_SCHEME_NAME];
-	memcpy(pdist, psrc, ((DM_SCHEME_END_0 - DM_SCHEME_START_0 + 1) * 2));
+	memcpy(pdist, psrc, ((FD_SCHEME_END_0 - FD_SCHEME_START_0 + 1) * 2));
 }
 void backgroundAppInit(void){
 	SET(R_FIBER_ID_PASS_0);

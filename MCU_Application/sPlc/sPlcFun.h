@@ -13,8 +13,6 @@ uint8_t LDB(uint16_t A) ;//方向载入
 uint8_t LDP(uint16_t A) ;//脉冲上升沿
 uint8_t LDN(uint16_t A) ;//脉冲下降沿
 //计时器指令
-//void T100US(uint8_t A, uint8_t start, uint16_t value);//100uS计时器启动
-void T1MS(uint8_t A, uint8_t start, uint16_t value) ;//1mS计时器启动
 void T10MS(uint8_t A, uint8_t start, uint16_t value) ;//10mS计时器启动
 void T100MS(uint8_t A, uint8_t start, uint16_t value) ;//100mS计时器启动
 //运算指令

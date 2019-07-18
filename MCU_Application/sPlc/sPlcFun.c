@@ -79,22 +79,6 @@ uint8_t LDN(uint16_t A){//脉冲下降沿
 }
 /*****************************************************************************/
 //延时器指令
-void T1MS(uint8_t A, uint8_t start, uint16_t value){//1MS延时器
-	if(start){
-		SET(T_1MS_ENA_START * 16 + A);
-		if(NVRAM0[(TD_1MS_START + A)] >= value){
-			NVRAM0[(T_1MS_START + (A / 16))] |= 1 << (A % 16);
-		}
-		else{
-			NVRAM0[(T_1MS_START + (A / 16))] &= ~(1 << (A % 16));
-		}		
-	}
-	else{
-		RES(T_1MS_ENA_START * 16 + A);
-		NVRAM0[(T_1MS_START + (A / 16))] &= ~(1 << (A % 16));
-		NVRAM0[(TD_1MS_START + A)] = 0x0;
-	}	
-}
 void T10MS(uint8_t A, uint8_t start, uint16_t value){//10MS延时器
 	if(start){
 		SET(T_10MS_ENA_START * 16 + A);
@@ -448,7 +432,12 @@ void FSAV(void){//强制立即更新NVRAM
 	updataNvram();
 	enableSplcIsr();
 }
+void FDSAV(void){//FDRAM->EPROM
+	
+}
+void FDLAD(void){//FDRAM<-EPROM
 
+}
 
 /*****************************************************************************/
 //IO指令

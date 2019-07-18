@@ -1,11 +1,11 @@
 #include "sPlc.h"
 /*****************************************************************************/
-int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
+int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前 包含存档寄存器
 int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+int8_t FDRAM[CONFIG_FDRAM_SIZE];//存档寄存器
 uint8_t TimerCounter_1mS = 0;
 uint8_t TimerCounter_10mS = 0;
 uint8_t TimerCounter_100mS = 0;
-uint8_t TD_1MS_SP = 0;
 uint8_t TD_10MS_SP = 0;
 uint8_t TD_100MS_SP = 0;
 uint8_t TD_1000MS_SP = 0;
@@ -31,35 +31,28 @@ void assertRegisterAddress(uint16_t adr){//检查寄存器地址
 }
 static void loadNvram(void){//从EPROM中载入NVRAM
 	uint16_t i;
-	enterSplcIsr();
-	memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
 #if CONFIG_SPLC_USING_EPROM == 1
-	epromRead(0, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
+	epromRead(CONFIG_EPROM_NVRAM_START, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
 #endif
 	for(i = R_START;i <= TM_END;i ++){
 		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
 	}
 	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
-	exitSplcIsr();
-//	SET(SPCOIL_SI7060_INIT_FAIL);
-//	SET(SPCOIL_MCP79412_INIT_FAIL);				
-//	SET(SPCOIL_CH376_INIT_FAIL);					
-//	SET(SPCOIL_SPI_FLASH_INIT_FAIL);				
-//	SET(SPCOIL_DK25L_INIT_FAIL);				
-//	SET(SPCOIL_NRF24L01_INIT_FAIL);		
-//	SET(SPCOIL_LASER_DRIVER_INIT_FAIL);				
-//	SET(SPCOIL_WIRELESS_FOOTCONTROL_INIT_FAIL);
-//	SET(SPCOIL_PROBATION_INIT_FAIL);
+}
+static void loadFdram(void){//从EPROM中载入FDRAM
+#if CONFIG_SPLC_USING_EPROM == 1
+	epromRead(CONFIG_EPROM_FDRAM_START, (uint8_t*)FDRAM, CONFIG_FDRAM_SIZE);//从EPROM中恢复MR
+#endif
+}
+static void saveFdram(void){//强制将FDRAM存入EPROM
+#if CONFIG_SPLC_USING_EPROM == 1
+	epromWrite(CONFIG_EPROM_FDRAM_START, (uint8_t*)FDRAM, CONFIG_FDRAM_SIZE);
+#endif
 }
 static void saveNvram(void){//强制将NVRAM存入EPROM
-	enterSplcIsr();
 #if CONFIG_SPLC_USING_EPROM == 1
-	setLedEprom(true);
 	epromWrite(0x0, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));
-	setLedEprom(false);
 #endif
-	exitSplcIsr();
 }
 void updataNvram(void){//更新NVRAM->EPROM
 	uint8_t *sp0, *sp1;
@@ -70,9 +63,7 @@ void updataNvram(void){//更新NVRAM->EPROM
 	for(i = (MR_START * 2);i < ((DM_END + 1) * 2);i ++){//储存MR
 		if(*sp0 != *sp1){
 #if CONFIG_SPLC_USING_EPROM == 1
-			//setLedEprom(true);
 			epromWriteOneByte(i, *sp0);
-			//setLedEprom(false);
 			sp0 ++;
 			sp1 ++;
 #endif
@@ -80,19 +71,28 @@ void updataNvram(void){//更新NVRAM->EPROM
 	}
 	memcpy((uint8_t*)(NVRAM1), (uint8_t*)(NVRAM0), (CONFIG_NVRAM_SIZE * 2));//更新NVRAM1 非保持寄存器
 }
+void clearFdram(void){//清楚FDRAM数据
+	uint16_t i;
+	disableWatchDog();
+#if CONFIG_SPLC_USING_EPROM == 1
+	for(i = CONFIG_EPROM_FDRAM_START; i<= CONFIG_FDRAM_SIZE; i++){
+		epromWriteOneByte(i, 0x0);
+	}
+#endif
+	memset(FDRAM, 0x0, CONFIG_FDRAM_SIZE);//初始化FDRAM
+}
+
 void clearNvram(void){//清除NVRAM数据	
 	uint16_t i = 0;
 	enterSplcIsr();
 	disableWatchDog();
 #if CONFIG_SPLC_USING_EPROM == 1
-	for(i = 0; i<= CONFIG_EPROM_SIZE;i ++){
-		setLedEprom(true);
+	for(i = CONFIG_EPROM_NVRAM_START; i<= CONFIG_EPROM_SIZE;i ++){
 		epromWriteOneByte(i, 0x0);
-		setLedEprom(false);
 	}
 #endif
-	memset((uint8_t*)NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
-	memset((uint8_t*)NVRAM1, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
+	memset((uint8_t*)NVRAM0, 0x0, (CONFIG_EPROM_SIZE * 2));//初始化NVRAM0
+	memset((uint8_t*)NVRAM1, 0x0, (CONFIG_EPROM_SIZE * 2));//初始化NVRAM1
 	exitSplcIsr();//恢复中断
 }
 void sPlcSpwmLoop(void){//SPWM轮询	
@@ -204,10 +204,6 @@ void sPlcInit(void){//软逻辑初始化
 #endif
 }
 void sPlcProcessStart(void){//sPLC轮询起始
-	if(TD_1MS_SP >= 1){
-		FLIP(SPCOIL_PS1MS);
-		TD_1MS_SP = 0;
-	}
 	if(TD_10MS_SP >= 1){
 		FLIP(SPCOIL_PS10MS);
 		TD_10MS_SP = 0;

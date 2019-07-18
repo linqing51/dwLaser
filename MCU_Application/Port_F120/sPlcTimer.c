@@ -24,19 +24,6 @@ void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER3{//硬件sTimer计时器中断 1mS
 	SFRPAGE = TMR3_PAGE;
 	TMR3CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag
 	SFRPAGE = SFRPAGE_save;
-	if(TD_1MS_SP < CHAR_MAX){
-		TD_1MS_SP ++;
-	}	
-	for(i = TD_1MS_START;i <= TD_1MS_END;i ++){//1mS计时
-		if(LD(T_1MS_ENA_START * 16 + (i - TD_1MS_START))){
-			if(NVRAM0[i] < SHRT_MAX){
-				NVRAM0[i] ++;
-			}
-		}
-		else{
-			NVRAM0[i] = 0;
-		}
-	}
 	if(TimerCounter_1mS >= 10){//10mS计算
 		for(i = TD_10MS_START;i <= TD_10MS_END;i ++){
 			if(LD(T_10MS_ENA_START * 16 + (i - TD_10MS_START))){

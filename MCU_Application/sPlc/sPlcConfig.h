@@ -42,6 +42,8 @@
 #define CONFIG_EPROM_ADDRESS							0x50
 #define CONFIG_EPROM_FRAM								1//铁电存储体无写入等待
 #define CONFIG_EPROM_PAGEWRITE							0//页写入
+#define CONFIG_EPROM_NVRAM_START						0x0
+#define CONFIG_EPROM_FDRAM_START						0x1000
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_SPWM							1//使了软件PWM功能
 /*****************************************************************************/
@@ -207,78 +209,73 @@
 #define POWER_REAL_CH1_95P										3800
 #define POWER_REAL_CH1_100P										4000
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_NFC							0
+#define CONFIG_SPLC_USING_NFC									0
 /*****************************************************************************/
 //线圈 保持 16*8=256 
-#define MR_START										0
-#define MR_END   										7
-//数据寄存器 保持 576
-#define DM_START										8
-#define DM_END											583
-//线圈寄存器 非保持 16*64=1024
-#define R_START											584
-#define R_END											647						
-//数据寄存器 非保持 256
-#define EM_START										648
-#define EM_END											903
+#define MR_START												0
+#define MR_END   												7
+//数据寄存器 保持 128
+#define DM_START												8
+#define DM_END													135
+//线圈寄存器 非保持 16*32=512
+#define R_START													136
+#define R_END													167						
+//数据寄存器 非保持 128
+#define EM_START												168
+#define EM_END													295
 //延时线圈
-//1MS 16*4=64
-#define T_1MS_START										904
-#define T_1MS_END										907
 //10MS 16*4=64
-#define T_10MS_START									908
-#define T_10MS_END										911
+#define T_10MS_START											296
+#define T_10MS_END												299
 //100MS 16*4=64
-#define T_100MS_START									912
-#define T_100MS_END										915
+#define T_100MS_START											300
+#define T_100MS_END												303
 //延时器使能
-//1MS 16*4=64
-#define T_1MS_ENA_START									916						
-#define T_1MS_ENA_END									919
 //10MS 16*4=64
-#define T_10MS_ENA_START								920
-#define T_10MS_ENA_END									923
+#define T_10MS_ENA_START										304
+#define T_10MS_ENA_END											307
 //100MS 16*4=64
-#define T_100MS_ENA_START								924
-#define T_100MS_ENA_END									927
+#define T_100MS_ENA_START										308
+#define T_100MS_ENA_END											311
 //延时计时器 
-//1MS 16*4=64
-#define TD_1MS_START									928
-#define TD_1MS_END										991
 //10MS 16*4=64
-#define TD_10MS_START									992
-#define TD_10MS_END										1055
+#define TD_10MS_START											312
+#define TD_10MS_END												375
 //100MS 16*4=64
-#define TD_100MS_START									1056
-#define TD_100MS_END									1119
+#define TD_100MS_START											376
+#define TD_100MS_END											439
 //输入位寄存器 16*4=64
-#define X_START											1120
-#define X_END											1123
+#define X_START													440
+#define X_END													443
 //输出位寄存器 16*4=64
-#define Y_START											1124
-#define Y_END											1127
+#define Y_START													444
+#define Y_END													447
 //特殊寄存器 64
-#define SPREG_START										1128
-#define SPREG_END										1191
+#define SPREG_START												448
+#define SPREG_END												511
 //特殊线圈 16*16=256
-#define SPCOIL_START									1192
-#define SPCOIL_END										1207
+#define SPCOIL_START											512
+#define SPCOIL_END												527
 //临时寄存器 16
-#define TM_START										1208
-#define TM_END											1223
+#define TM_START												528
+#define TM_END													543
 /*****************************************************************************/
-#define CONFIG_NVRAM_SIZE 								(TM_END + 1)
+#define CONFIG_NVRAM_SIZE 										(TM_END + 1)
 /*****************************************************************************/
-#define SPCOIL_ON										(SPCOIL_START * 16 + 0)//长通线圈
+//存档寄存器
+#define FD_START												0
+#define FD_END													1023
+/*****************************************************************************/
+#define CONFIG_FDRAM_SIZE										(FD_END + 1)
+/*****************************************************************************/
+#define SPCOIL_ON												(SPCOIL_START * 16 + 0)//长通线圈
 #define SPCOIL_START_UP									(SPCOIL_START * 16 + 1)//初次上电
-#define SPCOIL_PS1MS									(SPCOIL_START * 16 + 2)//1mS间隔 50%占空比脉冲
-#define SPCOIL_PS10MS									(SPCOIL_START * 16 + 3)//10mS
-#define SPCOIL_PS100MS									(SPCOIL_START * 16 + 4)//100mS
-#define SPCOIL_PS500MS									(SPCOIL_START * 16 + 5)//500mS
-#define SPCOIL_PS1000MS									(SPCOIL_START * 16 + 6)//1000mS
-#define SPCOIL_MODBUS_S0_ERROR							(SPCOIL_START * 16 + 7)//Modbus Slave->Uart0 错误
-#define SPCOIL_NVRAM_FAIL								(SPCOIL_START * 16 + 8)//NVRAM校验码错误
-#define SPCOIL_WATCHDOG_OVERFLOW						(SPCOIL_START * 16 + 9)//看门狗溢出
+#define SPCOIL_PS10MS									(SPCOIL_START * 16 + 2)//10mS
+#define SPCOIL_PS100MS									(SPCOIL_START * 16 + 3)//100mS
+#define SPCOIL_PS1000MS									(SPCOIL_START * 16 + 4)//1000mS
+#define SPCOIL_MODBUS_S0_ERROR							(SPCOIL_START * 16 + 5)//Modbus Slave->Uart0 错误
+#define SPCOIL_NVRAM_FAIL								(SPCOIL_START * 16 + 6)//NVRAM校验码错误
+#define SPCOIL_WATCHDOG_OVERFLOW						(SPCOIL_START * 16 + 7)//看门狗溢出
 /*****************************************************************************/
 //USB 
 #define SPCOIL_USB_INT_ERROR							(SPCOIL_START * 16 + 17)//USB 底层中断返回错误
