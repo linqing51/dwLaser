@@ -72,7 +72,6 @@ void updataNvram(void){//更新NVRAM->EPROM
 	memcpy((uint8_t*)(NVRAM1), (uint8_t*)(NVRAM0), (CONFIG_NVRAM_SIZE * 2));//更新NVRAM1 非保持寄存器
 }
 void clearFdram(void){//清楚FDRAM数据
-	uint16_t i;
 	disableWatchDog();
 #if CONFIG_SPLC_USING_EPROM == 1
 	for(i = CONFIG_EPROM_FDRAM_START; i<= CONFIG_FDRAM_SIZE; i++){

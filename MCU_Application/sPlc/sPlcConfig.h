@@ -158,7 +158,7 @@
 #define CONFIG_MIN_LASER_ENERGY_INTERVAL						100
 #define CONFIG_MAX_AIM_BRG										100//红光最大调光占空比
 #define CONFIG_MIN_AIM_BRG										0//红光最小调光占空比
-#define CONFIG_MAX_BEEM_VOLUME									255//蜂鸣器最大音量
+#define CONFIG_MAX_BEEM_VOLUME									9//蜂鸣器最大音量
 #define CONFIG_MIN_BEEM_VOLUME									0//蜂鸣器最小音量
 #define CONFIG_MAX_LCD_BRG										9//屏幕亮度最大值
 #define CONFIG_MIN_LCD_BRG										0//屏幕亮度最小值

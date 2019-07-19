@@ -1,7 +1,7 @@
 #include "backgroundApp.h"
 /*****************************************************************************/
 #if CONFIG_USING_BACKGROUND_APP == 1
-uint8_t getBeemVolumeDuty(int16_t volume){//获取蜂鸣器占空比设置
+uint8_t getBeemDuty(int16_t volume){//获取蜂鸣器占空比设置
 	switch(volume){
 		case 0:{
 			return BEEM_VOLUME_0;
@@ -44,13 +44,12 @@ uint8_t getBeemVolumeDuty(int16_t volume){//获取蜂鸣器占空比设置
 			break;
 		}
 		default:{
-			return 0;
+			return BEEM_VOLUME_9;
 		}break;
 	}
 }
 void defaultScheme(void){//当前选择方案恢复默认值
 	sprintf((char*)(&NVRAM0[EM_LASER_SCHEME_NAME]),"Hello dwLaser S%d",NVRAM0[DM_SCHEME_NUM]);		
-	NVRAM0[DM_BEEM_DUTY] = 9;
 	NVRAM0[EM_LASER_SELECT]	= LASER_SELECT_BOTH;//通道选择
 	NVRAM0[EM_LASER_PULSE_MODE]	= LASER_MODE_CW;//脉冲模式
 	NVRAM0[EM_LASER_POWER_CH0] = 199;//通道0功率

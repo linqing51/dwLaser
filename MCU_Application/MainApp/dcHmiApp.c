@@ -877,15 +877,22 @@ static void updateOptionDisplay(void){//更新选项显示
 	else{
 		SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_HAND_SWITCH_ON, 0x00);
 	}
-	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_DUTY]);//更新进度条
+	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
 	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新进度条
 }
 
 void dcHmiLoopInit(void){//初始化模块
 	NVRAM0[EM_HMI_OPERA_STEP] = 0;
 	NVRAM0[DM_AIM_BRG] = 0x80;
-	NVRAM0[DM_BEEM_DUTY] = BEEM_VOLUME_9;
-	NVRAM0[DM_BEEM_MODE] = BEEM_MODE_TONE;
+	//检查BEEM VOLUME储存值是否合规
+	if(NVRAM0[DM_BEEM_VOLUME] > CONFIG_MAX_BEEM_VOLUME){
+		NVRAM0[DM_BEEM_VOLUME] = CONFIG_MAX_BEEM_VOLUME;
+	}
+	if(NVRAM0[DM_BEEM_VOLUME] < CONFIG_MIN_BEEM_VOLUME){
+		NVRAM0[DM_BEEM_VOLUME] = CONFIG_MIN_BEEM_VOLUME;
+	}
+	//BEEM VOLUME转换为BEEM DUTY
+	NVRAM0[EM_BEEM_DUTY] = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
 	BeemFreq = BEEM_FREQ_0;
 	RES(Y_TEC0);
 	RES(Y_TEC1);
@@ -1851,7 +1858,7 @@ void dcHmiLoop(void){//HMI轮训程序
 #endif
 			//打开蜂鸣器
 			BeemMode = BEEM_MODE_0;
-			BeemDuty = NVRAM0[DM_BEEM_DUTY];
+			BeemDuty = NVRAM0[EM_BEEM_DUTY];
 			BeemCounter = 0;
 			BeemFreq = BEEM_FREQ_0;
 			BeemEnable = 1;
@@ -4063,19 +4070,20 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_OPTION_KEY_BEEM_VOLUME_ADD:{
 					if(state == 0x01){
-						if(NVRAM0[DM_BEEM_DUTY] < CONFIG_MAX_BEEM_VOLUME){
-							NVRAM0[DM_BEEM_DUTY] += 1;
-							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_DUTY]);//更新进度条
-							
+						if(NVRAM0[DM_BEEM_VOLUME] < CONFIG_MAX_BEEM_VOLUME){
+							NVRAM0[DM_BEEM_VOLUME] += 1;
+							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
+							NVRAM0[EM_BEEM_DUTY] = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
 						}
 					}
 					break;					
 				}
 				case GDDC_PAGE_OPTION_KEY_BEEM_VOLUME_DEC:{
 					if(state == 0x01){
-						if(NVRAM0[DM_BEEM_DUTY] > CONFIG_MIN_BEEM_VOLUME){
-							NVRAM0[DM_BEEM_DUTY] -= 1;
-							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_DUTY]);//更新进度条
+						if(NVRAM0[DM_BEEM_VOLUME] > CONFIG_MIN_BEEM_VOLUME){
+							NVRAM0[DM_BEEM_VOLUME] -= 1;
+							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
+							NVRAM0[EM_BEEM_DUTY] = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
 						}
 					}
 					break;					
@@ -4573,11 +4581,12 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 				}
 				case GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME:{
 					if(value >= CONFIG_MIN_BEEM_VOLUME && value <= CONFIG_MAX_BEEM_VOLUME){
-						NVRAM0[DM_BEEM_DUTY] = (int16_t)value;
+						NVRAM0[DM_BEEM_VOLUME] = (int16_t)value;
 					}
 					else{
-						NVRAM0[DM_BEEM_DUTY] = CONFIG_MAX_BEEM_VOLUME;
+						NVRAM0[DM_BEEM_VOLUME] = CONFIG_MAX_BEEM_VOLUME;
 					}
+					NVRAM0[EM_BEEM_DUTY] = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
 					break;
 				}
 				case GDDC_PAGE_OPTION_PROGRESS_LCD_BRG:{

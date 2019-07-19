@@ -142,7 +142,7 @@ void STLAR(void){//开始发射脉冲
 		BeemMode = BEEM_MODE_2;
 	}
 	BeemFreq = BEEM_FREQ_0;
-	BeemDuty = NVRAM0[DM_BEEM_DUTY];
+	BeemDuty = NVRAM0[EM_BEEM_DUTY];
 	BeemCounter = 0;
 	BeemEnable = true;
 	SET(SPCOIL_LASER_EMITING);//发射标志置位

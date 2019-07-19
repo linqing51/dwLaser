@@ -68,6 +68,7 @@
 #define EM_DK25L_VER							(EM_START + 46)//DK25L模块版本
 #define EM_LASER_SIGNAL_TIME_INTERVAL			(EM_START + 47)//SIGNAL蜂鸣器改变的时间间隔
 #define EM_BEEM_ON_TIME							(EM_START + 48)//蜂鸣器开启时间
+#define EM_BEEM_DUTY							(EM_START + 49)//蜂鸣器占空比
 /*****************************************************************************/
 #define EM_DC_PAGE								(EM_START + 64)//HMI页面编号 			
 #define EM_DC_PASSCODE_INDEX					(EM_START + 65)//密码输入位索引		
@@ -150,7 +151,7 @@
 #define FD_SCHEME_END_15										(FD_START + 479)//方案15存储区结束
 /*****************************************************************************/
 #define DM_SCHEME_NUM											(DM_START + 0)//选择的方案编号 低8位方案号 高8位方案使能
-#define DM_BEEM_DUTY											(DM_START + 1)//蜂鸣器音量
+#define DM_BEEM_VOLUME											(DM_START + 1)//蜂鸣器音量
 #define DM_BEEM_MODE											(DM_START + 2)//蜂鸣器模式
 #define DM_AIM_BRG												(DM_START + 3)//指示激光亮度
 #define DM_LCD_BRG												(DM_START + 4)//屏幕亮度
