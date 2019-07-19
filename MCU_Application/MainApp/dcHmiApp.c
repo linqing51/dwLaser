@@ -877,8 +877,9 @@ static void updateOptionDisplay(void){//更新选项显示
 	else{
 		SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_HAND_SWITCH_ON, 0x00);
 	}
-	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
-	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新进度条
+	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新BEEM音量进度条
+	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新AIM亮度进度条
+	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_LCD_BRG, NVRAM0[DM_LCD_BRG]);//更新LCD亮度
 }
 
 void dcHmiLoopInit(void){//初始化模块
@@ -1863,8 +1864,8 @@ void dcHmiLoop(void){//HMI轮训程序
 			BeemFreq = BEEM_FREQ_0;
 			BeemEnable = 1;
 			//打开指示激光
-			NVRAM0[SPREG_AIM0_BRIGHTNESS] = NVRAM0[DM_AIM_BRG];
-			SET(SPCOIL_AIM0_ENABLE);	
+			AimDuty0 = NVRAM0[DM_AIM_BRG];
+			AimEnable0 = true;	
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_READY_LOAD_PARA;	
 			RES(R_STANDBY_KEY_STNADBY_DOWN);
 		}
@@ -1898,7 +1899,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			EDLAR();//停止发射
 			NVRAM0[SPREG_DAC_0] = 0;
 		NVRAM0[SPREG_DAC_1] = 1;
-			RES(SPCOIL_AIM0_ENABLE);
+			AimEnable0 = false;	
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyTouchEnable(true);
 		}
@@ -1906,7 +1907,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			EDLAR();//停止发射
 			NVRAM0[SPREG_DAC_0] = 0;
 			NVRAM0[SPREG_DAC_1] = 1;
-			RES(SPCOIL_AIM0_ENABLE);			
+			AimEnable0 = false;	
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyTouchEnable(true);
 			RES(R_STANDBY_KEY_STNADBY_UP);
@@ -1932,7 +1933,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			EDLAR();
 			NVRAM0[SPREG_DAC_0] = 0;
 			NVRAM0[SPREG_DAC_1] = 1;
-			RES(SPCOIL_AIM0_ENABLE);
+			AimEnable0 = false;	
 			BeemEnable =false;//关闭蜂鸣器			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyTouchEnable(true);
@@ -4053,7 +4054,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_OPTION_KEY_AIM_BRG_ADD:{
 					if(state == 0x01){
 						if(NVRAM0[DM_AIM_BRG] < CONFIG_MAX_AIM_BRG){
-							ADDS1(DM_AIM_BRG);//+1	
+							NVRAM0[DM_AIM_BRG] += 1;//+1	
 							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新进度条
 						}
 					}
@@ -4062,7 +4063,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_OPTION_KEY_AIM_BRG_DEC:{
 					if(state == 0x01){
 						if(NVRAM0[DM_AIM_BRG] > CONFIG_MIN_AIM_BRG){
-							DEC1(DM_AIM_BRG);//-1	
+							NVRAM0[DM_AIM_BRG] += 1;//-1	
 							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新进度条
 						}
 					}
@@ -4091,8 +4092,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_OPTION_KEY_LCD_BRG_ADD:{
 					if(state == 0x01){
 						if(NVRAM0[DM_LCD_BRG] < CONFIG_MAX_LCD_BRG){
-							ADDS1(DM_LCD_BRG);
-							SetBackLight((uint8_t)(NVRAM0[DM_LCD_BRG] * 255 / 100));
+							NVRAM0[DM_LCD_BRG] += 1;
+							SetBackLight(NVRAM0[DM_LCD_BRG]);
 						}
 					}
 					break;
@@ -4100,8 +4101,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_OPTION_KEY_LCD_BRG_DEC:{
 					if(state == 0x01){
 						if(NVRAM0[DM_LCD_BRG] > CONFIG_MIN_LCD_BRG){
-							DECS1(DM_LCD_BRG);
-							SetBackLight((uint8_t)(NVRAM0[DM_LCD_BRG] * 255 / 100));
+							NVRAM0[DM_LCD_BRG] -= 1;
+							SetBackLight(NVRAM0[DM_LCD_BRG]);
 						}
 					}
 					break;					
@@ -4572,7 +4573,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 			switch(control_id){
 				case GDDC_PAGE_OPTION_PROGRESS_AIM_BRG:{
 					if(value >= CONFIG_MIN_AIM_BRG && value <= CONFIG_MAX_AIM_BRG){
-						NVRAM0[DM_AIM_BRG] = (int16_t)value;
+						NVRAM0[DM_AIM_BRG] = value;
 					}
 					else{
 						NVRAM0[DM_AIM_BRG] = CONFIG_MAX_AIM_BRG;
@@ -4596,7 +4597,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 					else{
 						NVRAM0[DM_LCD_BRG] = CONFIG_MAX_LCD_BRG;
 					}
-					SetBackLight((uint8_t)(NVRAM0[DM_LCD_BRG] * 255 / 100));
+					SetBackLight(NVRAM0[DM_LCD_BRG]);
 					break;
 				}					
 			

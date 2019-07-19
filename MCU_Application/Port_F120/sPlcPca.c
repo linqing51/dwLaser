@@ -5,6 +5,8 @@ uint8_t data BeemMode;//蜂鸣器模式
 uint8_t data BeemDuty;//蜂鸣器占空比
 uint16_t data BeemCounter;
 int8_t data BeemEnable;
+uint8_t data AimDuty0, AimDuty1;
+int8_t data AimEnable0, AimEnable1;
 /*****************************************************************************/
 void sPlcPcaInit(void){//计时器阵列初始化
 #if CONFIG_SPLC_USING_PCA == 1
@@ -29,25 +31,25 @@ void sPlcPcaInit(void){//计时器阵列初始化
 #endif
 }
 void sPlcAimInit(void){//指示光初始化
-	NVRAM0[SPREG_AIM0_BRIGHTNESS] = 0;
-	NVRAM0[SPREG_AIM1_BRIGHTNESS] = 0;
-	RES(SPCOIL_AIM0_ENABLE);
-	RES(SPCOIL_AIM1_ENABLE);
+	AimDuty0 = 0;
+	AimDuty1 = 0;
+	AimEnable0 = false;
+	AimEnable0 = false;
 }
 void sPlcAimLoop(void){//
 	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
 	SFRPAGE = PCA0_PAGE;
-	if(LD(SPCOIL_AIM0_ENABLE)){
+	if(AimEnable0){
 		PCA0CPM1 = 0x42;
-		PCA0CPH1 = (0xFF - (NVRAM0[SPREG_AIM0_BRIGHTNESS] & 0x00FF));
+		PCA0CPH1 = (0xFF - AimDuty0);
 	}
 	else{
 		PCA0CPM1 = 0x00;
 		PCA0CPH1  = 0xFF;
 	}
-	if(LD(SPCOIL_AIM1_ENABLE)){
+	if(AimEnable1){
 		PCA0CPM0 = 0x42;
-		PCA0CPH0 = (0xFF - (NVRAM0[SPREG_AIM0_BRIGHTNESS] & 0x00FF));
+		PCA0CPH0 = (0xFF - AimDuty1);
 	}
 	else{	
 		PCA0CPM0 = 0x00;

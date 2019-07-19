@@ -5,7 +5,7 @@ void initSplcTimer(void){//硬件sTimer计时器初始化
 	uint8_t SFRPAGE_SAVE;
 	SFRPAGE = TMR3_PAGE;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_SOFTPLC_TICK));
-	TMR3CF = 0x00;//EXTERNAL CLOCK/8 (Synchronized to the System Clock)	
+	TMR3CF = 0x00;
 	RCAP3 = temp;// Reload value to be used in Timer3
 	TMR3 = RCAP3;// Init the Timer3 register
 	TMR3CN &= ~(uint8_t)(1 << 7);//TF4 溢出标志清零
@@ -70,3 +70,5 @@ void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER3{//硬件sTimer计时器中断 10mS
 #endif
 	TimerCounter_5mS ++;	
 }
+
+

@@ -131,7 +131,7 @@
 #define CONFIG_SPLC_USING_LASER_TIMER							1
 #define CONFIG_SPLC_USING_LASER_TIMER_TEST						1
 /*****************************************************************************/
-#define CONFIG_LASER_TIMER_TICK									1000//1mS
+#define CONFIG_LASER_TIMER_TICK									200//5mS
 #define CONFIG_USING_USB_APP									0//USB应用
 #define CONFIG_USING_DCHMI_APP									1//广东大彩人机交互应用
 #define CONFIG_USING_BACKGROUND_APP								1//背景应用
@@ -156,11 +156,11 @@
 #define CONFIG_MIN_LASER_GROUP_OFF								10//最小脉冲间隔时间
 #define CONFIG_MAX_LASER_ENERGY_INTERVAL						1000
 #define CONFIG_MIN_LASER_ENERGY_INTERVAL						100
-#define CONFIG_MAX_AIM_BRG										100//红光最大调光占空比
+#define CONFIG_MAX_AIM_BRG										0xFF//红光最大调光占空比
 #define CONFIG_MIN_AIM_BRG										0//红光最小调光占空比
 #define CONFIG_MAX_BEEM_VOLUME									9//蜂鸣器最大音量
 #define CONFIG_MIN_BEEM_VOLUME									0//蜂鸣器最小音量
-#define CONFIG_MAX_LCD_BRG										9//屏幕亮度最大值
+#define CONFIG_MAX_LCD_BRG										0xFF//屏幕亮度最大值
 #define CONFIG_MIN_LCD_BRG										0//屏幕亮度最小值
 #define CONFIG_COOL_SET_TEMP									250//冷却温度
 #define CONFIG_COOL_DIFF_TEMP									20//冷却温度变化范围
@@ -307,11 +307,7 @@
 /*****************************************************************************/
 //激光脉冲发射相关线圈
 #define SPCOIL_LASER_EMITING							(SPCOIL_START * 16 + 42)//激光发射中
-#define SPCOIL_LASER_EMITOVER							(SPCOIL_START * 16 + 43)//激光发射结束
-/*****************************************************************************/
-//指示激光有关线圈
-#define SPCOIL_AIM0_ENABLE								(SPCOIL_START * 16 + 44)//激光指示光0使能
-#define SPCOIL_AIM1_ENABLE								(SPCOIL_START * 16 + 45)//激光指示光1使能		
+#define SPCOIL_LASER_EMITOVER							(SPCOIL_START * 16 + 43)//激光发射结束	
 /*****************************************************************************/
 #define SPCOIL_SI7060_INIT_FAIL							(SPCOIL_START * 16 + 47)//SI7060温度传感器初始化失败
 #define SPCOIL_MCP79412_INIT_FAIL						(SPCOIL_START * 16 + 48)//MCP794212 RTC初始化失败
@@ -366,9 +362,6 @@
 #define SPREG_SPWM_CYCLE_3								(SPREG_START + 37)//软件PWM3周期设置
 #define SPREG_SPWM_CYCLE_SHADOW_3						(SPREG_START + 38)//软件PWM3周期阴影
 #define SPREG_SPWM_COUNTER_3							(SPREG_START + 39)//软件PWM3计数器
-/*****************************************************************************/
-#define SPREG_AIM0_BRIGHTNESS							(SPREG_START + 40)//PCA0->指示光0亮度
-#define SPREG_AIM1_BRIGHTNESS							(SPREG_START + 41)//PCA1->指示光1亮度
 /*****************************************************************************/
 //激光脉冲发射相关寄存器
 #define SPREG_LASER_MODE								(SPREG_START + 46)//激光发射模式

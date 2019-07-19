@@ -33,4 +33,6 @@ extern uint8_t data BeemMode;//·äÃùÆ÷Ä£Ê½
 extern uint8_t data BeemDuty;//·äÃùÆ÷Õ¼¿Õ±È
 extern uint16_t data BeemCounter;
 extern int8_t data BeemEnable;
+extern uint8_t data AimDuty0, AimDuty1;
+extern int8_t data AimEnable0, AimEnable1;
 #endif
