@@ -1,6 +1,48 @@
 #include "backgroundApp.h"
 /*****************************************************************************/
 #if CONFIG_USING_BACKGROUND_APP == 1
+typedef struct{
+  float Kp;                       //比例系数Proportional
+  float Ki;                       //积分系数Integral
+  float Kd;                       //微分系数Derivative
+  float Ek;                       //当前误差
+  float Ek1;                      //前一次误差 e(k-1)
+  float Ek2;                      //再前一次误差 e(k-2)
+  float LocSum;                   //累计积分位置
+}PID_LocTypeDef;  
+/************************************************
+函数名称 ： PID_Loc
+功    能 ： PID位置(Location)计算
+参    数 ： SetValue ------ 设置值(期望值)
+			ActualValue --- 实际值(反馈值)
+			PID ----------- PID数据结构
+返 回 值 ： PIDLoc -------- PID位置
+作    者 ： strongerHuang
+*************************************************/
+PID_LocTypeDef tPid;
+float PID_Loc(float SetValue, float ActualValue, PID_LocTypeDef *PID)
+{
+	float PIDLoc;//位置 
+	PID->Ek = SetValue - ActualValue;
+	PID->LocSum += PID->Ek;//累计误差
+	PIDLoc = PID->Kp * PID->Ek + (PID->Ki * PID->LocSum) + PID->Kd * (PID->Ek1 - PID->Ek);
+	PID->Ek1 = PID->Ek;  
+		return PIDLoc;
+}
+void loadDefault(void){//恢复默认值
+	uint8_t i;
+	NVRAM0[DM_SCHEME_NUM] = 0;
+	NVRAM0[DM_BEEM_VOLUME] = 9;
+	NVRAM0[DM_AIM_BRG] = CONFIG_MAX_AIM_BRG;
+	NVRAM0[DM_LCD_BRG] = CONFIG_MAX_LCD_BRG;
+	reloadCorrTab();
+	for(i=0;i<CONFIG_HMI_SCHEME_NUM;i++){
+		NVRAM0[DM_SCHEME_NUM] = i;
+		defaultScheme();
+		saveScheme();
+	}
+	FDSAV();
+}
 uint8_t getBeemDuty(int16_t volume){//获取蜂鸣器占空比设置
 	switch(volume){
 		case 0:{
@@ -52,18 +94,18 @@ void defaultScheme(void){//当前选择方案恢复默认值
 	sprintf((char*)(&NVRAM0[EM_LASER_SCHEME_NAME]),"Hello dwLaser S%d",NVRAM0[DM_SCHEME_NUM]);		
 	NVRAM0[EM_LASER_SELECT]	= LASER_SELECT_BOTH;//通道选择
 	NVRAM0[EM_LASER_PULSE_MODE]	= LASER_MODE_CW;//脉冲模式
-	NVRAM0[EM_LASER_POWER_CH0] = 199;//通道0功率
-	NVRAM0[EM_LASER_POWER_CH1] = 59;//通道1功率
+	NVRAM0[EM_LASER_POWER_CH0] = 0;//通道0功率
+	NVRAM0[EM_LASER_POWER_CH1] = 0;//通道1功率
 	NVRAM0[EM_LASER_SP_POSWIDTH]= 500;//单脉冲正脉宽
-	NVRAM0[EM_LASER_MP_POSWIDTH]= 400;//多脉冲正脉宽
-	NVRAM0[EM_LASER_MP_NEGWIDTH]= 20;//多脉冲负脉宽
-	NVRAM0[EM_LASER_GP_POSWIDTH]= 300;//Group脉冲正脉宽
-	NVRAM0[EM_LASER_GP_NEGWIDTH]= 600;//Group脉冲负脉宽
-	NVRAM0[EM_LASER_GP_TIMES] =	10;//Group脉冲数
-	NVRAM0[EM_LASER_GP_GROUP_OFF] = 700;//Group脉冲间隔
+	NVRAM0[EM_LASER_MP_POSWIDTH]= 500;//多脉冲正脉宽
+	NVRAM0[EM_LASER_MP_NEGWIDTH]= 500;//多脉冲负脉宽
+	NVRAM0[EM_LASER_GP_POSWIDTH]= 500;//Group脉冲正脉宽
+	NVRAM0[EM_LASER_GP_NEGWIDTH]= 500;//Group脉冲负脉宽
+	NVRAM0[EM_LASER_GP_TIMES] =	100;//Group脉冲数
+	NVRAM0[EM_LASER_GP_GROUP_OFF] = 600;//Group脉冲间隔
 	NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL] = CONFIG_MIN_LASER_ENERGY_INTERVAL;//EVLA_SIGNAL能量间隔
-	NVRAM0[EM_LASER_DERMA_POSWIDTH]	= 250;//DERMA正脉宽
-	NVRAM0[EM_LASER_DERMA_NEGWIDTH]	= 550;//DERMA负脉宽
+	NVRAM0[EM_LASER_DERMA_POSWIDTH]	= 500;//DERMA正脉宽
+	NVRAM0[EM_LASER_DERMA_NEGWIDTH]	= 500;//DERMA负脉宽
 	NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_0MM5;//DERMA光斑直径
 }
 void reloadCorrTab(void){//恢复功率校正参数

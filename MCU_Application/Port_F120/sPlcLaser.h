@@ -17,6 +17,6 @@
 void sPlcLaserInit(void);
 void laserTimerIsr(void);//TIMER4 中断 激光发射
 void testBenchLaserTimer(uint8_t st);//LASER激光发射测试
-void EDLAR(void);//停止发射脉冲
+void EDLAR(void)reentrant;//停止发射脉冲
 void STLAR(void);//开始发射脉冲
 #endif

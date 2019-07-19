@@ -877,6 +877,14 @@ static void updateOptionDisplay(void){//更新选项显示
 	else{
 		SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_HAND_SWITCH_ON, 0x00);
 	}
+	if(LD(MR_BEEM_TONE)){
+		SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_TONE, 0x01);
+		SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_BEEP, 0x00);
+	}
+	else{
+		SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_TONE, 0x00);
+		SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_BEEP, 0x01);
+	}
 	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新BEEM音量进度条
 	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新AIM亮度进度条
 	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_LCD_BRG, NVRAM0[DM_LCD_BRG]);//更新LCD亮度
@@ -4000,14 +4008,14 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 			switch(control_id){
 				case GDDC_PAGE_OPTION_KEY_BEEP:{
 					if(state == 0x01){
-						NVRAM0[DM_BEEM_MODE] = BEEM_MODE_SYNC;
+						RES(MR_BEEM_TONE);
 						SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_TONE, 0x0);//TONE按键弹起
 					}
 					break;
 				}
 				case GDDC_PAGE_OPTION_KEY_TONE:{
 					if(state == 0x01){
-						NVRAM0[DM_BEEM_MODE] = BEEM_MODE_TONE;
+						SET(MR_BEEM_TONE);
 						SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_BEEP, 0x0);//BEEP按键弹起
 					}
 					break;

@@ -135,7 +135,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 void STLAR(void){//开始发射脉冲
 #if CONFIG_SPLC_USING_LASER_TIMER == 1	
 	uint8_t SFRPAGE_save;	
-	if((NVRAM0[DM_BEEM_MODE] == BEEM_MODE_SYNC) || (NVRAM0[EM_LASER_PULSE_MODE] == LASER_MODE_SIGNAL)){
+	if(LD(MR_BEEM_TONE) || (NVRAM0[EM_LASER_PULSE_MODE] == LASER_MODE_SIGNAL)){
 		BeemMode = BEEM_MODE_1;	
 	}
 	else{
@@ -159,7 +159,7 @@ void STLAR(void){//开始发射脉冲
 	SFRPAGE = SFRPAGE_save;
 #endif
 }
-void EDLAR(void){//停止发射脉冲
+void EDLAR(void) reentrant {//停止发射脉冲
 #if CONFIG_SPLC_USING_LASER_TIMER == 1 	
 	uint8_t SFRPAGE_save;
 	SFRPAGE = TMR4_PAGE;

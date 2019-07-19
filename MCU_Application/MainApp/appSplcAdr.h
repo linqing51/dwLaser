@@ -10,8 +10,6 @@
 #define CONFIG_HMI_DEFAULT_PASSSWORD1						0x3231//默认密码
 #define STATUS_LASER_READY									0x5A
 #define STATUS_LASER_STANDBY								0xA5
-#define BEEM_MODE_SYNC										0x1234//声光同步
-#define BEEM_MODE_TONE										0x4321
 #define AIM_MODE_CW_GREEN									0x5678//连续绿色
 #define AIM_MODE_CW_RED										0x9ABC//连续红色
 //故障码
@@ -152,15 +150,14 @@
 /*****************************************************************************/
 #define DM_SCHEME_NUM											(DM_START + 0)//选择的方案编号 低8位方案号 高8位方案使能
 #define DM_BEEM_VOLUME											(DM_START + 1)//蜂鸣器音量
-#define DM_BEEM_MODE											(DM_START + 2)//蜂鸣器模式
-#define DM_AIM_BRG												(DM_START + 3)//指示激光亮度
-#define DM_LCD_BRG												(DM_START + 4)//屏幕亮度
-#define DM_DC_OLD_PASSCODE0										(DM_START + 5)//屏旧密码0-1
-#define DM_DC_OLD_PASSCODE1										(DM_START + 6)//屏旧密码2-3
-#define DM_DC_OLD_PASSCODE2										(DM_START + 7)//屏旧密码0-1
-#define DM_DC_OLD_PASSCODE3										(DM_START + 8)//屏旧密码2-3
-#define DM_SYS_RUNTIME_L										(DM_START + 9)//系统累计运行时间秒L 32BIT
-#define DM_SYS_RUNTIME_H										(DM_START + 10)//系统累计运行时间秒H 32BIT
+#define DM_AIM_BRG												(DM_START + 2)//指示激光亮度
+#define DM_LCD_BRG												(DM_START + 3)//屏幕亮度
+#define DM_DC_OLD_PASSCODE0										(DM_START + 4)//屏旧密码0-1
+#define DM_DC_OLD_PASSCODE1										(DM_START + 5)//屏旧密码2-3
+#define DM_DC_OLD_PASSCODE2										(DM_START + 6)//屏旧密码0-1
+#define DM_DC_OLD_PASSCODE3										(DM_START + 7)//屏旧密码2-3
+#define DM_SYS_RUNTIME_L										(DM_START + 8)//系统累计运行时间秒L 32BIT
+#define DM_SYS_RUNTIME_H										(DM_START + 9)//系统累计运行时间秒H 32BIT
 /*****************************************************************************/
 #define DM_CORR_TAB0_POWER0										(DM_START + 20)//功率校正表0功率0 
 #define DM_CORR_TAB0_POWER1										(DM_START + 21)//功率校正表0功率2 
@@ -372,6 +369,7 @@
 #define R_DIAGNOSIS_OK_UP										(R_START * 16 + 191)
 /*****************************************************************************/
 #define MR_FOOSWITCH_HAND_SWITCH								(MR_START * 16 + 10)//脚踏HandSwitch 脉冲控制
+#define MR_BEEM_TONE											(MR_START * 16 + 11)//蜂鸣器模式
 /*****************************************************************************/
 #define T100MS_HMI_POWERUP_DELAY								0//HMI启动复位延时
 #define T100MS_CHECK_PROCESSOR_DELAY							1//存储器自检等待延迟

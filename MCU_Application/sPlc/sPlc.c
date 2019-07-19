@@ -31,7 +31,19 @@ void assertRegisterAddress(uint16_t adr){//检查寄存器地址
 }
 void loadNvram(void){//从EPROM中载入NVRAM
 	uint16_t i;
+	uint8_t checkCode[4];
 #if CONFIG_SPLC_USING_EPROM == 1
+	epromRead((CONFIG_EPROM_SIZE - 4), checkCode, 4);//从EPROM中恢复MR
+	if((checkCode[0] != 0x55) || (checkCode[1] != 0xAA) || (checkCode[2] != 0xBC) || (checkCode[3] != 0xD4)){
+		//检测到校验码错误清空EPROM
+		for(i = 0; i<= CONFIG_EPROM_SIZE;i ++){
+			epromWriteOneByte(i, 0x0);
+		}
+		epromWriteOneByte((CONFIG_EPROM_SIZE - 4), 0x55);
+		epromWriteOneByte((CONFIG_EPROM_SIZE - 3), 0xAA);
+		epromWriteOneByte((CONFIG_EPROM_SIZE - 2), 0xBC);
+		epromWriteOneByte((CONFIG_EPROM_SIZE - 1), 0xD4);
+	}
 	epromRead(CONFIG_EPROM_NVRAM_START, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
 #endif
 	for(i = R_START;i <= TM_END;i ++){
@@ -72,6 +84,7 @@ void updataNvram(void){//更新NVRAM->EPROM
 	memcpy((uint8_t*)(NVRAM1), (uint8_t*)(NVRAM0), (CONFIG_NVRAM_SIZE * 2));//更新NVRAM1 非保持寄存器
 }
 void clearFdram(void){//清楚FDRAM数据
+	uint16_t i;
 	disableWatchDog();
 #if CONFIG_SPLC_USING_EPROM == 1
 	for(i = CONFIG_EPROM_FDRAM_START; i<= CONFIG_FDRAM_SIZE; i++){
@@ -93,6 +106,37 @@ void clearNvram(void){//清除NVRAM数据
 	memset((uint8_t*)NVRAM0, 0x0, (CONFIG_EPROM_SIZE * 2));//初始化NVRAM0
 	memset((uint8_t*)NVRAM1, 0x0, (CONFIG_EPROM_SIZE * 2));//初始化NVRAM1
 	exitSplcIsr();//恢复中断
+}
+void clearEprom(void){
+	uint16_t i;
+	//清空EPROM
+	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
+		epromWriteOneByte(i, 0x0);
+	}
+	//写入校验码
+	epromWriteOneByte((CONFIG_EPROM_SIZE - 4), 0x55);
+	epromWriteOneByte((CONFIG_EPROM_SIZE - 3), 0xAA);
+	epromWriteOneByte((CONFIG_EPROM_SIZE - 2), 0xBC);
+	epromWriteOneByte((CONFIG_EPROM_SIZE - 1), 0xD4);
+}
+extern void loadDefault(void);
+void checkEprom(void){
+	uint16_t i;
+	uint8_t checkCode[4];
+#if CONFIG_SPLC_USING_EPROM == 1
+	epromRead((CONFIG_EPROM_SIZE - 4), checkCode, 4);//从EPROM中恢复MR
+	if((checkCode[0] != 0x55) || (checkCode[1] != 0xAA) || (checkCode[2] != 0xBC) || (checkCode[3] != 0xD4)){
+		//检测到校验码错误清空EPROM
+		for(i = 0; i<= CONFIG_EPROM_SIZE;i ++){
+			epromWriteOneByte(i, 0x0);
+		}
+		epromWriteOneByte((CONFIG_EPROM_SIZE - 4), 0x55);
+		epromWriteOneByte((CONFIG_EPROM_SIZE - 3), 0xAA);
+		epromWriteOneByte((CONFIG_EPROM_SIZE - 2), 0xBC);
+		epromWriteOneByte((CONFIG_EPROM_SIZE - 1), 0xD4);
+		loadDefault();
+	}
+#endif
 }
 void sPlcSpwmLoop(void){//SPWM轮询	
 	if(LDP(SPCOIL_PS10MS)){//每10mS执行一次
@@ -175,17 +219,17 @@ void sPlcSpwmLoop(void){//SPWM轮询
 /*****************************************************************************/
 void sPlcInit(void){//软逻辑初始化
 	CLDAC();
+	initWatchDog();//初始化看门狗
+	disableWatchDog();//屏蔽看门狗
+	checkEprom();
+	loadNvram();//上电恢复NVRAM
+	loadFdram();//上电恢复NVRAM
 	initSplcTimer();//初始化硬件计时器模块
 	SET(SPCOIL_ON);
 	inputInit();
 	outputInit();
-	//checkWatchDog();//检查看门狗状态
-	initWatchDog();//看门狗使能
-	disableWatchDog();//屏蔽看门狗
 	initUart0(CONFIG_UART0_BAUDRATE);//UART1初始化
 	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化	
-	loadNvram();//上电恢复NVRAM
-	loadFdram();//上电恢复NVRAM
 	initChipDac();//初始化DAC模块
 	initChipAdc();//初始化ADC模块
 	sPlcPcaInit();
