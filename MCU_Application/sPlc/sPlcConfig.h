@@ -136,7 +136,6 @@
 #define CONFIG_USING_DCHMI_APP									1//广东大彩人机交互应用
 #define CONFIG_USING_BACKGROUND_APP								1//背景应用
 /*****************************************************************************/
-#define CONFIG_SKIP_FAULT 										1
 #define CONFIG_CHECK_DELAY_TIME									5
 #define CONFIG_KEY_REPEAT_DELAY_TIME							50
 #define CONFIG_SCHEME_FILE_NAME									"/dwLaser.txt"

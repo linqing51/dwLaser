@@ -161,8 +161,6 @@
 #define DM_DC_OLD_PASSCODE3										(DM_START + 8)//屏旧密码2-3
 #define DM_SYS_RUNTIME_L										(DM_START + 9)//系统累计运行时间秒L 32BIT
 #define DM_SYS_RUNTIME_H										(DM_START + 10)//系统累计运行时间秒H 32BIT
-#define DM_LAR_RUNTIME_L										(DM_START + 11)//激光累计发射时间秒L 32BIT
-#define DM_LAR_RUNTIME_H										(DM_START + 12)//激光累计发射时间秒H 32BIT
 /*****************************************************************************/
 #define DM_CORR_TAB0_POWER0										(DM_START + 20)//功率校正表0功率0 
 #define DM_CORR_TAB0_POWER1										(DM_START + 21)//功率校正表0功率2 

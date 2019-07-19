@@ -11,16 +11,10 @@ void main(void){
 	while(1){
 		sPlcProcessStart();
 		if(LD(SPCOIL_START_UP)){//
-#if CONFIG_USING_BACKGROUND_APP == 1 
-			backgroundAppInit();
-#endif
 #if CONFIG_USING_DCHMI_APP == 1			
 			dcHmiLoopInit();
 #endif			
 		}
-#if CONFIG_USING_BACKGROUND_APP == 1 
-			backgroundApp();
-#endif		
 #if CONFIG_USING_DCHMI_APP == 1
 			dcHmiLoop();
 #endif
