@@ -53,7 +53,7 @@
 #define CONFIG_SPLC_ASSERT								0//检查地址范围
 #define CONFIG_SPLC_DEV									0x0A01//设备号
 #define CONFIG_SPLC_CLEAR_CODE							0xA58E
-#define CONFIG_SOFTPLC_TICK								1000L//1mS
+#define CONFIG_SOFTPLC_TICK								200L//1mS
 #define CONFIG_INPUT_FILTER_TIME						1//输入数字滤波扫描周期 1mS * N
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT							0//看门狗启用
@@ -65,7 +65,7 @@
 #define CONFIG_SPLC_USING_PCA							1//片内计数器阵列
 #define CONFIG_PCA_TICK									8000
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM							1//EPROM
+#define CONFIG_SPLC_USING_EPROM							0//EPROM
 #if CONFIG_SPLC_USING_EPROM == 1
 #define CONFIG_SPLC_USING_CLEAR_NVRAM					1//启用清除NVRAM功能
 #else

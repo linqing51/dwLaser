@@ -3,7 +3,7 @@
 int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前 包含存档寄存器
 int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 int8_t FDRAM[CONFIG_FDRAM_SIZE];//存档寄存器
-uint8_t TimerCounter_1mS = 0;
+uint8_t TimerCounter_5mS = 0;
 uint8_t TimerCounter_10mS = 0;
 uint8_t TimerCounter_100mS = 0;
 uint8_t TD_10MS_SP = 0;
