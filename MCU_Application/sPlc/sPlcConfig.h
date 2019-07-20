@@ -155,11 +155,11 @@
 #define CONFIG_MIN_LASER_GROUP_OFF								10//最小脉冲间隔时间
 #define CONFIG_MAX_LASER_ENERGY_INTERVAL						1000
 #define CONFIG_MIN_LASER_ENERGY_INTERVAL						100
-#define CONFIG_MAX_AIM_BRG										0xFF//红光最大调光占空比
+#define CONFIG_MAX_AIM_BRG										100//红光最大调光占空比
 #define CONFIG_MIN_AIM_BRG										0//红光最小调光占空比
-#define CONFIG_MAX_BEEM_VOLUME									9//蜂鸣器最大音量
+#define CONFIG_MAX_BEEM_VOLUME									100//蜂鸣器最大音量
 #define CONFIG_MIN_BEEM_VOLUME									0//蜂鸣器最小音量
-#define CONFIG_MAX_LCD_BRG										0xFF//屏幕亮度最大值
+#define CONFIG_MAX_LCD_BRG										100//屏幕亮度最大值
 #define CONFIG_MIN_LCD_BRG										0//屏幕亮度最小值
 #define CONFIG_COOL_SET_TEMP									250//冷却温度
 #define CONFIG_COOL_DIFF_TEMP									20//冷却温度变化范围

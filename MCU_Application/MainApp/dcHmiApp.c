@@ -879,11 +879,9 @@ static void updateOptionDisplay(void){//更新选项显示
 	}
 	if(LD(MR_BEEM_TONE)){
 		SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_TONE, 0x01);
-		SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_BEEP, 0x00);
 	}
 	else{
 		SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_TONE, 0x00);
-		SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_BEEP, 0x01);
 	}
 	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新BEEM音量进度条
 	SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新AIM亮度进度条
@@ -910,94 +908,71 @@ void dcHmiLoopInit(void){//初始化模块
 	RES(Y_TEC1);
 	SET(Y_FAN0);
 	SET(Y_FAN1);
+	RES(R_DRIVE_TEMP_HIGH);//屏蔽驱动器过热报警
+	SET(R_FIBER_ID_PASS_0);
+	SET(R_FIBER_ID_PASS_1);//屏蔽光纤ID检测
 }
 static void temperatureLoop(void){//温度轮询顺序
 	int16_t temp;
-	if(LDP(SPCOIL_PS1000MS)){//每100mS更新一次温度
-		temp = NVRAM0[SPREG_ADC_2];
-		TNTC(EM_DIODE_TEMP0, SPREG_ADC_2);//CODE转换为NTC测量温度温度
-		temp = NVRAM0[EM_DIODE_TEMP0];
-		temp = NVRAM0[SPREG_ADC_3];
-		TNTC(EM_DIODE_TEMP1, SPREG_ADC_3);//CODE转换为NTC测量温度温度
-		temp = NVRAM0[EM_DIODE_TEMP1];
-		temp = NVRAM0[SPREG_ADC_8];
-		TENV(EM_ENVI_TEMP, SPREG_ADC_8);//CODE转换为环境温度
-		temp = NVRAM0[EM_ENVI_TEMP];
-		//判断二极管0是否过热
-		if(NVRAM0[EM_DIODE_TEMP0] > CONFIG_APP_DIODE_HIGH_TEMP){
-			SET(R_DIODE_TEMP_HIGH_0);
-		}
-		else{
-			RES(R_DIODE_TEMP_HIGH_0);
-		}
-		//判断二极管1是否过热
-		if(NVRAM0[EM_DIODE_TEMP1] > CONFIG_APP_DIODE_HIGH_TEMP){
-			SET(R_DIODE_TEMP_HIGH_1);
-		}
-		else{
-			RES(R_DIODE_TEMP_HIGH_1);
-		}
-		//判断驱动器是否过热
-		if(NVRAM0[EM_DRIVE_TEMP] > CONFIG_APP_DRIVE_HIGH_TEMP){
-			SET(R_DRIVE_TEMP_HIGH);
-		}
-		else{
-			RES(R_DRIVE_TEMP_HIGH);
-		}
-		//判断环境是否过热
-		if(NVRAM0[EM_ENVI_TEMP] > CONFIG_APP_ENVI_HIGH_TEMP){
-			SET(R_ENVI_TEMP_HIGH);
-		}
-		else{
-			RES(R_ENVI_TEMP_HIGH);
-		}
-		//温控执行
-		if(NVRAM0[EM_DIODE_TEMP0] > (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
-			SET(Y_TEC0);
-			setLedVar(true);
-		}
-		if(NVRAM0[EM_DIODE_TEMP0] < (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
-			RES(Y_TEC0);
-			setLedVar(false);
-		}
+	temp = NVRAM0[SPREG_ADC_2];
+	TNTC(EM_DIODE_TEMP0, SPREG_ADC_2);//CODE转换为NTC测量温度温度
+	temp = NVRAM0[EM_DIODE_TEMP0];
+	temp = NVRAM0[SPREG_ADC_3];
+	TNTC(EM_DIODE_TEMP1, SPREG_ADC_3);//CODE转换为NTC测量温度温度
+	temp = NVRAM0[EM_DIODE_TEMP1];
+	temp = NVRAM0[SPREG_ADC_8];
+	TENV(EM_ENVI_TEMP, SPREG_ADC_8);//CODE转换为环境温度
+	temp = NVRAM0[EM_ENVI_TEMP];
+	//判断二极管0是否过热
+	if(NVRAM0[EM_DIODE_TEMP0] > CONFIG_APP_DIODE_HIGH_TEMP){
+		SET(R_DIODE_TEMP_HIGH_0);
+	}
+	else{
+		RES(R_DIODE_TEMP_HIGH_0);
+	}
+	//判断环境是否过热
+	if(NVRAM0[EM_ENVI_TEMP] > CONFIG_APP_ENVI_HIGH_TEMP){
+		SET(R_ENVI_TEMP_HIGH);
+	}
+	else{
+		RES(R_ENVI_TEMP_HIGH);
+	}
+	//温控执行
+	if(NVRAM0[EM_DIODE_TEMP0] > (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
+		SET(Y_TEC0);
+		setLedVar(true);
+	}
+	if(NVRAM0[EM_DIODE_TEMP0] < (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
+		RES(Y_TEC0);
+		setLedVar(false);
 	}
 }
 static void faultLoop(void){//故障轮询
-	if(LDP(SPCOIL_PS1000MS)){//每100mS更新一次温度
-		ADLS1(DM_SYS_RUNTIME_L);	
-	}
-	if(LDB(X_ESTOP)){
+	uint8_t temp;
+	temp = 0;
+	temp |= LDB(X_ESTOP);//正常1 
+	temp |=	LDB(X_INTERLOCK);//正常1
+	temp |= LDB(X_FOOTSWITCH_NC);//正常1
+	temp |= LDB(X_FBD0);//正常1
+	temp |= LD(R_DIODE_TEMP_HIGH_0);//正常0
+	temp |= LD(R_ENVI_TEMP_HIGH);//正常0
+	if(temp){
 		SET(R_FAULT);
-	}
-	else if(LDB(X_INTERLOCK)){
-		SET(R_FAULT);
-	}
-	else if(LDB(X_FOOTSWITCH_NC)){
-		SET(R_FAULT);
-	}
-	else if(LDB(X_FBD0)){
-		SET(R_FAULT);
-	}
-	else if(LD(R_DIODE_TEMP_HIGH_0)){
-		SET(R_FAULT);
-	}
-	else if(LD(R_ENVI_TEMP_HIGH)){
-		SET(R_FAULT);
-	}
-	else{
-		RES(R_FAULT);
-	}
-	if(LD(R_FAULT)){
 		SET(Y_LED_ALARM);
 	}
 	else{
+		RES(R_FAULT);
 		RES(Y_LED_ALARM);
 	}
 }
-
 void dcHmiLoop(void){//HMI轮训程序
-	temperatureLoop();
-	faultLoop();
+	if(LDP(SPCOIL_PS100MS)){//每100mS更新一次温度
+		temperatureLoop();
+		faultLoop();
+	}
+	if(LDP(SPCOIL_PS1000MS)){//每100mS更新一次温度
+		ADLS1(DM_SYS_RUNTIME_L);	
+	}
 	if(LD(R_DCHMI_RESET_DONE) && LD(R_DCHMI_RESTORE_DONE)){//HMI复位完成后处理串口指令
 		hmiCmdSize = queue_find_cmd(hmiCmdBuffer, CMD_MAX_SIZE);//从缓冲区中获取一条指令         
         if(hmiCmdSize > 0){//接收到指令及判断是否为开机提示                                                            
@@ -1711,9 +1686,9 @@ void dcHmiLoop(void){//HMI轮训程序
 			RES(R_STANDBY_KEY_ENTER_OPTION_DOWN);
 		}
 		//刷新故障显示
-		if(LDP(R_FAULT)){
+		if(LD(R_FAULT)){
 			//打开蜂鸣器报警
-			if(LD(X_INTERLOCK)){//安全连锁拔出
+			if(LDB(X_INTERLOCK)){//安全连锁拔出
 				SetTextValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_INTERLOCK_UNPLUG);
 				SetTextValue(GDDC_PAGE_STANDBY_SP_0, GDDC_PAGE_STANDBY_SP_TEXTDISPLAY_WARN, LANG_WARN_MSG_INTERLOCK_UNPLUG);
 				SetTextValue(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_MP_TEXTDISPLAY_WARN, LANG_WARN_MSG_INTERLOCK_UNPLUG);
@@ -1721,7 +1696,7 @@ void dcHmiLoop(void){//HMI轮训程序
 				SetTextValue(GDDC_PAGE_STANDBY_SIGNAL_0, GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_WARN, LANG_WARN_MSG_INTERLOCK_UNPLUG);
 				SetTextValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_WARN, LANG_WARN_MSG_INTERLOCK_UNPLUG);
 			}
-			else if(LD(X_FBD0)){//光纤拔出
+			else if(LDB(X_FBD0)){//光纤拔出
 				SetTextValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FIBER_UNPLUG);
 				SetTextValue(GDDC_PAGE_STANDBY_SP_0, GDDC_PAGE_STANDBY_SP_TEXTDISPLAY_WARN, LANG_WARN_MSG_FIBER_UNPLUG);
 				SetTextValue(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_MP_TEXTDISPLAY_WARN, LANG_WARN_MSG_FIBER_UNPLUG);
@@ -1729,7 +1704,15 @@ void dcHmiLoop(void){//HMI轮训程序
 				SetTextValue(GDDC_PAGE_STANDBY_SIGNAL_0, GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_WARN, LANG_WARN_MSG_FIBER_UNPLUG);
 				SetTextValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_WARN, LANG_WARN_MSG_FIBER_UNPLUG);
 			}
-			else if(LD(R_FIBER_ID_PASS_0)){//光纤ID不匹配
+			else if(LDB(X_FOOTSWITCH_NC)){//脚踏拔出
+				SetTextValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FOOTSWITCH_UNPLUG);
+				SetTextValue(GDDC_PAGE_STANDBY_SP_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FOOTSWITCH_UNPLUG);
+				SetTextValue(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FOOTSWITCH_UNPLUG);
+				SetTextValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FOOTSWITCH_UNPLUG);
+				SetTextValue(GDDC_PAGE_STANDBY_SIGNAL_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FOOTSWITCH_UNPLUG);
+				SetTextValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FOOTSWITCH_UNPLUG);
+			}
+			else if(LDB(R_FIBER_ID_PASS_0)){//光纤ID不匹配
 				SetTextValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FIBER_MISSMATE);
 				SetTextValue(GDDC_PAGE_STANDBY_SP_0, GDDC_PAGE_STANDBY_SP_TEXTDISPLAY_WARN, LANG_WARN_MSG_FIBER_MISSMATE);
 				SetTextValue(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_MP_TEXTDISPLAY_WARN, LANG_WARN_MSG_FIBER_MISSMATE);
@@ -1760,23 +1743,14 @@ void dcHmiLoop(void){//HMI轮训程序
 				SetTextValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_DRIVE_HTEMP);
 				SetTextValue(GDDC_PAGE_STANDBY_SIGNAL_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_DRIVE_HTEMP);
 				SetTextValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_DRIVE_HTEMP);
-			}
-			else if(LD(X_FOOTSWITCH_NC)){//脚踏拔出
-				SetTextValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FOOTSWITCH_UNPLUG);
-				SetTextValue(GDDC_PAGE_STANDBY_SP_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FOOTSWITCH_UNPLUG);
-				SetTextValue(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FOOTSWITCH_UNPLUG);
-				SetTextValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FOOTSWITCH_UNPLUG);
-				SetTextValue(GDDC_PAGE_STANDBY_SIGNAL_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FOOTSWITCH_UNPLUG);
-				SetTextValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_FOOTSWITCH_UNPLUG);
-			}
-			
+			}			
 			BeemMode = BEEM_MODE_3;
 			BeemDuty = NVRAM0[EM_BEEM_DUTY];
 			BeemCounter = 0;
 			BeemFreq = BEEM_FREQ_0;
 			BeemEnable = 1;;
 		}
-		if(LDN(R_FAULT)){
+		else{
 			BeemEnable = 0;
 			SetTextValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_WARN, LANG_WARN_MSG_NO_ERROR);
 			SetTextValue(GDDC_PAGE_STANDBY_SP_0, GDDC_PAGE_STANDBY_SP_TEXTDISPLAY_WARN, LANG_WARN_MSG_NO_ERROR);
@@ -4041,17 +4015,12 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		}
 		case GDDC_PAGE_OPTION_0:{//选项页面
 			switch(control_id){
-				case GDDC_PAGE_OPTION_KEY_BEEP:{
-					if(state == 0x01){
-						RES(MR_BEEM_TONE);
-						SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_TONE, 0x0);//TONE按键弹起
-					}
-					break;
-				}
 				case GDDC_PAGE_OPTION_KEY_TONE:{
 					if(state == 0x01){
 						SET(MR_BEEM_TONE);
-						SetButtonValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_KEY_BEEP, 0x0);//BEEP按键弹起
+					}
+					if(state == 0x00){
+						RES(MR_BEEM_TONE);
 					}
 					break;
 				}
@@ -4060,6 +4029,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_AIM_BRG] < CONFIG_MAX_AIM_BRG){
 							NVRAM0[DM_AIM_BRG] += 1;//+1	
 							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新进度条
+							SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_AIM_BRG , NVRAM0[DM_AIM_BRG], 1, 0);
+							NVRAM0[EM_AIM_DUTY] = getAimDuty(NVRAM0[DM_AIM_BRG]);
 						}
 					}
 					break;
@@ -4069,6 +4040,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_AIM_BRG] > CONFIG_MIN_AIM_BRG){
 							NVRAM0[DM_AIM_BRG] += 1;//-1	
 							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新进度条
+							SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_AIM_BRG , NVRAM0[DM_AIM_BRG], 1, 0);
+							NVRAM0[EM_AIM_DUTY] = getAimDuty(NVRAM0[DM_AIM_BRG]);
 						}
 					}
 					break;					
@@ -4078,6 +4051,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_BEEM_VOLUME] < CONFIG_MAX_BEEM_VOLUME){
 							NVRAM0[DM_BEEM_VOLUME] += 1;
 							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
+							SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_BEEM_VOLUME , NVRAM0[DM_BEEM_VOLUME], 1, 0);
 							NVRAM0[EM_BEEM_DUTY] = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
 						}
 					}
@@ -4088,6 +4062,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_BEEM_VOLUME] > CONFIG_MIN_BEEM_VOLUME){
 							NVRAM0[DM_BEEM_VOLUME] -= 1;
 							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
+							SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_BEEM_VOLUME , NVRAM0[DM_BEEM_VOLUME], 1, 0);
 							NVRAM0[EM_BEEM_DUTY] = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
 						}
 					}
@@ -4097,7 +4072,9 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state == 0x01){
 						if(NVRAM0[DM_LCD_BRG] < CONFIG_MAX_LCD_BRG){
 							NVRAM0[DM_LCD_BRG] += 1;
-							SetBackLight(NVRAM0[DM_LCD_BRG]);
+							SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_LCD_BRG , NVRAM0[DM_LCD_BRG], 1, 0);
+							NVRAM0[EM_LCD_DUTY] = getLcdDuty(NVRAM0[DM_LCD_BRG]);
+							SetBackLight((uint8_t)NVRAM0[EM_LCD_DUTY]);
 						}
 					}
 					break;
@@ -4106,7 +4083,9 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state == 0x01){
 						if(NVRAM0[DM_LCD_BRG] > CONFIG_MIN_LCD_BRG){
 							NVRAM0[DM_LCD_BRG] -= 1;
-							SetBackLight(NVRAM0[DM_LCD_BRG]);
+							SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_LCD_BRG , NVRAM0[DM_LCD_BRG], 1, 0);
+							NVRAM0[EM_LCD_DUTY] = getLcdDuty(NVRAM0[DM_LCD_BRG]);
+							SetBackLight(NVRAM0[EM_LCD_DUTY]);
 						}
 					}
 					break;					
@@ -4576,35 +4555,42 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 		case GDDC_PAGE_OPTION_0:{
 			switch(control_id){
 				case GDDC_PAGE_OPTION_PROGRESS_AIM_BRG:{
-					if(value >= CONFIG_MIN_AIM_BRG && value <= CONFIG_MAX_AIM_BRG){
-						NVRAM0[DM_AIM_BRG] = value;
+					if(value < CONFIG_MIN_AIM_BRG){
+						value = CONFIG_MIN_AIM_BRG;
 					}
-					else{
-						NVRAM0[DM_AIM_BRG] = CONFIG_MAX_AIM_BRG;
-					}	
+					if(value > CONFIG_MAX_AIM_BRG){
+						value = CONFIG_MAX_AIM_BRG;
+					}
+					NVRAM0[DM_AIM_BRG] = (int16_t)value;	
+					SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_AIM_BRG , NVRAM0[DM_AIM_BRG], 1, 0);
+					NVRAM0[EM_AIM_DUTY] = getAimDuty(NVRAM0[DM_AIM_BRG]);
 					break;
 				}
 				case GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME:{
-					if(value >= CONFIG_MIN_BEEM_VOLUME && value <= CONFIG_MAX_BEEM_VOLUME){
-						NVRAM0[DM_BEEM_VOLUME] = (int16_t)value;
+					if(value < CONFIG_MIN_BEEM_VOLUME){
+						value = CONFIG_MIN_BEEM_VOLUME;
 					}
-					else{
-						NVRAM0[DM_BEEM_VOLUME] = CONFIG_MAX_BEEM_VOLUME;
+					if(value > CONFIG_MAX_BEEM_VOLUME){
+						value = CONFIG_MAX_BEEM_VOLUME;
 					}
+					NVRAM0[DM_BEEM_VOLUME] = (int16_t)value;
+					SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_BEEM_VOLUME , NVRAM0[DM_BEEM_VOLUME], 1, 0);
 					NVRAM0[EM_BEEM_DUTY] = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
 					break;
 				}
 				case GDDC_PAGE_OPTION_PROGRESS_LCD_BRG:{
-					if(value >= CONFIG_MIN_LCD_BRG && value <= CONFIG_MAX_LCD_BRG){
-						NVRAM0[DM_LCD_BRG] = (int16_t)value;
+					if(value < CONFIG_MIN_LCD_BRG){
+						value = CONFIG_MIN_LCD_BRG;
 					}
-					else{
-						NVRAM0[DM_LCD_BRG] = CONFIG_MAX_LCD_BRG;
+					if(value > CONFIG_MAX_LCD_BRG){
+						value = CONFIG_MAX_LCD_BRG;
 					}
-					SetBackLight(NVRAM0[DM_LCD_BRG]);
+					NVRAM0[DM_LCD_BRG] = (int16_t)value;
+					SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_LCD_BRG , NVRAM0[DM_LCD_BRG], 1, 0);
+					NVRAM0[EM_LCD_DUTY] = getLcdDuty(NVRAM0[DM_LCD_BRG]);
+					SetBackLight(NVRAM0[EM_LCD_DUTY]);
 					break;
 				}					
-			
 				default:break;
 			}
 			break;

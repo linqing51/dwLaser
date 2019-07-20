@@ -43,6 +43,17 @@ void loadDefault(void){//恢复默认值
 	}
 	FDSAV();
 }
+uint8_t getLcdDuty(int16_t LcdBrg){//屏幕亮度值转换为占空比
+	uint8_t temp;
+	temp = (LcdBrg * 255 / 100);
+	return temp;
+}
+uint8_t getAimDuty(int16_t AimBrg){//指示光亮度值转换为占空比
+	uint8_t temp;
+	temp = (AimBrg * 255 / 100);
+	return temp;
+	
+}
 uint8_t getBeemDuty(int16_t volume){//获取蜂鸣器占空比设置
 	switch(volume){
 		case 0:{

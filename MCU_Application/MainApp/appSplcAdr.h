@@ -17,13 +17,13 @@
 #define ERROR_CODE_SPI_FLASH								0x0002//SPI FLSAH错误
 #define ERROR_CODE_SI7060									0x0003//温度传感器通信错误
 #define ERROR_CODE_MCP79412									0x0004//RTC通信错误
-#define ERROR_CODE_LDR0							0x0005//激光驱动器0错误
-#define ERROR_CODE_LDR1							0x0006//激光驱动器1错误
-#define ERROR_CODE_TEMPER						0x0007//温度传感器错误
-#define ERROR_CODE_USBHOST						0x0008//USB HOST模块错误
-#define ERROR_CODE_NFC							0x0009//NFC模块错误
-#define ERROR_CODE_NRF24L01						0x0010//NRF24L01模块错误
-#define ERRPR_CODE_NOERR						0xFFFF//无错误
+#define ERROR_CODE_LDR0										0x0005//激光驱动器0错误
+#define ERROR_CODE_LDR1										0x0006//激光驱动器1错误
+#define ERROR_CODE_TEMPER									0x0007//温度传感器错误
+#define ERROR_CODE_USBHOST									0x0008//USB HOST模块错误
+#define ERROR_CODE_NFC										0x0009//NFC模块错误
+#define ERROR_CODE_NRF24L01									0x0010//NRF24L01模块错误
+#define ERRPR_CODE_NOERR									0xFFFF//无错误
 //光斑直径定义
 #define DERMA_SPOT_SIZE_0MM5					0x100A//光斑直径0.5					
 #define DERMA_SPOT_SIZE_1MM0					0x200B//光斑直径1.0
@@ -67,6 +67,8 @@
 #define EM_LASER_SIGNAL_TIME_INTERVAL			(EM_START + 47)//SIGNAL蜂鸣器改变的时间间隔
 #define EM_BEEM_ON_TIME							(EM_START + 48)//蜂鸣器开启时间
 #define EM_BEEM_DUTY							(EM_START + 49)//蜂鸣器占空比
+#define EM_LCD_DUTY								(EM_START + 50)//屏幕背光占空比
+#define EM_AIM_DUTY								(EM_START + 51)//指示光占空比
 /*****************************************************************************/
 #define EM_DC_PAGE								(EM_START + 64)//HMI页面编号 			
 #define EM_DC_PASSCODE_INDEX					(EM_START + 65)//密码输入位索引		
