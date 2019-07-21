@@ -43,7 +43,7 @@
 #define CONFIG_EPROM_FRAM								1//铁电存储体无写入等待
 #define CONFIG_EPROM_PAGEWRITE							0//页写入
 #define CONFIG_EPROM_NVRAM_START						0x0
-#define CONFIG_EPROM_FDRAM_START						0x1000
+#define CONFIG_EPROM_FDRAM_START						0x1800
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_SPWM							1//使了软件PWM功能
 /*****************************************************************************/
@@ -131,13 +131,13 @@
 #define CONFIG_SPLC_USING_LASER_TIMER							1
 #define CONFIG_SPLC_USING_LASER_TIMER_TEST						1
 /*****************************************************************************/
-#define CONFIG_LASER_TIMER_TICK									200//5mS
+#define CONFIG_LASER_TIMER_TICK									1000//1mS
 #define CONFIG_USING_USB_APP									0//USB应用
 #define CONFIG_USING_DCHMI_APP									1//广东大彩人机交互应用
 #define CONFIG_USING_BACKGROUND_APP								1//背景应用
 /*****************************************************************************/
-#define CONFIG_CHECK_DELAY_TIME									5
-#define CONFIG_KEY_REPEAT_DELAY_TIME							50
+#define CONFIG_CHECK_DELAY_TIME									1
+#define CONFIG_KEY_REPEAT_DELAY_TIME							10
 #define CONFIG_SCHEME_FILE_NAME									"/dwLaser.txt"
 #define CONFIG_MAX_LASERPOWER_CH0								300//通道0最大激光功率
 #define CONFIG_MIN_LASERPOWER_CH0								0//通道0最小激光功率
@@ -263,7 +263,7 @@
 /*****************************************************************************/
 //存档寄存器
 #define FD_START												0
-#define FD_END													1023
+#define FD_END													511
 /*****************************************************************************/
 #define CONFIG_FDRAM_SIZE										(FD_END + 1)
 /*****************************************************************************/

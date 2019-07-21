@@ -39,7 +39,7 @@ void sPlcAimInit(void){//Ö¸Ê¾¹â³õÊ¼»¯
 void sPlcAimLoop(void){//
 	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
 	SFRPAGE = PCA0_PAGE;
-	if(AimEnable0){
+	if(AimEnable0 && (AimDuty0 > 0)){
 		PCA0CPM1 = 0x42;
 		PCA0CPH1 = (0xFF - AimDuty0);
 	}
@@ -47,7 +47,7 @@ void sPlcAimLoop(void){//
 		PCA0CPM1 = 0x00;
 		PCA0CPH1  = 0xFF;
 	}
-	if(AimEnable1){
+	if(AimEnable1 && (AimDuty0 > 0)){
 		PCA0CPM0 = 0x42;
 		PCA0CPH0 = (0xFF - AimDuty1);
 	}
@@ -97,19 +97,19 @@ void sPlcBeemLoop(void){//·äÃùÆ÷ÂÖÑ¯
 					PCA0CPM2 = 0x42;		
 					PCA0CPH2 = BeemDuty;
 				}
-				else if(BeemCounter == 300){//0
+				else if(BeemCounter == 20){//0
 					PCA0CPM2 = 0x00;			
 					PCA0CPH2 = 0xFF;
 				}
-				else if(BeemCounter == 600){//1
+				else if(BeemCounter == 40){//1
 					PCA0CPM2 = 0x42;		
 					PCA0CPH2 = BeemDuty;
 				}
-				else if(BeemCounter == 900){//0
+				else if(BeemCounter == 60){//0
 					PCA0CPM2 = 0x00;			
 					PCA0CPH2 = 0xFF;
 				}
-				else if(BeemCounter == 1900){//Í£1Ãë
+				else if(BeemCounter == 160){//Í£1Ãë
 					BeemCounter = 0xffff;
 				}
 				BeemCounter ++;
@@ -120,13 +120,14 @@ void sPlcBeemLoop(void){//·äÃùÆ÷ÂÖÑ¯
 					PCA0CPM2 = 0x42;		
 					PCA0CPH2 = BeemDuty;
 				}
-				else if(BeemCounter == 500){//0
+				else if(BeemCounter == 10){//0
 					PCA0CPM2 = 0x00;			
 					PCA0CPH2 = 0xFF;
 				}
-				else if(BeemCounter == 1500){
+				else if(BeemCounter == 19){
 					BeemCounter = 0xffff;
 				}
+				BeemCounter ++;
 				break;
 			}
 			default:break;

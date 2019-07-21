@@ -19,7 +19,7 @@
 /*****************************************************************************/
 extern int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前 包含存档寄存器
 extern int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
-extern int8_t FDRAM[CONFIG_FDRAM_SIZE];//存档寄存器
+extern int16_t FDRAM[CONFIG_FDRAM_SIZE];//存档寄存器
 extern uint8_t TimerCounter_5mS;
 extern uint8_t TimerCounter_10mS;
 extern uint8_t TimerCounter_100mS;

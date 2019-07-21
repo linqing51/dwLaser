@@ -41,4 +41,7 @@ extern code char *LANG_WARN_MSG_DIODE1_HTEMP;
 extern code char *LANG_WARN_MSG_ENVI_HTEMP;
 extern code char *LANG_WARN_MSG_DRIVE_HTEMP;
 extern code char *LANG_WARN_MSG_NO_ERROR;
+extern code char *LANG_WARN_MSG_FOOT_DEPRESSED;
+extern code char *LANG_WARN_MSG_LASER_EMIT;
+extern code char *LANG_WARN_MSG_WAIT_TRIGGER;
 #endif

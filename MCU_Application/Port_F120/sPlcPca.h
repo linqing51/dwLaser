@@ -5,20 +5,9 @@
 #define BEEM_MODE_1											0x11//声光同步
 #define BEEM_MODE_2											0x12//激光发射固定间隔
 #define BEEM_MODE_3											0x13//异常报警
-#define BEEM_FREQ_0											0xEE//正常频率
-#define BEEM_FREQ_1											0xFA
-#define BEEM_FREQ_2											0xFC
-#define BEEM_FREQ_3											0xFF
-#define BEEM_VOLUME_0										0xFF
-#define BEEM_VOLUME_1										0xFC
-#define BEEM_VOLUME_2										0xFA
-#define BEEM_VOLUME_3										0xF2
-#define BEEM_VOLUME_4										0xE2
-#define BEEM_VOLUME_5										0xB0
-#define BEEM_VOLUME_6										0x90
-#define BEEM_VOLUME_7										0x80
-#define BEEM_VOLUME_8										0x60
-#define BEEM_VOLUME_9										0x40
+#define BEEM_FREQ_0											0xF1//正常频率
+#define BEEM_FREQ_1											0xF2//变调
+#define BEEM_FREQ_2											0xF0
 /*****************************************************************************/
 #include "sPlcPort.h"
 /*****************************************************************************/

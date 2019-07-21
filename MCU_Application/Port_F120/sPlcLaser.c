@@ -142,7 +142,7 @@ void STLAR(void){//开始发射脉冲
 		BeemMode = BEEM_MODE_2;
 	}
 	BeemFreq = BEEM_FREQ_0;
-	BeemDuty = NVRAM0[EM_BEEM_DUTY];
+	BeemDuty = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
 	BeemCounter = 0;
 	BeemEnable = true;
 	SET(SPCOIL_LASER_EMITING);//发射标志置位
@@ -191,9 +191,13 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 	TMR4CN = 0;//16Bit AutoReload
 	RES(SPCOIL_LASER_DRIVER_INIT_FAIL);
 	SFRPAGE = SFRPAGE_SAVE; 
+	LaserReleaseTime = 0;
+	BeemChangeEnergy = 0;
 #endif
 }
 static void laserStart(void){//按通道选择打开激光
+	LaserReleaseTime = 0;
+	BeemChangeEnergy = 0;
 	switch(NVRAM0[SPREG_LASER_SELECT]){
 		case LASER_SELECT_CH0:{//0激光通道
 #if CONFIG_SPLC_USING_DAC == 1

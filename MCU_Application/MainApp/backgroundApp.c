@@ -44,62 +44,31 @@ void loadDefault(void){//恢复默认值
 	FDSAV();
 }
 uint8_t getLcdDuty(int16_t LcdBrg){//屏幕亮度值转换为占空比
-	uint8_t temp;
-	temp = (LcdBrg * 255 / 100);
-	return temp;
+	uint16_t temp;
+	LcdBrg = 100 - LcdBrg; 
+	if(LcdBrg <= 0)
+		LcdBrg = 0;
+	if(LcdBrg >= 80)
+		LcdBrg = 80;
+	temp = LcdBrg * 255;
+	temp = temp / 100;
+	return (uint8_t)(temp);
 }
 uint8_t getAimDuty(int16_t AimBrg){//指示光亮度值转换为占空比
-	uint8_t temp;
-	temp = (AimBrg * 255 / 100);
-	return temp;
+	uint16_t temp;
+	temp = AimBrg * 255;
+	temp = temp / 100;
+	return (uint8_t)(temp);
 	
 }
 uint8_t getBeemDuty(int16_t volume){//获取蜂鸣器占空比设置
-	switch(volume){
-		case 0:{
-			return BEEM_VOLUME_0;
-			break;
-		}
-		case 1:{
-			return BEEM_VOLUME_1;
-			break;
-		}
-		case 2:{
-			return BEEM_VOLUME_2;
-			break;
-		}
-		case 3:{
-			return BEEM_VOLUME_3;
-			break;
-		}
-		case 4:{
-			return BEEM_VOLUME_4;
-			break;
-		}
-		case 5:{
-			return BEEM_VOLUME_5;
-			break;
-		}
-		case 6:{
-			return BEEM_VOLUME_6;
-			break;
-		}
-		case 7:{
-			return BEEM_VOLUME_7;
-			break;
-		}
-		case 8:{
-			return BEEM_VOLUME_8;
-			break;
-		}
-		case 9:{
-			return BEEM_VOLUME_9;
-			break;
-		}
-		default:{
-			return BEEM_VOLUME_9;
-		}break;
-	}
+	//最大音量占空比0xB0
+	//最小音量占空比0xF1
+	uint8_t temp;
+	if(volume > 100)
+		volume = 100;
+	temp = (0xFD - (74* volume / 100));
+	return temp;
 }
 void defaultScheme(void){//当前选择方案恢复默认值
 	sprintf((char*)(&NVRAM0[EM_LASER_SCHEME_NAME]),"Hello dwLaser S%d",NVRAM0[DM_SCHEME_NUM]);		

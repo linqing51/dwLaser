@@ -66,9 +66,6 @@
 #define EM_DK25L_VER							(EM_START + 46)//DK25L模块版本
 #define EM_LASER_SIGNAL_TIME_INTERVAL			(EM_START + 47)//SIGNAL蜂鸣器改变的时间间隔
 #define EM_BEEM_ON_TIME							(EM_START + 48)//蜂鸣器开启时间
-#define EM_BEEM_DUTY							(EM_START + 49)//蜂鸣器占空比
-#define EM_LCD_DUTY								(EM_START + 50)//屏幕背光占空比
-#define EM_AIM_DUTY								(EM_START + 51)//指示光占空比
 /*****************************************************************************/
 #define EM_DC_PAGE								(EM_START + 64)//HMI页面编号 			
 #define EM_DC_PASSCODE_INDEX					(EM_START + 65)//密码输入位索引		
@@ -211,8 +208,8 @@
 #define X_INTERLOCK												(X_START * 16 + 3)//XIN3 安全连锁
 #define X_LDR_FAULT0											(X_START * 16 + 4)//XIN4 驱动器故障0
 #define X_LDR_FAULT1											(X_START * 16 + 5)//XIN5 驱动器故障1
-#define X_FBD0													(X_START * 16 + 6)//XIN6 光纤探测0
-#define X_FBD1													(X_START * 16 + 7)//XIN7 光纤探测1
+#define X_FBD1													(X_START * 16 + 6)//XIN6 光纤探测0
+#define X_FBD0													(X_START * 16 + 7)//XIN7 光纤探测1
 /*****************************************************************************/
 #define Y_LED_POWERON											(Y_START * 16 + 0)//YOUT0 电源灯
 #define Y_LED_EMIT												(Y_START * 16 + 1)//YOUT1 激光指示灯
@@ -234,9 +231,7 @@
 #define R_DRIVE_TEMP_HIGH										(R_START * 16 + 4)//驱动器高温标志
 #define R_ENVI_TEMP_HIGH										(R_START * 16 + 5)//环境温度标度
 #define R_FAULT													(R_START * 16 + 6)//故障标志
-#define R_LASER_EMIT_0											(R_START * 16 + 7)//激光通道0发射指示
-#define R_LASER_EMIT_1											(R_START * 16 + 8)//激光通道1发射指示
-#define R_ADMIN													(R_START * 16 + 9)//管理员模式
+#define R_ADMIN													(R_START * 16 + 7)//管理员模式
 //HMI相关状态
 #define R_DCHMI_RESET_REQ										(R_START * 16 + 20)//HMI复位请求
 #define R_DCHMI_RESET_DOING										(R_START * 16 + 21)//HMI复位中

@@ -27,7 +27,8 @@ void inputInit(void){//IO输入滤波器初始化
 }
 
 void inputRefresh(void){//获取输入IO
-	uint8_t SFRPAGE_SAVE, temp; 
+	uint8_t SFRPAGE_SAVE;
+	uint8_t	temp; 
 	//XIN0 P3_3
 	SFRPAGE_SAVE = SFRPAGE;
 	SFRPAGE = CONFIG_PAGE;
@@ -151,8 +152,9 @@ void inputRefresh(void){//获取输入IO
 	}
 	//XIN6 光纤探测0
 	SFRPAGE = CPT0_PAGE;  
-	temp = ((CPT0CN >> 6) & 0x01);
-	if(temp){
+	temp = CPT0CN >> 6;
+	temp &= 0x01;
+	if(!temp){
 		if(inputFilter[6] < CONFIG_INPUT_FILTER_TIME){
 			inputFilter[6] ++;
 		}
@@ -170,8 +172,9 @@ void inputRefresh(void){//获取输入IO
 	}	
 	//XIN7 光纤探测1
 	SFRPAGE = CPT1_PAGE;  
-	temp = ((CPT1CN >> 6) & 0x01);
-	if(temp){
+	temp = CPT0CN >> 6;
+	temp &= 0x01;
+	if(!temp){
 		if(inputFilter[7] < CONFIG_INPUT_FILTER_TIME){
 			inputFilter[7] ++;
 		}
