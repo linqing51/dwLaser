@@ -92,30 +92,7 @@ void sPlcBeemLoop(void){//蜂鸣器轮询
 				}
 				break;
 			}
-			case BEEM_MODE_2:{//模式2 滴滴两下一停
-				if(BeemCounter == 0){//1
-					PCA0CPM2 = 0x42;		
-					PCA0CPH2 = BeemDuty;
-				}
-				else if(BeemCounter == 20){//0
-					PCA0CPM2 = 0x00;			
-					PCA0CPH2 = 0xFF;
-				}
-				else if(BeemCounter == 40){//1
-					PCA0CPM2 = 0x42;		
-					PCA0CPH2 = BeemDuty;
-				}
-				else if(BeemCounter == 60){//0
-					PCA0CPM2 = 0x00;			
-					PCA0CPH2 = 0xFF;
-				}
-				else if(BeemCounter == 160){//停1秒
-					BeemCounter = 0xffff;
-				}
-				BeemCounter ++;
-				break;
-			}
-			case BEEM_MODE_3:{//模式3 长间隔
+			case BEEM_MODE_2:{//模式2 长间隔 激光发射音		
 				if(BeemCounter == 0){//1
 					PCA0CPM2 = 0x42;		
 					PCA0CPH2 = BeemDuty;
@@ -125,6 +102,29 @@ void sPlcBeemLoop(void){//蜂鸣器轮询
 					PCA0CPH2 = 0xFF;
 				}
 				else if(BeemCounter == 19){
+					BeemCounter = 0xffff;
+				}
+				BeemCounter ++;
+				break;
+			}
+			case BEEM_MODE_3:{//模式3 滴滴两下一停 报警音		
+				if(BeemCounter == 0){//1
+					PCA0CPM2 = 0x42;		
+					PCA0CPH2 = BeemDuty;
+				}
+				else if(BeemCounter == 1){//0
+					PCA0CPM2 = 0x00;			
+					PCA0CPH2 = 0xFF;
+				}
+				else if(BeemCounter == 2){//1
+					PCA0CPM2 = 0x42;		
+					PCA0CPH2 = BeemDuty;
+				}
+				else if(BeemCounter == 3){//0
+					PCA0CPM2 = 0x00;			
+					PCA0CPH2 = 0xFF;
+				}
+				else if(BeemCounter == 6){//停1秒
 					BeemCounter = 0xffff;
 				}
 				BeemCounter ++;

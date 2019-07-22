@@ -242,45 +242,47 @@
 #define R_DCHMI_RESTORE_REQ										(R_START * 16 + 26)//HMI从FLASH中恢复设置请求
 #define R_DCHMI_RESTORE_DOING									(R_START * 16 + 27)//HMI从FLASH中恢复中
 #define R_DCHMI_RESTORE_DONE									(R_START * 16 + 28)//HMI从FLASH中恢复设置完成	
-//自检状态
-#define R_CHECK_FLOAT_DONE										(R_START * 16 + 30)//浮点自检完毕
-#define R_CHECK_EPROM_DONE										(R_START * 16 + 31)//存储器自检完毕
-#define R_CHECK_SI7060_DONE										(R_START * 16 + 32)//SI7060温度传感器自检完毕
-#define R_CHECK_MCP79412_DONE									(R_START * 16 + 33)//板载RTC自检完毕
-#define R_CHECK_SPI_MEMORY_DONE									(R_START * 16 + 34)//外部FLASH自检完毕
-#define R_CHECK_CH376_DONE										(R_START * 16 + 35)//USB CH376自检完毕
-#define R_CHECK_DK25L_DONE										(R_START * 16 + 36)//DK25L模块完毕
-#define R_CHECK_NRF24L01_DONE									(R_START * 16 + 37)//NRF24L01模块自检完毕
-#define R_CHECK_LASER_DRIVER_DONE								(R_START * 16 + 38)//激光驱动器自检完毕
-#define R_CHECK_TEMPERATURE_DONE								(R_START * 16 + 39)//温度自检完毕
-#define R_CHECK_WIRELESS_FOOTCONTROL_DONE						(R_START * 16 + 40)//无线脚踏自检完毕
-#define R_CHECK_PROBATION_DONE									(R_START * 16 + 41)//试用期自检完毕
- 
-#define R_CHECK_FLOAT_PASS										(R_START * 16 + 50)//浮点自检通过
-#define R_CHECK_EPROM_PASS										(R_START * 16 + 51)//存储器自检通过
-#define R_CHECK_SI7060_PASS										(R_START * 16 + 52)//SI7060温度传感器自检通过
-#define R_CHECK_MCP79412_PASS									(R_START * 16 + 53)//板载RTC自检通过
-#define R_CHECK_SPI_MEMORY_PASS									(R_START * 16 + 54)//外部FLASH自检通过
-#define R_CHECK_CH376_PASS										(R_START * 16 + 55)//USB CH376自检自检通过
-#define R_CHECK_DK25L_PASS										(R_START * 16 + 56)//DK25L模块自检通过
-#define R_CHECK_NRF24L01_PASS									(R_START * 16 + 57)//NRF24L01模块自检通过
-#define R_CHECK_LASER_DRIVER_PASS								(R_START * 16 + 58)//激光驱动器自检通过
-#define R_CHECK_TEMPERATURE_PASS								(R_START * 16 + 59)//温度自检通过
-#define R_CHECK_WIRELESS_FOOTCONTROL_PASS						(R_START * 16 + 60)//无线脚踏自检通过
-#define R_CHECK_PROBATION_PASS									(R_START * 16 + 61)//试用期自检通过
 
-#define R_CHECK_FLOAT_FAIL										(R_START * 16 + 70)//浮点自检失败 
-#define R_CHECK_EPROM_FAIL										(R_START * 16 + 71)//存储器自检失败
-#define R_CHECK_SI7060_FAIL										(R_START * 16 + 72)//SI7060温度传感器自检失败
-#define R_CHECK_MCP79412_FAIL									(R_START * 16 + 73)//板载RTC自检失败
-#define R_CHECK_SPI_MEMORY_FAIL									(R_START * 16 + 74)//外部FLASH自检失败
-#define R_CHECK_CH376_FAIL										(R_START * 16 + 75)//USB CH376自检自检失败
-#define R_CHECK_DK25L_FAIL										(R_START * 16 + 76)//NFC模块自检失败
-#define R_CHECK_NRF24L01_FAIL									(R_START * 16 + 77)//NRF24L01模块自检失败
-#define R_CHECK_LASER_DRIVER_FAIL								(R_START * 16 + 78)//激光驱动器自检失败
-#define R_CHECK_TEMPERATURE_FAIL								(R_START * 16 + 79)//温度自检失败
-#define R_CHECK_WIRELESS_FOOTCONTROL_FAIL						(R_START * 16 + 80)//无线脚踏自检失败
-#define R_CHECK_PROBATION_FAIL									(R_START * 16 + 81)//试用期自检失败
+#define R_DCHMI_DISPLAY_WARN									(R_START * 16 + 30)//HMI显示报警信息
+//自检状态
+//#define R_CHECK_FLOAT_DONE										(R_START * 16 + 30)//浮点自检完毕
+//#define R_CHECK_EPROM_DONE										(R_START * 16 + 31)//存储器自检完毕
+//#define R_CHECK_SI7060_DONE										(R_START * 16 + 32)//SI7060温度传感器自检完毕
+//#define R_CHECK_MCP79412_DONE									(R_START * 16 + 33)//板载RTC自检完毕
+//#define R_CHECK_SPI_MEMORY_DONE									(R_START * 16 + 34)//外部FLASH自检完毕
+//#define R_CHECK_CH376_DONE										(R_START * 16 + 35)//USB CH376自检完毕
+//#define R_CHECK_DK25L_DONE										(R_START * 16 + 36)//DK25L模块完毕
+//#define R_CHECK_NRF24L01_DONE									(R_START * 16 + 37)//NRF24L01模块自检完毕
+//#define R_CHECK_LASER_DRIVER_DONE								(R_START * 16 + 38)//激光驱动器自检完毕
+//#define R_CHECK_TEMPERATURE_DONE								(R_START * 16 + 39)//温度自检完毕
+//#define R_CHECK_WIRELESS_FOOTCONTROL_DONE						(R_START * 16 + 40)//无线脚踏自检完毕
+//#define R_CHECK_PROBATION_DONE									(R_START * 16 + 41)//试用期自检完毕
+ 
+//#define R_CHECK_FLOAT_PASS										(R_START * 16 + 50)//浮点自检通过
+//#define R_CHECK_EPROM_PASS										(R_START * 16 + 51)//存储器自检通过
+//#define R_CHECK_SI7060_PASS										(R_START * 16 + 52)//SI7060温度传感器自检通过
+//#define R_CHECK_MCP79412_PASS									(R_START * 16 + 53)//板载RTC自检通过
+//#define R_CHECK_SPI_MEMORY_PASS									(R_START * 16 + 54)//外部FLASH自检通过
+//#define R_CHECK_CH376_PASS										(R_START * 16 + 55)//USB CH376自检自检通过
+//#define R_CHECK_DK25L_PASS										(R_START * 16 + 56)//DK25L模块自检通过
+//#define R_CHECK_NRF24L01_PASS									(R_START * 16 + 57)//NRF24L01模块自检通过
+//#define R_CHECK_LASER_DRIVER_PASS								(R_START * 16 + 58)//激光驱动器自检通过
+//#define R_CHECK_TEMPERATURE_PASS								(R_START * 16 + 59)//温度自检通过
+//#define R_CHECK_WIRELESS_FOOTCONTROL_PASS						(R_START * 16 + 60)//无线脚踏自检通过
+//#define R_CHECK_PROBATION_PASS									(R_START * 16 + 61)//试用期自检通过
+
+//#define R_CHECK_FLOAT_FAIL										(R_START * 16 + 70)//浮点自检失败 
+//#define R_CHECK_EPROM_FAIL										(R_START * 16 + 71)//存储器自检失败
+//#define R_CHECK_SI7060_FAIL										(R_START * 16 + 72)//SI7060温度传感器自检失败
+//#define R_CHECK_MCP79412_FAIL									(R_START * 16 + 73)//板载RTC自检失败
+//#define R_CHECK_SPI_MEMORY_FAIL									(R_START * 16 + 74)//外部FLASH自检失败
+//#define R_CHECK_CH376_FAIL										(R_START * 16 + 75)//USB CH376自检自检失败
+//#define R_CHECK_DK25L_FAIL										(R_START * 16 + 76)//NFC模块自检失败
+//#define R_CHECK_NRF24L01_FAIL									(R_START * 16 + 77)//NRF24L01模块自检失败
+//#define R_CHECK_LASER_DRIVER_FAIL								(R_START * 16 + 78)//激光驱动器自检失败
+//#define R_CHECK_TEMPERATURE_FAIL								(R_START * 16 + 79)//温度自检失败
+//#define R_CHECK_WIRELESS_FOOTCONTROL_FAIL						(R_START * 16 + 80)//无线脚踏自检失败
+//#define R_CHECK_PROBATION_FAIL									(R_START * 16 + 81)//试用期自检失败
 /*****************************************************************************/
 #define R_STANDBY_KEY_POSWIDTH_ADD_DOWN							(R_START * 16 + 90)
 //#define R_STANDBY_KEY_POSWIDTH_ADD_UP							(R_START * 16 + 91)

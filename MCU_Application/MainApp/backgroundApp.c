@@ -42,7 +42,7 @@ int16_t pulseWidthAdd(int16_t ps){//Âö¿íÔö¼Ó
 	else if(ps >= 100 && ps < 1000){
 		ps += 50;
 	}
-	else if(ps >= 1000 && ps < 9999){
+	else if(ps >= 1000 && ps < 10000){
 		ps += 1000;
 	}
 	return ps;
@@ -57,8 +57,8 @@ int16_t pulseWidthDec(int16_t ps){//Âö¿í¼õÉÙ
 	else if(ps > 100 && ps <= 1000){
 		ps -= 50;
 	}
-	else if(ps > 1000 && ps <= 9999){
-		ps = 1000;
+	else if(ps > 1000 && ps <= 10000){
+		ps -= 1000;
 	}
 	return ps;
 }
