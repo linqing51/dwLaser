@@ -270,11 +270,12 @@
 #define SPCOIL_ON												(SPCOIL_START * 16 + 0)//长通线圈
 #define SPCOIL_START_UP											(SPCOIL_START * 16 + 1)//初次上电
 #define SPCOIL_PS10MS											(SPCOIL_START * 16 + 2)//10mS
-#define SPCOIL_PS100MS											(SPCOIL_START * 16 + 3)//100mS
-#define SPCOIL_PS1000MS											(SPCOIL_START * 16 + 4)//1000mS
-#define SPCOIL_MODBUS_S0_ERROR									(SPCOIL_START * 16 + 5)//Modbus Slave->Uart0 错误
-#define SPCOIL_NVRAM_FAIL										(SPCOIL_START * 16 + 6)//NVRAM校验码错误
-#define SPCOIL_WATCHDOG_OVERFLOW								(SPCOIL_START * 16 + 7)//看门狗溢出
+#define SPCOIL_PS50MS											(SPCOIL_START * 16 + 3)//50mS
+#define SPCOIL_PS100MS											(SPCOIL_START * 16 + 4)//100mS
+#define SPCOIL_PS1000MS											(SPCOIL_START * 16 + 5)//1000mS
+#define SPCOIL_MODBUS_S0_ERROR									(SPCOIL_START * 16 + 6)//Modbus Slave->Uart0 错误
+#define SPCOIL_NVRAM_FAIL										(SPCOIL_START * 16 + 7)//NVRAM校验码错误
+#define SPCOIL_WATCHDOG_OVERFLOW								(SPCOIL_START * 16 + 8)//看门狗溢出
 /*****************************************************************************/
 //USB 
 #define SPCOIL_USB_INT_ERROR							(SPCOIL_START * 16 + 17)//USB 底层中断返回错误

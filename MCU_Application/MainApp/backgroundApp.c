@@ -20,14 +20,47 @@ typedef struct{
 作    者 ： strongerHuang
 *************************************************/
 PID_LocTypeDef tPid;
-float PID_Loc(float SetValue, float ActualValue, PID_LocTypeDef *PID)
-{
+
+
+
+float PID_Loc(float SetValue, float ActualValue, PID_LocTypeDef *PID){
 	float PIDLoc;//位置 
 	PID->Ek = SetValue - ActualValue;
 	PID->LocSum += PID->Ek;//累计误差
 	PIDLoc = PID->Kp * PID->Ek + (PID->Ki * PID->LocSum) + PID->Kd * (PID->Ek1 - PID->Ek);
 	PID->Ek1 = PID->Ek;  
 		return PIDLoc;
+}
+
+int16_t pulseWidthAdd(int16_t ps){//脉宽增加
+	if(ps >= 1 && ps < 10){
+		ps += 1;
+	}
+	else if(ps >= 10 && ps < 100){
+		ps += 10;
+	}
+	else if(ps >= 100 && ps < 1000){
+		ps += 50;
+	}
+	else if(ps >= 1000 && ps < 9999){
+		ps += 1000;
+	}
+	return ps;
+}
+int16_t pulseWidthDec(int16_t ps){//脉宽减少
+	if(ps > 1 && ps <= 10){
+		ps -= 1;
+	}
+	else if(ps > 10 && ps <= 100){
+		ps -= 10;
+	}
+	else if(ps > 100 && ps <= 1000){
+		ps -= 50;
+	}
+	else if(ps > 1000 && ps <= 9999){
+		ps = 1000;
+	}
+	return ps;
 }
 void loadDefault(void){//恢复默认值
 	uint8_t i;

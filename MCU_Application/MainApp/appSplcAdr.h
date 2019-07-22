@@ -369,20 +369,8 @@
 #define MR_BEEM_TONE											(MR_START * 16 + 11)//蜂鸣器模式
 /*****************************************************************************/
 #define T100MS_HMI_POWERUP_DELAY								0//HMI启动复位延时
-#define T100MS_CHECK_PROCESSOR_DELAY							1//存储器自检等待延迟
-#define T100MS_CHECK_EPROM_DELAY								2//总线自检等待延迟
-#define T100MS_CHECK_SI7060_DELAY								3//
-#define T100MS_CHECK_MCP79412_DELAY								4//
-#define T100MS_CHECK_SPI_FLASH_DELAY							5//
-#define T100MS_CHECK_CH376_DELAY								6//
-#define T100MS_CHECK_DK25L_DELAY								7//NFC读卡模块等待延迟
-#define T100MS_CHECK_NRF24L01_DELAY								8//激光驱动器自检等待延迟
-#define T100MS_CHECK_TEMPERATURE_DELAY							9
-#define T100MS_CHECK_LASER_DRIVER_DELAY							10
-#define T100MS_CHECK_WIRELESS_FOOTCONTROL_DELAY					11
-#define T100MS_CHECK_PROBATION_DELAY							12//USBHOST模块等待延迟
-#define T100MS_ENTER_PASSCODE_DELAY								13
-#define T100MS_READY_BEEM_DELAY									14//进入READY状态后蜂鸣器响延迟
+#define T100MS_ENTER_PASSCODE_DELAY								1
+#define T100MS_READY_BEEM_DELAY									2//进入READY状态后蜂鸣器响延迟
 /*****************************************************************************/
 #define T10MS_POSWIDTH_ADD_KEYDOWN_DELAY						3
 #define T10MS_POSWIDTH_DEC_KEYDOWN_DELAY						4
