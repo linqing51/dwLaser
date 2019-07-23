@@ -78,7 +78,7 @@
 #define EM_DC_DEFAULT_PASSCODE2					(EM_START + 72)//默认密码1	
 #define EM_DC_DEFAULT_PASSCODE3					(EM_START + 73)//默认密码1				
 #define EM_DC_DISPLAY_RELEASE_TIME				(EM_START + 74)//显示发射时间			
-#define EM_DC_DISPLAY_RELEASE_ENERGY			(EM_START + 75)//显示发射能量	
+#define EM_DC_DISPLAY_RELEASE_ENERGY			(EM_START + 75)//显示发射能量
 /*****************************************************************************/
 
 /*****************************************************************************/
@@ -244,6 +244,7 @@
 #define R_DCHMI_RESTORE_DONE									(R_START * 16 + 28)//HMI从FLASH中恢复设置完成	
 
 #define R_DCHMI_DISPLAY_WARN									(R_START * 16 + 30)//HMI显示报警信息
+#define R_DCHMI_KEY_STANDBY_ENABLE								(R_START * 16 + 40)//STANDBY 使能
 //自检状态
 //#define R_CHECK_FLOAT_DONE										(R_START * 16 + 30)//浮点自检完毕
 //#define R_CHECK_EPROM_DONE										(R_START * 16 + 31)//存储器自检完毕
