@@ -1,6 +1,5 @@
 #include "dcHmiNotifyProgress.h"
 void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){ 
-	uint8_t dispBuf[16];
 	switch(screen_id){
 		case GDDC_PAGE_STANDBY_CW_0:{
 			switch(control_id){

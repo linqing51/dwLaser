@@ -4,7 +4,6 @@
 #include "sPlc.h"
 #include "appSplcAdr.h"
 #include "dcHmiRes.h"
-#include "dcHmiLanguage.h"
 #include "backgroundApp.h"
 #include "hmiLib.h"
 #include "dcHmiApp.h"

@@ -97,11 +97,11 @@ void sPlcBeemLoop(void){//·äÃùÆ÷ÂÖÑ¯
 					PCA0CPM2 = 0x42;		
 					PCA0CPH2 = BeemDuty;
 				}
-				else if(BeemCounter == 10){//0
+				else if(BeemCounter == 20){//0
 					PCA0CPM2 = 0x00;			
 					PCA0CPH2 = 0xFF;
 				}
-				else if(BeemCounter == 19){
+				else if(BeemCounter == 39){
 					BeemCounter = 0xffff;
 				}
 				BeemCounter ++;
@@ -112,19 +112,19 @@ void sPlcBeemLoop(void){//·äÃùÆ÷ÂÖÑ¯
 					PCA0CPM2 = 0x42;		
 					PCA0CPH2 = BeemDuty;
 				}
-				else if(BeemCounter == 1){//0
+				else if(BeemCounter == 5){//0
 					PCA0CPM2 = 0x00;			
 					PCA0CPH2 = 0xFF;
 				}
-				else if(BeemCounter == 2){//1
+				else if(BeemCounter == 10){//1
 					PCA0CPM2 = 0x42;		
 					PCA0CPH2 = BeemDuty;
 				}
-				else if(BeemCounter == 3){//0
+				else if(BeemCounter == 15){//0
 					PCA0CPM2 = 0x00;			
 					PCA0CPH2 = 0xFF;
 				}
-				else if(BeemCounter == 6){//Í£1Ãë
+				else if(BeemCounter == 25){//Í£1Ãë
 					BeemCounter = 0xffff;
 				}
 				BeemCounter ++;

@@ -25,10 +25,10 @@
 #define ERROR_CODE_NRF24L01									0x0010//NRF24L01模块错误
 #define ERRPR_CODE_NOERR									0xFFFF//无错误
 //光斑直径定义
-#define DERMA_SPOT_SIZE_0MM5					0x100A//光斑直径0.5					
-#define DERMA_SPOT_SIZE_1MM0					0x200B//光斑直径1.0
-#define DERMA_SPOT_SIZE_2MM0					0x300C//光斑直径2.0
-#define DERMA_SPOT_SIZE_3MM0					0x400D//光斑直径3.0
+#define DERMA_SPOT_SIZE_0MM5								0x100A//光斑直径0.5					
+#define DERMA_SPOT_SIZE_1MM0								0x200B//光斑直径1.0
+#define DERMA_SPOT_SIZE_2MM0								0x300C//光斑直径2.0
+#define DERMA_SPOT_SIZE_3MM0								0x400D//光斑直径3.0
 /*****************************************************************************/
 #define EM_LASER_SCHEME_NAME					(EM_START + 0)//方案名称
 #define EM_LASER_SELECT							(EM_START + 15)//通道选择
@@ -269,9 +269,9 @@
 #define R_STANDBY_KEY_STNADBY_DOWN								(R_START * 16 + 110)
 #define R_STANDBY_KEY_STNADBY_UP								(R_START * 16 + 111)
 #define R_STANDBY_KEY_ENTER_OPTION_DOWN							(R_START * 16 + 112)
-#define R_STANDBY_KEY_ENTER_OPTION_UP							(R_START * 16 + 113)
+//#define R_STANDBY_KEY_ENTER_OPTION_UP							(R_START * 16 + 113)
 #define R_STANDBY_KEY_ENTER_SCHEME_DOWN							(R_START * 16 + 114)
-#define R_STANDBY_KEY_ENTER_SCHEME_UP							(R_START * 16 + 115)
+//#define R_STANDBY_KEY_ENTER_SCHEME_UP							(R_START * 16 + 115)
 /*****************************************************************************/
 #define R_OPTION_KEY_ENTER_CORRECTION_DOWN						(R_START * 16 + 120)
 #define R_OPTION_KEY_ENTER_CORRECTION_UP						(R_START * 16 + 121)

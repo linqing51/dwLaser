@@ -30,10 +30,26 @@
 #define FLASH_DATA_VERSION  										0XAABB0000
 #define FLASH_DATA_ADDR     										0X00000000
 /*****************************************************************************/
+#define MSG_NO_ERROR												0
+#define MSG_INTERLOCK_UNPLUG										1
+#define	MSG_FOOTSWITCH_UNPLUG										2
+#define	MSG_ESTOP_PRESS												3
+#define	MSG_FIBER_UNPLUG											4
+#define	MSG_OUT_ENERGY												5
+#define	MSG_DIODE_HTEMP												6
+#define	MSG_DIODE_LTEMP												7
+#define	MSG_DIODE0_OVERCURRENT										8
+#define	MSG_DIODE1_OVERCURRENT										9
+#define	MSG_NTC_ERROR												10
+#define	MSG_ENVI_HTEMP												11
+#define	MSG_FOOT_DEPRESSED											12
+#define	MSG_LASER_EMIT												13
+#define	MSG_WAIT_TRIGGER											14
+#define	MSG_FIBER_MISSMATE											15
+/*****************************************************************************/
 #include "sPlc.h"
 #include "appSplcAdr.h"
 #include "dcHmiRes.h"
-#include "dcHmiLanguage.h"
 #include "backgroundApp.h"
 #include "hmiLib.h"
 #include "dcHmiNotifyProgress.h"
@@ -48,4 +64,5 @@ void updataPosWidthDisplay(int16_t mode);
 void updataNegWidthDisplay(int16_t mode);
 void unselectSchemeNum(sel);
 void seletcSchemeNum(uint16_t sel);
+void updateReleaseTimeEnergy(void);
 #endif

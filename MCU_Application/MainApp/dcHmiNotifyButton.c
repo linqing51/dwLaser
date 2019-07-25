@@ -693,18 +693,13 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state == 0x01){
 						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
 						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
-						SetTextInt32(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_ENERGY ,NVRAM0[EM_RELEASE_TOTAL_ENERGY], 1, 0);
-						SetTextInt32(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_CW_TEXTDISPLAY_RELEASE_TIME ,NVRAM0[EM_RELEASE_TOTAL_TIME], 1, 0);
-						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_CW_KEY_RESET, 0x00);
+						updateReleaseTimeEnergy();
 					}
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_CW_KEY_ENTER_OPTION:{
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
-					}
-					else if(state == 0x00){
-						SET(R_STANDBY_KEY_ENTER_OPTION_UP);
 					}
 					break;
 				}
@@ -890,18 +885,13 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state == 0x01){
 						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
 						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
-						SetTextInt32(GDDC_PAGE_STANDBY_SP_0, GDDC_PAGE_STANDBY_SP_TEXTDISPLAY_ENERGY ,NVRAM0[EM_RELEASE_TOTAL_ENERGY], 1, 0);
-						SetTextInt32(GDDC_PAGE_STANDBY_SP_0, GDDC_PAGE_STANDBY_SP_TEXTDISPLAY_RELEASE_TIME ,NVRAM0[EM_RELEASE_TOTAL_TIME], 1, 0);
-						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_CW_KEY_RESET, 0x00);
+						updateReleaseTimeEnergy();
 					}
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_SP_KEY_ENTER_OPTION:{
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
-					}
-					else if(state == 0x00){
-						SET(R_STANDBY_KEY_ENTER_OPTION_UP);
 					}
 					break;
 				}
@@ -1111,18 +1101,13 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state == 0x01){
 						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
 						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
-						SetTextInt32(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_MP_TEXTDISPLAY_ENERGY ,NVRAM0[EM_RELEASE_TOTAL_ENERGY], 1, 0);
-						SetTextInt32(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_MP_TEXTDISPLAY_RELEASE_TIME ,NVRAM0[EM_RELEASE_TOTAL_TIME], 1, 0);
-						SetButtonValue(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_MP_KEY_RESET, 0x00);
+						updateReleaseTimeEnergy();
 					}
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_MP_KEY_ENTER_OPTION:{
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
-					}
-					else if(state == 0x00){
-						SET(R_STANDBY_KEY_ENTER_OPTION_UP);
 					}
 					break;
 				}
@@ -1386,18 +1371,13 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state == 0x01){
 						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
 						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
-						SetTextInt32(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_ENERGY ,NVRAM0[EM_RELEASE_TOTAL_ENERGY], 1, 0);
-						SetTextInt32(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_RELEASE_TIME ,NVRAM0[EM_RELEASE_TOTAL_TIME], 1, 0);
-						SetButtonValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_GP_KEY_RESET, 0x00);
+						updateReleaseTimeEnergy();
 					}
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_GP_KEY_ENTER_OPTION:{
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
-					}
-					else if(state == 0x00){
-						SET(R_STANDBY_KEY_ENTER_OPTION_UP);
 					}
 					break;
 				}
@@ -1577,18 +1557,13 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state == 0x01){
 						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
 						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
-						SetTextInt32(GDDC_PAGE_STANDBY_SIGNAL_0, GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_ENERGY ,NVRAM0[EM_RELEASE_TOTAL_ENERGY], 1, 0);
-						SetTextInt32(GDDC_PAGE_STANDBY_SIGNAL_0, GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_RELEASE_TIME ,NVRAM0[EM_RELEASE_TOTAL_TIME], 1, 0);
-						SetButtonValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_GP_KEY_RESET, 0x00);
+						updateReleaseTimeEnergy();
 					}
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_SIGNAL_KEY_ENTER_OPTION:{
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
-					}
-					else if(state == 0x00){
-						SET(R_STANDBY_KEY_ENTER_OPTION_UP);
 					}
 					break;
 				}
@@ -1838,18 +1813,13 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state == 0x01){
 						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
 						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
-						SetTextInt32(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_ENERGY ,NVRAM0[EM_RELEASE_TOTAL_ENERGY], 1, 0);
-						SetTextInt32(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_RELEASE_TIME ,NVRAM0[EM_RELEASE_TOTAL_TIME], 1, 0);
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_RESET, 0x00);
+						updateReleaseTimeEnergy();
 					}
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_DERMA_KEY_ENTER_OPTION:{
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
-					}
-					else if(state == 0x00){
-						SET(R_STANDBY_KEY_ENTER_OPTION_UP);
 					}
 					break;
 				}
