@@ -1,7 +1,7 @@
 #include "sPlcChipAdc.h"
 /*****************************************************************************/
 static adcTempDat_t adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
-static uint8_t adcSelect;//ADC通道选择
+static data uint8_t adcSelect;//ADC通道选择
 static void initAdcData(adcTempDat_t *s);
 /*****************************************************************************/
 static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器

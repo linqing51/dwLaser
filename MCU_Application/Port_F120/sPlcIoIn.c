@@ -1,6 +1,6 @@
 #include "sPlcIoIn.h"
 /*****************************************************************************/
-xdata int8_t inputFilter[(X_END - X_START + 1) * 16];//IO输入滤波器缓冲区
+data int8_t inputFilter[(X_END - X_START + 1) * 16];//IO输入滤波器缓冲区
 /*****************************************************************************/
 void inputInit(void){//IO输入滤波器初始化
 #if CONFIG_SPLC_USING_IO_INPUT == 1

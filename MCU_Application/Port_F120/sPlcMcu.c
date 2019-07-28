@@ -1,6 +1,6 @@
 #include "sPlcMcu.h"
 /*****************************************************************************/
-static uint8_t sPlcInterrupt;
+static data uint8_t sPlcInterrupt;
 /*****************************************************************************/
 uint8_t floatSumTest(void){
 	uint32_t i;

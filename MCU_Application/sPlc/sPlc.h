@@ -20,13 +20,13 @@
 extern int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前 包含存档寄存器
 extern int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 extern int16_t FDRAM[CONFIG_FDRAM_SIZE];//存档寄存器
-extern uint8_t TimerCounter_5mS;
-extern uint8_t TimerCounter_10mS;
-extern uint8_t TimerCounter_100mS;
-extern uint8_t TD_1MS_SP;
-extern uint8_t TD_10MS_SP;
-extern uint8_t TD_100MS_SP;
-extern uint8_t TD_1000MS_SP;
+extern uint8_t data TimerCounter_5mS;
+extern uint8_t data TimerCounter_10mS;
+extern uint8_t data TimerCounter_100mS;
+extern uint8_t data TD_1MS_SP;
+extern uint8_t data TD_10MS_SP;
+extern uint8_t data TD_100MS_SP;
+extern uint8_t data TD_1000MS_SP;
 /*****************************************************************************/
 void sPlcInit(void);//软逻辑初始化
 void sPlcProcessStart(void);//sPLC轮询起始

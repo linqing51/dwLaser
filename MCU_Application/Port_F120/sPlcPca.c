@@ -97,11 +97,11 @@ void sPlcBeemLoop(void){//·äÃùÆ÷ÂÖÑ¯
 					PCA0CPM2 = 0x42;		
 					PCA0CPH2 = BeemDuty;
 				}
-				else if(BeemCounter == 20){//0
+				else if(BeemCounter == 10){//0
 					PCA0CPM2 = 0x00;			
 					PCA0CPH2 = 0xFF;
 				}
-				else if(BeemCounter == 39){
+				else if(BeemCounter == 59){
 					BeemCounter = 0xffff;
 				}
 				BeemCounter ++;
