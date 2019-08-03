@@ -3,7 +3,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 	switch(screen_id){
 		case GDDC_PAGE_STANDBY_CW_0:{
 			switch(control_id){
-				case GDDC_PAGE_STANDBY_CW_PROGRESS_CH0:{
+				case GDDC_PAGE_STANDBY_PROGRESS_CH0:{
 					if(value > 100){
 						value = 100;
 					}
@@ -15,7 +15,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 					updatePowerDisplay(LASER_SELECT_CH0, LASER_MODE_CW);					
 					break;
 				}
-				case GDDC_PAGE_STANDBY_CW_PROGRESS_CH1:{
+				case GDDC_PAGE_STANDBY_PROGRESS_CH1:{
 					if(value > 100){
 						value = 100;
 					}
@@ -33,7 +33,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 		}
 		case GDDC_PAGE_STANDBY_SP_0:{
 			switch(control_id){
-				case GDDC_PAGE_STANDBY_SP_PROGRESS_CH0:{
+				case GDDC_PAGE_STANDBY_PROGRESS_CH0:{
 					if(value > 100){
 						value = 100;
 					}
@@ -45,7 +45,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 					updatePowerDisplay(LASER_SELECT_CH0, LASER_MODE_SP);
 					break;
 				}
-				case GDDC_PAGE_STANDBY_SP_PROGRESS_CH1:{
+				case GDDC_PAGE_STANDBY_PROGRESS_CH1:{
 					if(value > 100){
 						value = 100;
 					}
@@ -63,7 +63,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 		}
 		case GDDC_PAGE_STANDBY_MP_0:{
 			switch(control_id){
-				case GDDC_PAGE_STANDBY_MP_PROGRESS_CH0:{
+				case GDDC_PAGE_STANDBY_PROGRESS_CH0:{
 					if(value > 100){
 						value = 100;
 					}
@@ -75,7 +75,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 					updatePowerDisplay(LASER_SELECT_CH0, LASER_MODE_MP);
 					break;
 				}
-				case GDDC_PAGE_STANDBY_MP_PROGRESS_CH1:{
+				case GDDC_PAGE_STANDBY_PROGRESS_CH1:{
 					if(value > 100){
 						value = 100;
 					}
@@ -93,7 +93,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 		}
 		case GDDC_PAGE_STANDBY_GP_0:{
 			switch(control_id){
-				case GDDC_PAGE_STANDBY_GP_PROGRESS_CH0:{
+				case GDDC_PAGE_STANDBY_PROGRESS_CH0:{
 					if(value > 100){
 						value = 100;
 					}
@@ -105,7 +105,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 					updatePowerDisplay(LASER_SELECT_CH0, LASER_MODE_GP);
 					break;
 				}
-				case GDDC_PAGE_STANDBY_GP_PROGRESS_CH1:{
+				case GDDC_PAGE_STANDBY_PROGRESS_CH1:{
 					if(value > 100){
 						value = 100;
 					}
@@ -123,7 +123,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 		}
 		case GDDC_PAGE_STANDBY_SIGNAL_0:{
 			switch(control_id){
-				case GDDC_PAGE_STANDBY_SIGNAL_PROGRESS_CH0:{
+				case GDDC_PAGE_STANDBY_PROGRESS_CH0:{
 					if(value > 100){
 						value = 100;
 					}
@@ -135,7 +135,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 					updatePowerDisplay(LASER_SELECT_CH0, LASER_MODE_SIGNAL);
 					break;
 				}
-				case GDDC_PAGE_STANDBY_SIGNAL_PROGRESS_CH1:{
+				case GDDC_PAGE_STANDBY_PROGRESS_CH1:{
 					if(value > 100){
 						value = 100;
 					}
@@ -153,7 +153,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 		}
 		case GDDC_PAGE_STANDBY_DERMA_0:{
 			switch(control_id){
-				case GDDC_PAGE_STANDBY_DERMA_PROGRESS_CH0:{
+				case GDDC_PAGE_STANDBY_PROGRESS_CH0:{
 					if(value > 100){
 						value = 100;
 					}
@@ -165,7 +165,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 					updatePowerDisplay(LASER_SELECT_CH0, LASER_MODE_DERMA);
 					break;
 				}
-				case GDDC_PAGE_STANDBY_DERMA_PROGRESS_CH1:{
+				case GDDC_PAGE_STANDBY_PROGRESS_CH1:{
 					if(value > 100){
 						value = 100;
 					}
