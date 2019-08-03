@@ -901,6 +901,12 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+				case GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME:{//按键SCHEME
+					if(state == 0x01){
+						SET(R_STANDBY_KEY_ENTER_SCHEME_DOWN);
+					}
+					break;
+				}
 				default:break;
 			}
 			break;
@@ -1114,6 +1120,12 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_KEY_ENTER_OPTION:{
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
+					}
+					break;
+				}
+				case GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME:{//按键SCHEME
+					if(state == 0x01){
+						SET(R_STANDBY_KEY_ENTER_SCHEME_DOWN);
 					}
 					break;
 				}
@@ -1387,6 +1399,12 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+				case GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME:{//按键SCHEME
+					if(state == 0x01){
+						SET(R_STANDBY_KEY_ENTER_SCHEME_DOWN);
+					}
+					break;
+				}
 				default:break;
 			}
 			break;
@@ -1570,6 +1588,12 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_KEY_ENTER_OPTION:{
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
+					}
+					break;
+				}
+				case GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME:{//按键SCHEME
+					if(state == 0x01){
+						SET(R_STANDBY_KEY_ENTER_SCHEME_DOWN);
 					}
 					break;
 				}
@@ -1829,6 +1853,12 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+				case GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME:{//按键SCHEME
+					if(state == 0x01){
+						SET(R_STANDBY_KEY_ENTER_SCHEME_DOWN);
+					}
+					break;
+				}
 				default:break;
 			}
 			break;
@@ -1985,26 +2015,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state == 0x01){
 					}
 					break;
-				}
-				case GDDC_PAGE_SCHEME_KEY_SAVE_USB:{
-					if(state == 0x01){
-						SET(R_SCHEME_KEY_SAVE_USB_DOWN);
-					}
-					else if(state == 0x00){
-						SET(R_SCHEME_KEY_SAVE_USB_UP);
-					}
-					break;
-				}
-				case GDDC_PAGE_SCHEME_KEY_LOAD_USB:{
-					if(state == 0x01){
-						SET(R_SCHEME_KEY_LOAD_USB_DOWN);
-					}
-					else if(state == 0x00){
-						SET(R_SCHEME_KEY_LOAD_USB_UP);
-					}
-					break;
 				}	
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_0:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_0:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2012,7 +2024,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}	
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_1:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_1:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2020,7 +2032,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_2:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_2:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2028,7 +2040,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_3:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_3:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2036,7 +2048,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_4:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_4:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2044,7 +2056,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_5:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_5:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2052,7 +2064,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_6:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_6:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2060,7 +2072,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_7:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_7:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2068,7 +2080,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_8:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_8:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2076,7 +2088,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_9:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_9:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2084,7 +2096,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_10:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_10:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2092,7 +2104,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_11:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_11:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2100,7 +2112,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_12:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_12:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2108,7 +2120,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_13:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_13:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2116,7 +2128,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_14:{	
+				case GDDC_PAGE_SCHEME_KEY_SELECT_14:{	
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
@@ -2124,7 +2136,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}				
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SCHEME_SELECT_15:{
+				case GDDC_PAGE_SCHEME_KEY_SELECT_15:{
 					if(state == 0x01){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
