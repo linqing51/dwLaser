@@ -1718,6 +1718,17 @@ void dcHmiLoop(void){//HMI轮训程序
 			standbyTouchEnable(true);
 			updateWarnMsgDisplay(MSG_NO_ERROR);
 		}
+		else if(LD(R_STANDBY_KEY_STNADBY_UP)){//Ready->Standby
+			NVRAM0[SPREG_DAC_0] = 0;
+			NVRAM0[SPREG_DAC_1] = 0;
+			AimEnable0 = false;//关闭指示光	
+			BeemEnable =false;//关闭蜂鸣器			
+			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
+			standbyKeyValue(false);
+			standbyTouchEnable(true);
+			updateWarnMsgDisplay(MSG_NO_ERROR);
+			RES(R_STANDBY_KEY_STNADBY_UP);
+		}
 		else if(LD(MR_FOOSWITCH_HAND_SWITCH)){//上升沿触发
 			if(LDP(X_FOOTSWITCH_NO)){//关闭激光
 				EDLAR();
