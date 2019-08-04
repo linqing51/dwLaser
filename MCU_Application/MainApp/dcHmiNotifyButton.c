@@ -618,9 +618,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
-					else if(state == 0x00){
-						SET(R_STANDBY_KEY_STNADBY_UP);
-					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
@@ -815,9 +812,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
-					}
-					else if(state == 0x00){
-						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
 				}
@@ -1313,9 +1307,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
-					}
-					else if(state == 0x00){
-						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
 				}
@@ -1938,26 +1929,17 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state == 0x01){
 						SET(R_OPTION_KEY_ENTER_INFORMATION_DOWN);
 					}
-					else if(state == 0x00){
-						SET(R_OPTION_KEY_ENTER_INFORMATION_UP);
-					}
 					break;							
 				}
 				case GDDC_PAGE_OPTION_KEY_ENTER_CORRECTION:{//功率校正
 					if(state == 0x01){
 						SET(R_OPTION_KEY_ENTER_CORRECTION_DOWN);
 					}
-					else if(state == 0x00){
-						RES(R_OPTION_KEY_ENTER_CORRECTION_UP);
-					}
 					break;
 				}
 				case GDDC_PAGE_OPTION_KEY_ENTER_OK:{//OK
 					if(state == 0x01){
 						SET(R_OPTION_KEY_ENTER_OK_DOWN);
-					}
-					else if(state == 0x00){
-						RES(R_OPTION_KEY_ENTER_OK_UP);
 					}
 					break;
 				}
@@ -1970,9 +1952,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_OPTION_KEY_ENTER_DIAGNOSIS:{
 					if(state == 0x01){
 						SET(R_OPTION_KEY_ENTER_DIAGNOSIS_DOWN);
-					}
-					if(state == 0x00){
-						SET(R_OPTION_KEY_ENTER_DIAGNOSIS_UP);
 					}
 					break;
 				}
@@ -2001,18 +1980,17 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state == 0x01){
 						SET(R_SCHEME_KEY_RENAME_DOWN);
 					}
-					else if(state == 0x00){
-						SET(R_SCHEME_KEY_RENAME_UP);
-					}	
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_ENTER_OK:{
+				case GDDC_PAGE_SCHEME_KEY_OK:{
 					if(state == 0x01){
+						SET(R_SCHEME_KEY_OK_DOWN);
 					}
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_CANCEL:{
 					if(state == 0x01){
+						SET(R_SCHEME_KEY_CANCEL_DOWN);
 					}
 					break;
 				}	

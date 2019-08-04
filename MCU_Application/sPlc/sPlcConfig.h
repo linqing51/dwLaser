@@ -80,17 +80,17 @@
 #define CONFIG_SPLC_USING_UART1_ISR						1
 #define UART1											1
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_ADC							1//使能ADC模块
-#define CONFIG_SPLC_ADC_FILTER_TAP						10//ADC位移滤波次数
-#define CONFIG_SPLC_ADC_CHANNLE							9//ADC通道数
-#define CONFIG_ADC_TEMP_SENSOR_SLOPE					2.86F
-#define CONFIG_ADC_TEMP_SENSOR_OFFSET  					776L// Temp Sensor Offset in mV
-#define CONFIG_ADC_INTERNAL_VREF     					2430L// ADC Voltage Reference (mV)
-#define CONFIG_ADC_AMBIENT             					25L// Ambient temp in deg C
-#define CONFIG_NTC_RS									3300L
-#define CONFIG_NTC_B									3500L
-#define CONFIG_NTC_RB									10000L
-#define CONFIG_NTC_VREF									5000L
+#define CONFIG_SPLC_USING_ADC									1//使能ADC模块
+#define CONFIG_SPLC_ADC_FILTER_TAP								10//ADC位移滤波次数
+#define CONFIG_SPLC_ADC_CHANNLE									9//ADC通道数
+#define CONFIG_ADC_TEMP_SENSOR_SLOPE							2.86F
+#define CONFIG_ADC_TEMP_SENSOR_OFFSET  							776L// Temp Sensor Offset in mV
+#define CONFIG_ADC_INTERNAL_VREF     							2430L// ADC Voltage Reference (mV)
+#define CONFIG_ADC_AMBIENT             							25L// Ambient temp in deg C
+#define CONFIG_NTC_RS											3300L
+#define CONFIG_NTC_B											3500L
+#define CONFIG_NTC_RB											10000L
+#define CONFIG_NTC_VREF											5000L
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DAC									1//是能DAC模块
 /*****************************************************************************/
