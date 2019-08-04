@@ -63,12 +63,13 @@ int16_t pulseWidthDec(int16_t ps){//脉宽减少
 	return ps;
 }
 void loadDefault(void){//恢复默认值
-	uint8_t i;
+	uint8_t i;	
 	NVRAM0[DM_SCHEME_NUM] = 0;
-	NVRAM0[DM_BEEM_VOLUME] = 9;
+	NVRAM0[DM_BEEM_VOLUME] = CONFIG_MAX_BEEM_VOLUME;
 	NVRAM0[DM_AIM_BRG] = CONFIG_MAX_AIM_BRG;
 	NVRAM0[DM_LCD_BRG] = CONFIG_MAX_LCD_BRG;
 	reloadCorrTab();
+	NVSAV();//强制储存NVRAM
 	for(i=0;i<CONFIG_HMI_SCHEME_NUM;i++){
 		NVRAM0[DM_SCHEME_NUM] = i;
 		defaultScheme();

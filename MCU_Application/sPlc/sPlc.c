@@ -117,7 +117,7 @@ void checkEprom(void){
 	checkCode[2] = 0;
 	checkCode[3] = 0;
 	epromRead((CONFIG_EPROM_SIZE - 4), checkCode, 4);//从EPROM中恢复MR
-	if((checkCode[0] != 0x55) || (checkCode[1] != 0xAA) || (checkCode[2] != 0xBC) || (checkCode[3] != 0xD0)){
+	if((checkCode[0] != 0x55) || (checkCode[1] != 0xAA) || (checkCode[2] != 0xBC) || (checkCode[3] != 0xD1)){
 		//检测到校验码错误清空EPROM
 		for(i = 0; i< CONFIG_EPROM_SIZE;i ++){
 			epromWriteOneByte(i, 0x0);
@@ -125,7 +125,7 @@ void checkEprom(void){
 		epromWriteOneByte((CONFIG_EPROM_SIZE - 4), 0x55);
 		epromWriteOneByte((CONFIG_EPROM_SIZE - 3), 0xAA);
 		epromWriteOneByte((CONFIG_EPROM_SIZE - 2), 0xBC);
-		epromWriteOneByte((CONFIG_EPROM_SIZE - 1), 0xD0);
+		epromWriteOneByte((CONFIG_EPROM_SIZE - 1), 0xD1);
 		loadDefault();
 	}
 #endif

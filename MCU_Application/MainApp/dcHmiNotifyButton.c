@@ -618,6 +618,9 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
+					else if(state == 0x00){
+						SET(R_STANDBY_KEY_STNADBY_UP);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
@@ -812,6 +815,9 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
+					}
+					else if(state == 0x00){
+						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
 				}
@@ -1307,6 +1313,9 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
 					if(state == 0x01){
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
+					}
+					else if(state == 0x00){
+						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
 				}
