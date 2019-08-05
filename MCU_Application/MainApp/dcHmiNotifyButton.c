@@ -541,7 +541,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		case GDDC_PAGE_STANDBY_CW_0:{//主界面STANDBY CW
 			switch(control_id){				
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH0] < CONFIG_MAX_LASERPOWER_CH0){
 							NVRAM0[EM_LASER_POWER_CH0]++;
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -552,7 +552,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH0] > CONFIG_MIN_LASERPOWER_CH0){
 							DECS1(EM_LASER_POWER_CH0);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -563,7 +563,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] < CONFIG_MAX_LASERPOWER_CH1){
 							ADDS1(EM_LASER_POWER_CH1);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -574,7 +574,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] > CONFIG_MIN_LASERPOWER_CH1){
 							DECS1(EM_LASER_POWER_CH1);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -585,16 +585,14 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
-					if(state == 0x01){
+					if(state){
 						saveScheme();
 						FDSAV();//FDRAM->EPROM
-					}
-					else if(state == 0x00){
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_LAST:{//选择上一个方案
-					if(state == 0){
+					if(state){
 						if(NVRAM0[DM_SCHEME_NUM] > 0){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
@@ -605,7 +603,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT:{//选择下一个方案
-					if(state == 0){
+					if(state){
 						if(NVRAM0[DM_SCHEME_NUM] < (CONFIG_HMI_SCHEME_NUM - 1)){
 							ADDS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
@@ -615,16 +613,16 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
-					if(state == 0x00){
+					else{
 						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH0;
 						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
@@ -632,7 +630,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH1:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH1;
 						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
@@ -640,7 +638,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_BOTH;
 						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
@@ -648,49 +646,49 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_KEY_MODE_CW:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_MP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_MP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_GP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_GP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_SP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SIGNAL;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_DERMA:{	
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_DERMA;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_RESET:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
 						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
 						updateReleaseTimeEnergy();
@@ -698,13 +696,13 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_KEY_ENTER_OPTION:{
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME:{//按键SCHEME
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_ENTER_SCHEME_DOWN);
 					}
 					break;
@@ -716,7 +714,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		case GDDC_PAGE_STANDBY_SP_0:{//主界面STANDBY SP
 			switch(control_id){
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH0] < CONFIG_MAX_LASERPOWER_CH0){
 							ADDS1(EM_LASER_POWER_CH0);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];	
@@ -727,7 +725,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH0] > CONFIG_MIN_LASERPOWER_CH0){
 							DECS1(EM_LASER_POWER_CH0);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -738,7 +736,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] < CONFIG_MAX_LASERPOWER_CH1){
 							ADDS1(EM_LASER_POWER_CH1);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -749,7 +747,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] > CONFIG_MIN_LASERPOWER_CH1){
 							DECS1(EM_LASER_POWER_CH1);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -760,40 +758,38 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_SP_KEY_POSWIDTH_ADD:{	
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
-						T10MS(T10MS_POSWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_SP_POSWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_SP_POSWIDTH]);
 						updataPosWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
+						T10MS(T10MS_POSWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_SP_KEY_POSWIDTH_DEC:{
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
-						T10MS(T10MS_POSWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);	
 						NVRAM0[EM_LASER_SP_POSWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_SP_POSWIDTH]);
 						updataPosWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
+						T10MS(T10MS_POSWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
-					if(state == 0x01){
+					if(state){
 						saveScheme();
 						FDSAV();//立即更新NVRAM
-					}
-					else if(state == 0x00){
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_LAST:{//选择上一个方案
-					if(state == 0){
+					if(state){
 						if(NVRAM0[DM_SCHEME_NUM] > 0){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
@@ -803,7 +799,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT:{//选择下一个方案
-					if(state == 0){
+					if(state){
 						if(NVRAM0[DM_SCHEME_NUM] < (CONFIG_HMI_SCHEME_NUM - 1)){
 							ADDS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
@@ -813,16 +809,16 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
-					else if(state == 0x00){
+					else{
 						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH0;
 						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
@@ -830,7 +826,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH1:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH1;
 						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
@@ -838,7 +834,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_BOTH;
 						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_CW_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
@@ -846,49 +842,49 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_KEY_MODE_CW:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_MP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_MP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_GP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_GP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_SP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SIGNAL;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_DERMA:{	
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_DERMA;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_RESET:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
 						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
 						updateReleaseTimeEnergy();
@@ -896,13 +892,13 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_KEY_ENTER_OPTION:{
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME:{//按键SCHEME
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_ENTER_SCHEME_DOWN);
 					}
 					break;
@@ -914,7 +910,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		case GDDC_PAGE_STANDBY_MP_0:{//主界面STANDBY MP
 			switch(control_id){				
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH0] < CONFIG_MAX_LASERPOWER_CH0){
 							ADDS1(EM_LASER_POWER_CH0);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -925,7 +921,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH0] > CONFIG_MIN_LASERPOWER_CH0){
 							DECS1(EM_LASER_POWER_CH0);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -936,7 +932,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] < CONFIG_MAX_LASERPOWER_CH1){
 							ADDS1(EM_LASER_POWER_CH1);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -947,7 +943,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] > CONFIG_MIN_LASERPOWER_CH1){
 							DECS1(EM_LASER_POWER_CH1);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -958,64 +954,62 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_MP_KEY_POSWIDTH_ADD:{	
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
-						T10MS(T10MS_POSWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_MP_POSWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_MP_POSWIDTH]);
 						updataPosWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
+						T10MS(T10MS_POSWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_MP_KEY_POSWIDTH_DEC:{
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);	
-						T10MS(T10MS_POSWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
 						NVRAM0[EM_LASER_MP_POSWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_MP_POSWIDTH]);
 						updataPosWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);	
+						T10MS(T10MS_POSWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_MP_KEY_NEGWIDTH_ADD:{
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
-						T10MS(T10MS_NEGWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_MP_NEGWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_MP_NEGWIDTH]);
 						updataNegWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
+						T10MS(T10MS_NEGWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_MP_KEY_NEGWIDTH_DEC:{
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
-						T10MS(T10MS_NEGWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
 						NVRAM0[EM_LASER_MP_NEGWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_MP_NEGWIDTH]);
 						updataNegWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
+						T10MS(T10MS_NEGWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
-					if(state == 0x01){
+					if(state){
 						saveScheme();
 						NVSAV();//立即更新NVRAM
-					}
-					else if(state == 0x00){
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_LAST:{//选择上一个方案
-					if(state == 0){
+					if(state){
 						if(NVRAM0[DM_SCHEME_NUM] > 0){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
@@ -1025,7 +1019,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT:{//选择下一个方案
-					if(state == 0){
+					if(state){
 						if(NVRAM0[DM_SCHEME_NUM] < (CONFIG_HMI_SCHEME_NUM - 1)){
 							ADDS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
@@ -1035,16 +1029,16 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
-					else if(state == 0x00){
+					else{
 						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH0;
 						SetButtonValue(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
@@ -1052,7 +1046,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH1:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH1;
 						SetButtonValue(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
@@ -1060,7 +1054,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_BOTH;
 						SetButtonValue(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_MP_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
@@ -1068,49 +1062,49 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_KEY_MODE_CW:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_MP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_MP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_GP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_GP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_SP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SIGNAL;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_DERMA:{	
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_DERMA;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_RESET:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
 						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
 						updateReleaseTimeEnergy();
@@ -1118,13 +1112,13 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_KEY_ENTER_OPTION:{
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME:{//按键SCHEME
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_ENTER_SCHEME_DOWN);
 					}
 					break;
@@ -1136,7 +1130,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		case GDDC_PAGE_STANDBY_GP_0:{//主界面STANDBY GP
 			switch(control_id){				
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH0] < CONFIG_MAX_LASERPOWER_CH0){
 							ADDS1(EM_LASER_POWER_CH0);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -1147,7 +1141,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH0] > CONFIG_MIN_LASERPOWER_CH0){
 							DECS1(EM_LASER_POWER_CH0);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -1158,7 +1152,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] < CONFIG_MAX_LASERPOWER_CH1){
 							ADDS1(EM_LASER_POWER_CH1);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -1169,7 +1163,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] > CONFIG_MIN_LASERPOWER_CH1){
 							DECS1(EM_LASER_POWER_CH1);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -1180,118 +1174,116 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_GP_KEY_POSWIDTH_ADD:{	
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
-						T10MS(T10MS_POSWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_GP_POSWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_GP_POSWIDTH]);
 						updataPosWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
+						T10MS(T10MS_POSWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_GP_KEY_POSWIDTH_DEC:{
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
-						T10MS(T10MS_POSWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
 						NVRAM0[EM_LASER_GP_POSWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_GP_POSWIDTH]);
 						updataPosWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
+						T10MS(T10MS_POSWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_GP_KEY_NEGWIDTH_ADD:{
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
-						T10MS(T10MS_NEGWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_GP_NEGWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_GP_NEGWIDTH]);
 						updataNegWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
+						T10MS(T10MS_NEGWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_GP_KEY_NEGWIDTH_DEC:{
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
-						T10MS(T10MS_NEGWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
 						NVRAM0[EM_LASER_GP_NEGWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_GP_NEGWIDTH]);
 						updataNegWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
+						T10MS(T10MS_NEGWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_GP_KEY_TIMES_ADD:{
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_TIMES_ADD_DOWN);
-						T10MS(T10MS_TIMES_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_TIMES_ADD_DOWN);
 						NVRAM0[EM_LASER_GP_NEGWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_GP_NEGWIDTH]);
 						SetTextInt32(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES ,NVRAM0[EM_LASER_GP_TIMES], 1, 0);
 					}
+					else{
+						RES(R_STANDBY_KEY_TIMES_ADD_DOWN);
+						T10MS(T10MS_TIMES_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_GP_KEY_TIMES_DEC:{
-					if(state == 0x0){
-						RES(R_STANDBY_KEY_TIMES_DEC_DOWN);
-						T10MS(T10MS_TIMES_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_TIMES_DEC_DOWN);
 						if(NVRAM0[EM_LASER_GP_TIMES] > CONFIG_MIN_LASER_TIMES){
 							DECS1(EM_LASER_GP_TIMES);//-1
 							SetTextInt32(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES ,NVRAM0[EM_LASER_GP_TIMES], 1, 0);
 						}	
 					}
+					else{
+						RES(R_STANDBY_KEY_TIMES_DEC_DOWN);
+						T10MS(T10MS_TIMES_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_GP_KEY_GROUP_OFF_ADD:{
-					if(state == 0x0){
-						RES(R_STANDBY_KEY_GROUP_OFF_ADD_DOWN);
-						T10MS(T10MS_GROUP_OFF_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_GROUP_OFF_ADD_DOWN);
 						if(NVRAM0[EM_LASER_GP_GROUP_OFF] < CONFIG_MAX_LASER_GROUP_OFF){
 							ADDS1(EM_LASER_GP_GROUP_OFF);//+1
 							SetTextInt32(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_GROUP_OFF ,NVRAM0[EM_LASER_GP_GROUP_OFF], 1, 0);
 						}
 					}
+					else{
+						RES(R_STANDBY_KEY_GROUP_OFF_ADD_DOWN);
+						T10MS(T10MS_GROUP_OFF_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_GP_KEY_GROUP_OFF_DEC:{
-					if(state == 0x0){//UP
-						RES(R_STANDBY_KEY_GROUP_OFF_DEC_DOWN);
-						T10MS(T10MS_GROUP_OFF_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_GROUP_OFF_DEC_DOWN);
 						if(NVRAM0[EM_LASER_GP_GROUP_OFF] > CONFIG_MIN_LASER_GROUP_OFF){
 							DECS1(EM_LASER_GP_GROUP_OFF);//-1
 							SetTextInt32(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_GROUP_OFF ,NVRAM0[EM_LASER_GP_GROUP_OFF], 1, 0);
 						}
 					}
+					else{
+						RES(R_STANDBY_KEY_GROUP_OFF_DEC_DOWN);
+						T10MS(T10MS_GROUP_OFF_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
-					if(state == 0x01){
+					if(state){
 						saveScheme();
 						FDSAV();//FDRAM->EPROM
-					}
-					else if(state == 0x00){
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_LAST:{//选择上一个方案
-					if(state == 0){
+					if(state){
 						if(NVRAM0[DM_SCHEME_NUM] > 0){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
@@ -1301,7 +1293,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT:{//选择下一个方案
-					if(state == 0){
+					if(state){
 						if(NVRAM0[DM_SCHEME_NUM] < (CONFIG_HMI_SCHEME_NUM - 1)){
 							ADDS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
@@ -1311,16 +1303,16 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
-					else if(state == 0x00){
+					else{
 						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH0;
 						SetButtonValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
@@ -1328,7 +1320,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH1:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH1;
 						SetButtonValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
@@ -1336,7 +1328,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_BOTH;
 						SetButtonValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
@@ -1344,49 +1336,49 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_KEY_MODE_CW:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_MP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_MP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_GP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_GP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_SP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SIGNAL;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_DERMA:{	
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_DERMA;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_RESET:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
 						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
 						updateReleaseTimeEnergy();
@@ -1394,13 +1386,13 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_KEY_ENTER_OPTION:{
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME:{//按键SCHEME
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_ENTER_SCHEME_DOWN);
 					}
 					break;
@@ -1412,7 +1404,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		case GDDC_PAGE_STANDBY_SIGNAL_0:{//主界面STANDBY EVLA SIGNAL
 			switch(control_id){				
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH0] < CONFIG_MAX_LASERPOWER_CH0){
 							ADDS1(EM_LASER_POWER_CH0);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -1423,7 +1415,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH0] > CONFIG_MIN_LASERPOWER_CH0){
 							DECS1(EM_LASER_POWER_CH0);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -1434,7 +1426,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] < CONFIG_MAX_LASERPOWER_CH1){
 							ADDS1(EM_LASER_POWER_CH1);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -1445,7 +1437,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] > CONFIG_MIN_LASERPOWER_CH1){
 							DECS1(EM_LASER_POWER_CH1);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -1456,7 +1448,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_SIGNAL_KEY_ENERGY_INTERVAL_ADD:{
-					if(state == 0x01){	
+					if(state){	
 						if(NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL] < CONFIG_MAX_LASER_ENERGY_INTERVAL){
 							NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL] += 100;
 						}
@@ -1465,7 +1457,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_SIGNAL_KEY_ENERGY_INTERVAL_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL] > CONFIG_MIN_LASER_ENERGY_INTERVAL){
 							NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL] -= 100;
 						}
@@ -1474,16 +1466,14 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
-					if(state == 0x01){
+					if(state){
 						saveScheme();
 						FDSAV();//立即更新NVRAM
-					}
-					else if(state == 0x00){
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_LAST :{//选择上一个方案
-					if(state == 0){
+					if(state){
 						if(NVRAM0[DM_SCHEME_NUM] > 0){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
@@ -1493,7 +1483,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT:{//选择下一个方案
-					if(state == 0){
+					if(state){
 						if(NVRAM0[DM_SCHEME_NUM] < (CONFIG_HMI_SCHEME_NUM - 1)){
 							ADDS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
@@ -1503,16 +1493,16 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
-					else if(state == 0x00){
+					else{
 						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH0;
 						SetButtonValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
@@ -1520,7 +1510,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH1:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH1;
 						SetButtonValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_GP_0, GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
@@ -1528,7 +1518,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_BOTH;
 						SetButtonValue(GDDC_PAGE_STANDBY_SIGNAL_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_SIGNAL_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
@@ -1536,49 +1526,49 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_KEY_MODE_CW:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_MP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_MP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_GP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_GP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_SP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SIGNAL;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_DERMA:{	
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_DERMA;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_RESET:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
 						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
 						updateReleaseTimeEnergy();
@@ -1586,13 +1576,13 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_KEY_ENTER_OPTION:{
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME:{//按键SCHEME
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_ENTER_SCHEME_DOWN);
 					}
 					break;
@@ -1604,7 +1594,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		case GDDC_PAGE_STANDBY_DERMA_0:{//主界面STNADBY DERMA
 			switch(control_id){	
 				case GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5:{
-					if(state == 0x01){
+					if(state){
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, true);
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, false);
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, false);
@@ -1614,7 +1604,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}			
 				case GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0:{
-					if(state == 0x01){
+					if(state){
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, false);
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, true);
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, false);
@@ -1624,7 +1614,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0:{
-					if(state == 0x01){
+					if(state){
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, false);
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, false);
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, true);
@@ -1634,7 +1624,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0:{
-					if(state == 0x01){
+					if(state){
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, false);
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, false);
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, false);
@@ -1644,55 +1634,55 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_DERMA_KEY_POSWIDTH_ADD:{	
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
-						T10MS(T10MS_POSWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_DERMA_POSWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_DERMA_POSWIDTH]);
 						updataPosWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
+						T10MS(T10MS_POSWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_DERMA_KEY_POSWIDTH_DEC:{
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
-						T10MS(T10MS_POSWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
 						NVRAM0[EM_LASER_DERMA_POSWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_DERMA_POSWIDTH]);//-1
 						updataPosWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
+						T10MS(T10MS_POSWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_DERMA_KEY_NEGWIDTH_ADD:{
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
-						T10MS(T10MS_NEGWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_DERMA_NEGWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_DERMA_NEGWIDTH]);
 						updataNegWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
+						T10MS(T10MS_NEGWIDTH_ADD_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_DERMA_KEY_NEGWIDTH_DEC:{
-					if(state == 0x00){
-						RES(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
-						T10MS(T10MS_NEGWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
-					}
-					else if(state == 0x01){//DOWN
+					if(state){//DOWN
 						SET(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
 						NVRAM0[EM_LASER_DERMA_NEGWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_DERMA_NEGWIDTH]);
 						updataNegWidthDisplay();
 					}
+					else{
+						RES(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
+						T10MS(T10MS_NEGWIDTH_DEC_KEYDOWN_DELAY, false, CONFIG_KEY_REPEAT_DELAY_TIME);
+					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH0] < CONFIG_MAX_LASERPOWER_CH0){
 							ADDS1(EM_LASER_POWER_CH0);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];					
@@ -1703,7 +1693,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH0] > CONFIG_MIN_LASERPOWER_CH0){
 							DECS1(EM_LASER_POWER_CH0);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -1714,7 +1704,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] < CONFIG_MAX_LASERPOWER_CH1){
 							ADDS1(EM_LASER_POWER_CH1);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -1725,7 +1715,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] > CONFIG_MIN_LASERPOWER_CH1){
 							DECS1(EM_LASER_POWER_CH1);
 							NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];
@@ -1736,16 +1726,14 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
-					if(state == 0x01){
+					if(state){
 						saveScheme();
 						FDSAV();//FDRAM->EPROM
-					}
-					else if(state == 0x00){
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_LAST :{//选择上一个方案
-					if(state == 0){
+					if(state){
 						if(NVRAM0[DM_SCHEME_NUM] > 0){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
@@ -1755,7 +1743,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT:{//选择下一个方案
-					if(state == 0){
+					if(state){
 						if(NVRAM0[DM_SCHEME_NUM] < (CONFIG_HMI_SCHEME_NUM - 1)){
 							ADDS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
@@ -1765,16 +1753,16 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
-					else if(state == 0x00){
+					else{
 						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH0;
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
@@ -1782,7 +1770,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH1:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH1;
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
@@ -1790,7 +1778,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_BOTH;
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
@@ -1798,49 +1786,49 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_KEY_MODE_CW:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_MP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_MP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_GP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_GP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_SP:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SP;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SIGNAL;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_MODE_DERMA:{	
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_DERMA;
 						updateStandbyDisplay();
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_RESET:{
-					if(state == 0x01){
+					if(state){
 						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
 						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
 						updateReleaseTimeEnergy();
@@ -1848,13 +1836,13 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_KEY_ENTER_OPTION:{
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_ENTER_OPTION_DOWN);
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME:{//按键SCHEME
-					if(state == 0x01){
+					if(state){
 						SET(R_STANDBY_KEY_ENTER_SCHEME_DOWN);
 					}
 					break;
@@ -1866,16 +1854,16 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		case GDDC_PAGE_OPTION_0:{//选项页面
 			switch(control_id){
 				case GDDC_PAGE_OPTION_KEY_TONE:{
-					if(state == 0x01){
+					if(state){
 						SET(MR_BEEM_TONE);
 					}
-					if(state == 0x00){
+					else{
 						RES(MR_BEEM_TONE);
 					}
 					break;
 				}
 				case GDDC_PAGE_OPTION_KEY_AIM_BRG_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[DM_AIM_BRG] < CONFIG_MAX_AIM_BRG){
 							NVRAM0[DM_AIM_BRG] += 1;//+1	
 							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新进度条
@@ -1885,7 +1873,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_OPTION_KEY_AIM_BRG_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[DM_AIM_BRG] > CONFIG_MIN_AIM_BRG){
 							NVRAM0[DM_AIM_BRG] -= 1;//-1	
 							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新进度条
@@ -1895,7 +1883,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;					
 				}
 				case GDDC_PAGE_OPTION_KEY_BEEM_VOLUME_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[DM_BEEM_VOLUME] < CONFIG_MAX_BEEM_VOLUME){
 							NVRAM0[DM_BEEM_VOLUME] += 1;
 							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
@@ -1905,7 +1893,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;					
 				}
 				case GDDC_PAGE_OPTION_KEY_BEEM_VOLUME_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[DM_BEEM_VOLUME] > CONFIG_MIN_BEEM_VOLUME){
 							NVRAM0[DM_BEEM_VOLUME] -= 1;
 							SetProgressValue(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
@@ -1915,7 +1903,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;					
 				}
 				case GDDC_PAGE_OPTION_KEY_LCD_BRG_ADD:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[DM_LCD_BRG] < CONFIG_MAX_LCD_BRG){
 							NVRAM0[DM_LCD_BRG] += 1;
 							SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_LCD_BRG , NVRAM0[DM_LCD_BRG], 1, 0);
@@ -1925,7 +1913,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_OPTION_KEY_LCD_BRG_DEC:{
-					if(state == 0x01){
+					if(state){
 						if(NVRAM0[DM_LCD_BRG] > CONFIG_MIN_LCD_BRG){
 							NVRAM0[DM_LCD_BRG] -= 1;
 							SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_LCD_BRG , NVRAM0[DM_LCD_BRG], 1, 0);
@@ -1935,31 +1923,34 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;					
 				}
 				case GDDC_PAGE_OPTION_KEY_ENTER_INFORMATION:{//信息
-					if(state == 0x01){
+					if(state){
 						SET(R_OPTION_KEY_ENTER_INFORMATION_DOWN);
 					}
 					break;							
 				}
 				case GDDC_PAGE_OPTION_KEY_ENTER_CORRECTION:{//功率校正
-					if(state == 0x01){
+					if(state){
 						SET(R_OPTION_KEY_ENTER_CORRECTION_DOWN);
 					}
 					break;
 				}
 				case GDDC_PAGE_OPTION_KEY_ENTER_OK:{//OK
-					if(state == 0x01){
+					if(state){
 						SET(R_OPTION_KEY_ENTER_OK_DOWN);
 					}
 					break;
 				}
 				case GDDC_PAGE_OPTION_KEY_HAND_SWITCH_ON:{
-					if(state == 0x01){
+					if(state){
 						SET(MR_FOOSWITCH_HAND_SWITCH);
+					}
+					else{
+						RES(MR_FOOSWITCH_HAND_SWITCH);
 					}
 					break;
 				}
 				case GDDC_PAGE_OPTION_KEY_ENTER_DIAGNOSIS:{
-					if(state == 0x01){
+					if(state){
 						SET(R_OPTION_KEY_ENTER_DIAGNOSIS_DOWN);
 					}
 					break;
@@ -1971,10 +1962,10 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		case GDDC_PAGE_INFORMATION_0:{
 			switch(control_id){
 				case GDDC_PAGE_INFORMATION_KEY_ENTER_OK:{
-					if(state == 0x1){
+					if(state){
 						SET(R_INFORMATION_KEY_OK_DOWN);
 					}
-					else if(state == 0x0){
+					else{
 						SET(R_INFORMATION_KEY_OK_UP);
 					}
 					break;
@@ -1986,25 +1977,25 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		case GDDC_PAGE_SCHEME_A_0:{
 			switch(control_id){
 				case GDDC_PAGE_SCHEME_KEY_RENAME:{
-					if(state == 0x01){
+					if(state){
 						SET(R_SCHEME_KEY_RENAME_DOWN);
 					}
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_OK:{
-					if(state == 0x01){
+					if(state){
 						SET(R_SCHEME_KEY_OK_DOWN);
 					}
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_CANCEL:{
-					if(state == 0x01){
+					if(state){
 						SET(R_SCHEME_KEY_CANCEL_DOWN);
 					}
 					break;
 				}	
 				case GDDC_PAGE_SCHEME_KEY_SELECT_0:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(0);
@@ -2012,7 +2003,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}	
 				case GDDC_PAGE_SCHEME_KEY_SELECT_1:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(1);
@@ -2020,7 +2011,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_2:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(2);
@@ -2028,7 +2019,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_3:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(3);
@@ -2036,7 +2027,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_4:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(4);
@@ -2044,7 +2035,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_5:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(5);
@@ -2052,7 +2043,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_6:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(6);
@@ -2060,7 +2051,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_7:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(7);
@@ -2068,7 +2059,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_8:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(8);
@@ -2076,7 +2067,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_9:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(9);
@@ -2084,7 +2075,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_10:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(10);
@@ -2092,7 +2083,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_11:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(11);
@@ -2100,7 +2091,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_12:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(12);
@@ -2108,7 +2099,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_13:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(13);
@@ -2116,7 +2107,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_14:{	
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(14);
@@ -2124,7 +2115,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_15:{
-					if(state == 0x01){
+					if(state){
 						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 						seletcSchemeNum(15);
@@ -2142,7 +2133,9 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 		case GDDC_PAGE_DIAGNOSIS_0:{
 			switch(control_id){
 				case GDDC_PAGE_DIAGNOSIS_KEY_ENTER_OK:{
-					SET(R_DIAGNOSIS_OK_DOWN);
+					if(state){
+						SET(R_DIAGNOSIS_OK_DOWN);
+					}
 					break;
 				}
 				default:break;
