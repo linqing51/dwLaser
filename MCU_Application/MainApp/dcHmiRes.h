@@ -212,7 +212,9 @@
 #define GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_13							33
 #define GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_14							34
 #define GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_15							35
-#define GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL								36
+#define GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL0							36
+#define GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL1							37
+#define GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL2							38
 /*****************************************************************************/
 //更名界面
 #define GDDC_PAGE_RENAME_OK										1//确定
