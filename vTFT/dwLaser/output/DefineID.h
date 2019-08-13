@@ -602,6 +602,9 @@
 
 #define  _BTN_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_LCD_BRG_DEC           7
 
+//全局图片19_gddc_page_option_1.jpg
+#define  _IMG_19_GDDC_PAGE_OPTION_1_JPG                                       19
+
 #define  _BTN_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_TONE                  1
 
 #define  _BTN_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_ENTER_INFORMATION          9
@@ -619,10 +622,10 @@
 #define  _TXT_DIS__18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_TEXTDISPLAY_AIM_BRG         18
 
 //画面20_GDDC_PAGE_SCHEME_0的背景图片
-#define  _IMG_20_GDDC_PAGE_SCHEME_0                                           19
+#define  _IMG_20_GDDC_PAGE_SCHEME_0                                           20
 
 //全局图片21_gddc_page_scheme_1.jpg
-#define  _IMG_21_GDDC_PAGE_SCHEME_1_JPG                                       20
+#define  _IMG_21_GDDC_PAGE_SCHEME_1_JPG                                       21
 
 #define  _BTN_20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_KEY_SELECT_5              9
 
