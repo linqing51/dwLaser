@@ -215,10 +215,12 @@
 #define GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL0							36
 #define GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL1							37
 #define GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL2							38
+#define GDDC_PAGE_SCHEME_KEY_LAST_PAGE									39
+#define GDDC_PAGE_SCHEME_KEY_NEXT_PAGE									40
 /*****************************************************************************/
 //更名界面
-#define GDDC_PAGE_RENAME_OK										1//确定
-#define GDDC_PAGE_RENAME_CANCLE									2//取消
+#define GDDC_PAGE_RENAME_OK												1//确定
+#define GDDC_PAGE_RENAME_CANCLE											2//取消
 /*****************************************************************************/
 #define GDDC_PAGE_CORRECTION_TEXTDISPLAY_CODE_CH0				1
 #define GDDC_PAGE_CORRECTION_TEXTDISPLAY_CODE_CH1				2	
