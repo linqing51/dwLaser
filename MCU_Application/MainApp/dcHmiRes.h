@@ -35,7 +35,7 @@
 #define GDDC_PAGE_STANDBY_GP_1											106
 #define GDDC_PAGE_STANDBY_SIGNAL_0										7
 #define GDDC_PAGE_STANDBY_SIGNAL_1										107
-#define GDDC_PAGE_STANDBY_DERMA_0										8
+#define GDDC_PAGE_STANDBY_DERMA_0										13//8
 #define GDDC_PAGE_STANDBY_DERMA_1										108
 #define GDDC_PAGE_OPTION_0												9//选项页面
 #define GDDC_PAGE_OPTION_1												109//选项页面

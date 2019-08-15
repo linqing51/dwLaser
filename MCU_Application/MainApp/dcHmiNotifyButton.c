@@ -1595,40 +1595,84 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 			switch(control_id){	
 				case GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5:{
 					if(state){
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, true);
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, false);
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, false);
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, false);
+						switch(NVRAM0[EM_LASER_DERMA_SPOT_SIZE]){
+							case DERMA_SPOT_SIZE_1MM0:{
+								SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, false);
+								break;
+							}
+							case DERMA_SPOT_SIZE_2MM0:{
+								SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, false);
+								break;
+							}
+							case DERMA_SPOT_SIZE_3MM0:{
+								SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, false);
+								break;
+							}
+							default:break;
+						}
 						NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_0MM5;
 					}
 					break;
 				}			
 				case GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0:{
 					if(state){
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, false);
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, true);
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, false);
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, false);
+						switch(NVRAM0[EM_LASER_DERMA_SPOT_SIZE]){
+							case DERMA_SPOT_SIZE_0MM5:{
+								SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, false);
+								break;
+							}
+							case DERMA_SPOT_SIZE_2MM0:{
+								SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, false);
+								break;
+							}
+							case DERMA_SPOT_SIZE_3MM0:{
+								SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, false);
+								break;
+							}
+							default:break;
+						}						
 						NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_1MM0;
 					}
 					break;
 				}	
 				case GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0:{
 					if(state){
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, false);
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, false);
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, true);
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, false);
+						switch(NVRAM0[EM_LASER_DERMA_SPOT_SIZE]){
+							case DERMA_SPOT_SIZE_0MM5:{
+								SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, false);
+								break;
+							}
+							case DERMA_SPOT_SIZE_1MM0:{
+								SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, false);
+								break;
+							}
+							case DERMA_SPOT_SIZE_3MM0:{
+								SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, false);
+								break;
+							}
+							default:break;
+						}
 						NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_2MM0;
 					}
 					break;
 				}
 				case GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0:{
 					if(state){
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, false);
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, false);
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, false);
-						SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, true);
+						switch(NVRAM0[EM_LASER_DERMA_SPOT_SIZE]){
+							case DERMA_SPOT_SIZE_0MM5:{
+								SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, false);
+								break;
+							}
+							case DERMA_SPOT_SIZE_1MM0:{
+								SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, false);
+								break;
+							}
+							case DERMA_SPOT_SIZE_2MM0:{
+								SetButtonValue(GDDC_PAGE_STANDBY_DERMA_0, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, false);
+								break;
+							}
+							default:break;
+						}
 						NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_3MM0;
 					}
 					break;

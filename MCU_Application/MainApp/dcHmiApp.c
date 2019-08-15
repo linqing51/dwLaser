@@ -28,6 +28,7 @@ static void updateReleaseTimeEnergy(void);
 void updateWarnMsgDisplay(uint8_t id);
 void returnStandbyDisplay(void);
 void updateSchemeDisplay(void);
+void unselectSchemeAll(void);
 /*****************************************************************************/
 #if CONFIG_USING_DCHMI_APP == 1
 void updateSchemeDisplay(void){//更新选项界面方案名称
@@ -79,6 +80,9 @@ void updateSchemeDisplay(void){//更新选项界面方案名称
 
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_15]), 30);
 	SetTextValue(GDDC_PAGE_SCHEME_A_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_15, dispBuf);	
+	
+	unselectSchemeAll();
+	seletcSchemeNum(NVRAM0[DM_SCHEME_NUM]);
 }
 
 
@@ -218,7 +222,7 @@ void updateWarnMsgDisplay(uint8_t id){//更新警号显示框
 	}
 }
 void updataSchemeInfo(int16_t cn){//更新SCHEME 详细参数
-	char dispBuf1[32], dispBuf2[32];
+	char dispBuf1[64], dispBuf2[64];
 	int16_t mode;
 	int16_t	power0;
 	int16_t power1;
@@ -237,6 +241,7 @@ void updataSchemeInfo(int16_t cn){//更新SCHEME 详细参数
 	switch(mode){
 		case LASER_MODE_CW:{
 			SetTextValue(GDDC_PAGE_SCHEME_A_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL0, "Mode:CW");
+			sprintf(dispBuf2, "");
 			break;
 		}
 		case LASER_MODE_SP:{
