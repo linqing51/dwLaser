@@ -19,36 +19,20 @@
 #define HMI_WHITE     													0xFFFF//白色  
 /*****************************************************************************/
 //HMI页面编号
-#define GDDC_PAGE_POWERUP_0												0
-#define GDDC_PAGE_POWERUP_1												100
-#define GDDC_PAGE_PASSCODE_0											1
-#define GDDC_PAGE_PASSCODE_1											101
-#define GDDC_PAGE_NEW_PASSCODE_0										2
-#define GDDC_PAGE_NEW_PASSCODE_1										102
-#define GDDC_PAGE_STANDBY_CW_0											3
-#define GDDC_PAGE_STANDBY_CW_1											103
-#define GDDC_PAGE_STANDBY_SP_0											4
-#define GDDC_PAGE_STANDBY_SP_1											104
-#define GDDC_PAGE_STANDBY_MP_0											5
-#define GDDC_PAGE_STANDBY_MP_1											105
-#define GDDC_PAGE_STANDBY_GP_0											6
-#define GDDC_PAGE_STANDBY_GP_1											106
-#define GDDC_PAGE_STANDBY_SIGNAL_0										7
-#define GDDC_PAGE_STANDBY_SIGNAL_1										107
-#define GDDC_PAGE_STANDBY_DERMA_0										13//8
-#define GDDC_PAGE_STANDBY_DERMA_1										108
-#define GDDC_PAGE_OPTION_0												9//选项页面
-#define GDDC_PAGE_OPTION_1												109//选项页面
-#define GDDC_PAGE_SCHEME_A_0											10//方案页面
-#define GDDC_PAGE_SCHEME_A_1											110//方案页面
-#define GDDC_PAGE_SCHEME_B_0											99
-#define GDDC_PAGE_SCHEME_B_1											999
-#define GDDC_PAGE_INFORMATION_0											11//信息页面
-#define GDDC_PAGE_INFORMATION_1											111//信息页面
-#define GDDC_PAGE_DIAGNOSIS_0											12//诊断页面
-#define GDDC_PAGE_DIAGNOSIS_1											112//诊断页面
-#define GDDC_PAGE_POWER_CORRECTION_0									13//功率校正
-#define GDDC_PAGE_POWER_CORRECTION_1									114//功率校正
+#define GDDC_PAGE_POWERUP												0
+#define GDDC_PAGE_PASSCODE												1
+#define GDDC_PAGE_NEW_PASSCODE											2
+#define GDDC_PAGE_STANDBY_CW											3
+#define GDDC_PAGE_STANDBY_SP											4
+#define GDDC_PAGE_STANDBY_MP											5
+#define GDDC_PAGE_STANDBY_GP											6
+#define GDDC_PAGE_STANDBY_SIGNAL										7
+#define GDDC_PAGE_STANDBY_DERMA											13
+#define GDDC_PAGE_OPTION												9//选项页面
+#define GDDC_PAGE_SCHEME												10//方案页面
+#define GDDC_PAGE_INFORMATION											11//信息页面
+#define GDDC_PAGE_DIAGNOSIS												12//诊断页面
+#define GDDC_PAGE_SCHEME_RENAME											14//SCHEME更名
 /*****************************************************************************/
 //GDDC页面控件编号
 /*****************************************************************************/
@@ -219,8 +203,9 @@
 #define GDDC_PAGE_SCHEME_KEY_NEXT_PAGE									40
 /*****************************************************************************/
 //更名界面
-#define GDDC_PAGE_RENAME_OK												1//确定
-#define GDDC_PAGE_RENAME_CANCLE											2//取消
+#define GDDC_PAGE_SCHEME_RENAME_TEXTDISPLAY_NEWNAME						1
+#define GDDC_PAGE_SCHEME_RENAME_KEY_OK									2//确定
+#define GDDC_PAGE_SCHEME_RENAME_KEY_CANCLE								3//取消
 /*****************************************************************************/
 #define GDDC_PAGE_CORRECTION_TEXTDISPLAY_CODE_CH0				1
 #define GDDC_PAGE_CORRECTION_TEXTDISPLAY_CODE_CH1				2	
