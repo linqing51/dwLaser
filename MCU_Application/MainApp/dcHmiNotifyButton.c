@@ -761,7 +761,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_SP_POSWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_SP_POSWIDTH]);
-						updataPosWidthDisplay();
+						updataPosWidthDisplay(LASER_MODE_SP);
 					}
 					else{
 						RES(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
@@ -773,7 +773,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);	
 						NVRAM0[EM_LASER_SP_POSWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_SP_POSWIDTH]);
-						updataPosWidthDisplay();
+						updataPosWidthDisplay(LASER_MODE_SP);
 					}
 					else{
 						RES(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
@@ -957,7 +957,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_MP_POSWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_MP_POSWIDTH]);
-						updataPosWidthDisplay();
+						updataPosWidthDisplay(LASER_MODE_MP);
 					}
 					else{
 						RES(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
@@ -969,7 +969,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
 						NVRAM0[EM_LASER_MP_POSWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_MP_POSWIDTH]);
-						updataPosWidthDisplay();
+						updataPosWidthDisplay(LASER_MODE_MP);
 					}
 					else{
 						RES(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);	
@@ -981,7 +981,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_MP_NEGWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_MP_NEGWIDTH]);
-						updataNegWidthDisplay();
+						updataNegWidthDisplay(LASER_MODE_MP);
 					}
 					else{
 						RES(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
@@ -993,7 +993,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
 						NVRAM0[EM_LASER_MP_NEGWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_MP_NEGWIDTH]);
-						updataNegWidthDisplay();
+						updataNegWidthDisplay(LASER_MODE_MP);
 					}
 					else{
 						RES(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
@@ -1177,7 +1177,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_GP_POSWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_GP_POSWIDTH]);
-						updataPosWidthDisplay();
+						updataPosWidthDisplay(LASER_MODE_GP);
 					}
 					else{
 						RES(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
@@ -1189,7 +1189,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
 						NVRAM0[EM_LASER_GP_POSWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_GP_POSWIDTH]);
-						updataPosWidthDisplay();
+						updataPosWidthDisplay(LASER_MODE_GP);
 					}
 					else{
 						RES(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
@@ -1201,7 +1201,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_GP_NEGWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_GP_NEGWIDTH]);
-						updataNegWidthDisplay();
+						updataNegWidthDisplay(LASER_MODE_GP);
 					}
 					else{
 						RES(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
@@ -1213,7 +1213,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
 						NVRAM0[EM_LASER_GP_NEGWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_GP_NEGWIDTH]);
-						updataNegWidthDisplay();
+						updataNegWidthDisplay(LASER_MODE_GP);
 					}
 					else{
 						RES(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
@@ -1224,7 +1224,12 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_GP_KEY_TIMES_ADD:{
 					if(state){
 						SET(R_STANDBY_KEY_TIMES_ADD_DOWN);
-						NVRAM0[EM_LASER_GP_NEGWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_GP_NEGWIDTH]);
+						if(NVRAM0[EM_LASER_GP_TIMES] < CONFIG_MAX_LASER_TIMES){
+							NVRAM0[EM_LASER_GP_TIMES] ++;
+						}
+						else{
+							NVRAM0[EM_LASER_GP_TIMES] = CONFIG_MAX_LASER_TIMES;
+						}
 						SetTextInt32(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES ,NVRAM0[EM_LASER_GP_TIMES], 1, 0);
 					}
 					else{
@@ -1237,9 +1242,12 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						SET(R_STANDBY_KEY_TIMES_DEC_DOWN);
 						if(NVRAM0[EM_LASER_GP_TIMES] > CONFIG_MIN_LASER_TIMES){
-							DECS1(EM_LASER_GP_TIMES);//-1
-							SetTextInt32(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES ,NVRAM0[EM_LASER_GP_TIMES], 1, 0);
-						}	
+							NVRAM0[EM_LASER_GP_TIMES] -= 1;//-1
+						}
+						else{
+							NVRAM0[EM_LASER_GP_TIMES]  = CONFIG_MIN_LASER_TIMES;
+						}
+						SetTextInt32(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES ,NVRAM0[EM_LASER_GP_TIMES], 1, 0);
 					}
 					else{
 						RES(R_STANDBY_KEY_TIMES_DEC_DOWN);
@@ -1250,10 +1258,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_GP_KEY_GROUP_OFF_ADD:{
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_GROUP_OFF_ADD_DOWN);
-						if(NVRAM0[EM_LASER_GP_GROUP_OFF] < CONFIG_MAX_LASER_GROUP_OFF){
-							ADDS1(EM_LASER_GP_GROUP_OFF);//+1
-							SetTextInt32(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_GROUP_OFF ,NVRAM0[EM_LASER_GP_GROUP_OFF], 1, 0);
-						}
+						NVRAM0[EM_LASER_GP_GROUP_OFF] = pulseWidthAdd(NVRAM0[EM_LASER_GP_GROUP_OFF]);
+						updataGroupOff();
 					}
 					else{
 						RES(R_STANDBY_KEY_GROUP_OFF_ADD_DOWN);
@@ -1264,10 +1270,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_GP_KEY_GROUP_OFF_DEC:{
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_GROUP_OFF_DEC_DOWN);
-						if(NVRAM0[EM_LASER_GP_GROUP_OFF] > CONFIG_MIN_LASER_GROUP_OFF){
-							DECS1(EM_LASER_GP_GROUP_OFF);//-1
-							SetTextInt32(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_GROUP_OFF ,NVRAM0[EM_LASER_GP_GROUP_OFF], 1, 0);
-						}
+						NVRAM0[EM_LASER_GP_GROUP_OFF] = pulseWidthDec(NVRAM0[EM_LASER_GP_GROUP_OFF]);
+						updataGroupOff();
 					}
 					else{
 						RES(R_STANDBY_KEY_GROUP_OFF_DEC_DOWN);
@@ -1681,7 +1685,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_DERMA_POSWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_DERMA_POSWIDTH]);
-						updataPosWidthDisplay();
+						updataPosWidthDisplay(LASER_MODE_DERMA);
 					}
 					else{
 						RES(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
@@ -1693,7 +1697,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
 						NVRAM0[EM_LASER_DERMA_POSWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_DERMA_POSWIDTH]);//-1
-						updataPosWidthDisplay();
+						updataPosWidthDisplay(LASER_MODE_DERMA);
 					}
 					else{
 						RES(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);
@@ -1705,7 +1709,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
 						NVRAM0[EM_LASER_DERMA_NEGWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_DERMA_NEGWIDTH]);
-						updataNegWidthDisplay();
+						updataNegWidthDisplay(LASER_MODE_DERMA);
 					}
 					else{
 						RES(R_STANDBY_KEY_NEGWIDTH_ADD_DOWN);
@@ -1717,7 +1721,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
 						NVRAM0[EM_LASER_DERMA_NEGWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_DERMA_NEGWIDTH]);
-						updataNegWidthDisplay();
+						updataNegWidthDisplay(LASER_MODE_DERMA);
 					}
 					else{
 						RES(R_STANDBY_KEY_NEGWIDTH_DEC_DOWN);
@@ -1996,6 +2000,12 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_OPTION_KEY_ENTER_DIAGNOSIS:{
 					if(state){
 						SET(R_OPTION_KEY_ENTER_DIAGNOSIS_DOWN);
+					}
+					break;
+				}
+				case GDDC_PAGE_OPTION_KEY_RESTORE:{//»Ö¸´Ä¬ÈÏÖµ
+					if(state){
+						loadDefault();
 					}
 					break;
 				}

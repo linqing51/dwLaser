@@ -145,14 +145,8 @@
 #define CONFIG_MAX_LASER_DAC_CH1								0xFFF//
 #define CONFIG_MAX_LASERPOWER_CH1								150//通道1最大激光功率
 #define CONFIG_MIN_LASERPOWER_CH1								0//通道1最小激光功率
-#define CONFIG_MAX_LASER_POSWIDTH								999//最大正脉宽时间
-#define CONFIG_MIN_LASER_POSWIDTH								10//最小正脉宽时间
-#define CONFIG_MAX_LASER_NEGWIDTH								999//最大负脉宽时间
-#define CONFIG_MIN_LASER_NEGWIDTH								10//最小正脉宽时间
-#define CONFIG_MAX_LASER_TIMES									999//最大可计数脉冲数
-#define CONFIG_MIN_LASER_TIMES									10//最小可计数脉冲数
-#define CONFIG_MAX_LASER_GROUP_OFF								999//最大脉冲间隔时间
-#define CONFIG_MIN_LASER_GROUP_OFF								10//最小脉冲间隔时间
+#define CONFIG_MAX_LASER_TIMES									20//最大可计数脉冲数
+#define CONFIG_MIN_LASER_TIMES									1//最小可计数脉冲数
 #define CONFIG_MAX_LASER_ENERGY_INTERVAL						1000
 #define CONFIG_MIN_LASER_ENERGY_INTERVAL						100
 #define CONFIG_MAX_AIM_BRG										100//红光最大调光占空比

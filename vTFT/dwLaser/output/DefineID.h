@@ -37,11 +37,8 @@
 //创建画面24_GDDC_PAGE_DIAGNOSIS_0的命令索引ID
 #define  _SCREEN_24_GDDC_PAGE_DIAGNOSIS_0                                     12
 
-//创建画面25_GDDC_SW_PAGE_STANDBY_DERMA_0的命令索引ID
-#define  _SCREEN_25_GDDC_SW_PAGE_STANDBY_DERMA_0                              13
-
-//创建画面keyboard的命令索引ID
-#define  _SCREEN_KEYBOARD                                                     14
+//创建画面26_GDDC_PAGE_SCHEME_RENAME_0的命令索引ID
+#define  _SCREEN_26_GDDC_PAGE_SCHEME_RENAME_0                                 13
 
 //画面0_GDDC_PAGE_POWERUP的背景图片
 #define  _IMG_0_GDDC_PAGE_POWERUP                                              0
@@ -528,6 +525,16 @@
 
 #define  _BTN_14_GDDC_PAGE_STNADBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_NEGWIDTH_ADD         33
 
+#define  _BTN_14_GDDC_PAGE_STNADBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5         36
+
+#define  _BTN_14_GDDC_PAGE_STNADBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0         37
+
+#define  _BTN_14_GDDC_PAGE_STNADBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0         39
+
+#define  _BTN_14_GDDC_PAGE_STNADBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0         38
+
+#define  _TXT_DIS__14_GDDC_PAGE_STNADBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_ENERGY_DENSITY         40
+
 //画面16_GDDC_PAGE_STANDBY_SIGNAL_0的背景图片
 #define  _IMG_16_GDDC_PAGE_STANDBY_SIGNAL_0                                   16
 
@@ -598,6 +605,12 @@
 
 #define  _BTN_16_GDDC_PAGE_STANDBY_SIGNAL_0_GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE         14
 
+#define  _BTN_16_GDDC_PAGE_STANDBY_SIGNAL_0_BUTTON1                           30
+
+#define  _BTN_16_GDDC_PAGE_STANDBY_SIGNAL_0_BUTTON2                           31
+
+#define  _TXT_DIS__16_GDDC_PAGE_STANDBY_SIGNAL_0_TEXT_DISPLAY1                32
+
 //画面18_GDDC_PAGE_OPTION_0的背景图片
 #define  _IMG_18_GDDC_PAGE_OPTION_0                                           18
 
@@ -606,12 +619,15 @@
 
 #define  _PROGRESS_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_PROGRESS_AIM_BRG         13
 
+//全局图片19_gddc_page_option_1.jpg
+#define  _IMG_19_GDDC_PAGE_OPTION_1_JPG                                       20
+
 #define  _BTN_18_GDDC_PAGE_OPTION_0_GGDDC_PAGE_OPTION_KEY_AIM_BRG_ADD          2
 
 #define  _BTN_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_AIM_BRG_DEC           3
 
 //画面18_GDDC_PAGE_OPTION_0中进度条GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME的背景图片
-#define  _IMG_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME         20
+#define  _IMG_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME         21
 
 #define  _PROGRESS_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME         14
 
@@ -620,16 +636,13 @@
 #define  _BTN_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_BEEM_VOLUME_DEC          5
 
 //画面18_GDDC_PAGE_OPTION_0中进度条GDDC_PAGE_OPTION_PROGRESS_LCD_BRG的背景图片
-#define  _IMG_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_PROGRESS_LCD_BRG         21
+#define  _IMG_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_PROGRESS_LCD_BRG         22
 
 #define  _PROGRESS_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_PROGRESS_LCD_BRG         15
 
 #define  _BTN_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_LCD_BRG_ADD           6
 
 #define  _BTN_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_LCD_BRG_DEC           7
-
-//全局图片19_gddc_page_option_1.jpg
-#define  _IMG_19_GDDC_PAGE_OPTION_1_JPG                                       22
 
 #define  _BTN_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_TONE                  1
 
@@ -646,6 +659,8 @@
 #define  _TXT_DIS__18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_TEXTDISPLAY_LCD_BRG         17
 
 #define  _TXT_DIS__18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_TEXTDISPLAY_AIM_BRG         18
+
+#define  _BTN_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_RESTORE              19
 
 //画面20_GDDC_PAGE_SCHEME_0的背景图片
 #define  _IMG_20_GDDC_PAGE_SCHEME_0                                           23
@@ -745,10 +760,16 @@
 
 #define  _BTN_20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_KEY_NEXT_PAGE            40
 
+//画面22_GDDC_PAGE_INFORMATION_0的背景图片
+#define  _IMG_22_GDDC_PAGE_INFORMATION_0                                      29
+
+//全局图片23_gddc_page_information_1.jpg
+#define  _IMG_23_GDDC_PAGE_INFORMATION_1_JPG                                  30
+
 #define  _BTN_22_GDDC_PAGE_INFORMATION_0_GDDC_PAGE_INFORMATION_KEY_ENTER_OK          1
 
 //画面24_GDDC_PAGE_DIAGNOSIS_0的背景图片
-#define  _IMG_24_GDDC_PAGE_DIAGNOSIS_0                                        29
+#define  _IMG_24_GDDC_PAGE_DIAGNOSIS_0                                        31
 
 #define  _TXT_DIS__24_GDDC_PAGE_DIAGNOSIS_0_GDDC_PAGE_DIAGNOSIS_TEXTDISPLAY_X_INTERLOCK          1
 
@@ -840,191 +861,97 @@
 
 #define  _TXT_DIS__24_GDDC_PAGE_DIAGNOSIS_0_GDDC_PAGE_DIAGNOSIS_TEXTDISPLAY_DT1         52
 
-//画面25_GDDC_SW_PAGE_STANDBY_DERMA_0的背景图片
-#define  _IMG_25_GDDC_SW_PAGE_STANDBY_DERMA_0                                 30
+//画面26_GDDC_PAGE_SCHEME_RENAME_0中图片Image1使用的图片
+#define  _IMG_26_GDDC_PAGE_SCHEME_RENAME_0_IMAGE1                             32
 
-//全局图片27_gddc_sw_page_standby_derma_1.jpg
-#define  _IMG_27_GDDC_SW_PAGE_STANDBY_DERMA_1_JPG                             31
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5         36
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0         37
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0         39
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0         38
-
-#define  _TXT_DIS__25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_ENERGY_DENSITY         40
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC          2
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD          1
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC          4
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD          3
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_STANDBY          5
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_MODE_CW          6
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_MODE_MP          7
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_MODE_GP          8
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_SELECT_CH0         17
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_SELECT_CH1         18
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_SELECT_BOTH         19
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_RESET         20
-
-//画面25_GDDC_SW_PAGE_STANDBY_DERMA_0中进度条GDDC_PAGE_STANDBY_PROGRESS_CH0的背景图片
-#define  _IMG_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_PROGRESS_CH0          7
-
-#define  _PROGRESS_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_PROGRESS_CH0         28
-
-//画面25_GDDC_SW_PAGE_STANDBY_DERMA_0中进度条GDDC_PAGE_STANDBY_PROGRESS_CH1的背景图片
-#define  _IMG_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_PROGRESS_CH1          7
-
-#define  _PROGRESS_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_PROGRESS_CH1         29
-
-#define  _TXT_DIS__25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_TEXTDISPLAY_ENERGY         25
-
-#define  _TXT_DIS__25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_TEXTDISPLAY_RELEASE_TIME         26
-
-#define  _TXT_DIS__25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0         22
-
-#define  _TXT_DIS__25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1         23
-
-#define  _TXT_DIS__25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_TEXTDISPLAY_WARN         24
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_MODE_SP          9
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL         10
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_MODE_DERMA         11
-
-#define  _TXT_DIS__25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER         27
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_ENTER_OPTION         12
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME         13
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_SCHEME_LAST         16
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT         15
-
-#define  _TXT_DIS__25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME         21
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE         14
-
-#define  _TXT_DIS__25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_POSWIDTH         32
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_POSWIDTH_DEC         31
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_POSWIDTH_ADD         30
-
-#define  _TXT_DIS__25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_NEGWIDTH         35
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_NEGWIDTH_DEC         34
-
-#define  _BTN_25_GDDC_SW_PAGE_STANDBY_DERMA_0_GDDC_PAGE_STANDBY_DERMA_KEY_NEGWIDTH_ADD         33
-
-//画面keyboard中图片Image1使用的图片
-#define  _IMG_KEYBOARD_IMAGE1                                                 32
-
-#define  _TXT_DIS__KEYBOARD_TEXT_DISPLAY1                                      2
+#define  _TXT_DIS__26_GDDC_PAGE_SCHEME_RENAME_0_TEXT_DISPLAY1                  1
 
 //全局图片full_640_363_down.jpg
 #define  _IMG_FULL_640_363_DOWN_JPG                                           33
 
-#define  _BTN_KEYBOARD_BUTTON1                                                 3
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON1                            70
 
-#define  _BTN_KEYBOARD_BUTTON2                                                 4
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON2                             4
 
-#define  _BTN_KEYBOARD_BUTTON3                                                 5
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON3                             5
 
-#define  _BTN_KEYBOARD_BUTTON4                                                 6
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON4                             6
 
-#define  _BTN_KEYBOARD_BUTTON5                                                 7
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON5                             7
 
-#define  _BTN_KEYBOARD_BUTTON6                                                 8
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON6                             8
 
-#define  _BTN_KEYBOARD_BUTTON7                                                 9
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON7                             9
 
-#define  _BTN_KEYBOARD_BUTTON8                                                10
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON8                            10
 
-#define  _BTN_KEYBOARD_BUTTON9                                                11
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON9                            11
 
-#define  _BTN_KEYBOARD_BUTTON10                                               12
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON10                           12
 
-#define  _BTN_KEYBOARD_BUTTON11                                               13
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON11                           13
 
-#define  _BTN_KEYBOARD_BUTTON12                                               14
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON12                            2
 
-#define  _BTN_KEYBOARD_BUTTON13                                               15
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON13                           15
 
-#define  _BTN_KEYBOARD_BUTTON14                                               16
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON14                           16
 
-#define  _BTN_KEYBOARD_BUTTON15                                               17
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON15                           17
 
-#define  _BTN_KEYBOARD_BUTTON16                                               18
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON16                           18
 
-#define  _BTN_KEYBOARD_BUTTON17                                               19
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON17                           19
 
-#define  _BTN_KEYBOARD_BUTTON18                                               20
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON18                           20
 
-#define  _BTN_KEYBOARD_BUTTON19                                               21
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON19                           21
 
-#define  _BTN_KEYBOARD_BUTTON20                                               22
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON20                           22
 
-#define  _BTN_KEYBOARD_BUTTON21                                               23
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON21                           23
 
-#define  _BTN_KEYBOARD_BUTTON22                                               24
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON22                           24
 
-#define  _BTN_KEYBOARD_BUTTON23                                               25
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON23                           25
 
-#define  _BTN_KEYBOARD_BUTTON24                                               26
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON24                           26
 
-#define  _BTN_KEYBOARD_BUTTON25                                               27
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON25                           27
 
-#define  _BTN_KEYBOARD_BUTTON26                                               28
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON26                           28
 
-#define  _BTN_KEYBOARD_BUTTON27                                               29
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON27                           29
 
-#define  _BTN_KEYBOARD_BUTTON28                                               30
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON28                           30
 
-#define  _BTN_KEYBOARD_BUTTON29                                               31
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON29                           31
 
-#define  _BTN_KEYBOARD_BUTTON30                                               32
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON30                           32
 
-#define  _BTN_KEYBOARD_BUTTON31                                               33
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON31                           33
 
-#define  _BTN_KEYBOARD_BUTTON32                                               34
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON32                           34
 
-#define  _BTN_KEYBOARD_BUTTON33                                               35
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON33                           35
 
-#define  _BTN_KEYBOARD_BUTTON34                                               36
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON34                           36
 
-#define  _BTN_KEYBOARD_BUTTON35                                               37
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON35                           37
 
-#define  _BTN_KEYBOARD_BUTTON36                                               38
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON36                           38
 
-#define  _BTN_KEYBOARD_BUTTON37                                               39
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON37                           39
 
-#define  _BTN_KEYBOARD_BUTTON38                                               40
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON38                           40
 
-#define  _BTN_KEYBOARD_BUTTON39                                               41
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON39                           41
 
-#define  _BTN_KEYBOARD_BUTTON40                                               42
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON40                           42
 
-#define  _BTN_KEYBOARD_BUTTON41                                               43
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON41                           43
 
-#define  _BTN_KEYBOARD_BUTTON42                                               44
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON42                           44
 
-#define  _BTN_KEYBOARD_BUTTON43                                               45
-
-#define  _BTN_KEYBOARD_BUTTON44                                               46
+#define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON43                            3
 

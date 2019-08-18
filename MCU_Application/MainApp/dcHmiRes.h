@@ -26,13 +26,13 @@
 #define GDDC_PAGE_STANDBY_SP											4
 #define GDDC_PAGE_STANDBY_MP											5
 #define GDDC_PAGE_STANDBY_GP											6
-#define GDDC_PAGE_STANDBY_SIGNAL										7
-#define GDDC_PAGE_STANDBY_DERMA											13
+#define GDDC_PAGE_STANDBY_DERMA											7
+#define GDDC_PAGE_STANDBY_SIGNAL										8
 #define GDDC_PAGE_OPTION												9//选项页面
 #define GDDC_PAGE_SCHEME												10//方案页面
 #define GDDC_PAGE_INFORMATION											11//信息页面
 #define GDDC_PAGE_DIAGNOSIS												12//诊断页面
-#define GDDC_PAGE_SCHEME_RENAME											14//SCHEME更名
+#define GDDC_PAGE_SCHEME_RENAME											13//SCHEME更名
 /*****************************************************************************/
 //GDDC页面控件编号
 /*****************************************************************************/
@@ -159,6 +159,7 @@
 #define GDDC_PAGE_OPTION_TEXTDISPLAY_BEEM_VOLUME						16
 #define GDDC_PAGE_OPTION_TEXTDISPLAY_LCD_BRG							17
 #define GDDC_PAGE_OPTION_TEXTDISPLAY_AIM_BRG							18
+#define GDDC_PAGE_OPTION_KEY_RESTORE									19//恢复默认设置
 /*****************************************************************************/
 //方案页面
 #define GDDC_PAGE_SCHEME_KEY_RENAME										1//更名按键
