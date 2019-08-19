@@ -586,8 +586,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
 					if(state){
-						saveScheme();
-						FDSAV();//FDRAM->EPROM
+						SET(R_STANDBY_KEY_SCHEME_SAVE_DOWN);
 					}
 					break;
 				}
@@ -783,8 +782,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
 					if(state){
-						saveScheme();
-						FDSAV();//立即更新NVRAM
+						SET(R_STANDBY_KEY_SCHEME_SAVE_DOWN);
 					}
 					break;
 				}
@@ -1003,8 +1001,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
 					if(state){
-						saveScheme();
-						NVSAV();//立即更新NVRAM
+						SET(R_STANDBY_KEY_SCHEME_SAVE_DOWN);
 					}
 					break;
 				}
@@ -1281,8 +1278,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
 					if(state){
-						saveScheme();
-						FDSAV();//FDRAM->EPROM
+						SET(R_STANDBY_KEY_SCHEME_SAVE_DOWN);
 					}
 					break;
 				}
@@ -1471,8 +1467,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
 					if(state){
-						saveScheme();
-						FDSAV();//立即更新NVRAM
+						SET(R_STANDBY_KEY_SCHEME_SAVE_DOWN);
 					}
 					break;
 				}
@@ -1775,8 +1770,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
 					if(state){
-						saveScheme();
-						FDSAV();//FDRAM->EPROM
+						SET(R_STANDBY_KEY_SCHEME_SAVE_DOWN);
 					}
 					break;
 				}

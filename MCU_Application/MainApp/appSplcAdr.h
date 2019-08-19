@@ -277,6 +277,7 @@
 #define R_STANDBY_KEY_STNADBY_UP								(R_START * 16 + 91)
 #define R_STANDBY_KEY_ENTER_OPTION_DOWN							(R_START * 16 + 92)
 #define R_STANDBY_KEY_ENTER_SCHEME_DOWN							(R_START * 16 + 93)
+#define R_STANDBY_KEY_SCHEME_SAVE_DOWN							(R_START * 16 + 94)
 /*****************************************************************************/
 #define R_OPTION_KEY_ENTER_CORRECTION_DOWN						(R_START * 16 + 100)
 #define R_OPTION_KEY_ENTER_INFORMATION_DOWN						(R_START * 16 + 101)

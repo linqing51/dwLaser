@@ -1621,7 +1621,7 @@ void dcHmiLoop(void){//HMIÂÖÑµ³ÌÐò
 					if(LD(T_10MS_START * 16 + T10MS_TIMES_ADD_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							if(NVRAM0[EM_LASER_GP_TIMES] < CONFIG_MAX_LASER_TIMES){
-								ADDS1(EM_LASER_GP_TIMES);
+								NVRAM0[EM_LASER_GP_TIMES] += 1;
 								SetTextInt32(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES, NVRAM0[EM_LASER_GP_TIMES], 1, 0);	
 							}
 						}
@@ -1632,7 +1632,7 @@ void dcHmiLoop(void){//HMIÂÖÑµ³ÌÐò
 					if(LD(T_10MS_START * 16 + T10MS_TIMES_DEC_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							if(NVRAM0[EM_LASER_GP_TIMES] > CONFIG_MIN_LASER_TIMES){
-								DECS1(EM_LASER_GP_TIMES);
+								NVRAM0[EM_LASER_GP_TIMES] -= 1;
 								SetTextInt32(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES, NVRAM0[EM_LASER_GP_TIMES], 1, 0);	
 							}
 						}
@@ -1803,6 +1803,15 @@ void dcHmiLoop(void){//HMIÂÖÑµ³ÌÐò
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_READY_LOAD_PARA;	
 			}
 			RES(R_STANDBY_KEY_STNADBY_DOWN);
+		}else if(LD(R_STANDBY_KEY_SCHEME_SAVE_DOWN)){	
+			//½ûÖ¹ÆÁÄ»´¥Ãþ
+			standbyTouchEnable(false);
+			saveScheme();//EM->FD
+			FDSAV_ONE(NVRAM0[DM_SCHEME_NUM]);//FDRAM->EPROM
+			RES(R_STANDBY_KEY_SCHEME_SAVE_DOWN);
+			SetScreen(NVRAM0[EM_DC_PAGE]);
+			standbyTouchEnable(true);
+			//Ê¹ÄÜÆÁÄ»´¥Ãþ
 		}
 		return;
 	}

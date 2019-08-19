@@ -61,6 +61,8 @@ void NVSAV(void);//强制立即更新NVRAM
 void NVLOAD(void);
 void FDSAV(void);
 void FDLAD(void);
+void FDSAV_ONE(int16_t cn);
+void FDLAD_ONE(int16_t cn);
 #endif
 
 

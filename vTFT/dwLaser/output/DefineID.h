@@ -40,14 +40,11 @@
 //创建画面26_GDDC_PAGE_SCHEME_RENAME_0的命令索引ID
 #define  _SCREEN_26_GDDC_PAGE_SCHEME_RENAME_0                                 13
 
+//创建画面28_GDDC_PAGE_SCHEME_SAVING的命令索引ID
+#define  _SCREEN_28_GDDC_PAGE_SCHEME_SAVING                                   14
+
 //画面0_GDDC_PAGE_POWERUP的背景图片
 #define  _IMG_0_GDDC_PAGE_POWERUP                                              0
-
-#define  _PROGRESS_0_GDDC_PAGE_POWERUP_GDDC_PAGE_POWERUP_PROGRESS_CHECK_INFO          2
-
-#define  _TXT_DIS__0_GDDC_PAGE_POWERUP_GDDC_PAGE_POWERUP_TEXTDISPLAY_CHECK_INFO          1
-
-#define  _TXT_DIS__0_GDDC_PAGE_POWERUP_TEXT_DISPLAY1                           3
 
 //画面2_GDDC_PAGE_PASSCODE_0的背景图片
 #define  _IMG_2_GDDC_PAGE_PASSCODE_0                                           1
