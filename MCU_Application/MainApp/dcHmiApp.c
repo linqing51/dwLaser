@@ -295,184 +295,37 @@ void updataSchemeInfo(int16_t cn){//更新SCHEME 详细参数
 		}
 		default:break;
 	}
-	sprintf(dispBuf1, "1470nM Power:%4.1fW;980nM Power:%4.1fW", (fp32_t)(power0 / 10), (fp32_t)(power1 /10));
+	sprintf(dispBuf1, "1470nM Power:%4.1fW;980nM Power:%4.1fW", ((fp32_t)power0 / 10.0F), ((fp32_t)power1 / 10.0F));
 	SetTextValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL1, dispBuf1);
 	SetTextValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL2, dispBuf2);
 	
 }
 void unselectSchemeNum(sel){//反选方案条
-	switch(sel){
-		case 0:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_0, 0x0);
-			break;
-		}
-		case 1:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_1, 0x0);
-			break;
-		}
-		case 2:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_2, 0x0);
-			break;
-		}
-		case 3:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_3, 0x0);
-			break;
-		}
-		case 4:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_4, 0x0);
-			break;
-		}
-		case 5:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_5, 0x0);
-			break;
-		}
-		case 6:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_6, 0x0);
-			break;
-		}
-		case 7:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_7, 0x0);
-			break;
-		}
-		case 8:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_8, 0x0);
-			break;
-		}
-		case 9:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_9, 0x0);
-			break;
-		}
-		case 10:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_10, 0x0);
-			break;
-		}
-		case 11:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_11, 0x0);
-			break;
-		}
-		case 12:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_12, 0x0);
-			break;
-		}
-		case 13:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_13, 0x0);
-			break;
-		}
-		case 14:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_14, 0x0);
-			break;
-		}
-		case 15:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_15, 0x0);
-			break;
-		}
-		default:break;
-	}
+	SetButtonValue(GDDC_PAGE_SCHEME, (GDDC_PAGE_SCHEME_KEY_SELECT_0 + sel), 0x0);	
 }
 void unselectSchemeAll(void){//反选全部方案条
 	BatchBegin(GDDC_PAGE_SCHEME);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_1, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_2, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_3, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_4, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_5, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_6, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_7, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_8, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_9, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_10, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_11, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_12, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_13, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_14, 0x0);
-	BatchSetButtonValue(GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_15, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_0, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_1, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_2, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_3, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_4, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_5, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_6, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_7, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_8, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_9, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_10, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_11, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_12, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_13, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_14, 0x0);
+	BatchSetButtonValue(GDDC_PAGE_SCHEME_KEY_SELECT_15, 0x0);
 	BatchEnd();
 }
 void seletcSchemeNum(uint16_t sel){//选中方案条
-	switch(sel){
-		case 0:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_0, 0x1);
-			NVRAM0[EM_SCHEME_NUM_TMP] = 0;
-			break;
-		}
-		case 1:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_1, 0x1);		
-			NVRAM0[EM_SCHEME_NUM_TMP] = 1;
-			break;
-		}
-		case 2:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_2, 0x1);
-			NVRAM0[EM_SCHEME_NUM_TMP] = 2;
-			break;
-		}
-		case 3:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_3, 0x1);
-			NVRAM0[EM_SCHEME_NUM_TMP] = 3;
-			break;
-		}
-		case 4:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_4, 0x1);
-			NVRAM0[EM_SCHEME_NUM_TMP] = 4;
-			break;
-		}
-		case 5:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_5, 0x1);
-			NVRAM0[EM_SCHEME_NUM_TMP] = 5;
-			break;
-		}
-		case 6:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_6, 0x1);
-			NVRAM0[EM_SCHEME_NUM_TMP] = 6;
-			break;
-		}
-		case 7:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_7, 0x1);
-			NVRAM0[EM_SCHEME_NUM_TMP] = 7;
-			break;
-		}
-		case 8:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_8, 0x1);
-			NVRAM0[EM_SCHEME_NUM_TMP] = 8;
-			break;
-		}
-		case 9:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_9, 0x1);	
-			NVRAM0[EM_SCHEME_NUM_TMP] = 9;
-			break;
-		}
-		case 10:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_10, 0x1);
-			NVRAM0[EM_SCHEME_NUM_TMP] = 10;
-			break;
-		}
-		case 11:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_11, 0x1);	
-			NVRAM0[EM_SCHEME_NUM_TMP] = 11;
-			break;
-		}
-		case 12:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_12, 0x1);	
-			NVRAM0[EM_SCHEME_NUM_TMP] = 12;
-			break;
-		}
-		case 13:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_13, 0x1);
-			NVRAM0[EM_SCHEME_NUM_TMP] = 13;
-			break;
-		}
-		case 14:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_14, 0x1);
-			NVRAM0[EM_SCHEME_NUM_TMP] = 14;
-			break;
-		}
-		case 15:{
-			SetButtonValue(GDDC_PAGE_SCHEME, GDDC_PAGE_SCHEME_KEY_SELECT_15, 0x1);
-			NVRAM0[EM_SCHEME_NUM_TMP] = 15;
-			break;
-		}
-		default:break;
-	}	
+	SetButtonValue(GDDC_PAGE_SCHEME, (GDDC_PAGE_SCHEME_KEY_SELECT_0 + sel), 0x1);
+	NVRAM0[EM_SCHEME_NUM_TMP] = sel;
 	updataSchemeInfo(NVRAM0[EM_SCHEME_NUM_TMP]);
 }
 void standbyTouchEnable(int8_t enable){//使能STANDBY界面触摸
@@ -1809,7 +1662,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			saveScheme();//EM->FD
 			FDSAV_ONE(NVRAM0[DM_SCHEME_NUM]);//FDRAM->EPROM
 			RES(R_STANDBY_KEY_SCHEME_SAVE_DOWN);
-			SetScreen(NVRAM0[EM_DC_PAGE]);
+			//SetScreen(NVRAM0[EM_DC_PAGE]);
 			standbyTouchEnable(true);
 			//使能屏幕触摸
 		}
@@ -1961,7 +1814,7 @@ void dcHmiLoop(void){//HMI轮训程序
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_SCHEME){//方案界面
 		if(LD(R_SCHEME_KEY_OK_DOWN)){//确定
 			NVRAM0[DM_SCHEME_NUM] = NVRAM0[EM_SCHEME_NUM_TMP];
-			loadScheme();
+			loadSchemeTmpName();
 			updateStandbyDisplay();
 			returnStandbyDisplay();
 			RES(R_SCHEME_KEY_OK_DOWN);
@@ -1974,7 +1827,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			RES(R_SCHEME_KEY_CANCEL_DOWN);
 		}
 		else if(LD(R_SCHEME_KEY_RENAME_DOWN)){//改名
-			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_SCHEME;
+			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_RENAME;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_RENAME;
 			//将EM_SCHEME_NUM_TMP指向的名称更新RENAME输入框
 			SetTextValue(GDDC_PAGE_RENAME, GDDC_PAGE_RENAME_TEXTDISPLAY_NEWNAME, (uint8_t*)(&TMPRAM[(NVRAM0[EM_SCHEME_NUM_TMP] * 15)]));

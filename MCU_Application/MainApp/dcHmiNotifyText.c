@@ -22,7 +22,7 @@ void NotifyText(uint16_t screen_id, uint16_t control_id, uint8_t *str){
 					else{
 						strncpy((uint8_t*)(&TMPRAM[tmp * 15]), str, 30);
 					}
-					TMPRAM[tmp + 14] &= 0xFF00;
+					TMPRAM[(tmp * 15) + 14] &= 0xFF00;
 					SetTextValue(GDDC_PAGE_SCHEME, (GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0 + tmp), (uint8_t*)&TMPRAM[tmp * 15]);
 					SET(R_RENAME_TEXTDISPLAY_READ_DONE);
 					break;

@@ -69,4 +69,5 @@ void unselectSchemeNum(sel);
 void seletcSchemeNum(uint16_t sel);
 void unselectSchemeAll(void);
 void updateReleaseTimeEnergy(void);
+void updataSchemeInfo(int16_t cn);
 #endif

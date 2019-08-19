@@ -595,7 +595,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_SCHEME_NUM] > 0){
 							DECS1(DM_SCHEME_NUM);//+1
 							loadScheme();//DM->EM
-							NVSAV();//Á¢¼´¸üÐÂNVRAM
 							updateStandbyDisplay();
 						}
 					}
@@ -2049,6 +2048,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 0){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 0;
+							updataSchemeInfo(0);
 						}
 					}
 					break;
@@ -2058,6 +2058,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 1){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 1;
+							updataSchemeInfo(1);
 						}
 					}
 					break;
@@ -2067,6 +2068,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 2){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 2;
+							updataSchemeInfo(2);
 						}
 					}					
 					break;
@@ -2076,6 +2078,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 3){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 3;
+							updataSchemeInfo(3);
 						}
 					}					
 					break;
@@ -2085,6 +2088,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 4){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 4;
+							updataSchemeInfo(4);
 						}
 					}					
 					break;
@@ -2094,6 +2098,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 5){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 5;
+							updataSchemeInfo(5);
 						}
 					}					
 					break;
@@ -2103,6 +2108,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 6){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 6;
+							updataSchemeInfo(6);
 						}
 					}					
 					break;
@@ -2112,6 +2118,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 7){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 7;
+							updataSchemeInfo(7);
 						}
 					}
 					break;
@@ -2121,6 +2128,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 8){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 8;
+							updataSchemeInfo(8);
 						}
 					}					
 					break;
@@ -2130,6 +2138,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 9){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 9;
+							updataSchemeInfo(9);
 						}
 					}					
 					break;
@@ -2139,6 +2148,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 10){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 10;
+							updataSchemeInfo(10);
 						}
 					}						
 					break;
@@ -2148,6 +2158,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 11){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 11;
+							updataSchemeInfo(11);
 						}
 					}
 					break;
@@ -2157,6 +2168,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 12){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 12;
+							updataSchemeInfo(12);
 						}
 					}					
 					break;
@@ -2166,6 +2178,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 13){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 13;
+							updataSchemeInfo(13);
 						}
 					}					
 					break;
@@ -2175,6 +2188,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 14){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 14;
+							updataSchemeInfo(14);
 						}
 					}				
 					break;
@@ -2184,6 +2198,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 15){
 							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
 							NVRAM0[EM_SCHEME_NUM_TMP] = 15;
+							updataSchemeInfo(15);
 						}
 					}
 					break;
@@ -2192,24 +2207,24 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 			}
 			break;
 		}
-		case GDDC_PAGE_RENAME:{
-			switch(control_id){
-				case GDDC_PAGE_RENAME_KEY_ENTER:{
-					if(state){
-						SET(R_RENAME_KEY_ENTER_DOWN);
-					}
-					break;
-				}
-				case GDDC_PAGE_RENAME_KEY_EXIT:{
-					if(state){
-						SET(R_RENAME_KEY_EXIT_DOWN);
-					}
-					break;
-				}
-				default:break;
-			}
-			break;
-		}		
+//		case GDDC_PAGE_RENAME:{
+//			switch(control_id){
+//				case GDDC_PAGE_RENAME_KEY_ENTER:{
+//					if(state){
+//						SET(R_RENAME_KEY_ENTER_DOWN);
+//					}
+//					break;
+//				}
+//				case GDDC_PAGE_RENAME_KEY_EXIT:{
+//					if(state){
+//						SET(R_RENAME_KEY_EXIT_DOWN);
+//					}
+//					break;
+//				}
+//				default:break;
+//			}
+//			break;
+//		}		
 		case GDDC_PAGE_DIAGNOSIS:{
 			switch(control_id){
 				case GDDC_PAGE_DIAGNOSIS_KEY_ENTER_OK:{

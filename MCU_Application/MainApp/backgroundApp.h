@@ -10,6 +10,7 @@ uint8_t getAimDuty(int16_t AimBrg);//指示光亮度值转换为占空比
 int16_t pulseWidthAdd(int16_t ps);
 int16_t pulseWidthDec(int16_t ps);
 void loadScheme(void);//DM->EM
+void loadSchemeTmpName(void);//TMP->EM
 void saveScheme(void);//EM->DM
 void checkScheme(void);//方案检测
 void reloadCorrTab(void);//恢复功率校正参数

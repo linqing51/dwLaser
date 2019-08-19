@@ -108,8 +108,8 @@ void defaultScheme(void){//当前选择方案恢复默认值
 	sprintf((char*)(&NVRAM0[EM_LASER_SCHEME_NAME]),"Hello dwLaser S%d",NVRAM0[DM_SCHEME_NUM]);		
 	NVRAM0[EM_LASER_SELECT]	= LASER_SELECT_BOTH;//通道选择
 	NVRAM0[EM_LASER_PULSE_MODE]	= LASER_MODE_CW;//脉冲模式
-	NVRAM0[EM_LASER_POWER_CH0] = 0;//通道0功率
-	NVRAM0[EM_LASER_POWER_CH1] = 0;//通道1功率
+	NVRAM0[EM_LASER_POWER_CH0] = NVRAM0[DM_SCHEME_NUM] * 5 + 50;//通道0功率
+	NVRAM0[EM_LASER_POWER_CH1] = NVRAM0[DM_SCHEME_NUM] * 5;//通道1功率
 	NVRAM0[EM_LASER_SP_POSWIDTH]= 500;//单脉冲正脉宽
 	NVRAM0[EM_LASER_MP_POSWIDTH]= 500;//多脉冲正脉宽
 	NVRAM0[EM_LASER_MP_NEGWIDTH]= 500;//多脉冲负脉宽
@@ -175,6 +175,40 @@ void loadScheme(void){//FD->EM
 	psrc = (uint8_t*)&FDRAM[(FD_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 30)];
 	pdist = (uint8_t*)&NVRAM0[EM_LASER_SCHEME_NAME];
 	memcpy(pdist, psrc, ((FD_SCHEME_END_0 - FD_SCHEME_START_0 + 1) * 2));
+	switch(NVRAM0[EM_LASER_PULSE_MODE]){
+		case LASER_MODE_CW:{
+			break;
+		}
+		case LASER_MODE_SP:{
+			break;
+		}
+		case LASER_MODE_MP:{
+			break;
+		}
+		case LASER_MODE_GP:{
+			break;
+		}
+		case LASER_MODE_SIGNAL:{
+			break;
+		}
+		case LASER_MODE_DERMA:{
+			break;
+		}
+		default:{
+			defaultScheme();
+			break;
+		}
+	}
+}
+void loadSchemeTmpName(void){
+	uint8_t *psrc, *pdist;
+	if(NVRAM0[DM_SCHEME_NUM] > CONFIG_HMI_SCHEME_NUM)
+		NVRAM0[DM_SCHEME_NUM] = CONFIG_HMI_SCHEME_NUM;
+	if(NVRAM0[DM_SCHEME_NUM] < 0)
+		NVRAM0[DM_SCHEME_NUM] = 0;
+	psrc = (uint8_t*)&TMPRAM[NVRAM0[DM_SCHEME_NUM] * 15];
+	pdist = (uint8_t*)&NVRAM0[EM_LASER_SCHEME_NAME];
+	memcpy(pdist, psrc, 30);
 	switch(NVRAM0[EM_LASER_PULSE_MODE]){
 		case LASER_MODE_CW:{
 			break;
