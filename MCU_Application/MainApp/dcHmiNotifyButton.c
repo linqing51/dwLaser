@@ -1259,7 +1259,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_GROUP_OFF_ADD_DOWN);
 						NVRAM0[EM_LASER_GP_GROUP_OFF] = pulseWidthAdd(NVRAM0[EM_LASER_GP_GROUP_OFF]);
-						updataGroupOff();
+						updataGroupOffDisplay();
 					}
 					else{
 						RES(R_STANDBY_KEY_GROUP_OFF_ADD_DOWN);
@@ -1271,7 +1271,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_GROUP_OFF_DEC_DOWN);
 						NVRAM0[EM_LASER_GP_GROUP_OFF] = pulseWidthDec(NVRAM0[EM_LASER_GP_GROUP_OFF]);
-						updataGroupOff();
+						updataGroupOffDisplay();
 					}
 					else{
 						RES(R_STANDBY_KEY_GROUP_OFF_DEC_DOWN);
@@ -1913,9 +1913,9 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_OPTION_KEY_AIM_BRG_ADD:{
 					if(state){
 						if(NVRAM0[DM_AIM_BRG] < CONFIG_MAX_AIM_BRG){
-							NVRAM0[DM_AIM_BRG] += 1;//+1	
-							SetProgressValue(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新进度条
+							NVRAM0[DM_AIM_BRG] += 1;//+1
 							SetTextInt32(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_TEXTDISPLAY_AIM_BRG , NVRAM0[DM_AIM_BRG], 1, 0);
+							SetProgressValue(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新进度条
 						}
 					}
 					break;
@@ -1924,8 +1924,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						if(NVRAM0[DM_AIM_BRG] > CONFIG_MIN_AIM_BRG){
 							NVRAM0[DM_AIM_BRG] -= 1;//-1	
-							SetProgressValue(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新进度条
 							SetTextInt32(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_TEXTDISPLAY_AIM_BRG , NVRAM0[DM_AIM_BRG], 1, 0);
+							SetProgressValue(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_PROGRESS_AIM_BRG, NVRAM0[DM_AIM_BRG]);//更新进度条
 						}
 					}
 					break;					
@@ -1934,8 +1934,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						if(NVRAM0[DM_BEEM_VOLUME] < CONFIG_MAX_BEEM_VOLUME){
 							NVRAM0[DM_BEEM_VOLUME] += 1;
-							SetProgressValue(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
 							SetTextInt32(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_TEXTDISPLAY_BEEM_VOLUME , NVRAM0[DM_BEEM_VOLUME], 1, 0);
+							SetProgressValue(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
 						}
 					}
 					break;					
@@ -1944,8 +1944,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						if(NVRAM0[DM_BEEM_VOLUME] > CONFIG_MIN_BEEM_VOLUME){
 							NVRAM0[DM_BEEM_VOLUME] -= 1;
-							SetProgressValue(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
 							SetTextInt32(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_TEXTDISPLAY_BEEM_VOLUME , NVRAM0[DM_BEEM_VOLUME], 1, 0);
+							SetProgressValue(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME, NVRAM0[DM_BEEM_VOLUME]);//更新进度条
 						}
 					}
 					break;					
@@ -1955,6 +1955,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_LCD_BRG] < CONFIG_MAX_LCD_BRG){
 							NVRAM0[DM_LCD_BRG] += 1;
 							SetTextInt32(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_TEXTDISPLAY_LCD_BRG , NVRAM0[DM_LCD_BRG], 1, 0);
+							SetProgressValue(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_PROGRESS_LCD_BRG, NVRAM0[DM_LCD_BRG]);
 							SetBackLight(getLcdDuty(NVRAM0[DM_LCD_BRG]));
 						}
 					}
@@ -1965,6 +1966,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						if(NVRAM0[DM_LCD_BRG] > CONFIG_MIN_LCD_BRG){
 							NVRAM0[DM_LCD_BRG] -= 1;
 							SetTextInt32(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_TEXTDISPLAY_LCD_BRG , NVRAM0[DM_LCD_BRG], 1, 0);
+							SetProgressValue(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_PROGRESS_LCD_BRG, NVRAM0[DM_LCD_BRG]);
 							SetBackLight(getLcdDuty(NVRAM0[DM_LCD_BRG]));
 						}
 					}
@@ -1997,7 +1999,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
-				case GDDC_PAGE_OPTION_KEY_ENTER_DIAGNOSIS:{
+				case GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER:{
 					if(state){
 						SET(R_OPTION_KEY_ENTER_DIAGNOSIS_DOWN);
 					}
@@ -2050,129 +2052,145 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}	
 				case GDDC_PAGE_SCHEME_KEY_SELECT_0:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(0);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 0){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 0;
+						}
 					}
 					break;
 				}	
 				case GDDC_PAGE_SCHEME_KEY_SELECT_1:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(1);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 1){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 1;
+						}
 					}
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_2:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(2);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 2){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 2;
+						}
 					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_3:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(3);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 3){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 3;
+						}
 					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_4:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(4);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 4){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 4;
+						}
 					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_5:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(5);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 5){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 5;
+						}
 					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_6:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(6);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 6){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 6;
+						}
 					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_7:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(7);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 7){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 7;
+						}
 					}
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_8:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(8);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 8){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 8;
+						}
 					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_9:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(9);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 9){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 9;
+						}
 					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_10:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(10);
-					}					
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 10){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 10;
+						}
+					}						
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_11:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(11);
-					}					
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 11){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 11;
+						}
+					}
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_12:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(12);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 12){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 12;
+						}
 					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_13:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(13);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 13){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 13;
+						}
 					}					
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_14:{	
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(14);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 14){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 14;
+						}
 					}				
 					break;
 				}
 				case GDDC_PAGE_SCHEME_KEY_SELECT_15:{
 					if(state){
-						unselectSchemeNum(NVRAM0[DM_SCHEME_NUM]);
-						unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
-						seletcSchemeNum(15);
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 15){
+							unselectSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);
+							NVRAM0[EM_SCHEME_NUM_TMP] = 15;
+						}
 					}
 					break;
 				}
@@ -2180,15 +2198,17 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 			}
 			break;
 		}
-		case GDDC_PAGE_SCHEME_RENAME:{
+		case GDDC_PAGE_RENAME:{
 			switch(control_id){
-				case GDDC_PAGE_SCHEME_RENAME_KEY_OK:{
-					
+				case GDDC_PAGE_RENAME_KEY_ENTER:{
+					if(state){
+						SET(R_RENAME_KEY_ENTER_DOWN);
+					}
 					break;
 				}
-				case GDDC_PAGE_SCHEME_RENAME_KEY_CANCLE:{
+				case GDDC_PAGE_RENAME_KEY_EXIT:{
 					if(state){
-						SetTextValue(GDDC_PAGE_SCHEME_RENAME, GDDC_PAGE_SCHEME_RENAME_TEXTDISPLAY_NEWNAME,"");//清空出入框
+						SET(R_RENAME_KEY_EXIT_DOWN);
 					}
 					break;
 				}

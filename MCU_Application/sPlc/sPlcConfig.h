@@ -40,45 +40,45 @@
 #define	CONFIG_AT24C128_SIZE 							16384
 #define	CONFIG_AT24C256_SIZE 							32768
 #define CONFIG_EPROM_ADDRESS							0x50
-#define CONFIG_EPROM_FRAM								1//铁电存储体无写入等待
-#define CONFIG_EPROM_PAGEWRITE							0//页写入
-#define CONFIG_EPROM_NVRAM_START						0x0
-#define CONFIG_EPROM_FDRAM_START						0x1800
+#define CONFIG_EPROM_FRAM										1//铁电存储体无写入等待
+#define CONFIG_EPROM_PAGEWRITE									0//页写入
+#define CONFIG_EPROM_NVRAM_START								0x0
+#define CONFIG_EPROM_FDRAM_START								0x1800
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_SPWM							1//使了软件PWM功能
+#define CONFIG_SPLC_USING_SPWM									1//使了软件PWM功能
 /*****************************************************************************/
-#define CONFIG_SPLC_FUN_EPID							0//使能SPLC扩展指令
-#define CONFIG_SPLC_FUNTEST								0//功能指令测试
+#define CONFIG_SPLC_FUN_EPID									0//使能SPLC扩展指令
+#define CONFIG_SPLC_FUNTEST										0//功能指令测试
 /*****************************************************************************/
-#define CONFIG_SPLC_ASSERT								0//检查地址范围
-#define CONFIG_SPLC_DEV									0x0A01//设备号
-#define CONFIG_SPLC_CLEAR_CODE							0xA58E
-#define CONFIG_SOFTPLC_TICK								200L//1mS
-#define CONFIG_INPUT_FILTER_TIME						1//输入数字滤波扫描周期 1mS * N
+#define CONFIG_SPLC_ASSERT										0//检查地址范围
+#define CONFIG_SPLC_DEV											0x0A01//设备号
+#define CONFIG_SPLC_CLEAR_CODE									0xA58E
+#define CONFIG_SOFTPLC_TICK										200L//1mS
+#define CONFIG_INPUT_FILTER_TIME								1//输入数字滤波扫描周期 1mS * N
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_WDT							0//看门狗启用
+#define CONFIG_SPLC_USING_WDT									0//看门狗启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_INPUT						1//输入IO刷新启用
+#define CONFIG_SPLC_USING_IO_INPUT								1//输入IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_OUTPUT						1//输出IO刷新启用
+#define CONFIG_SPLC_USING_IO_OUTPUT								1//输出IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_PCA							1//片内计数器阵列
-#define CONFIG_PCA_TICK									8000
+#define CONFIG_SPLC_USING_PCA									1//片内计数器阵列
+#define CONFIG_PCA_TICK											8000
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM							1//EPROM
+#define CONFIG_SPLC_USING_EPROM									1//EPROM
 #if CONFIG_SPLC_USING_EPROM == 1
-#define CONFIG_SPLC_USING_CLEAR_NVRAM					0//启用清除NVRAM功能
+#define CONFIG_SPLC_USING_CLEAR_NVRAM							0//启用清除NVRAM功能
 #else
-#define CONFIG_SPLC_USING_CLEAR_NVRAM					0//启用清除NVRAM功能
+#define CONFIG_SPLC_USING_CLEAR_NVRAM							0//启用清除NVRAM功能
 #endif
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_UART0							1//UART 0串口启用
-#define CONFIG_SPLC_USING_UART0_ISR						1
-#define UART0											0
+#define CONFIG_SPLC_USING_UART0									1//UART 0串口启用
+#define CONFIG_SPLC_USING_UART0_ISR								1
+#define UART0													0
 
-#define CONFIG_SPLC_USING_UART1							1//UART 1串口启用
-#define CONFIG_SPLC_USING_UART1_ISR						1
-#define UART1											1
+#define CONFIG_SPLC_USING_UART1									1//UART 1串口启用
+#define CONFIG_SPLC_USING_UART1_ISR								1
+#define UART1													1
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ADC									1//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP								10//ADC位移滤波次数
@@ -260,6 +260,10 @@
 #define FD_END													511
 /*****************************************************************************/
 #define CONFIG_FDRAM_SIZE										(FD_END + 1)
+/*****************************************************************************/
+#define TMP_START												0
+#define TMP_END													511
+#define CONFIG_TMPRAM_SIZE										(TMP_END + 1)
 /*****************************************************************************/
 #define SPCOIL_ON												(SPCOIL_START * 16 + 0)//长通线圈
 #define SPCOIL_START_UP											(SPCOIL_START * 16 + 1)//初次上电

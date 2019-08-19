@@ -30,22 +30,22 @@
 #define DERMA_SPOT_SIZE_2MM0								0x300C//光斑直径2.0
 #define DERMA_SPOT_SIZE_3MM0								0x400D//光斑直径3.0
 /*****************************************************************************/
-#define EM_LASER_SCHEME_NAME					(EM_START + 0)//方案名称
-#define EM_LASER_SELECT							(EM_START + 15)//通道选择
-#define EM_LASER_PULSE_MODE						(EM_START + 16)//脉冲模式
-#define EM_LASER_POWER_CH0						(EM_START + 17)//通道0功率
-#define EM_LASER_POWER_CH1						(EM_START + 18)//通道1功率
-#define EM_LASER_SP_POSWIDTH					(EM_START + 19)//单脉冲正脉宽
-#define EM_LASER_MP_POSWIDTH					(EM_START + 20)//多脉冲正脉宽
-#define EM_LASER_MP_NEGWIDTH					(EM_START + 21)//多脉冲负脉宽
-#define EM_LASER_GP_POSWIDTH					(EM_START + 22)//Group脉冲正脉宽
-#define EM_LASER_GP_NEGWIDTH					(EM_START + 23)//Group脉冲负脉宽
-#define EM_LASER_GP_TIMES						(EM_START + 24)//Group脉冲数
-#define EM_LASER_GP_GROUP_OFF					(EM_START + 25)//Group脉冲间隔
-#define EM_LASER_SIGNAL_ENERGY_INTERVAL			(EM_START + 26)//SIGNAL能量间隔
-#define EM_LASER_DERMA_POSWIDTH					(EM_START + 27)//DERMA正脉宽
-#define EM_LASER_DERMA_NEGWIDTH					(EM_START + 28)//DERMA负脉宽
-#define EM_LASER_DERMA_SPOT_SIZE				(EM_START + 29)//DERMA光斑直径
+#define EM_LASER_SCHEME_NAME								(EM_START + 0)//方案名称
+#define EM_LASER_SELECT										(EM_START + 15)//通道选择
+#define EM_LASER_PULSE_MODE									(EM_START + 16)//脉冲模式
+#define EM_LASER_POWER_CH0									(EM_START + 17)//通道0功率
+#define EM_LASER_POWER_CH1									(EM_START + 18)//通道1功率
+#define EM_LASER_SP_POSWIDTH								(EM_START + 19)//单脉冲正脉宽
+#define EM_LASER_MP_POSWIDTH								(EM_START + 20)//多脉冲正脉宽
+#define EM_LASER_MP_NEGWIDTH								(EM_START + 21)//多脉冲负脉宽
+#define EM_LASER_GP_POSWIDTH								(EM_START + 22)//Group脉冲正脉宽
+#define EM_LASER_GP_NEGWIDTH								(EM_START + 23)//Group脉冲负脉宽
+#define EM_LASER_GP_TIMES									(EM_START + 24)//Group脉冲数
+#define EM_LASER_GP_GROUP_OFF								(EM_START + 25)//Group脉冲间隔
+#define EM_LASER_SIGNAL_ENERGY_INTERVAL						(EM_START + 26)//SIGNAL能量间隔
+#define EM_LASER_DERMA_POSWIDTH								(EM_START + 27)//DERMA正脉宽
+#define EM_LASER_DERMA_NEGWIDTH								(EM_START + 28)//DERMA负脉宽
+#define EM_LASER_DERMA_SPOT_SIZE							(EM_START + 29)//DERMA光斑直径
 /*****************************************************************************/
 #define EM_DIODE_TEMP0							(EM_START + 30)//二极管温度0
 #define EM_DIODE_TEMP1							(EM_START + 31)//二极管温度1
@@ -146,6 +146,23 @@
 
 #define FD_SCHEME_START_15										(FD_START + 450)//方案15存储区起始
 #define FD_SCHEME_END_15										(FD_START + 479)//方案15存储区结束
+/*****************************************************************************/
+#define TMP_NAME_0												(TMP_START + 0)//临时名称储存区
+#define TMP_NAME_1												(TMP_START + 15)//临时名称储存区
+#define TMP_NAME_2												(TMP_START + 30)//临时名称储存区
+#define TMP_NAME_3												(TMP_START + 45)//临时名称储存区
+#define TMP_NAME_4												(TMP_START + 60)//临时名称储存区
+#define TMP_NAME_5												(TMP_START + 75)//临时名称储存区
+#define TMP_NAME_6												(TMP_START + 90)//临时名称储存区
+#define TMP_NAME_7												(TMP_START + 105)//临时名称储存区
+#define TMP_NAME_8												(TMP_START + 120)//临时名称储存区
+#define TMP_NAME_9												(TMP_START + 135)//临时名称储存区
+#define TMP_NAME_10												(TMP_START + 150)//临时名称储存区
+#define TMP_NAME_11												(TMP_START + 165)//临时名称储存区
+#define TMP_NAME_12												(TMP_START + 180)//临时名称储存区
+#define TMP_NAME_13												(TMP_START + 195)//临时名称储存区
+#define TMP_NAME_14												(TMP_START + 210)//临时名称储存区
+#define TMP_NAME_15												(TMP_START + 225)//临时名称储存区
 /*****************************************************************************/
 #define DM_SCHEME_NUM											(DM_START + 0)//选择的方案编号 低8位方案号 高8位方案使能
 #define DM_BEEM_VOLUME											(DM_START + 1)//蜂鸣器音量
@@ -291,6 +308,10 @@
 /*****************************************************************************/
 #define R_DIAGNOSIS_OK_DOWN										(R_START * 16 + 160)
 #define R_DIAGNOSIS_OK_UP										(R_START * 16 + 161)
+/*****************************************************************************/
+#define R_RENAME_KEY_ENTER_DOWN									(R_START * 16 + 170)
+#define R_RENAME_KEY_EXIT_DOWN									(R_START * 16 + 171)
+#define R_RENAME_TEXTDISPLAY_READ_DONE							(R_START * 16 + 172)
 /*****************************************************************************/
 #define MR_FOOSWITCH_HAND_SWITCH								(MR_START * 16 + 10)//脚踏HandSwitch 脉冲控制
 #define MR_BEEM_TONE											(MR_START * 16 + 11)//蜂鸣器模式

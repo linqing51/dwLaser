@@ -10,26 +10,21 @@
 */
 void NotifyText(uint16_t screen_id, uint16_t control_id, uint8_t *str){
    //TODO: 添加用户
+	uint16_t tmp;
 	switch(screen_id){
-		case GDDC_PAGE_SCHEME_RENAME:{
+		case GDDC_PAGE_RENAME:{
 			switch(control_id){
-				case GDDC_PAGE_SCHEME_RENAME_TEXTDISPLAY_NEWNAME:{
-					//将str复制到scheme
+				case GDDC_PAGE_RENAME_TEXTDISPLAY_NEWNAME:{
+					tmp = NVRAM0[EM_SCHEME_NUM_TMP];
 					if(strlen(str) <= 30){
-						strcpy((uint8_t*)(&NVRAM0[EM_LASER_SCHEME_NAME]), str);
+						strcpy((uint8_t*)(&TMPRAM[tmp * 15]), str);
 					}
 					else{
-						strncpy((uint8_t*)(&NVRAM0[EM_LASER_SCHEME_NAME]), str, 30);
+						strncpy((uint8_t*)(&TMPRAM[tmp * 15]), str, 30);
 					}
-					SetTextValue(GDDC_PAGE_SCHEME_RENAME, GDDC_PAGE_SCHEME_RENAME_TEXTDISPLAY_NEWNAME, "");
-					
-					//NVRAM0[EM_SCHEME_NUM_TMP]
-					//saveScheme();
-					//更新方案名称显示
-					//updateSchemeDisplay();
-					//关闭键盘
-					SetScreen(NVRAM0[EM_DC_PAGE]);
-				
+					TMPRAM[tmp + 14] &= 0xFF00;
+					SetTextValue(GDDC_PAGE_SCHEME, (GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0 + tmp), (uint8_t*)&TMPRAM[tmp * 15]);
+					SET(R_RENAME_TEXTDISPLAY_READ_DONE);
 					break;
 				}
 				default:break;

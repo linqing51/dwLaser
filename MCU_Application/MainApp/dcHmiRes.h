@@ -32,7 +32,7 @@
 #define GDDC_PAGE_SCHEME												10//方案页面
 #define GDDC_PAGE_INFORMATION											11//信息页面
 #define GDDC_PAGE_DIAGNOSIS												12//诊断页面
-#define GDDC_PAGE_SCHEME_RENAME											13//SCHEME更名
+#define GDDC_PAGE_RENAME											13//SCHEME更名
 /*****************************************************************************/
 //GDDC页面控件编号
 /*****************************************************************************/
@@ -151,7 +151,7 @@
 #define GDDC_PAGE_OPTION_KEY_ENTER_OK									8//返回待机页面
 #define GDDC_PAGE_OPTION_KEY_ENTER_INFORMATION							9//
 #define GDDC_PAGE_OPTION_KEY_HAND_SWITCH_ON								10
-#define GDDC_PAGE_OPTION_KEY_ENTER_DIAGNOSIS							11
+#define GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER								11
 #define GDDC_PAGE_OPTION_KEY_ENTER_CORRECTION							12//进入参数校正菜单
 #define GDDC_PAGE_OPTION_PROGRESS_AIM_BRG								13//指示光亮度滑块条
 #define GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME							14//蜂鸣器音量调节
@@ -202,11 +202,6 @@
 #define GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL2							38
 #define GDDC_PAGE_SCHEME_KEY_LAST_PAGE									39
 #define GDDC_PAGE_SCHEME_KEY_NEXT_PAGE									40
-/*****************************************************************************/
-//更名界面
-#define GDDC_PAGE_SCHEME_RENAME_TEXTDISPLAY_NEWNAME						1
-#define GDDC_PAGE_SCHEME_RENAME_KEY_OK									2//确定
-#define GDDC_PAGE_SCHEME_RENAME_KEY_CANCLE								3//取消
 /*****************************************************************************/
 #define GDDC_PAGE_CORRECTION_TEXTDISPLAY_CODE_CH0				1
 #define GDDC_PAGE_CORRECTION_TEXTDISPLAY_CODE_CH1				2	
@@ -317,4 +312,49 @@
 #define GDDC_PAGE_DIAGNOSIS_TEXTDISPLAY_DT0						51
 #define GDDC_PAGE_DIAGNOSIS_TEXTDISPLAY_DT1						52
 #define GDDC_PAGE_DIAGNOSIS_KEY_ENTER_OK						99
+/*****************************************************************************/
+#define GDDC_PAGE_RENAME_TEXTDISPLAY_NEWNAME					1
+#define GDDC_PAGE_RENAME_KEY_ENTER								2
+#define GDDC_PAGE_RENAME_KEY_EXIT								3
+#define GDDC_PAGE_RENAME_KEY_1									70
+#define GDDC_PAGE_RENAME_KEY_2									4
+#define GDDC_PAGE_RENAME_KEY_3									5
+#define GDDC_PAGE_RENAME_KEY_4									6
+#define GDDC_PAGE_RENAME_KEY_5									7
+#define GDDC_PAGE_RENMAE_KEY_6									8
+#define GDDC_PAGE_RENAME_KEY_7									9
+#define GDDC_PAGE_RENAME_KEY_8									10
+#define GDDC_PAGE_RENAME_KEY_9									11
+#define GDDC_PAGE_RENAME_KEY_0									12
+#define GDDC_PAGE_RENAME_KEY_Q									26
+#define GDDC_PAGE_RENAME_KEY_W									27	
+#define GDDC_PAGE_RENAME_KEY_E									28
+#define GDDC_PAGE_RENAME_KEY_R									29
+#define GDDC_PAGE_RENAME_KEY_T									30
+#define GDDC_PAGE_RENAME_KEY_Y									31
+#define GDDC_PAGE_RENAME_KEY_U									32
+#define GDDC_PAGE_RENAME_KEY_I									33
+#define GDDC_PAGE_RENAME_KEY_O									34
+#define GDDC_PAGE_RENAME_KEY_P									15
+#define GDDC_PAGE_RENAME_KEY_A									16
+#define GDDC_PAGE_RENAME_KEY_S									17
+#define GDDC_PAGE_RENAME_KEY_D									18
+#define GDDC_PAGE_RENAME_KEY_F									19
+#define GDDC_PAGE_RENAME_KEY_G									20
+#define GDDC_PAGE_RENAME_KEY_H									21
+#define GDDC_PAGE_RENAME_KEY_J									22
+#define GDDC_PAGE_RENAME_KEY_K									23
+#define GDDC_PAGE_RENAME_KEY_L									24
+#define GDDC_PAGE_RENAME_KEY_ADDDEC								25
+#define GDDC_PAGE_RENAME_KEY_SHIFT								35
+#define GDDC_PAGE_RENAME_KEY_Z									36
+#define GDDC_PAGE_RENAME_KEY_X									37
+#define GDDC_PAGE_RENAME_KEY_C									38
+#define GDDC_PAGE_RENAME_KEY_V									39
+#define GDDC_PAGE_RENAME_KEY_SPACE								40
+#define GDDC_PAGE_RENAME_KEY_B									41
+#define GDDC_PAGE_RENAME_KEY_N									42
+#define GDDC_PAGE_RENAME_KEY_M									43
+#define GDDC_PAGE_RENAME_KEY_DOT								44
+/*****************************************************************************/
 #endif

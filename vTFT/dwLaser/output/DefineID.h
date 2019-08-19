@@ -652,7 +652,10 @@
 
 #define  _BTN_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_HAND_SWITCH_ON         10
 
-#define  _BTN_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_ENTER_DIAGNOSIS         11
+//画面18_GDDC_PAGE_OPTION_0中按钮GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER弹起时的图片
+#define  _IMG_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER_UP         23
+
+#define  _BTN_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER         11
 
 #define  _TXT_DIS__18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_TEXTDISPLAY_BEEM_VOLUME         16
 
@@ -663,10 +666,10 @@
 #define  _BTN_18_GDDC_PAGE_OPTION_0_GDDC_PAGE_OPTION_KEY_RESTORE              19
 
 //画面20_GDDC_PAGE_SCHEME_0的背景图片
-#define  _IMG_20_GDDC_PAGE_SCHEME_0                                           23
+#define  _IMG_20_GDDC_PAGE_SCHEME_0                                           24
 
 //全局图片21_gddc_page_scheme_1.jpg
-#define  _IMG_21_GDDC_PAGE_SCHEME_1_JPG                                       24
+#define  _IMG_21_GDDC_PAGE_SCHEME_1_JPG                                       25
 
 #define  _BTN_20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_KEY_SELECT_5              9
 
@@ -745,31 +748,31 @@
 #define  _TXT_DIS__20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL0         36
 
 //画面20_GDDC_PAGE_SCHEME_0中按钮GDDC_PAGE_SCHEME_KEY_LAST_PAGE弹起时的图片
-#define  _IMG_20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_KEY_LAST_PAGE_UP         25
+#define  _IMG_20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_KEY_LAST_PAGE_UP         26
 
 //画面20_GDDC_PAGE_SCHEME_0中按钮GDDC_PAGE_SCHEME_KEY_LAST_PAGE按下时的图片
-#define  _IMG_20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_KEY_LAST_PAGE_DOWN         26
+#define  _IMG_20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_KEY_LAST_PAGE_DOWN         27
 
 #define  _BTN_20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_KEY_LAST_PAGE            39
 
 //画面20_GDDC_PAGE_SCHEME_0中按钮GDDC_PAGE_SCHEME_KEY_NEXT_PAGE弹起时的图片
-#define  _IMG_20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_KEY_NEXT_PAGE_UP         27
+#define  _IMG_20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_KEY_NEXT_PAGE_UP         28
 
 //画面20_GDDC_PAGE_SCHEME_0中按钮GDDC_PAGE_SCHEME_KEY_NEXT_PAGE按下时的图片
-#define  _IMG_20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_KEY_NEXT_PAGE_DOWN         28
+#define  _IMG_20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_KEY_NEXT_PAGE_DOWN         29
 
 #define  _BTN_20_GDDC_PAGE_SCHEME_0_GDDC_PAGE_SCHEME_KEY_NEXT_PAGE            40
 
 //画面22_GDDC_PAGE_INFORMATION_0的背景图片
-#define  _IMG_22_GDDC_PAGE_INFORMATION_0                                      29
+#define  _IMG_22_GDDC_PAGE_INFORMATION_0                                      30
 
 //全局图片23_gddc_page_information_1.jpg
-#define  _IMG_23_GDDC_PAGE_INFORMATION_1_JPG                                  30
+#define  _IMG_23_GDDC_PAGE_INFORMATION_1_JPG                                  31
 
 #define  _BTN_22_GDDC_PAGE_INFORMATION_0_GDDC_PAGE_INFORMATION_KEY_ENTER_OK          1
 
 //画面24_GDDC_PAGE_DIAGNOSIS_0的背景图片
-#define  _IMG_24_GDDC_PAGE_DIAGNOSIS_0                                        31
+#define  _IMG_24_GDDC_PAGE_DIAGNOSIS_0                                        32
 
 #define  _TXT_DIS__24_GDDC_PAGE_DIAGNOSIS_0_GDDC_PAGE_DIAGNOSIS_TEXTDISPLAY_X_INTERLOCK          1
 
@@ -861,13 +864,13 @@
 
 #define  _TXT_DIS__24_GDDC_PAGE_DIAGNOSIS_0_GDDC_PAGE_DIAGNOSIS_TEXTDISPLAY_DT1         52
 
-//画面26_GDDC_PAGE_SCHEME_RENAME_0中图片Image1使用的图片
-#define  _IMG_26_GDDC_PAGE_SCHEME_RENAME_0_IMAGE1                             32
+//画面26_GDDC_PAGE_SCHEME_RENAME_0的背景图片
+#define  _IMG_26_GDDC_PAGE_SCHEME_RENAME_0                                    33
 
 #define  _TXT_DIS__26_GDDC_PAGE_SCHEME_RENAME_0_TEXT_DISPLAY1                  1
 
-//全局图片full_640_363_down.jpg
-#define  _IMG_FULL_640_363_DOWN_JPG                                           33
+//全局图片full_800_600_down.jpg
+#define  _IMG_FULL_800_600_DOWN_JPG                                           34
 
 #define  _BTN_26_GDDC_PAGE_SCHEME_RENAME_0_BUTTON1                            70
 

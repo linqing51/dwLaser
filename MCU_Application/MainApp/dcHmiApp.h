@@ -25,6 +25,7 @@
 #define FSMSTEP_INFORMATION											700
 #define FSMSTEP_SCHEME												800//方案菜单
 #define FSMSTEP_DIAGNOSIS  											900//诊断菜单
+#define FSMSTEP_RENAME												1000
 #define FSMSTEP_CORRECTION											10000//功率校正
 /*****************************************************************************/
 #define FLASH_DATA_VERSION  										0XAABB0000
@@ -62,9 +63,10 @@ void standbyTouchEnable(int8_t enable);
 void updatePowerDisplay(int16_t ch, int16_t mode);
 void updataPosWidthDisplay(int16_t mode);
 void updataNegWidthDisplay(int16_t mode);
-void updataGroupOff(void);
+void updataGroupOffDisplay(void);
 void updateSchemeDisplay(void);
 void unselectSchemeNum(sel);
 void seletcSchemeNum(uint16_t sel);
+void unselectSchemeAll(void);
 void updateReleaseTimeEnergy(void);
 #endif
