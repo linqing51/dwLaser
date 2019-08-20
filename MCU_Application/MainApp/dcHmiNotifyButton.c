@@ -1989,27 +1989,27 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 			}
 			break;
 		}
-		case GDDC_PAGE_SCHEME:{
+		case GDDC_PAGE_SCHEME_0:{
 			switch(control_id){
-				case GDDC_PAGE_SCHEME_KEY_RENAME:{
+				case GDDC_PAGE_SCHEME_0_KEY_RENAME:{
 					if(state){
 						SET(R_SCHEME_KEY_RENAME_DOWN);
 					}
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_OK:{
+				case GDDC_PAGE_SCHEME_0_KEY_OK:{
 					if(state){
 						SET(R_SCHEME_KEY_OK_DOWN);
 					}
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_CANCEL:{
+				case GDDC_PAGE_SCHEME_0_KEY_CANCEL:{
 					if(state){
 						SET(R_SCHEME_KEY_CANCEL_DOWN);
 					}
 					break;
-				}	
-				case GDDC_PAGE_SCHEME_KEY_SELECT_0:{
+				}
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_0:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 0){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 0;
@@ -2018,7 +2018,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}	
-				case GDDC_PAGE_SCHEME_KEY_SELECT_1:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_1:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 1){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 1;
@@ -2027,7 +2027,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_2:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_2:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 2){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 2;
@@ -2036,7 +2036,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_3:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_3:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 3){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 3;
@@ -2045,7 +2045,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_4:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_4:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 4){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 4;
@@ -2054,7 +2054,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_5:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_5:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 5){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 5;
@@ -2063,7 +2063,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_6:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_6:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 6){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 6;
@@ -2072,7 +2072,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_7:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_7:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 7){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 7;
@@ -2081,7 +2081,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_8:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_8:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 8){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 8;
@@ -2090,7 +2090,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_9:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_9:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 9){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 9;
@@ -2099,7 +2099,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_10:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_10:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 10){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 10;
@@ -2108,7 +2108,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}						
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_11:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_11:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 11){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 11;
@@ -2117,7 +2117,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_12:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_12:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 12){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 12;
@@ -2126,7 +2126,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_13:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_13:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 13){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 13;
@@ -2135,7 +2135,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}					
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_14:{	
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_14:{	
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 14){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 14;
@@ -2144,7 +2144,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}				
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_SELECT_15:{
+				case GDDC_PAGE_SCHEME_0_KEY_SELECT_15:{
 					if(state){
 						if(NVRAM0[EM_SCHEME_NUM_TMP] != 15){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 15;
@@ -2153,10 +2153,190 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+				case GDDC_PAGE_SCHEME_0_KEY_NEXT_PAGE:{
+					if(state){
+						SET(R_SCHEME_KEY_NEXT_SCHEME);
+					}
+					break;
+				}
+				case GDDC_PAGE_SCHEME_0_KEY_LAST_PAGE:{
+					if(state){
+						SET(R_SCHEME_KEY_LAST_SCHEME);
+					}
+					break;
+				}
 				default:break;
 			}
 			break;
 		}
+		case GDDC_PAGE_SCHEME_1:{
+			switch(control_id){
+				case GDDC_PAGE_SCHEME_1_KEY_RENAME:{
+					if(state){
+						SET(R_SCHEME_KEY_RENAME_DOWN);
+					}
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_OK:{
+					if(state){
+						SET(R_SCHEME_KEY_OK_DOWN);
+					}
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_CANCEL:{
+					if(state){
+						SET(R_SCHEME_KEY_CANCEL_DOWN);
+					}
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_0:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 16){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 16;
+							updateSchemeInfo(16);
+						}
+					}
+					break;
+				}	
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_1:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 17){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 17;
+							updateSchemeInfo(17);
+						}
+					}
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_2:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 18){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 18;
+							updateSchemeInfo(18);
+						}
+					}					
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_3:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 19){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 19;
+							updateSchemeInfo(19);
+						}
+					}					
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_4:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 20){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 20;
+							updateSchemeInfo(20);
+						}
+					}					
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_5:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 21){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 21;
+							updateSchemeInfo(21);
+						}
+					}					
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_6:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 22){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 22;
+							updateSchemeInfo(22);
+						}
+					}					
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_7:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 23){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 23;
+							updateSchemeInfo(23);
+						}
+					}
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_8:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 24){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 24;
+							updateSchemeInfo(24);
+						}
+					}					
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_9:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 25){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 25;
+							updateSchemeInfo(25);
+						}
+					}					
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_10:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 26){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 26;
+							updateSchemeInfo(26);
+						}
+					}						
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_11:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 27){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 27;
+							updateSchemeInfo(27);
+						}
+					}
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_12:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 28){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 28;
+							updateSchemeInfo(28);
+						}
+					}					
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_13:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 29){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 29;
+							updateSchemeInfo(29);
+						}
+					}					
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_14:{	
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 30){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 30;
+							updateSchemeInfo(30);
+						}
+					}				
+					break;
+				}
+				case GDDC_PAGE_SCHEME_1_KEY_SELECT_15:{
+					if(state){
+						if(NVRAM0[EM_SCHEME_NUM_TMP] != 31){
+							NVRAM0[EM_SCHEME_NUM_TMP] = 31;
+							updateSchemeInfo(31);
+						}
+					}
+					break;
+				}
+				default:break;
+			}
+			break;
+		}		
 //		case GDDC_PAGE_RENAME:{
 //			switch(control_id){
 //				case GDDC_PAGE_RENAME_KEY_ENTER:{

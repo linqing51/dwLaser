@@ -23,7 +23,9 @@
 //选项状态
 #define FSMSTEP_OPTION												600//选项菜单
 #define FSMSTEP_INFORMATION											700
-#define FSMSTEP_SCHEME												800//方案菜单
+#define FSMSTEP_SCHEME_0											800//方案菜单第一页
+#define FSMSTEP_SCHEME_1											810//方案菜单第二页
+
 #define FSMSTEP_DIAGNOSIS  											900//诊断菜单
 #define FSMSTEP_RENAME												1000
 #define FSMSTEP_CORRECTION											10000//功率校正
@@ -64,10 +66,16 @@ void updatePowerDisplay(int16_t ch, int16_t mode);
 void updatePosWidthDisplay(int16_t mode);
 void updateNegWidthDisplay(int16_t mode);
 void updateGroupOffDisplay(void);
-void updateSchemeDisplay(void);
-void unselectSchemeNum(sel);
-void seletcSchemeNum(uint16_t sel);
-void unselectSchemeAll(void);
+/*****************************************************************************/
+void updateScheme_0_Display(void);
+void updateScheme_1_Display(void);
+void unselectScheme_0_All(void);
+void unselectScheme_1_All(void);
+void seletcSchemeNum(int16_t sel);
+void unselectSchemeNum(int16_t sel);
+/*****************************************************************************/
 void updateReleaseTimeEnergy(void);
 void updateSchemeInfo(int16_t cn);
+void updateWarnMsgDisplay(uint8_t id);
+void returnStandbyDisplay(void);
 #endif
