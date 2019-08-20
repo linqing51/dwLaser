@@ -55,7 +55,7 @@ void saveNvram(void){//强制将NVRAM存入EPROM
 	epromWrite(CONFIG_EPROM_NVRAM_START, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));
 #endif
 }
-void updataNvram(void){//更新NVRAM->EPROM
+void updateNvram(void){//更新NVRAM->EPROM
 	uint8_t *sp0, *sp1;
 	uint16_t i;
 	sp0 = (uint8_t*)NVRAM0;
@@ -307,7 +307,7 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 #if CONFIG_SPLC_USING_CH376 == 1
 	sPlcUsbPoll();
 #endif
-	updataNvram();//更新NVRAM
+	updateNvram();//更新NVRAM
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();//喂狗
 #endif

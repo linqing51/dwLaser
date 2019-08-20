@@ -61,13 +61,13 @@ void dcHmiLoopInit(void);
 void updateStandbyDisplay(void);
 void standbyTouchEnable(int8_t enable);
 void updatePowerDisplay(int16_t ch, int16_t mode);
-void updataPosWidthDisplay(int16_t mode);
-void updataNegWidthDisplay(int16_t mode);
-void updataGroupOffDisplay(void);
+void updatePosWidthDisplay(int16_t mode);
+void updateNegWidthDisplay(int16_t mode);
+void updateGroupOffDisplay(void);
 void updateSchemeDisplay(void);
 void unselectSchemeNum(sel);
 void seletcSchemeNum(uint16_t sel);
 void unselectSchemeAll(void);
 void updateReleaseTimeEnergy(void);
-void updataSchemeInfo(int16_t cn);
+void updateSchemeInfo(int16_t cn);
 #endif

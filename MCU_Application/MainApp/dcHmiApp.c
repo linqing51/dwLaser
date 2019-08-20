@@ -15,7 +15,7 @@ code char *LANG_WARN_MSG_ENVI_HTEMP = "Envi High Temperature";//环境温度过高
 code char *LANG_WARN_MSG_FOOT_DEPRESSED = "Foot/finger switch is depressed";//脚踏按下去没弹起来
 code char *LANG_WARN_MSG_LASER_EMIT = "Laser is firing";//激光正在发射
 code char *LANG_WARN_MSG_WAIT_TRIGGER = "Wait Laser Trigger";//等待激光触发
-code char *LANG_WARN_MSG_FIBER_MISSMATE = "fiber not mate";
+code char *LANG_WARN_MSG_FIBER_MISSMATE = "Fiber not mate";
 /*****************************************************************************/
 uint8_t hmiCmdBuffer[CMD_MAX_SIZE];//指令缓存
 uint16_t data hmiCmdSize;//已缓冲的指令数
@@ -28,6 +28,28 @@ void updateWarnMsgDisplay(uint8_t id);
 void returnStandbyDisplay(void);
 /*****************************************************************************/
 #if CONFIG_USING_DCHMI_APP == 1
+void updateEnergyDensity(void){
+	fp32_t ftemp;
+	ftemp = (fp32_t)NVRAM0[EM_TOTAL_POWER];
+	switch(NVRAM0[EM_LASER_SELECT]){	
+		case DERMA_SPOT_SIZE_0MM5:{
+			SetTextInt32(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_ENERGY_DENSITY , (int32_t)(ftemp / 0.00019625F), 1, 0);
+			break;
+		}
+		case DERMA_SPOT_SIZE_1MM0:{
+			SetTextInt32(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_ENERGY_DENSITY, (int32_t)(ftemp / 0.000785F), 1 , 0);
+			break;
+		}
+		case DERMA_SPOT_SIZE_2MM0:{
+			SetTextInt32(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_ENERGY_DENSITY, (int32_t)(ftemp / 0.00314926F), 1 , 0);
+			break;
+		}
+		case DERMA_SPOT_SIZE_3MM0:{
+			SetTextInt32(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_ENERGY_DENSITY, (int32_t)(ftemp / 0.00706853), 1 , 0);
+			break;
+		}
+	}
+}
 void updateSchemeDisplay(void){//更新选项界面方案名称
 	char dispBuf[32];
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_0]), 30);
@@ -235,7 +257,7 @@ void updateWarnMsgDisplay(uint8_t id){//更新警号显示框
 		MsgId = id;
 	}
 }
-void updataSchemeInfo(int16_t cn){//更新SCHEME 详细参数
+void updateSchemeInfo(int16_t cn){//更新SCHEME 详细参数
 	char dispBuf1[64], dispBuf2[64];
 	int16_t mode;
 	int16_t	power0;
@@ -244,7 +266,6 @@ void updataSchemeInfo(int16_t cn){//更新SCHEME 详细参数
 	int16_t negWidth;
 	int16_t times;
 	int16_t	groupOff;
-	int16_t spotSize;
 	int16_t energyInterval;
 	mode = FDRAM[cn * 30 + FD_LASER_PULSE_MODE]; 
 	power0 = FDRAM[cn * 30 + FD_LASER_POWER_CH0];
@@ -326,7 +347,7 @@ void unselectSchemeAll(void){//反选全部方案条
 void seletcSchemeNum(uint16_t sel){//选中方案条
 	SetButtonValue(GDDC_PAGE_SCHEME, (GDDC_PAGE_SCHEME_KEY_SELECT_0 + sel), 0x1);
 	NVRAM0[EM_SCHEME_NUM_TMP] = sel;
-	updataSchemeInfo(NVRAM0[EM_SCHEME_NUM_TMP]);
+	updateSchemeInfo(NVRAM0[EM_SCHEME_NUM_TMP]);
 }
 void standbyTouchEnable(int8_t enable){//使能STANDBY界面触摸
 	if(StandbyTouchState != enable){
@@ -723,17 +744,7 @@ void updateStandbyDisplay(void){//更新方案显示
 			updatePowerDisplay(LASER_SELECT_BOTH, LASER_MODE_CW);
 			SetProgressValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 			SetProgressValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
-			SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));
-			
-			BatchBegin(GDDC_PAGE_STANDBY_CW);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_CW, 0x01);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_MP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_GP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, 0x00);
-			BatchEnd();
-			
+			SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));				
 			switch(NVRAM0[EM_LASER_SELECT]){
 				case LASER_SELECT_CH0:{
 					BatchBegin(GDDC_PAGE_STANDBY_CW);
@@ -769,18 +780,7 @@ void updateStandbyDisplay(void){//更新方案显示
 			SetProgressValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 			SetProgressValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
 			SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));		
-			
-			BatchBegin(GDDC_PAGE_STANDBY_SP);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_CW, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SP, 0x01);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_MP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_GP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, 0x00);
-			BatchEnd();
-			
-			updataPosWidthDisplay(LASER_MODE_SP);
-			
+			updatePosWidthDisplay(LASER_MODE_SP);
 			switch(NVRAM0[EM_LASER_SELECT]){
 				case LASER_SELECT_CH0:{
 					BatchBegin(GDDC_PAGE_STANDBY_SP);
@@ -815,20 +815,9 @@ void updateStandbyDisplay(void){//更新方案显示
 			updatePowerDisplay(LASER_SELECT_BOTH, LASER_MODE_MP);
 			SetProgressValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 			SetProgressValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
-			SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));			
-			
-			BatchBegin(GDDC_PAGE_STANDBY_MP);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_CW, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_MP, 0x01);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_GP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, 0x00);
-			BatchEnd();
-			
-			updataPosWidthDisplay(LASER_MODE_MP);
-			updataNegWidthDisplay(LASER_MODE_MP);
-			
+			SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));				
+			updatePosWidthDisplay(LASER_MODE_MP);
+			updateNegWidthDisplay(LASER_MODE_MP);	
 			switch(NVRAM0[EM_LASER_SELECT]){
 				case LASER_SELECT_CH0:{
 					BatchBegin(GDDC_PAGE_STANDBY_MP);
@@ -863,26 +852,12 @@ void updateStandbyDisplay(void){//更新方案显示
 			updatePowerDisplay(LASER_SELECT_BOTH, LASER_MODE_GP);
 			SetProgressValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 			SetProgressValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
-			SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));			
-			
-			BatchBegin(GDDC_PAGE_STANDBY_GP);	
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_CW, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_MP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_GP, 0x01);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, 0x00);		
-			BatchEnd();
-			
-			updataPosWidthDisplay(LASER_MODE_GP);
-			updataNegWidthDisplay(LASER_MODE_GP);
-			
+			SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));				
+			updatePosWidthDisplay(LASER_MODE_GP);
+			updateNegWidthDisplay(LASER_MODE_GP);
 			sprintf(dispBuf, "%d", NVRAM0[EM_LASER_GP_TIMES]);
-			SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES, dispBuf);	
-			
-			updataGroupOffDisplay();
-	
-			
+			SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES, dispBuf);			
+			updateGroupOffDisplay();
 			switch(NVRAM0[EM_LASER_SELECT]){
 				case LASER_SELECT_CH0:{	
 					BatchBegin(GDDC_PAGE_STANDBY_GP);
@@ -917,63 +892,10 @@ void updateStandbyDisplay(void){//更新方案显示
 			updatePowerDisplay(LASER_SELECT_BOTH, LASER_MODE_DERMA);
 			SetProgressValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 			SetProgressValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
-			SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));				
-			
-			BatchBegin(GDDC_PAGE_STANDBY_DERMA);	
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_CW, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_MP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_GP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, 0x01);		
-			BatchEnd();
-			
-			updataPosWidthDisplay(LASER_MODE_DERMA);
-			updataNegWidthDisplay(LASER_MODE_DERMA);
-		
-			switch(NVRAM0[EM_LASER_DERMA_SPOT_SIZE]){
-				case DERMA_SPOT_SIZE_0MM5:{
-					BatchBegin(GDDC_PAGE_STANDBY_DERMA);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, 0x01);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, 0x00);
-					BatchEnd();
-					SetTextFloat(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_ENERGY_DENSITY, (((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10) / 0.0019625), 1 , 1);
-					break;
-				}
-				case DERMA_SPOT_SIZE_1MM0:{
-					BatchBegin(GDDC_PAGE_STANDBY_DERMA);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, 0x01);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, 0x00);
-					BatchEnd();
-					SetTextFloat(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_ENERGY_DENSITY, (((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10) / 0.00785), 1 , 1);
-					break;
-				}
-				case DERMA_SPOT_SIZE_2MM0:{
-					BatchBegin(GDDC_PAGE_STANDBY_DERMA);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, 0x01);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, 0x00);
-					BatchEnd();
-					SetTextFloat(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_ENERGY_DENSITY, (((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10) / 0.0314926), 1 , 1);
-					break;
-				}
-				case DERMA_SPOT_SIZE_3MM0:{
-					BatchBegin(GDDC_PAGE_STANDBY_DERMA);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, 0x01);
-					BatchEnd();
-					SetTextFloat(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_TEXTDISPLAY_ENERGY_DENSITY, (((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10) / 0.0706853), 1 , 1);
-					break;
-				}
-				default:break;
-			}
+			SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));					
+			updatePosWidthDisplay(LASER_MODE_DERMA);
+			updateNegWidthDisplay(LASER_MODE_DERMA);
+			updateEnergyDensity();
 			switch(NVRAM0[EM_LASER_SELECT]){
 				case LASER_SELECT_CH0:{
 					BatchBegin(GDDC_PAGE_STANDBY_DERMA);
@@ -1008,17 +930,7 @@ void updateStandbyDisplay(void){//更新方案显示
 			updatePowerDisplay(LASER_SELECT_BOTH, LASER_MODE_SIGNAL);
 			SetProgressValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 			SetProgressValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
-			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));			
-			
-			BatchBegin(GDDC_PAGE_STANDBY_SIGNAL);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_CW, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_MP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_GP, 0x00);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, 0x01);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, 0x00);
-			BatchEnd();
-			
+			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));				
 			SetTextInt32(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_ENERGY_INTERVAL ,NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL], 1, 0);
 			switch(NVRAM0[EM_LASER_SELECT]){
 				case LASER_SELECT_CH0:{
@@ -1054,15 +966,7 @@ void updateStandbyDisplay(void){//更新方案显示
 	SetScreen(NVRAM0[EM_DC_PAGE]);
 }
 
-void updateOptionDisplay(void){//更新选项显示
-	if(LD(R_ADMIN)){
-		SetControlVisiable(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER, true);//显示控件
-		SetControlEnable(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER ,true);//使能控件
-	}
-	else{
-		SetControlVisiable(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER, false);//隐藏控件
-		SetControlEnable(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER ,false);//禁止控件
-	}	
+void updateOptionDisplay(void){//更新选项显示	
 	if(LD(MR_FOOSWITCH_HAND_SWITCH)){
 		SetButtonValue(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_KEY_HAND_SWITCH_ON, 0x01);
 	}
@@ -1085,7 +989,7 @@ void updateOptionDisplay(void){//更新选项显示
 	SetTextInt32(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_TEXTDISPLAY_AIM_BRG ,NVRAM0[DM_AIM_BRG], 1, 0);
 }
 
-void updataPosWidthDisplay(uint16_t mode){//更新正脉宽显示
+void updatePosWidthDisplay(int16_t mode){//更新正脉宽显示
 	uint8_t dispBuf[16];
 	switch(mode){
 		case LASER_MODE_SP:{
@@ -1131,7 +1035,7 @@ void updataPosWidthDisplay(uint16_t mode){//更新正脉宽显示
 		default:break;
 	}
 }
-void updataNegWidthDisplay(uint16_t mode){//更新负脉宽显示
+void updateNegWidthDisplay(int16_t mode){//更新负脉宽显示
 	uint8_t dispBuf[16];
 	switch(mode){
 		case LASER_MODE_MP:{
@@ -1169,7 +1073,7 @@ void updataNegWidthDisplay(uint16_t mode){//更新负脉宽显示
 		default:break;
 	}
 }
-void updataGroupOffDisplay(void){//更新GroupOff显示
+void updateGroupOffDisplay(void){//更新GroupOff显示
 	uint8_t dispBuf[16];
 	if(NVRAM0[EM_LASER_GP_GROUP_OFF] < 1000){
 		sprintf(dispBuf, "%d mS", NVRAM0[EM_LASER_GP_GROUP_OFF]);
@@ -1378,7 +1282,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_POSWIDTH_ADD_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_SP_POSWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_SP_POSWIDTH]);	
-							updataPosWidthDisplay(LASER_MODE_SP);
+							updatePosWidthDisplay(LASER_MODE_SP);
 						}
 					}
 				}		
@@ -1387,7 +1291,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_POSWIDTH_DEC_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_SP_POSWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_SP_POSWIDTH]);	
-							updataPosWidthDisplay(LASER_MODE_SP);
+							updatePosWidthDisplay(LASER_MODE_SP);
 						}
 					}
 				}
@@ -1399,7 +1303,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_POSWIDTH_ADD_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_MP_POSWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_MP_POSWIDTH]);
-							updataPosWidthDisplay(LASER_MODE_MP);
+							updatePosWidthDisplay(LASER_MODE_MP);
 						}
 					}
 				}				
@@ -1408,7 +1312,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_POSWIDTH_DEC_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_MP_POSWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_MP_POSWIDTH]);	
-							updataPosWidthDisplay(LASER_MODE_MP);
+							updatePosWidthDisplay(LASER_MODE_MP);
 						}
 					}
 				}
@@ -1417,7 +1321,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_NEGWIDTH_ADD_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_MP_NEGWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_MP_NEGWIDTH]);
-							updataNegWidthDisplay(LASER_MODE_MP);
+							updateNegWidthDisplay(LASER_MODE_MP);
 						}
 					}
 				}
@@ -1426,7 +1330,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_NEGWIDTH_DEC_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_MP_NEGWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_MP_NEGWIDTH]);
-							updataNegWidthDisplay(LASER_MODE_MP);
+							updateNegWidthDisplay(LASER_MODE_MP);
 						}
 					}
 				}
@@ -1438,7 +1342,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_POSWIDTH_ADD_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_GP_POSWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_GP_POSWIDTH]);	
-							updataPosWidthDisplay(LASER_MODE_GP);
+							updatePosWidthDisplay(LASER_MODE_GP);
 						}
 					}
 				}				
@@ -1447,7 +1351,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_POSWIDTH_DEC_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_GP_POSWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_GP_POSWIDTH]);		
-							updataPosWidthDisplay(LASER_MODE_GP);
+							updatePosWidthDisplay(LASER_MODE_GP);
 						}
 					}
 				}
@@ -1456,7 +1360,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_NEGWIDTH_ADD_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_GP_NEGWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_GP_NEGWIDTH]);		
-							updataNegWidthDisplay(LASER_MODE_GP);
+							updateNegWidthDisplay(LASER_MODE_GP);
 						}
 					}
 				}
@@ -1465,7 +1369,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_NEGWIDTH_DEC_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_GP_NEGWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_GP_NEGWIDTH]);	
-							updataNegWidthDisplay(LASER_MODE_GP);
+							updateNegWidthDisplay(LASER_MODE_GP);
 						}
 					}
 				}
@@ -1496,7 +1400,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_GROUP_OFF_ADD_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_GP_GROUP_OFF] =	pulseWidthAdd(NVRAM0[EM_LASER_GP_GROUP_OFF]);	
-							updataGroupOffDisplay();			
+							updateGroupOffDisplay();			
 						}								
 					}
 				}
@@ -1505,7 +1409,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_GROUP_OFF_DEC_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_GP_GROUP_OFF] =	pulseWidthDec(NVRAM0[EM_LASER_GP_GROUP_OFF]);	
-							updataGroupOffDisplay();	
+							updateGroupOffDisplay();	
 						}
 					}
 				}
@@ -1517,7 +1421,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_POSWIDTH_ADD_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_DERMA_POSWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_DERMA_POSWIDTH]);		
-							updataPosWidthDisplay(LASER_MODE_DERMA);
+							updatePosWidthDisplay(LASER_MODE_DERMA);
 						}
 					}
 				}				
@@ -1526,7 +1430,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_POSWIDTH_DEC_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_DERMA_POSWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_DERMA_POSWIDTH]);	
-							updataPosWidthDisplay(LASER_MODE_DERMA);
+							updatePosWidthDisplay(LASER_MODE_DERMA);
 						}
 					}
 				}
@@ -1535,7 +1439,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_NEGWIDTH_ADD_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_DERMA_NEGWIDTH] = pulseWidthAdd(NVRAM0[EM_LASER_DERMA_NEGWIDTH]);	
-							updataNegWidthDisplay(LASER_MODE_DERMA);
+							updateNegWidthDisplay(LASER_MODE_DERMA);
 						}
 					}
 				}
@@ -1544,7 +1448,7 @@ void dcHmiLoop(void){//HMI轮训程序
 					if(LD(T_10MS_START * 16 + T10MS_NEGWIDTH_DEC_KEYDOWN_DELAY)){	
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							NVRAM0[EM_LASER_DERMA_NEGWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_DERMA_NEGWIDTH]);
-							updataNegWidthDisplay(LASER_MODE_DERMA);
+							updateNegWidthDisplay(LASER_MODE_DERMA);
 						}
 					}
 				}					

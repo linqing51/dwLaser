@@ -79,6 +79,7 @@
 #define EM_DC_DEFAULT_PASSCODE3					(EM_START + 73)//默认密码1				
 #define EM_DC_DISPLAY_RELEASE_TIME				(EM_START + 74)//显示发射时间			
 #define EM_DC_DISPLAY_RELEASE_ENERGY			(EM_START + 75)//显示发射能量
+#define EM_DC_SCHEME_PAGE						(EM_START + 76)//方案页面
 /*****************************************************************************/
 
 /*****************************************************************************/
@@ -248,7 +249,6 @@
 #define R_DRIVE_TEMP_HIGH										(R_START * 16 + 4)//驱动器高温标志
 #define R_ENVI_TEMP_HIGH										(R_START * 16 + 5)//环境温度标度
 #define R_FAULT													(R_START * 16 + 6)//故障标志
-#define R_ADMIN													(R_START * 16 + 7)//管理员模式
 //HMI相关状态
 #define R_DCHMI_RESET_REQ										(R_START * 16 + 20)//HMI复位请求
 #define R_DCHMI_RESET_DOING										(R_START * 16 + 21)//HMI复位中

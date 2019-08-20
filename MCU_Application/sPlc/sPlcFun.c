@@ -429,7 +429,7 @@ void BCPY(uint16_t dist, uint16_t src, uint16_t length) {//块复制
 }
 void NVSAV(void){//强制立即更新NVRAM
 	disableSplcIsr();
-	updataNvram();
+	updateNvram();
 	enableSplcIsr();
 }
 void NVLOAD(void){
