@@ -288,7 +288,7 @@
 #define X_INTERLOCK												(X_START * 16 + 3)//XIN3 安全连锁
 //#define X_LDR_FAULT0											(X_START * 16 + 4)//XIN4 驱动器故障0
 //#define X_LDR_FAULT1											(X_START * 16 + 5)//XIN5 驱动器故障1
-#define X_FIBER_PROBE											(X_START * 16 + 6)//XIN6 光纤探测0
+#define X_FIBER_PROBE											(X_START * 16 + 7)//XIN6 光纤探测0
 //#define X_FBD1												(X_START * 16 + 7)//XIN7 光纤探测1
 /*****************************************************************************/
 #define Y_LED_POWERON											(Y_START * 16 + 0)//YOUT0 电源灯
@@ -316,6 +316,7 @@
 #define R_DISABLE_RFID											(R_START * 16 + 16)//蜂鸣器模式
 #define R_DISABLE_FIBER_PROBE									(R_START * 16 + 17)//蜂鸣器模式
 #define R_DISABLE_FAN_SPEED										(R_START * 16 + 18)//蜂鸣器模式
+#define R_ENGINEER_MODE											(R_START * 16 + 19)//工程师模式
 //HMI相关状态
 #define R_DCHMI_RESET_REQ										(R_START * 16 + 20)//HMI复位请求
 #define R_DCHMI_RESET_DOING										(R_START * 16 + 21)//HMI复位中

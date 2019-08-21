@@ -968,92 +968,94 @@
 //»­ÃæGDDC_PAGE_RENAMEµÄ±³¾°Í¼Æ¬
 #define  _IMG_GDDC_PAGE_RENAME                                                33
 
-#define  _TXT_DIS__GDDC_PAGE_RENAME_TEXT_DISPLAY1                              1
+#define  _TXT_DIS__GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_TEXTDISPLAY_NEWNAME          1
 
 //È«¾ÖÍ¼Æ¬full_800_600_down.jpg
 #define  _IMG_FULL_800_600_DOWN_JPG                                           34
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON1                                        70
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_1                         70
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON2                                         4
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_2                          4
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON3                                         5
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_3                          5
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON4                                         6
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_4                          6
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON5                                         7
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_5                          7
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON6                                         8
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_6                          8
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON7                                         9
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_7                          9
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON8                                        10
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_8                         10
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON9                                        11
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_9                         11
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON10                                       12
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_0                         12
 
 #define  _BTN_GDDC_PAGE_RENAME_BUTTON11                                       13
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON12                                        2
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_ENTER                      2
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON13                                       15
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_P                         15
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON14                                       16
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_A                         16
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON15                                       17
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_S                         17
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON16                                       18
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_D                         18
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON17                                       19
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_F                         19
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON18                                       20
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_G                         20
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON19                                       21
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_H                         21
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON20                                       22
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_J                         22
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON21                                       23
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_K                         23
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON22                                       24
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_L                         24
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON23                                       25
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_ADDDEC                    25
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON24                                       26
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_Q                         26
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON25                                       27
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_W                         27
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON26                                       28
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_E                         28
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON27                                       29
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_R                         29
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON28                                       30
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_T                         30
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON29                                       31
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_Y                         31
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON30                                       32
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_U                         32
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON31                                       33
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_I                         33
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON32                                       34
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_O                         34
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON33                                       35
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_SHIFT                     35
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON34                                       36
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_Z                         36
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON35                                       37
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_X                         37
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON36                                       38
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_C                         38
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON37                                       39
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_V                         39
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON38                                       40
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_SPACE                     40
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON39                                       41
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_B                         41
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON40                                       42
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_N                         42
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON41                                       43
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_M                         43
 
-#define  _BTN_GDDC_PAGE_RENAME_BUTTON42                                       44
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_DOT                       44
+
+#define  _BTN_GDDC_PAGE_RENAME_GDDC_PAGE_RENAME_KEY_EXIT                       3
 

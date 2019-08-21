@@ -66,6 +66,7 @@ void updatePowerDisplay(int16_t ch, int16_t mode);
 void updatePosWidthDisplay(int16_t mode);
 void updateNegWidthDisplay(int16_t mode);
 void updateGroupOffDisplay(void);
+void updateOptionDisplay(void);
 /*****************************************************************************/
 void updateScheme_0_Display(void);
 void updateScheme_1_Display(void);

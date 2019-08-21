@@ -252,20 +252,18 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					break;
 				}
 				case GDDC_PAGE_PASSCODE_KEY_ENTER:{//按键ENTER
-					if((NVRAM0[EM_DC_NEW_PASSCODE0] == NVRAM0[DM_DC_OLD_PASSCODE0]) && (NVRAM0[EM_DC_NEW_PASSCODE1] == NVRAM0[DM_DC_OLD_PASSCODE1])){
+					if((NVRAM0[EM_DC_NEW_PASSCODE0] == NVRAM0[EM_DC_DEFAULT_PASSCODE0]) && (NVRAM0[EM_DC_NEW_PASSCODE1] == NVRAM0[EM_DC_DEFAULT_PASSCODE1])){
 						NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
-						SetControlVisiable(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER, false);//隐藏控件
-						SetControlEnable(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER ,false);//禁止控件
+						SET(R_ENGINEER_MODE);
+						updateStandbyDisplay();
+						standbyTouchEnable(true);										
+					}else if((NVRAM0[EM_DC_NEW_PASSCODE0] == NVRAM0[DM_DC_OLD_PASSCODE0]) && (NVRAM0[EM_DC_NEW_PASSCODE1] == NVRAM0[DM_DC_OLD_PASSCODE1])){
+						NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
+						RES(R_ENGINEER_MODE);
 						updateStandbyDisplay();
 						standbyTouchEnable(true);
 					}		
-					else if((NVRAM0[EM_DC_NEW_PASSCODE0] == NVRAM0[EM_DC_DEFAULT_PASSCODE0]) && (NVRAM0[EM_DC_NEW_PASSCODE1] == NVRAM0[EM_DC_DEFAULT_PASSCODE1])){
-						NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
-						SetControlVisiable(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER, true);//显示控件
-						SetControlEnable(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER ,true);//使能控件
-						updateStandbyDisplay();
-						standbyTouchEnable(true);										
-					}
+
 					CLR(EM_DC_NEW_PASSCODE0);//清空已输入密码
 					CLR(EM_DC_NEW_PASSCODE1);
 					CLR(EM_DC_PASSCODE_INDEX);//清空密码显示位索引 
@@ -1967,6 +1965,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_OPTION_KEY_RESTORE:{//恢复默认值
 					if(state){
 						loadDefault();
+						updateOptionDisplay();//更新Option显示
+						SetBackLight(getLcdDuty(NVRAM0[DM_LCD_BRG]));//更新背光亮度
 					}
 					break;
 				}
