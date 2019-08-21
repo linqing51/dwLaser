@@ -24,10 +24,10 @@ void NotifyText(uint16_t screen_id, uint16_t control_id, uint8_t *str){
 					}
 					TMPRAM[(tmp * 15) + 14] &= 0xFF00;
 					if(tmp < 16){
-						SetTextValue(GDDC_PAGE_SCHEME_0, (GDDC_PAGE_SCHEME_0_TEXTDISPLAY_SCHEME_0 + tmp), (uint8_t*)&TMPRAM[tmp * 15]);
+						SetTextValue(GDDC_PAGE_SCHEME_0, (GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0 + tmp), (uint8_t*)&TMPRAM[tmp * 15]);
 					}
 					else{
-						SetTextValue(GDDC_PAGE_SCHEME_1, (GDDC_PAGE_SCHEME_1_TEXTDISPLAY_SCHEME_0 + tmp - 16), (uint8_t*)&TMPRAM[tmp * 15]);
+						SetTextValue(GDDC_PAGE_SCHEME_1, (GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0 + tmp - 16), (uint8_t*)&TMPRAM[tmp * 15]);
 					}
 					SET(R_RENAME_TEXTDISPLAY_READ_DONE);
 					break;

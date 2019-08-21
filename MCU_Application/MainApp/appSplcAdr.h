@@ -286,10 +286,10 @@
 #define X_ESTOP													(X_START * 16 + 1)//XIN1 紧急停止开关
 #define X_FOOTSWITCH_NO											(X_START * 16 + 2)//XIN2 脚踏常开
 #define X_INTERLOCK												(X_START * 16 + 3)//XIN3 安全连锁
-#define X_LDR_FAULT0											(X_START * 16 + 4)//XIN4 驱动器故障0
-#define X_LDR_FAULT1											(X_START * 16 + 5)//XIN5 驱动器故障1
-#define X_FBD1													(X_START * 16 + 6)//XIN6 光纤探测0
-#define X_FBD0													(X_START * 16 + 7)//XIN7 光纤探测1
+//#define X_LDR_FAULT0											(X_START * 16 + 4)//XIN4 驱动器故障0
+//#define X_LDR_FAULT1											(X_START * 16 + 5)//XIN5 驱动器故障1
+#define X_FIBER_PROBE											(X_START * 16 + 6)//XIN6 光纤探测0
+//#define X_FBD1												(X_START * 16 + 7)//XIN7 光纤探测1
 /*****************************************************************************/
 #define Y_LED_POWERON											(Y_START * 16 + 0)//YOUT0 电源灯
 #define Y_LED_EMIT												(Y_START * 16 + 1)//YOUT1 激光指示灯
@@ -304,13 +304,18 @@
 #define Y_TEC0													(Y_START * 16 + 10)//YOUT10 制冷开关0
 #define Y_TEC1													(Y_START * 16 + 11)//YOUT11 制冷开关1
 /*****************************************************************************/
-#define R_FIBER_ID_PASS_0										(R_START * 16 + 0)//通道0光纤ID标志
-#define R_FIBER_ID_PASS_1										(R_START * 16 + 1)//通道1光纤ID标志
-#define R_DIODE_TEMP_HIGH_0										(R_START * 16 + 2)//通道0二极管高温标志
-#define R_DIODE_TEMP_HIGH_1										(R_START * 16 + 3)//通道1二极管高温标志
-#define R_DRIVE_TEMP_HIGH										(R_START * 16 + 4)//驱动器高温标志
-#define R_ENVI_TEMP_HIGH										(R_START * 16 + 5)//环境温度标度
-#define R_FAULT													(R_START * 16 + 6)//故障标志
+#define R_FOOTSWITCH_NC											(X_START * 16 + 0)//
+#define R_ESTOP													(X_START * 16 + 1)//
+#define R_INTERLOCK												(X_START * 16 + 2)//
+#define R_FIBER_PROBE											(X_START * 16 + 3)//
+#define R_RFID_PASS												(X_START * 16 + 4)
+#define R_DIODE_TEMP_HIGH										(R_START * 16 + 5)//通道0二极管高温标志
+#define R_DRIVE_TEMP_HIGH										(R_START * 16 + 6)//驱动器高温标志
+#define R_ENVI_TEMP_HIGH										(R_START * 16 + 7)//环境温度标度
+#define R_FAULT													(R_START * 16 + 8)//故障标志
+#define R_DISABLE_RFID											(R_START * 16 + 16)//蜂鸣器模式
+#define R_DISABLE_FIBER_PROBE									(R_START * 16 + 17)//蜂鸣器模式
+#define R_DISABLE_FAN_SPEED										(R_START * 16 + 18)//蜂鸣器模式
 //HMI相关状态
 #define R_DCHMI_RESET_REQ										(R_START * 16 + 20)//HMI复位请求
 #define R_DCHMI_RESET_DOING										(R_START * 16 + 21)//HMI复位中
@@ -321,7 +326,6 @@
 #define R_DCHMI_RESTORE_REQ										(R_START * 16 + 26)//HMI从FLASH中恢复设置请求
 #define R_DCHMI_RESTORE_DOING									(R_START * 16 + 27)//HMI从FLASH中恢复中
 #define R_DCHMI_RESTORE_DONE									(R_START * 16 + 28)//HMI从FLASH中恢复设置完成	
-
 #define R_DCHMI_DISPLAY_WARN									(R_START * 16 + 30)//HMI显示报警信息
 #define R_DCHMI_KEY_STANDBY_ENABLE								(R_START * 16 + 40)//STANDBY 使能
 /*****************************************************************************/
