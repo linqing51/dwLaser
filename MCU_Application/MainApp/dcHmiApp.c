@@ -712,7 +712,7 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 					SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
-				case LASER_SELECT_BOTH:{
+				case LASER_SELECT_ALL:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
@@ -740,7 +740,7 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 					SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
-				case LASER_SELECT_BOTH:{
+				case LASER_SELECT_ALL:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
@@ -769,7 +769,7 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 					SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
-				case LASER_SELECT_BOTH:{
+				case LASER_SELECT_ALL:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
@@ -798,7 +798,7 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 					SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
-				case LASER_SELECT_BOTH:{
+				case LASER_SELECT_ALL:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
@@ -828,7 +828,7 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 					SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
-				case LASER_SELECT_BOTH:{
+				case LASER_SELECT_ALL:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
@@ -857,7 +857,7 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 					SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
-				case LASER_SELECT_BOTH:{
+				case LASER_SELECT_ALL:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
@@ -880,7 +880,7 @@ void updateStandbyDisplay(void){//更新方案显示
 	switch(NVRAM0[EM_LASER_PULSE_MODE]){
 		case LASER_MODE_CW:{
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY_CW;//切换待机页面						
-			updatePowerDisplay(LASER_SELECT_BOTH, LASER_MODE_CW);
+			updatePowerDisplay(LASER_SELECT_ALL, LASER_MODE_CW);
 			SetProgressValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 			SetProgressValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
 			SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));				
@@ -901,7 +901,7 @@ void updateStandbyDisplay(void){//更新方案显示
 					BatchEnd();
 					break;
 				}
-				case LASER_SELECT_BOTH:{
+				case LASER_SELECT_ALL:{
 					BatchBegin(GDDC_PAGE_STANDBY_CW);
 					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
@@ -915,7 +915,7 @@ void updateStandbyDisplay(void){//更新方案显示
 		}
 		case LASER_MODE_SP:{
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY_SP;//切换待机页面		
-			updatePowerDisplay(LASER_SELECT_BOTH, LASER_MODE_SP);	
+			updatePowerDisplay(LASER_SELECT_ALL, LASER_MODE_SP);	
 			SetProgressValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 			SetProgressValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
 			SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));		
@@ -937,7 +937,7 @@ void updateStandbyDisplay(void){//更新方案显示
 					BatchEnd();
 					break;
 				}
-				case LASER_SELECT_BOTH:{
+				case LASER_SELECT_ALL:{
 					BatchBegin(GDDC_PAGE_STANDBY_SP);
 					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
@@ -951,7 +951,7 @@ void updateStandbyDisplay(void){//更新方案显示
 		}
 		case LASER_MODE_MP:{
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY_MP;//切换待机页面
-			updatePowerDisplay(LASER_SELECT_BOTH, LASER_MODE_MP);
+			updatePowerDisplay(LASER_SELECT_ALL, LASER_MODE_MP);
 			SetProgressValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 			SetProgressValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
 			SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));				
@@ -974,7 +974,7 @@ void updateStandbyDisplay(void){//更新方案显示
 					BatchEnd();
 					break;
 				}
-				case LASER_SELECT_BOTH:{
+				case LASER_SELECT_ALL:{
 					BatchBegin(GDDC_PAGE_STANDBY_MP);
 					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
@@ -988,7 +988,7 @@ void updateStandbyDisplay(void){//更新方案显示
 		}
 		case LASER_MODE_GP:{
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY_GP;//切换待机页面
-			updatePowerDisplay(LASER_SELECT_BOTH, LASER_MODE_GP);
+			updatePowerDisplay(LASER_SELECT_ALL, LASER_MODE_GP);
 			SetProgressValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 			SetProgressValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
 			SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));				
@@ -1014,7 +1014,7 @@ void updateStandbyDisplay(void){//更新方案显示
 					BatchEnd();
 					break;
 				}
-				case LASER_SELECT_BOTH:{
+				case LASER_SELECT_ALL:{
 					BatchBegin(GDDC_PAGE_STANDBY_GP);
 					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
@@ -1028,7 +1028,7 @@ void updateStandbyDisplay(void){//更新方案显示
 		}
 		case LASER_MODE_DERMA:{
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY_DERMA;//切换待机页面
-			updatePowerDisplay(LASER_SELECT_BOTH, LASER_MODE_DERMA);
+			updatePowerDisplay(LASER_SELECT_ALL, LASER_MODE_DERMA);
 			SetProgressValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 			SetProgressValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
 			SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));					
@@ -1052,7 +1052,7 @@ void updateStandbyDisplay(void){//更新方案显示
 					BatchEnd();
 					break;
 				}
-				case LASER_SELECT_BOTH:{
+				case LASER_SELECT_ALL:{
 					BatchBegin(GDDC_PAGE_STANDBY_DERMA);
 					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
@@ -1066,7 +1066,7 @@ void updateStandbyDisplay(void){//更新方案显示
 		}
 		case LASER_MODE_SIGNAL:{
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_STANDBY_SIGNAL;//切换待机页面
-			updatePowerDisplay(LASER_SELECT_BOTH, LASER_MODE_SIGNAL);
+			updatePowerDisplay(LASER_SELECT_ALL, LASER_MODE_SIGNAL);
 			SetProgressValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 			SetProgressValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
 			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));				
@@ -1088,7 +1088,7 @@ void updateStandbyDisplay(void){//更新方案显示
 					BatchEnd();
 					break;
 				}
-				case LASER_SELECT_BOTH:{
+				case LASER_SELECT_ALL:{
 					BatchBegin(GDDC_PAGE_STANDBY_SIGNAL);
 					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
 					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
@@ -1916,6 +1916,8 @@ void dcHmiLoop(void){//HMI轮训程序
 		}
 		else if(LD(R_SCHEME_KEY_NEXT_SCHEME)){//第一页->第二页
 			updateScheme_1_Display();//更新第二页
+			seletcSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);//更新选中条
+			updateSchemeInfo(NVRAM0[EM_SCHEME_NUM_TMP]);//更新选中详细信息
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_SCHEME_1;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_SCHEME_1;
 			SetScreen(NVRAM0[EM_DC_PAGE]);
@@ -1948,6 +1950,8 @@ void dcHmiLoop(void){//HMI轮训程序
 		}
 		else if(LD(R_SCHEME_KEY_LAST_SCHEME)){//第二页->第一页
 			updateScheme_0_Display();//更新第一页
+			seletcSchemeNum(NVRAM0[EM_SCHEME_NUM_TMP]);//更新选中条
+			updateSchemeInfo(NVRAM0[EM_SCHEME_NUM_TMP]);//更新选中详细信息
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_SCHEME_0;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_SCHEME_0;
 			SetScreen(NVRAM0[EM_DC_PAGE]);

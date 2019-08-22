@@ -139,26 +139,7 @@
 #define CONFIG_CHECK_DELAY_TIME									10
 #define CONFIG_KEY_REPEAT_DELAY_TIME							50
 #define CONFIG_SCHEME_FILE_NAME									"/dwLaser.txt"
-#define CONFIG_MAX_LASERPOWER_CH0								300//通道0最大激光功率
-#define CONFIG_MIN_LASERPOWER_CH0								0//通道0最小激光功率
-#define CONFIG_MAX_LASER_DAC_CH0								0xFFF//
-#define CONFIG_MAX_LASER_DAC_CH1								0xFFF//
-#define CONFIG_MAX_LASERPOWER_CH1								150//通道1最大激光功率
-#define CONFIG_MIN_LASERPOWER_CH1								0//通道1最小激光功率
-#define CONFIG_MAX_LASER_TIMES									20//最大可计数脉冲数
-#define CONFIG_MIN_LASER_TIMES									1//最小可计数脉冲数
-#define CONFIG_MAX_LASER_ENERGY_INTERVAL						1000
-#define CONFIG_MIN_LASER_ENERGY_INTERVAL						100
-#define CONFIG_MAX_AIM_BRG										100//红光最大调光占空比
-#define CONFIG_MIN_AIM_BRG										0//红光最小调光占空比
-#define CONFIG_MAX_BEEM_VOLUME									100//蜂鸣器最大音量
-#define CONFIG_MIN_BEEM_VOLUME									0//蜂鸣器最小音量
-#define CONFIG_MAX_LCD_BRG										100//屏幕亮度最大值
-#define CONFIG_MIN_LCD_BRG										0//屏幕亮度最小值
-#define CONFIG_COOL_SET_TEMP									250//冷却温度
-#define CONFIG_COOL_DIFF_TEMP									20//冷却温度变化范围
 /*****************************************************************************/
-#define POWER_REAL_CH0_0P										0
 #define POWER_REAL_CH0_5P										200
 #define POWER_REAL_CH0_10P										400
 #define POWER_REAL_CH0_15P										600
@@ -180,7 +161,6 @@
 #define POWER_REAL_CH0_95P										3800
 #define POWER_REAL_CH0_100P										4000
 /*****************************************************************************/
-#define POWER_REAL_CH1_0P										0
 #define POWER_REAL_CH1_5P										150
 #define POWER_REAL_CH1_10P										300
 #define POWER_REAL_CH1_15P										450
@@ -201,6 +181,48 @@
 #define POWER_REAL_CH1_90P										3600
 #define POWER_REAL_CH1_95P										3800
 #define POWER_REAL_CH1_100P										4000
+/*****************************************************************************/
+#define POWER_REAL_CH2_5P										150
+#define POWER_REAL_CH2_10P										300
+#define POWER_REAL_CH2_15P										450
+#define POWER_REAL_CH2_20P										800
+#define POWER_REAL_CH2_25P										1000
+#define POWER_REAL_CH2_30P										1200
+#define POWER_REAL_CH2_35P										1400
+#define POWER_REAL_CH2_40P										1600
+#define POWER_REAL_CH2_45P										1800
+#define POWER_REAL_CH2_50P										2000
+#define POWER_REAL_CH2_55P										2200
+#define POWER_REAL_CH2_60P										2400
+#define POWER_REAL_CH2_65P										2600
+#define POWER_REAL_CH2_70P										2800
+#define POWER_REAL_CH2_75P										3000
+#define POWER_REAL_CH2_80P										3200
+#define POWER_REAL_CH2_85P										3400
+#define POWER_REAL_CH2_90P										3600
+#define POWER_REAL_CH2_95P										3800
+#define POWER_REAL_CH2_100P										4000
+/*****************************************************************************/
+#define POWER_REAL_CH3_5P										150
+#define POWER_REAL_CH3_10P										300
+#define POWER_REAL_CH3_15P										450
+#define POWER_REAL_CH3_20P										800
+#define POWER_REAL_CH3_25P										1000
+#define POWER_REAL_CH3_30P										1200
+#define POWER_REAL_CH3_35P										1400
+#define POWER_REAL_CH3_40P										1600
+#define POWER_REAL_CH3_45P										1800
+#define POWER_REAL_CH3_50P										2000
+#define POWER_REAL_CH3_55P										2200
+#define POWER_REAL_CH3_60P										2400
+#define POWER_REAL_CH3_65P										2600
+#define POWER_REAL_CH3_70P										2800
+#define POWER_REAL_CH3_75P										3000
+#define POWER_REAL_CH3_80P										3200
+#define POWER_REAL_CH3_85P										3400
+#define POWER_REAL_CH3_90P										3600
+#define POWER_REAL_CH3_95P										3800
+#define POWER_REAL_CH3_100P										4000
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_NFC									0
 /*****************************************************************************/
@@ -336,9 +358,11 @@
 #define SPREG_ADC_7										(SPREG_START + 8)//ADC7采集值 IVINMON1
 #define SPREG_ADC_8										(SPREG_START + 9)//ADC8采集值 Temperature Sensor
 #define SPREG_DAC_0										(SPREG_START + 10)//DAC0设定值 LSET0
-#define SPREG_DAC_1										(SPREG_START + 11)//DAC0设定值 LSET1
+#define SPREG_DAC_1										(SPREG_START + 11)//DAC1设定值 LSET1
+#define SPREG_DAC_2										(SPREG_START + 12)//DAC2设定值 LSET2
+#define SPREG_DAC_3										(SPREG_START + 13)//DAC3设定值 LSET3
 /*****************************************************************************/
-#define SPREG_DK25L_VER									(SPREG_START + 12)//DK25L模块版本
+#define SPREG_DK25L_VER									(SPREG_START + 15)//DK25L模块版本
 /*****************************************************************************/
 #define SPREG_SPWM_POS_0								(SPREG_START + 20)//软件PWM0正脉宽设置
 #define SPREG_SPWM_POS_SHADOW_0							(SPREG_START + 21)//软件PWM0正脉宽阴影

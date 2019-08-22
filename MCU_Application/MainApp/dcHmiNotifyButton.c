@@ -633,7 +633,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
 					if(state){
-						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_BOTH;
+						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_ALL;
 					}
 					break;
 				}	
@@ -822,7 +822,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
 					if(state){
-						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_BOTH;
+						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_ALL;
 					}
 					break;
 				}	
@@ -1035,7 +1035,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
 					if(state){
-						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_BOTH;
+						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_ALL;
 					}
 					break;
 				}	
@@ -1306,7 +1306,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
 					if(state){
-						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_BOTH;
+						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_ALL;
 					}
 					break;
 				}	
@@ -1489,7 +1489,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
 					if(state){
-						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_BOTH;
+						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_ALL;
 					}
 					break;
 				}	
@@ -1786,7 +1786,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
 					if(state){
-						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_BOTH;
+						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_ALL;
 					}
 					break;
 				}	
@@ -2159,12 +2159,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
-				case GDDC_PAGE_SCHEME_KEY_LAST_PAGE:{
-					if(state){
-						SET(R_SCHEME_KEY_LAST_SCHEME);
-					}
-					break;
-				}
 				default:break;
 			}
 			break;
@@ -2330,6 +2324,12 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 							NVRAM0[EM_SCHEME_NUM_TMP] = 31;
 							updateSchemeInfo(31);
 						}
+					}
+					break;
+				}
+				case GDDC_PAGE_SCHEME_KEY_LAST_PAGE:{
+					if(state){
+						SET(R_SCHEME_KEY_LAST_SCHEME);
 					}
 					break;
 				}

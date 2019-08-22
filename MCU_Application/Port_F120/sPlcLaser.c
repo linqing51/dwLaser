@@ -22,7 +22,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 	}
 	if(st == 2){//CH0+CH1 CW模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_CW;
-		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_ALL;
 		STLAR();
 	}
 	if(st == 3){//CH0 SP模式测试
@@ -39,7 +39,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 	}
 	if(st == 5){//CH0+CH1 SP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_SP;
-		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_ALL;
 		NVRAM0[SPREG_LASER_TMATE] = 30;//激光脉冲正脉宽 10mS
 		STLAR();
 	}
@@ -59,7 +59,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 	}
 	if(st == 8){//CH0+CH1 MP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_MP;
-		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_ALL;
 		NVRAM0[SPREG_LASER_TMATE] = 53;//激光脉冲正脉宽 10mS
 		NVRAM0[SPREG_LASER_TOVERTIME] = 130;//激光脉冲周期 25mS
 		STLAR();
@@ -84,7 +84,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 	}
 	if(st == 11){//CH0+CH1 GP模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_GP;
-		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_ALL;
 		NVRAM0[SPREG_LASER_TMATE] = 5;//激光脉冲正脉宽 10mS
 		NVRAM0[SPREG_LASER_TOVERTIME] = 24;//激光脉冲周期 25mS
 		NVRAM0[SPREG_LASER_PMATE] = 6;//10个脉冲
@@ -107,7 +107,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 	}
 	if(st == 14){//CH0+CH1 DERMA模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_DERMA;
-		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_ALL;
 		NVRAM0[SPREG_LASER_TMATE] = 5;//激光脉冲正脉宽 10mS
 		NVRAM0[SPREG_LASER_TOVERTIME] = 24;//激光脉冲周期 25mS
 		STLAR();
@@ -126,7 +126,7 @@ void testBenchLaserTimer(uint8_t st){//LASER激光发射测试
 	}
 	if(st == 17){//CH0+CH1 SIGNAL模式测试
 		NVRAM0[SPREG_LASER_MODE] = LASER_MODE_SIGNAL;
-		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_BOTH;
+		NVRAM0[SPREG_LASER_SELECT] = LASER_SELECT_ALL;
 		STLAR();
 	}
 }
@@ -215,7 +215,7 @@ static void laserStart(void){//按通道选择打开激光
 			LASER_CH1_MODPIN = true;
 			break;
 		}
-		case LASER_SELECT_BOTH:{
+		case LASER_SELECT_ALL:{
 #if CONFIG_SPLC_USING_DAC == 1
 			UPDAC0();//DAC立即输出计时器值
 			UPDAC1();//DAC立即输出计时器值

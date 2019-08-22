@@ -2,6 +2,7 @@
 #define __BACKGROUNDAPP_H__
 /*****************************************************************************/
 #include "sPlc.h"
+#include "appConfig.h"
 #include "appSplcAdr.h"
 /*****************************************************************************/
 uint8_t getBeemDuty(int16_t volume);
@@ -12,7 +13,7 @@ int16_t pulseWidthDec(int16_t ps);
 void loadScheme(void);//DM->EM
 void loadSchemeTmpName(void);//TMP->EM
 void saveScheme(void);//EM->DM
-void checkScheme(void);//方案检测
+int8_t checkScheme(int8_t cn);//方案检测
 void reloadCorrTab(void);//恢复功率校正参数
 void defaultScheme(void);//恢复默认设置
 void loadDefault(void);

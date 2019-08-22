@@ -51,6 +51,7 @@
 #define	MSG_FIBER_MISSMATE											15
 /*****************************************************************************/
 #include "sPlc.h"
+#include "appConfig.h"
 #include "appSplcAdr.h"
 #include "dcHmiRes.h"
 #include "backgroundApp.h"

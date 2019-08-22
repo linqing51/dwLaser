@@ -1,40 +1,13 @@
 #ifndef __APPSPLCADR_H__
 #define __APPSPLCADR_H__
 /*****************************************************************************/
-#define CONFIG_APP_DIODE_HIGH_TEMP								400
-#define CONFIG_APP_DRIVE_HIGH_TEMP								650
-#define CONFIG_APP_ENVI_HIGH_TEMP								500
-/*****************************************************************************/
-#define CONFIG_HMI_SCHEME_NUM									32//方案数
-#define CONFIG_HMI_DEFAULT_PASSSWORD0							0x3433//默认密码
-#define CONFIG_HMI_DEFAULT_PASSSWORD1							0x3231//默认密码
-#define STATUS_LASER_READY										0x5A
-#define STATUS_LASER_STANDBY									0xA5
-#define AIM_MODE_CW_GREEN										0x5678//连续绿色
-#define AIM_MODE_CW_RED											0x9ABC//连续红色
-//故障码
-#define ERROR_CODE_EPROM										0x0001//EPRON 错误
-#define ERROR_CODE_SPI_FLASH									0x0002//SPI FLSAH错误
-#define ERROR_CODE_SI7060										0x0003//温度传感器通信错误
-#define ERROR_CODE_MCP79412										0x0004//RTC通信错误
-#define ERROR_CODE_LDR0											0x0005//激光驱动器0错误
-#define ERROR_CODE_LDR1											0x0006//激光驱动器1错误
-#define ERROR_CODE_TEMPER										0x0007//温度传感器错误
-#define ERROR_CODE_USBHOST										0x0008//USB HOST模块错误
-#define ERROR_CODE_NFC											0x0009//NFC模块错误
-#define ERROR_CODE_NRF24L01										0x0010//NRF24L01模块错误
-#define ERRPR_CODE_NOERR										0xFFFF//无错误
-//光斑直径定义
-#define DERMA_SPOT_SIZE_0MM5									0x100A//光斑直径0.5					
-#define DERMA_SPOT_SIZE_1MM0									0x200B//光斑直径1.0
-#define DERMA_SPOT_SIZE_2MM0									0x300C//光斑直径2.0
-#define DERMA_SPOT_SIZE_3MM0									0x400D//光斑直径3.0
-/*****************************************************************************/
 #define EM_LASER_SCHEME_NAME									(EM_START + 0)//方案名称
-#define EM_LASER_SELECT											(EM_START + 15)//通道选择
-#define EM_LASER_PULSE_MODE										(EM_START + 16)//脉冲模式
-#define EM_LASER_POWER_CH0										(EM_START + 17)//通道0功率
-#define EM_LASER_POWER_CH1										(EM_START + 18)//通道1功率
+#define EM_LASER_SELECT											(EM_START + 13)//通道选择
+#define EM_LASER_PULSE_MODE										(EM_START + 14)//脉冲模式
+#define EM_LASER_POWER_CH0										(EM_START + 15)//通道0功率
+#define EM_LASER_POWER_CH1										(EM_START + 16)//通道1功率
+#define EM_LASER_POWER_CH2										(EM_START + 17)//通道2功率
+#define EM_LASER_POWER_CH3										(EM_START + 18)//通道3功率
 #define EM_LASER_SP_POSWIDTH									(EM_START + 19)//单脉冲正脉宽
 #define EM_LASER_MP_POSWIDTH									(EM_START + 20)//多脉冲正脉宽
 #define EM_LASER_MP_NEGWIDTH									(EM_START + 21)//多脉冲负脉宽
@@ -81,10 +54,12 @@
 #define EM_DC_DISPLAY_RELEASE_ENERGY							(EM_START + 75)//显示发射能量
 /*****************************************************************************/
 #define FD_LASER_SCHEME_NAME									(FD_START +  0)//方案名称
-#define FD_LASER_SELECT											(FD_START +  15)//通道选择
-#define FD_LASER_PULSE_MODE										(FD_START +  16)//脉冲模式
-#define FD_LASER_POWER_CH0										(FD_START +  17)//通道0功率
-#define FD_LASER_POWER_CH1										(FD_START +  18)//通道1功率
+#define FD_LASER_SELECT											(FD_START +  13)//通道选择
+#define FD_LASER_PULSE_MODE										(FD_START +  14)//脉冲模式
+#define FD_LASER_POWER_CH0										(FD_START +  15)//通道0功率
+#define FD_LASER_POWER_CH1										(FD_START +  16)//通道1功率
+#define FD_LASER_POWER_CH2										(FD_START +  17)//通道2功率
+#define FD_LASER_POWER_CH3										(FD_START +  18)//通道3功率
 #define FD_LASER_SP_POSWIDTH									(FD_START +  19)//单脉冲正脉宽
 #define FD_LASER_MP_POSWIDTH									(FD_START +  20)//多脉冲正脉宽
 #define FD_LASER_MP_NEGWIDTH									(FD_START +  21)//多脉冲负脉宽
@@ -258,29 +233,70 @@
 #define DM_CORR_TAB0_POWER17									(DM_START + 37)//功率校正表0功率34 
 #define DM_CORR_TAB0_POWER18									(DM_START + 38)//功率校正表0功率36
 #define DM_CORR_TAB0_POWER19									(DM_START + 39)//功率校正表0功率38
-#define DM_CORR_TAB0_POWER20									(DM_START + 40)//功率校正表0功率40
 
-#define DM_CORR_TAB1_POWER0										(DM_START + 50)//功率校正表1功率0 			
-#define DM_CORR_TAB1_POWER1										(DM_START + 51)//功率校正表1功率2
-#define DM_CORR_TAB1_POWER2										(DM_START + 52)//功率校正表1功率4
-#define DM_CORR_TAB1_POWER3										(DM_START + 53)//功率校正表1功率6 
-#define DM_CORR_TAB1_POWER4										(DM_START + 54)//功率校正表1功率8 
-#define DM_CORR_TAB1_POWER5										(DM_START + 55)//功率校正表1功率10 
-#define DM_CORR_TAB1_POWER6										(DM_START + 56)//功率校正表1功率12 
-#define DM_CORR_TAB1_POWER7										(DM_START + 57)//功率校正表1功率14 
-#define DM_CORR_TAB1_POWER8										(DM_START + 58)//功率校正表1功率16 
-#define DM_CORR_TAB1_POWER9										(DM_START + 59)//功率校正表1功率18 
-#define DM_CORR_TAB1_POWER10									(DM_START + 60)//功率校正表1功率20 
-#define DM_CORR_TAB1_POWER11									(DM_START + 61)//功率校正表1功率22 
-#define DM_CORR_TAB1_POWER12									(DM_START + 62)//功率校正表1功率24 
-#define DM_CORR_TAB1_POWER13									(DM_START + 63)//功率校正表1功率26 
-#define DM_CORR_TAB1_POWER14									(DM_START + 64)//功率校正表1功率28 
-#define DM_CORR_TAB1_POWER15									(DM_START + 65)//功率校正表1功率30 
-#define DM_CORR_TAB1_POWER16									(DM_START + 66)//功率校正表1功率32 
-#define DM_CORR_TAB1_POWER17									(DM_START + 67)//功率校正表1功率34 
-#define DM_CORR_TAB1_POWER18									(DM_START + 68)//功率校正表1功率36 
-#define DM_CORR_TAB1_POWER19									(DM_START + 69)//功率校正表1功率38
-#define DM_CORR_TAB1_POWER20									(DM_START + 70)//功率校正表1功率40
+#define DM_CORR_TAB1_POWER0										(DM_START + 40)//功率校正表1功率0 			
+#define DM_CORR_TAB1_POWER1										(DM_START + 41)//功率校正表1功率2
+#define DM_CORR_TAB1_POWER2										(DM_START + 42)//功率校正表1功率4
+#define DM_CORR_TAB1_POWER3										(DM_START + 43)//功率校正表1功率6 
+#define DM_CORR_TAB1_POWER4										(DM_START + 44)//功率校正表1功率8 
+#define DM_CORR_TAB1_POWER5										(DM_START + 45)//功率校正表1功率10 
+#define DM_CORR_TAB1_POWER6										(DM_START + 46)//功率校正表1功率12 
+#define DM_CORR_TAB1_POWER7										(DM_START + 47)//功率校正表1功率14 
+#define DM_CORR_TAB1_POWER8										(DM_START + 48)//功率校正表1功率16 
+#define DM_CORR_TAB1_POWER9										(DM_START + 49)//功率校正表1功率18 
+#define DM_CORR_TAB1_POWER10									(DM_START + 50)//功率校正表1功率20 
+#define DM_CORR_TAB1_POWER11									(DM_START + 51)//功率校正表1功率22 
+#define DM_CORR_TAB1_POWER12									(DM_START + 52)//功率校正表1功率24 
+#define DM_CORR_TAB1_POWER13									(DM_START + 53)//功率校正表1功率26 
+#define DM_CORR_TAB1_POWER14									(DM_START + 54)//功率校正表1功率28 
+#define DM_CORR_TAB1_POWER15									(DM_START + 55)//功率校正表1功率30 
+#define DM_CORR_TAB1_POWER16									(DM_START + 56)//功率校正表1功率32 
+#define DM_CORR_TAB1_POWER17									(DM_START + 57)//功率校正表1功率34 
+#define DM_CORR_TAB1_POWER18									(DM_START + 58)//功率校正表1功率36 
+#define DM_CORR_TAB1_POWER19									(DM_START + 59)//功率校正表1功率38
+
+#define DM_CORR_TAB2_POWER0										(DM_START + 60)//功率校正表0功率0 
+#define DM_CORR_TAB2_POWER1										(DM_START + 61)//功率校正表0功率2 
+#define DM_CORR_TAB2_POWER2										(DM_START + 62)//功率校正表0功率4 
+#define DM_CORR_TAB2_POWER3										(DM_START + 63)//功率校正表0功率6 
+#define DM_CORR_TAB2_POWER4										(DM_START + 64)//功率校正表0功率8 
+#define DM_CORR_TAB2_POWER5										(DM_START + 65)//功率校正表0功率10 
+#define DM_CORR_TAB2_POWER6										(DM_START + 66)//功率校正表0功率12 
+#define DM_CORR_TAB2_POWER7										(DM_START + 67)//功率校正表0功率14 
+#define DM_CORR_TAB2_POWER8										(DM_START + 68)//功率校正表0功率16 
+#define DM_CORR_TAB2_POWER9										(DM_START + 69)//功率校正表0功率18 
+#define DM_CORR_TAB2_POWER10									(DM_START + 70)//功率校正表0功率20 
+#define DM_CORR_TAB2_POWER11									(DM_START + 71)//功率校正表0功率22 
+#define DM_CORR_TAB2_POWER12									(DM_START + 72)//功率校正表0功率24 
+#define DM_CORR_TAB2_POWER13									(DM_START + 73)//功率校正表0功率26 
+#define DM_CORR_TAB2_POWER14									(DM_START + 74)//功率校正表0功率28 
+#define DM_CORR_TAB2_POWER15									(DM_START + 75)//功率校正表0功率30 
+#define DM_CORR_TAB2_POWER16									(DM_START + 76)//功率校正表0功率32 
+#define DM_CORR_TAB2_POWER17									(DM_START + 77)//功率校正表0功率34 
+#define DM_CORR_TAB2_POWER18									(DM_START + 78)//功率校正表0功率36
+#define DM_CORR_TAB2_POWER19									(DM_START + 79)//功率校正表0功率38
+
+#define DM_CORR_TAB3_POWER0										(DM_START + 80)//功率校正表0功率0 
+#define DM_CORR_TAB3_POWER1										(DM_START + 81)//功率校正表0功率2 
+#define DM_CORR_TAB3_POWER2										(DM_START + 82)//功率校正表0功率4 
+#define DM_CORR_TAB3_POWER3										(DM_START + 83)//功率校正表0功率6 
+#define DM_CORR_TAB3_POWER4										(DM_START + 84)//功率校正表0功率8 
+#define DM_CORR_TAB3_POWER5										(DM_START + 85)//功率校正表0功率10 
+#define DM_CORR_TAB3_POWER6										(DM_START + 86)//功率校正表0功率12 
+#define DM_CORR_TAB3_POWER7										(DM_START + 87)//功率校正表0功率14 
+#define DM_CORR_TAB3_POWER8										(DM_START + 88)//功率校正表0功率16 
+#define DM_CORR_TAB3_POWER9										(DM_START + 89)//功率校正表0功率18 
+#define DM_CORR_TAB3_POWER10									(DM_START + 80)//功率校正表0功率20 
+#define DM_CORR_TAB3_POWER11									(DM_START + 81)//功率校正表0功率22 
+#define DM_CORR_TAB3_POWER12									(DM_START + 82)//功率校正表0功率24 
+#define DM_CORR_TAB3_POWER13									(DM_START + 83)//功率校正表0功率26 
+#define DM_CORR_TAB3_POWER14									(DM_START + 84)//功率校正表0功率28 
+#define DM_CORR_TAB3_POWER15									(DM_START + 85)//功率校正表0功率30 
+#define DM_CORR_TAB3_POWER16									(DM_START + 86)//功率校正表0功率32 
+#define DM_CORR_TAB3_POWER17									(DM_START + 87)//功率校正表0功率34 
+#define DM_CORR_TAB3_POWER18									(DM_START + 88)//功率校正表0功率36
+#define DM_CORR_TAB3_POWER19									(DM_START + 89)//功率校正表0功率38
+#define DM_CORR_TAB3_POWER20									(DM_START + )//功率校正表0功率40
 /*****************************************************************************/
 #define X_FOOTSWITCH_NC											(X_START * 16 + 0)//XIN0 脚踏常闭
 #define X_ESTOP													(X_START * 16 + 1)//XIN1 紧急停止开关
