@@ -296,7 +296,6 @@
 #define DM_CORR_TAB3_POWER17									(DM_START + 87)//功率校正表0功率34 
 #define DM_CORR_TAB3_POWER18									(DM_START + 88)//功率校正表0功率36
 #define DM_CORR_TAB3_POWER19									(DM_START + 89)//功率校正表0功率38
-#define DM_CORR_TAB3_POWER20									(DM_START + )//功率校正表0功率40
 /*****************************************************************************/
 #define X_FOOTSWITCH_NC											(X_START * 16 + 0)//XIN0 脚踏常闭
 #define X_ESTOP													(X_START * 16 + 1)//XIN1 紧急停止开关

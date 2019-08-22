@@ -16,34 +16,34 @@
 #define CONFIG_DEBUG_PCA								0//PCA调试
 #endif
 /*****************************************************************************/
-#define CONFIG_UART0_BAUDRATE							115200//串口0 波特率
-#define CONFIG_UART1_BAUDRATE							115200//串口1 波特率
+#define CONFIG_UART0_BAUDRATE									115200//串口0 波特率
+#define CONFIG_UART1_BAUDRATE									115200//串口1 波特率
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_I2C0							1//使能I2C0
-#define CONFIG_SPLC_USING_I2C1							1//使能I2C1
-#define CONFIG_SPLC_USING_I2C2							1//使能I2C2
-#define CONFIG_SPLC_USING_I2C3							1//使能I2C3
+#define CONFIG_SPLC_USING_I2C0									1//使能I2C0
+#define CONFIG_SPLC_USING_I2C1									1//使能I2C1
+#define CONFIG_SPLC_USING_I2C2									1//使能I2C2
+#define CONFIG_SPLC_USING_I2C3									1//使能I2C3
 /*****************************************************************************/
-#define CONFIG_I2C0_FREQ 								1            
-#define CONFIG_I2C1_FREQ 								16
-#define CONFIG_I2C2_FREQ 								16
-#define CONFIG_I2C3_FREQ 								16
-#define CONFIG_I2C_WAITACT_TIME							10
+#define CONFIG_I2C0_FREQ 										1            
+#define CONFIG_I2C1_FREQ 										16
+#define CONFIG_I2C2_FREQ 										16
+#define CONFIG_I2C3_FREQ 										16
+#define CONFIG_I2C_WAITACT_TIME									10
 /*****************************************************************************/
-#define CONFIG_EPROM_SIZE 								CONFIG_AT24C64_SIZE
-#define	CONFIG_AT24C02_SIZE 							256
-#define	CONFIG_AT24C04_SIZE  							512
-#define	CONFIG_AT24C08_SIZE 							1024
-#define	CONFIG_AT24C16_SIZE 							2048
-#define	CONFIG_AT24C32_SIZE 							4096
-#define	CONFIG_AT24C64_SIZE								8192
-#define	CONFIG_AT24C128_SIZE 							16384
-#define	CONFIG_AT24C256_SIZE 							32768
-#define CONFIG_EPROM_ADDRESS							0x50
+#define CONFIG_EPROM_SIZE 										CONFIG_AT24C64_SIZE
+#define	CONFIG_AT24C02_SIZE 									256
+#define	CONFIG_AT24C04_SIZE  									512
+#define	CONFIG_AT24C08_SIZE 									1024
+#define	CONFIG_AT24C16_SIZE 									2048
+#define	CONFIG_AT24C32_SIZE 									4096
+#define	CONFIG_AT24C64_SIZE										8192
+#define	CONFIG_AT24C128_SIZE 									16384
+#define	CONFIG_AT24C256_SIZE 									32768
+#define CONFIG_EPROM_ADDRESS									0x50
 #define CONFIG_EPROM_FRAM										1//铁电存储体无写入等待
 #define CONFIG_EPROM_PAGEWRITE									0//页写入
 #define CONFIG_EPROM_NVRAM_START								0x0
-#define CONFIG_EPROM_FDRAM_START								0x1800
+#define CONFIG_EPROM_FDRAM_START								0x800//2048
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_SPWM									1//使了软件PWM功能
 /*****************************************************************************/

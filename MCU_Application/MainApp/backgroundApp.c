@@ -246,38 +246,12 @@ void loadScheme(void){//FD->EM
 		}
 	}
 }
-void loadSchemeTmpName(void){
-	uint8_t *psrc, *pdist;
-	if(NVRAM0[DM_SCHEME_NUM] > CONFIG_HMI_SCHEME_NUM)
-		NVRAM0[DM_SCHEME_NUM] = CONFIG_HMI_SCHEME_NUM;
-	if(NVRAM0[DM_SCHEME_NUM] < 0)
-		NVRAM0[DM_SCHEME_NUM] = 0;
-	psrc = (uint8_t*)&TMPRAM[NVRAM0[DM_SCHEME_NUM] * 15];
-	pdist = (uint8_t*)&NVRAM0[EM_LASER_SCHEME_NAME];
-	memcpy(pdist, psrc, 30);
-	switch(NVRAM0[EM_LASER_PULSE_MODE]){
-		case LASER_MODE_CW:{
-			break;
-		}
-		case LASER_MODE_SP:{
-			break;
-		}
-		case LASER_MODE_MP:{
-			break;
-		}
-		case LASER_MODE_GP:{
-			break;
-		}
-		case LASER_MODE_SIGNAL:{
-			break;
-		}
-		case LASER_MODE_DERMA:{
-			break;
-		}
-		default:{
-			defaultScheme();
-			break;
-		}
+void updateSchemeName(void){//通过临时名称更新FDRAM
+	uint8_t *psrc, *pdist, i;
+	for(i = 0;i < CONFIG_HMI_SCHEME_NUM;i ++){
+		psrc = (uint8_t*)&TMPRAM[i * 15];
+		pdist = (uint8_t*)&FDRAM[i * 30];
+		memcpy(pdist, psrc, 26);
 	}
 }
 void saveScheme(void){//EM->FD
@@ -286,9 +260,9 @@ void saveScheme(void){//EM->FD
 		NVRAM0[DM_SCHEME_NUM] = CONFIG_HMI_SCHEME_NUM;
 	if(NVRAM0[DM_SCHEME_NUM] < 0)
 		NVRAM0[DM_SCHEME_NUM] = 0;
-	pdist = (uint8_t*)&FDRAM[(FD_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 30)];
+	pdist = (uint8_t*)&FDRAM[NVRAM0[DM_SCHEME_NUM] * 30];
 	psrc = (uint8_t*)&NVRAM0[EM_LASER_SCHEME_NAME];
-	memcpy(pdist, psrc, ((FD_SCHEME_END_0 - FD_SCHEME_START_0 + 1) * 2));
+	memcpy(pdist, psrc, 60);
 }
 int8_t checkScheme(int8_t cn){
 	uint16_t strSize;
@@ -373,41 +347,21 @@ int8_t checkScheme(int8_t cn){
 	   (temp != DERMA_SPOT_SIZE_3MM0)){
 		return false;
 	}
+	return true;
 }
-void PCLAR0(uint16_t POW, uint16_t CUR) reentrant{//功率->DAC CODE
-	uint8_t index;
-	fp32_t pert, k, b, out;
-	pert = (fp32_t)NVRAM0[POW] / CONFIG_MAX_LASERPOWER_CH0;
-	index = (uint8_t)(pert / 0.05);	
+int16_t PCLAR(int16_t percent, int16_t table) reentrant{//功率->DAC CODE
+	int8_t index;
+	fp32_t k, b, out;
+	index = percent / 50;
 	if(index >= 20){
-		NVRAM0[CUR] = NVRAM0[DM_CORR_TAB0_POWER20];
+		return NVRAM0[table + 20];
 	}
 	else{
-		k = ((fp32_t)NVRAM0[(DM_CORR_TAB0_POWER0 + index + 1)] - (fp32_t)NVRAM0[DM_CORR_TAB0_POWER0 + index]) / 0.05;
-		b = NVRAM0[DM_CORR_TAB0_POWER0 + index] - (k * index * 0.05);		
+		k = (fp32_t)(NVRAM0[table + index + 1] - NVRAM0[table + index]) / 50;
+		b = NVRAM0[table + index] - (k * index * 50);		
 	}
-	out = k * (fp32_t)pert - b;
-	if(out > CONFIG_MAX_LASER_DAC_CH0){
-		out = CONFIG_MAX_LASER_DAC_CH0;
-	}
-	NVRAM0[CUR] = (int16_t)out;
+	out = k * percent + b;
+	return (int16_t)out;
 }
-void PCLAR1(uint16_t POW, uint16_t CUR) reentrant{//功率->DAC CODE
-	uint8_t index;
-	fp32_t pert, k, b, out;
-	pert = (fp32_t)NVRAM0[POW] / CONFIG_MAX_LASERPOWER_CH1;
-	index = (uint8_t)(pert / 0.05);	
-	if(index >= 20){
-		NVRAM0[CUR] = NVRAM0[DM_CORR_TAB1_POWER20];
-	}
-	else{
-		k = ((fp32_t)NVRAM0[(DM_CORR_TAB1_POWER0 + index + 1)] - (fp32_t)NVRAM0[DM_CORR_TAB1_POWER0 + index]) / 0.05;
-		b = NVRAM0[DM_CORR_TAB1_POWER0 + index] - (k * index * 0.05);		
-	}
-	out = k * (fp32_t)pert - b;
-	if(out > CONFIG_MAX_LASER_DAC_CH1){
-		out = CONFIG_MAX_LASER_DAC_CH1;
-	}
-	NVRAM0[CUR] = (int16_t)out;
-}
+
 #endif
