@@ -1,35 +1,33 @@
 #include "backgroundApp.h"
 /*****************************************************************************/
 #if CONFIG_USING_BACKGROUND_APP == 1
-typedef struct{
-  float Kp;                       //比例系数Proportional
-  float Ki;                       //积分系数Integral
-  float Kd;                       //微分系数Derivative
-  float Ek;                       //当前误差
-  float Ek1;                      //前一次误差 e(k-1)
-  float Ek2;                      //再前一次误差 e(k-2)
-  float LocSum;                   //累计积分位置
-}PID_LocTypeDef;  
-/************************************************
-函数名称 ： PID_Loc
-功    能 ： PID位置(Location)计算
-参    数 ： SetValue ------ 设置值(期望值)
-			ActualValue --- 实际值(反馈值)
-			PID ----------- PID数据结构
-返 回 值 ： PIDLoc -------- PID位置
-作    者 ： strongerHuang
-*************************************************/
-PID_LocTypeDef tPid;
-
-
-
-float PID_Loc(float SetValue, float ActualValue, PID_LocTypeDef *PID){
-	float PIDLoc;//位置 
-	PID->Ek = SetValue - ActualValue;
-	PID->LocSum += PID->Ek;//累计误差
-	PIDLoc = PID->Kp * PID->Ek + (PID->Ki * PID->LocSum) + PID->Kd * (PID->Ek1 - PID->Ek);
-	PID->Ek1 = PID->Ek;  
-		return PIDLoc;
+static int8_t flaginit;
+static fp32_t PID_OutK, PID_dErrorK1, PID_ErrorK1;
+static fp32_t PID_Kp=0.21, PID_Ki=0.0101, PID_Kd=0.05;
+static fp32_t PID_ErrorK, PID_dOutK, PID_dErrorK; 
+/*****************************************************************************/
+void PidRegulateInit(void){//PID初始化
+	PID_OutK = 0;
+	PID_dErrorK1 = 0;
+	PID_ErrorK1 = 0;
+	PID_ErrorK = 0;
+	PID_dOutK = 0;
+	PID_dErrorK = 0;
+}
+fp32_t PidRegulate(fp32_t ref, fp32_t feedback){//限制输入幅度，归一化到[-1，1]区间
+	if(ref >= 1) ref = 1;
+	if(ref <= -1) ref = -1;
+	if(feedback >=1) feedback = 1;
+	if(feedback <=-1) feedback = -1;
+	ch1_ErrorK = ref - feedback;
+	if(fabs(ch1_ErrorK) <= 0.001) ch1_ErrorK = 0;
+	ch1_dErrorK = ch1_ErrorK - ch1_ErrorK1;//de(K) = e(k) - e(k-1)
+	ch1_dOutK = ch1_Kp * ch1_dErrorK + ch1_Ki * ch1_ErrorK + ch1_Kd * (ch1_dErrorK - ch1_dErrorK1);
+	ch1_dErrorK1 = ch1_dErrorK; //de(k) -> de(k-1)
+	ch1_OutK += ch1_dOutK;//u(k) =  u(k-1) +du(k)
+	if(ch1_OutK >=  1) ch1_OutK =  1; //限制幅度 1>=u(k)>=-1
+	if(ch1_OutK<= -1)  ch1_OutK = -1;
+	return(-ch1_OutK);
 }
 
 int16_t pulseWidthAdd(int16_t ps){//脉宽增加

@@ -1301,12 +1301,14 @@ void dcHmiLoopInit(void){//初始化模块
 	NVRAM0[EM_COOL_SET_TEMP] = CONFIG_COOL_SET_TEMP;
 	NVRAM0[EM_COOL_DIFF_TEMP] = CONFIG_COOL_DIFF_TEMP;
 	reloadCorrTab();
+	PidRegulateInit();//初始化PID参数
 	RES(Y_TEC0);
 	SET(Y_FAN0);
 	RES(R_DRIVE_TEMP_HIGH);//屏蔽驱动器过热报警
 }
 static void temperatureLoop(void){//温度轮询顺序
 	int16_t temp;
+	fp32_t ftemp;
 	temp = NVRAM0[SPREG_ADC_2];
 	TNTC(EM_DIODE_TEMP0, SPREG_ADC_2);//CODE转换为NTC测量温度温度
 	temp = NVRAM0[EM_DIODE_TEMP0];
@@ -1331,14 +1333,15 @@ static void temperatureLoop(void){//温度轮询顺序
 		RES(R_ENVI_TEMP_HIGH);
 	}
 	//温控执行
-	if(NVRAM0[EM_DIODE_TEMP0] > (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
-		SET(Y_TEC0);
-		setLedVar(true);
-	}
-	if(NVRAM0[EM_DIODE_TEMP0] < (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
-		RES(Y_TEC0);
-		setLedVar(false);
-	}
+//	if(NVRAM0[EM_DIODE_TEMP0] > (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
+//		SET(Y_TEC0);
+//		setLedVar(true);
+//	}
+//	if(NVRAM0[EM_DIODE_TEMP0] < (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
+//		RES(Y_TEC0);
+//		setLedVar(false);
+//	}
+	
 }
 static void faultLoop(void){//故障轮询
 	uint8_t temp;
@@ -1385,8 +1388,8 @@ void dcHmiLoop(void){//HMI轮训程序
 		temperatureLoop();
 		faultLoop();
 	}
-	if(LDP(SPCOIL_PS1000MS)){//每100mS更新一次累计时间
-		ADLS1(DM_SYS_RUNTIME_L);	
+	if(LDP(SPCOIL_PS1000MS)){//每1000mS更新一次累计时间
+		ADLS1(DM_SYS_RUNTIME_L);		
 	}
 	if(LD(R_DCHMI_RESET_DONE) && LD(R_DCHMI_RESTORE_DONE)){//HMI复位完成后处理串口指令
 		hmiCmdSize = queue_find_cmd(hmiCmdBuffer, CMD_MAX_SIZE);//从缓冲区中获取一条指令         
