@@ -1425,7 +1425,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_SIGNAL_KEY_ENERGY_INTERVAL_ADD:{
 					if(state){	
 						if(NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL] < CONFIG_MAX_LASER_ENERGY_INTERVAL){
-							NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL] += 100;
+							NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL] += CONFIG_STEP_LASER_ENERGY_INTERVAL;
 						}
 						SetTextInt32(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_ENERGY_INTERVAL ,NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL], 1, 0);	
 					}
@@ -1434,7 +1434,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_SIGNAL_KEY_ENERGY_INTERVAL_DEC:{
 					if(state){
 						if(NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL] > CONFIG_MIN_LASER_ENERGY_INTERVAL){
-							NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL] -= 100;
+							NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL] -= CONFIG_STEP_LASER_ENERGY_INTERVAL;
 						}
 						SetTextInt32(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_ENERGY_INTERVAL ,NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL], 1, 0);
 					}
@@ -1563,43 +1563,13 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 			switch(control_id){	
 				case GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5:{
 					if(state){
-						switch(NVRAM0[EM_LASER_DERMA_SPOT_SIZE]){
-							case DERMA_SPOT_SIZE_1MM0:{
-								SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, false);
-								break;
-							}
-							case DERMA_SPOT_SIZE_2MM0:{
-								SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, false);
-								break;
-							}
-							case DERMA_SPOT_SIZE_3MM0:{
-								SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, false);
-								break;
-							}
-							default:break;
-						}
 						NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_0MM5;
 						updateEnergyDensity();
 					}
 					break;
 				}			
 				case GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0:{
-					if(state){
-						switch(NVRAM0[EM_LASER_DERMA_SPOT_SIZE]){
-							case DERMA_SPOT_SIZE_0MM5:{
-								SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, false);
-								break;
-							}
-							case DERMA_SPOT_SIZE_2MM0:{
-								SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, false);
-								break;
-							}
-							case DERMA_SPOT_SIZE_3MM0:{
-								SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, false);
-								break;
-							}
-							default:break;
-						}						
+					if(state){					
 						NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_1MM0;
 						updateEnergyDensity();
 					}
@@ -1607,21 +1577,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}	
 				case GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0:{
 					if(state){
-						switch(NVRAM0[EM_LASER_DERMA_SPOT_SIZE]){
-							case DERMA_SPOT_SIZE_0MM5:{
-								SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, false);
-								break;
-							}
-							case DERMA_SPOT_SIZE_1MM0:{
-								SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, false);
-								break;
-							}
-							case DERMA_SPOT_SIZE_3MM0:{
-								SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, false);
-								break;
-							}
-							default:break;
-						}
 						NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_2MM0;
 						updateEnergyDensity();
 					}
@@ -1629,21 +1584,6 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0:{
 					if(state){
-						switch(NVRAM0[EM_LASER_DERMA_SPOT_SIZE]){
-							case DERMA_SPOT_SIZE_0MM5:{
-								SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, false);
-								break;
-							}
-							case DERMA_SPOT_SIZE_1MM0:{
-								SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, false);
-								break;
-							}
-							case DERMA_SPOT_SIZE_2MM0:{
-								SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, false);
-								break;
-							}
-							default:break;
-						}
 						NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_3MM0;
 						updateEnergyDensity();
 					}

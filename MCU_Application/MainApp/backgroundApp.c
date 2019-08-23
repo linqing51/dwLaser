@@ -19,15 +19,21 @@ fp32_t PidRegulate(fp32_t ref, fp32_t feedback){//œﬁ÷∆ ‰»Î∑˘∂»£¨πÈ“ªªØµΩ[-1£¨1]«
 	if(ref <= -1) ref = -1;
 	if(feedback >=1) feedback = 1;
 	if(feedback <=-1) feedback = -1;
-	ch1_ErrorK = ref - feedback;
-	if(fabs(ch1_ErrorK) <= 0.001) ch1_ErrorK = 0;
-	ch1_dErrorK = ch1_ErrorK - ch1_ErrorK1;//de(K) = e(k) - e(k-1)
-	ch1_dOutK = ch1_Kp * ch1_dErrorK + ch1_Ki * ch1_ErrorK + ch1_Kd * (ch1_dErrorK - ch1_dErrorK1);
-	ch1_dErrorK1 = ch1_dErrorK; //de(k) -> de(k-1)
-	ch1_OutK += ch1_dOutK;//u(k) =  u(k-1) +du(k)
-	if(ch1_OutK >=  1) ch1_OutK =  1; //œﬁ÷∆∑˘∂» 1>=u(k)>=-1
-	if(ch1_OutK<= -1)  ch1_OutK = -1;
-	return(-ch1_OutK);
+	PID_ErrorK = ref - feedback;
+	if(fabs(PID_ErrorK) <= 0.001){
+		PID_ErrorK = 0;
+	}
+	PID_dErrorK = PID_ErrorK - PID_ErrorK1;//de(K) = e(k) - e(k-1)
+	PID_dOutK = PID_Kp * PID_dErrorK + PID_Ki * PID_ErrorK + PID_Kd * (PID_dErrorK - PID_dErrorK1);
+	PID_dErrorK1 = PID_dErrorK; //de(k) -> de(k-1)
+	PID_OutK += PID_dOutK;//u(k) =  u(k-1) +du(k)
+	if(PID_OutK >=  1){
+		PID_OutK =  1; //œﬁ÷∆∑˘∂» 1>=u(k)>=-1
+	}
+	if(PID_OutK<= -1){  
+		PID_OutK = -1;
+	}
+	return(-PID_OutK);
 }
 
 int16_t pulseWidthAdd(int16_t ps){//¬ˆøÌ‘ˆº”
@@ -212,10 +218,7 @@ void reloadCorrTab(void){//ª÷∏¥π¶¬ –£’˝≤Œ ˝
 }
 void loadScheme(void){//FD->EM
 	uint8_t *psrc, *pdist;
-	if(NVRAM0[DM_SCHEME_NUM] > CONFIG_HMI_SCHEME_NUM)
-		NVRAM0[DM_SCHEME_NUM] = CONFIG_HMI_SCHEME_NUM;
-	if(NVRAM0[DM_SCHEME_NUM] < 0)
-		NVRAM0[DM_SCHEME_NUM] = 0;
+	NVRAM0[DM_SCHEME_NUM] = 0;
 	psrc = (uint8_t*)&FDRAM[(FD_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 30)];
 	pdist = (uint8_t*)&NVRAM0[EM_LASER_SCHEME_NAME];
 	memcpy(pdist, psrc, ((FD_SCHEME_END_0 - FD_SCHEME_START_0 + 1) * 2));
