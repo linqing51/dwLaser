@@ -80,4 +80,6 @@ void updateReleaseTimeEnergy(void);
 void updateSchemeInfo(int16_t cn);
 void updateWarnMsgDisplay(uint8_t id);
 void returnStandbyDisplay(void);
+/*****************************************************************************/
+void updateEnergyDensity(void);
 #endif

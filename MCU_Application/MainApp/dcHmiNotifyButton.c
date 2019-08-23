@@ -1579,6 +1579,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 							default:break;
 						}
 						NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_0MM5;
+						updateEnergyDensity();
 					}
 					break;
 				}			
@@ -1600,6 +1601,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 							default:break;
 						}						
 						NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_1MM0;
+						updateEnergyDensity();
 					}
 					break;
 				}	
@@ -1621,6 +1623,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 							default:break;
 						}
 						NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_2MM0;
+						updateEnergyDensity();
 					}
 					break;
 				}
@@ -1642,6 +1645,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 							default:break;
 						}
 						NVRAM0[EM_LASER_DERMA_SPOT_SIZE] = DERMA_SPOT_SIZE_3MM0;
+						updateEnergyDensity();
 					}
 					break;
 				}
