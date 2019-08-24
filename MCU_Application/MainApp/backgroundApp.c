@@ -73,7 +73,6 @@ void loadDefault(void){//恢复默认值
 	RES(R_DISABLE_RFID);
 	RES(R_DISABLE_FIBER_PROBE);
 	RES(R_DISABLE_FAN_SPEED);
-	NVRAM0[DM_SCHEME_NUM] = 0;
 	NVRAM0[DM_BEEM_VOLUME] = CONFIG_MAX_BEEM_VOLUME;
 	NVRAM0[DM_AIM_BRG] = CONFIG_MAX_AIM_BRG;
 	NVRAM0[DM_LCD_BRG] = CONFIG_MAX_LCD_BRG;
@@ -84,6 +83,7 @@ void loadDefault(void){//恢复默认值
 		defaultScheme();
 		saveScheme();
 	}
+	NVRAM0[DM_SCHEME_NUM] = 0;
 	FDSAV();
 }
 uint8_t getLcdDuty(int16_t LcdBrg){//屏幕亮度值转换为占空比
@@ -218,7 +218,6 @@ void reloadCorrTab(void){//恢复功率校正参数
 }
 void loadScheme(void){//FD->EM
 	uint8_t *psrc, *pdist;
-	NVRAM0[DM_SCHEME_NUM] = 0;
 	psrc = (uint8_t*)&FDRAM[(FD_SCHEME_START_0 + NVRAM0[DM_SCHEME_NUM] * 30)];
 	pdist = (uint8_t*)&NVRAM0[EM_LASER_SCHEME_NAME];
 	memcpy(pdist, psrc, ((FD_SCHEME_END_0 - FD_SCHEME_START_0 + 1) * 2));

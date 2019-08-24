@@ -1836,10 +1836,35 @@ void dcHmiLoop(void){//HMIÂÖÑµ³ÌÐò
 			standbyTouchEnable(false);
 			saveScheme();//EM->FD
 			FDSAV_ONE(NVRAM0[DM_SCHEME_NUM]);//FDRAM->EPROM
-			RES(R_STANDBY_KEY_SCHEME_SAVE_DOWN);
-			//SetScreen(NVRAM0[EM_DC_PAGE]);
 			standbyTouchEnable(true);
-			//Ê¹ÄÜÆÁÄ»´¥Ãþ
+			switch(NVRAM0[EM_LASER_PULSE_MODE]){
+				case LASER_MODE_CW:{
+					SetButtonValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, 0x00);
+					break;
+				}
+				case LASER_MODE_SP:{
+					SetButtonValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, 0x00);
+					break;
+				}
+				case LASER_MODE_MP:{
+					SetButtonValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, 0x00);
+					break;
+				}
+				case LASER_MODE_GP:{
+					SetButtonValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, 0x00);
+					break;
+				}
+				case LASER_MODE_SIGNAL:{
+					SetButtonValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, 0x00);
+					break;
+				}
+				case LASER_MODE_DERMA:{
+					SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, 0x00);
+					break;
+				}
+				default:break;
+			}
+			RES(R_STANDBY_KEY_SCHEME_SAVE_DOWN);
 		}
 		return;
 	}

@@ -315,6 +315,7 @@
 #define GDDC_PAGE_DISGNOSIS_KEY_DISABLE_RFID					53//∆¡±ŒRFID
 #define GDDC_PAGE_DISGNOSIS_KEY_DISABLE_FIBER_PROBE				54//∆¡±Œπ‚œÀÃΩ≤‚
 #define GDDC_PAGE_DISGNOSIS_KEY_DISABLE_FAN_SPEED				55//∆¡±Œ∑Á…»øÿ÷∆
+#define GDDC_PAGE_DISGNOSIS_KEY_CLEAR_EPROM						56//EPROMª÷∏¥ƒ¨»œ÷µ
 #define GDDC_PAGE_DIAGNOSIS_KEY_ENTER_OK						99
 /*****************************************************************************/
 #define GDDC_PAGE_RENAME_TEXTDISPLAY_NEWNAME					1
