@@ -18,17 +18,15 @@
 #define FSMSTEP_LASER_EMITING										404//激光发射中
 #define FSMSTEP_LASER_STOP											405//激光发射结束
 #define FSMSTEP_READY_ERROR											406//脚踏踩下错误
-//READY状态
-#define FSMSTEP_READY												500
 //选项状态
-#define FSMSTEP_OPTION												600//选项菜单
-#define FSMSTEP_INFORMATION											700
-#define FSMSTEP_SCHEME_0											800//方案菜单第一页
-#define FSMSTEP_SCHEME_1											810//方案菜单第二页
+#define FSMSTEP_OPTION												500//选项菜单
+#define FSMSTEP_INFORMATION											600
+#define FSMSTEP_SCHEME_0											700//方案菜单第一页
+#define FSMSTEP_SCHEME_1											710//方案菜单第二页
 
-#define FSMSTEP_DIAGNOSIS  											900//诊断菜单
-#define FSMSTEP_RENAME												1000
-#define FSMSTEP_CORRECTION											10000//功率校正
+#define FSMSTEP_DIAGNOSIS  											800//诊断菜单
+#define FSMSTEP_RENAME												900
+#define FSMSTEP_CORRECTION											1000//功率校正
 /*****************************************************************************/
 #define FLASH_DATA_VERSION  										0XAABB0000
 #define FLASH_DATA_ADDR     										0X00000000

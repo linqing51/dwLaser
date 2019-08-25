@@ -1347,7 +1347,6 @@ void dcHmiLoopInit(void){//初始化模块
 	NVRAM0[EM_COOL_SET_TEMP] = CONFIG_COOL_SET_TEMP;
 	NVRAM0[EM_COOL_DIFF_TEMP] = CONFIG_COOL_DIFF_TEMP;
 	reloadCorrTab();
-	PidRegulateInit();//初始化PID参数
 	RES(Y_TEC0);
 	SET(Y_FAN0);
 	RES(R_DRIVE_TEMP_HIGH);//屏蔽驱动器过热报警
@@ -1378,15 +1377,30 @@ static void temperatureLoop(void){//温度轮询顺序
 	else{
 		RES(R_ENVI_TEMP_HIGH);
 	}
-	//温控执行
-	if(NVRAM0[EM_DIODE_TEMP0] > (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
-		SET(Y_TEC0);
-		setLedVar(true);
+	//温控执行 激光等待发射及错误状态启动温控	
+	if((NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_POWERUP) || (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_RESTORE_HMI) ||
+	   (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_CHECK_FAIL_DISPLAY) || (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_LOAD_PARA) ||								
+       (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_LOAD_DONE) || (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_WAIT_TRIGGER) ||							
+       (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_EMITING) || (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_STOP) ||
+       (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_ERROR) || (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_DIAGNOSIS))
+	{
+		SET(Y_FAN1);
+		if(NVRAM0[EM_DIODE_TEMP0] > (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
+			SET(Y_TEC0);
+			setLedVar(true);
+		}
+		if(NVRAM0[EM_DIODE_TEMP0] < (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
+			RES(Y_TEC0);
+			setLedVar(false);
+		}   
 	}
-	if(NVRAM0[EM_DIODE_TEMP0] < (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
+	else{
 		RES(Y_TEC0);
-		setLedVar(false);
+		RES(Y_FAN1);
 	}
+
+	
+	
 	//ftemp = PidRegulate(28.0, NVRAM0[EM_DIODE_TEMP0]);
 }
 static void faultLoop(void){//故障轮询
@@ -2354,10 +2368,6 @@ void NotifyWriteFlash(uint8_t status){
     //TODO: 添加用户代码
 }
 
-
-void NotifyReadRTC(uint8_t year,uint8_t month,uint8_t week,uint8_t day,uint8_t hour,uint8_t minute,uint8_t second){
-     
-}
 
 /*! 
 *  \brief  string 转 int

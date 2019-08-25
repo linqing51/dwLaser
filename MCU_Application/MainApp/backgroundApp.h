@@ -29,6 +29,4 @@ void defaultScheme(void);//恢复默认设置
 void loadDefault(void);
 int16_t PCLAR(int16_t percent, int16_t table) reentrant;
 /*****************************************************************************/
-void PidRegulateInit(void);
-fp32_t PidRegulate(fp32_t ref, fp32_t feedback);//限制输入幅度，归一化到[-1，1]区间
 #endif

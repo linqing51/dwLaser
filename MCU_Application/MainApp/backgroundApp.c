@@ -1,41 +1,6 @@
 #include "backgroundApp.h"
 /*****************************************************************************/
 #if CONFIG_USING_BACKGROUND_APP == 1
-static int8_t flaginit;
-static fp32_t PID_OutK, PID_dErrorK1, PID_ErrorK1;
-static fp32_t PID_Kp=0.21, PID_Ki=0.0101, PID_Kd=0.05;
-static fp32_t PID_ErrorK, PID_dOutK, PID_dErrorK; 
-/*****************************************************************************/
-void PidRegulateInit(void){//PID初始化
-	PID_OutK = 0;
-	PID_dErrorK1 = 0;
-	PID_ErrorK1 = 0;
-	PID_ErrorK = 0;
-	PID_dOutK = 0;
-	PID_dErrorK = 0;
-}
-fp32_t PidRegulate(fp32_t ref, fp32_t feedback){//限制输入幅度，归一化到[-1，1]区间
-	if(ref >= 1) ref = 1;
-	if(ref <= -1) ref = -1;
-	if(feedback >=1) feedback = 1;
-	if(feedback <=-1) feedback = -1;
-	PID_ErrorK = ref - feedback;
-	if(fabs(PID_ErrorK) <= 0.001){
-		PID_ErrorK = 0;
-	}
-	PID_dErrorK = PID_ErrorK - PID_ErrorK1;//de(K) = e(k) - e(k-1)
-	PID_dOutK = PID_Kp * PID_dErrorK + PID_Ki * PID_ErrorK + PID_Kd * (PID_dErrorK - PID_dErrorK1);
-	PID_dErrorK1 = PID_dErrorK; //de(k) -> de(k-1)
-	PID_OutK += PID_dOutK;//u(k) =  u(k-1) +du(k)
-	if(PID_OutK >=  1){
-		PID_OutK =  1; //限制幅度 1>=u(k)>=-1
-	}
-	if(PID_OutK<= -1){  
-		PID_OutK = -1;
-	}
-	return(-PID_OutK);
-}
-
 int16_t pulseWidthAdd(int16_t ps){//脉宽增加
 	if(ps >= 1 && ps < 10){
 		ps += 1;
@@ -352,7 +317,7 @@ int8_t checkScheme(int8_t cn){
 int16_t PCLAR(int16_t percent, int16_t table) reentrant{//功率->DAC CODE
 	int8_t index;
 	fp32_t k, b, out;
-	index = percent / 50;
+	index = percent / 50;//percent 0 -1000
 	if(index >= 20){
 		return NVRAM0[table + 20];
 	}
