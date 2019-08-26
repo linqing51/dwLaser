@@ -328,6 +328,7 @@
 #define R_DRIVE_TEMP_HIGH										(R_START * 16 + 6)//驱动器高温标志
 #define R_ENVI_TEMP_HIGH										(R_START * 16 + 7)//环境温度标度
 #define R_FAULT													(R_START * 16 + 8)//故障标志
+#define R_FAN_ENABLE											(R_START * 16 + 9)//风扇使能
 #define R_DISABLE_RFID											(R_START * 16 + 16)//蜂鸣器模式
 #define R_DISABLE_FIBER_PROBE									(R_START * 16 + 17)//蜂鸣器模式
 #define R_DISABLE_FAN_SPEED										(R_START * 16 + 18)//蜂鸣器模式

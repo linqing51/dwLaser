@@ -1378,40 +1378,19 @@ static void temperatureLoop(void){//温度轮询顺序
 		RES(R_ENVI_TEMP_HIGH);
 	}
 	//温控执行 激光等待发射及错误状态启动温控	
-	if((NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_POWERUP) || (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_RESTORE_HMI) ||
-	   (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_CHECK_FAIL_DISPLAY) || (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_LOAD_PARA) ||								
-       (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_LOAD_DONE) || (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_WAIT_TRIGGER) ||							
-       (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_EMITING) || (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_STOP) ||
-       (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_ERROR) || (NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_DIAGNOSIS))
-	{
+	if(LD(R_FAN_ENABLE) || LD(R_DIODE_TEMP_HIGH) || LD(R_ENVI_TEMP_HIGH)){
 		SET(Y_FAN1);
-		if(NVRAM0[EM_DIODE_TEMP0] > (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
+		if(NVRAM0[EM_DIODE_TEMP0] >= (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
 			SET(Y_TEC0);
-			setLedVar(true);
 		}
-		if(NVRAM0[EM_DIODE_TEMP0] < (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
+		if(NVRAM0[EM_DIODE_TEMP0] <= (CONFIG_COOL_SET_TEMP + CONFIG_COOL_DIFF_TEMP)){
 			RES(Y_TEC0);
-			setLedVar(false);
 		}   
 	}
 	else{
-//		#define EM_DIODE_TEMP0											(EM_START + 30)//二极管温度0
-//#define EM_DIODE_TEMP1											(EM_START + 31)//二极管温度1
-//#define EM_DRIVE_TEMP											(EM_START + 32)//驱动器温度
-//#define EM_ENVI_TEMP											(EM_START + 33)//环境温度
-//#define EM_DIODE_HIGH_TEMP										(EM_START + 34)//二极管过热阈值
-//#define EM_DRIVE_HIGH_TEMP										(EM_START + 35)//驱动器过热阈值
-//#define EM_ENVI_HIGH_TEMP										(EM_START + 36)//环境过热阈值
-//#define EM_COOL_SET_TEMP										(EM_START + 37)//设定冷却温度
-//#define EM_COOL_DIFF_TEMP										(EM_START + 38)//设定冷却回差调节
-//		if(NVRAM0[EM_DIODE_TEMP0] < )
 		RES(Y_TEC0);
 		RES(Y_FAN1);
 	}
-
-	
-	
-	//ftemp = PidRegulate(28.0, NVRAM0[EM_DIODE_TEMP0]);
 }
 static void faultLoop(void){//故障轮询
 	uint8_t temp;
@@ -1469,6 +1448,7 @@ void dcHmiLoop(void){//HMI轮训程序
 	}
 	//状态机
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_POWERUP){//上电步骤	
+		SET(R_FAN_ENABLE);
 		SET(Y_LED_POWERON);//电源灯常亮
 #if CONFIG_USING_BACKGROUND_APP == 1
 		loadScheme();//从掉电存储寄存器中恢复方案参数
@@ -1501,6 +1481,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_RESTORE_HMI){//等待HMI复位
+		SET(R_FAN_ENABLE);
 		T100MS(T100MS_HMI_POWERUP_DELAY, true, CONFIG_CHECK_DELAY_TIME);
 		if(LD(T_100MS_START * 16 + T100MS_HMI_POWERUP_DELAY)){
 			T100MS(T100MS_HMI_POWERUP_DELAY, false, CONFIG_CHECK_DELAY_TIME);
@@ -1530,9 +1511,11 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_CHECK_FAIL_DISPLAY){//自检错误显示
+		SET(R_FAN_ENABLE);
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_WAIT_ENTER_PASSCODE){//等待开机密码输入
+		RES(R_FAN_ENABLE);
 		T100MS(T100MS_ENTER_PASSCODE_DELAY, true, CONFIG_CHECK_DELAY_TIME);
 		if(LD(T_100MS_START * 16 + T100MS_ENTER_PASSCODE_DELAY)){
 			T100MS(T100MS_ENTER_PASSCODE_DELAY, false, CONFIG_CHECK_DELAY_TIME);
@@ -1547,9 +1530,11 @@ void dcHmiLoop(void){//HMI轮训程序
 	}
 	
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_PASSCODE_INPUT){//输入开机密码
+		RES(R_FAN_ENABLE);
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_PASSCODE_NEW0){//等待输入新密码
+		RES(R_FAN_ENABLE);
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_STANDBY){//待机状态机
@@ -1895,6 +1880,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_LOAD_PARA){//等待蜂鸣器
+		SET(R_FAN_ENABLE);
 		T100MS(T100MS_READY_BEEM_DELAY, true, 20);//启动计时器延时2000mS//打开计时器
 		//清空计时器
 		if(LD(T_100MS_START * 16 + T100MS_READY_BEEM_DELAY)){
@@ -1913,6 +1899,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_WAIT_TRIGGER){//等待触发激光	
+		SET(R_FAN_ENABLE);
 		updateWarnMsgDisplay(MSG_WAIT_TRIGGER);
 		if(LD(R_FAULT)){//Ready状态检测到故障
 			EDLAR();//停止发射
@@ -1949,6 +1936,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_EMITING){//发激光中
+		SET(R_FAN_ENABLE);
 		if(LDP(SPCOIL_PS1000MS) || LDN(SPCOIL_PS1000MS)){//每隔1S刷新累计时间和能量
 			NVRAM0[TM_START] = (int16_t)((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10);
 			MULTS16(EM_RELEASE_TOTAL_TIME, TM_START, EM_RELEASE_TOTAL_ENERGY);//计算发射能量
@@ -1996,6 +1984,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_ERROR){//Ready检测到脚踏踩下
+		SET(R_FAN_ENABLE);
 		if(LDB(X_FOOTSWITCH_NO)){//检测到脚踏状态恢复正常
 			BeemEnable = 0;
 			standbyKeyValue(false);
@@ -2009,6 +1998,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_OPTION){//选项界面
+		RES(R_FAN_ENABLE);
 		if(LD(R_OPTION_KEY_ENTER_INFORMATION_DOWN)){
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_INFORMATION;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_INFORMATION;
@@ -2029,6 +2019,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_INFORMATION){//信息界面
+		RES(R_FAN_ENABLE);
 		if(LD(R_INFORMATION_KEY_OK_DOWN)){
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_OPTION;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_OPTION;
@@ -2038,6 +2029,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_SCHEME_0){//方案界面第一页
+		RES(R_FAN_ENABLE);
 		if(LD(R_SCHEME_KEY_OK_DOWN)){//确定
 			NVRAM0[DM_SCHEME_NUM] = NVRAM0[EM_SCHEME_NUM_TMP];//选定方案生效
 			updateSchemeName();
@@ -2072,6 +2064,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_SCHEME_1){//方案界面第二页
+		RES(R_FAN_ENABLE);
 		if(LD(R_SCHEME_KEY_OK_DOWN)){//确定
 			NVRAM0[DM_SCHEME_NUM] = NVRAM0[EM_SCHEME_NUM_TMP];
 			updateSchemeName();
@@ -2107,6 +2100,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_RENAME){//方案改名
+		RES(R_FAN_ENABLE);
 		if(LD(R_RENAME_TEXTDISPLAY_READ_DONE)){//更名完毕				
 			if(NVRAM0[EM_SCHEME_NUM_TMP] < 16){
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_SCHEME_0;
@@ -2135,6 +2129,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_DIAGNOSIS){//诊断界面
+		SET(R_FAN_ENABLE);
 		if(LD(R_DIAGNOSIS_OK_DOWN)){//返回Option
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_OPTION;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_OPTION;
