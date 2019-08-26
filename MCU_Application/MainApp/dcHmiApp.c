@@ -1395,6 +1395,16 @@ static void temperatureLoop(void){//温度轮询顺序
 		}   
 	}
 	else{
+//		#define EM_DIODE_TEMP0											(EM_START + 30)//二极管温度0
+//#define EM_DIODE_TEMP1											(EM_START + 31)//二极管温度1
+//#define EM_DRIVE_TEMP											(EM_START + 32)//驱动器温度
+//#define EM_ENVI_TEMP											(EM_START + 33)//环境温度
+//#define EM_DIODE_HIGH_TEMP										(EM_START + 34)//二极管过热阈值
+//#define EM_DRIVE_HIGH_TEMP										(EM_START + 35)//驱动器过热阈值
+//#define EM_ENVI_HIGH_TEMP										(EM_START + 36)//环境过热阈值
+//#define EM_COOL_SET_TEMP										(EM_START + 37)//设定冷却温度
+//#define EM_COOL_DIFF_TEMP										(EM_START + 38)//设定冷却回差调节
+//		if(NVRAM0[EM_DIODE_TEMP0] < )
 		RES(Y_TEC0);
 		RES(Y_FAN1);
 	}
@@ -1759,6 +1769,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			updateWarnMsgDisplay(MSG_NO_ERROR);
 		}
 		if(LD(R_STANDBY_KEY_ENTER_OPTION_DOWN)){//点击OPTION
+			BeemEnable = 0;//关闭蜂鸣器
 			if(LD(R_ENGINEER_MODE)){
 				SetControlVisiable(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER, true);//显示控件
 				SetControlEnable(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER ,true);//使能控件
@@ -1773,6 +1784,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_STANDBY_KEY_ENTER_OPTION_DOWN);
 		}else if(LD(R_STANDBY_KEY_ENTER_SCHEME_DOWN)){//点击SCHEME 默认显示第一页
+			BeemEnable = 0;//关闭蜂鸣器
 			if(NVRAM0[DM_SCHEME_NUM] < 16){//第一页
 				updateScheme_0_Display();//更新方案第一页名称
 				seletcSchemeNum(NVRAM0[DM_SCHEME_NUM]);
@@ -1830,8 +1842,8 @@ void dcHmiLoop(void){//HMI轮训程序
 					default:break;
 			}
 #if CONFIG_USING_BACKGROUND_APP == 1
-				NVRAM0[SPREG_DAC_0] = PCLAR(NVRAM0[EM_LASER_POWER_CH0], DM_CORR_TAB0_POWER0);
-				NVRAM0[SPREG_DAC_0] = PCLAR(NVRAM0[EM_LASER_POWER_CH1], DM_CORR_TAB1_POWER0);
+				NVRAM0[SPREG_DAC_0] = PCLAR(((int32_t)NVRAM0[EM_LASER_POWER_CH0] * 1000 / CONFIG_MAX_LASERPOWER_CH0), DM_CORR_TAB0_POWER0);
+				NVRAM0[SPREG_DAC_1] = PCLAR(((int32_t)NVRAM0[EM_LASER_POWER_CH1] * 1000 / CONFIG_MAX_LASERPOWER_CH1), DM_CORR_TAB1_POWER0);
 #endif
 				//打开蜂鸣器
 				BeemMode = BEEM_MODE_0;
