@@ -211,14 +211,6 @@ void loadScheme(void){//FD->EM
 		}
 	}
 }
-void updateSchemeName(void){//通过临时名称更新FDRAM
-	uint8_t *psrc, *pdist, i;
-	for(i = 0;i < CONFIG_HMI_SCHEME_NUM;i ++){
-		psrc = (uint8_t*)&TMPRAM[i * 15];
-		pdist = (uint8_t*)&FDRAM[i * 30];
-		memcpy(pdist, psrc, 26);
-	}
-}
 void saveScheme(void){//EM->FD
 	uint8_t *psrc, *pdist;
 	if(NVRAM0[DM_SCHEME_NUM] > CONFIG_HMI_SCHEME_NUM)

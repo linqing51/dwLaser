@@ -57,67 +57,51 @@ void updateEnergyDensity(void){//更新能量密度显示
 void updateScheme_0_Display(void){//更新选项界面方案名称
 	char dispBuf[32];	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_0]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_0]), (char*)(&FDRAM[FD_SCHEME_START_0]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_1]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_1]), (char*)(&FDRAM[FD_SCHEME_START_1]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_1, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_2]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_2]), (char*)(&FDRAM[FD_SCHEME_START_2]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_2, dispBuf);
 
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_3]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_3]), (char*)(&FDRAM[FD_SCHEME_START_3]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_3, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_4]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_4]), (char*)(&FDRAM[FD_SCHEME_START_4]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_4, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_5]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_5]), (char*)(&FDRAM[FD_SCHEME_START_5]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_5, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_6]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_6]), (char*)(&FDRAM[FD_SCHEME_START_6]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_6, dispBuf);
 
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_7]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_7]), (char*)(&FDRAM[FD_SCHEME_START_7]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_7, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_8]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_8]), (char*)(&FDRAM[FD_SCHEME_START_8]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_8, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_9]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_9]), (char*)(&FDRAM[FD_SCHEME_START_9]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_9, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_10]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_10]), (char*)(&FDRAM[FD_SCHEME_START_10]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_10, dispBuf);
 
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_11]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_11]), (char*)(&FDRAM[FD_SCHEME_START_11]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_11, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_12]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_12]), (char*)(&FDRAM[FD_SCHEME_START_12]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_12, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_13]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_13]), (char*)(&FDRAM[FD_SCHEME_START_13]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_13, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_14]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_14]), (char*)(&FDRAM[FD_SCHEME_START_14]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_14, dispBuf);
 
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_15]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_15]), (char*)(&FDRAM[FD_SCHEME_START_15]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_15, dispBuf);	
 	
 	unselectScheme_0_All();
@@ -128,67 +112,51 @@ void updateScheme_0_Display(void){//更新选项界面方案名称
 void updateScheme_1_Display(void){//更新选项界面方案名称
 	char dispBuf[26];
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_16]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_16]), (char*)(&FDRAM[FD_SCHEME_START_16]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_17]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_17]), (char*)(&FDRAM[FD_SCHEME_START_17]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_1, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_18]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_18]), (char*)(&FDRAM[FD_SCHEME_START_18]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_2, dispBuf);
 
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_19]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_19]), (char*)(&FDRAM[FD_SCHEME_START_19]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_3, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_20]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_20]), (char*)(&FDRAM[FD_SCHEME_START_20]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_4, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_21]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_21]), (char*)(&FDRAM[FD_SCHEME_START_21]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_5, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_22]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_22]), (char*)(&FDRAM[FD_SCHEME_START_22]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_6, dispBuf);
 
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_23]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_23]), (char*)(&FDRAM[FD_SCHEME_START_23]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_7, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_24]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_24]), (char*)(&FDRAM[FD_SCHEME_START_24]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_8, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_25]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_25]), (char*)(&FDRAM[FD_SCHEME_START_25]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_9, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_26]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_26]), (char*)(&FDRAM[FD_SCHEME_START_26]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_10, dispBuf);
 
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_27]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_27]), (char*)(&FDRAM[FD_SCHEME_START_27]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_11, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_28]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_28]), (char*)(&FDRAM[FD_SCHEME_START_28]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_12, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_29]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_29]), (char*)(&FDRAM[FD_SCHEME_START_29]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_13, dispBuf);
 	
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_30]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_30]), (char*)(&FDRAM[FD_SCHEME_START_30]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_14, dispBuf);
 
 	memcpy(dispBuf, (char*)(&FDRAM[FD_SCHEME_START_31]), 26);
-	memcpy((char*)(&TMPRAM[TMP_NAME_31]), (char*)(&FDRAM[FD_SCHEME_START_31]), 26);
 	SetTextValue(GDDC_PAGE_SCHEME_1, GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_15, dispBuf);	
 	
 	unselectScheme_1_All();
@@ -707,14 +675,14 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 				case LASER_SELECT_CH0:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
 				case LASER_SELECT_CH1:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
@@ -723,7 +691,7 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 					SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
@@ -735,14 +703,14 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 				case LASER_SELECT_CH0:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
 				case LASER_SELECT_CH1:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
@@ -751,7 +719,7 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 					SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
@@ -764,14 +732,14 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 				case LASER_SELECT_CH0:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
 				case LASER_SELECT_CH1:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
@@ -780,7 +748,7 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 					SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
@@ -793,14 +761,14 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 				case LASER_SELECT_CH0:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
 				case LASER_SELECT_CH1:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
@@ -809,7 +777,7 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 					SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
@@ -823,14 +791,14 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 				case LASER_SELECT_CH0:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
 				case LASER_SELECT_CH1:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
@@ -839,7 +807,7 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 					SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
@@ -853,14 +821,14 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 				case LASER_SELECT_CH0:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
 				case LASER_SELECT_CH1:{
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
@@ -869,7 +837,7 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 					SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0, dispBuf);
 					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH1]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1, dispBuf);
-					sprintf(dispBuf, "%4.1f W", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
+					sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10));
 					SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER, dispBuf);
 					break;
 				}
@@ -2032,7 +2000,6 @@ void dcHmiLoop(void){//HMI轮训程序
 		RES(R_FAN_ENABLE);
 		if(LD(R_SCHEME_KEY_OK_DOWN)){//确定
 			NVRAM0[DM_SCHEME_NUM] = NVRAM0[EM_SCHEME_NUM_TMP];//选定方案生效
-			updateSchemeName();
 			loadScheme();
 			updateStandbyDisplay();
 			returnStandbyDisplay();
@@ -2048,7 +2015,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_RENAME;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_RENAME;
 			//将EM_SCHEME_NUM_TMP指向的名称更新RENAME输入框
-			SetTextValue(GDDC_PAGE_RENAME, GDDC_PAGE_RENAME_TEXTDISPLAY_NEWNAME, (uint8_t*)(&TMPRAM[(NVRAM0[EM_SCHEME_NUM_TMP] * 15)]));
+			SetTextValue(GDDC_PAGE_RENAME, GDDC_PAGE_RENAME_TEXTDISPLAY_NEWNAME, (uint8_t*)(FDRAM + (NVRAM0[EM_SCHEME_NUM_TMP] * 30)));
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_SCHEME_KEY_RENAME_DOWN);
 		}
@@ -2067,7 +2034,6 @@ void dcHmiLoop(void){//HMI轮训程序
 		RES(R_FAN_ENABLE);
 		if(LD(R_SCHEME_KEY_OK_DOWN)){//确定
 			NVRAM0[DM_SCHEME_NUM] = NVRAM0[EM_SCHEME_NUM_TMP];
-			updateSchemeName();
 			loadScheme();
 			updateStandbyDisplay();
 			returnStandbyDisplay();
@@ -2084,7 +2050,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_RENAME;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_RENAME;
 			//将EM_SCHEME_NUM_TMP指向的名称更新RENAME输入框
-			SetTextValue(GDDC_PAGE_RENAME, GDDC_PAGE_RENAME_TEXTDISPLAY_NEWNAME, (uint8_t*)(&TMPRAM[(NVRAM0[EM_SCHEME_NUM_TMP] * 15)]));
+			SetTextValue(GDDC_PAGE_RENAME, GDDC_PAGE_RENAME_TEXTDISPLAY_NEWNAME, (uint8_t*)(FDRAM + (NVRAM0[EM_SCHEME_NUM_TMP] * 30)));
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_SCHEME_KEY_RENAME_DOWN);
 		}

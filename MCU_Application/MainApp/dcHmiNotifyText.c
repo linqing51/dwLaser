@@ -16,18 +16,14 @@ void NotifyText(uint16_t screen_id, uint16_t control_id, uint8_t *str){
 			switch(control_id){
 				case GDDC_PAGE_RENAME_TEXTDISPLAY_NEWNAME:{
 					tmp = NVRAM0[EM_SCHEME_NUM_TMP];
-					if(strlen(str) <= 26){
-						strcpy((uint8_t*)(&TMPRAM[tmp * 15]), str);
-					}
-					else{
-						strncpy((uint8_t*)(&TMPRAM[tmp * 15]), str, 26);
-					}
-					TMPRAM[(tmp * 15) + 13] &= 0xFF00;
-					if(tmp < 16){
-						SetTextValue(GDDC_PAGE_SCHEME_0, (GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0 + tmp), (uint8_t*)&TMPRAM[tmp * 15]);
-					}
-					else{
-						SetTextValue(GDDC_PAGE_SCHEME_1, (GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0 + tmp - 16), (uint8_t*)&TMPRAM[tmp * 15]);
+					if(strlen(str) <= CONFIG_SCHEME_NAME_SIZE){
+						strcpy((uint8_t*)(FDRAM + (tmp * 30)), str);
+						if(tmp < 16){
+							SetTextValue(GDDC_PAGE_SCHEME_0, (GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0 + tmp), str);
+						}
+						else{
+							SetTextValue(GDDC_PAGE_SCHEME_1, (GDDC_PAGE_SCHEME_TEXTDISPLAY_SCHEME_0 + tmp - 16), str);
+						}
 					}
 					SET(R_RENAME_TEXTDISPLAY_READ_DONE);
 					break;

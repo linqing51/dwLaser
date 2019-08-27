@@ -295,10 +295,6 @@
 /*****************************************************************************/
 #define CONFIG_FDRAM_SIZE										(FD_END + 1)
 /*****************************************************************************/
-#define TMP_START												0
-#define TMP_END													511
-#define CONFIG_TMPRAM_SIZE										(TMP_END + 1)
-/*****************************************************************************/
 #define SPCOIL_ON												(SPCOIL_START * 16 + 0)//长通线圈
 #define SPCOIL_START_UP											(SPCOIL_START * 16 + 1)//初次上电
 #define SPCOIL_PS10MS											(SPCOIL_START * 16 + 2)//10mS
