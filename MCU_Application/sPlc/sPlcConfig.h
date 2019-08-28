@@ -107,7 +107,7 @@
 #define CONFIG_DK25L_RXBUF_SIZE									24
 #define CONFIG_DK25L_TXBUF_SIZE									24
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_CH376									0
+#define CONFIG_SPLC_USING_CH376									1
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ONCHIPFLASH							0
 #define CONFIG_SPLC_USING_SI7060								0

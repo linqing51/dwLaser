@@ -5,6 +5,10 @@
 #define CONFIG_APP_DRIVE_HIGH_TEMP								650
 #define CONFIG_APP_ENVI_HIGH_TEMP								500
 /*****************************************************************************/
+#define CONFIG_USING_LASER_CHANNEL_0							1
+#define CONFIG_USING_LASER_CHANNEL_1							1
+#define CONFIG_USING_LASER_CHANNEL_2							1
+#define CONFIG_USING_LASER_CHANNEL_3							1
 #define CONFIG_HMI_SCHEME_NUM									32//方案数
 #define CONFIG_HMI_DEFAULT_PASSSWORD0							0x3433//默认密码
 #define CONFIG_HMI_DEFAULT_PASSSWORD1							0x3231//默认密码

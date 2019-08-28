@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>F120</TargetName>
+      <TargetName>Debug</TargetName>
       <ToolsetNumber>0x0</ToolsetNumber>
       <ToolsetName>MCS-51</ToolsetName>
       <uAC6>0</uAC6>
@@ -45,16 +45,16 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>..\Objects\</OutputDirectory>
-          <OutputName>dwLaser.uvgui</OutputName>
+          <OutputDirectory>.\Objects\</OutputDirectory>
+          <OutputName>bootloader</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
-          <ListingPath>..\Listings\</ListingPath>
+          <ListingPath>.\Listings\</ListingPath>
           <HexFormatSelection>0</HexFormatSelection>
-          <Merge32K>1</Merge32K>
+          <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
           <BeforeCompile>
             <RunUserProg1>0</RunUserProg1>
@@ -125,7 +125,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>0</UseSimulator>
+            <UseSimulator>1</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -137,9 +137,9 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
-            <UseTarget>1</UseTarget>
+            <UseTarget>0</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
-            <RunToMain>1</RunToMain>
+            <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
             <RestoreWatchpoints>1</RestoreWatchpoints>
             <RestoreMemoryDisplay>1</RestoreMemoryDisplay>
@@ -149,13 +149,13 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>10</TargetSelection>
+          <TargetSelection>-1</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
-            <InitializationFile>.\Simulation.ini</InitializationFile>
+            <InitializationFile></InitializationFile>
           </SimDlls>
           <TargetDlls>
             <CpuDll></CpuDll>
@@ -163,21 +163,21 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>BIN\SiC8051F.dll</Driver>
+            <Driver></Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
           <Flash1>
-            <UseTargetDll>1</UseTargetDll>
+            <UseTargetDll>0</UseTargetDll>
             <UseExternalTool>0</UseExternalTool>
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>0</UpdateFlashBeforeDebugging>
-            <Capability>1</Capability>
+            <Capability>0</Capability>
             <DriverSelection>-1</DriverSelection>
           </Flash1>
-          <bUseTDR>1</bUseTDR>
+          <bUseTDR>0</bUseTDR>
           <Flash2></Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -227,13 +227,13 @@
             <hadIROM2>0</hadIROM2>
             <hadIROM3>0</hadIROM3>
             <ModSmx2>0</ModSmx2>
-            <cBanks>1</cBanks>
+            <cBanks>0</cBanks>
             <xBanks>0</xBanks>
             <OnChipMemories>
               <RCB>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x7fff</Size>
+                <Size>0xffff</Size>
               </RCB>
               <RXB>
                 <Type>0</Type>
@@ -310,13 +310,13 @@
           <C51>
             <RegisterColoring>0</RegisterColoring>
             <VariablesInOrder>0</VariablesInOrder>
-            <IntegerPromotion>0</IntegerPromotion>
+            <IntegerPromotion>1</IntegerPromotion>
             <uAregs>0</uAregs>
             <UseInterruptVector>1</UseInterruptVector>
             <Fuzzy>3</Fuzzy>
             <Optimize>8</Optimize>
             <WarningLevel>2</WarningLevel>
-            <SizeSpeed>1</SizeSpeed>
+            <SizeSpeed>0</SizeSpeed>
             <ObjectExtend>1</ObjectExtend>
             <ACallAJmp>0</ACallAJmp>
             <InterruptVectorAddress>0</InterruptVectorAddress>
@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define>C8051F120</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Lib;..\Driver;..\sPlc;..\Port_F120;.\UsbHost;..\dcHMI;..\MainApp</IncludePath>
+              <IncludePath>.\Lib;.\OnChipFlash;.\UsbHost;.\MainApp</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -347,8 +347,8 @@
             <WarningLevel>2</WarningLevel>
             <DataOverlaying>1</DataOverlaying>
             <OverlayString></OverlayString>
-            <MiscControls>REMOVEUNUSED</MiscControls>
-            <DisableWarningNumbers>16</DisableWarningNumbers>
+            <MiscControls></MiscControls>
+            <DisableWarningNumbers></DisableWarningNumbers>
             <LinkerCmdFile></LinkerCmdFile>
             <Assign></Assign>
             <ReserveString></ReserveString>
@@ -377,164 +377,39 @@
           <GroupName>Lib</GroupName>
           <Files>
             <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Lib\delay.c</FilePath>
-            </File>
-            <File>
               <FileName>crc16.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Lib\crc16.c</FilePath>
+              <FilePath>.\Lib\crc16.c</FilePath>
+            </File>
+            <File>
+              <FileName>delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Lib\delay.c</FilePath>
             </File>
             <File>
               <FileName>STARTUP.A51</FileName>
               <FileType>2</FileType>
-              <FilePath>..\Lib\STARTUP.A51</FilePath>
+              <FilePath>.\Lib\STARTUP.A51</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>Drive</GroupName>
+          <GroupName>OnChipFlash</GroupName>
           <Files>
             <File>
-              <FileName>eprom.c</FileName>
+              <FileName>F120_FlashPrimitives.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Driver\eprom.c</FilePath>
+              <FilePath>.\OnChipFlash\F120_FlashPrimitives.c</FilePath>
             </File>
             <File>
-              <FileName>debugLed.c</FileName>
+              <FileName>F120_FlashUtils.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\Driver\debugLed.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c0.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Driver\i2c0.c</FilePath>
+              <FilePath>.\OnChipFlash\F120_FlashUtils.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>sPlc</GroupName>
-          <Files>
-            <File>
-              <FileName>sPlc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\sPlc\sPlc.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcFun.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\sPlc\sPlcFun.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sPlc_F120</GroupName>
-          <Files>
-            <File>
-              <FileName>InitDevice.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\InitDevice.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcChipAdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcChipAdc.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcChipDac.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcChipDac.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcIoIn.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcIoIn.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcIoOut.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcIoOut.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcLaser.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcLaser.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcMcu.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcMcu.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcTimer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcTimer.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcUart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcUart.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcPca.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcPca.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcDK25L.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcDK25L.c</FilePath>
-            </File>
-            <File>
-              <FileName>sPlcUsb.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\sPlcUsb.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>MainApp</GroupName>
-          <Files>
-            <File>
-              <FileName>MainApp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\MainApp.c</FilePath>
-            </File>
-            <File>
-              <FileName>backgroundApp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\backgroundApp.c</FilePath>
-            </File>
-            <File>
-              <FileName>dcHmiApp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\dcHmiApp.c</FilePath>
-            </File>
-            <File>
-              <FileName>dcHmiNotifyButton.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\dcHmiNotifyButton.c</FilePath>
-            </File>
-            <File>
-              <FileName>dcHmiNotifyProgress.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\dcHmiNotifyProgress.c</FilePath>
-            </File>
-            <File>
-              <FileName>dcHmiNotifyText.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\dcHmiNotifyText.c</FilePath>
-            </File>
-            <File>
-              <FileName>dcHmiNotifyReadRTC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\MainApp\dcHmiNotifyReadRTC.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sPlc_F120_USBHost</GroupName>
+          <GroupName>UsbHost</GroupName>
           <Files>
             <File>
               <FileName>FILE_SYS.C</FileName>
@@ -549,22 +424,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>dcHMI</GroupName>
+          <GroupName>MainApp</GroupName>
           <Files>
             <File>
-              <FileName>hmiCmdQueue.c</FileName>
+              <FileName>Bootloader.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\dcHMI\hmiCmdQueue.c</FilePath>
+              <FilePath>.\MainApp\Bootloader.c</FilePath>
             </File>
             <File>
-              <FileName>hmiDriver.c</FileName>
+              <FileName>InitDevice.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\dcHMI\hmiDriver.c</FilePath>
-            </File>
-            <File>
-              <FileName>hmiUserUart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\dcHMI\hmiUserUart.c</FilePath>
+              <FilePath>.\MainApp\InitDevice.c</FilePath>
             </File>
           </Files>
         </Group>
