@@ -18,14 +18,15 @@
 #define FSMSTEP_LASER_EMITING										404//激光发射中
 #define FSMSTEP_LASER_STOP											405//激光发射结束
 #define FSMSTEP_READY_ERROR											406//脚踏踩下错误
-//READY状态
-#define FSMSTEP_READY												500
 //选项状态
-#define FSMSTEP_OPTION												600//选项菜单
-#define FSMSTEP_INFORMATION											700
-#define FSMSTEP_SCHEME												800//方案菜单
-#define FSMSTEP_DIAGNOSIS  											900//诊断菜单
-#define FSMSTEP_CORRECTION											10000//功率校正
+#define FSMSTEP_OPTION												500//选项菜单
+#define FSMSTEP_INFORMATION											600
+#define FSMSTEP_SCHEME_0											700//方案菜单第一页
+#define FSMSTEP_SCHEME_1											710//方案菜单第二页
+
+#define FSMSTEP_DIAGNOSIS  											800//诊断菜单
+#define FSMSTEP_RENAME												900
+#define FSMSTEP_CORRECTION											1000//功率校正
 /*****************************************************************************/
 #define FLASH_DATA_VERSION  										0XAABB0000
 #define FLASH_DATA_ADDR     										0X00000000
@@ -48,6 +49,7 @@
 #define	MSG_FIBER_MISSMATE											15
 /*****************************************************************************/
 #include "sPlc.h"
+#include "appConfig.h"
 #include "appSplcAdr.h"
 #include "dcHmiRes.h"
 #include "backgroundApp.h"
@@ -60,9 +62,22 @@ void dcHmiLoopInit(void);
 void updateStandbyDisplay(void);
 void standbyTouchEnable(int8_t enable);
 void updatePowerDisplay(int16_t ch, int16_t mode);
-void updataPosWidthDisplay(void);
-void updataNegWidthDisplay(void);
-void unselectSchemeNum(sel);
-void seletcSchemeNum(uint16_t sel);
+void updatePosWidthDisplay(int16_t mode);
+void updateNegWidthDisplay(int16_t mode);
+void updateGroupOffDisplay(void);
+void updateOptionDisplay(void);
+/*****************************************************************************/
+void updateScheme_0_Display(void);
+void updateScheme_1_Display(void);
+void unselectScheme_0_All(void);
+void unselectScheme_1_All(void);
+void seletcSchemeNum(int16_t sel);
+void unselectSchemeNum(int16_t sel);
+/*****************************************************************************/
 void updateReleaseTimeEnergy(void);
+void updateSchemeInfo(int16_t cn);
+void updateWarnMsgDisplay(uint8_t id);
+void returnStandbyDisplay(void);
+/*****************************************************************************/
+void updateEnergyDensity(void);
 #endif

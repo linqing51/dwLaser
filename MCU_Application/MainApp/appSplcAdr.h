@@ -1,92 +1,65 @@
 #ifndef __APPSPLCADR_H__
 #define __APPSPLCADR_H__
 /*****************************************************************************/
-#define CONFIG_APP_DIODE_HIGH_TEMP							400
-#define CONFIG_APP_DRIVE_HIGH_TEMP							650
-#define CONFIG_APP_ENVI_HIGH_TEMP							500
+#define EM_LASER_SCHEME_NAME									(EM_START + 0)//方案名称
+#define EM_LASER_SELECT											(EM_START + 13)//通道选择
+#define EM_LASER_PULSE_MODE										(EM_START + 14)//脉冲模式
+#define EM_LASER_POWER_CH0										(EM_START + 15)//通道0功率
+#define EM_LASER_POWER_CH1										(EM_START + 16)//通道1功率
+#define EM_LASER_POWER_CH2										(EM_START + 17)//通道2功率
+#define EM_LASER_POWER_CH3										(EM_START + 18)//通道3功率
+#define EM_LASER_SP_POSWIDTH									(EM_START + 19)//单脉冲正脉宽
+#define EM_LASER_MP_POSWIDTH									(EM_START + 20)//多脉冲正脉宽
+#define EM_LASER_MP_NEGWIDTH									(EM_START + 21)//多脉冲负脉宽
+#define EM_LASER_GP_POSWIDTH									(EM_START + 22)//Group脉冲正脉宽
+#define EM_LASER_GP_NEGWIDTH									(EM_START + 23)//Group脉冲负脉宽
+#define EM_LASER_GP_TIMES										(EM_START + 24)//Group脉冲数
+#define EM_LASER_GP_GROUP_OFF									(EM_START + 25)//Group脉冲间隔
+#define EM_LASER_SIGNAL_ENERGY_INTERVAL							(EM_START + 26)//SIGNAL能量间隔
+#define EM_LASER_DERMA_POSWIDTH									(EM_START + 27)//DERMA正脉宽
+#define EM_LASER_DERMA_NEGWIDTH									(EM_START + 28)//DERMA负脉宽
+#define EM_LASER_DERMA_SPOT_SIZE								(EM_START + 29)//DERMA光斑直径
 /*****************************************************************************/
-#define CONFIG_HMI_SCHEME_NUM								16//方案数
-#define CONFIG_HMI_DEFAULT_PASSSWORD0						0x3433//默认密码
-#define CONFIG_HMI_DEFAULT_PASSSWORD1						0x3231//默认密码
-#define STATUS_LASER_READY									0x5A
-#define STATUS_LASER_STANDBY								0xA5
-#define AIM_MODE_CW_GREEN									0x5678//连续绿色
-#define AIM_MODE_CW_RED										0x9ABC//连续红色
-//故障码
-#define ERROR_CODE_EPROM									0x0001//EPRON 错误
-#define ERROR_CODE_SPI_FLASH								0x0002//SPI FLSAH错误
-#define ERROR_CODE_SI7060									0x0003//温度传感器通信错误
-#define ERROR_CODE_MCP79412									0x0004//RTC通信错误
-#define ERROR_CODE_LDR0										0x0005//激光驱动器0错误
-#define ERROR_CODE_LDR1										0x0006//激光驱动器1错误
-#define ERROR_CODE_TEMPER									0x0007//温度传感器错误
-#define ERROR_CODE_USBHOST									0x0008//USB HOST模块错误
-#define ERROR_CODE_NFC										0x0009//NFC模块错误
-#define ERROR_CODE_NRF24L01									0x0010//NRF24L01模块错误
-#define ERRPR_CODE_NOERR									0xFFFF//无错误
-//光斑直径定义
-#define DERMA_SPOT_SIZE_0MM5								0x100A//光斑直径0.5					
-#define DERMA_SPOT_SIZE_1MM0								0x200B//光斑直径1.0
-#define DERMA_SPOT_SIZE_2MM0								0x300C//光斑直径2.0
-#define DERMA_SPOT_SIZE_3MM0								0x400D//光斑直径3.0
-/*****************************************************************************/
-#define EM_LASER_SCHEME_NAME					(EM_START + 0)//方案名称
-#define EM_LASER_SELECT							(EM_START + 15)//通道选择
-#define EM_LASER_PULSE_MODE						(EM_START + 16)//脉冲模式
-#define EM_LASER_POWER_CH0						(EM_START + 17)//通道0功率
-#define EM_LASER_POWER_CH1						(EM_START + 18)//通道1功率
-#define EM_LASER_SP_POSWIDTH					(EM_START + 19)//单脉冲正脉宽
-#define EM_LASER_MP_POSWIDTH					(EM_START + 20)//多脉冲正脉宽
-#define EM_LASER_MP_NEGWIDTH					(EM_START + 21)//多脉冲负脉宽
-#define EM_LASER_GP_POSWIDTH					(EM_START + 22)//Group脉冲正脉宽
-#define EM_LASER_GP_NEGWIDTH					(EM_START + 23)//Group脉冲负脉宽
-#define EM_LASER_GP_TIMES						(EM_START + 24)//Group脉冲数
-#define EM_LASER_GP_GROUP_OFF					(EM_START + 25)//Group脉冲间隔
-#define EM_LASER_SIGNAL_ENERGY_INTERVAL			(EM_START + 26)//SIGNAL能量间隔
-#define EM_LASER_DERMA_POSWIDTH					(EM_START + 27)//DERMA正脉宽
-#define EM_LASER_DERMA_NEGWIDTH					(EM_START + 28)//DERMA负脉宽
-#define EM_LASER_DERMA_SPOT_SIZE				(EM_START + 29)//DERMA光斑直径
-/*****************************************************************************/
-#define EM_DIODE_TEMP0							(EM_START + 30)//二极管温度0
-#define EM_DIODE_TEMP1							(EM_START + 31)//二极管温度1
-#define EM_DRIVE_TEMP							(EM_START + 32)//驱动器温度
-#define EM_ENVI_TEMP							(EM_START + 33)//环境温度
-#define EM_DIODE_HIGH_TEMP						(EM_START + 34)//二极管过热阈值
-#define EM_DRIVE_HIGH_TEMP						(EM_START + 35)//驱动器过热阈值
-#define EM_ENVI_HIGH_TEMP						(EM_START + 36)//环境过热阈值
-#define EM_COOL_SET_TEMP						(EM_START + 37)//设定冷却温度
-#define EM_COOL_DIFF_TEMP						(EM_START + 38)//设定冷却回差调节
+#define EM_DIODE_TEMP0											(EM_START + 30)//二极管温度0
+#define EM_DIODE_TEMP1											(EM_START + 31)//二极管温度1
+#define EM_DRIVE_TEMP											(EM_START + 32)//驱动器温度
+#define EM_ENVI_TEMP											(EM_START + 33)//环境温度
+#define EM_DIODE_HIGH_TEMP										(EM_START + 34)//二极管过热阈值
+#define EM_DRIVE_HIGH_TEMP										(EM_START + 35)//驱动器过热阈值
+#define EM_ENVI_HIGH_TEMP										(EM_START + 36)//环境过热阈值
+#define EM_COOL_SET_TEMP										(EM_START + 37)//设定冷却温度
+#define EM_COOL_DIFF_TEMP										(EM_START + 38)//设定冷却回差调节
 /*****************************************************************************/			
-#define EM_RELEASE_TOTAL_TIME					(EM_START + 40)//发射总时间			
-#define EM_RELEASE_TOTAL_ENERGY					(EM_START + 41)//发射总能量		
-#define EM_TOTAL_POWER							(EM_START + 42)//发射总功率
-#define EM_HMI_OPERA_STEP						(EM_START +	43)//操作步骤								
-#define EM_ERROR_CODE							(EM_START + 44)//错误码					
-#define EM_SCHEME_NUM_TMP						(EM_START + 45)//待确认方案编号			
-#define EM_DK25L_VER							(EM_START + 46)//DK25L模块版本
-#define EM_LASER_SIGNAL_TIME_INTERVAL			(EM_START + 47)//SIGNAL蜂鸣器改变的时间间隔
-#define EM_BEEM_ON_TIME							(EM_START + 48)//蜂鸣器开启时间
+#define EM_RELEASE_TOTAL_TIME									(EM_START + 40)//发射总时间			
+#define EM_RELEASE_TOTAL_ENERGY									(EM_START + 41)//发射总能量		
+#define EM_TOTAL_POWER											(EM_START + 42)//发射总功率
+#define EM_HMI_OPERA_STEP										(EM_START +	43)//操作步骤								
+#define EM_ERROR_CODE											(EM_START + 44)//错误码					
+#define EM_SCHEME_NUM_TMP										(EM_START + 45)//待确认方案编号			
+#define EM_DK25L_VER											(EM_START + 46)//DK25L模块版本
+#define EM_LASER_SIGNAL_TIME_INTERVAL							(EM_START + 47)//SIGNAL蜂鸣器改变的时间间隔
+#define EM_BEEM_ON_TIME											(EM_START + 48)//蜂鸣器开启时间
 /*****************************************************************************/
-#define EM_DC_PAGE								(EM_START + 64)//HMI页面编号 			
-#define EM_DC_PASSCODE_INDEX					(EM_START + 65)//密码输入位索引		
-#define EM_DC_NEW_PASSCODE0						(EM_START + 66)//输入新密码0			
-#define EM_DC_NEW_PASSCODE1						(EM_START + 67)//输入新密码1			
-#define EM_DC_NEW_PASSCODE2						(EM_START + 68)//输入新密码0			
-#define EM_DC_NEW_PASSCODE3						(EM_START + 69)//输入新密码1			
-#define EM_DC_DEFAULT_PASSCODE0					(EM_START + 70)//默认密码0				
-#define EM_DC_DEFAULT_PASSCODE1					(EM_START + 71)//默认密码1				
-#define EM_DC_DEFAULT_PASSCODE2					(EM_START + 72)//默认密码1	
-#define EM_DC_DEFAULT_PASSCODE3					(EM_START + 73)//默认密码1				
-#define EM_DC_DISPLAY_RELEASE_TIME				(EM_START + 74)//显示发射时间			
-#define EM_DC_DISPLAY_RELEASE_ENERGY			(EM_START + 75)//显示发射能量
-/*****************************************************************************/
-
+#define EM_DC_PAGE												(EM_START + 64)//HMI页面编号 			
+#define EM_DC_PASSCODE_INDEX									(EM_START + 65)//密码输入位索引		
+#define EM_DC_NEW_PASSCODE0										(EM_START + 66)//输入新密码0			
+#define EM_DC_NEW_PASSCODE1										(EM_START + 67)//输入新密码1			
+#define EM_DC_NEW_PASSCODE2										(EM_START + 68)//输入新密码0			
+#define EM_DC_NEW_PASSCODE3										(EM_START + 69)//输入新密码1			
+#define EM_DC_DEFAULT_PASSCODE0									(EM_START + 70)//默认密码0				
+#define EM_DC_DEFAULT_PASSCODE1									(EM_START + 71)//默认密码1				
+#define EM_DC_DEFAULT_PASSCODE2									(EM_START + 72)//默认密码1	
+#define EM_DC_DEFAULT_PASSCODE3									(EM_START + 73)//默认密码1				
+#define EM_DC_DISPLAY_RELEASE_TIME								(EM_START + 74)//显示发射时间			
+#define EM_DC_DISPLAY_RELEASE_ENERGY							(EM_START + 75)//显示发射能量
 /*****************************************************************************/
 #define FD_LASER_SCHEME_NAME									(FD_START +  0)//方案名称
-#define FD_LASER_SELECT											(FD_START +  15)//通道选择
-#define FD_LASER_PULSE_MODE										(FD_START +  16)//脉冲模式
-#define FD_LASER_POWER_CH0										(FD_START +  17)//通道0功率
-#define FD_LASER_POWER_CH1										(FD_START +  18)//通道1功率
+#define FD_LASER_SELECT											(FD_START +  13)//通道选择
+#define FD_LASER_PULSE_MODE										(FD_START +  14)//脉冲模式
+#define FD_LASER_POWER_CH0										(FD_START +  15)//通道0功率
+#define FD_LASER_POWER_CH1										(FD_START +  16)//通道1功率
+#define FD_LASER_POWER_CH2										(FD_START +  17)//通道2功率
+#define FD_LASER_POWER_CH3										(FD_START +  18)//通道3功率
 #define FD_LASER_SP_POSWIDTH									(FD_START +  19)//单脉冲正脉宽
 #define FD_LASER_MP_POSWIDTH									(FD_START +  20)//多脉冲正脉宽
 #define FD_LASER_MP_NEGWIDTH									(FD_START +  21)//多脉冲负脉宽
@@ -147,6 +120,88 @@
 #define FD_SCHEME_START_15										(FD_START + 450)//方案15存储区起始
 #define FD_SCHEME_END_15										(FD_START + 479)//方案15存储区结束
 /*****************************************************************************/
+#define FD_SCHEME_START_16										(FD_START + 480)//方案16存储区起始
+#define FD_SCHEME_END_16										(FD_START + 509)//方案16存储区结束
+
+#define FD_SCHEME_START_17										(FD_START + 510)//方案17存储区起始
+#define FD_SCHEME_END_17										(FD_START + 539)//方案17存储区结束
+
+#define FD_SCHEME_START_18										(FD_START + 540)//方案18存储区起始
+#define FD_SCHEME_END_18										(FD_START + 569)//方案18存储区结束
+
+#define FD_SCHEME_START_19										(FD_START + 570)//方案19存储区起始
+#define FD_SCHEME_END_19										(FD_START + 599)//方案19存储区结束
+
+#define FD_SCHEME_START_20										(FD_START + 600)//方案20存储区起始
+#define FD_SCHEME_END_20										(FD_START + 629)//方案20存储区结束
+
+#define FD_SCHEME_START_21										(FD_START + 630)//方案21存储区起始
+#define FD_SCHEME_END_21										(FD_START + 659)//方案21存储区结束
+
+#define FD_SCHEME_START_22										(FD_START + 660)//方案22存储区起始
+#define FD_SCHEME_END_22										(FD_START + 689)//方案22存储区结束
+
+#define FD_SCHEME_START_23										(FD_START + 690)//方案23存储区起始
+#define FD_SCHEME_END_23										(FD_START + 719)//方案23存储区结束
+
+#define FD_SCHEME_START_24										(FD_START + 720)//方案24存储区起始
+#define FD_SCHEME_END_24										(FD_START + 749)//方案24存储区结束
+
+#define FD_SCHEME_START_25										(FD_START + 750)//方案25存储区起始
+#define FD_SCHEME_END_25										(FD_START + 779)//方案25存储区结束
+
+#define FD_SCHEME_START_26										(FD_START + 780)//方案26存储区起始
+#define FD_SCHEME_END_26										(FD_START + 809)//方案26存储区结束
+
+#define FD_SCHEME_START_27										(FD_START + 810)//方案27存储区起始
+#define FD_SCHEME_END_27										(FD_START + 839)//方案27存储区结束
+
+#define FD_SCHEME_START_28										(FD_START + 840)//方案28存储区起始
+#define FD_SCHEME_END_28										(FD_START + 869)//方案28存储区结束
+
+#define FD_SCHEME_START_29										(FD_START + 870)//方案29存储区起始
+#define FD_SCHEME_END_29										(FD_START + 899)//方案29存储区结束
+
+#define FD_SCHEME_START_30										(FD_START + 900)//方案30存储区起始
+#define FD_SCHEME_END_30										(FD_START + 929)//方案30存储区结束
+
+#define FD_SCHEME_START_31										(FD_START + 930)//方案31存储区起始
+#define FD_SCHEME_END_31										(FD_START + 959)//方案31存储区结束
+/*****************************************************************************/
+#define TMP_NAME_0												(TMP_START + 0)//临时名称储存区
+#define TMP_NAME_1												(TMP_START + 15)//临时名称储存区
+#define TMP_NAME_2												(TMP_START + 30)//临时名称储存区
+#define TMP_NAME_3												(TMP_START + 45)//临时名称储存区
+#define TMP_NAME_4												(TMP_START + 60)//临时名称储存区
+#define TMP_NAME_5												(TMP_START + 75)//临时名称储存区
+#define TMP_NAME_6												(TMP_START + 90)//临时名称储存区
+#define TMP_NAME_7												(TMP_START + 105)//临时名称储存区
+#define TMP_NAME_8												(TMP_START + 120)//临时名称储存区
+#define TMP_NAME_9												(TMP_START + 135)//临时名称储存区
+#define TMP_NAME_10												(TMP_START + 150)//临时名称储存区
+#define TMP_NAME_11												(TMP_START + 165)//临时名称储存区
+#define TMP_NAME_12												(TMP_START + 180)//临时名称储存区
+#define TMP_NAME_13												(TMP_START + 195)//临时名称储存区
+#define TMP_NAME_14												(TMP_START + 210)//临时名称储存区
+#define TMP_NAME_15												(TMP_START + 225)//临时名称储存区
+
+#define TMP_NAME_16												(TMP_START + 240)//临时名称储存区
+#define TMP_NAME_17												(TMP_START + 255)//临时名称储存区
+#define TMP_NAME_18												(TMP_START + 270)//临时名称储存区
+#define TMP_NAME_19												(TMP_START + 285)//临时名称储存区
+#define TMP_NAME_20												(TMP_START + 300)//临时名称储存区
+#define TMP_NAME_21												(TMP_START + 315)//临时名称储存区
+#define TMP_NAME_22												(TMP_START + 330)//临时名称储存区
+#define TMP_NAME_23												(TMP_START + 345)//临时名称储存区
+#define TMP_NAME_24												(TMP_START + 360)//临时名称储存区
+#define TMP_NAME_25												(TMP_START + 375)//临时名称储存区
+#define TMP_NAME_26												(TMP_START + 390)//临时名称储存区
+#define TMP_NAME_27												(TMP_START + 405)//临时名称储存区
+#define TMP_NAME_28												(TMP_START + 420)//临时名称储存区
+#define TMP_NAME_29												(TMP_START + 435)//临时名称储存区
+#define TMP_NAME_30												(TMP_START + 450)//临时名称储存区
+#define TMP_NAME_31												(TMP_START + 465)//临时名称储存区
+/*****************************************************************************/
 #define DM_SCHEME_NUM											(DM_START + 0)//选择的方案编号 低8位方案号 高8位方案使能
 #define DM_BEEM_VOLUME											(DM_START + 1)//蜂鸣器音量
 #define DM_AIM_BRG												(DM_START + 2)//指示激光亮度
@@ -178,38 +233,78 @@
 #define DM_CORR_TAB0_POWER17									(DM_START + 37)//功率校正表0功率34 
 #define DM_CORR_TAB0_POWER18									(DM_START + 38)//功率校正表0功率36
 #define DM_CORR_TAB0_POWER19									(DM_START + 39)//功率校正表0功率38
-#define DM_CORR_TAB0_POWER20									(DM_START + 40)//功率校正表0功率40
 
-#define DM_CORR_TAB1_POWER0										(DM_START + 50)//功率校正表1功率0 			
-#define DM_CORR_TAB1_POWER1										(DM_START + 51)//功率校正表1功率2
-#define DM_CORR_TAB1_POWER2										(DM_START + 52)//功率校正表1功率4
-#define DM_CORR_TAB1_POWER3										(DM_START + 53)//功率校正表1功率6 
-#define DM_CORR_TAB1_POWER4										(DM_START + 54)//功率校正表1功率8 
-#define DM_CORR_TAB1_POWER5										(DM_START + 55)//功率校正表1功率10 
-#define DM_CORR_TAB1_POWER6										(DM_START + 56)//功率校正表1功率12 
-#define DM_CORR_TAB1_POWER7										(DM_START + 57)//功率校正表1功率14 
-#define DM_CORR_TAB1_POWER8										(DM_START + 58)//功率校正表1功率16 
-#define DM_CORR_TAB1_POWER9										(DM_START + 59)//功率校正表1功率18 
-#define DM_CORR_TAB1_POWER10									(DM_START + 60)//功率校正表1功率20 
-#define DM_CORR_TAB1_POWER11									(DM_START + 61)//功率校正表1功率22 
-#define DM_CORR_TAB1_POWER12									(DM_START + 62)//功率校正表1功率24 
-#define DM_CORR_TAB1_POWER13									(DM_START + 63)//功率校正表1功率26 
-#define DM_CORR_TAB1_POWER14									(DM_START + 64)//功率校正表1功率28 
-#define DM_CORR_TAB1_POWER15									(DM_START + 65)//功率校正表1功率30 
-#define DM_CORR_TAB1_POWER16									(DM_START + 66)//功率校正表1功率32 
-#define DM_CORR_TAB1_POWER17									(DM_START + 67)//功率校正表1功率34 
-#define DM_CORR_TAB1_POWER18									(DM_START + 68)//功率校正表1功率36 
-#define DM_CORR_TAB1_POWER19									(DM_START + 69)//功率校正表1功率38
-#define DM_CORR_TAB1_POWER20									(DM_START + 70)//功率校正表1功率40
+#define DM_CORR_TAB1_POWER0										(DM_START + 40)//功率校正表1功率0 			
+#define DM_CORR_TAB1_POWER1										(DM_START + 41)//功率校正表1功率2
+#define DM_CORR_TAB1_POWER2										(DM_START + 42)//功率校正表1功率4
+#define DM_CORR_TAB1_POWER3										(DM_START + 43)//功率校正表1功率6 
+#define DM_CORR_TAB1_POWER4										(DM_START + 44)//功率校正表1功率8 
+#define DM_CORR_TAB1_POWER5										(DM_START + 45)//功率校正表1功率10 
+#define DM_CORR_TAB1_POWER6										(DM_START + 46)//功率校正表1功率12 
+#define DM_CORR_TAB1_POWER7										(DM_START + 47)//功率校正表1功率14 
+#define DM_CORR_TAB1_POWER8										(DM_START + 48)//功率校正表1功率16 
+#define DM_CORR_TAB1_POWER9										(DM_START + 49)//功率校正表1功率18 
+#define DM_CORR_TAB1_POWER10									(DM_START + 50)//功率校正表1功率20 
+#define DM_CORR_TAB1_POWER11									(DM_START + 51)//功率校正表1功率22 
+#define DM_CORR_TAB1_POWER12									(DM_START + 52)//功率校正表1功率24 
+#define DM_CORR_TAB1_POWER13									(DM_START + 53)//功率校正表1功率26 
+#define DM_CORR_TAB1_POWER14									(DM_START + 54)//功率校正表1功率28 
+#define DM_CORR_TAB1_POWER15									(DM_START + 55)//功率校正表1功率30 
+#define DM_CORR_TAB1_POWER16									(DM_START + 56)//功率校正表1功率32 
+#define DM_CORR_TAB1_POWER17									(DM_START + 57)//功率校正表1功率34 
+#define DM_CORR_TAB1_POWER18									(DM_START + 58)//功率校正表1功率36 
+#define DM_CORR_TAB1_POWER19									(DM_START + 59)//功率校正表1功率38
+
+#define DM_CORR_TAB2_POWER0										(DM_START + 60)//功率校正表0功率0 
+#define DM_CORR_TAB2_POWER1										(DM_START + 61)//功率校正表0功率2 
+#define DM_CORR_TAB2_POWER2										(DM_START + 62)//功率校正表0功率4 
+#define DM_CORR_TAB2_POWER3										(DM_START + 63)//功率校正表0功率6 
+#define DM_CORR_TAB2_POWER4										(DM_START + 64)//功率校正表0功率8 
+#define DM_CORR_TAB2_POWER5										(DM_START + 65)//功率校正表0功率10 
+#define DM_CORR_TAB2_POWER6										(DM_START + 66)//功率校正表0功率12 
+#define DM_CORR_TAB2_POWER7										(DM_START + 67)//功率校正表0功率14 
+#define DM_CORR_TAB2_POWER8										(DM_START + 68)//功率校正表0功率16 
+#define DM_CORR_TAB2_POWER9										(DM_START + 69)//功率校正表0功率18 
+#define DM_CORR_TAB2_POWER10									(DM_START + 70)//功率校正表0功率20 
+#define DM_CORR_TAB2_POWER11									(DM_START + 71)//功率校正表0功率22 
+#define DM_CORR_TAB2_POWER12									(DM_START + 72)//功率校正表0功率24 
+#define DM_CORR_TAB2_POWER13									(DM_START + 73)//功率校正表0功率26 
+#define DM_CORR_TAB2_POWER14									(DM_START + 74)//功率校正表0功率28 
+#define DM_CORR_TAB2_POWER15									(DM_START + 75)//功率校正表0功率30 
+#define DM_CORR_TAB2_POWER16									(DM_START + 76)//功率校正表0功率32 
+#define DM_CORR_TAB2_POWER17									(DM_START + 77)//功率校正表0功率34 
+#define DM_CORR_TAB2_POWER18									(DM_START + 78)//功率校正表0功率36
+#define DM_CORR_TAB2_POWER19									(DM_START + 79)//功率校正表0功率38
+
+#define DM_CORR_TAB3_POWER0										(DM_START + 80)//功率校正表0功率0 
+#define DM_CORR_TAB3_POWER1										(DM_START + 81)//功率校正表0功率2 
+#define DM_CORR_TAB3_POWER2										(DM_START + 82)//功率校正表0功率4 
+#define DM_CORR_TAB3_POWER3										(DM_START + 83)//功率校正表0功率6 
+#define DM_CORR_TAB3_POWER4										(DM_START + 84)//功率校正表0功率8 
+#define DM_CORR_TAB3_POWER5										(DM_START + 85)//功率校正表0功率10 
+#define DM_CORR_TAB3_POWER6										(DM_START + 86)//功率校正表0功率12 
+#define DM_CORR_TAB3_POWER7										(DM_START + 87)//功率校正表0功率14 
+#define DM_CORR_TAB3_POWER8										(DM_START + 88)//功率校正表0功率16 
+#define DM_CORR_TAB3_POWER9										(DM_START + 89)//功率校正表0功率18 
+#define DM_CORR_TAB3_POWER10									(DM_START + 80)//功率校正表0功率20 
+#define DM_CORR_TAB3_POWER11									(DM_START + 81)//功率校正表0功率22 
+#define DM_CORR_TAB3_POWER12									(DM_START + 82)//功率校正表0功率24 
+#define DM_CORR_TAB3_POWER13									(DM_START + 83)//功率校正表0功率26 
+#define DM_CORR_TAB3_POWER14									(DM_START + 84)//功率校正表0功率28 
+#define DM_CORR_TAB3_POWER15									(DM_START + 85)//功率校正表0功率30 
+#define DM_CORR_TAB3_POWER16									(DM_START + 86)//功率校正表0功率32 
+#define DM_CORR_TAB3_POWER17									(DM_START + 87)//功率校正表0功率34 
+#define DM_CORR_TAB3_POWER18									(DM_START + 88)//功率校正表0功率36
+#define DM_CORR_TAB3_POWER19									(DM_START + 89)//功率校正表0功率38
 /*****************************************************************************/
 #define X_FOOTSWITCH_NC											(X_START * 16 + 0)//XIN0 脚踏常闭
 #define X_ESTOP													(X_START * 16 + 1)//XIN1 紧急停止开关
 #define X_FOOTSWITCH_NO											(X_START * 16 + 2)//XIN2 脚踏常开
 #define X_INTERLOCK												(X_START * 16 + 3)//XIN3 安全连锁
-#define X_LDR_FAULT0											(X_START * 16 + 4)//XIN4 驱动器故障0
-#define X_LDR_FAULT1											(X_START * 16 + 5)//XIN5 驱动器故障1
-#define X_FBD1													(X_START * 16 + 6)//XIN6 光纤探测0
-#define X_FBD0													(X_START * 16 + 7)//XIN7 光纤探测1
+//#define X_LDR_FAULT0											(X_START * 16 + 4)//XIN4 驱动器故障0
+//#define X_LDR_FAULT1											(X_START * 16 + 5)//XIN5 驱动器故障1
+#define X_FIBER_PROBE											(X_START * 16 + 7)//XIN6 光纤探测0
+//#define X_FBD1												(X_START * 16 + 7)//XIN7 光纤探测1
 /*****************************************************************************/
 #define Y_LED_POWERON											(Y_START * 16 + 0)//YOUT0 电源灯
 #define Y_LED_EMIT												(Y_START * 16 + 1)//YOUT1 激光指示灯
@@ -224,14 +319,20 @@
 #define Y_TEC0													(Y_START * 16 + 10)//YOUT10 制冷开关0
 #define Y_TEC1													(Y_START * 16 + 11)//YOUT11 制冷开关1
 /*****************************************************************************/
-#define R_FIBER_ID_PASS_0										(R_START * 16 + 0)//通道0光纤ID标志
-#define R_FIBER_ID_PASS_1										(R_START * 16 + 1)//通道1光纤ID标志
-#define R_DIODE_TEMP_HIGH_0										(R_START * 16 + 2)//通道0二极管高温标志
-#define R_DIODE_TEMP_HIGH_1										(R_START * 16 + 3)//通道1二极管高温标志
-#define R_DRIVE_TEMP_HIGH										(R_START * 16 + 4)//驱动器高温标志
-#define R_ENVI_TEMP_HIGH										(R_START * 16 + 5)//环境温度标度
-#define R_FAULT													(R_START * 16 + 6)//故障标志
-#define R_ADMIN													(R_START * 16 + 7)//管理员模式
+#define R_FOOTSWITCH_NC											(X_START * 16 + 0)//
+#define R_ESTOP													(X_START * 16 + 1)//
+#define R_INTERLOCK												(X_START * 16 + 2)//
+#define R_FIBER_PROBE											(X_START * 16 + 3)//
+#define R_RFID_PASS												(X_START * 16 + 4)
+#define R_DIODE_TEMP_HIGH										(R_START * 16 + 5)//通道0二极管高温标志
+#define R_DRIVE_TEMP_HIGH										(R_START * 16 + 6)//驱动器高温标志
+#define R_ENVI_TEMP_HIGH										(R_START * 16 + 7)//环境温度标度
+#define R_FAULT													(R_START * 16 + 8)//故障标志
+#define R_FAN_ENABLE											(R_START * 16 + 9)//风扇使能
+#define R_DISABLE_RFID											(R_START * 16 + 16)//蜂鸣器模式
+#define R_DISABLE_FIBER_PROBE									(R_START * 16 + 17)//蜂鸣器模式
+#define R_DISABLE_FAN_SPEED										(R_START * 16 + 18)//蜂鸣器模式
+#define R_ENGINEER_MODE											(R_START * 16 + 19)//工程师模式
 //HMI相关状态
 #define R_DCHMI_RESET_REQ										(R_START * 16 + 20)//HMI复位请求
 #define R_DCHMI_RESET_DOING										(R_START * 16 + 21)//HMI复位中
@@ -242,7 +343,6 @@
 #define R_DCHMI_RESTORE_REQ										(R_START * 16 + 26)//HMI从FLASH中恢复设置请求
 #define R_DCHMI_RESTORE_DOING									(R_START * 16 + 27)//HMI从FLASH中恢复中
 #define R_DCHMI_RESTORE_DONE									(R_START * 16 + 28)//HMI从FLASH中恢复设置完成	
-
 #define R_DCHMI_DISPLAY_WARN									(R_START * 16 + 30)//HMI显示报警信息
 #define R_DCHMI_KEY_STANDBY_ENABLE								(R_START * 16 + 40)//STANDBY 使能
 /*****************************************************************************/
@@ -260,6 +360,7 @@
 #define R_STANDBY_KEY_STNADBY_UP								(R_START * 16 + 91)
 #define R_STANDBY_KEY_ENTER_OPTION_DOWN							(R_START * 16 + 92)
 #define R_STANDBY_KEY_ENTER_SCHEME_DOWN							(R_START * 16 + 93)
+#define R_STANDBY_KEY_SCHEME_SAVE_DOWN							(R_START * 16 + 94)
 /*****************************************************************************/
 #define R_OPTION_KEY_ENTER_CORRECTION_DOWN						(R_START * 16 + 100)
 #define R_OPTION_KEY_ENTER_INFORMATION_DOWN						(R_START * 16 + 101)
@@ -273,24 +374,30 @@
 #define R_SCHEME_KEY_OK_DOWN									(R_START * 16 + 121)
 #define R_SCHEME_KEY_CANCEL_DOWN								(R_START * 16 + 122)
 #define R_SCHEME_KEY_SCHEME_SELECT_0_DOWN						(R_START * 16 + 123)		
-#define R_SCHEME_KEY_SCHEME_SELECT_1_DOWN						(R_START * 16 + 125)
-#define R_SCHEME_KEY_SCHEME_SELECT_2_DOWN						(R_START * 16 + 127)
-#define R_SCHEME_KEY_SCHEME_SELECT_3_DOWN						(R_START * 16 + 129)
-#define R_SCHEME_KEY_SCHEME_SELECT_4_DOWN						(R_START * 16 + 131)
-#define R_SCHEME_KEY_SCHEME_SELECT_5_DOWN						(R_START * 16 + 133)
-#define R_SCHEME_KEY_SCHEME_SELECT_6_DOWN						(R_START * 16 + 135)
-#define R_SCHEME_KEY_SCHEME_SELECT_7_DOWN						(R_START * 16 + 137)
-#define R_SCHEME_KEY_SCHEME_SELECT_8_DOWN						(R_START * 16 + 139)
-#define R_SCHEME_KEY_SCHEME_SELECT_9_DOWN						(R_START * 16 + 141)
-#define R_SCHEME_KEY_SCHEME_SELECT_10_DOWN						(R_START * 16 + 143)
-#define R_SCHEME_KEY_SCHEME_SELECT_11_DOWN						(R_START * 16 + 145)
-#define R_SCHEME_KEY_SCHEME_SELECT_12_DOWN						(R_START * 16 + 147)
-#define R_SCHEME_KEY_SCHEME_SELECT_13_DOWN						(R_START * 16 + 149)
-#define R_SCHEME_KEY_SCHEME_SELECT_14_DOWN						(R_START * 16 + 151)
-#define R_SCHEME_KEY_SCHEME_SELECT_15_DOWN						(R_START * 16 + 153)
+#define R_SCHEME_KEY_SCHEME_SELECT_1_DOWN						(R_START * 16 + 124)
+#define R_SCHEME_KEY_SCHEME_SELECT_2_DOWN						(R_START * 16 + 125)
+#define R_SCHEME_KEY_SCHEME_SELECT_3_DOWN						(R_START * 16 + 126)
+#define R_SCHEME_KEY_SCHEME_SELECT_4_DOWN						(R_START * 16 + 127)
+#define R_SCHEME_KEY_SCHEME_SELECT_5_DOWN						(R_START * 16 + 128)
+#define R_SCHEME_KEY_SCHEME_SELECT_6_DOWN						(R_START * 16 + 129)
+#define R_SCHEME_KEY_SCHEME_SELECT_7_DOWN						(R_START * 16 + 130)
+#define R_SCHEME_KEY_SCHEME_SELECT_8_DOWN						(R_START * 16 + 131)
+#define R_SCHEME_KEY_SCHEME_SELECT_9_DOWN						(R_START * 16 + 132)
+#define R_SCHEME_KEY_SCHEME_SELECT_10_DOWN						(R_START * 16 + 133)
+#define R_SCHEME_KEY_SCHEME_SELECT_11_DOWN						(R_START * 16 + 134)
+#define R_SCHEME_KEY_SCHEME_SELECT_12_DOWN						(R_START * 16 + 135)
+#define R_SCHEME_KEY_SCHEME_SELECT_13_DOWN						(R_START * 16 + 136)
+#define R_SCHEME_KEY_SCHEME_SELECT_14_DOWN						(R_START * 16 + 137)
+#define R_SCHEME_KEY_SCHEME_SELECT_15_DOWN						(R_START * 16 + 138)
+#define R_SCHEME_KEY_NEXT_SCHEME								(R_START * 16 + 139)
+#define R_SCHEME_KEY_LAST_SCHEME								(R_START * 16 + 140)
 /*****************************************************************************/
 #define R_DIAGNOSIS_OK_DOWN										(R_START * 16 + 160)
 #define R_DIAGNOSIS_OK_UP										(R_START * 16 + 161)
+/*****************************************************************************/
+#define R_RENAME_KEY_ENTER_DOWN									(R_START * 16 + 170)
+#define R_RENAME_KEY_EXIT_DOWN									(R_START * 16 + 171)
+#define R_RENAME_TEXTDISPLAY_READ_DONE							(R_START * 16 + 172)
 /*****************************************************************************/
 #define MR_FOOSWITCH_HAND_SWITCH								(MR_START * 16 + 10)//脚踏HandSwitch 脉冲控制
 #define MR_BEEM_TONE											(MR_START * 16 + 11)//蜂鸣器模式

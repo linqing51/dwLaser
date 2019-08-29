@@ -1,7 +1,7 @@
 #include "dcHmiNotifyProgress.h"
 void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){ 
 	switch(screen_id){
-		case GDDC_PAGE_STANDBY_CW_0:{
+		case GDDC_PAGE_STANDBY_CW:{
 			switch(control_id){
 				case GDDC_PAGE_STANDBY_PROGRESS_CH0:{
 					if(value > 100){
@@ -31,7 +31,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 			}
 			break;
 		}
-		case GDDC_PAGE_STANDBY_SP_0:{
+		case GDDC_PAGE_STANDBY_SP:{
 			switch(control_id){
 				case GDDC_PAGE_STANDBY_PROGRESS_CH0:{
 					if(value > 100){
@@ -61,7 +61,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 			}
 			break;
 		}
-		case GDDC_PAGE_STANDBY_MP_0:{
+		case GDDC_PAGE_STANDBY_MP:{
 			switch(control_id){
 				case GDDC_PAGE_STANDBY_PROGRESS_CH0:{
 					if(value > 100){
@@ -91,7 +91,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 			}
 			break;
 		}
-		case GDDC_PAGE_STANDBY_GP_0:{
+		case GDDC_PAGE_STANDBY_GP:{
 			switch(control_id){
 				case GDDC_PAGE_STANDBY_PROGRESS_CH0:{
 					if(value > 100){
@@ -121,7 +121,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 			}
 			break;
 		}
-		case GDDC_PAGE_STANDBY_SIGNAL_0:{
+		case GDDC_PAGE_STANDBY_SIGNAL:{
 			switch(control_id){
 				case GDDC_PAGE_STANDBY_PROGRESS_CH0:{
 					if(value > 100){
@@ -151,7 +151,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 			}
 			break;
 		}
-		case GDDC_PAGE_STANDBY_DERMA_0:{
+		case GDDC_PAGE_STANDBY_DERMA:{
 			switch(control_id){
 				case GDDC_PAGE_STANDBY_PROGRESS_CH0:{
 					if(value > 100){
@@ -181,7 +181,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 			}
 			break;
 		}
-		case GDDC_PAGE_OPTION_0:{
+		case GDDC_PAGE_OPTION:{
 			switch(control_id){
 				case GDDC_PAGE_OPTION_PROGRESS_AIM_BRG:{
 					if(value < CONFIG_MIN_AIM_BRG){
@@ -191,7 +191,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 						value = CONFIG_MAX_AIM_BRG;
 					}
 					NVRAM0[DM_AIM_BRG] = (int16_t)value;	
-					SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_AIM_BRG , NVRAM0[DM_AIM_BRG], 1, 0);
+					SetTextInt32(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_TEXTDISPLAY_AIM_BRG , NVRAM0[DM_AIM_BRG], 1, 0);
 					break;
 				}
 				case GDDC_PAGE_OPTION_PROGRESS_BEEM_VOLUME:{
@@ -202,7 +202,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 						value = CONFIG_MAX_BEEM_VOLUME;
 					}
 					NVRAM0[DM_BEEM_VOLUME] = (int16_t)value;
-					SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_BEEM_VOLUME , NVRAM0[DM_BEEM_VOLUME], 1, 0);
+					SetTextInt32(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_TEXTDISPLAY_BEEM_VOLUME , NVRAM0[DM_BEEM_VOLUME], 1, 0);
 					break;
 				}
 				case GDDC_PAGE_OPTION_PROGRESS_LCD_BRG:{
@@ -213,7 +213,7 @@ void NotifyProgress(uint16_t screen_id, uint16_t control_id, uint32_t value){
 						value = CONFIG_MAX_LCD_BRG;
 					}
 					NVRAM0[DM_LCD_BRG] = (int16_t)value;
-					SetTextInt32(GDDC_PAGE_OPTION_0, GDDC_PAGE_OPTION_TEXTDISPLAY_LCD_BRG , NVRAM0[DM_LCD_BRG], 1, 0);
+					SetTextInt32(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_TEXTDISPLAY_LCD_BRG , NVRAM0[DM_LCD_BRG], 1, 0);
 					SetBackLight(getLcdDuty(NVRAM0[DM_LCD_BRG]));
 					break;
 				}					

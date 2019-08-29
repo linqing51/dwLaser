@@ -13,7 +13,8 @@
 #define LASER_MODE_SIGNAL						0x0020//单脉冲模式
 #define LASER_SELECT_CH0						0x0001
 #define LASER_SELECT_CH1						0x0002
-#define LASER_SELECT_BOTH						0x0004
+#define LASER_SELECT_CH2						0x0003
+#define LASER_SELECT_ALL						0x0004
 /*****************************************************************************/
 void sPlcLaserInit(void);
 void laserTimerIsr(void);//TIMER4 中断 激光发射

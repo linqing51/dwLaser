@@ -16,69 +16,70 @@
 #define CONFIG_DEBUG_PCA								0//PCA调试
 #endif
 /*****************************************************************************/
-#define CONFIG_UART0_BAUDRATE							115200//串口0 波特率
-#define CONFIG_UART1_BAUDRATE							115200//串口1 波特率
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_I2C0							1//使能I2C0
-#define CONFIG_SPLC_USING_I2C1							1//使能I2C1
-#define CONFIG_SPLC_USING_I2C2							1//使能I2C2
-#define CONFIG_SPLC_USING_I2C3							1//使能I2C3
+#define CONFIG_UART0_BAUDRATE									115200//串口0 波特率
+#define CONFIG_UART1_BAUDRATE									115200//串口1 波特率
 /*****************************************************************************/
-#define CONFIG_I2C0_FREQ 								1            
-#define CONFIG_I2C1_FREQ 								16
-#define CONFIG_I2C2_FREQ 								16
-#define CONFIG_I2C3_FREQ 								16
-#define CONFIG_I2C_WAITACT_TIME							10
+#define CONFIG_SPLC_USING_I2C0									1//使能I2C0
+#define CONFIG_SPLC_USING_I2C1									1//使能I2C1
+#define CONFIG_SPLC_USING_I2C2									1//使能I2C2
+#define CONFIG_SPLC_USING_I2C3									1//使能I2C3
 /*****************************************************************************/
-#define CONFIG_EPROM_SIZE 								CONFIG_AT24C64_SIZE
-#define	CONFIG_AT24C02_SIZE 							256
-#define	CONFIG_AT24C04_SIZE  							512
-#define	CONFIG_AT24C08_SIZE 							1024
-#define	CONFIG_AT24C16_SIZE 							2048
-#define	CONFIG_AT24C32_SIZE 							4096
-#define	CONFIG_AT24C64_SIZE								8192
-#define	CONFIG_AT24C128_SIZE 							16384
-#define	CONFIG_AT24C256_SIZE 							32768
-#define CONFIG_EPROM_ADDRESS							0x50
-#define CONFIG_EPROM_FRAM								1//铁电存储体无写入等待
-#define CONFIG_EPROM_PAGEWRITE							0//页写入
-#define CONFIG_EPROM_NVRAM_START						0x0
-#define CONFIG_EPROM_FDRAM_START						0x1800
+#define CONFIG_I2C0_FREQ 										1            
+#define CONFIG_I2C1_FREQ 										16
+#define CONFIG_I2C2_FREQ 										16
+#define CONFIG_I2C3_FREQ 										16
+#define CONFIG_I2C_WAITACT_TIME									10
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_SPWM							1//使了软件PWM功能
+#define CONFIG_EPROM_SIZE 										CONFIG_AT24C64_SIZE
+#define	CONFIG_AT24C02_SIZE 									256
+#define	CONFIG_AT24C04_SIZE  									512
+#define	CONFIG_AT24C08_SIZE 									1024
+#define	CONFIG_AT24C16_SIZE 									2048
+#define	CONFIG_AT24C32_SIZE 									4096
+#define	CONFIG_AT24C64_SIZE										8192
+#define	CONFIG_AT24C128_SIZE 									16384
+#define	CONFIG_AT24C256_SIZE 									32768
+#define CONFIG_EPROM_ADDRESS									0x50
+#define CONFIG_EPROM_FRAM										1//铁电存储体无写入等待
+#define CONFIG_EPROM_PAGEWRITE									0//页写入
+#define CONFIG_EPROM_NVRAM_START								0x0
+#define CONFIG_EPROM_FDRAM_START								0x800//2048
 /*****************************************************************************/
-#define CONFIG_SPLC_FUN_EPID							0//使能SPLC扩展指令
-#define CONFIG_SPLC_FUNTEST								0//功能指令测试
+#define CONFIG_SPLC_USING_SPWM									1//使了软件PWM功能
 /*****************************************************************************/
-#define CONFIG_SPLC_ASSERT								0//检查地址范围
-#define CONFIG_SPLC_DEV									0x0A01//设备号
-#define CONFIG_SPLC_CLEAR_CODE							0xA58E
-#define CONFIG_SOFTPLC_TICK								200L//1mS
-#define CONFIG_INPUT_FILTER_TIME						1//输入数字滤波扫描周期 1mS * N
+#define CONFIG_SPLC_FUN_EPID									0//使能SPLC扩展指令
+#define CONFIG_SPLC_FUNTEST										0//功能指令测试
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_WDT							0//看门狗启用
+#define CONFIG_SPLC_ASSERT										0//检查地址范围
+#define CONFIG_SPLC_DEV											0x0A01//设备号
+#define CONFIG_SPLC_CLEAR_CODE									0xA58E
+#define CONFIG_SOFTPLC_TICK										200L//1mS
+#define CONFIG_INPUT_FILTER_TIME								1//输入数字滤波扫描周期 1mS * N
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_INPUT						1//输入IO刷新启用
+#define CONFIG_SPLC_USING_WDT									0//看门狗启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_OUTPUT						1//输出IO刷新启用
+#define CONFIG_SPLC_USING_IO_INPUT								1//输入IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_PCA							1//片内计数器阵列
-#define CONFIG_PCA_TICK									8000
+#define CONFIG_SPLC_USING_IO_OUTPUT								1//输出IO刷新启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM							1//EPROM
+#define CONFIG_SPLC_USING_PCA									1//片内计数器阵列
+#define CONFIG_PCA_TICK											8000
+/*****************************************************************************/
+#define CONFIG_SPLC_USING_EPROM									1//EPROM
 #if CONFIG_SPLC_USING_EPROM == 1
-#define CONFIG_SPLC_USING_CLEAR_NVRAM					0//启用清除NVRAM功能
+#define CONFIG_SPLC_USING_CLEAR_NVRAM							0//启用清除NVRAM功能
 #else
-#define CONFIG_SPLC_USING_CLEAR_NVRAM					0//启用清除NVRAM功能
+#define CONFIG_SPLC_USING_CLEAR_NVRAM							0//启用清除NVRAM功能
 #endif
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_UART0							1//UART 0串口启用
-#define CONFIG_SPLC_USING_UART0_ISR						1
-#define UART0											0
+#define CONFIG_SPLC_USING_UART0									1//UART 0串口启用
+#define CONFIG_SPLC_USING_UART0_ISR								1
+#define UART0													0
 
-#define CONFIG_SPLC_USING_UART1							1//UART 1串口启用
-#define CONFIG_SPLC_USING_UART1_ISR						1
-#define UART1											1
+#define CONFIG_SPLC_USING_UART1									1//UART 1串口启用
+#define CONFIG_SPLC_USING_UART1_ISR								1
+#define UART1													1
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ADC									1//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP								10//ADC位移滤波次数
@@ -116,6 +117,17 @@
 #define CONFIG_SPLC_USING_WIRELESS_FOOTCONTROL					0//使能无线脚踏
 #define CONFIG_SPLC_USING_ROBATION								0//使能试用期功能
 /*****************************************************************************/
+#define CONFIG_FW_BOOTLOAD_ADR
+#define CONFIG_FW_BOOTLOAD_SIZE
+#define CONFIG_FW_BOOTLOAD_VER
+#define CONFIG_FW_OTA0_ADR
+#define CONFIG_FW_OTA0_SIZE
+#define CONFIG_FW_OTA0_VER
+#define CONFIG_FW_OTA1_ADR
+#define CONFIG_FW_OTA1_SIZE
+#define CONFIG_FW_TOA1_ADR
+#define CONFIG_FW_INFORMATION_ADR
+#define CONFIG_FW_INFORMATION_SIZE
 #define CONFIG_FIRMWARE_UPDATE_PAGE_SIZE						128//FLASH单次读写容量
 #define CONFIG_FW_CONFIG_ADR									0x0000//固件配置信息起始地址
 #define CONFIG_FW_CONFIG_SIZE									0x0000//固件配置信息容量
@@ -139,32 +151,7 @@
 #define CONFIG_CHECK_DELAY_TIME									10
 #define CONFIG_KEY_REPEAT_DELAY_TIME							50
 #define CONFIG_SCHEME_FILE_NAME									"/dwLaser.txt"
-#define CONFIG_MAX_LASERPOWER_CH0								300//通道0最大激光功率
-#define CONFIG_MIN_LASERPOWER_CH0								0//通道0最小激光功率
-#define CONFIG_MAX_LASER_DAC_CH0								0xFFF//
-#define CONFIG_MAX_LASER_DAC_CH1								0xFFF//
-#define CONFIG_MAX_LASERPOWER_CH1								150//通道1最大激光功率
-#define CONFIG_MIN_LASERPOWER_CH1								0//通道1最小激光功率
-#define CONFIG_MAX_LASER_POSWIDTH								999//最大正脉宽时间
-#define CONFIG_MIN_LASER_POSWIDTH								10//最小正脉宽时间
-#define CONFIG_MAX_LASER_NEGWIDTH								999//最大负脉宽时间
-#define CONFIG_MIN_LASER_NEGWIDTH								10//最小正脉宽时间
-#define CONFIG_MAX_LASER_TIMES									999//最大可计数脉冲数
-#define CONFIG_MIN_LASER_TIMES									10//最小可计数脉冲数
-#define CONFIG_MAX_LASER_GROUP_OFF								999//最大脉冲间隔时间
-#define CONFIG_MIN_LASER_GROUP_OFF								10//最小脉冲间隔时间
-#define CONFIG_MAX_LASER_ENERGY_INTERVAL						1000
-#define CONFIG_MIN_LASER_ENERGY_INTERVAL						100
-#define CONFIG_MAX_AIM_BRG										100//红光最大调光占空比
-#define CONFIG_MIN_AIM_BRG										0//红光最小调光占空比
-#define CONFIG_MAX_BEEM_VOLUME									100//蜂鸣器最大音量
-#define CONFIG_MIN_BEEM_VOLUME									0//蜂鸣器最小音量
-#define CONFIG_MAX_LCD_BRG										100//屏幕亮度最大值
-#define CONFIG_MIN_LCD_BRG										0//屏幕亮度最小值
-#define CONFIG_COOL_SET_TEMP									250//冷却温度
-#define CONFIG_COOL_DIFF_TEMP									20//冷却温度变化范围
 /*****************************************************************************/
-#define POWER_REAL_CH0_0P										0
 #define POWER_REAL_CH0_5P										200
 #define POWER_REAL_CH0_10P										400
 #define POWER_REAL_CH0_15P										600
@@ -186,7 +173,6 @@
 #define POWER_REAL_CH0_95P										3800
 #define POWER_REAL_CH0_100P										4000
 /*****************************************************************************/
-#define POWER_REAL_CH1_0P										0
 #define POWER_REAL_CH1_5P										150
 #define POWER_REAL_CH1_10P										300
 #define POWER_REAL_CH1_15P										450
@@ -207,6 +193,48 @@
 #define POWER_REAL_CH1_90P										3600
 #define POWER_REAL_CH1_95P										3800
 #define POWER_REAL_CH1_100P										4000
+/*****************************************************************************/
+#define POWER_REAL_CH2_5P										150
+#define POWER_REAL_CH2_10P										300
+#define POWER_REAL_CH2_15P										450
+#define POWER_REAL_CH2_20P										800
+#define POWER_REAL_CH2_25P										1000
+#define POWER_REAL_CH2_30P										1200
+#define POWER_REAL_CH2_35P										1400
+#define POWER_REAL_CH2_40P										1600
+#define POWER_REAL_CH2_45P										1800
+#define POWER_REAL_CH2_50P										2000
+#define POWER_REAL_CH2_55P										2200
+#define POWER_REAL_CH2_60P										2400
+#define POWER_REAL_CH2_65P										2600
+#define POWER_REAL_CH2_70P										2800
+#define POWER_REAL_CH2_75P										3000
+#define POWER_REAL_CH2_80P										3200
+#define POWER_REAL_CH2_85P										3400
+#define POWER_REAL_CH2_90P										3600
+#define POWER_REAL_CH2_95P										3800
+#define POWER_REAL_CH2_100P										4000
+/*****************************************************************************/
+#define POWER_REAL_CH3_5P										150
+#define POWER_REAL_CH3_10P										300
+#define POWER_REAL_CH3_15P										450
+#define POWER_REAL_CH3_20P										800
+#define POWER_REAL_CH3_25P										1000
+#define POWER_REAL_CH3_30P										1200
+#define POWER_REAL_CH3_35P										1400
+#define POWER_REAL_CH3_40P										1600
+#define POWER_REAL_CH3_45P										1800
+#define POWER_REAL_CH3_50P										2000
+#define POWER_REAL_CH3_55P										2200
+#define POWER_REAL_CH3_60P										2400
+#define POWER_REAL_CH3_65P										2600
+#define POWER_REAL_CH3_70P										2800
+#define POWER_REAL_CH3_75P										3000
+#define POWER_REAL_CH3_80P										3200
+#define POWER_REAL_CH3_85P										3400
+#define POWER_REAL_CH3_90P										3600
+#define POWER_REAL_CH3_95P										3800
+#define POWER_REAL_CH3_100P										4000
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_NFC									0
 /*****************************************************************************/
@@ -263,7 +291,7 @@
 /*****************************************************************************/
 //存档寄存器
 #define FD_START												0
-#define FD_END													511
+#define FD_END													1023
 /*****************************************************************************/
 #define CONFIG_FDRAM_SIZE										(FD_END + 1)
 /*****************************************************************************/
@@ -338,9 +366,11 @@
 #define SPREG_ADC_7										(SPREG_START + 8)//ADC7采集值 IVINMON1
 #define SPREG_ADC_8										(SPREG_START + 9)//ADC8采集值 Temperature Sensor
 #define SPREG_DAC_0										(SPREG_START + 10)//DAC0设定值 LSET0
-#define SPREG_DAC_1										(SPREG_START + 11)//DAC0设定值 LSET1
+#define SPREG_DAC_1										(SPREG_START + 11)//DAC1设定值 LSET1
+#define SPREG_DAC_2										(SPREG_START + 12)//DAC2设定值 LSET2
+#define SPREG_DAC_3										(SPREG_START + 13)//DAC3设定值 LSET3
 /*****************************************************************************/
-#define SPREG_DK25L_VER									(SPREG_START + 12)//DK25L模块版本
+#define SPREG_DK25L_VER									(SPREG_START + 15)//DK25L模块版本
 /*****************************************************************************/
 #define SPREG_SPWM_POS_0								(SPREG_START + 20)//软件PWM0正脉宽设置
 #define SPREG_SPWM_POS_SHADOW_0							(SPREG_START + 21)//软件PWM0正脉宽阴影

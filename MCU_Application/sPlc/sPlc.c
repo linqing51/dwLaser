@@ -3,6 +3,7 @@
 int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前 包含存档寄存器
 int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 int16_t FDRAM[CONFIG_FDRAM_SIZE];//存档寄存器
+//int16_t TMPRAM[CONFIG_TMPRAM_SIZE];//临时寄存器
 uint8_t data TimerCounter_5mS = 0;
 uint8_t data TimerCounter_10mS = 0;
 uint8_t data TimerCounter_100mS = 0;
@@ -10,6 +11,8 @@ uint8_t data TD_10MS_SP = 0;
 uint8_t data TD_100MS_SP = 0;
 uint8_t data TD_1000MS_SP = 0;
 /******************************************************************************/
+
+
 void assertCoilAddress(uint16_t adr){//检查线圈地址
 #if CONFIG_SPLC_ASSERT == 1
 	uint16_t maxCoilAdr = CONFIG_NVRAM_SIZE * 16 - 1;
@@ -54,7 +57,7 @@ void saveNvram(void){//强制将NVRAM存入EPROM
 	epromWrite(CONFIG_EPROM_NVRAM_START, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));
 #endif
 }
-void updataNvram(void){//更新NVRAM->EPROM
+void updateNvram(void){//更新NVRAM->EPROM
 	uint8_t *sp0, *sp1;
 	uint16_t i;
 	sp0 = (uint8_t*)NVRAM0;
@@ -306,7 +309,7 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 #if CONFIG_SPLC_USING_CH376 == 1
 	sPlcUsbPoll();
 #endif
-	updataNvram();//更新NVRAM
+	updateNvram();//更新NVRAM
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();//喂狗
 #endif
