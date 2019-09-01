@@ -12,7 +12,7 @@ void initUart0(uint32_t baudrate){//³õÊ¼»¯´®¿Ú0
 	TMR2CN = 0x0;//16Bit AutoReload
 	TMR2CN |= 1 << 2;//TR2 RUN
 	SFRPAGE = UART0_PAGE;
-	SCON0 = 0x50;// 8-bit variable baud rate;
+	SCON0 = 0x40;// 8-bit variable baud rate;
 	SSTA0 = 0;//T1->UART0
 	SSTA0 |= (1 << 2);//Timer 2 Overflow generates UART0 TX baud rate
 	SSTA0 |= (1 << 0);//Timer 2 Overflow generates UART0 RX baud rate

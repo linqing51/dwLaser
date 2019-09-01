@@ -1,6 +1,6 @@
 #include "delay.h"
 /*****************************************************************************/
-void delayUs(uint8_t us) reentrant{//Œ¢√Î—” ±
+void delayUs(uint16_t us) reentrant{//Œ¢√Î—” ±
 	while(us){
 #if CONFIG_SPLC_USING_WDT == 1
 		NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();NOP();
@@ -17,7 +17,7 @@ void delayUs(uint8_t us) reentrant{//Œ¢√Î—” ±
 		us --;	
 	}
 }
-void delayMs(uint8_t ms) reentrant{//∫¡√Î—” ±
+void delayMs(uint16_t ms) reentrant{//∫¡√Î—” ±
 	while(ms--){
 		delayUs(1000);
 	}

@@ -103,7 +103,8 @@
 #define CONFIG_MB_RTU_SLAVE_TIMEOUT								20//接收通讯超时 10mS
 #define CONFIG_MB_RTU_SLAVE_IO_DELAY							1//RX TX切换延时
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_DK25L									0//SPLC使能NFC功能
+#define CONFIG_SPLC_USING_DK25L									1//SPLC使能NFC功能
+#define CONFIG_SPLC_USING_DK25L_OVERTIME						500
 #define CONFIG_DK25L_RXBUF_SIZE									24
 #define CONFIG_DK25L_TXBUF_SIZE									24
 /*****************************************************************************/
@@ -350,9 +351,11 @@
 #define SPCOIL_DK25L_RXCMD_DONE							(SPCOIL_START * 16 + 70)//接收指令完成
 #define SPCOIL_DK25L_RXCMD_DOING						(SPCOIL_START * 16 + 71)//接收指令进行中
 #define SPCOIL_DK25L_RXCMD_OVERFLOW						(SPCOIL_START * 16 + 72)//接收指令溢出
-#define SPCOIL_DK25L_TXCMD_DONE							(SPCOIL_START * 16 + 73)//写指令完成
-#define SPCOIL_DK25L_TXCMD_DOING						(SPCOIL_START * 16 + 74)//写指令进行中
-#define SPCOIL_DK25L_TXCMD_OVERFLOW						(SPCOIL_START * 16 + 75)//写指令溢出						
+#define SPCOIL_DK25L_RXCMD_ERROR						(SPCOIL_START * 16 + 73)//接收指错误
+#define SPCOIL_DK25L_TXCMD_DONE							(SPCOIL_START * 16 + 74)//写指令完成
+#define SPCOIL_DK25L_TXCMD_DOING						(SPCOIL_START * 16 + 75)//写指令进行中
+#define SPCOIL_DK25L_TXCMD_OVERFLOW						(SPCOIL_START * 16 + 76)//写指令溢出
+#define SPCOIL_DK25L_TXCMD_ERROR						(SPCOIL_START * 16 + 77)//写指令错误
 /*****************************************************************************/
 #define SPREG_CLEAR_NVRAM								(SPREG_START + 0)//清除NVRAM后重新启动
 /*****************************************************************************/
@@ -369,8 +372,6 @@
 #define SPREG_DAC_1										(SPREG_START + 11)//DAC1设定值 LSET1
 #define SPREG_DAC_2										(SPREG_START + 12)//DAC2设定值 LSET2
 #define SPREG_DAC_3										(SPREG_START + 13)//DAC3设定值 LSET3
-/*****************************************************************************/
-#define SPREG_DK25L_VER									(SPREG_START + 15)//DK25L模块版本
 /*****************************************************************************/
 #define SPREG_SPWM_POS_0								(SPREG_START + 20)//软件PWM0正脉宽设置
 #define SPREG_SPWM_POS_SHADOW_0							(SPREG_START + 21)//软件PWM0正脉宽阴影
@@ -394,16 +395,18 @@
 #define SPREG_SPWM_COUNTER_3							(SPREG_START + 39)//软件PWM3计数器
 /*****************************************************************************/
 //激光脉冲发射相关寄存器
-#define SPREG_LASER_MODE								(SPREG_START + 46)//激光发射模式
-#define SPREG_LASER_SELECT								(SPREG_START + 47)//激光通道选择
-#define SPREG_LASER_TCOUNTER							(SPREG_START + 48)//激光脉冲计时器计数值
-#define SPREG_LASER_TMATE								(SPREG_START + 49)//激光脉冲计时器器匹配值
-#define SPREG_LASER_TOVERTIME							(SPREG_START + 50)//激光脉冲计时器溢出值
-#define SPREG_LASER_PCOUNTER 							(SPREG_START + 51)//激光脉冲个数计数值
-#define SPREG_LASER_PMATE								(SPREG_START + 52)//激光脉冲个数匹配值
-#define SPREG_LASER_POVERTIME							(SPREG_START + 53)//激光脉冲间隔计时值
-#define SPREG_LASER_RELEASETIME							(SPREG_START + 54)//激光持续时间
-#define SPREG_LASER_RELEASE_COUNTER						(SPREG_START + 55)//激光持续时间计时器                                                                                                                            
+#define SPREG_LASER_MODE								(SPREG_START + 40)//激光发射模式
+#define SPREG_LASER_SELECT								(SPREG_START + 41)//激光通道选择
+#define SPREG_LASER_TCOUNTER							(SPREG_START + 42)//激光脉冲计时器计数值
+#define SPREG_LASER_TMATE								(SPREG_START + 43)//激光脉冲计时器器匹配值
+#define SPREG_LASER_TOVERTIME							(SPREG_START + 44)//激光脉冲计时器溢出值
+#define SPREG_LASER_PCOUNTER 							(SPREG_START + 45)//激光脉冲个数计数值
+#define SPREG_LASER_PMATE								(SPREG_START + 46)//激光脉冲个数匹配值
+#define SPREG_LASER_POVERTIME							(SPREG_START + 47)//激光脉冲间隔计时值
+#define SPREG_LASER_RELEASETIME							(SPREG_START + 48)//激光持续时间
+#define SPREG_LASER_RELEASE_COUNTER						(SPREG_START + 49)//激光持续时间计时器
+/*****************************************************************************/
+#define SPREG_DK25L_VER									(SPREG_START + 50)//DK25L NFC模块版本
 /*****************************************************************************/
 #define SPREG_IDENTITY									(SPREG_END + 0)//平台ID号
 /*****************************************************************************/

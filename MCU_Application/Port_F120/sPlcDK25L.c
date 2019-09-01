@@ -8,40 +8,56 @@ static uint8_t DL25L_RxIndex;//接收位置索引
 static uint8_t DL25L_TXLength;//发送长度
 /*****************************************************************************/
 void DL25L_Init(void){//DK25L NFC模块初始化
-	memset(DK25L_TxBuffer, 0x00, CONFIG_DK25L_TXBUF_SIZE);
-	memset(DK25L_RxBuffer, 0x00, CONFIG_DK25L_RXBUF_SIZE);
-	DL25L_TxIndex = 0;
-	DL25L_RxIndex = 0;
-	DL25L_TXLength = 0;							
-	RES(SPCOIL_DK25L_RXCMD_DONE);							
-	RES(SPCOIL_DK25L_RXCMD_DOING);						
-	RES(SPCOIL_DK25L_RXCMD_OVERFLOW);					
-	RES(SPCOIL_DK25L_TXCMD_DONE);						
-	RES(SPCOIL_DK25L_TXCMD_DOING);					
-	RES(SPCOIL_DK25L_TXCMD_OVERFLOW);
-	NVRAM0[SPREG_DK25L_VER] = 0;
+	uint8_t fwver, hwver;
+	uint16_t overTime;
+	RES(SPCOIL_DK25L_INIT_FAIL);
+	NVRAM0[SPREG_DK25L_VER] = 0xFFFF;
 	DK25L_GET_HWVER();
 	while(LDB(SPCOIL_DK25L_TXCMD_DONE));
-	delayMs(100);
-	if(LD(SPCOIL_DK25L_RXCMD_DONE)){//DK25L 返回成功
-		NVRAM0[SPREG_DK25L_VER] = DK25L_TxBuffer[2];
-		DK25L_GET_FWVER();//获取模块硬件版本号
-		delayMs(100);
-		if(LD(SPCOIL_DK25L_RXCMD_DONE)){//DK25L 返回成功
-			NVRAM0[SPREG_DK25L_VER] |= (DK25L_TxBuffer[2] << 8);
-			RES(SPCOIL_DK25L_INIT_FAIL);	
-		}
-		else{
-			SET(SPCOIL_DK25L_INIT_FAIL);	
-		}
+	DK25L_EnableRx(true);
+	overTime = 0;
+	while(LDB(SPCOIL_DK25L_RXCMD_DONE) && (overTime < CONFIG_SPLC_USING_DK25L_OVERTIME)){//DK25L 返回成功
+		delayMs(1);
+		overTime ++;
+	}
+	if(overTime >= CONFIG_SPLC_USING_DK25L_OVERTIME){
+		SET(SPCOIL_DK25L_INIT_FAIL);
+		return;
+	}
+	fwver = DK25L_TxBuffer[2];
+	DK25L_GET_FWVER();//获取模块硬件版本号
+	while(LDB(SPCOIL_DK25L_TXCMD_DONE));
+	overTime = 0;
+	while(LDB(SPCOIL_DK25L_RXCMD_DONE) && (overTime < CONFIG_SPLC_USING_DK25L_OVERTIME)){//DK25L 返回成功
+		delayMs(1);
+		overTime ++;
+	}
+	if(overTime >= CONFIG_SPLC_USING_DK25L_OVERTIME){
+		SET(SPCOIL_DK25L_INIT_FAIL);
+		return;
+	}
+	hwver = DK25L_TxBuffer[2];
+	NVRAM0[SPREG_DK25L_VER] = ((int16_t)hwver << 8) + fwver;
+	if(NVRAM0[SPREG_DK25L_VER] == 0x01B1){
+		setLedEprom(true);
+	}
+	
+}
+void DK25L_EnableRx(int8_t ena){//接收中断使能
+	uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE	
+	SFRPAGE = UART0_PAGE;
+	if(ena){
+		RI0 = 0;
+		SCON0 |= 0x10;//UART0 reception enabled
 	}
 	else{
-		SET(SPCOIL_DK25L_INIT_FAIL);	
+		SCON0 &= 0x7F;
+		RI0 = 0;
 	}
+	SFRPAGE = SFRPAGE_SAVE;// Restore SFRPAGE
 }
 static void DK25L_UartIsr() interrupt INTERRUPT_UART0{
-	uint8_t rxDat, txDat;
-	uint16_t rxSize, txSize;
+	uint8_t rxDat;
 	if(TI0){
         TI0 = 0;        
 			if(DL25L_TxIndex == DL25L_TXLength){
@@ -64,41 +80,59 @@ static void DK25L_UartIsr() interrupt INTERRUPT_UART0{
 		RI0 = 0;
 		rxDat = SBUF0;
 		if(rxDat == DK25L_STX){//接收到帧头
-			DL25L_RxIndex = 1;	
-			DK25L_RxBuffer[(DL25L_RxIndex - 1)] = DK25L_STX;
+			DL25L_RxIndex = 0;	
+			DK25L_RxBuffer[0] = DK25L_STX;
+			RES(SPCOIL_DK25L_RXCMD_DONE);
+			SET(SPCOIL_DK25L_RXCMD_DOING);
+			RES(SPCOIL_DK25L_RXCMD_OVERFLOW);
+			RES(SPCOIL_DK25L_RXCMD_ERROR);
 			return;
 		}
 		if(DL25L_RxIndex == 1){//接收到长度字节
-			DL25L_RxIndex = 2;
-			DK25L_RxBuffer[(DL25L_RxIndex - 1)] = rxDat;
+			DL25L_RxIndex ++;
+			DK25L_RxBuffer[2] = rxDat;
 			return;
 		}
-        if((DL25L_RxIndex >= 2) && (DL25L_RxIndex <  CONFIG_DK25L_RXBUF_SIZE) && (DL25L_RxIndex <= (DK25L_RxBuffer[1] + 1))){//指令接收中
+		if(DL25L_RxIndex >= CONFIG_DK25L_RXBUF_SIZE){//超出缓冲区
+			SET(SPCOIL_DK25L_RXCMD_DONE);
+			RES(SPCOIL_DK25L_RXCMD_DOING);
+			SET(SPCOIL_DK25L_RXCMD_OVERFLOW);
+			SET(SPCOIL_DK25L_RXCMD_ERROR);		
+			DL25L_RxIndex = 0;
+			return;
+		}
+        if((DL25L_RxIndex >= 2) && (DL25L_RxIndex <  CONFIG_DK25L_RXBUF_SIZE) && (DL25L_RxIndex <= (DK25L_RxBuffer[1] + 2))){//指令接收中
 			DK25L_RxBuffer[DL25L_RxIndex] = rxDat;
-			DL25L_RxIndex ++;
 			if(DL25L_RxIndex == (DK25L_RxBuffer[1] + 2)){//命令接收完毕开始
 				DL25L_RxIndex = 0;
 				SET(SPCOIL_DK25L_RXCMD_DONE);
 				RES(SPCOIL_DK25L_RXCMD_DOING);
+				RES(SPCOIL_DK25L_RXCMD_OVERFLOW);
+				RES(SPCOIL_DK25L_RXCMD_ERROR);
 				SCON0 &= 0xEF;//关闭接收中断
 			}
+			DL25L_RxIndex ++;
 			return;
 		}
 	}   
 }
-
-
 static void DK25L_CmdSend(void){//发送DK25L指令
 	uint8_t SFRPAGE_SAVE = SFRPAGE;// Preserve SFRPAGE	
 	RES(SPCOIL_DK25L_RXCMD_DONE);
 	RES(SPCOIL_DK25L_RXCMD_DOING);	
 	RES(SPCOIL_DK25L_RXCMD_OVERFLOW);
+	RES(SPCOIL_DK25L_RXCMD_ERROR);
+	
 	RES(SPCOIL_DK25L_TXCMD_DONE);	
 	RES(SPCOIL_DK25L_TXCMD_DOING);	
 	RES(SPCOIL_DK25L_TXCMD_OVERFLOW);
+	RES(SPCOIL_DK25L_TXCMD_ERROR);
+	DL25L_TxIndex = 0;
+	DL25L_RxIndex = 0;
+	memset(DK25L_RxBuffer, 0x00, CONFIG_DK25L_RXBUF_SIZE);
+	DK25L_EnableRx(false);
 	SFRPAGE = UART0_PAGE;
 	DL25L_TXLength = (DK25L_TxBuffer[1] + 2);//第二位为发送长度
-	SCON0 |= 0x10;
 	TI0 = 1;
 	SFRPAGE = SFRPAGE_SAVE;// Restore SFRPAGE
 }

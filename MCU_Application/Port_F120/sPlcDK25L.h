@@ -3,6 +3,9 @@
 /*****************************************************************************/
 #include "sPlcPort.h"
 /*****************************************************************************/
+#define DK25L_FWVER												0x12
+#define DK25L_HWVER												0x34
+/*****************************************************************************/
 #define DK25L_STX												0xAA//
 //通用指令
 #define CMD_FIND_CARD_UID										0x01//获取卡片UID
@@ -80,5 +83,5 @@ void DL25L_ULTRALIGHT_READ_MBLOCK(uint8_t blockStart, uint8_t blockEnd);//UL卡读
 void DL25L_ULTRALIGHT_WRITE_MBLOCK(uint8_t blockStart, uint8_t blockEnd, uint8_t *pdat);//UL卡写多个块指令
 void DL25L_ISO14443A_ACTIVATE(void);//ISO14443A 卡激活指令
 void DL25L_ISO14443A_APDU(uint8_t length, uint8_t *pdat);//ISO14443A PDU指令接口
-
+void DK25L_EnableRx(int8_t ena);
 #endif

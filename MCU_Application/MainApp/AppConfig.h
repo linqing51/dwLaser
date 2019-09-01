@@ -35,6 +35,8 @@
 
 #define CONFIG_MAX_LASER_DAC_CH0								0xFFF//
 #define CONFIG_MAX_LASER_DAC_CH1								0xFFF//
+#define CONFIG_MAX_LASER_DAC_CH2								0xFFF
+#define CONFIG_MAX_LASER_DAC_CH3								0xFFF
 
 #define CONFIG_MAX_LASERPOWER_CH0								300//通道0最大激光功率
 #define CONFIG_MAX_LASERPOWER_CH1								150//通道1最大激光功率
@@ -66,5 +68,25 @@
 #define CONFIG_MIN_LCD_BRG										0//屏幕亮度最小值
 #define CONFIG_COOL_SET_TEMP									280//冷却温度
 #define CONFIG_COOL_DIFF_TEMP									20//冷却温度变化范围
+
+#define LASER_CH0_NOTES_INTERCEPT								-0.16355			
+#define LASER_CH0_NOTES_B1										1.82066E-5
+#define LASER_CH0_NOTES_B2										-2.75859E-13
+#define LASER_CH0_NOTES_B3										7.12301E-20
+
+#define LASER_CH1_NOTES_INTERCEPT								-0.16355			
+#define LASER_CH1_NOTES_B1										1.82066E-5
+#define LASER_CH1_NOTES_B2										-2.75859E-13
+#define LASER_CH1_NOTES_B3										7.12301E-20
+
+#define LASER_CH2_NOTES_INTERCEPT								-0.16355			
+#define LASER_CH2_NOTES_B1										1.82066E-5
+#define LASER_CH2_NOTES_B2										-2.75859E-13
+#define LASER_CH2_NOTES_B3										7.12301E-20
+
+#define LASER_CH3_NOTES_INTERCEPT								-0.16355			
+#define LASER_CH3_NOTES_B1										1.82066E-5
+#define LASER_CH3_NOTES_B2										-2.75859E-13
+#define LASER_CH3_NOTES_B3										7.12301E-20
 
 #endif

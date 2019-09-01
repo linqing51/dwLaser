@@ -449,8 +449,6 @@ void FDSAV_ONE(int16_t cn){//储存一个方案到EPROM中
 #endif
 	enableSplcIsr();
 }
-void FDLAD_ONE(int16_t cn){//载入一个方案到EPROM中
-}
 void FDLAD(void){//FDRAM<-EPROM
 	disableSplcIsr();
 	loadFdram();
