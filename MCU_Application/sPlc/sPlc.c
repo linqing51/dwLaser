@@ -242,9 +242,7 @@ void sPlcInit(void){//软逻辑初始化
 	enableSplcIsr();
 #if CONFIG_SPLC_USING_DK25L == 1
 	delayMs(100);
-	while(1){
 	DL25L_Init();//打开中断后运行
-	}
 #endif
 }
 void sPlcProcessStart(void){//sPLC轮询起始

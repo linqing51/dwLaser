@@ -105,8 +105,8 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DK25L									1//SPLC使能NFC功能
 #define CONFIG_SPLC_USING_DK25L_OVERTIME						500
-#define CONFIG_DK25L_RXBUF_SIZE									24
-#define CONFIG_DK25L_TXBUF_SIZE									24
+#define CONFIG_DK25L_RXBUF_SIZE									16
+#define CONFIG_DK25L_TXBUF_SIZE									16
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_CH376									0
 /*****************************************************************************/

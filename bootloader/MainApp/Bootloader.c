@@ -1,28 +1,21 @@
 #include "lib.h"
 #include "InitDevice.h"
 /*****************************************************************************/
-typedef struct firmwareInfo_t{
+typedef struct BinInfo_t{
 	uint32_t address;//引导程序起始地址
 	uint32_t length;//引导程序容量
 	uint32_t version;//引导程序版本
 	uint32_t crc32;//引导程序校CRC32验码	
 };
 
+typedef struct BootloadInfo_t{
+	BinInfo_t BL_APP;//引导程序
+	BinInfo_t OTA0_APP;//可升级固件0
+	BinInfo_t OTA1_APP;//可升级固件1
+	uint8_t bootOrder;//引导顺序
+};
 
-
-//typedef struct BootloadConfig_t{//
-//	firmwareInfo_t BL_APP;//引导程序
-//	firmwareInfo_t OTA0_APP;//可升级固件0
-//	firmwareInfo_t OTA1_APP;//可升级固件1
-//	firmwareInfo_t ORIGINAL_APP;//原始备份固件
-//	uint8_t bootSequence;//引导顺序
-//};
-//#define BOOT_OTA0				0x81
-//#define BOOT_OTA1				0x82
-//#define BOOT_ORIGINAL			0X83
-//#define BOOT_USB				0x84
-
-
+BootloadInfo_t BootloadInfo;
 
 //void bootloader(void){
 //	uint32_t *pboot;

@@ -2307,7 +2307,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
-				case GDDC_PAGE_DISGNOSIS_KEY_DISABLE_FAN_SPEED:{
+				case GDDC_PAGE_DISGNOSIS_KEY_DISABLE_FAN_CONTRAL:{
 					if(state){
 						SET(R_DISABLE_FAN_SPEED);
 					}
