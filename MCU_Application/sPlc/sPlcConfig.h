@@ -103,7 +103,7 @@
 #define CONFIG_MB_RTU_SLAVE_TIMEOUT								20//接收通讯超时 10mS
 #define CONFIG_MB_RTU_SLAVE_IO_DELAY							1//RX TX切换延时
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_DK25L									1//SPLC使能NFC功能
+#define CONFIG_SPLC_USING_DK25L									0//SPLC使能NFC功能
 #define CONFIG_SPLC_USING_DK25L_OVERTIME						500
 #define CONFIG_DK25L_RXBUF_SIZE									16
 #define CONFIG_DK25L_TXBUF_SIZE									16
@@ -118,17 +118,6 @@
 #define CONFIG_SPLC_USING_WIRELESS_FOOTCONTROL					0//使能无线脚踏
 #define CONFIG_SPLC_USING_ROBATION								0//使能试用期功能
 /*****************************************************************************/
-#define CONFIG_FW_BOOTLOAD_ADR
-#define CONFIG_FW_BOOTLOAD_SIZE
-#define CONFIG_FW_BOOTLOAD_VER
-#define CONFIG_FW_OTA0_ADR
-#define CONFIG_FW_OTA0_SIZE
-#define CONFIG_FW_OTA0_VER
-#define CONFIG_FW_OTA1_ADR
-#define CONFIG_FW_OTA1_SIZE
-#define CONFIG_FW_TOA1_ADR
-#define CONFIG_FW_INFORMATION_ADR
-#define CONFIG_FW_INFORMATION_SIZE
 #define CONFIG_FIRMWARE_UPDATE_PAGE_SIZE						128//FLASH单次读写容量
 #define CONFIG_FW_CONFIG_ADR									0x0000//固件配置信息起始地址
 #define CONFIG_FW_CONFIG_SIZE									0x0000//固件配置信息容量
@@ -149,7 +138,7 @@
 #define CONFIG_USING_DCHMI_APP									1//广东大彩人机交互应用
 #define CONFIG_USING_BACKGROUND_APP								1//背景应用
 /*****************************************************************************/
-#define CONFIG_CHECK_DELAY_TIME									10
+#define CONFIG_CHECK_DELAY_TIME									15
 #define CONFIG_KEY_REPEAT_DELAY_TIME							50
 #define CONFIG_SCHEME_FILE_NAME									"/dwLaser.txt"
 /*****************************************************************************/

@@ -12,7 +12,7 @@ void initUart0(uint32_t baudrate){//³õÊ¼»¯´®¿Ú0
 	TMR2CN = 0x0;//16Bit AutoReload
 	TMR2CN |= 1 << 2;//TR2 RUN
 	SFRPAGE = UART0_PAGE;
-	SCON0 = 0x40;// 8-bit variable baud rate;
+	SCON0 |= 0x40;// 8-bit variable baud rate;
 	SSTA0 = 0;//T1->UART0
 	SSTA0 |= (1 << 2);//Timer 2 Overflow generates UART0 TX baud rate
 	SSTA0 |= (1 << 0);//Timer 2 Overflow generates UART0 RX baud rate
@@ -28,7 +28,7 @@ void initUart1(uint32_t baudrate){
 #if CONFIG_SPLC_USING_UART1 == 1
 	uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
 	SFRPAGE = UART1_PAGE;
-	SCON1 = 0x10;// SCON1: mode 0, 8-bit UART, enable RX
+	SCON1 |= 0x10;// SCON1: mode 0, 8-bit UART, enable RX
 	SFRPAGE = TIMER01_PAGE;
 	CKCON &= 0xFC;
 	CKCON |= 1 << 1;//System clock divided by 48

@@ -36,6 +36,7 @@ void loadNvram(void){//从EPROM中载入NVRAM
 	uint16_t i;
 #if CONFIG_SPLC_USING_EPROM == 1
 	epromRead(CONFIG_EPROM_NVRAM_START, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));//从EPROM中恢复MR
+	feedWatchDog();
 #endif
 	for(i = R_START;i <= TM_END;i ++){
 		NVRAM0[i] = 0x0;
@@ -45,16 +46,19 @@ void loadNvram(void){//从EPROM中载入NVRAM
 void loadFdram(void){//从EPROM中载入FDRAM
 #if CONFIG_SPLC_USING_EPROM == 1
 	epromRead(CONFIG_EPROM_FDRAM_START, (uint8_t*)FDRAM, (CONFIG_FDRAM_SIZE * 2));//从EPROM中恢复MR
+	feedWatchDog();
 #endif
 }
 void saveFdram(void){//强制将FDRAM存入EPROM
 #if CONFIG_SPLC_USING_EPROM == 1
 	epromWrite(CONFIG_EPROM_FDRAM_START, (uint8_t*)FDRAM, (CONFIG_FDRAM_SIZE * 2));
+	feedWatchDog();
 #endif
 }
 void saveNvram(void){//强制将NVRAM存入EPROM
 #if CONFIG_SPLC_USING_EPROM == 1
 	epromWrite(CONFIG_EPROM_NVRAM_START, (uint8_t*)NVRAM0, ((MR_END + 1) * 2));
+	feedWatchDog();
 #endif
 }
 void updateNvram(void){//更新NVRAM->EPROM
@@ -120,6 +124,7 @@ void checkEprom(void){
 	checkCode[2] = 0;
 	checkCode[3] = 0;
 	epromRead((CONFIG_EPROM_SIZE - 4), checkCode, 4);//从EPROM中恢复MR
+	feedWatchDog();
 	if((checkCode[0] != 0x55) || (checkCode[1] != 0xAA) || (checkCode[2] != 0xBC) || (checkCode[3] != 0xD1)){
 		//检测到校验码错误清空EPROM
 		for(i = 0; i< CONFIG_EPROM_SIZE;i ++){
@@ -130,6 +135,7 @@ void checkEprom(void){
 		epromWriteOneByte((CONFIG_EPROM_SIZE - 2), 0xBC);
 		epromWriteOneByte((CONFIG_EPROM_SIZE - 1), 0xD1);
 		loadDefault();
+		feedWatchDog();
 	}
 #endif
 }
@@ -214,8 +220,11 @@ void sPlcSpwmLoop(void){//SPWM轮询
 /*****************************************************************************/
 void sPlcInit(void){//软逻辑初始化
 	CLDAC();
+#if CONFIG_SPLC_USING_WDT == 1
 	initWatchDog();//初始化看门狗
+#else
 	disableWatchDog();//屏蔽看门狗
+#endif
 	checkEprom();
 	loadNvram();//上电恢复NVRAM
 	loadFdram();//上电恢复NVRAM
@@ -223,7 +232,9 @@ void sPlcInit(void){//软逻辑初始化
 	SET(SPCOIL_ON);
 	inputInit();
 	outputInit();
+#if CONFIG_SPLC_USING_DK25L == 1
 	initUart0(CONFIG_UART0_BAUDRATE);//UART1初始化
+#endif
 	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化	
 	initChipDac();//初始化DAC模块
 	initChipAdc();//初始化ADC模块

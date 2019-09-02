@@ -2,6 +2,7 @@
 /*****************************************************************************/
 void main(void){ 
 	initDevice();
+	feedWatchDog();
 	SET(Y_FAN1);
 	sPlcInit();
 	Cache_ISR_Entry((unsigned int)sPlcTimerIsr, INTERRUPT_TIMER3);
