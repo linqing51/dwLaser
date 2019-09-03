@@ -17,6 +17,13 @@ code char *LANG_WARN_MSG_LASER_EMIT = "Laser is firing";//激光正在发射
 code char *LANG_WARN_MSG_WAIT_TRIGGER = "Wait Laser Trigger";//等待激光触发
 code char *LANG_WARN_MSG_FIBER_MISSMATE = "Fiber not mate";
 /*****************************************************************************/
+code char *LANG_INFO_MSG_TYPE = "TYPE:Dual Git";
+code char *LANG_INFO_MSG_SN = "SN:0000-00-00";
+code char *LANG_INFO_MSG_WAVELENGTH = "WAVE LENGTH:980 nM";
+code char *LANG_INFO_MSG_LASER_POWER = "LASER_POWER:30W";
+code char *LANG_INFO_MSG_VERSION = "VERSION:0.99";
+code char *LANG_INFO_MSG_MANUFACTURE_DATE = "MANUFACTURE DATE:1970-01-01";
+/*****************************************************************************/
 uint8_t hmiCmdBuffer[CMD_MAX_SIZE];//指令缓存
 uint16_t data hmiCmdSize;//已缓冲的指令数
 static data uint8_t MsgId;//当前显示的信息ID
@@ -429,7 +436,12 @@ void updateSchemeInfo(int16_t cn){//更新SCHEME 详细参数
 		}
 		default:break;
 	}
+#if CONFIG_USING_SINGLE_WAVE == 1
+	sprintf(dispBuf1, "980nM Power:%4.1fW", ((fp32_t)power0 / 10.0F));
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 	sprintf(dispBuf1, "1470nM Power:%4.1fW;980nM Power:%4.1fW", ((fp32_t)power0 / 10.0F), ((fp32_t)power1 / 10.0F));
+#endif
 	if(cn < 16){
 		SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL1, dispBuf1);
 		SetTextValue(GDDC_PAGE_SCHEME_0, GDDC_PAGE_SCHEME_TEXTDISPLAY_DETAIL2, dispBuf2);
@@ -1462,7 +1474,7 @@ void dcHmiLoopInit(void){//初始化模块
 	//检查BEEM VOLUME储存值是否合规
 #if CONFIG_USING_SINGLE_WAVE == 1
 	for(i = 0;i < CONFIG_HMI_SCHEME_NUM; i++){
-		NVRAM0[FD_LASER_SELECT + (i * 30)] = LASER_SELECT_CH0;//默认设置为单波长
+		FDRAM[FD_LASER_SELECT + (i * 30)] = LASER_SELECT_CH0;//默认设置为单波长
 	}
 	NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH0;
 #endif
@@ -1586,7 +1598,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		NVRAM0[EM_DC_DEFAULT_PASSCODE3] = 0;
 		NVRAM0[DM_DC_OLD_PASSCODE2] = 0;
 		NVRAM0[DM_DC_OLD_PASSCODE3] = 0;
-		
+	
 		NVRAM0[EM_DC_NEW_PASSCODE2] = 0;
 		NVRAM0[EM_DC_NEW_PASSCODE3] = 0;
 		//检查储存密码是否合规
@@ -2129,6 +2141,12 @@ void dcHmiLoop(void){//HMI轮训程序
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_OPTION){//选项界面
 		RES(R_FAN_ENABLE);
 		if(LD(R_OPTION_KEY_ENTER_INFORMATION_DOWN)){
+			SetTextValue(GDDC_PAGE_INFORMATION, GDDC_PAGE_INFORMATION_TEXTDISPLAY_TPYE, LANG_INFO_MSG_TYPE);	
+			SetTextValue(GDDC_PAGE_INFORMATION, GDDC_PAGE_INFORMATION_TEXTDISPLAY_SN, LANG_INFO_MSG_SN);
+			SetTextValue(GDDC_PAGE_INFORMATION, GDDC_PAGE_INFORMATION_TEXTDISPLAY_LASER_WAVELENGTH, LANG_INFO_MSG_WAVELENGTH);
+			SetTextValue(GDDC_PAGE_INFORMATION, GDDC_PAGE_INFORMATION_TEXTDISPLAY_MAX_LASER_POWER, LANG_INFO_MSG_LASER_POWER);
+			SetTextValue(GDDC_PAGE_INFORMATION, GDDC_PAGE_INFORMATION_TEXTDISPLAY_VERSION, LANG_INFO_MSG_VERSION);
+			SetTextValue(GDDC_PAGE_INFORMATION, GDDC_PAGE_INFORMATION_TEXTDISPLAY_MANUFACTURE_DATE, LANG_INFO_MSG_MANUFACTURE_DATE);			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_INFORMATION;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_INFORMATION;
 			SetScreen(NVRAM0[EM_DC_PAGE]);
@@ -2241,7 +2259,6 @@ void dcHmiLoop(void){//HMI轮训程序
 			RES(R_RENAME_TEXTDISPLAY_READ_DONE);	
 		}
 		else if(LD(R_RENAME_KEY_EXIT_DOWN)){
-			SetTextValue(GDDC_PAGE_RENAME, GDDC_PAGE_RENAME_TEXTDISPLAY_NEWNAME, "");//清空出入框
 			if(NVRAM0[EM_SCHEME_NUM_TMP] < 16){
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_SCHEME_0;
 				NVRAM0[EM_DC_PAGE] = GDDC_PAGE_SCHEME_0;

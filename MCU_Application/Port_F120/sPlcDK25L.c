@@ -77,6 +77,10 @@ static void DK25L_UartIsr() interrupt INTERRUPT_UART0{
 			}
     }
 	if(RI0){
+		if((SSTA0 & 0x80)){//FE0: Frame Error Flag.
+			RI0 = 0;
+			return;
+		}
 		RI0 = 0;
 		rxDat = SBUF0;
 		if(rxDat == DK25L_STX){//接收到帧头
