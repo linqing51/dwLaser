@@ -74,8 +74,10 @@
 /*****************************************************************************/
 #define GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD								1//
 #define GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC								2//
+#if CONFIG_USING_DUAL_WAVE == 1
 #define GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD								3//
 #define GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC								4//
+#endif
 #define GDDC_PAGE_STANDBY_KEY_STANDBY									5//
 #define GDDC_PAGE_STANDBY_KEY_MODE_CW									6//
 #define	GDDC_PAGE_STANDBY_KEY_MODE_MP									7//
@@ -88,19 +90,27 @@
 #define GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE								14//
 #define GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT								15//+
 #define GDDC_PAGE_STANDBY_KEY_SCHEME_LAST								16//-
+#if CONFIG_USING_DUAL_WAVE == 1
 #define GDDC_PAGE_STANDBY_KEY_SELECT_CH0								17//
 #define GDDC_PAGE_STANDBY_KEY_SELECT_CH1								18//
 #define GDDC_PAGE_STANDBY_KEY_SELECT_BOTH								19//
+#endif
 #define GDDC_PAGE_STANDBY_KEY_RESET										20//
 #define GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME								21//方案名称显示
 #define GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0							22//CH0功率显示
+#if CONFIG_USING_DUAL_WAVE == 1
 #define GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1							23//CH1功率显示
+#endif
 #define GDDC_PAGE_STANDBY_TEXTDISPLAY_WARN								24//报警显示
 #define GDDC_PAGE_STANDBY_TEXTDISPLAY_ENERGY							25//
 #define GDDC_PAGE_STANDBY_TEXTDISPLAY_RELEASE_TIME						26//
+#if CONFIG_USING_DUAL_WAVE == 1
 #define GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER						27//
+#endif
 #define GDDC_PAGE_STANDBY_PROGRESS_CH0									28//
+#if CONFIG_USING_DUAL_WAVE == 1
 #define GDDC_PAGE_STANDBY_PROGRESS_CH1									29//
+#endif
 /*****************************************************************************/
 #define GDDC_PAGE_STANDBY_SP_KEY_POSWIDTH_ADD							30		
 #define GDDC_PAGE_STANDBY_SP_KEY_POSWIDTH_DEC							31

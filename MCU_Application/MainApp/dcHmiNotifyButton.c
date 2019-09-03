@@ -562,6 +562,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD:{
 					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] < CONFIG_MAX_LASERPOWER_CH1){
@@ -573,6 +574,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC:{
 					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] > CONFIG_MIN_LASERPOWER_CH1){
@@ -584,6 +587,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#endif
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
 					if(state){
 						SET(R_STANDBY_KEY_SCHEME_SAVE_DOWN);
@@ -619,24 +623,30 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH0;
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH1:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH1;
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_ALL;
 					}
 					break;
-				}	
+				}
+#endif
 				case GDDC_PAGE_STANDBY_KEY_MODE_CW:{
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
@@ -727,6 +737,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD:{
 					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] < CONFIG_MAX_LASERPOWER_CH1){
@@ -738,6 +749,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC:{
 					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] > CONFIG_MIN_LASERPOWER_CH1){
@@ -749,6 +762,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#endif
 				case GDDC_PAGE_STANDBY_SP_KEY_POSWIDTH_ADD:{	
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
@@ -808,24 +822,30 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH0;
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH1:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH1;
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_ALL;
 					}
 					break;
-				}	
+				}
+#endif				
 				case GDDC_PAGE_STANDBY_KEY_MODE_CW:{
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
@@ -916,6 +936,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD:{
 					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] < CONFIG_MAX_LASERPOWER_CH1){
@@ -927,6 +948,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC:{
 					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] > CONFIG_MIN_LASERPOWER_CH1){
@@ -938,6 +961,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#endif
 				case GDDC_PAGE_STANDBY_MP_KEY_POSWIDTH_ADD:{	
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
@@ -1021,24 +1045,30 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH0;
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH1:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH1;
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_ALL;
 					}
 					break;
 				}	
+#endif
 				case GDDC_PAGE_STANDBY_KEY_MODE_CW:{
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
@@ -1129,6 +1159,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD:{
 					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] < CONFIG_MAX_LASERPOWER_CH1){
@@ -1140,6 +1171,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC:{
 					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] > CONFIG_MIN_LASERPOWER_CH1){
@@ -1151,6 +1184,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#endif
 				case GDDC_PAGE_STANDBY_GP_KEY_POSWIDTH_ADD:{	
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_ADD_DOWN);
@@ -1292,24 +1326,30 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH0;
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1				
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH1:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH1;
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_ALL;
 					}
 					break;
 				}	
+#endif
 				case GDDC_PAGE_STANDBY_KEY_MODE_CW:{
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
@@ -1400,6 +1440,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD:{
 					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] < CONFIG_MAX_LASERPOWER_CH1){
@@ -1411,6 +1452,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC:{
 					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] > CONFIG_MIN_LASERPOWER_CH1){
@@ -1422,6 +1465,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#endif
 				case GDDC_PAGE_STANDBY_SIGNAL_KEY_ENERGY_INTERVAL_ADD:{
 					if(state){	
 						if(NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL] < CONFIG_MAX_LASER_ENERGY_INTERVAL){
@@ -1475,24 +1519,30 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH0;
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH1:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH1;
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_ALL;
 					}
 					break;
 				}	
+#endif
 				case GDDC_PAGE_STANDBY_KEY_MODE_CW:{
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
@@ -1659,6 +1709,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD:{
 					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] < CONFIG_MAX_LASERPOWER_CH1){
@@ -1670,6 +1721,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC:{
 					if(state){
 						if(NVRAM0[EM_LASER_POWER_CH1] > CONFIG_MIN_LASERPOWER_CH1){
@@ -1681,6 +1734,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#endif
 				case GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE:{
 					if(state){
 						SET(R_STANDBY_KEY_SCHEME_SAVE_DOWN);
@@ -1716,24 +1770,30 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH0:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH0;
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_CH1:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_CH1;
 					}
 					break;
 				}
+#endif
+#if CONFIG_USING_DUAL_WAVE == 1
 				case GDDC_PAGE_STANDBY_KEY_SELECT_BOTH:{
 					if(state){
 						NVRAM0[EM_LASER_SELECT] = LASER_SELECT_ALL;
 					}
 					break;
-				}	
+				}
+#endif				
 				case GDDC_PAGE_STANDBY_KEY_MODE_CW:{
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
