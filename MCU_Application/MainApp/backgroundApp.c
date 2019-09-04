@@ -74,8 +74,10 @@ uint8_t getBeemDuty(int16_t volume){//获取蜂鸣器占空比设置
 	uint8_t temp;
 	if(volume > 100)
 		volume = 100;
+	if(volume < 0)
+		volume = 0;
 	//temp = (0xFF - (250* volume / 100));
-	temp = 1 + 10 * (int16_t)volume / 100;
+	temp = (uint8_t)(0xFF - (int32_t)volume * 200 / 100);
 	return temp;
 }
 void defaultScheme(void){//当前选择方案恢复默认值

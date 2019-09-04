@@ -37,8 +37,6 @@
 #define EM_ERROR_CODE											(EM_START + 44)//错误码					
 #define EM_SCHEME_NUM_TMP										(EM_START + 45)//待确认方案编号			
 #define EM_DK25L_VER											(EM_START + 46)//DK25L模块版本
-#define EM_LASER_SIGNAL_TIME_INTERVAL							(EM_START + 47)//SIGNAL蜂鸣器改变的时间间隔
-#define EM_BEEM_ON_TIME											(EM_START + 48)//蜂鸣器开启时间
 /*****************************************************************************/
 #define EM_DC_PAGE												(EM_START + 64)//HMI页面编号 			
 #define EM_DC_PASSCODE_INDEX									(EM_START + 65)//密码输入位索引		

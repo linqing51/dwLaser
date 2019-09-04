@@ -62,9 +62,11 @@ void sPlcBeemLoop(void){//蜂鸣器轮询
 	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
 	if(BeemEnable){
 		SFRPAGE = TIMER01_PAGE;
-		if(TH0 != BeemFreq){//调频率
-			TH0 = BeemFreq;
-			TL0 = BeemFreq;
+		if(LDB(SPCOIL_LASER_EMITING)){
+			if(TH0 != BeemFreq){//调频率
+				TH0 = BeemFreq;
+				TL0 = BeemFreq;
+			}
 		}
 		SFRPAGE = PCA0_PAGE;
 		switch(BeemMode){//调模式

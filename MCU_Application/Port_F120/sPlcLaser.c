@@ -234,6 +234,7 @@ static void laserStop(void){//按通道选择关闭激光
 	LASER_CH1_MODPIN = false;//翻转输出	
 	setLedEmit(false);	
 }
+
 void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射	
 	uint8_t SFRPAGE_save = SFRPAGE;
 	TMR4CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag
@@ -271,22 +272,20 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 					LaserReleaseTime = 0;
 					ADDS1(EM_RELEASE_TOTAL_TIME);
 				}
-				if(BeemChangeEnergy >= NVRAM0[EM_LASER_SIGNAL_TIME_INTERVAL]){
+				if((BeemChangeEnergy * NVRAM0[EM_TOTAL_POWER] / 10000) >= NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL]){
 					BeemChangeEnergy = 0;
-		
 					SFRPAGE = TIMER01_PAGE;
 					if(TH0 == BEEM_FREQ_0){
-						TH0 = BEEM_FREQ_0;
+						TH0 = BEEM_FREQ_1;
 						TL0 = TH0;
 					}
 					else{
-						TH0 = BEEM_FREQ_1;
+						TH0 = BEEM_FREQ_0;
 						TL0 = TH0;
 					}
 					SFRPAGE = SFRPAGE_save;
 				}
-			}		
-			NVRAM0[SPREG_LASER_TCOUNTER] ++;
+			}
 			break;
 		}
 		case LASER_MODE_DERMA:{//与MP模式相同

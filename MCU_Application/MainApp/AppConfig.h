@@ -69,15 +69,15 @@
 #define CONFIG_COOL_SET_TEMP									280//¿‰»¥Œ¬∂»
 #define CONFIG_COOL_DIFF_TEMP									20//¿‰»¥Œ¬∂»±‰ªØ∑∂Œß
 
-#define LASER_CH0_NOTES_INTERCEPT								-0.16355			
-#define LASER_CH0_NOTES_B1										1.82066E-5
-#define LASER_CH0_NOTES_B2										-2.75859E-13
-#define LASER_CH0_NOTES_B3										7.12301E-20
+#define LASER_CH0_NOTES_INTERCEPT								-10.0F	
+#define LASER_CH0_NOTES_B1										4.095F
+#define LASER_CH0_NOTES_B2										0.0F
+#define LASER_CH0_NOTES_B3										0.0F
 
-#define LASER_CH1_NOTES_INTERCEPT								-0.16355			
-#define LASER_CH1_NOTES_B1										1.82066E-5
-#define LASER_CH1_NOTES_B2										-2.75859E-13
-#define LASER_CH1_NOTES_B3										7.12301E-20
+#define LASER_CH1_NOTES_INTERCEPT								-10.0F	
+#define LASER_CH1_NOTES_B1										4.096F
+#define LASER_CH1_NOTES_B2										0.0
+#define LASER_CH1_NOTES_B3										0.0
 
 #define LASER_CH2_NOTES_INTERCEPT								-0.16355			
 #define LASER_CH2_NOTES_B1										1.82066E-5

@@ -17,11 +17,11 @@ code char *LANG_WARN_MSG_LASER_EMIT = "Laser is firing";//激光正在发射
 code char *LANG_WARN_MSG_WAIT_TRIGGER = "Wait Laser Trigger";//等待激光触发
 code char *LANG_WARN_MSG_FIBER_MISSMATE = "Fiber not mate";
 /*****************************************************************************/
-code char *LANG_INFO_MSG_TYPE = "TYPE:Dual Git";
-code char *LANG_INFO_MSG_SN = "SN:0000-00-00";
-code char *LANG_INFO_MSG_WAVELENGTH = "WAVE LENGTH:980 nM";
-code char *LANG_INFO_MSG_LASER_POWER = "LASER_POWER:30W";
-code char *LANG_INFO_MSG_VERSION = "VERSION:0.99";
+code char *LANG_INFO_MSG_TYPE = "TYPE: Dual Git";
+code char *LANG_INFO_MSG_SN = "SN: 0000-00-00";
+code char *LANG_INFO_MSG_WAVELENGTH = "WAVE LENGTH: 980nM";
+code char *LANG_INFO_MSG_LASER_POWER = "LASER_POWER: 30W";
+code char *LANG_INFO_MSG_VERSION = "VERSION: 0.99";
 code char *LANG_INFO_MSG_MANUFACTURE_DATE = "MANUFACTURE DATE:1970-01-01";
 /*****************************************************************************/
 uint8_t hmiCmdBuffer[CMD_MAX_SIZE];//指令缓存
@@ -1885,7 +1885,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			BeemMode = BEEM_MODE_3;
 			BeemDuty = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
 			BeemFreq = BEEM_FREQ_0;
-			BeemEnable = 1;;
+			BeemEnable = 1;
 		}
 		else{//无故障显示
 			standbyKeyEnable(true);
@@ -1966,10 +1966,15 @@ void dcHmiLoop(void){//HMI轮训程序
 					default:break;
 			}
 #if CONFIG_USING_BACKGROUND_APP == 1
-				NVRAM0[SPREG_DAC_0] = fitLaserToCode(LASER_SELECT_CH0, (int16_t)(NVRAM0[EM_LASER_POWER_CH0] * 1000 / CONFIG_MAX_LASERPOWER_CH0));
-				NVRAM0[SPREG_DAC_1] = fitLaserToCode(LASER_SELECT_CH1, (int16_t)(NVRAM0[EM_LASER_POWER_CH1] * 1000 / CONFIG_MAX_LASERPOWER_CH1));
-				NVRAM0[SPREG_DAC_2] = fitLaserToCode(LASER_SELECT_CH2, (int16_t)(NVRAM0[EM_LASER_POWER_CH2] * 1000 / CONFIG_MAX_LASERPOWER_CH2));
-				NVRAM0[SPREG_DAC_3] = fitLaserToCode(LASER_SELECT_CH3, (int16_t)(NVRAM0[EM_LASER_POWER_CH3] * 1000 / CONFIG_MAX_LASERPOWER_CH3));
+				NVRAM0[SPREG_DAC_0] = fitLaserToCode(LASER_SELECT_CH0, (int16_t)((int32_t)NVRAM0[EM_LASER_POWER_CH0] * 1000 / CONFIG_MAX_LASERPOWER_CH0));
+#if CONFIG_USING_DUAL_WAVE == 1			
+				NVRAM0[SPREG_DAC_1] = fitLaserToCode(LASER_SELECT_CH1, (int16_t)((int32_t)NVRAM0[EM_LASER_POWER_CH1] * 1000 / CONFIG_MAX_LASERPOWER_CH1));
+				
+#else
+				NVRAM0[SPREG_DAC_1] = 0;
+				NVRAM0[SPREG_DAC_2] = 0;
+				NVRAM0[SPREG_DAC_3] = 0;
+#endif
 #endif
 				//打开蜂鸣器
 				BeemMode = BEEM_MODE_0;
