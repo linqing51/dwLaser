@@ -118,12 +118,6 @@
 #define CONFIG_SPLC_USING_WIRELESS_FOOTCONTROL					0//使能无线脚踏
 #define CONFIG_SPLC_USING_ROBATION								0//使能试用期功能
 /*****************************************************************************/
-#define CONFIG_FIRMWARE_UPDATE_PAGE_SIZE						128//FLASH单次读写容量
-#define CONFIG_FW_CONFIG_ADR									0x0000//固件配置信息起始地址
-#define CONFIG_FW_CONFIG_SIZE									0x0000//固件配置信息容量
-#define CONFIG_FW_STORAGE_ADR									0x0000//固件暂存区起始地址
-#define CONFIG_FW_STORAGE_SIZE									0x0000//固件暂存区容量
-/*****************************************************************************/
 #define CONFIG_FW_ORIGINAL_SAVE									1//更新前保存旧固件
 #define CONFIG_FW_UPDATE_REQ_FLAG								0x5A//固件更新标志
 #define CONFIG_FW_CONFIG_FILE_NAME								"/fwConfig.ini"//固件配置文件名称
@@ -131,7 +125,7 @@
 #define CONFIG_FW_MCU_FILE_SAVE_NAME							"/dwLaserOD.bib"//
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_LASER_TIMER							1
-#define CONFIG_SPLC_USING_LASER_TIMER_TEST						1
+#define CONFIG_SPLC_USING_LASER_TIMER_TEST						0
 /*****************************************************************************/
 #define CONFIG_LASER_TIMER_TICK									1000//1mS
 #define CONFIG_USING_USB_APP									0//USB应用
@@ -296,111 +290,111 @@
 #define SPCOIL_WATCHDOG_OVERFLOW								(SPCOIL_START * 16 + 8)//看门狗溢出
 /*****************************************************************************/
 //USB 
-#define SPCOIL_USB_INT_ERROR							(SPCOIL_START * 16 + 17)//USB 底层中断返回错误
-#define SPCOIL_USBHOST_CONNECT_REQ						(SPCOIL_START * 16 + 18)//USBHOST连接请求
-#define SPCOIL_USBDISK_CONNECT_DOING					(SPCOIL_START * 16 + 19)//USBHOST连接进行中
-#define SPCOIL_USBDISK_CONNECT_DONE						(SPCOIL_START * 16 + 20)//USBHOST连接完成
-#define SPCOIL_USBDISK_MOUNT_REQ						(SPCOIL_START * 16 + 21)//USBDISK载入请求
-#define SPCOIL_USBDISK_MOUNT_DOING						(SPCOIL_START * 16 + 22)//USBDISK装载进行中
-#define SPCOIL_USBDISK_MOUNT_DONE						(SPCOIL_START * 16 + 23)//USBDISK装载完成
-#define SPCOIL_USBDISK_REMOVE_REQ						(SPCOIL_START * 16 + 24)//USBHOST移除请求
-#define SPCOIL_USBDISK_REMOVE_DOING						(SPCOIL_START * 16 + 25)//USBHOST移除进行中
-#define SPCOIL_USBDISK_REMOVE_DONE						(SPCOIL_START * 16 + 26)//USBHOST移除完成
-#define SPCOIL_USBDISK_READING							(SPCOIL_START * 16 + 27)//USBDISK读取进行中
-#define SPCOIL_USBDISK_OPEN_FILE_FAIL					(SPCOIL_START * 16 + 28)//USBDISK打开文件失败
-#define SPCOIL_USBDISK_READ_FILE_FAIL					(SPCOIL_START * 16 + 29)//USBDISK读取文件失败
-#define SPCOIL_USBDISK_WRITE_FILE_FAIL					(SPCOIL_START * 16 + 30)//USBDISK写入文件失败
-#define SPCOIL_USBDISK_CLOSE_FILE_FAIL					(SPCOIL_START * 16 + 31)//USBDISK关闭文件失败
-#define SPCOIL_SIMEPROM_READ_FAIL						(SPCOIL_START * 16 + 32)//SIMEPROM读取失败
-#define SPCOIL_SIMEPROM_WRITE_FAIL						(SPCOIL_START * 16 + 33)//SIMEPROM写入失败
+#define SPCOIL_USBHOST_INT_ERROR								(SPCOIL_START * 16 + 17)//USB 底层中断返回错误
+#define SPCOIL_USBHOST_CONNECT_REQ								(SPCOIL_START * 16 + 18)//USBHOST连接请求
+#define SPCOIL_USBDISK_CONNECT_DOING							(SPCOIL_START * 16 + 19)//USBHOST连接进行中
+#define SPCOIL_USBDISK_CONNECT_DONE								(SPCOIL_START * 16 + 20)//USBHOST连接完成
+#define SPCOIL_USBDISK_MOUNT_REQ								(SPCOIL_START * 16 + 21)//USBDISK载入请求
+#define SPCOIL_USBDISK_MOUNT_DOING								(SPCOIL_START * 16 + 22)//USBDISK装载进行中
+#define SPCOIL_USBDISK_MOUNT_DONE								(SPCOIL_START * 16 + 23)//USBDISK装载完成
+#define SPCOIL_USBDISK_REMOVE_REQ								(SPCOIL_START * 16 + 24)//USBHOST移除请求
+#define SPCOIL_USBDISK_REMOVE_DOING								(SPCOIL_START * 16 + 25)//USBHOST移除进行中
+#define SPCOIL_USBDISK_REMOVE_DONE								(SPCOIL_START * 16 + 26)//USBHOST移除完成
+#define SPCOIL_USBDISK_READING									(SPCOIL_START * 16 + 27)//USBDISK读取进行中
+#define SPCOIL_USBDISK_OPEN_FILE_FAIL							(SPCOIL_START * 16 + 28)//USBDISK打开文件失败
+#define SPCOIL_USBDISK_READ_FILE_FAIL							(SPCOIL_START * 16 + 29)//USBDISK读取文件失败
+#define SPCOIL_USBDISK_WRITE_FILE_FAIL							(SPCOIL_START * 16 + 30)//USBDISK写入文件失败
+#define SPCOIL_USBDISK_CLOSE_FILE_FAIL							(SPCOIL_START * 16 + 31)//USBDISK关闭文件失败
+#define SPCOIL_SIMEPROM_READ_FAIL								(SPCOIL_START * 16 + 32)//SIMEPROM读取失败
+#define SPCOIL_SIMEPROM_WRITE_FAIL								(SPCOIL_START * 16 + 33)//SIMEPROM写入失败
 /*****************************************************************************/
-#define SPCOIL_SPWM_OUT_0								(SPCOIL_START * 16 + 34)//SPWM0输出状态
-#define SPCOIL_SPWM_RESET_0								(SPCOIL_START * 16 + 35)//SPWM0复位
-#define SPCOIL_SPWM_OUT_1								(SPCOIL_START * 16 + 36)//SPWM1输出状态
-#define SPCOIL_SPWM_RESET_1								(SPCOIL_START * 16 + 37)//SPWM1复位
-#define SPCOIL_SPWM_OUT_2								(SPCOIL_START * 16 + 38)//SPWM2输出状态
-#define SPCOIL_SPWM_RESET_2								(SPCOIL_START * 16 + 39)//SPWM2复位
-#define SPCOIL_SPWM_OUT_3								(SPCOIL_START * 16 + 40)//SPWM3输出状态
-#define SPCOIL_SPWM_RESET_3								(SPCOIL_START * 16 + 41)//SPWM3复位
+#define SPCOIL_SPWM_OUT_0										(SPCOIL_START * 16 + 34)//SPWM0输出状态
+#define SPCOIL_SPWM_RESET_0										(SPCOIL_START * 16 + 35)//SPWM0复位
+#define SPCOIL_SPWM_OUT_1										(SPCOIL_START * 16 + 36)//SPWM1输出状态
+#define SPCOIL_SPWM_RESET_1										(SPCOIL_START * 16 + 37)//SPWM1复位
+#define SPCOIL_SPWM_OUT_2										(SPCOIL_START * 16 + 38)//SPWM2输出状态
+#define SPCOIL_SPWM_RESET_2										(SPCOIL_START * 16 + 39)//SPWM2复位
+#define SPCOIL_SPWM_OUT_3										(SPCOIL_START * 16 + 40)//SPWM3输出状态
+#define SPCOIL_SPWM_RESET_3										(SPCOIL_START * 16 + 41)//SPWM3复位
 /*****************************************************************************/
 //激光脉冲发射相关线圈
-#define SPCOIL_LASER_EMITING							(SPCOIL_START * 16 + 42)//激光发射中
-#define SPCOIL_LASER_EMITOVER							(SPCOIL_START * 16 + 43)//激光发射结束	
+#define SPCOIL_LASER_EMITING									(SPCOIL_START * 16 + 42)//激光发射中
+#define SPCOIL_LASER_EMITOVER									(SPCOIL_START * 16 + 43)//激光发射结束	
 /*****************************************************************************/
-#define SPCOIL_SI7060_INIT_FAIL							(SPCOIL_START * 16 + 47)//SI7060温度传感器初始化失败
-#define SPCOIL_MCP79412_INIT_FAIL						(SPCOIL_START * 16 + 48)//MCP794212 RTC初始化失败
-#define SPCOIL_CH376_INIT_FAIL							(SPCOIL_START * 16 + 49)//USB HOST CH376初始化失败
-#define SPCOIL_SPI_FLASH_INIT_FAIL						(SPCOIL_START * 16 + 50)//SPI FLASH初始化失败
-#define SPCOIL_DK25L_INIT_FAIL							(SPCOIL_START * 16 + 51)//NFC模块初始化失败
-#define SPCOIL_NRF24L01_INIT_FAIL						(SPCOIL_START * 16 + 52)//NRF模块初始化失败
-#define SPCOIL_LASER_DRIVER_INIT_FAIL					(SPCOIL_START * 16 + 53)//激光驱动器初始化失败
-#define SPCOIL_WIRELESS_FOOTCONTROL_INIT_FAIL			(SPCOIL_START * 16 + 56)//无线脚踏初始化失败
-#define SPCOIL_PROBATION_INIT_FAIL						(SPCOIL_START * 16 + 57)//试用期初始化失败
+#define SPCOIL_SI7060_INIT_FAIL									(SPCOIL_START * 16 + 47)//SI7060温度传感器初始化失败
+#define SPCOIL_MCP79412_INIT_FAIL								(SPCOIL_START * 16 + 48)//MCP794212 RTC初始化失败
+#define SPCOIL_CH376_INIT_FAIL									(SPCOIL_START * 16 + 49)//USB HOST CH376初始化失败
+#define SPCOIL_SPI_FLASH_INIT_FAIL								(SPCOIL_START * 16 + 50)//SPI FLASH初始化失败
+#define SPCOIL_DK25L_INIT_FAIL									(SPCOIL_START * 16 + 51)//NFC模块初始化失败
+#define SPCOIL_NRF24L01_INIT_FAIL								(SPCOIL_START * 16 + 52)//NRF模块初始化失败
+#define SPCOIL_LASER_DRIVER_INIT_FAIL							(SPCOIL_START * 16 + 53)//激光驱动器初始化失败
+#define SPCOIL_WIRELESS_FOOTCONTROL_INIT_FAIL					(SPCOIL_START * 16 + 56)//无线脚踏初始化失败
+#define SPCOIL_PROBATION_INIT_FAIL								(SPCOIL_START * 16 + 57)//试用期初始化失败
 /*****************************************************************************/
-#define SPCOIL_DK25L_RXCMD_DONE							(SPCOIL_START * 16 + 70)//接收指令完成
-#define SPCOIL_DK25L_RXCMD_DOING						(SPCOIL_START * 16 + 71)//接收指令进行中
-#define SPCOIL_DK25L_RXCMD_OVERFLOW						(SPCOIL_START * 16 + 72)//接收指令溢出
-#define SPCOIL_DK25L_RXCMD_ERROR						(SPCOIL_START * 16 + 73)//接收指错误
-#define SPCOIL_DK25L_TXCMD_DONE							(SPCOIL_START * 16 + 74)//写指令完成
-#define SPCOIL_DK25L_TXCMD_DOING						(SPCOIL_START * 16 + 75)//写指令进行中
-#define SPCOIL_DK25L_TXCMD_OVERFLOW						(SPCOIL_START * 16 + 76)//写指令溢出
-#define SPCOIL_DK25L_TXCMD_ERROR						(SPCOIL_START * 16 + 77)//写指令错误
+#define SPCOIL_DK25L_RXCMD_DONE									(SPCOIL_START * 16 + 70)//接收指令完成
+#define SPCOIL_DK25L_RXCMD_DOING								(SPCOIL_START * 16 + 71)//接收指令进行中
+#define SPCOIL_DK25L_RXCMD_OVERFLOW								(SPCOIL_START * 16 + 72)//接收指令溢出
+#define SPCOIL_DK25L_RXCMD_ERROR								(SPCOIL_START * 16 + 73)//接收指错误
+#define SPCOIL_DK25L_TXCMD_DONE									(SPCOIL_START * 16 + 74)//写指令完成
+#define SPCOIL_DK25L_TXCMD_DOING								(SPCOIL_START * 16 + 75)//写指令进行中
+#define SPCOIL_DK25L_TXCMD_OVERFLOW								(SPCOIL_START * 16 + 76)//写指令溢出
+#define SPCOIL_DK25L_TXCMD_ERROR								(SPCOIL_START * 16 + 77)//写指令错误
 /*****************************************************************************/
-#define SPREG_CLEAR_NVRAM								(SPREG_START + 0)//清除NVRAM后重新启动
+#define SPREG_CLEAR_NVRAM										(SPREG_START + 0)//清除NVRAM后重新启动
 /*****************************************************************************/
-#define SPREG_ADC_0										(SPREG_START + 1)//ADC0采集值 PD0
-#define SPREG_ADC_1										(SPREG_START + 2)//ADC1采集值 PD1
-#define SPREG_ADC_2										(SPREG_START + 3)//ADC2采集值 NTC0
-#define SPREG_ADC_3										(SPREG_START + 4)//ADC3采集值 NTC1
-#define SPREG_ADC_4										(SPREG_START + 5)//ADC4采集值 ISMON0
-#define SPREG_ADC_5										(SPREG_START + 6)//ADC5采集值 IVINMON0
-#define SPREG_ADC_6										(SPREG_START + 7)//ADC6采集值 ISMON1
-#define SPREG_ADC_7										(SPREG_START + 8)//ADC7采集值 IVINMON1
-#define SPREG_ADC_8										(SPREG_START + 9)//ADC8采集值 Temperature Sensor
-#define SPREG_DAC_0										(SPREG_START + 10)//DAC0设定值 LSET0
-#define SPREG_DAC_1										(SPREG_START + 11)//DAC1设定值 LSET1
-#define SPREG_DAC_2										(SPREG_START + 12)//DAC2设定值 LSET2
-#define SPREG_DAC_3										(SPREG_START + 13)//DAC3设定值 LSET3
+#define SPREG_ADC_0												(SPREG_START + 1)//ADC0采集值 PD0
+#define SPREG_ADC_1												(SPREG_START + 2)//ADC1采集值 PD1
+#define SPREG_ADC_2												(SPREG_START + 3)//ADC2采集值 NTC0
+#define SPREG_ADC_3												(SPREG_START + 4)//ADC3采集值 NTC1
+#define SPREG_ADC_4												(SPREG_START + 5)//ADC4采集值 ISMON0
+#define SPREG_ADC_5												(SPREG_START + 6)//ADC5采集值 IVINMON0
+#define SPREG_ADC_6												(SPREG_START + 7)//ADC6采集值 ISMON1
+#define SPREG_ADC_7												(SPREG_START + 8)//ADC7采集值 IVINMON1
+#define SPREG_ADC_8												(SPREG_START + 9)//ADC8采集值 Temperature Sensor
+#define SPREG_DAC_0												(SPREG_START + 10)//DAC0设定值 LSET0
+#define SPREG_DAC_1												(SPREG_START + 11)//DAC1设定值 LSET1
+#define SPREG_DAC_2												(SPREG_START + 12)//DAC2设定值 LSET2
+#define SPREG_DAC_3												(SPREG_START + 13)//DAC3设定值 LSET3
 /*****************************************************************************/
-#define SPREG_SPWM_POS_0								(SPREG_START + 20)//软件PWM0正脉宽设置
-#define SPREG_SPWM_POS_SHADOW_0							(SPREG_START + 21)//软件PWM0正脉宽阴影
-#define SPREG_SPWM_CYCLE_0								(SPREG_START + 22)//软件PWM0周期设置
-#define SPREG_SPWM_CYCLE_SHADOW_0						(SPREG_START + 23)//软件PWM0周期阴影
-#define SPREG_SPWM_COUNTER_0							(SPREG_START + 24)//软件PWM0计数器
-#define SPREG_SPWM_POS_1								(SPREG_START + 25)//软件PWM1正脉宽设置
-#define SPREG_SPWM_POS_SHADOW_1							(SPREG_START + 26)//软件PWM1正脉宽阴影
-#define SPREG_SPWM_CYCLE_1								(SPREG_START + 27)//软件PWM1周期设置
-#define SPREG_SPWM_CYCLE_SHADOW_1						(SPREG_START + 28)//软件PWM1周期阴影
-#define SPREG_SPWM_COUNTER_1							(SPREG_START + 29)//软件PWM1计数器
-#define SPREG_SPWM_POS_2								(SPREG_START + 30)//软件PWM2正脉宽设置
-#define SPREG_SPWM_POS_SHADOW_2							(SPREG_START + 31)//软件PWM2正脉宽阴影
-#define SPREG_SPWM_CYCLE_2								(SPREG_START + 32)//软件PWM2周期设置
-#define SPREG_SPWM_CYCLE_SHADOW_2						(SPREG_START + 33)//软件PWM2周期阴影
-#define SPREG_SPWM_COUNTER_2							(SPREG_START + 34)//软件PWM2计数器
-#define SPREG_SPWM_POS_3								(SPREG_START + 35)//软件PWM3正脉宽设置
-#define SPREG_SPWM_POS_SHADOW_3							(SPREG_START + 36)//软件PWM3正脉宽阴影
-#define SPREG_SPWM_CYCLE_3								(SPREG_START + 37)//软件PWM3周期设置
-#define SPREG_SPWM_CYCLE_SHADOW_3						(SPREG_START + 38)//软件PWM3周期阴影
-#define SPREG_SPWM_COUNTER_3							(SPREG_START + 39)//软件PWM3计数器
+#define SPREG_SPWM_POS_0										(SPREG_START + 20)//软件PWM0正脉宽设置
+#define SPREG_SPWM_POS_SHADOW_0									(SPREG_START + 21)//软件PWM0正脉宽阴影
+#define SPREG_SPWM_CYCLE_0										(SPREG_START + 22)//软件PWM0周期设置
+#define SPREG_SPWM_CYCLE_SHADOW_0								(SPREG_START + 23)//软件PWM0周期阴影
+#define SPREG_SPWM_COUNTER_0									(SPREG_START + 24)//软件PWM0计数器
+#define SPREG_SPWM_POS_1										(SPREG_START + 25)//软件PWM1正脉宽设置
+#define SPREG_SPWM_POS_SHADOW_1									(SPREG_START + 26)//软件PWM1正脉宽阴影
+#define SPREG_SPWM_CYCLE_1										(SPREG_START + 27)//软件PWM1周期设置
+#define SPREG_SPWM_CYCLE_SHADOW_1								(SPREG_START + 28)//软件PWM1周期阴影
+#define SPREG_SPWM_COUNTER_1									(SPREG_START + 29)//软件PWM1计数器
+#define SPREG_SPWM_POS_2										(SPREG_START + 30)//软件PWM2正脉宽设置
+#define SPREG_SPWM_POS_SHADOW_2									(SPREG_START + 31)//软件PWM2正脉宽阴影
+#define SPREG_SPWM_CYCLE_2										(SPREG_START + 32)//软件PWM2周期设置
+#define SPREG_SPWM_CYCLE_SHADOW_2								(SPREG_START + 33)//软件PWM2周期阴影
+#define SPREG_SPWM_COUNTER_2									(SPREG_START + 34)//软件PWM2计数器
+#define SPREG_SPWM_POS_3										(SPREG_START + 35)//软件PWM3正脉宽设置
+#define SPREG_SPWM_POS_SHADOW_3									(SPREG_START + 36)//软件PWM3正脉宽阴影
+#define SPREG_SPWM_CYCLE_3										(SPREG_START + 37)//软件PWM3周期设置
+#define SPREG_SPWM_CYCLE_SHADOW_3								(SPREG_START + 38)//软件PWM3周期阴影
+#define SPREG_SPWM_COUNTER_3									(SPREG_START + 39)//软件PWM3计数器
 /*****************************************************************************/
 //激光脉冲发射相关寄存器
-#define SPREG_LASER_MODE								(SPREG_START + 40)//激光发射模式
-#define SPREG_LASER_SELECT								(SPREG_START + 41)//激光通道选择
-#define SPREG_LASER_TCOUNTER							(SPREG_START + 42)//激光脉冲计时器计数值
-#define SPREG_LASER_TMATE								(SPREG_START + 43)//激光脉冲计时器器匹配值
-#define SPREG_LASER_TOVERTIME							(SPREG_START + 44)//激光脉冲计时器溢出值
-#define SPREG_LASER_PCOUNTER 							(SPREG_START + 45)//激光脉冲个数计数值
-#define SPREG_LASER_PMATE								(SPREG_START + 46)//激光脉冲个数匹配值
-#define SPREG_LASER_POVERTIME							(SPREG_START + 47)//激光脉冲间隔计时值
-#define SPREG_LASER_RELEASETIME							(SPREG_START + 48)//激光持续时间
-#define SPREG_LASER_RELEASE_COUNTER						(SPREG_START + 49)//激光持续时间计时器
+#define SPREG_LASER_MODE										(SPREG_START + 40)//激光发射模式
+#define SPREG_LASER_SELECT										(SPREG_START + 41)//激光通道选择
+#define SPREG_LASER_TCOUNTER									(SPREG_START + 42)//激光脉冲计时器计数值
+#define SPREG_LASER_TMATE										(SPREG_START + 43)//激光脉冲计时器器匹配值
+#define SPREG_LASER_TOVERTIME									(SPREG_START + 44)//激光脉冲计时器溢出值
+#define SPREG_LASER_PCOUNTER 									(SPREG_START + 45)//激光脉冲个数计数值
+#define SPREG_LASER_PMATE										(SPREG_START + 46)//激光脉冲个数匹配值
+#define SPREG_LASER_POVERTIME									(SPREG_START + 47)//激光脉冲间隔计时值
+#define SPREG_LASER_RELEASETIME									(SPREG_START + 48)//激光持续时间
+#define SPREG_LASER_RELEASE_COUNTER								(SPREG_START + 49)//激光持续时间计时器
 /*****************************************************************************/
-#define SPREG_DK25L_VER									(SPREG_START + 50)//DK25L NFC模块版本
+#define SPREG_DK25L_VER											(SPREG_START + 50)//DK25L NFC模块版本
 /*****************************************************************************/
-#define SPREG_IDENTITY									(SPREG_END + 0)//平台ID号
+#define SPREG_IDENTITY											(SPREG_END + 0)//平台ID号
 /*****************************************************************************/
-#define T10MS_USBDISK_CONNECT_DELAY						0
-#define T10MS_USBDISK_MOUNT_DELAY						1
-#define T10MS_USBDISK_REMOVE_DELAY						2
+#define T10MS_USBDISK_CONNECT_DELAY								0
+#define T10MS_USBDISK_MOUNT_DELAY								1
+#define T10MS_USBDISK_REMOVE_DELAY								2
 /*****************************************************************************/
 #endif

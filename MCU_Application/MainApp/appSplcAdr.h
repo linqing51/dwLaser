@@ -243,17 +243,18 @@
 #define R_ENVI_TEMP_HIGH										(R_START * 16 + 7)//环境温度标度
 #define R_FAULT													(R_START * 16 + 8)//故障标志
 #define R_FAN_ENABLE											(R_START * 16 + 9)//风扇使能
-#define R_DISABLE_RFID											(R_START * 16 + 16)//蜂鸣器模式
-#define R_DISABLE_FIBER_PROBE									(R_START * 16 + 17)//蜂鸣器模式
-#define R_DISABLE_FAN_SPEED										(R_START * 16 + 18)//蜂鸣器模式
-#define R_ENGINEER_MODE											(R_START * 16 + 19)//工程师模式
+#define R_DISABLE_RFID											(R_START * 16 + 16)//屏蔽NFC检测
+#define R_DISABLE_FIBER_PROBE									(R_START * 16 + 17)//屏蔽光纤探测
+#define R_DISABLE_FAN_SPEED										(R_START * 16 + 18)//屏蔽风扇控制
+#define R_CLEAR_EPROM											(R_START * 16 + 19)//完全清空EPROM
+#define R_ENGINEER_MODE											(R_START * 16 + 20)//工程师模式
 //HMI相关状态
 #define R_DCHMI_RESET_REQ										(R_START * 16 + 20)//HMI复位请求
 #define R_DCHMI_RESET_DOING										(R_START * 16 + 21)//HMI复位中
 #define R_DCHMI_RESET_DONE										(R_START * 16 + 22)//HMI复位完成	
 #define R_DCHMI_UPDATEUI_REQ									(R_START * 16 + 23)//HMI内容更新请求
 #define R_DCHMI_UPDATEUI_DOING									(R_START * 16 + 24)//HMI内容更新中
-#define R_DCHMO_UPDATEUI_DONE									(R_START * 16 + 25)//HMI内容更新请求完成
+#define R_DCHMI_UPDATEUI_DONE									(R_START * 16 + 25)//HMI内容更新请求完成
 #define R_DCHMI_RESTORE_REQ										(R_START * 16 + 26)//HMI从FLASH中恢复设置请求
 #define R_DCHMI_RESTORE_DOING									(R_START * 16 + 27)//HMI从FLASH中恢复中
 #define R_DCHMI_RESTORE_DONE									(R_START * 16 + 28)//HMI从FLASH中恢复设置完成	

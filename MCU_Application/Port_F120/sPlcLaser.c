@@ -3,7 +3,8 @@
 sbit LASER_CH0_MODPIN = P2^7;
 sbit LASER_CH1_MODPIN = P2^6;
 int32_t data LaserReleaseTime;//激光发射时间
-int32_t data BeemChangeEnergy;//蜂鸣器频率改变能量
+int32_t data BeemChangeCounter;//
+int32_t data BeemChangeLength;//
 /*****************************************************************************/
 static void initTimer4(void);
 /*****************************************************************************/
@@ -192,12 +193,14 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 	RES(SPCOIL_LASER_DRIVER_INIT_FAIL);
 	SFRPAGE = SFRPAGE_SAVE; 
 	LaserReleaseTime = 0;
-	BeemChangeEnergy = 0;
+	BeemChangeCounter = 0;
+	BeemChangeLength = 0;
 #endif
 }
 static void laserStart(void){//按通道选择打开激光
 	LaserReleaseTime = 0;
-	BeemChangeEnergy = 0;
+	BeemChangeCounter = 0;
+	BeemChangeLength = 0;
 	switch(NVRAM0[SPREG_LASER_SELECT]){
 		case LASER_SELECT_CH0:{//0激光通道
 #if CONFIG_SPLC_USING_DAC == 1
@@ -234,7 +237,6 @@ static void laserStop(void){//按通道选择关闭激光
 	LASER_CH1_MODPIN = false;//翻转输出	
 	setLedEmit(false);	
 }
-
 void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射	
 	uint8_t SFRPAGE_save = SFRPAGE;
 	TMR4CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag
@@ -261,10 +263,11 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 				laserStart();
 				setLedEmit(true);
 				NVRAM0[SPREG_LASER_TCOUNTER] ++;
-				BeemChangeEnergy = 0;
+				BeemChangeCounter = 0;
+				BeemChangeLength = 0;
 			}
 			else{
-				BeemChangeEnergy += 1;
+				BeemChangeCounter += 1;
 				if(LaserReleaseTime < 1000){
 					LaserReleaseTime ++;//发射时间累计
 				}
@@ -272,18 +275,22 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 					LaserReleaseTime = 0;
 					ADDS1(EM_RELEASE_TOTAL_TIME);
 				}
-				if((BeemChangeEnergy * NVRAM0[EM_TOTAL_POWER] / 10000) >= NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL]){
-					BeemChangeEnergy = 0;
+				if((BeemChangeCounter * NVRAM0[EM_TOTAL_POWER] / 10000) >= NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL]){
 					SFRPAGE = TIMER01_PAGE;
-					if(TH0 == BEEM_FREQ_0){
+					if(TH0 != BEEM_FREQ_1){
 						TH0 = BEEM_FREQ_1;
 						TL0 = TH0;
 					}
-					else{
-						TH0 = BEEM_FREQ_0;
-						TL0 = TH0;
-					}
 					SFRPAGE = SFRPAGE_save;
+					BeemChangeLength ++;
+				}
+				if(BeemChangeLength >= CONFIG_BEEM_ENERGY_INTERVAL_TIME){
+					SFRPAGE = TIMER01_PAGE;
+					TH0 = BEEM_FREQ_0;
+					TL0 = TH0;
+					SFRPAGE = SFRPAGE_save;
+					BeemChangeLength = 0;
+					BeemChangeCounter = 0;
 				}
 			}
 			break;

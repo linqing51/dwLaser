@@ -34,9 +34,25 @@ static void updateReleaseTimeEnergy(void);
 /*****************************************************************************/
 #if CONFIG_USING_DCHMI_APP == 1
 void updateDiognosisInfo(void){//更新诊断信息
-//	char dispBuf[256];
-//	sprintf(dispBuf, "%d ms", NVRAM0[EM_LASER_DERMA_NEGWIDTH]);
-//	//GDDC_PAGE_DIAGNOSIS_TEXTDISPLAY_INFO
+	char dispBuf[256];
+	
+	sprintf(dispBuf, "ADC0:0x%4X,ADC1:0x%4X,ADC2:0x%4X,ADC3:0x%4X", NVRAM0[SPREG_ADC_0], NVRAM0[SPREG_ADC_1], NVRAM0[SPREG_ADC_2], NVRAM0[SPREG_ADC_3]);
+	SetTextValue(GDDC_PAGE_DIAGNOSIS, GDDC_PAGE_DIAGNOSIS_TEXTDISPLAY_INFO0, dispBuf);
+	
+	sprintf(dispBuf, "ADC4:0x%4X,ADC5:0x%4X,ADC6:0x%4X,ADC7:0x%4X", NVRAM0[SPREG_ADC_4], NVRAM0[SPREG_ADC_5], NVRAM0[SPREG_ADC_6], NVRAM0[SPREG_ADC_7]);
+	SetTextValue(GDDC_PAGE_DIAGNOSIS, GDDC_PAGE_DIAGNOSIS_TEXTDISPLAY_INFO1, dispBuf);
+	
+	sprintf(dispBuf, "DAC0:0x%4X,DAC1:0x%4X,DAC2:0x%4X,DAC3:0x%4X", NVRAM0[SPREG_DAC_0], NVRAM0[SPREG_DAC_1], NVRAM0[SPREG_DAC_2], NVRAM0[SPREG_DAC_3]);
+	SetTextValue(GDDC_PAGE_DIAGNOSIS, GDDC_PAGE_DIAGNOSIS_TEXTDISPLAY_INFO2, dispBuf);
+	
+	sprintf(dispBuf, "NFC VER:0x%4X, PLATFORM VER:0x%4X", NVRAM0[SPREG_DK25L_VER], NVRAM0[SPREG_IDENTITY]);
+	SetTextValue(GDDC_PAGE_DIAGNOSIS, GDDC_PAGE_DIAGNOSIS_TEXTDISPLAY_INFO3, dispBuf);
+	
+	sprintf(dispBuf, "FS NC:%d, FS NO:%d, ES:%d, IL:%d, FP:%d", LD(X_FOOTSWITCH_NC),  LD(X_FOOTSWITCH_NO), LD(X_ESTOP), LD(X_INTERLOCK), NVRAM0[X_FIBER_PROBE]);
+	SetTextValue(GDDC_PAGE_DIAGNOSIS, GDDC_PAGE_DIAGNOSIS_TEXTDISPLAY_INFO4, dispBuf);
+	
+	sprintf(dispBuf, "FAN:%d, TEC:%d", LD(Y_FAN0),  LD(Y_TEC0));
+	SetTextValue(GDDC_PAGE_DIAGNOSIS, GDDC_PAGE_DIAGNOSIS_TEXTDISPLAY_INFO5, dispBuf);
 }
 void updateEnergyDensity(void){//更新能量密度显示
 	char dispBuf[32];
@@ -2285,10 +2301,14 @@ void dcHmiLoop(void){//HMI轮训程序
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_DIAGNOSIS_OK_DOWN);
 		}
-		else{
-			if(LDP(SPCOIL_PS1000MS)){
-				updateDiognosisInfo();
-			}
+		else if(LD(R_CLEAR_EPROM)){//
+			disableWatchDog();//屏蔽看门狗
+			clearNvram();
+			REBOOT();
+			
+		}
+		else if(LDP(SPCOIL_PS1000MS)){
+			updateDiognosisInfo();
 		}
 		return;
 	}
