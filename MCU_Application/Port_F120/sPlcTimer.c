@@ -23,7 +23,7 @@ void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER3{//硬件sTimer计时器中断 10mS
 	uint8_t SFRPAGE_save;	
 	SFRPAGE_save = SFRPAGE;
 	SFRPAGE = TMR3_PAGE;
-	TMR3CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag
+	TMR3CN &= 0x7F;//Clear Timer 4 High Byte Overflow Flag
 	SFRPAGE = SFRPAGE_save;
 	if(TimerCounter_5mS >= 2){//10mS计算
 		for(i = TD_10MS_START;i <= TD_10MS_END;i ++){

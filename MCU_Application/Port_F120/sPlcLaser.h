@@ -17,6 +17,19 @@
 #define LASER_SELECT_CH3						0x0008
 #define LASER_SELECT_ALL						0x000F
 /*****************************************************************************/
+extern volatile int16_t data LaserTimer_Mode;
+extern volatile int16_t data LaserTimer_Select;
+extern volatile int16_t data LaserTimer_TCounter;
+extern volatile int16_t data LaserTimer_TMate;
+extern volatile int16_t data LaserTimer_TOvertime;
+extern volatile int16_t data LaserTimer_PCounter;
+extern volatile int16_t data LaserTimer_PMate;
+extern volatile int16_t data LaserTimer_POvertime;
+extern volatile int16_t data LaserTimer_ReleaseTime;
+extern volatile int16_t data LaserTimer_ReleaseCounter;
+extern volatile int16_t data LaserTimer_BeemSwitchCounter;
+extern volatile int16_t data LaserTimer_BeemSwtichLength;
+/*****************************************************************************/
 void sPlcLaserInit(void);
 void laserTimerIsr(void);//TIMER4 中断 激光发射
 void testBenchLaserTimer(uint8_t st);//LASER激光发射测试

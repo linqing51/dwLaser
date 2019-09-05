@@ -378,16 +378,16 @@
 #define SPREG_SPWM_COUNTER_3									(SPREG_START + 39)//软件PWM3计数器
 /*****************************************************************************/
 //激光脉冲发射相关寄存器
-#define SPREG_LASER_MODE										(SPREG_START + 40)//激光发射模式
-#define SPREG_LASER_SELECT										(SPREG_START + 41)//激光通道选择
-#define SPREG_LASER_TCOUNTER									(SPREG_START + 42)//激光脉冲计时器计数值
-#define SPREG_LASER_TMATE										(SPREG_START + 43)//激光脉冲计时器器匹配值
-#define SPREG_LASER_TOVERTIME									(SPREG_START + 44)//激光脉冲计时器溢出值
-#define SPREG_LASER_PCOUNTER 									(SPREG_START + 45)//激光脉冲个数计数值
-#define SPREG_LASER_PMATE										(SPREG_START + 46)//激光脉冲个数匹配值
-#define SPREG_LASER_POVERTIME									(SPREG_START + 47)//激光脉冲间隔计时值
-#define SPREG_LASER_RELEASETIME									(SPREG_START + 48)//激光持续时间
-#define SPREG_LASER_RELEASE_COUNTER								(SPREG_START + 49)//激光持续时间计时器
+//#define SPREG_LASER_MODE										(SPREG_START + 40)//激光发射模式
+//#define SPREG_LASER_SELECT										(SPREG_START + 41)//激光通道选择
+////#define SPREG_LASER_TCOUNTER									(SPREG_START + 42)//激光脉冲计时器计数值
+//#define SPREG_LASER_TMATE										(SPREG_START + 43)//激光脉冲计时器器匹配值
+//#define SPREG_LASER_TOVERTIME									(SPREG_START + 44)//激光脉冲计时器溢出值
+//#define SPREG_LASER_PCOUNTER 									(SPREG_START + 45)//激光脉冲个数计数值
+//#define SPREG_LASER_PMATE										(SPREG_START + 46)//激光脉冲个数匹配值
+//#define SPREG_LASER_POVERTIME									(SPREG_START + 47)//激光脉冲间隔计时值
+//#define SPREG_LASER_RELEASETIME									(SPREG_START + 48)//激光持续时间
+//#define SPREG_LASER_RELEASE_COUNTER								(SPREG_START + 49)//激光持续时间计时器
 /*****************************************************************************/
 #define SPREG_DK25L_VER											(SPREG_START + 50)//DK25L NFC模块版本
 /*****************************************************************************/
