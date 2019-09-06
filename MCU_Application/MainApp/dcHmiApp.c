@@ -1009,48 +1009,7 @@ void updateStandbyDisplay(void){//更新方案显示
 #if CONFIG_USING_DUAL_WAVE == 1
 			SetProgressValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
 #endif			
-			SetButtonValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_MODE_CW, 0x01);
-			BatchBegin(GDDC_PAGE_STANDBY_CW);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_MP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_GP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, 0x0);
-			BatchEnd();
 			SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));				
-			switch(NVRAM0[EM_LASER_SELECT]){
-				case LASER_SELECT_CH0:{
-#if CONFIG_USING_DUAL_WAVE == 1
-					BatchBegin(GDDC_PAGE_STANDBY_CW);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x01);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
-					BatchEnd();
-#endif
-					break;
-				}
-				case LASER_SELECT_CH1:{
-#if CONFIG_USING_DUAL_WAVE == 1
-					BatchBegin(GDDC_PAGE_STANDBY_CW);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x01);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
-					BatchEnd();
-#endif
-					break;
-				}
-				case LASER_SELECT_ALL:{
-#if CONFIG_USING_DUAL_WAVE == 1					
-					BatchBegin(GDDC_PAGE_STANDBY_CW);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x01);
-					BatchEnd();
-#endif
-					break;
-				}
-				default:break;
-			}
 			break;			
 		}
 		case LASER_MODE_SP:{
@@ -1060,49 +1019,8 @@ void updateStandbyDisplay(void){//更新方案显示
 #if CONFIG_USING_DUAL_WAVE == 1			
 			SetProgressValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
 #endif			
-			SetButtonValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_MODE_SP, 0x01);
-			BatchBegin(GDDC_PAGE_STANDBY_SP);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_CW, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_MP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_GP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, 0x0);
-			BatchEnd();
 			SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));		
 			updatePosWidthDisplay(LASER_MODE_SP);
-			switch(NVRAM0[EM_LASER_SELECT]){
-				case LASER_SELECT_CH0:{
-#if CONFIG_USING_DUAL_WAVE == 1
-					BatchBegin(GDDC_PAGE_STANDBY_SP);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x01);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
-					BatchEnd();
-#endif
-					break;
-				}
-				case LASER_SELECT_CH1:{
-#if CONFIG_USING_DUAL_WAVE == 1
-					BatchBegin(GDDC_PAGE_STANDBY_SP);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x01);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
-					BatchEnd();
-#endif
-					break;
-				}
-				case LASER_SELECT_ALL:{
-#if CONFIG_USING_DUAL_WAVE == 1
-					BatchBegin(GDDC_PAGE_STANDBY_SP);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x01);
-					BatchEnd();
-#endif
-					break;
-				}
-				default:break;
-			}
 			break;		
 		}
 		case LASER_MODE_MP:{
@@ -1111,51 +1029,10 @@ void updateStandbyDisplay(void){//更新方案显示
 			SetProgressValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 #if CONFIG_USING_DUAL_WAVE == 1		
 			SetProgressValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
-#endif
-			SetButtonValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_MODE_MP, 0x01);
-			BatchBegin(GDDC_PAGE_STANDBY_MP);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_CW, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_GP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, 0x0);
-			BatchEnd();			
+#endif	
 			SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));				
 			updatePosWidthDisplay(LASER_MODE_MP);
-			updateNegWidthDisplay(LASER_MODE_MP);	
-			switch(NVRAM0[EM_LASER_SELECT]){
-				case LASER_SELECT_CH0:{
-#if CONFIG_USING_DUAL_WAVE == 1
-					BatchBegin(GDDC_PAGE_STANDBY_MP);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x01);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
-					BatchEnd();
-#endif
-					break;
-				}
-				case LASER_SELECT_CH1:{
-#if CONFIG_USING_DUAL_WAVE == 1
-					BatchBegin(GDDC_PAGE_STANDBY_MP);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x01);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
-					BatchEnd();
-#endif
-					break;
-				}
-				case LASER_SELECT_ALL:{
-#if CONFIG_USING_DUAL_WAVE == 1
-					BatchBegin(GDDC_PAGE_STANDBY_MP);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x01);
-					BatchEnd();
-#endif
-					break;
-				}
-				default:break;
-			}
+			updateNegWidthDisplay(LASER_MODE_MP);
 			break;
 		}
 		case LASER_MODE_GP:{
@@ -1164,54 +1041,13 @@ void updateStandbyDisplay(void){//更新方案显示
 			SetProgressValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_PROGRESS_CH0, ((uint32_t)NVRAM0[EM_LASER_POWER_CH0] * 100 / CONFIG_MAX_LASERPOWER_CH0));
 #if CONFIG_USING_DUAL_WAVE == 1
 			SetProgressValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
-#endif
-			SetButtonValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_MODE_GP, 0x01);
-			BatchBegin(GDDC_PAGE_STANDBY_GP);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_CW, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_MP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, 0x0);
-			BatchEnd();			
+#endif		
 			SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));				
 			updatePosWidthDisplay(LASER_MODE_GP);
 			updateNegWidthDisplay(LASER_MODE_GP);
 			sprintf(dispBuf, "%d", NVRAM0[EM_LASER_GP_TIMES]);
 			SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES, dispBuf);			
 			updateGroupOffDisplay();
-			switch(NVRAM0[EM_LASER_SELECT]){
-				case LASER_SELECT_CH0:{	
-#if CONFIG_USING_DUAL_WAVE == 1
-					BatchBegin(GDDC_PAGE_STANDBY_GP);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x01);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
-					BatchEnd();
-#endif
-					break;
-				}
-				case LASER_SELECT_CH1:{
-#if CONFIG_USING_DUAL_WAVE == 1
-					BatchBegin(GDDC_PAGE_STANDBY_GP);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x01);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
-					BatchEnd();
-#endif
-					break;
-				}
-				case LASER_SELECT_ALL:{
-#if CONFIG_USING_DUAL_WAVE == 1					
-					BatchBegin(GDDC_PAGE_STANDBY_GP);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x01);
-					BatchEnd();
-#endif
-					break;
-				}
-				default:break;
-			}
 			break;
 		}
 		case LASER_MODE_DERMA:{
@@ -1221,14 +1057,6 @@ void updateStandbyDisplay(void){//更新方案显示
 #if CONFIG_USING_DUAL_WAVE == 1
 			SetProgressValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
 #endif
-			SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_MODE_DERMA, 0x01);
-			BatchBegin(GDDC_PAGE_STANDBY_DERMA);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_CW, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_MP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_GP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, 0x0);
-			BatchEnd();
 			SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));					
 			updatePosWidthDisplay(LASER_MODE_DERMA);
 			updateNegWidthDisplay(LASER_MODE_DERMA);
@@ -1314,49 +1142,9 @@ void updateStandbyDisplay(void){//更新方案显示
 #if CONFIG_USING_DUAL_WAVE == 1
 			SetProgressValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_PROGRESS_CH1, ((uint32_t)NVRAM0[EM_LASER_POWER_CH1] * 100 / CONFIG_MAX_LASERPOWER_CH1));
 #endif
-			BatchBegin(GDDC_PAGE_STANDBY_SIGNAL);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_CW, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_SP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_MP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_GP, 0x0);
-			BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, 0x0);
-			BatchEnd();
 			SetButtonValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, 0x01);
 			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME, (char*)(&NVRAM0[EM_LASER_SCHEME_NAME]));				
-			SetTextInt32(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_ENERGY_INTERVAL ,NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL], 1, 0);
-			switch(NVRAM0[EM_LASER_SELECT]){
-				case LASER_SELECT_CH0:{
-#if CONFIG_USING_DUAL_WAVE == 1
-					BatchBegin(GDDC_PAGE_STANDBY_SIGNAL);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x01);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
-					BatchEnd();
-#endif
-					break;
-				}
-				case LASER_SELECT_CH1:{
-#if CONFIG_USING_DUAL_WAVE == 1
-					BatchBegin(GDDC_PAGE_STANDBY_SIGNAL);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x01);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x00);
-					BatchEnd();
-#endif
-					break;
-				}
-				case LASER_SELECT_ALL:{
-#if CONFIG_USING_DUAL_WAVE == 1
-					BatchBegin(GDDC_PAGE_STANDBY_SIGNAL);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, 0x00);
-					BatchSetButtonValue(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, 0x01);
-					BatchEnd();
-#endif
-					break;
-				}
-				default:break;
-			}	
+			SetTextInt32(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_SIGNAL_TEXTDISPLAY_ENERGY_INTERVAL ,NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL], 1, 0);	
 			break;
 		}
 		default:break;
@@ -1971,8 +1759,8 @@ void dcHmiLoop(void){//HMI轮训程序
 			else if(LDB(R_FAULT)){//无故障进入Standby->Ready启动过程
 				standbyTouchEnable(false);
 				standbyKeyEnable(false);
-				LaserTimer_Select = NVRAM0[EM_LASER_SELECT];
-				LaserTimer_Mode = NVRAM0[EM_LASER_PULSE_MODE];
+				LaserTimer_Select = (int8_t)NVRAM0[EM_LASER_SELECT];
+				LaserTimer_Mode = (int8_t)NVRAM0[EM_LASER_PULSE_MODE];
 				switch(LaserTimer_Mode){
 					case LASER_MODE_SP:{
 						LaserTimer_TMate 			= NVRAM0[EM_LASER_SP_POSWIDTH];//激光脉冲正脉宽 10mS
@@ -2099,13 +1887,26 @@ void dcHmiLoop(void){//HMI轮训程序
 		}
 		else if(LD(MR_FOOSWITCH_HAND_SWITCH)){//上升沿触发
 			if(LDP(X_FOOTSWITCH_NO)){//发射激光
+				//禁止Standby触摸
+				SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+				SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+				SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+				SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+				SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+				SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_EMITING;				
 				STLAR();
 				updateWarnMsgDisplay(MSG_LASER_EMIT);
 			}
 		}
 		else{//电平触发
-			if(LD(X_FOOTSWITCH_NO)){//发射激光			
+			if(LD(X_FOOTSWITCH_NO)){//发射激光	
+				SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+				SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+				SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+				SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+				SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+				SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, false);				
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_EMITING;				
 				STLAR();
 				updateWarnMsgDisplay(MSG_LASER_EMIT);
@@ -2120,6 +1921,14 @@ void dcHmiLoop(void){//HMI轮训程序
 			MULTS16(EM_RELEASE_TOTAL_TIME, TM_START, EM_RELEASE_TOTAL_ENERGY);//计算发射能量
 			updateReleaseTimeEnergy();//更新累计发射时间和能量
 		}
+		if(LDN(SPCOIL_LASER_EMITING)){//激光发射完毕
+			SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+		}
 		if(LD(R_FAULT)){//发现故障
 			EDLAR();
 			NVRAM0[SPREG_DAC_0] = 0;
@@ -2130,18 +1939,6 @@ void dcHmiLoop(void){//HMI轮训程序
 			standbyKeyValue(false);
 			standbyTouchEnable(true);
 			updateWarnMsgDisplay(MSG_NO_ERROR);
-		}
-		else if(LD(R_STANDBY_KEY_STNADBY_UP)){//Ready->Standby
-			EDLAR();
-			NVRAM0[SPREG_DAC_0] = 0;
-			NVRAM0[SPREG_DAC_1] = 0;
-			AimEnable0 = false;//关闭指示光	
-			BeemEnable =false;//关闭蜂鸣器			
-			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
-			standbyKeyValue(false);
-			standbyTouchEnable(true);
-			updateWarnMsgDisplay(MSG_NO_ERROR);
-			RES(R_STANDBY_KEY_STNADBY_UP);
 		}
 		else if(LD(MR_FOOSWITCH_HAND_SWITCH)){//上升沿触发
 			if(LDP(X_FOOTSWITCH_NO)){//关闭激光

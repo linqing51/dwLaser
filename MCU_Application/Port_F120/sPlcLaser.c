@@ -2,8 +2,8 @@
 /*****************************************************************************/
 sbit LASER_CH0_MODPIN = P2^7;
 sbit LASER_CH1_MODPIN = P2^6;
-volatile int16_t data LaserTimer_Mode;
-volatile int16_t data LaserTimer_Select;
+volatile int8_t data LaserTimer_Mode;
+volatile int8_t data LaserTimer_Select;
 volatile int16_t data LaserTimer_TCounter;
 volatile int16_t data LaserTimer_TMate;
 volatile int16_t data LaserTimer_TOvertime;
@@ -201,7 +201,7 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 	TMR4CN = 0;//16Bit AutoReload
 	RES(SPCOIL_LASER_DRIVER_INIT_FAIL);
 	SFRPAGE = SFRPAGE_SAVE; 
-	//EIP2      = 0x04;
+	//EIP2 = 0x04;
 	LaserTimer_Mode = 0;
 	LaserTimer_Select = 0;
 	LaserTimer_TCounter = 0;
@@ -217,9 +217,6 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 #endif
 }
 static void laserStart(void){//按通道选择打开激光
-	//LaserTimer_ReleaseTime = 0;
-	//LaserTimer_BeemSwitchCounter = 0;
-	//LaserTimer_BeemSwtichLength = 0;
 	setLedEmit(true);
 	switch(LaserTimer_Select){
 		case LASER_SELECT_CH0:{//0激光通道
@@ -258,7 +255,7 @@ static void laserStop(void){//按通道选择关闭激光
 	setLedEmit(false);	
 }
 void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射	
-	uint8_t SFRPAGE_save = SFRPAGE;
+	uint8_t data SFRPAGE_save = SFRPAGE;
 	TMR4CN &= 0x7F;//Clear Timer 4 High Byte Overflow Flag
 	switch(LaserTimer_Mode){
 		case LASER_MODE_CW:{//CW连续模式

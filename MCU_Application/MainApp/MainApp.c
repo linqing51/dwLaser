@@ -5,9 +5,10 @@ void main(void){
 	feedWatchDog();
 	SET(Y_FAN1);
 	sPlcInit();
-	Cache_ISR_Entry((unsigned int)sPlcTimerIsr, INTERRUPT_TIMER3);
+	//Cache_ISR_Entry((unsigned int)Uart1Isr, INTERRUPT_UART1);
+	//Cache_ISR_Entry((unsigned int)sPlcTimerIsr, INTERRUPT_TIMER3);
 #if CONFIG_SPLC_USING_LASER_TIMER == 1
-	Cache_ISR_Entry((unsigned int)laserTimerIsr, INTERRUPT_TIMER4);
+	//Cache_ISR_Entry((unsigned int)laserTimerIsr, INTERRUPT_TIMER4);
 #endif
 	while(1){
 		sPlcProcessStart();

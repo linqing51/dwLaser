@@ -4,21 +4,22 @@
 #include "sPlc.h"
 #include "appSplcAdr.h"
 #include "backgroundApp.h"
+#include "dcHmiApp.h"
 /*****************************************************************************/
-#define LASER_MODE_CW							0x0001//连续模式
-#define LASER_MODE_SP							0x0002//单脉冲模式
-#define LASER_MODE_MP							0x0004//多脉冲模式
-#define LASER_MODE_GP							0x0008//群脉冲模式
-#define LASER_MODE_DERMA						0x0010//
-#define LASER_MODE_SIGNAL						0x0020//单脉冲模式
-#define LASER_SELECT_CH0						0x0001
-#define LASER_SELECT_CH1						0x0002
-#define LASER_SELECT_CH2						0x0004
-#define LASER_SELECT_CH3						0x0008
-#define LASER_SELECT_ALL						0x000F
+#define LASER_MODE_CW							0x01//连续模式
+#define LASER_MODE_SP							0x02//单脉冲模式
+#define LASER_MODE_MP							0x04//多脉冲模式
+#define LASER_MODE_GP							0x08//群脉冲模式
+#define LASER_MODE_DERMA						0x10//
+#define LASER_MODE_SIGNAL						0x20//单脉冲模式
+#define LASER_SELECT_CH0						0x01
+#define LASER_SELECT_CH1						0x02
+#define LASER_SELECT_CH2						0x04
+#define LASER_SELECT_CH3						0x08
+#define LASER_SELECT_ALL						0x10
 /*****************************************************************************/
-extern volatile int16_t data LaserTimer_Mode;
-extern volatile int16_t data LaserTimer_Select;
+extern volatile int8_t data LaserTimer_Mode;
+extern volatile int8_t data LaserTimer_Select;
 extern volatile int16_t data LaserTimer_TCounter;
 extern volatile int16_t data LaserTimer_TMate;
 extern volatile int16_t data LaserTimer_TOvertime;

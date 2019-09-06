@@ -318,7 +318,7 @@
 #define SPCOIL_SPWM_RESET_3										(SPCOIL_START * 16 + 41)//SPWM3复位
 /*****************************************************************************/
 //激光脉冲发射相关线圈
-#define SPCOIL_LASER_EMITING									(SPCOIL_START * 16 + 42)//激光发射中
+#define SPCOIL_LASER_EMITING									(SPCOIL_START * 16 + 42)//激光发射中	
 #define SPCOIL_LASER_EMITOVER									(SPCOIL_START * 16 + 43)//激光发射结束	
 /*****************************************************************************/
 #define SPCOIL_SI7060_INIT_FAIL									(SPCOIL_START * 16 + 47)//SI7060温度传感器初始化失败

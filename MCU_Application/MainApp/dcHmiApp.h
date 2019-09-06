@@ -16,8 +16,7 @@
 #define FSMSTEP_READY_LOAD_DONE										402//载入参数完毕
 #define FSMSTEP_LASER_WAIT_TRIGGER									403//激光触发
 #define FSMSTEP_LASER_EMITING										404//激光发射中
-#define FSMSTEP_LASER_STOP											405//激光发射结束
-#define FSMSTEP_READY_ERROR											406//脚踏踩下错误
+#define FSMSTEP_READY_ERROR											405//脚踏踩下错误
 //选项状态
 #define FSMSTEP_OPTION												500//选项菜单
 #define FSMSTEP_INFORMATION											600
