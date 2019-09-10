@@ -201,7 +201,7 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 	TMR3CN = 0;//16Bit AutoReload
 	RES(SPCOIL_LASER_DRIVER_INIT_FAIL);
 	SFRPAGE = SFRPAGE_SAVE; 
-	//EIP2 = 0x04;
+	EIP2 |= 1 << 2;
 	LaserTimer_Mode = 0;
 	LaserTimer_Select = 0;
 	LaserTimer_TCounter = 0;
@@ -254,7 +254,7 @@ static void laserStop(void){//按通道选择关闭激光
 	LASER_CH1_MODPIN = false;//翻转输出	
 	setLedEmit(false);	
 }
-void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER4 中断 激光发射	
+void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射	
 	uint8_t data SFRPAGE_save = SFRPAGE;
 	TMR3CN &= 0x7F;//Clear Timer 4 High Byte Overflow Flag
 	switch(LaserTimer_Mode){

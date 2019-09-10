@@ -1,14 +1,14 @@
 #include "sPlc.h"
 /*****************************************************************************/
-int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前 包含存档寄存器
-int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
-int16_t FDRAM[CONFIG_FDRAM_SIZE];//存档寄存器
-uint8_t data TimerCounter_5mS = 0;
-uint8_t data TimerCounter_10mS = 0;
-uint8_t data TimerCounter_100mS = 0;
-uint8_t data TD_10MS_SP = 0;
-uint8_t data TD_100MS_SP = 0;
-uint8_t data TD_1000MS_SP = 0;
+volatile int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前 包含存档寄存器
+volatile int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
+volatile int16_t FDRAM[CONFIG_FDRAM_SIZE];//存档寄存器
+volatile uint8_t data TimerCounter_5mS = 0;
+volatile uint8_t data TimerCounter_10mS = 0;
+volatile uint8_t data TimerCounter_100mS = 0;
+volatile uint8_t data TD_10MS_SP = 0;
+volatile uint8_t data TD_100MS_SP = 0;
+volatile uint8_t data TD_1000MS_SP = 0;
 /******************************************************************************/
 void assertCoilAddress(uint16_t adr){//检查线圈地址
 #if CONFIG_SPLC_ASSERT == 1
@@ -235,10 +235,10 @@ void sPlcInit(void){//软逻辑初始化
 	SET(SPCOIL_ON);
 	inputInit();
 	outputInit();
+	initUart0(CONFIG_UART1_BAUDRATE);//UART1初始化	
 #if CONFIG_SPLC_USING_DK25L == 1
-	initUart0(CONFIG_UART0_BAUDRATE);//UART1初始化
+	initUart1(CONFIG_UART0_BAUDRATE);//UART1初始化
 #endif
-	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化	
 	initChipDac();//初始化DAC模块
 	initChipAdc();//初始化ADC模块
 	sPlcPcaInit();

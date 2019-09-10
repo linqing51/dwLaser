@@ -5,8 +5,8 @@
 /*****************************************************************************/
 #define FIRMWARE_VER 						921// 保持此固件版本号与真实屏幕一致，确保新增功能可用
 #define CRC16_ENABLE 						0// 如果需要CRC16校验功能，修改此宏为1(此时需要在VisualTFT工程中配CRC校验)
-#define CMD_MAX_SIZE 						64// 单条指令大小，根据需要调整，尽量设置大一些
-#define QUEUE_MAX_SIZE 						1024// 指令接收缓冲区大小，根据需要调整，尽量设置大一些
+#define CMD_MAX_SIZE 						256// 单条指令大小，根据需要调整，尽量设置大一些
+#define QUEUE_MAX_SIZE 						2048// 指令接收缓冲区大小，根据需要调整，尽量设置大一些
 #define SD_FILE_EN 							0			
 
 /*! 

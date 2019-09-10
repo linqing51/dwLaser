@@ -66,7 +66,7 @@
 #define CONFIG_SPLC_USING_PCA									1//片内计数器阵列
 #define CONFIG_PCA_TICK											8000
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM									0//EPROM
+#define CONFIG_SPLC_USING_EPROM									1//EPROM
 #if CONFIG_SPLC_USING_EPROM == 1
 #define CONFIG_SPLC_USING_CLEAR_NVRAM							0//启用清除NVRAM功能
 #else
