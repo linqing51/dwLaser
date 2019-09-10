@@ -34,9 +34,9 @@ void initChipAdc(void){//ADC模块初始化
 #endif
 }
 void chipAdcProcess(void){//循环采集ADC
-	uint16_t result = 0;
-	uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
-	uint8_t adcOverTime = 0;
+	data uint16_t result = 0;
+	data uint8_t SFRPAGE_SAVE = SFRPAGE;// Save Current SFR page
+	data uint8_t adcOverTime = 0;
 	SFRPAGE = ADC0_PAGE;
 	while(1){
 		adcOverTime ++;
@@ -98,9 +98,9 @@ void chipAdcProcess(void){//循环采集ADC
 	SFRPAGE = SFRPAGE_SAVE;
 }
 void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值 
-	uint8_t i;
-	uint16_t temp;
-	uint32_t sum;
+	data uint8_t i;
+	data uint16_t temp;
+	data uint32_t sum;
 	s->dat[s->wIndex] = dat;
 	s->wIndex ++;
 	if(s->wIndex >= CONFIG_SPLC_ADC_FILTER_TAP){

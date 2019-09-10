@@ -3,7 +3,6 @@
 int16_t NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前 包含存档寄存器
 int16_t NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 int16_t FDRAM[CONFIG_FDRAM_SIZE];//存档寄存器
-//int16_t TMPRAM[CONFIG_TMPRAM_SIZE];//临时寄存器
 uint8_t data TimerCounter_5mS = 0;
 uint8_t data TimerCounter_10mS = 0;
 uint8_t data TimerCounter_100mS = 0;
@@ -11,8 +10,6 @@ uint8_t data TD_10MS_SP = 0;
 uint8_t data TD_100MS_SP = 0;
 uint8_t data TD_1000MS_SP = 0;
 /******************************************************************************/
-
-
 void assertCoilAddress(uint16_t adr){//检查线圈地址
 #if CONFIG_SPLC_ASSERT == 1
 	uint16_t maxCoilAdr = CONFIG_NVRAM_SIZE * 16 - 1;
@@ -83,7 +80,9 @@ void clearFdram(void){//清楚FDRAM数据
 	disableWatchDog();
 #if CONFIG_SPLC_USING_EPROM == 1
 	for(i = CONFIG_EPROM_FDRAM_START; i< (CONFIG_FDRAM_SIZE * 2) ; i++){
+#if CONFIG_SPLC_USING_EPROM == 1
 		epromWriteOneByte(i, 0x0);
+#endif
 	}
 #endif
 	memset(FDRAM, 0x0, (CONFIG_FDRAM_SIZE * 2));//初始化FDRAM
@@ -105,6 +104,7 @@ void clearNvram(void){//清除NVRAM数据
 void clearEprom(void){
 	uint16_t i;
 	//清空EPROM
+#if CONFIG_SPLC_USING_EPROM == 1
 	for(i = 0;i < CONFIG_EPROM_SIZE;i ++){
 		epromWriteOneByte(i, 0x0);
 	}
@@ -113,6 +113,7 @@ void clearEprom(void){
 	epromWriteOneByte((CONFIG_EPROM_SIZE - 3), 0xAA);
 	epromWriteOneByte((CONFIG_EPROM_SIZE - 2), 0xBC);
 	epromWriteOneByte((CONFIG_EPROM_SIZE - 1), 0xD4);
+#endif
 }
 extern void loadDefault(void);
 void checkEprom(void){
@@ -127,6 +128,7 @@ void checkEprom(void){
 	feedWatchDog();
 	if((checkCode[0] != 0x55) || (checkCode[1] != 0xAA) || (checkCode[2] != 0xBC) || (checkCode[3] != 0xD1)){
 		//检测到校验码错误清空EPROM
+#if CONFIG_SPLC_USING_EPROM == 1
 		for(i = 0; i< CONFIG_EPROM_SIZE;i ++){
 			epromWriteOneByte(i, 0x0);
 		}
@@ -134,6 +136,7 @@ void checkEprom(void){
 		epromWriteOneByte((CONFIG_EPROM_SIZE - 3), 0xAA);
 		epromWriteOneByte((CONFIG_EPROM_SIZE - 2), 0xBC);
 		epromWriteOneByte((CONFIG_EPROM_SIZE - 1), 0xD1);
+#endif
 		loadDefault();
 		feedWatchDog();
 	}

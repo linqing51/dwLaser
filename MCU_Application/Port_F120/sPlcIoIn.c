@@ -27,8 +27,8 @@ void inputInit(void){//IO输入滤波器初始化
 }
 
 void inputRefresh(void){//获取输入IO
-	uint8_t SFRPAGE_SAVE;
-	uint8_t	temp; 
+	data uint8_t SFRPAGE_SAVE;
+	data uint8_t	temp; 
 	//XIN0 P3_3
 	SFRPAGE_SAVE = SFRPAGE;
 	SFRPAGE = CONFIG_PAGE;

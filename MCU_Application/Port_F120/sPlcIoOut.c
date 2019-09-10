@@ -22,7 +22,7 @@ void outputInit(void){//IO输出初始化
 
 void outputRefresh(void){//设置输出IO
 	//YOUT0
-	uint8_t SFRPAGE_SAVE; 
+	data uint8_t SFRPAGE_SAVE; 
 	SFRPAGE_SAVE = SFRPAGE;
 	SFRPAGE = CONFIG_PAGE;
 	if((NVRAM0[Y_START] >> 0) & 0x01){//P3_5

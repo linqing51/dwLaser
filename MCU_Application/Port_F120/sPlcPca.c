@@ -37,7 +37,7 @@ void sPlcAimInit(void){//指示光初始化
 	AimEnable0 = false;
 }
 void sPlcAimLoop(void){//
-	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
+	data uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
 	SFRPAGE = PCA0_PAGE;
 	if(AimEnable0 && (AimDuty0 > 0)){
 		PCA0CPM1 = 0x42;
@@ -59,7 +59,7 @@ void sPlcAimLoop(void){//
 }
 /*****************************************************************************/
 void sPlcBeemLoop(void){//蜂鸣器轮询
-	uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
+	data uint8_t SFRPAGE_save = SFRPAGE;// Save current SFR Page
 	if(BeemEnable){
 		SFRPAGE = TIMER01_PAGE;
 		if(LDB(SPCOIL_LASER_EMITING)){

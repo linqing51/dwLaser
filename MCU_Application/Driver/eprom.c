@@ -3,7 +3,6 @@
 /*****************************************************************************/
 void epromInit(void){//初始化IIC接口
 }
-
 uint8_t epromReadOneByte(uint16_t ReadAddr){//在AT24CXX指定地址读出一个数据
 //ReadAddr:开始读数的地址  
 //返回值  :读到的数据				  
