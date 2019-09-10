@@ -46,7 +46,7 @@
 #define CONFIG_EPROM_NVRAM_START								0x0
 #define CONFIG_EPROM_FDRAM_START								0x800//2048
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_SPWM									1//使了软件PWM功能
+#define CONFIG_SPLC_USING_SPWM									0//使了软件PWM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_FUN_EPID									0//使能SPLC扩展指令
 #define CONFIG_SPLC_FUNTEST										0//功能指令测试
@@ -54,7 +54,7 @@
 #define CONFIG_SPLC_ASSERT										0//检查地址范围
 #define CONFIG_SPLC_DEV											0x0A01//设备号
 #define CONFIG_SPLC_CLEAR_CODE									0xA58E
-#define CONFIG_SOFTPLC_TICK										200L//1mS
+#define CONFIG_SOFTPLC_TICK										200L//5mS
 #define CONFIG_INPUT_FILTER_TIME								1//输入数字滤波扫描周期 1mS * N
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT									0//看门狗启用
@@ -77,8 +77,8 @@
 #define CONFIG_SPLC_USING_UART0_ISR								1
 #define UART0													0
 
-#define CONFIG_SPLC_USING_UART1									1//UART 1串口启用
-#define CONFIG_SPLC_USING_UART1_ISR								1
+#define CONFIG_SPLC_USING_UART1									0//UART 1串口启用
+#define CONFIG_SPLC_USING_UART1_ISR								0
 #define UART1													1
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ADC									1//使能ADC模块
@@ -95,14 +95,6 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DAC									1//是能DAC模块
 /*****************************************************************************/
-#define CONFIG_USING_RTU_SLAVE									0//使能MODBUS RTU从站
-#define CONFIG_MB_PORT											UART0
-#define CONFIG_MB_RTU_SLAVE_TICK								1000L//1000uS
-#define CONFIG_MB_RTU_SLAVE_ADDRESS								0x01//从设备地址
-#define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE							256//发送接收缓冲区
-#define CONFIG_MB_RTU_SLAVE_TIMEOUT								20//接收通讯超时 10mS
-#define CONFIG_MB_RTU_SLAVE_IO_DELAY							1//RX TX切换延时
-/*****************************************************************************/
 #define CONFIG_SPLC_USING_DK25L									0//SPLC使能NFC功能
 #define CONFIG_SPLC_USING_DK25L_OVERTIME						500
 #define CONFIG_DK25L_RXBUF_SIZE									16
@@ -117,12 +109,6 @@
 #define CONFIG_SPLC_USING_NRF24L01								0
 #define CONFIG_SPLC_USING_WIRELESS_FOOTCONTROL					0//使能无线脚踏
 #define CONFIG_SPLC_USING_ROBATION								0//使能试用期功能
-/*****************************************************************************/
-#define CONFIG_FW_ORIGINAL_SAVE									1//更新前保存旧固件
-#define CONFIG_FW_UPDATE_REQ_FLAG								0x5A//固件更新标志
-#define CONFIG_FW_CONFIG_FILE_NAME								"/fwConfig.ini"//固件配置文件名称
-#define CONFIG_FW_MCU_FILE_LOAD_NAME							"/dwLaserNE.bin"//单片机固件名称
-#define CONFIG_FW_MCU_FILE_SAVE_NAME							"/dwLaserOD.bib"//
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_LASER_TIMER							1
 #define CONFIG_SPLC_USING_LASER_TIMER_TEST						0
@@ -222,54 +208,54 @@
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_NFC									0
 /*****************************************************************************/
-//线圈 保持 16*8=256 
+//线圈 保持 16*4=64 
 #define MR_START												0
-#define MR_END   												7
-//数据寄存器 保持 128
-#define DM_START												8
-#define DM_END													135
-//线圈寄存器 非保持 16*32=512
-#define R_START													136
-#define R_END													167						
+#define MR_END   												3
+//数据寄存器 保持 32
+#define DM_START												4
+#define DM_END													35
+//线圈寄存器 非保持 16*16=256
+#define R_START													36
+#define R_END													51						
 //数据寄存器 非保持 128
-#define EM_START												168
-#define EM_END													295
+#define EM_START												52
+#define EM_END													179
 //延时线圈
-//10MS 16*4=64
-#define T_10MS_START											296
-#define T_10MS_END												299
-//100MS 16*4=64
-#define T_100MS_START											300
-#define T_100MS_END												303
+//10MS 16*2=32
+#define T_10MS_START											180
+#define T_10MS_END												181
+//100MS 16*2=32
+#define T_100MS_START											182
+#define T_100MS_END												183
 //延时器使能
-//10MS 16*4=64
-#define T_10MS_ENA_START										304
-#define T_10MS_ENA_END											307
-//100MS 16*4=64
-#define T_100MS_ENA_START										308
-#define T_100MS_ENA_END											311
+//10MS 16*2=32
+#define T_10MS_ENA_START										184
+#define T_10MS_ENA_END											185
+//100MS 16*2=32
+#define T_100MS_ENA_START										186
+#define T_100MS_ENA_END											187
 //延时计时器 
-//10MS 16*4=64
-#define TD_10MS_START											312
-#define TD_10MS_END												375
-//100MS 16*4=64
-#define TD_100MS_START											376
-#define TD_100MS_END											439
-//输入位寄存器 16*4=64
-#define X_START													440
-#define X_END													443
-//输出位寄存器 16*4=64
-#define Y_START													444
-#define Y_END													447
+//10MS 16*2=32
+#define TD_10MS_START											188
+#define TD_10MS_END												219
+//100MS 16*2=32
+#define TD_100MS_START											220
+#define TD_100MS_END											251
+//输入位寄存器 16*2=32
+#define X_START													252
+#define X_END													253
+//输出位寄存器 16*2=32
+#define Y_START													254
+#define Y_END													255
 //特殊寄存器 64
-#define SPREG_START												448
-#define SPREG_END												511
-//特殊线圈 16*16=256
-#define SPCOIL_START											512
-#define SPCOIL_END												527
+#define SPREG_START												256
+#define SPREG_END												319
+//特殊线圈 16*8=128
+#define SPCOIL_START											320
+#define SPCOIL_END												327
 //临时寄存器 16
-#define TM_START												528
-#define TM_END													543
+#define TM_START												328
+#define TM_END													343
 /*****************************************************************************/
 #define CONFIG_NVRAM_SIZE 										(TM_END + 1)
 /*****************************************************************************/
@@ -376,18 +362,6 @@
 #define SPREG_SPWM_CYCLE_3										(SPREG_START + 37)//软件PWM3周期设置
 #define SPREG_SPWM_CYCLE_SHADOW_3								(SPREG_START + 38)//软件PWM3周期阴影
 #define SPREG_SPWM_COUNTER_3									(SPREG_START + 39)//软件PWM3计数器
-/*****************************************************************************/
-//激光脉冲发射相关寄存器
-//#define SPREG_LASER_MODE										(SPREG_START + 40)//激光发射模式
-//#define SPREG_LASER_SELECT										(SPREG_START + 41)//激光通道选择
-////#define SPREG_LASER_TCOUNTER									(SPREG_START + 42)//激光脉冲计时器计数值
-//#define SPREG_LASER_TMATE										(SPREG_START + 43)//激光脉冲计时器器匹配值
-//#define SPREG_LASER_TOVERTIME									(SPREG_START + 44)//激光脉冲计时器溢出值
-//#define SPREG_LASER_PCOUNTER 									(SPREG_START + 45)//激光脉冲个数计数值
-//#define SPREG_LASER_PMATE										(SPREG_START + 46)//激光脉冲个数匹配值
-//#define SPREG_LASER_POVERTIME									(SPREG_START + 47)//激光脉冲间隔计时值
-//#define SPREG_LASER_RELEASETIME									(SPREG_START + 48)//激光持续时间
-//#define SPREG_LASER_RELEASE_COUNTER								(SPREG_START + 49)//激光持续时间计时器
 /*****************************************************************************/
 #define SPREG_DK25L_VER											(SPREG_START + 50)//DK25L NFC模块版本
 /*****************************************************************************/

@@ -17,10 +17,6 @@
 #include "sPlcChipDac.h"
 #include "sPlcIoIn.h"
 #include "sPlcIoOut.h"
-#if CONFIG_USING_RTU_SLAVE == 1
-#include "sPlcModbus.h"
-#include "sPlcModbusPort.h"
-#endif
 #if CONFIG_SPLC_USING_CH376 == 1
 #include "usbSpi.h"
 #include "FILE_SYS.H"

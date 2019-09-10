@@ -5,5 +5,5 @@
 /*****************************************************************************/
 void hmiUartSendChar(uint8_t t);
 void hmiInitUart(uint32_t baudrate);
-void Uart1Isr(void);
+void Uart0sr(void);
 #endif

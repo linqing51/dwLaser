@@ -164,22 +164,22 @@ void STLAR(void){//开始发射脉冲
 	LaserTimer_ReleaseCounter = 0x0;
 	LaserTimer_BeemSwitchCounter = 0x0;	
 	SFRPAGE_save = SFRPAGE;
-	SFRPAGE = TMR4_PAGE;
-	TMR4CN &= ~(uint8_t)(1 << 7);//TF4 溢出标志清零
-	EIE2 |= (1 << 2);//T4 ET3中断使能
-	TMR4L = 0xFF;
-	TMR4H = 0xFF;
-	TMR4CN |= (1 << 2);//TR4 使能TIMER4计时器
+	SFRPAGE = TMR3_PAGE;
+	TMR3CN &= ~(uint8_t)(1 << 7);//TF4 溢出标志清零
+	EIE2 |= (1 << 0);//T4 ET3中断使能
+	TMR3L = 0xFF;
+	TMR3H = 0xFF;
+	TMR3CN |= (1 << 2);//TR4 使能TIMER4计时器
 	SFRPAGE = SFRPAGE_save;
 #endif
 }
 void EDLAR(void) reentrant {//停止发射脉冲
 #if CONFIG_SPLC_USING_LASER_TIMER == 1 	
 	uint8_t SFRPAGE_save;
-	SFRPAGE = TMR4_PAGE;	
-	TMR4CN &= ~(uint8_t)(1 << 2);//Stop Timer 4
-	EIE2 &= ~(uint8_t)(1 << 2);//关闭Timer4中断
-	TMR4CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag.
+	SFRPAGE = TMR3_PAGE;	
+	TMR3CN &= ~(uint8_t)(1 << 2);//Stop Timer 3
+	EIE2 &= ~(uint8_t)(1 << 0);//关闭Timer3中断
+	TMR3CN &= ~(uint8_t)(1 << 7);//Clear Timer 3 High Byte Overflow Flag.
 	SFRPAGE = SFRPAGE_save;
 	laserStop();//关闭DAC输出
 	LaserTimer_TCounter = 0X0;
@@ -193,12 +193,12 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 	uint8_t SFRPAGE_SAVE;
 	LASER_CH0_MODPIN = 0;
 	LASER_CH1_MODPIN = 0;
-	SFRPAGE = TMR4_PAGE;
+	SFRPAGE = TMR3_PAGE;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_LASER_TIMER_TICK));
-	TMR4CF = 0;//	
-	RCAP4 = temp;// Reload value to be used in Timer4
-	TMR4 = RCAP4;// Init the Timer4 register
-	TMR4CN = 0;//16Bit AutoReload
+	TMR3CF = 0;//	
+	RCAP3 = temp;// Reload value to be used in Timer4
+	TMR3 = RCAP3;// Init the Timer4 register
+	TMR3CN = 0;//16Bit AutoReload
 	RES(SPCOIL_LASER_DRIVER_INIT_FAIL);
 	SFRPAGE = SFRPAGE_SAVE; 
 	//EIP2 = 0x04;
@@ -254,9 +254,9 @@ static void laserStop(void){//按通道选择关闭激光
 	LASER_CH1_MODPIN = false;//翻转输出	
 	setLedEmit(false);	
 }
-void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射	
+void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER4 中断 激光发射	
 	uint8_t data SFRPAGE_save = SFRPAGE;
-	TMR4CN &= 0x7F;//Clear Timer 4 High Byte Overflow Flag
+	TMR3CN &= 0x7F;//Clear Timer 4 High Byte Overflow Flag
 	switch(LaserTimer_Mode){
 		case LASER_MODE_CW:{//CW连续模式
 			if(LaserTimer_TCounter == 0){
@@ -379,9 +379,9 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER4{//TIMER4 中断 激光发射
 			}
 			if(LaserTimer_TCounter >= LaserTimer_TMate){//计时器匹配
 				laserStop();//关闭DAC输出	
-				TMR4CN &= ~(uint8_t)(1 << 2);//Stop Timer 4
-				EIE2 &= ~(uint8_t)(1 << 2);//关闭Timer4中断
-				TMR4CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag.
+				TMR3CN &= ~(uint8_t)(1 << 2);//Stop Timer 4
+				EIE2 &= ~(uint8_t)(1 << 0);//关闭Timer4中断
+				TMR3CN &= ~(uint8_t)(1 << 7);//Clear Timer 4 High Byte Overflow Flag.
 				RES(SPCOIL_LASER_EMITING);//发射标志置位
 			}
 			if(LaserTimer_ReleaseTime < 1000){

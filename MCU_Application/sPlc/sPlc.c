@@ -243,9 +243,6 @@ void sPlcInit(void){//软逻辑初始化
 	SET(SPCOIL_ON);
 	SET(SPCOIL_START_UP);
 	NVRAM0[SPREG_IDENTITY] = CONFIG_SPLC_DEV;
-#if CONFIG_USING_RTU_SLAVE == 1	
-	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
-#endif
 #if CONFIG_SPLC_USING_CH376 == 1
 	usbSpiInit();//初始化 USB SPI	
 	mStopIfError(usbHostInit());//默认初始化为HOST
@@ -291,9 +288,6 @@ void sPlcProcessStart(void){//sPLC轮询起始
 #endif
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();//喂狗
-#endif
-#if CONFIG_USING_RTU_SLAVE == 1
-	modbusPorcess();//处理MODBUS
 #endif
 #if CONFIG_SPLC_USING_IO_INPUT == 1
 	inputRefresh();//读取X口输入
