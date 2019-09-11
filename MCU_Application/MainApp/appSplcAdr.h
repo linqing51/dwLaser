@@ -208,8 +208,6 @@
 #define DM_DC_OLD_PASSCODE1										(DM_START + 5)//屏旧密码2-3
 #define DM_DC_OLD_PASSCODE2										(DM_START + 6)//屏旧密码0-1
 #define DM_DC_OLD_PASSCODE3										(DM_START + 7)//屏旧密码2-3
-#define DM_SYS_RUNTIME_L										(DM_START + 8)//系统累计运行时间秒L 32BIT
-#define DM_SYS_RUNTIME_H										(DM_START + 9)//系统累计运行时间秒H 32BIT
 /*****************************************************************************/
 #define X_FOOTSWITCH_NC											(X_START * 16 + 0)//XIN0 脚踏常闭
 #define X_ESTOP													(X_START * 16 + 1)//XIN1 紧急停止开关

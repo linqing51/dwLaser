@@ -1443,9 +1443,6 @@ void dcHmiLoop(void){//HMI轮训程序
 		temperatureLoop();
 		faultLoop();
 	}
-	if(LDP(SPCOIL_PS1000MS)){//每1000mS更新一次累计时间
-		ADLS1(DM_SYS_RUNTIME_L);		
-	}
 	if(LD(R_DCHMI_RESET_DONE) && LD(R_DCHMI_RESTORE_DONE)){//HMI复位完成后处理串口指令
 		hmiCmdSize = queue_find_cmd(hmiCmdBuffer, CMD_MAX_SIZE);//从缓冲区中获取一条指令         
         if(hmiCmdSize > 0){//接收到指令及判断是否为开机提示                                                            
@@ -1836,12 +1833,15 @@ void dcHmiLoop(void){//HMI轮训程序
 				NVRAM0[SPREG_DAC_0] = fitLaserToCode(LASER_SELECT_CH0, (int16_t)((int32_t)NVRAM0[EM_LASER_POWER_CH0] * 1000 / CONFIG_MAX_LASERPOWER_CH0));
 #if CONFIG_USING_DUAL_WAVE == 1			
 				NVRAM0[SPREG_DAC_1] = fitLaserToCode(LASER_SELECT_CH1, (int16_t)((int32_t)NVRAM0[EM_LASER_POWER_CH1] * 1000 / CONFIG_MAX_LASERPOWER_CH1));
-				
 #else
 				NVRAM0[SPREG_DAC_1] = 0;
 				NVRAM0[SPREG_DAC_2] = 0;
 				NVRAM0[SPREG_DAC_3] = 0;
 #endif
+				UPDAC0();
+				UPDAC1();
+				UPDAC2();
+				UPDAC3();
 #endif
 				//打开蜂鸣器
 				BeemMode = BEEM_MODE_0;
@@ -1923,7 +1923,13 @@ void dcHmiLoop(void){//HMI轮训程序
 		if(LD(R_FAULT)){//Ready状态检测到故障
 			EDLAR();//停止发射
 			NVRAM0[SPREG_DAC_0] = 0;
-			NVRAM0[SPREG_DAC_1] = 1;
+			NVRAM0[SPREG_DAC_1] = 0;
+			NVRAM0[SPREG_DAC_2] = 0;
+			NVRAM0[SPREG_DAC_3] = 0;
+			UPDAC0();
+			UPDAC1();
+			UPDAC2();
+			UPDAC3();
 			AimEnable0 = false;	
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyKeyValue(false);//Standby按键恢复到Standby
@@ -1932,7 +1938,13 @@ void dcHmiLoop(void){//HMI轮训程序
 		else if(LD(R_STANDBY_KEY_STNADBY_UP)){//回到等待状态
 			EDLAR();//停止发射
 			NVRAM0[SPREG_DAC_0] = 0;
-			NVRAM0[SPREG_DAC_1] = 1;
+			NVRAM0[SPREG_DAC_1] = 0;
+			NVRAM0[SPREG_DAC_2] = 0;
+			NVRAM0[SPREG_DAC_3] = 0;
+			UPDAC0();
+			UPDAC1();
+			UPDAC2();
+			UPDAC3();
 			AimEnable0 = false;	
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyTouchEnable(true);
@@ -1943,6 +1955,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
 			SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
 			SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+			delayMs(100);//延时100mS等待触摸屏响应
 		}
 		else if(LD(MR_FOOSWITCH_HAND_SWITCH)){//上升沿触发
 			if(LDP(X_FOOTSWITCH_NO)){//发射激光
@@ -1953,6 +1966,7 @@ void dcHmiLoop(void){//HMI轮训程序
 				SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
 				SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
 				SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+				delayMs(100);//延时100mS等待触摸屏响应
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_EMITING;				
 				STLAR();
 				updateWarnMsgDisplay(MSG_LASER_EMIT);

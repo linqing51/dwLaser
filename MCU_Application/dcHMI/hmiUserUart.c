@@ -5,7 +5,6 @@ void hmiUartSendChar(uint8_t t){//UART1·¢ËÍ
 	uint8_t SFRPAGE_SAVE = SFRPAGE;        // Save Current SFR page
 	SFRPAGE = UART0_PAGE;
 	TI0 = 0;
-	SCON1 &= 0xFD;//TI1 = 0
 	SBUF0 = t;
     while(!TI0);
 	TI0 = 0;//TI1 = 0

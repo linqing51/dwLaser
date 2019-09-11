@@ -165,11 +165,11 @@ void STLAR(void){//开始发射脉冲
 	LaserTimer_BeemSwitchCounter = 0x0;	
 	SFRPAGE_save = SFRPAGE;
 	SFRPAGE = TMR3_PAGE;
-	TMR3CN &= ~(uint8_t)(1 << 7);//TF4 溢出标志清零
-	EIE2 |= (1 << 0);//T4 ET3中断使能
+	TMR3CN &= ~(uint8_t)(1 << 7);//TF3 溢出标志清零
+	EIE2 |= (1 << 0);//T3 ET3中断使能
 	TMR3L = 0xFF;
 	TMR3H = 0xFF;
-	TMR3CN |= (1 << 2);//TR4 使能TIMER4计时器
+	TMR3CN |= (1 << 2);//TR3 使能TIMER4计时器
 	SFRPAGE = SFRPAGE_save;
 #endif
 }
@@ -196,8 +196,8 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 	SFRPAGE = TMR3_PAGE;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_LASER_TIMER_TICK));
 	TMR3CF = 0;//	
-	RCAP3 = temp;// Reload value to be used in Timer4
-	TMR3 = RCAP3;// Init the Timer4 register
+	RCAP3 = temp;// Reload value to be used in Timer3
+	TMR3 = RCAP3;// Init the Timer3 register
 	TMR3CN = 0;//16Bit AutoReload
 	RES(SPCOIL_LASER_DRIVER_INIT_FAIL);
 	SFRPAGE = SFRPAGE_SAVE; 
@@ -218,38 +218,10 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 }
 static void laserStart(void){//按通道选择打开激光
 	setLedEmit(true);
-	switch(LaserTimer_Select){
-		case LASER_SELECT_CH0:{//0激光通道
-#if CONFIG_SPLC_USING_DAC == 1
-			UPDAC0();//DAC立即输出计时器值
-#endif
-			LASER_CH0_MODPIN = true; 
-			LASER_CH1_MODPIN = false;
-			break;
-		}
-		case LASER_SELECT_CH1:{ 
-#if CONFIG_SPLC_USING_DAC == 1
-			UPDAC1();//DAC立即输出计时器值
-#endif
-			LASER_CH0_MODPIN = false;
-			LASER_CH1_MODPIN = true;
-			break;
-		}
-		case LASER_SELECT_ALL:{
-#if CONFIG_SPLC_USING_DAC == 1
-			UPDAC0();//DAC立即输出计时器值
-			UPDAC1();//DAC立即输出计时器值
-#endif
-			LASER_CH0_MODPIN = true; 
-			LASER_CH1_MODPIN = true; 
-			break;
-		}
-	}
+	LASER_CH0_MODPIN = true; 
+	LASER_CH1_MODPIN = true; 
 }
 static void laserStop(void){//按通道选择关闭激光
-#if CONFIG_SPLC_USING_DAC == 1
-	CLDAC();//DAC立即输出计时器值
-#endif
 	LASER_CH0_MODPIN = false;
 	LASER_CH1_MODPIN = false;//翻转输出	
 	setLedEmit(false);	
@@ -314,10 +286,14 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射
 		}
 		case LASER_MODE_MP:{//MP多脉冲模式	
 			if(LaserTimer_TCounter == 0){//翻转
-				laserStart();		
+				setLedEmit(true);
+				LASER_CH0_MODPIN = true; 
+				LASER_CH1_MODPIN = true; 	
 			}
 			if(LaserTimer_TCounter >= LaserTimer_TMate){//计时器匹配
-				laserStop();
+				LASER_CH0_MODPIN = false;
+				LASER_CH1_MODPIN = false;//翻转输出	
+				setLedEmit(false);	
 			}
 			if(LaserTimer_TCounter < LaserTimer_TMate){//激光发射中
 				if(LaserTimer_ReleaseTime < 1000){
@@ -337,7 +313,9 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射
 		case LASER_MODE_GP:{//GP可编程脉冲模式
 			if(LaserTimer_TCounter < LaserTimer_PMate){//脉冲串输出
 				if(LaserTimer_TCounter == 0){//翻转	
-					laserStart();
+					setLedEmit(true);
+					LASER_CH0_MODPIN = true; 
+					LASER_CH1_MODPIN = true; 
 				}
 				if(LaserTimer_TCounter < LaserTimer_PMate){//激光发射中
 					if(LaserTimer_ReleaseTime < 1000){
@@ -349,7 +327,9 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射
 					}
 				}
 				if(LaserTimer_TCounter == LaserTimer_PMate){//计时器匹配
-					laserStop();
+					LASER_CH0_MODPIN = false;
+					LASER_CH1_MODPIN = false;//翻转输出	
+					setLedEmit(false);	
 					if(LaserTimer_ReleaseTime < 1000){
 						LaserTimer_ReleaseTime ++;//发射时间累计
 					}
