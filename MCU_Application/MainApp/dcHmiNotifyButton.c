@@ -618,10 +618,11 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
 					if(state){
 						SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+						SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+						standbyTouchEnable(false);
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
 					else{
-						SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
 						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
@@ -820,10 +821,11 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						//½ûÖ¹STANDBY´¥Ãþ
 						SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+						SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+						standbyTouchEnable(false);
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
 					else{
-						SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
 						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
@@ -1045,10 +1047,10 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
 					if(state){
 						SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+						standbyTouchEnable(false);
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
 					else{
-						SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
 						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
@@ -1327,11 +1329,10 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
 					if(state){
-						SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+						standbyTouchEnable(false);
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
 					else{
-						SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
 						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
@@ -1522,11 +1523,10 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
 					if(state){
-						SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+						standbyTouchEnable(false);
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
 					else{
-						SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
 						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;
@@ -1775,11 +1775,10 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_STANDBY:{
 					if(state){
-						SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+						standbyTouchEnable(false);
 						SET(R_STANDBY_KEY_STNADBY_DOWN);
 					}
 					else{
-						SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
 						SET(R_STANDBY_KEY_STNADBY_UP);
 					}
 					break;

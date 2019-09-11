@@ -201,7 +201,7 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 	TMR3CN = 0;//16Bit AutoReload
 	RES(SPCOIL_LASER_DRIVER_INIT_FAIL);
 	SFRPAGE = SFRPAGE_SAVE; 
-	EIP2 |= 1 << 2;
+	//EIP2 |= 1 << 2;
 	LaserTimer_Mode = 0;
 	LaserTimer_Select = 0;
 	LaserTimer_TCounter = 0;
@@ -262,12 +262,10 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射
 					LaserTimer_ReleaseTime = 0;
 					ADDS1(EM_RELEASE_TOTAL_TIME);
 				}
-				if((LaserTimer_BeemSwitchCounter * NVRAM0[EM_TOTAL_POWER] / 10000) >= NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL]){
+				if((((int32_t)LaserTimer_BeemSwitchCounter * NVRAM0[EM_TOTAL_POWER]) / 10000) >= NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL]){
 					SFRPAGE = TIMER01_PAGE;
-					if(TH0 != BEEM_FREQ_1){
-						TH0 = BEEM_FREQ_1;
-						TL0 = TH0;
-					}
+					TH0 = BEEM_FREQ_1;
+					TL0 = TH0;
 					SFRPAGE = SFRPAGE_save;
 					LaserTimer_BeemSwtichLength ++;
 				}

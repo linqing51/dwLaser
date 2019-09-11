@@ -19,7 +19,7 @@ void initUart0(uint32_t baudrate){//初始化串口0
 	SSTA0 |= (1 << 0);//Timer 2 Overflow generates UART0 RX baud rate
 	SSTA0 |= 1 << 4;//UART0 baud rate divide-by-two disabled.
 	ES0 = 1;//关闭串口0中断
-	//PS0 = 1;//UART0 interrupts set to high priority
+	PS0 = 1;//UART0 interrupts set to high priority
 	TI0 = 0;//清除发送完成   		
 	RI0 = 0;//清除接收完成	
 	SFRPAGE = SFRPAGE_SAVE;             // Restore SFRPAGE

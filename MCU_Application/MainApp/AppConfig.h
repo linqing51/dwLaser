@@ -59,7 +59,7 @@
 #define CONFIG_MAX_LASER_ENERGY_INTERVAL						200
 #define CONFIG_MIN_LASER_ENERGY_INTERVAL						40
 #define CONFIG_STEP_LASER_ENERGY_INTERVAL						10
-#define CONFIG_BEEM_ENERGY_INTERVAL_TIME						250//变音持续时间
+#define CONFIG_BEEM_ENERGY_INTERVAL_TIME						200//变音持续时间
 
 #define CONFIG_MAX_AIM_BRG										100//红光最大调光占空比
 #define CONFIG_MIN_AIM_BRG										0//红光最小调光占空比

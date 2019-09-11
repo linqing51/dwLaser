@@ -27,8 +27,8 @@ code char *LANG_INFO_MSG_MANUFACTURE_DATE = "MANUFACTURE DATE:1970-01-01";
 uint8_t hmiCmdBuffer[CMD_MAX_SIZE];//指令缓存
 uint16_t data hmiCmdSize;//已缓冲的指令数
 static data uint8_t MsgId;//当前显示的信息ID
-static data uint8_t StandbyEnableState;//Standby按键状态
-static data uint8_t StandbyTouchState;
+//static data uint8_t StandbyEnableState;//Standby按键状态
+//static data uint8_t StandbyTouchState;
 void UpdateUI(void);
 static void updateReleaseTimeEnergy(void);
 /*****************************************************************************/
@@ -544,240 +544,237 @@ void unselectScheme_1_All(void){//反选第二页全部方案条
 	BatchEnd();
 }
 void standbyTouchEnable(int8_t enable){//使能STANDBY界面触摸
-	if(StandbyTouchState != enable){
-		switch(NVRAM0[EM_LASER_PULSE_MODE]){
-			case LASER_MODE_CW:{
-				BatchBegin(GDDC_PAGE_STANDBY_CW);
-				
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_CW, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_MP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_GP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_OPTION, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_LAST, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_RESET, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH0, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH1, enable);
-#endif				
-				BatchEnd();
-				break;
-			}
-			case LASER_MODE_SP:{
-				BatchBegin(GDDC_PAGE_STANDBY_SP);
-				
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_CW, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_MP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_GP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_OPTION, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_LAST, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_RESET, enable);
-				
-				BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH0, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH1, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_SP_KEY_POSWIDTH_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_SP_KEY_POSWIDTH_DEC, enable);
-				
-				BatchEnd();
-				break;
-			}
-			case LASER_MODE_MP:{
-				BatchBegin(GDDC_PAGE_STANDBY_MP);
-				
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_CW, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_MP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_GP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, enable);		
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_OPTION, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_LAST, enable);
-#if CONFIG_USING_DUAL_WAVE == 1				
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_RESET, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH0, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH1, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_MP_KEY_POSWIDTH_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_MP_KEY_POSWIDTH_DEC, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_MP_KEY_NEGWIDTH_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_MP_KEY_NEGWIDTH_DEC, enable);
-				
-				BatchEnd();
-				break;
-			}
-			case LASER_MODE_GP:{
-				BatchBegin(GDDC_PAGE_STANDBY_GP);
-				
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_CW, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_MP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_GP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_OPTION, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_LAST, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_RESET, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH0, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH1, enable);
-#endif				
-				BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_POSWIDTH_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_POSWIDTH_DEC, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_NEGWIDTH_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_NEGWIDTH_DEC, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_TIMES_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_TIMES_DEC, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_GROUP_OFF_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_GROUP_OFF_DEC, enable);
-				
-				BatchEnd();
-				break;
-			}
-			case LASER_MODE_DERMA:{
-				BatchBegin(GDDC_PAGE_STANDBY_DERMA);
-				
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_CW, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_MP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_GP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_OPTION, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_LAST, enable);
-#if CONFIG_USING_DUAL_WAVE == 1				
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_RESET, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH0, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH1, enable);
-#endif				
-				BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_POSWIDTH_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_POSWIDTH_DEC, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_NEGWIDTH_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_NEGWIDTH_DEC, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, enable);	
-				
-				BatchEnd();
-				break;
-			}
-			case LASER_MODE_SIGNAL:{
-				BatchBegin(GDDC_PAGE_STANDBY_DERMA);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_CW, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_MP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_GP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SP, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_OPTION, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_LAST, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, enable);
-#endif
-				BatchSetEnable(GDDC_PAGE_STANDBY_KEY_RESET, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH0, enable);
-#if CONFIG_USING_DUAL_WAVE == 1				
-				BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH1, enable);
-#endif				
-				BatchSetEnable(GDDC_PAGE_STANDBY_SIGNAL_KEY_ENERGY_INTERVAL_ADD, enable);
-				BatchSetEnable(GDDC_PAGE_STANDBY_SIGNAL_KEY_ENERGY_INTERVAL_DEC, enable);
+	switch(NVRAM0[EM_LASER_PULSE_MODE]){
+		case LASER_MODE_CW:{
+			BatchBegin(GDDC_PAGE_STANDBY_CW);
 			
-				BatchEnd();
-				break;
-			}
-			default:break;
-		}		
-		StandbyTouchState = enable;
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_CW, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_MP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_GP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_OPTION, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_LAST, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_RESET, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH0, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH1, enable);
+#endif				
+			BatchEnd();
+			break;
+		}
+		case LASER_MODE_SP:{
+			BatchBegin(GDDC_PAGE_STANDBY_SP);
+			
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_CW, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_MP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_GP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_OPTION, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_LAST, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_RESET, enable);
+			
+			BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH0, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH1, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_SP_KEY_POSWIDTH_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_SP_KEY_POSWIDTH_DEC, enable);
+			
+			BatchEnd();
+			break;
+		}
+		case LASER_MODE_MP:{
+			BatchBegin(GDDC_PAGE_STANDBY_MP);
+			
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_CW, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_MP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_GP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, enable);		
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_OPTION, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_LAST, enable);
+#if CONFIG_USING_DUAL_WAVE == 1				
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_RESET, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH0, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH1, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_MP_KEY_POSWIDTH_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_MP_KEY_POSWIDTH_DEC, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_MP_KEY_NEGWIDTH_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_MP_KEY_NEGWIDTH_DEC, enable);
+			
+			BatchEnd();
+			break;
+		}
+		case LASER_MODE_GP:{
+			BatchBegin(GDDC_PAGE_STANDBY_GP);
+			
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_CW, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_MP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_GP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_OPTION, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_LAST, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_RESET, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH0, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH1, enable);
+#endif				
+			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_POSWIDTH_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_POSWIDTH_DEC, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_NEGWIDTH_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_NEGWIDTH_DEC, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_TIMES_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_TIMES_DEC, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_GROUP_OFF_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_GROUP_OFF_DEC, enable);
+			
+			BatchEnd();
+			break;
+		}
+		case LASER_MODE_DERMA:{
+			BatchBegin(GDDC_PAGE_STANDBY_DERMA);
+			
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_CW, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_MP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_GP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_OPTION, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_LAST, enable);
+#if CONFIG_USING_DUAL_WAVE == 1				
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_RESET, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH0, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH1, enable);
+#endif				
+			BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_POSWIDTH_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_POSWIDTH_DEC, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_NEGWIDTH_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_NEGWIDTH_DEC, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_0MM5, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_1MM0, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_2MM0, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_DERMA_KEY_SPOT_3MM0, enable);	
+			
+			BatchEnd();
+			break;
+		}
+		case LASER_MODE_SIGNAL:{
+			BatchBegin(GDDC_PAGE_STANDBY_DERMA);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_CW, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_MP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_GP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SP, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_MODE_DERMA, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_OPTION, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SCHEME_LAST, enable);
+#if CONFIG_USING_DUAL_WAVE == 1
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH0, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_CH1, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_SELECT_BOTH, enable);
+#endif
+			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_RESET, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH0, enable);
+#if CONFIG_USING_DUAL_WAVE == 1				
+			BatchSetEnable(GDDC_PAGE_STANDBY_PROGRESS_CH1, enable);
+#endif				
+			BatchSetEnable(GDDC_PAGE_STANDBY_SIGNAL_KEY_ENERGY_INTERVAL_ADD, enable);
+			BatchSetEnable(GDDC_PAGE_STANDBY_SIGNAL_KEY_ENERGY_INTERVAL_DEC, enable);
+		
+			BatchEnd();
+			break;
+		}
+		default:break;
 	}
 }
 void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
@@ -1317,23 +1314,61 @@ void updateGroupOffDisplay(void){//更新GroupOff显示
 	SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_GROUP_OFF, dispBuf);		
 }
 void standbyKeyEnable(uint8_t ena){//设置Standby使能
-	if(StandbyEnableState != ena){
-		StandbyEnableState = ena;
-		SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
-		SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
-		SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
-		SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
-		SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
-		SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
+	switch(NVRAM0[EM_LASER_PULSE_MODE]){
+		case LASER_MODE_CW:{
+			SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
+			break;
+		}
+		case LASER_MODE_SP:{
+			SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
+			break;
+		}
+		case LASER_MODE_MP:{
+			SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
+		}			
+		case LASER_MODE_GP:{
+			SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
+			break;
+		}
+		case LASER_MODE_DERMA:{
+			SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
+			break;
+		}
+		case LASER_MODE_SIGNAL:{
+			SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
+			break;
+		}
+		default:break;
 	}
 }
 void standbyKeyValue(uint8_t value){//设置Standby键值
-	SetButtonValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
-	SetButtonValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
-	SetButtonValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
-	SetButtonValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
-	SetButtonValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
-	SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
+	switch(NVRAM0[EM_LASER_PULSE_MODE]){
+		case LASER_MODE_CW:{
+			SetButtonValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
+			break;
+		}		
+		case LASER_MODE_SP:{
+			SetButtonValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
+			break;
+		}			
+		case LASER_MODE_MP:	{
+			SetButtonValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
+			break;
+		}			
+		case LASER_MODE_GP:{
+			SetButtonValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
+			break;
+		}			
+		case LASER_MODE_DERMA:{
+			SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
+			break;
+		}			
+		case LASER_MODE_SIGNAL:{
+			SetButtonValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
+			break;
+		}			
+		default:break;
+	}
 }
 void dcHmiLoopInit(void){//初始化模块
 	uint8_t i;
@@ -1499,10 +1534,21 @@ void dcHmiLoop(void){//HMI轮训程序
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_WAIT_ENTER_PASSCODE;
 			NVRAM0[EM_DC_PAGE] = GDDC_PAGE_POWERUP;//HMI页面
 			MsgId = 0xFF;//当前显示的信息ID
-			StandbyEnableState = 0xFF;//Standby按键状态
-			StandbyTouchState = 0xFF;
-			standbyKeyValue(false);
-			standbyKeyEnable(true);
+		
+			SetButtonValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+			SetButtonValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+			SetButtonValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+			SetButtonValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+			SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+			SetButtonValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
+			
+			SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+			
 			SetTextValue(GDDC_PAGE_PASSCODE, GDDC_PAGE_PASSCODE_TEXTDISPLAY, (uint8_t*)(&(NVRAM0[EM_DC_NEW_PASSCODE0])));
 			SetTextValue(GDDC_PAGE_NEW_PASSCODE, GDDC_PAGE_NEWPASSCODE_TEXTDISPLAY, (uint8_t*)(&(NVRAM0[EM_DC_NEW_PASSCODE0])));	
 			SetBackLight(getLcdDuty(NVRAM0[DM_LCD_BRG]));
@@ -1789,7 +1835,6 @@ void dcHmiLoop(void){//HMI轮训程序
 			RES(R_STANDBY_KEY_ENTER_SCHEME_DOWN);
 		}else if(LD(R_STANDBY_KEY_STNADBY_DOWN)){//点击READY	
 			if(LD(X_FOOTSWITCH_NO)){//检测脚踏踩下
-				standbyTouchEnable(false);
 				//打开蜂鸣器
 				BeemMode = BEEM_MODE_3;
 				BeemDuty = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
@@ -1801,8 +1846,6 @@ void dcHmiLoop(void){//HMI轮训程序
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_READY_ERROR;	
 			}
 			else if(LDB(R_FAULT)){//无故障进入Standby->Ready启动过程
-				standbyTouchEnable(false);
-				standbyKeyEnable(false);
 				LaserTimer_Select = (int8_t)NVRAM0[EM_LASER_SELECT];
 				LaserTimer_Mode = (int8_t)NVRAM0[EM_LASER_PULSE_MODE];
 				switch(LaserTimer_Mode){
@@ -1854,12 +1897,6 @@ void dcHmiLoop(void){//HMI轮训程序
 				AimEnable0 = true;	
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_READY_LOAD_PARA;	
 			}
-			SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-			SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-			SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-			SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-			SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-			SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
 			RES(R_STANDBY_KEY_STNADBY_DOWN);
 		}else if(LD(R_STANDBY_KEY_SCHEME_SAVE_DOWN)){	
 			//禁止屏幕触摸
@@ -1913,12 +1950,13 @@ void dcHmiLoop(void){//HMI轮训程序
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_LOAD_DONE){//参数载入完毕并停止蜂鸣器
 		BeemEnable = 0;//关闭蜂鸣器
+		SET(R_FAN_ENABLE);
 		NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
 		standbyKeyEnable(true);
+		standbyKeyValue(true);
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_WAIT_TRIGGER){//等待触发激光	
-		SET(R_FAN_ENABLE);
 		updateWarnMsgDisplay(MSG_WAIT_TRIGGER);
 		if(LD(R_FAULT)){//Ready状态检测到故障
 			EDLAR();//停止发射
@@ -1932,8 +1970,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			UPDAC3();
 			AimEnable0 = false;	
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
-			standbyKeyValue(false);//Standby按键恢复到Standby
-			standbyTouchEnable(true);//恢复触摸屏触摸
+			delayMs(10);//延时100mS等待触摸屏响应
 		}
 		else if(LD(R_STANDBY_KEY_STNADBY_UP)){//回到等待状态
 			EDLAR();//停止发射
@@ -1949,24 +1986,13 @@ void dcHmiLoop(void){//HMI轮训程序
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyTouchEnable(true);
 			RES(R_STANDBY_KEY_STNADBY_UP);
-			SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-			SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-			SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-			SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-			SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-			SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-			delayMs(100);//延时100mS等待触摸屏响应
+			delayMs(10);//延时100mS等待触摸屏响应
 		}
 		else if(LD(MR_FOOSWITCH_HAND_SWITCH)){//上升沿触发
 			if(LDP(X_FOOTSWITCH_NO)){//发射激光
 				//禁止Standby触摸
-				SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
-				SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
-				SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
-				SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
-				SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
-				SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
-				delayMs(100);//延时100mS等待触摸屏响应
+				standbyKeyEnable(false);
+				delayMs(10);//延时100mS等待触摸屏响应
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_EMITING;				
 				STLAR();
 				updateWarnMsgDisplay(MSG_LASER_EMIT);
@@ -1974,12 +2000,8 @@ void dcHmiLoop(void){//HMI轮训程序
 		}
 		else{//电平触发
 			if(LD(X_FOOTSWITCH_NO)){//发射激光	
-				SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
-				SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
-				SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
-				SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
-				SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, false);
-				SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, false);				
+				standbyKeyEnable(false);
+				delayMs(10);				
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_EMITING;				
 				STLAR();
 				updateWarnMsgDisplay(MSG_LASER_EMIT);
@@ -1988,7 +2010,6 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_EMITING){//发激光中
-		SET(R_FAN_ENABLE);
 		if(LDP(SPCOIL_PS1000MS) || LDN(SPCOIL_PS1000MS)){//每隔1S刷新累计时间和能量
 			NVRAM0[TM_START] = (int16_t)((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10);
 			MULTS16(EM_RELEASE_TOTAL_TIME, TM_START, EM_RELEASE_TOTAL_ENERGY);//计算发射能量
@@ -2002,8 +2023,10 @@ void dcHmiLoop(void){//HMI轮训程序
 			BeemEnable =false;//关闭蜂鸣器			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyKeyValue(false);
+			standbyKeyEnable(true);
 			standbyTouchEnable(true);
 			updateWarnMsgDisplay(MSG_NO_ERROR);
+			delayMs(10);
 		}
 		else if(LD(MR_FOOSWITCH_HAND_SWITCH)){//上升沿触发
 			if(LDP(X_FOOTSWITCH_NO)){//关闭激光
@@ -2011,12 +2034,8 @@ void dcHmiLoop(void){//HMI轮训程序
 				updateWarnMsgDisplay(MSG_NO_ERROR);
 				BeemEnable = false;//关闭蜂鸣器	
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
-				SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-				SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-				SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-				SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-				SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-				SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, true);	
+				standbyKeyEnable(true);
+				delayMs(10);
 			}
 		}
 		else{
@@ -2025,22 +2044,18 @@ void dcHmiLoop(void){//HMI轮训程序
 				updateWarnMsgDisplay(MSG_NO_ERROR);
 				BeemEnable = false;//关闭蜂鸣器	
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
-				SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-				SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-				SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-				SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-				SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
-				SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
+				standbyKeyEnable(true);
+				delayMs(10);
 			}
 		}
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_ERROR){//Ready检测到脚踏踩下
-		SET(R_FAN_ENABLE);
 		if(LDB(X_FOOTSWITCH_NO)){//检测到脚踏状态恢复正常
 			BeemEnable = 0;
 			standbyKeyValue(false);
 			standbyKeyEnable(true);
+			standbyTouchEnable(true);
 			updateWarnMsgDisplay(MSG_NO_ERROR);
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 		}
