@@ -27,6 +27,7 @@ code char *LANG_INFO_MSG_MANUFACTURE_DATE = "MANUFACTURE DATE:1970-01-01";
 uint8_t hmiCmdBuffer[CMD_MAX_SIZE];//指令缓存
 uint16_t data hmiCmdSize;//已缓冲的指令数
 static data uint8_t MsgId;//当前显示的信息ID
+static data uint8_t FlagKeyStandbyEnable;
 //static data uint8_t StandbyEnableState;//Standby按键状态
 //static data uint8_t StandbyTouchState;
 void UpdateUI(void);
@@ -685,10 +686,9 @@ void standbyTouchEnable(int8_t enable){//使能STANDBY界面触摸
 #endif				
 			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_POSWIDTH_ADD, enable);
 			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_POSWIDTH_DEC, enable);
-#if CONFIG_USING_DUAL_WAVE == 1
 			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_NEGWIDTH_ADD, enable);
 			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_NEGWIDTH_DEC, enable);
-#endif
+
 			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_TIMES_ADD, enable);
 			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_TIMES_DEC, enable);
 			BatchSetEnable(GDDC_PAGE_STANDBY_GP_KEY_GROUP_OFF_ADD, enable);
@@ -1314,61 +1314,20 @@ void updateGroupOffDisplay(void){//更新GroupOff显示
 	SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_GROUP_OFF, dispBuf);		
 }
 void standbyKeyEnable(uint8_t ena){//设置Standby使能
-	switch(NVRAM0[EM_LASER_PULSE_MODE]){
-		case LASER_MODE_CW:{
-			SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
-			break;
-		}
-		case LASER_MODE_SP:{
-			SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
-			break;
-		}
-		case LASER_MODE_MP:{
-			SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
-		}			
-		case LASER_MODE_GP:{
-			SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
-			break;
-		}
-		case LASER_MODE_DERMA:{
-			SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
-			break;
-		}
-		case LASER_MODE_SIGNAL:{
-			SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
-			break;
-		}
-		default:break;
-	}
+	SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
+	SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
+	SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
+	SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
+	SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
+	SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
 }
-void standbyKeyValue(uint8_t value){//设置Standby键值
-	switch(NVRAM0[EM_LASER_PULSE_MODE]){
-		case LASER_MODE_CW:{
-			SetButtonValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
-			break;
-		}		
-		case LASER_MODE_SP:{
-			SetButtonValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
-			break;
-		}			
-		case LASER_MODE_MP:	{
-			SetButtonValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
-			break;
-		}			
-		case LASER_MODE_GP:{
-			SetButtonValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
-			break;
-		}			
-		case LASER_MODE_DERMA:{
-			SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
-			break;
-		}			
-		case LASER_MODE_SIGNAL:{
-			SetButtonValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
-			break;
-		}			
-		default:break;
-	}
+void standbyKeyValue(uint8_t value){//设置Standby键值	
+	SetButtonValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
+	SetButtonValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
+	SetButtonValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
+	SetButtonValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
+	SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
+	SetButtonValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, value);
 }
 void dcHmiLoopInit(void){//初始化模块
 	uint8_t i;
@@ -1391,6 +1350,7 @@ void dcHmiLoopInit(void){//初始化模块
 	RES(Y_TEC0);
 	SET(Y_FAN0);
 	SET(Y_FAN1);
+	SET(R_RFID_PASS);
 	RES(R_DRIVE_TEMP_HIGH);//屏蔽驱动器过热报警
 }
 static void temperatureLoop(void){//温度轮询顺序
@@ -1447,15 +1407,15 @@ static void faultLoop(void){//故障轮询
 		else{
 			RES(R_FIBER_PROBE);
 		}
-		if(LD(R_DISABLE_RFID)){
-			SET(R_RFID_PASS);
-		}
-		else{
-			if(LDP(X_FIBER_PROBE)){
-				RES(R_RFID_PASS);//启动RFID读取
-			}
-			SET(R_RFID_PASS);
-		}
+//		if(LD(R_DISABLE_RFID)){
+//			SET(R_RFID_PASS);
+//		}
+//		else{
+//			if(LDP(X_FIBER_PROBE)){
+//				RES(R_RFID_PASS);//启动RFID读取
+//			}
+//			SET(R_RFID_PASS);
+//		}
 	}
 	temp |= LDB(X_ESTOP);//正常1 
 	temp |=	LDB(X_INTERLOCK);//正常1
@@ -1769,10 +1729,6 @@ void dcHmiLoop(void){//HMI轮训程序
 			default:break;
 		}
 		if(LD(R_FAULT)){//有故障显示
-			//打开蜂鸣器报警
-			if(LDP(R_FAULT)){
-				standbyKeyEnable(false);//禁止Standby触摸
-			}
 			if(LDB(X_ESTOP)){//急停按下
 				updateWarnMsgDisplay(MSG_ESTOP_PRESS);		
 			}
@@ -1800,12 +1756,16 @@ void dcHmiLoop(void){//HMI轮训程序
 			BeemEnable = 1;
 		}
 		else{//无故障显示
-			if(LDN(R_FAULT)){
-				standbyKeyEnable(true);
-			}
 			BeemEnable = 0;
 			updateWarnMsgDisplay(MSG_NO_ERROR);
 		}
+		if(LDP(R_FAULT)){
+			standbyKeyEnable(false);//禁止Standby触摸
+		}
+		if(LDN(R_FAULT)){
+			standbyKeyEnable(true);
+		}
+
 		if(LD(R_STANDBY_KEY_ENTER_OPTION_DOWN)){//点击OPTION
 			BeemEnable = 0;//关闭蜂鸣器
 			if(LD(R_ENGINEER_MODE)){
@@ -1837,7 +1797,8 @@ void dcHmiLoop(void){//HMI轮训程序
 			}
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_STANDBY_KEY_ENTER_SCHEME_DOWN);
-		}else if(LD(R_STANDBY_KEY_STNADBY_DOWN)){//点击READY	
+		}else if(LD(R_STANDBY_KEY_STNADBY_DOWN)){//点击READY
+			standbyTouchEnable(false);			
 			if(LD(X_FOOTSWITCH_NO)){//检测脚踏踩下
 				//打开蜂鸣器
 				BeemMode = BEEM_MODE_3;
@@ -1845,7 +1806,6 @@ void dcHmiLoop(void){//HMI轮训程序
 				BeemCounter = 0;
 				BeemFreq = BEEM_FREQ_0;
 				BeemEnable = 1;
-				standbyKeyEnable(false);//Standby禁止点击
 				updateWarnMsgDisplay(MSG_FOOT_DEPRESSED);//显示错误信息
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_READY_ERROR;	
 			}
@@ -1875,20 +1835,17 @@ void dcHmiLoop(void){//HMI轮训程序
 						break;
 					}
 					default:break;
-			}
+				}
 #if CONFIG_USING_BACKGROUND_APP == 1
 				NVRAM0[SPREG_DAC_0] = fitLaserToCode(LASER_SELECT_CH0, (int16_t)((int32_t)NVRAM0[EM_LASER_POWER_CH0] * 1000 / CONFIG_MAX_LASERPOWER_CH0));
+				UPDAC0();
 #if CONFIG_USING_DUAL_WAVE == 1			
 				NVRAM0[SPREG_DAC_1] = fitLaserToCode(LASER_SELECT_CH1, (int16_t)((int32_t)NVRAM0[EM_LASER_POWER_CH1] * 1000 / CONFIG_MAX_LASERPOWER_CH1));
-#else
-				NVRAM0[SPREG_DAC_1] = 0;
-				NVRAM0[SPREG_DAC_2] = 0;
-				NVRAM0[SPREG_DAC_3] = 0;
-#endif
-				UPDAC0();
 				UPDAC1();
-				UPDAC2();
-				UPDAC3();
+#else
+				NVRAM0[SPREG_DAC_2] = 0;UPDAC2();
+				NVRAM0[SPREG_DAC_3] = 0;UPDAC3();
+#endif
 #endif
 				//打开蜂鸣器
 				BeemMode = BEEM_MODE_0;
@@ -1901,8 +1858,13 @@ void dcHmiLoop(void){//HMI轮训程序
 				AimEnable0 = true;	
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_READY_LOAD_PARA;	
 			}
+			else{
+				standbyKeyValue(false);
+				standbyTouchEnable(true);
+			}
 			RES(R_STANDBY_KEY_STNADBY_DOWN);
-		}else if(LD(R_STANDBY_KEY_SCHEME_SAVE_DOWN)){	
+		}
+		else if(LD(R_STANDBY_KEY_SCHEME_SAVE_DOWN)){	
 			//禁止屏幕触摸
 			standbyTouchEnable(false);
 			saveScheme();//EM->FD
@@ -1970,10 +1932,10 @@ void dcHmiLoop(void){//HMI轮训程序
 			NVRAM0[SPREG_DAC_2] = 0;UPDAC2();
 			NVRAM0[SPREG_DAC_3] = 0;UPDAC3();	
 			AimEnable0 = false;	
-			standbyKeyEnable(false);
+			standbyTouchEnable(true);
 			standbyKeyValue(false);
+			standbyKeyEnable(false);
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
-			delayMs(10);//延时100mS等待触摸屏响应
 		}
 		else if(LD(R_STANDBY_KEY_STNADBY_UP)){//回到等待状态
 			EDLAR();//停止发射
@@ -2024,37 +1986,26 @@ void dcHmiLoop(void){//HMI轮训程序
 			BeemEnable =false;//关闭蜂鸣器			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyKeyValue(false);
-			standbyKeyEnable(true);
+			standbyKeyEnable(false);
 			standbyTouchEnable(true);
 			updateWarnMsgDisplay(MSG_NO_ERROR);
-			delayMs(10);
 		}
 		else if(LD(MR_FOOSWITCH_HAND_SWITCH)){//上升沿触发
 			if(LDP(X_FOOTSWITCH_NO)){//关闭激光
 				EDLAR();
-				NVRAM0[SPREG_DAC_0] = 0;UPDAC0();
-				NVRAM0[SPREG_DAC_1] = 0;UPDAC1();
-				NVRAM0[SPREG_DAC_2] = 0;UPDAC2();
-				NVRAM0[SPREG_DAC_3] = 0;UPDAC3();
 				updateWarnMsgDisplay(MSG_NO_ERROR);
 				BeemEnable = false;//关闭蜂鸣器	
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
 				standbyKeyEnable(true);
-				delayMs(10);
 			}
 		}
 		else{
 			if(LDB(X_FOOTSWITCH_NO)){//关闭激光
 				EDLAR(); 
-				NVRAM0[SPREG_DAC_0] = 0;UPDAC0();
-				NVRAM0[SPREG_DAC_1] = 0;UPDAC1();
-				NVRAM0[SPREG_DAC_2] = 0;UPDAC2();
-				NVRAM0[SPREG_DAC_3] = 0;UPDAC3();
 				updateWarnMsgDisplay(MSG_NO_ERROR);
 				BeemEnable = false;//关闭蜂鸣器	
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
 				standbyKeyEnable(true);
-				delayMs(10);
 			}
 		}
 		return;

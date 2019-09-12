@@ -66,7 +66,7 @@
 #define CONFIG_SPLC_USING_PCA									1//片内计数器阵列
 #define CONFIG_PCA_TICK											8000
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM									0//EPROM
+#define CONFIG_SPLC_USING_EPROM									1//EPROM
 #if CONFIG_SPLC_USING_EPROM == 1
 #define CONFIG_SPLC_USING_CLEAR_NVRAM							0//启用清除NVRAM功能
 #else
@@ -103,8 +103,6 @@
 #define CONFIG_SPLC_USING_CH376									0
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_ONCHIPFLASH							0
-#define CONFIG_SPLC_USING_SI7060								0
-#define CONFIG_SPLC_USING_MCP79412								0
 #define CONFIG_SPLC_USING_SPI_FLASH								0
 #define CONFIG_SPLC_USING_NRF24L01								0
 #define CONFIG_SPLC_USING_WIRELESS_FOOTCONTROL					0//使能无线脚踏
@@ -118,10 +116,9 @@
 #define CONFIG_USING_DCHMI_APP									1//广东大彩人机交互应用
 #define CONFIG_USING_BACKGROUND_APP								1//背景应用
 /*****************************************************************************/
-#define CONFIG_CHECK_DELAY_TIME									1
+#define CONFIG_CHECK_DELAY_TIME									10
 #define CONFIG_KEY_REPEAT_DELAY_TIME							50
-#define CONFIG_STANDBY_BEEM_DELAY_TIME							1
-#define CONFIG_SCHEME_FILE_NAME									"/dwLaser.txt"
+#define CONFIG_STANDBY_BEEM_DELAY_TIME							20
 /*****************************************************************************/
 #define POWER_REAL_CH0_5P										200
 #define POWER_REAL_CH0_10P										400

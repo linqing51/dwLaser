@@ -25,7 +25,7 @@ void FLIP(uint16_t A){//·­×ª
 #if CONFIG_SPLC_ASSERT == 1
 	assertCoilAddress(A);//¼ì²éµØÖ··¶Î§
 #endif
-	temp= NVRAM0[(A / 16)] & (1 << (A % 16));
+	temp= (uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01;;
 	if(temp)
 		RES(A);
 	else
@@ -36,7 +36,7 @@ uint8_t LD(uint16_t A){//ÔØÈë
 #if CONFIG_SPLC_ASSERT == 1
 	assertCoilAddress(A);//¼ì²éµØÖ··¶Î§
 #endif
-	res = (uint8_t)((uint16_t)NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
+	res = (uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
 	if(res)
 		return true;
 	else
@@ -47,7 +47,7 @@ uint8_t LDB(uint16_t A){//·´ÏòÔØÈë
 #if CONFIG_SPLC_ASSERT == 1
 	assertCoilAddress(A);//¼ì²éµØÖ··¶Î§
 #endif
-	res = ((uint8_t)((uint16_t)NVRAM0[(A / 16)] >> (A % 16)) & 0x01);
+	res = (uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
 	if(res)
 		return false;
 	else
@@ -60,7 +60,7 @@ uint8_t LDP(uint16_t A){//Âö³åÉÏÉýÑØ
 #endif
 	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
 	temp1 = (uint8_t)(NVRAM1[(A / 16)] >> (A % 16)) & 0x01;
-	if(temp0 == 1 && temp1 != 1)
+	if(temp0 == 1 && temp1 == 0)
 		return true;
 	else
 		return false;
@@ -70,9 +70,9 @@ uint8_t LDN(uint16_t A){//Âö³åÏÂ½µÑØ
 #if CONFIG_SPLC_ASSERT == 1
 	assertCoilAddress(A);
 #endif
-	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> NVRAM0[(A % 16)]);
-	temp1 = (uint8_t)(NVRAM1[(A / 16)] >> NVRAM1[(A % 16)]);
-	if(!temp0 && temp1)
+	temp0 = (uint8_t)(NVRAM0[(A / 16)] >> (A % 16)) & 0x01;
+	temp1 = (uint8_t)(NVRAM1[(A / 16)] >> (A % 16)) & 0x01;
+	if(temp0 == 0 && temp1 == 1)
 		return true;
 	else
 		return false;

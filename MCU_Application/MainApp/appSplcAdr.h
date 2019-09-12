@@ -231,21 +231,21 @@
 #define Y_TEC0													(Y_START * 16 + 10)//YOUT10 制冷开关0
 #define Y_TEC1													(Y_START * 16 + 11)//YOUT11 制冷开关1
 /*****************************************************************************/
-#define R_FOOTSWITCH_NC											(X_START * 16 + 0)//
-#define R_ESTOP													(X_START * 16 + 1)//
-#define R_INTERLOCK												(X_START * 16 + 2)//
-#define R_FIBER_PROBE											(X_START * 16 + 3)//
-#define R_RFID_PASS												(X_START * 16 + 4)
+#define R_FOOTSWITCH_NC											(R_START * 16 + 0)//
+#define R_ESTOP													(R_START * 16 + 1)//
+#define R_INTERLOCK												(R_START * 16 + 2)//
+#define R_FIBER_PROBE											(R_START * 16 + 3)//
+#define R_RFID_PASS												(R_START * 16 + 4)
 #define R_DIODE_TEMP_HIGH										(R_START * 16 + 5)//通道0二极管高温标志
 #define R_DRIVE_TEMP_HIGH										(R_START * 16 + 6)//驱动器高温标志
 #define R_ENVI_TEMP_HIGH										(R_START * 16 + 7)//环境温度标度
 #define R_FAULT													(R_START * 16 + 8)//故障标志
 #define R_FAN_ENABLE											(R_START * 16 + 9)//风扇使能
-#define R_DISABLE_RFID											(R_START * 16 + 16)//屏蔽NFC检测
-#define R_DISABLE_FIBER_PROBE									(R_START * 16 + 17)//屏蔽光纤探测
-#define R_DISABLE_FAN_SPEED										(R_START * 16 + 18)//屏蔽风扇控制
-#define R_CLEAR_EPROM											(R_START * 16 + 19)//完全清空EPROM
-#define R_ENGINEER_MODE											(R_START * 16 + 20)//工程师模式
+#define R_DISABLE_RFID											(R_START * 16 + 10)//屏蔽NFC检测
+#define R_DISABLE_FIBER_PROBE									(R_START * 16 + 11)//屏蔽光纤探测
+#define R_DISABLE_FAN_SPEED										(R_START * 16 + 12)//屏蔽风扇控制
+#define R_CLEAR_EPROM											(R_START * 16 + 13)//完全清空EPROM
+#define R_ENGINEER_MODE											(R_START * 16 + 14)//工程师模式
 //HMI相关状态
 #define R_DCHMI_RESET_REQ										(R_START * 16 + 20)//HMI复位请求
 #define R_DCHMI_RESET_DOING										(R_START * 16 + 21)//HMI复位中

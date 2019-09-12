@@ -309,7 +309,7 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射
 			break;
 		}
 		case LASER_MODE_GP:{//GP可编程脉冲模式
-			if(LaserTimer_TCounter < LaserTimer_PMate){//脉冲串输出
+			if(LaserTimer_PCounter < LaserTimer_PMate){//脉冲串输出
 				if(LaserTimer_TCounter == 0){//翻转	
 					setLedEmit(true);
 					LASER_CH0_MODPIN = true; 
@@ -324,7 +324,7 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射
 						ADDS1(EM_RELEASE_TOTAL_TIME);
 					}
 				}
-				if(LaserTimer_TCounter == LaserTimer_PMate){//计时器匹配
+				if(LaserTimer_TCounter == LaserTimer_TMate){//计时器匹配
 					LASER_CH0_MODPIN = false;
 					LASER_CH1_MODPIN = false;//翻转输出	
 					setLedEmit(false);	
