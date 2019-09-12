@@ -66,7 +66,7 @@
 #define CONFIG_SPLC_USING_PCA									1//片内计数器阵列
 #define CONFIG_PCA_TICK											8000
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM									1//EPROM
+#define CONFIG_SPLC_USING_EPROM									0//EPROM
 #if CONFIG_SPLC_USING_EPROM == 1
 #define CONFIG_SPLC_USING_CLEAR_NVRAM							0//启用清除NVRAM功能
 #else
@@ -118,8 +118,9 @@
 #define CONFIG_USING_DCHMI_APP									1//广东大彩人机交互应用
 #define CONFIG_USING_BACKGROUND_APP								1//背景应用
 /*****************************************************************************/
-#define CONFIG_CHECK_DELAY_TIME									15
+#define CONFIG_CHECK_DELAY_TIME									1
 #define CONFIG_KEY_REPEAT_DELAY_TIME							50
+#define CONFIG_STANDBY_BEEM_DELAY_TIME							1
 #define CONFIG_SCHEME_FILE_NAME									"/dwLaser.txt"
 /*****************************************************************************/
 #define POWER_REAL_CH0_5P										200

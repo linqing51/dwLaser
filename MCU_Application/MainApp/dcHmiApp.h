@@ -77,6 +77,8 @@ void updateReleaseTimeEnergy(void);
 void updateSchemeInfo(int16_t cn);
 void updateWarnMsgDisplay(uint8_t id);
 void returnStandbyDisplay(void);
+void standbyKeyValue(uint8_t value);//…Ë÷√Standbyº¸÷µ
+void standbyKeyEnable(uint8_t ena);
 /*****************************************************************************/
 void updateEnergyDensity(void);
 #endif

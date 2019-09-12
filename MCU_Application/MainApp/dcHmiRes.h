@@ -74,42 +74,35 @@
 /*****************************************************************************/
 #define GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD								1//
 #define GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC								2//
+#define GDDC_PAGE_STANDBY_KEY_STANDBY									3//
+#define GDDC_PAGE_STANDBY_KEY_MODE_CW									4//
+#define	GDDC_PAGE_STANDBY_KEY_MODE_MP									5//
+#define GDDC_PAGE_STANDBY_KEY_MODE_GP									6//
+#define GDDC_PAGE_STANDBY_KEY_MODE_SP									7//
+#define GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL								8//
+#define GDDC_PAGE_STANDBY_KEY_MODE_DERMA								9//
+#define GDDC_PAGE_STANDBY_KEY_ENTER_OPTION								10//
+#define GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME								11//
+#define GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE								12//
+#define GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT								13//+
+#define GDDC_PAGE_STANDBY_KEY_SCHEME_LAST								14//-
+#define GDDC_PAGE_STANDBY_KEY_RESET										15//
+#define GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME								16//方案名称显示
+#define GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0							17//CH0功率显示
+#define GDDC_PAGE_STANDBY_TEXTDISPLAY_WARN								18//报警显示
+#define GDDC_PAGE_STANDBY_TEXTDISPLAY_ENERGY							19//
+#define GDDC_PAGE_STANDBY_TEXTDISPLAY_RELEASE_TIME						20//
+#define GDDC_PAGE_STANDBY_PROGRESS_CH0									21//
+
 #if CONFIG_USING_DUAL_WAVE == 1
-#define GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD								3//
-#define GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC								4//
-#endif
-#define GDDC_PAGE_STANDBY_KEY_STANDBY									5//
-#define GDDC_PAGE_STANDBY_KEY_MODE_CW									6//
-#define	GDDC_PAGE_STANDBY_KEY_MODE_MP									7//
-#define GDDC_PAGE_STANDBY_KEY_MODE_GP									8//
-#define GDDC_PAGE_STANDBY_KEY_MODE_SP									9//
-#define GDDC_PAGE_STANDBY_KEY_MODE_SIGNAL								10//
-#define GDDC_PAGE_STANDBY_KEY_MODE_DERMA								11//
-#define GDDC_PAGE_STANDBY_KEY_ENTER_OPTION								12//
-#define GDDC_PAGE_STANDBY_KEY_ENTER_SCHEME								13//
-#define GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE								14//
-#define GDDC_PAGE_STANDBY_KEY_SCHEME_NEXT								15//+
-#define GDDC_PAGE_STANDBY_KEY_SCHEME_LAST								16//-
-#if CONFIG_USING_DUAL_WAVE == 1
-#define GDDC_PAGE_STANDBY_KEY_SELECT_CH0								17//
-#define GDDC_PAGE_STANDBY_KEY_SELECT_CH1								18//
-#define GDDC_PAGE_STANDBY_KEY_SELECT_BOTH								19//
-#endif
-#define GDDC_PAGE_STANDBY_KEY_RESET										20//
-#define GDDC_PAGE_STANDBY_TEXTDISPLAY_NAME								21//方案名称显示
-#define GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH0							22//CH0功率显示
-#if CONFIG_USING_DUAL_WAVE == 1
-#define GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1							23//CH1功率显示
-#endif
-#define GDDC_PAGE_STANDBY_TEXTDISPLAY_WARN								24//报警显示
-#define GDDC_PAGE_STANDBY_TEXTDISPLAY_ENERGY							25//
-#define GDDC_PAGE_STANDBY_TEXTDISPLAY_RELEASE_TIME						26//
-#if CONFIG_USING_DUAL_WAVE == 1
-#define GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER						27//
-#endif
-#define GDDC_PAGE_STANDBY_PROGRESS_CH0									28//
-#if CONFIG_USING_DUAL_WAVE == 1
-#define GDDC_PAGE_STANDBY_PROGRESS_CH1									29//
+#define GDDC_PAGE_STANDBY_PROGRESS_CH1									22//
+#define GDDC_PAGE_STANDBY_KEY_POWER_CH1_ADD								23//
+#define GDDC_PAGE_STANDBY_KEY_POWER_CH1_DEC								24//
+#define GDDC_PAGE_STANDBY_KEY_SELECT_CH0								25//
+#define GDDC_PAGE_STANDBY_KEY_SELECT_CH1								26//
+#define GDDC_PAGE_STANDBY_KEY_SELECT_BOTH								27//
+#define GDDC_PAGE_STANDBY_TEXTDISPLAY_POWER_CH1							28//CH1功率显示
+#define GDDC_PAGE_STANDBY_TEXTDISPLAY_TOTAL_POWER						29//
 #endif
 /*****************************************************************************/
 #define GDDC_PAGE_STANDBY_SP_KEY_POSWIDTH_ADD							30		
@@ -283,48 +276,8 @@
 #define GDDC_PAGE_DISGNOSIS_KEY_CLEAR_EPROM								56//EPROM恢复默认值
 #define GDDC_PAGE_DIAGNOSIS_KEY_ENTER_OK								99
 /*****************************************************************************/
-#define GDDC_PAGE_RENAME_TEXTDISPLAY_NEWNAME					1
-#define GDDC_PAGE_RENAME_KEY_ENTER								2
-#define GDDC_PAGE_RENAME_KEY_EXIT								3
-#define GDDC_PAGE_RENAME_KEY_1									70
-#define GDDC_PAGE_RENAME_KEY_2									4
-#define GDDC_PAGE_RENAME_KEY_3									5
-#define GDDC_PAGE_RENAME_KEY_4									6
-#define GDDC_PAGE_RENAME_KEY_5									7
-#define GDDC_PAGE_RENAME_KEY_6									8
-#define GDDC_PAGE_RENAME_KEY_7									9
-#define GDDC_PAGE_RENAME_KEY_8									10
-#define GDDC_PAGE_RENAME_KEY_9									11
-#define GDDC_PAGE_RENAME_KEY_0									12
-#define GDDC_PAGE_RENAME_KEY_Q									26
-#define GDDC_PAGE_RENAME_KEY_W									27	
-#define GDDC_PAGE_RENAME_KEY_E									28
-#define GDDC_PAGE_RENAME_KEY_R									29
-#define GDDC_PAGE_RENAME_KEY_T									30
-#define GDDC_PAGE_RENAME_KEY_Y									31
-#define GDDC_PAGE_RENAME_KEY_U									32
-#define GDDC_PAGE_RENAME_KEY_I									33
-#define GDDC_PAGE_RENAME_KEY_O									34
-#define GDDC_PAGE_RENAME_KEY_P									15
-#define GDDC_PAGE_RENAME_KEY_A									16
-#define GDDC_PAGE_RENAME_KEY_S									17
-#define GDDC_PAGE_RENAME_KEY_D									18
-#define GDDC_PAGE_RENAME_KEY_F									19
-#define GDDC_PAGE_RENAME_KEY_G									20
-#define GDDC_PAGE_RENAME_KEY_H									21
-#define GDDC_PAGE_RENAME_KEY_J									22
-#define GDDC_PAGE_RENAME_KEY_K									23
-#define GDDC_PAGE_RENAME_KEY_L									24
-#define GDDC_PAGE_RENAME_KEY_ADDDEC								25
-#define GDDC_PAGE_RENAME_KEY_SHIFT								35
-#define GDDC_PAGE_RENAME_KEY_Z									36
-#define GDDC_PAGE_RENAME_KEY_X									37
-#define GDDC_PAGE_RENAME_KEY_C									38
-#define GDDC_PAGE_RENAME_KEY_V									39
-#define GDDC_PAGE_RENAME_KEY_SPACE								40
-#define GDDC_PAGE_RENAME_KEY_B									41
-#define GDDC_PAGE_RENAME_KEY_N									42
-#define GDDC_PAGE_RENAME_KEY_M									43
-#define GDDC_PAGE_RENAME_KEY_DOT								44
+#define GDDC_PAGE_RENAME_TEXTDISPLAY_NEWNAME							1
+#define GDDC_PAGE_RENAME_KEY_ENTER										2
+#define GDDC_PAGE_RENAME_KEY_EXIT										3
 /*****************************************************************************/
 #endif

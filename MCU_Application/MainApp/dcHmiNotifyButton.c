@@ -827,6 +827,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					else{
 						SET(R_STANDBY_KEY_STNADBY_UP);
+						standbyKeyEnable(false);
 					}
 					break;
 				}

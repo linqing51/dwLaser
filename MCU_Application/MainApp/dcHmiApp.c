@@ -1770,7 +1770,9 @@ void dcHmiLoop(void){//HMI轮训程序
 		}
 		if(LD(R_FAULT)){//有故障显示
 			//打开蜂鸣器报警
-			standbyKeyEnable(false);//禁止Standby触摸
+			if(LDP(R_FAULT)){
+				standbyKeyEnable(false);//禁止Standby触摸
+			}
 			if(LDB(X_ESTOP)){//急停按下
 				updateWarnMsgDisplay(MSG_ESTOP_PRESS);		
 			}
@@ -1798,7 +1800,9 @@ void dcHmiLoop(void){//HMI轮训程序
 			BeemEnable = 1;
 		}
 		else{//无故障显示
-			standbyKeyEnable(true);
+			if(LDN(R_FAULT)){
+				standbyKeyEnable(true);
+			}
 			BeemEnable = 0;
 			updateWarnMsgDisplay(MSG_NO_ERROR);
 		}
@@ -1937,7 +1941,7 @@ void dcHmiLoop(void){//HMI轮训程序
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_LOAD_PARA){//等待蜂鸣器
 		SET(R_FAN_ENABLE);
-		T100MS(T100MS_READY_BEEM_DELAY, true, 20);//启动计时器延时2000mS//打开计时器
+		T100MS(T100MS_READY_BEEM_DELAY, true, CONFIG_STANDBY_BEEM_DELAY_TIME);//启动计时器延时2000mS//打开计时器
 		//清空计时器
 		if(LD(T_100MS_START * 16 + T100MS_READY_BEEM_DELAY)){
 			T100MS(T100MS_READY_BEEM_DELAY, false, 3);
@@ -1954,45 +1958,40 @@ void dcHmiLoop(void){//HMI轮训程序
 		NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
 		standbyKeyEnable(true);
 		standbyKeyValue(true);
+		RES(R_STANDBY_KEY_STNADBY_DOWN);
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_WAIT_TRIGGER){//等待触发激光	
 		updateWarnMsgDisplay(MSG_WAIT_TRIGGER);
 		if(LD(R_FAULT)){//Ready状态检测到故障
 			EDLAR();//停止发射
-			NVRAM0[SPREG_DAC_0] = 0;
-			NVRAM0[SPREG_DAC_1] = 0;
-			NVRAM0[SPREG_DAC_2] = 0;
-			NVRAM0[SPREG_DAC_3] = 0;
-			UPDAC0();
-			UPDAC1();
-			UPDAC2();
-			UPDAC3();
+			NVRAM0[SPREG_DAC_0] = 0;UPDAC0();
+			NVRAM0[SPREG_DAC_1] = 0;UPDAC1();
+			NVRAM0[SPREG_DAC_2] = 0;UPDAC2();
+			NVRAM0[SPREG_DAC_3] = 0;UPDAC3();	
 			AimEnable0 = false;	
+			standbyKeyEnable(false);
+			standbyKeyValue(false);
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			delayMs(10);//延时100mS等待触摸屏响应
 		}
 		else if(LD(R_STANDBY_KEY_STNADBY_UP)){//回到等待状态
 			EDLAR();//停止发射
-			NVRAM0[SPREG_DAC_0] = 0;
-			NVRAM0[SPREG_DAC_1] = 0;
-			NVRAM0[SPREG_DAC_2] = 0;
-			NVRAM0[SPREG_DAC_3] = 0;
-			UPDAC0();
-			UPDAC1();
-			UPDAC2();
-			UPDAC3();
+			NVRAM0[SPREG_DAC_0] = 0;UPDAC0();
+			NVRAM0[SPREG_DAC_1] = 0;UPDAC1();
+			NVRAM0[SPREG_DAC_2] = 0;UPDAC2();
+			NVRAM0[SPREG_DAC_3] = 0;UPDAC3();
 			AimEnable0 = false;	
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyTouchEnable(true);
+			standbyKeyValue(false);
+			standbyKeyEnable(true);
 			RES(R_STANDBY_KEY_STNADBY_UP);
-			delayMs(10);//延时100mS等待触摸屏响应
 		}
 		else if(LD(MR_FOOSWITCH_HAND_SWITCH)){//上升沿触发
 			if(LDP(X_FOOTSWITCH_NO)){//发射激光
 				//禁止Standby触摸
 				standbyKeyEnable(false);
-				delayMs(10);//延时100mS等待触摸屏响应
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_EMITING;				
 				STLAR();
 				updateWarnMsgDisplay(MSG_LASER_EMIT);
@@ -2010,15 +2009,17 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_LASER_EMITING){//发激光中
-		if(LDP(SPCOIL_PS1000MS) || LDN(SPCOIL_PS1000MS)){//每隔1S刷新累计时间和能量
+		if(LDP(SPCOIL_PS100MS)){//每隔1S刷新累计时间和能量
 			NVRAM0[TM_START] = (int16_t)((fp32_t)(NVRAM0[EM_TOTAL_POWER]) / 10);
 			MULTS16(EM_RELEASE_TOTAL_TIME, TM_START, EM_RELEASE_TOTAL_ENERGY);//计算发射能量
 			updateReleaseTimeEnergy();//更新累计发射时间和能量
 		}
 		if(LD(R_FAULT)){//发现故障
 			EDLAR();
-			NVRAM0[SPREG_DAC_0] = 0;
-			NVRAM0[SPREG_DAC_1] = 0;
+			NVRAM0[SPREG_DAC_0] = 0;UPDAC0();
+			NVRAM0[SPREG_DAC_1] = 0;UPDAC1();
+			NVRAM0[SPREG_DAC_2] = 0;UPDAC2();
+			NVRAM0[SPREG_DAC_3] = 0;UPDAC3();
 			AimEnable0 = false;//关闭指示光	
 			BeemEnable =false;//关闭蜂鸣器			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
@@ -2031,6 +2032,10 @@ void dcHmiLoop(void){//HMI轮训程序
 		else if(LD(MR_FOOSWITCH_HAND_SWITCH)){//上升沿触发
 			if(LDP(X_FOOTSWITCH_NO)){//关闭激光
 				EDLAR();
+				NVRAM0[SPREG_DAC_0] = 0;UPDAC0();
+				NVRAM0[SPREG_DAC_1] = 0;UPDAC1();
+				NVRAM0[SPREG_DAC_2] = 0;UPDAC2();
+				NVRAM0[SPREG_DAC_3] = 0;UPDAC3();
 				updateWarnMsgDisplay(MSG_NO_ERROR);
 				BeemEnable = false;//关闭蜂鸣器	
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
@@ -2041,6 +2046,10 @@ void dcHmiLoop(void){//HMI轮训程序
 		else{
 			if(LDB(X_FOOTSWITCH_NO)){//关闭激光
 				EDLAR(); 
+				NVRAM0[SPREG_DAC_0] = 0;UPDAC0();
+				NVRAM0[SPREG_DAC_1] = 0;UPDAC1();
+				NVRAM0[SPREG_DAC_2] = 0;UPDAC2();
+				NVRAM0[SPREG_DAC_3] = 0;UPDAC3();
 				updateWarnMsgDisplay(MSG_NO_ERROR);
 				BeemEnable = false;//关闭蜂鸣器	
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;

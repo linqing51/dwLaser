@@ -11,21 +11,10 @@
 #define CONFIG_HMI_DEFAULT_PASSSWORD0							0x3433//默认密码
 #define CONFIG_HMI_DEFAULT_PASSSWORD1							0x3231//默认密码
 #define CONFIG_SCHEME_NAME_SIZE									22//12*2
-#define STATUS_LASER_READY										0x5A
-#define STATUS_LASER_STANDBY									0xA5
-#define AIM_MODE_CW_GREEN										0x5678//连续绿色
-#define AIM_MODE_CW_RED											0x9ABC//连续红色
 //故障码
 #define ERROR_CODE_EPROM										0x0001//EPRON 错误
-#define ERROR_CODE_SPI_FLASH									0x0002//SPI FLSAH错误
-#define ERROR_CODE_SI7060										0x0003//温度传感器通信错误
-#define ERROR_CODE_MCP79412										0x0004//RTC通信错误
-#define ERROR_CODE_LDR0											0x0005//激光驱动器0错误
-#define ERROR_CODE_LDR1											0x0006//激光驱动器1错误
-#define ERROR_CODE_TEMPER										0x0007//温度传感器错误
 #define ERROR_CODE_USBHOST										0x0008//USB HOST模块错误
 #define ERROR_CODE_NFC											0x0009//NFC模块错误
-#define ERROR_CODE_NRF24L01										0x0010//NRF24L01模块错误
 #define ERRPR_CODE_NOERR										0xFFFF//无错误
 //光斑直径定义
 #define DERMA_SPOT_SIZE_0MM5									0x100A//光斑直径0.5					
