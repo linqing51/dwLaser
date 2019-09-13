@@ -30,6 +30,8 @@ extern volatile int16_t data LaserTimer_ReleaseTime;
 extern volatile int16_t data LaserTimer_ReleaseCounter;
 extern volatile int16_t data LaserTimer_BeemSwitchCounter;
 extern volatile int16_t data LaserTimer_BeemSwtichLength;
+extern volatile int8_t data  LaserFlag_Emiting;//激光发射中标志
+extern volatile int8_t data  LaserFlag_Emitover;//激光发射完毕标志
 /*****************************************************************************/
 void sPlcLaserInit(void);
 void laserTimerIsr(void);//TIMER4 中断 激光发射

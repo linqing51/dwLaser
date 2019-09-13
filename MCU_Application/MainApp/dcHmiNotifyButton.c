@@ -652,6 +652,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -659,6 +660,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_MP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -666,6 +668,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_GP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -673,6 +676,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -680,6 +684,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SIGNAL;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -687,6 +692,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_DERMA;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -852,6 +858,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -859,6 +866,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_MP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -866,6 +874,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_GP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -873,6 +882,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -880,6 +890,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SIGNAL;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -887,6 +898,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_DERMA;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1075,6 +1087,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1082,6 +1095,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_MP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1089,6 +1103,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_GP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1096,6 +1111,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1103,6 +1119,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SIGNAL;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1110,6 +1127,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_DERMA;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1356,6 +1374,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1363,6 +1382,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_MP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1370,6 +1390,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_GP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1377,6 +1398,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1384,6 +1406,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SIGNAL;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1391,6 +1414,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_DERMA;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1549,6 +1573,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1556,6 +1581,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_MP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1563,6 +1589,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_GP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1570,6 +1597,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1577,6 +1605,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SIGNAL;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1584,6 +1613,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_DERMA;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1800,6 +1830,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_CW;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1807,6 +1838,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_MP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1814,6 +1846,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_GP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1821,6 +1854,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SP;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1828,6 +1862,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_SIGNAL;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}
@@ -1835,6 +1870,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					if(state){
 						NVRAM0[EM_LASER_PULSE_MODE] = LASER_MODE_DERMA;
 						updateStandbyDisplay();
+						standbyTouchEnable(true);
 					}
 					break;
 				}

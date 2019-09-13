@@ -27,9 +27,6 @@ code char *LANG_INFO_MSG_MANUFACTURE_DATE = "MANUFACTURE DATE:1970-01-01";
 uint8_t hmiCmdBuffer[CMD_MAX_SIZE];//指令缓存
 uint16_t data hmiCmdSize;//已缓冲的指令数
 static data uint8_t MsgId;//当前显示的信息ID
-static data uint8_t FlagKeyStandbyEnable;
-//static data uint8_t StandbyEnableState;//Standby按键状态
-//static data uint8_t StandbyTouchState;
 void UpdateUI(void);
 static void updateReleaseTimeEnergy(void);
 /*****************************************************************************/
@@ -740,7 +737,7 @@ void standbyTouchEnable(int8_t enable){//使能STANDBY界面触摸
 			break;
 		}
 		case LASER_MODE_SIGNAL:{
-			BatchBegin(GDDC_PAGE_STANDBY_DERMA);
+			BatchBegin(GDDC_PAGE_STANDBY_SIGNAL);
 			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_ADD, enable);
 			BatchSetEnable(GDDC_PAGE_STANDBY_KEY_POWER_CH0_DEC, enable);
 #if CONFIG_USING_DUAL_WAVE == 1
@@ -1509,6 +1506,20 @@ void dcHmiLoop(void){//HMI轮训程序
 			SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
 			SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_STANDBY, true);
 			
+			SetButtonValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, false);
+			SetButtonValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, false);
+			SetButtonValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, false);
+			SetButtonValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, false);
+			SetButtonValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, false);
+			SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, false);
+			
+			SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, true);
+			SetControlEnable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, true);
+
 			SetTextValue(GDDC_PAGE_PASSCODE, GDDC_PAGE_PASSCODE_TEXTDISPLAY, (uint8_t*)(&(NVRAM0[EM_DC_NEW_PASSCODE0])));
 			SetTextValue(GDDC_PAGE_NEW_PASSCODE, GDDC_PAGE_NEWPASSCODE_TEXTDISPLAY, (uint8_t*)(&(NVRAM0[EM_DC_NEW_PASSCODE0])));	
 			SetBackLight(getLcdDuty(NVRAM0[DM_LCD_BRG]));
@@ -1753,10 +1764,10 @@ void dcHmiLoop(void){//HMI轮训程序
 			BeemMode = BEEM_MODE_3;
 			BeemDuty = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
 			BeemFreq = BEEM_FREQ_0;
-			BeemEnable = 1;
+			BeemEnable = true;
 		}
 		else{//无故障显示
-			BeemEnable = 0;
+			BeemEnable = false;
 			updateWarnMsgDisplay(MSG_NO_ERROR);
 		}
 		if(LDP(R_FAULT)){
@@ -1767,7 +1778,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		}
 
 		if(LD(R_STANDBY_KEY_ENTER_OPTION_DOWN)){//点击OPTION
-			BeemEnable = 0;//关闭蜂鸣器
+			BeemEnable = false;//关闭蜂鸣器
 			if(LD(R_ENGINEER_MODE)){
 				SetControlVisiable(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER, true);//显示控件
 				SetControlEnable(GDDC_PAGE_OPTION, GDDC_PAGE_OPTION_KEY_ENTER_ENGINEER ,true);//使能控件
@@ -1782,7 +1793,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			SetScreen(NVRAM0[EM_DC_PAGE]);
 			RES(R_STANDBY_KEY_ENTER_OPTION_DOWN);
 		}else if(LD(R_STANDBY_KEY_ENTER_SCHEME_DOWN)){//点击SCHEME 默认显示第一页
-			BeemEnable = 0;//关闭蜂鸣器
+			BeemEnable = false;//关闭蜂鸣器
 			if(NVRAM0[DM_SCHEME_NUM] < 16){//第一页
 				updateScheme_0_Display();//更新方案第一页名称
 				seletcSchemeNum(NVRAM0[DM_SCHEME_NUM]);
@@ -1805,7 +1816,7 @@ void dcHmiLoop(void){//HMI轮训程序
 				BeemDuty = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
 				BeemCounter = 0;
 				BeemFreq = BEEM_FREQ_0;
-				BeemEnable = 1;
+				BeemEnable = true;
 				updateWarnMsgDisplay(MSG_FOOT_DEPRESSED);//显示错误信息
 				NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_READY_ERROR;	
 			}
@@ -1837,10 +1848,10 @@ void dcHmiLoop(void){//HMI轮训程序
 					default:break;
 				}
 #if CONFIG_USING_BACKGROUND_APP == 1
-				NVRAM0[SPREG_DAC_0] = fitLaserToCode(LASER_SELECT_CH0, (int16_t)((int32_t)NVRAM0[EM_LASER_POWER_CH0] * 1000 / CONFIG_MAX_LASERPOWER_CH0));
+				NVRAM0[SPREG_DAC_0] = fitLaserToCode(LASER_SELECT_CH0, NVRAM0[EM_LASER_POWER_CH0]);
 				UPDAC0();
-#if CONFIG_USING_DUAL_WAVE == 1			
-				NVRAM0[SPREG_DAC_1] = fitLaserToCode(LASER_SELECT_CH1, (int16_t)((int32_t)NVRAM0[EM_LASER_POWER_CH1] * 1000 / CONFIG_MAX_LASERPOWER_CH1));
+#if CONFIG_USING_DUAL_WAVE == 1		
+				NVRAM0[SPREG_DAC_1] = fitLaserToCode(LASER_SELECT_CH1, NVRAM0[EM_LASER_POWER_CH1]);
 				UPDAC1();
 #else
 				NVRAM0[SPREG_DAC_2] = 0;UPDAC2();
@@ -1852,7 +1863,7 @@ void dcHmiLoop(void){//HMI轮训程序
 				BeemDuty = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
 				BeemCounter = 0;
 				BeemFreq = BEEM_FREQ_0;
-				BeemEnable = 1;
+				BeemEnable = true;
 				//打开指示激光
 				AimDuty0 = getAimDuty(NVRAM0[DM_AIM_BRG]);
 				AimEnable0 = true;	
@@ -1870,33 +1881,6 @@ void dcHmiLoop(void){//HMI轮训程序
 			saveScheme();//EM->FD
 			FDSAV_ONE(NVRAM0[DM_SCHEME_NUM]);//FDRAM->EPROM
 			standbyTouchEnable(true);
-			switch(NVRAM0[EM_LASER_PULSE_MODE]){
-				case LASER_MODE_CW:{
-					SetButtonValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, 0x00);
-					break;
-				}
-				case LASER_MODE_SP:{
-					SetButtonValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, 0x00);
-					break;
-				}
-				case LASER_MODE_MP:{
-					SetButtonValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, 0x00);
-					break;
-				}
-				case LASER_MODE_GP:{
-					SetButtonValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, 0x00);
-					break;
-				}
-				case LASER_MODE_SIGNAL:{
-					SetButtonValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, 0x00);
-					break;
-				}
-				case LASER_MODE_DERMA:{
-					SetButtonValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_KEY_SCHEME_SAVE, 0x00);
-					break;
-				}
-				default:break;
-			}
 			RES(R_STANDBY_KEY_SCHEME_SAVE_DOWN);
 		}
 		return;
@@ -1915,7 +1899,7 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_LOAD_DONE){//参数载入完毕并停止蜂鸣器
-		BeemEnable = 0;//关闭蜂鸣器
+		BeemEnable = false;//关闭蜂鸣器
 		SET(R_FAN_ENABLE);
 		NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_LASER_WAIT_TRIGGER;
 		standbyKeyEnable(true);
@@ -1976,6 +1960,12 @@ void dcHmiLoop(void){//HMI轮训程序
 			MULTS16(EM_RELEASE_TOTAL_TIME, TM_START, EM_RELEASE_TOTAL_ENERGY);//计算发射能量
 			updateReleaseTimeEnergy();//更新累计发射时间和能量
 		}
+		if(LaserFlag_Emiting){
+			BeemEnable = true;
+		}
+		else{
+			BeemEnable = false;
+		}		
 		if(LD(R_FAULT)){//发现故障
 			EDLAR();
 			NVRAM0[SPREG_DAC_0] = 0;UPDAC0();
@@ -1983,7 +1973,7 @@ void dcHmiLoop(void){//HMI轮训程序
 			NVRAM0[SPREG_DAC_2] = 0;UPDAC2();
 			NVRAM0[SPREG_DAC_3] = 0;UPDAC3();
 			AimEnable0 = false;//关闭指示光	
-			BeemEnable =false;//关闭蜂鸣器			
+			BeemEnable = false;//关闭蜂鸣器			
 			NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 			standbyKeyValue(false);
 			standbyKeyEnable(false);
@@ -2012,7 +2002,7 @@ void dcHmiLoop(void){//HMI轮训程序
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_READY_ERROR){//Ready检测到脚踏踩下
 		if(LDB(X_FOOTSWITCH_NO)){//检测到脚踏状态恢复正常
-			BeemEnable = 0;
+			BeemEnable = false;
 			standbyKeyValue(false);
 			standbyKeyEnable(true);
 			standbyTouchEnable(true);

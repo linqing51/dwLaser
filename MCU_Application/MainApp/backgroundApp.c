@@ -225,9 +225,10 @@ int8_t checkScheme(int8_t cn){
 	return true;
 }
 int16_t fitLaserToCode(uint8_t ch, int16_t power){//功率->DAC CODE
-	fp64_t ftemp0, ftemp1, ftemp2, ftemp3;
-	fp64_t notesB1, notesB2, notesB3, notesIntercept;
+	fp32_t fin, ftemp0, ftemp1, ftemp2, ftemp3;
+	fp32_t notesB1, notesB2, notesB3, notesIntercept;
 	int16_t out;
+	fin = (fp32_t)power;	
 	switch(ch){
 		case LASER_SELECT_CH0:{
 			notesIntercept = LASER_CH0_NOTES_INTERCEPT;			
@@ -261,12 +262,18 @@ int16_t fitLaserToCode(uint8_t ch, int16_t power){//功率->DAC CODE
 			return 0;
 		}break;
 	}
-	ftemp0 = pow((fp64_t)power, 3) * notesB3;
-	ftemp1 = pow((fp64_t)power, 2) * notesB2;
-	ftemp2 = (fp64_t)power * notesB1;
-	ftemp3 = ftemp0 + ftemp1 + ftemp2 + notesIntercept;
+	ftemp0 = pow((fp64_t)fin, 3) * notesB3;
+	ftemp1 = pow((fp64_t)fin, 2) * notesB2;
+	ftemp2 = (fp32_t)fin * notesB1;
+	ftemp3 = ftemp2 + notesIntercept;
+	if(ftemp3 >= 0x0FFF){
+		ftemp3 = 0x0FFF;
+	}
+	if(ftemp3 < 0x0){
+		ftemp3 = 0;
+	}
 	out = (int16_t)ftemp3;
-	out &= 0xEFFF;
+	out &= 0x0FFF;
 	return out;
 }
 

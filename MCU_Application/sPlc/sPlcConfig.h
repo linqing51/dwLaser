@@ -301,10 +301,6 @@
 #define SPCOIL_SPWM_OUT_3										(SPCOIL_START * 16 + 40)//SPWM3输出状态
 #define SPCOIL_SPWM_RESET_3										(SPCOIL_START * 16 + 41)//SPWM3复位
 /*****************************************************************************/
-//激光脉冲发射相关线圈
-#define SPCOIL_LASER_EMITING									(SPCOIL_START * 16 + 42)//激光发射中	
-#define SPCOIL_LASER_EMITOVER									(SPCOIL_START * 16 + 43)//激光发射结束	
-/*****************************************************************************/
 #define SPCOIL_SI7060_INIT_FAIL									(SPCOIL_START * 16 + 47)//SI7060温度传感器初始化失败
 #define SPCOIL_MCP79412_INIT_FAIL								(SPCOIL_START * 16 + 48)//MCP794212 RTC初始化失败
 #define SPCOIL_CH376_INIT_FAIL									(SPCOIL_START * 16 + 49)//USB HOST CH376初始化失败

@@ -318,6 +318,7 @@
 #define T100MS_HMI_POWERUP_DELAY								0//HMI启动复位延时
 #define T100MS_ENTER_PASSCODE_DELAY								1
 #define T100MS_READY_BEEM_DELAY									2//进入READY状态后蜂鸣器响延迟
+#define T100MS_PULSE_BEEM_DELAY									3//脉冲模式蜂鸣器延迟
 /*****************************************************************************/
 #define T10MS_POSWIDTH_ADD_KEYDOWN_DELAY						3
 #define T10MS_POSWIDTH_DEC_KEYDOWN_DELAY						4
