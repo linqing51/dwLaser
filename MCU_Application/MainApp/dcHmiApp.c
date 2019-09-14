@@ -7,7 +7,7 @@ code char *LANG_WARN_MSG_ESTOP_PRESS = "ESTOP Press";
 code char *LANG_WARN_MSG_FIBER_UNPLUG = "No fiber connected ";//光纤没插或者RFID不识别
 code char *LANG_WARN_MSG_OUT_ENERGY = "Energy out of tolerance";//功率偏差超20%，预留功能，可以以后实现
 code char *LANG_WARN_MSG_DIODE_HTEMP = "Laser overheating";//温度过高
-code char *LANG_WARN_MSG_DIODE_LTEMP = "Laser temperature too low";//温度过低
+code char *LANG_WARN_MSG_DIODE_LTEMP = "Laser NTC Open";//温度过低
 code char *LANG_WARN_MSG_DIODE0_OVERCURRENT = "Laser current exceeds set value";//电流超过限定值，保护激光器
 code char *LANG_WARN_MSG_DIODE1_OVERCURRENT = "Laser current exceeds set value";//电流超过限定值，保护激光器
 code char *LANG_WARN_MSG_NTC_ERROR = "Thermistor Error";//热敏电阻故障
@@ -31,6 +31,24 @@ void UpdateUI(void);
 static void updateReleaseTimeEnergy(void);
 /*****************************************************************************/
 #if CONFIG_USING_DCHMI_APP == 1
+void standbyDebugInfoVisiable(int8_t enable){//Standby调试信息可见
+	SetControlVisiable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_DEBUG, enable);
+	SetControlVisiable(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_DEBUG, enable);
+	SetControlVisiable(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_DEBUG, enable);
+	SetControlVisiable(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_DEBUG, enable);
+	SetControlVisiable(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_DEBUG, enable);
+	SetControlVisiable(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_DEBUG, enable);
+}
+void updateStandbyDebugInfo(void){//更新Standby调试信息
+	char dispBuf[128];
+	sprintf(dispBuf, "Diode Temper:%d, Chip Temper:%d", NVRAM0[EM_DIODE_TEMP0], NVRAM0[EM_ENVI_TEMP]);
+	SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_TEXTDISPLAY_DEBUG, dispBuf);
+	SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_TEXTDISPLAY_DEBUG, dispBuf);
+	SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_TEXTDISPLAY_DEBUG, dispBuf);
+	SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_TEXTDISPLAY_DEBUG, dispBuf);
+	SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_TEXTDISPLAY_DEBUG, dispBuf);
+	SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_TEXTDISPLAY_DEBUG, dispBuf);
+}
 void updateDiognosisInfo(void){//更新诊断信息
 	char dispBuf[256];
 	
@@ -1368,6 +1386,12 @@ static void temperatureLoop(void){//温度轮询顺序
 	else{
 		RES(R_DIODE_TEMP_HIGH);
 	}
+	if(NVRAM0[EM_DIODE_TEMP0] < CONFIG_APP_DIODE_LOW_TEMP){
+		SET(R_DIODE_TEMP_LOW);
+	}
+	else{
+		RES(R_DIODE_TEMP_LOW);
+	}
 	//判断环境是否过热
 	if(NVRAM0[EM_ENVI_TEMP] > CONFIG_APP_ENVI_HIGH_TEMP){
 		SET(R_ENVI_TEMP_HIGH);
@@ -1420,6 +1444,7 @@ static void faultLoop(void){//故障轮询
 	temp |= LDB(R_FIBER_PROBE);//正常1
 	temp |= LDB(R_RFID_PASS);//正常1
 	temp |= LD(R_DIODE_TEMP_HIGH);//正常0
+	temp |= LD(R_DIODE_TEMP_LOW);//正常0
 	temp |= LD(R_ENVI_TEMP_HIGH);//正常0
 	if(temp){
 		SET(R_FAULT);
@@ -1558,6 +1583,11 @@ void dcHmiLoop(void){//HMI轮训程序
 		return;
 	}
 	if(NVRAM0[EM_HMI_OPERA_STEP] == FSMSTEP_STANDBY){//待机状态机
+#if	CONFIG_APP_DEBUG == 1
+		if(LDP(SPCOIL_PS1000MS)){		
+			updateStandbyDebugInfo();
+		}
+#endif
 		switch(NVRAM0[EM_LASER_PULSE_MODE]){//脉宽自动加减
 			case LASER_MODE_SP:{
 				if(LD(R_STANDBY_KEY_POSWIDTH_ADD_DOWN)){//正脉宽加按键
@@ -1740,7 +1770,16 @@ void dcHmiLoop(void){//HMI轮训程序
 			default:break;
 		}
 		if(LD(R_FAULT)){//有故障显示
-			if(LDB(X_ESTOP)){//急停按下
+			if(LD(R_DIODE_TEMP_HIGH)){//激光器高温保护
+				updateWarnMsgDisplay(MSG_DIODE_HTEMP);
+			}
+			else if(LD(R_DIODE_TEMP_LOW)){//激光器低温NTC开路保护
+				updateWarnMsgDisplay(MSG_DIODE_LTEMP);
+			}
+			else if(LD(R_ENVI_TEMP_HIGH)){//环境高温保护
+				updateWarnMsgDisplay(MSG_ENVI_HTEMP);
+			}
+			else if(LDB(X_ESTOP)){//急停按下
 				updateWarnMsgDisplay(MSG_ESTOP_PRESS);		
 			}
 			else if(LDB(X_INTERLOCK)){//安全连锁拔出
@@ -1754,12 +1793,6 @@ void dcHmiLoop(void){//HMI轮训程序
 			}
 			else if(LDB(R_RFID_PASS)){//光纤ID不匹配
 				updateWarnMsgDisplay(MSG_FIBER_MISSMATE);
-			}
-			else if(LD(R_DIODE_TEMP_HIGH)){//激光器高温保护
-				updateWarnMsgDisplay(MSG_DIODE_HTEMP);
-			}
-			else if(LD(R_ENVI_TEMP_HIGH)){//环境高温保护
-				updateWarnMsgDisplay(MSG_ENVI_HTEMP);
 			}
 			BeemMode = BEEM_MODE_3;
 			BeemDuty = getBeemDuty(NVRAM0[DM_BEEM_VOLUME]);
@@ -1960,6 +1993,11 @@ void dcHmiLoop(void){//HMI轮训程序
 			MULTS16(EM_RELEASE_TOTAL_TIME, TM_START, EM_RELEASE_TOTAL_ENERGY);//计算发射能量
 			updateReleaseTimeEnergy();//更新累计发射时间和能量
 		}
+#if	CONFIG_APP_DEBUG == 1		
+		if(LDP(SPCOIL_PS1000MS)){		
+			updateStandbyDebugInfo();
+		}
+#endif
 		if(LaserFlag_Emiting){
 			BeemEnable = true;
 		}

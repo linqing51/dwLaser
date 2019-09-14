@@ -6,6 +6,7 @@ void hmiUartSendChar(uint8_t t){//UART1·¢ËÍ
 	SFRPAGE = UART0_PAGE;
 	TI0 = 0;
 	SBUF0 = t;
+	feedWatchDog();
     while(!TI0);
 	TI0 = 0;//TI1 = 0
 	SFRPAGE = SFRPAGE_SAVE;             // Restore SFR page   

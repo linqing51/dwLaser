@@ -256,12 +256,14 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 						SET(R_ENGINEER_MODE);
 						updateStandbyDisplay();
-						standbyTouchEnable(true);										
+						standbyTouchEnable(true);
+						standbyDebugInfoVisiable(true);						
 					}else if((NVRAM0[EM_DC_NEW_PASSCODE0] == NVRAM0[DM_DC_OLD_PASSCODE0]) && (NVRAM0[EM_DC_NEW_PASSCODE1] == NVRAM0[DM_DC_OLD_PASSCODE1])){
 						NVRAM0[EM_HMI_OPERA_STEP] = FSMSTEP_STANDBY;
 						RES(R_ENGINEER_MODE);
 						updateStandbyDisplay();
 						standbyTouchEnable(true);
+						standbyDebugInfoVisiable(false);
 					}		
 
 					CLR(EM_DC_NEW_PASSCODE0);//«Âø’“— ‰»Î√‹¬Î

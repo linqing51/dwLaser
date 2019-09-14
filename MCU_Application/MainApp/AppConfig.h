@@ -1,9 +1,12 @@
 #ifndef __APPCONFIG_H__
 #define __APPCONFIG_H__
 /*****************************************************************************/
+#define CONFIG_APP_DEBUG										1
+/*****************************************************************************/
 #define CONFIG_APP_DIODE_HIGH_TEMP								400
+#define CONFIG_APP_DIODE_LOW_TEMP								-100
 #define CONFIG_APP_DRIVE_HIGH_TEMP								650
-#define CONFIG_APP_ENVI_HIGH_TEMP								500
+#define CONFIG_APP_ENVI_HIGH_TEMP								750
 /*****************************************************************************/
 #define CONFIG_USING_SINGLE_WAVE								1//µ¥²¨³¤
 #define CONFIG_USING_DUAL_WAVE									0//Ë«²¨³¤

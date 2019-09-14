@@ -20,6 +20,7 @@ void delayUs(uint16_t us) reentrant{//Œ¢√Î—” ±
 void delayMs(uint16_t ms) reentrant{//∫¡√Î—” ±
 	while(ms--){
 		delayUs(1000);
+		feedWatchDog();
 	}
 }
 

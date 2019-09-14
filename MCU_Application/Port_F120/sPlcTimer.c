@@ -68,7 +68,8 @@ void sPlcTimerIsr(void) interrupt INTERRUPT_TIMER4{//硬件sTimer计时器中断 10mS
 #if CONFIG_SPLC_USING_ADC == 1
 	chipAdcProcess();//ADC扫描
 #endif
-	TimerCounter_5mS ++;	
+	TimerCounter_5mS ++;
+	feedWatchDog();
 }
 
 

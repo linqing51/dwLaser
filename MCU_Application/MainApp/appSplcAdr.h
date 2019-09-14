@@ -237,15 +237,18 @@
 #define R_FIBER_PROBE											(R_START * 16 + 3)//
 #define R_RFID_PASS												(R_START * 16 + 4)
 #define R_DIODE_TEMP_HIGH										(R_START * 16 + 5)//通道0二极管高温标志
-#define R_DRIVE_TEMP_HIGH										(R_START * 16 + 6)//驱动器高温标志
-#define R_ENVI_TEMP_HIGH										(R_START * 16 + 7)//环境温度标度
-#define R_FAULT													(R_START * 16 + 8)//故障标志
-#define R_FAN_ENABLE											(R_START * 16 + 9)//风扇使能
-#define R_DISABLE_RFID											(R_START * 16 + 10)//屏蔽NFC检测
-#define R_DISABLE_FIBER_PROBE									(R_START * 16 + 11)//屏蔽光纤探测
-#define R_DISABLE_FAN_SPEED										(R_START * 16 + 12)//屏蔽风扇控制
-#define R_CLEAR_EPROM											(R_START * 16 + 13)//完全清空EPROM
-#define R_ENGINEER_MODE											(R_START * 16 + 14)//工程师模式
+#define R_DIODE_TEMP_LOW										(R_START * 16 + 6)//通道0二极管高温标志
+#define R_DRIVE_TEMP_HIGH										(R_START * 16 + 7)//驱动器高温标志
+#define R_DRIVE_TEMP_LOW										(R_START * 16 + 8)//通道0二极管高温标志
+#define R_ENVI_TEMP_HIGH										(R_START * 16 + 9)//环境温度标度
+#define R_ENVI_TEMP_LOW											(R_START * 16 + 10)//通道0二极管高温标志
+#define R_FAULT													(R_START * 16 + 11)//故障标志
+#define R_FAN_ENABLE											(R_START * 16 + 12)//风扇使能
+#define R_DISABLE_RFID											(R_START * 16 + 13)//屏蔽NFC检测
+#define R_DISABLE_FIBER_PROBE									(R_START * 16 + 14)//屏蔽光纤探测
+#define R_DISABLE_FAN_SPEED										(R_START * 16 + 15)//屏蔽风扇控制
+#define R_CLEAR_EPROM											(R_START * 16 + 16)//完全清空EPROM
+#define R_ENGINEER_MODE											(R_START * 16 + 17)//工程师模式
 //HMI相关状态
 #define R_DCHMI_RESET_REQ										(R_START * 16 + 20)//HMI复位请求
 #define R_DCHMI_RESET_DOING										(R_START * 16 + 21)//HMI复位中

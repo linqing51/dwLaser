@@ -223,26 +223,35 @@ void sPlcSpwmLoop(void){//SPWM轮询
 /*****************************************************************************/
 void sPlcInit(void){//软逻辑初始化
 	CLDAC();
+	checkEprom();
+	loadNvram();//上电恢复NVRAM
+	loadFdram();//上电恢复NVRAM
 #if CONFIG_SPLC_USING_WDT == 1
 	initWatchDog();//初始化看门狗
 #else
 	disableWatchDog();//屏蔽看门狗
-#endif
-	checkEprom();
-	loadNvram();//上电恢复NVRAM
-	loadFdram();//上电恢复NVRAM
+#endif	
 	initSplcTimer();//初始化硬件计时器模块
+	feedWatchDog();
 	SET(SPCOIL_ON);
 	inputInit();
+	feedWatchDog();
 	outputInit();
+	feedWatchDog();
 	initUart0(CONFIG_UART1_BAUDRATE);//UART1初始化	
+	feedWatchDog();
 #if CONFIG_SPLC_USING_DK25L == 1
 	initUart1(CONFIG_UART0_BAUDRATE);//UART1初始化
+	feedWatchDog();
 #endif
 	initChipDac();//初始化DAC模块
+	feedWatchDog();
 	initChipAdc();//初始化ADC模块
+	feedWatchDog();
 	sPlcPcaInit();
+	feedWatchDog();
 	sPlcLaserInit();
+	feedWatchDog();
 	SET(SPCOIL_ON);
 	SET(SPCOIL_START_UP);
 	NVRAM0[SPREG_IDENTITY] = CONFIG_SPLC_DEV;
