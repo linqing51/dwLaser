@@ -700,8 +700,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_RESET:{
 					if(state){
-						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
-						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
+						LaserRelease_TotalTime = 0;
+						LaserRelease_TotalEnergy = 0;
 						updateReleaseTimeEnergy();
 					}
 					break;
@@ -906,8 +906,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_RESET:{
 					if(state){
-						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
-						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
+						LaserRelease_TotalTime = 0;
+						LaserRelease_TotalEnergy = 0;
 						updateReleaseTimeEnergy();
 					}
 					break;
@@ -1135,8 +1135,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_RESET:{
 					if(state){
-						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
-						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
+						LaserRelease_TotalTime = 0;
+						LaserRelease_TotalEnergy = 0;
 						updateReleaseTimeEnergy();
 					}
 					break;
@@ -1422,8 +1422,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_RESET:{
 					if(state){
-						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
-						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
+						LaserRelease_TotalTime = 0;
+						LaserRelease_TotalEnergy = 0;
 						updateReleaseTimeEnergy();
 					}
 					break;
@@ -1621,8 +1621,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_RESET:{
 					if(state){
-						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
-						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
+						LaserRelease_TotalTime = 0;
+						LaserRelease_TotalEnergy = 0;
 						updateReleaseTimeEnergy();
 					}
 					break;
@@ -1878,8 +1878,8 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_STANDBY_KEY_RESET:{
 					if(state){
-						NVRAM0[EM_RELEASE_TOTAL_TIME] = 0;
-						NVRAM0[EM_RELEASE_TOTAL_ENERGY] = 0;
+						LaserRelease_TotalTime = 0;
+						LaserRelease_TotalEnergy = 0;
 						updateReleaseTimeEnergy();
 					}
 					break;
@@ -2008,9 +2008,11 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 				}
 				case GDDC_PAGE_OPTION_KEY_RESTORE:{//恢复默认值
 					if(state){
+						optionKeyEnable(false);//锁定按键
 						loadDefault();
 						updateOptionDisplay();//更新Option显示
 						SetBackLight(getLcdDuty(NVRAM0[DM_LCD_BRG]));//更新背光亮度
+						optionKeyEnable(true);//解说按键
 					}
 					break;
 				}

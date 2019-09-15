@@ -82,4 +82,5 @@
 #define LASER_CH3_NOTES_B2										-2.75859E-13
 #define LASER_CH3_NOTES_B3										7.12301E-20
 
+#define CONFIG_RELEASE_SECOND_DEF								1000//激光发射计时秒定义
 #endif

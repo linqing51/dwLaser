@@ -16,6 +16,8 @@ volatile int16_t data LaserTimer_BeemSwitchCounter;
 volatile int16_t data LaserTimer_BeemSwtichLength;
 volatile int8_t data  LaserFlag_Emiting;//激光发射中标志
 volatile int8_t data  LaserFlag_Emitover;//激光发射完毕标志
+volatile int32_t data LaserRelease_TotalTime;//激光发射总时间
+volatile int32_t data LaserRelease_TotalEnergy;//激光发射总能量
 /*****************************************************************************/
 static void initTimer4(void);
 static void laserStop(void);
@@ -221,6 +223,8 @@ void sPlcLaserInit(void){//激光脉冲功能初始化
 	LaserTimer_BeemSwtichLength = 0;
 	LaserFlag_Emiting = false;//激光发射中标志
 	LaserFlag_Emitover = false;
+	LaserRelease_TotalTime = 0;
+	LaserRelease_TotalEnergy = 0;
 #endif
 }
 static void laserStart(void){//按通道选择打开激光
@@ -244,12 +248,14 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射
 				laserStart();
 				LaserTimer_TCounter ++;
 			}
-			if(LaserTimer_ReleaseTime < 1000){
+			if(LaserTimer_ReleaseTime < CONFIG_RELEASE_SECOND_DEF){
 				LaserTimer_ReleaseTime ++;//发射时间累计
 			}
 			else{
 				LaserTimer_ReleaseTime = 0;
-				ADDS1(EM_RELEASE_TOTAL_TIME);
+				if(LaserRelease_TotalTime < 99999){
+					LaserRelease_TotalTime ++;
+				}
 			}
 			break;
 		}
@@ -262,12 +268,14 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射
 			}
 			else{
 				LaserTimer_BeemSwitchCounter += 1;
-				if(LaserTimer_ReleaseTime < 1000){
+				if(LaserTimer_ReleaseTime < CONFIG_RELEASE_SECOND_DEF){
 					LaserTimer_ReleaseTime ++;//发射时间累计
 				}
 				else{
 					LaserTimer_ReleaseTime = 0;
-					ADDS1(EM_RELEASE_TOTAL_TIME);
+					if(LaserRelease_TotalTime < 99999){
+						LaserRelease_TotalTime ++;
+					}
 				}
 				if((((int32_t)LaserTimer_BeemSwitchCounter * NVRAM0[EM_TOTAL_POWER]) / 10000) >= NVRAM0[EM_LASER_SIGNAL_ENERGY_INTERVAL]){
 					SFRPAGE = TIMER01_PAGE;
@@ -301,12 +309,14 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射
 				laserStop();
 			}
 			if(LaserTimer_TCounter < LaserTimer_TMate){//激光发射中
-				if(LaserTimer_ReleaseTime < 1000){
+				if(LaserTimer_ReleaseTime < CONFIG_RELEASE_SECOND_DEF){
 					LaserTimer_ReleaseTime ++;//发射时间累计
 				}
 				else{
 					LaserTimer_ReleaseTime = 0;
-					ADDS1(EM_RELEASE_TOTAL_TIME);
+					if(LaserRelease_TotalTime < 99999){
+						LaserRelease_TotalTime ++;
+					}
 				}
 			}
 			if(LaserTimer_TCounter >= LaserTimer_TOvertime){//计时器溢出
@@ -321,12 +331,14 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射
 					laserStart();
 				}
 				if(LaserTimer_TCounter < LaserTimer_PMate){//激光发射中
-					if(LaserTimer_ReleaseTime < 1000){
+					if(LaserTimer_ReleaseTime < CONFIG_RELEASE_SECOND_DEF){
 						LaserTimer_ReleaseTime ++;//发射时间累计
 					}
 					else{
 						LaserTimer_ReleaseTime = 0;
-						ADDS1(EM_RELEASE_TOTAL_TIME);
+						if(LaserRelease_TotalTime < 99999){
+							LaserRelease_TotalTime ++;
+						}
 					}
 				}
 				if(LaserTimer_TCounter == LaserTimer_TMate){//计时器匹配
@@ -359,12 +371,14 @@ void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射
 				EIP2 &= 0xFB;//T3 低优先级
 				LaserFlag_Emitover = true;
 			}
-			if(LaserTimer_ReleaseTime < 1000){
+			if(LaserTimer_ReleaseTime < CONFIG_RELEASE_SECOND_DEF){
 				LaserTimer_ReleaseTime ++;//发射时间累计
 			}
 			else{
 				LaserTimer_ReleaseTime = 0;
-				ADDS1(EM_RELEASE_TOTAL_TIME);
+				if(LaserRelease_TotalTime < 99999){
+					LaserRelease_TotalTime ++;
+				}
 			}
 			LaserTimer_TCounter ++;
 			break;

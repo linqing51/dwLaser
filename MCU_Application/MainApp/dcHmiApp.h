@@ -82,4 +82,5 @@ void standbyKeyEnable(uint8_t ena);
 /*****************************************************************************/
 void updateEnergyDensity(void);
 void standbyDebugInfoVisiable(int8_t enable);
+void optionKeyEnable(uint8_t enable);
 #endif
