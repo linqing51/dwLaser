@@ -1029,6 +1029,108 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 		default:break;
 	}
 }
+void updateAveragePowerDisplay(int16_t mode){//更新平均功率显示
+	uint8_t dispBuf[16];
+	fp32_t averagePower, dutyCycle;
+	switch(mode){
+		case LASER_MODE_CW:{
+			sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
+			SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_AVERAGE_POWER, dispBuf);
+			break;
+		}
+		case LASER_MODE_SP:{
+			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_AVERAGE_POWER, dispBuf);
+			break;
+		}
+		case LASER_MODE_MP:{
+			dutyCycle = (fp32_t)NVRAM0[EM_LASER_MP_POSWIDTH] / (fp32_t)(NVRAM0[EM_LASER_MP_POSWIDTH] + NVRAM0[EM_LASER_MP_NEGWIDTH]);
+			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_AVERAGE_POWER, dispBuf);
+			break;
+		}
+		case LASER_MODE_GP:{
+			break;
+		}
+		case LASER_MODE_DERMA:{
+			
+			break;
+		}
+		case LASER_MODE_SIGNAL:{
+			sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
+			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_AVERAGE_POWER, dispBuf);
+			break;
+		}		
+		default:break;
+	}
+}
+void updateFrequencyDisplay(int16_t mode){//更新频率显示
+	uint8_t dispBuf[16];
+	switch(mode){
+		case LASER_MODE_CW:{
+			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);
+			break;
+		}
+		case LASER_MODE_SP:{
+			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);
+			break;
+		}
+		case LASER_MODE_MP:{
+			break;
+		}
+		case LASER_MODE_GP:{
+			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);
+			break;
+		}
+		case LASER_MODE_DERMA:{
+			break;
+		}
+		case LASER_MODE_SIGNAL:{
+			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);
+			break;
+		}		
+		default:break;
+	}
+}
+void updateDutyCycle(int16_t mode){//更新占空比显示
+	uint8_t dispBuf[16];
+	
+	switch(mode){
+		case LASER_MODE_CW:{
+			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
+			break;
+		}
+		case LASER_MODE_SP:{
+			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
+			break;
+		}
+		case LASER_MODE_MP:{
+			break;
+		}
+		case LASER_MODE_GP:{
+			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
+			break;
+		}
+		case LASER_MODE_DERMA:{
+			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
+			break;
+		}
+		case LASER_MODE_SIGNAL:{
+			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
+			break;
+		}		
+		default:break;
+	}	
+}
 void updateStandbyDisplay(void){//更新方案显示
 	uint8_t dispBuf[16];
 	NVRAM0[EM_TOTAL_POWER] = NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1];

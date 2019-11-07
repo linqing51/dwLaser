@@ -81,6 +81,8 @@ void standbyKeyValue(uint8_t value);//…Ë÷√Standbyº¸÷µ
 void standbyKeyEnable(uint8_t ena);
 /*****************************************************************************/
 void updateEnergyDensity(void);
+void updateAveragePowerDisplay(int16_t mode);
+void updateDutyCycle(int16_t mode);
 void standbyDebugInfoVisiable(int8_t enable);
 void optionKeyEnable(uint8_t enable);
 #endif

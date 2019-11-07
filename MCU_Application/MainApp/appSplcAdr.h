@@ -2,7 +2,7 @@
 #define __APPSPLCADR_H__
 /*****************************************************************************/
 #define EM_LASER_SCHEME_NAME									(EM_START + 0)//方案名称
-#define EM_LASER_SELECT											(EM_START + 13)//通道选择
+#define EM_LASER_SELECT												(EM_START + 13)//通道选择
 #define EM_LASER_PULSE_MODE										(EM_START + 14)//脉冲模式
 #define EM_LASER_POWER_CH0										(EM_START + 15)//通道0功率
 #define EM_LASER_POWER_CH1										(EM_START + 16)//通道1功率
@@ -13,44 +13,47 @@
 #define EM_LASER_MP_NEGWIDTH									(EM_START + 21)//多脉冲负脉宽
 #define EM_LASER_GP_POSWIDTH									(EM_START + 22)//Group脉冲正脉宽
 #define EM_LASER_GP_NEGWIDTH									(EM_START + 23)//Group脉冲负脉宽
-#define EM_LASER_GP_TIMES										(EM_START + 24)//Group脉冲数
+#define EM_LASER_GP_TIMES											(EM_START + 24)//Group脉冲数
 #define EM_LASER_GP_GROUP_OFF									(EM_START + 25)//Group脉冲间隔
-#define EM_LASER_SIGNAL_ENERGY_INTERVAL							(EM_START + 26)//SIGNAL能量间隔
-#define EM_LASER_DERMA_POSWIDTH									(EM_START + 27)//DERMA正脉宽
-#define EM_LASER_DERMA_NEGWIDTH									(EM_START + 28)//DERMA负脉宽
-#define EM_LASER_DERMA_SPOT_SIZE								(EM_START + 29)//DERMA光斑直径
+#define EM_LASER_SIGNAL_ENERGY_INTERVAL				(EM_START + 26)//SIGNAL能量间隔
+#define EM_LASER_DERMA_POSWIDTH								(EM_START + 27)//DERMA正脉宽
+#define EM_LASER_DERMA_NEGWIDTH								(EM_START + 28)//DERMA负脉宽
+#define EM_LASER_DERMA_SPOT_SIZE							(EM_START + 29)//DERMA光斑直径
+#define EM_LASER_AVERAGE_POWER								(EM_START + 30//当面模式平均功率
+#define EM_LASER_FREQUENCY										(EM_START + 31)//当前模式频率
+#define EM_LASER_DUTY_CYCLE										(EM_START + 32)//当前模式占空比
 /*****************************************************************************/
-#define EM_DIODE_TEMP0											(EM_START + 30)//二极管温度0
-#define EM_DIODE_TEMP1											(EM_START + 31)//二极管温度1
-#define EM_DRIVE_TEMP											(EM_START + 32)//驱动器温度
-#define EM_ENVI_TEMP											(EM_START + 33)//环境温度
-#define EM_DIODE_HIGH_TEMP										(EM_START + 34)//二极管过热阈值
-#define EM_DRIVE_HIGH_TEMP										(EM_START + 35)//驱动器过热阈值
-#define EM_ENVI_HIGH_TEMP										(EM_START + 36)//环境过热阈值
-#define EM_COOL_SET_TEMP										(EM_START + 37)//设定冷却温度
-#define EM_COOL_DIFF_TEMP										(EM_START + 38)//设定冷却回差调节
+#define EM_DIODE_TEMP0												(EM_START + 40)//二极管温度0
+#define EM_DIODE_TEMP1												(EM_START + 41)//二极管温度1
+#define EM_DRIVE_TEMP													(EM_START + 42)//驱动器温度
+#define EM_ENVI_TEMP													(EM_START + 43)//环境温度
+#define EM_DIODE_HIGH_TEMP										(EM_START + 44)//二极管过热阈值
+#define EM_DRIVE_HIGH_TEMP										(EM_START + 45)//驱动器过热阈值
+#define EM_ENVI_HIGH_TEMP											(EM_START + 46)//环境过热阈值
+#define EM_COOL_SET_TEMP											(EM_START + 47)//设定冷却温度
+#define EM_COOL_DIFF_TEMP											(EM_START + 48)//设定冷却回差调节
 /*****************************************************************************/				
-#define EM_TOTAL_POWER											(EM_START + 40)//发射总功率
-#define EM_HMI_OPERA_STEP										(EM_START +	41)//操作步骤								
-#define EM_ERROR_CODE											(EM_START + 42)//错误码					
-#define EM_SCHEME_NUM_TMP										(EM_START + 43)//待确认方案编号			
-#define EM_DK25L_VER											(EM_START + 44)//DK25L模块版本
+#define EM_TOTAL_POWER												(EM_START + 50)//发射总功率
+#define EM_HMI_OPERA_STEP											(EM_START +	51)//操作步骤								
+#define EM_ERROR_CODE													(EM_START + 52)//错误码					
+#define EM_SCHEME_NUM_TMP											(EM_START + 53)//待确认方案编号			
+#define EM_DK25L_VER													(EM_START + 54)//DK25L模块版本
 /*****************************************************************************/
-#define EM_DC_PAGE												(EM_START + 64)//HMI页面编号 			
+#define EM_DC_PAGE														(EM_START + 64)//HMI页面编号 			
 #define EM_DC_PASSCODE_INDEX									(EM_START + 65)//密码输入位索引		
 #define EM_DC_NEW_PASSCODE0										(EM_START + 66)//输入新密码0			
 #define EM_DC_NEW_PASSCODE1										(EM_START + 67)//输入新密码1			
 #define EM_DC_NEW_PASSCODE2										(EM_START + 68)//输入新密码0			
 #define EM_DC_NEW_PASSCODE3										(EM_START + 69)//输入新密码1			
-#define EM_DC_DEFAULT_PASSCODE0									(EM_START + 70)//默认密码0				
-#define EM_DC_DEFAULT_PASSCODE1									(EM_START + 71)//默认密码1				
-#define EM_DC_DEFAULT_PASSCODE2									(EM_START + 72)//默认密码1	
-#define EM_DC_DEFAULT_PASSCODE3									(EM_START + 73)//默认密码1				
-#define EM_DC_DISPLAY_RELEASE_TIME								(EM_START + 74)//显示发射时间			
-#define EM_DC_DISPLAY_RELEASE_ENERGY							(EM_START + 75)//显示发射能量
+#define EM_DC_DEFAULT_PASSCODE0								(EM_START + 70)//默认密码0				
+#define EM_DC_DEFAULT_PASSCODE1								(EM_START + 71)//默认密码1				
+#define EM_DC_DEFAULT_PASSCODE2								(EM_START + 72)//默认密码1	
+#define EM_DC_DEFAULT_PASSCODE3								(EM_START + 73)//默认密码1				
+#define EM_DC_DISPLAY_RELEASE_TIME						(EM_START + 74)//显示发射时间			
+#define EM_DC_DISPLAY_RELEASE_ENERGY					(EM_START + 75)//显示发射能量
 /*****************************************************************************/
 #define FD_LASER_SCHEME_NAME									(FD_START +  0)//方案名称
-#define FD_LASER_SELECT											(FD_START +  13)//通道选择
+#define FD_LASER_SELECT												(FD_START +  13)//通道选择
 #define FD_LASER_PULSE_MODE										(FD_START +  14)//脉冲模式
 #define FD_LASER_POWER_CH0										(FD_START +  15)//通道0功率
 #define FD_LASER_POWER_CH1										(FD_START +  16)//通道1功率
