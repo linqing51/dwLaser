@@ -1028,108 +1028,82 @@ void updatePowerDisplay(int16_t ch, int16_t mode){//更新功率显示
 		}
 		default:break;
 	}
+	updateExtralDisplay(mode);
 }
-void updateAveragePowerDisplay(int16_t mode){//更新平均功率显示
+void updateExtralDisplay(int16_t mode){//更新额外显示
 	uint8_t dispBuf[16];
-	fp32_t averagePower, dutyCycle;
+	fp32_t freq, averagePower, dutyCycle;
 	switch(mode){
 		case LASER_MODE_CW:{
-			sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
+			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
+			SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);			
+			averagePower = (fp32_t)(NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1]) / 10.0F;
+			sprintf(dispBuf, "%4.2f", averagePower);
 			SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_AVERAGE_POWER, dispBuf);
 			break;
 		}
 		case LASER_MODE_SP:{
 			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
+			SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);
+			averagePower = (fp32_t)(NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1]) / 10.0F;
+			sprintf(dispBuf, "%4.2f", averagePower);
 			SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_AVERAGE_POWER, dispBuf);
 			break;
 		}
 		case LASER_MODE_MP:{
+			freq =1000.0F / (fp32_t)(NVRAM0[EM_LASER_MP_POSWIDTH] + NVRAM0[EM_LASER_MP_NEGWIDTH]);
+			sprintf(dispBuf, "%4.2f", freq);
+			SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);
+						
 			dutyCycle = (fp32_t)NVRAM0[EM_LASER_MP_POSWIDTH] / (fp32_t)(NVRAM0[EM_LASER_MP_POSWIDTH] + NVRAM0[EM_LASER_MP_NEGWIDTH]);
-			sprintf(dispBuf, "N/A");
+			sprintf(dispBuf, "%4.2f", dutyCycle * 100.0F);
+			SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
+			
+			averagePower = dutyCycle * (fp32_t)(NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1]) / 10.0F;
+			sprintf(dispBuf, "%4.2f", averagePower);
 			SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_AVERAGE_POWER, dispBuf);
 			break;
 		}
 		case LASER_MODE_GP:{
-			break;
-		}
-		case LASER_MODE_DERMA:{
+			sprintf(dispBuf, "N/A");
+			SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
+			SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);
+			
+			dutyCycle = ((fp32_t)NVRAM0[EM_LASER_GP_POSWIDTH] * (fp32_t)NVRAM0[EM_LASER_GP_TIMES]) / 
+			             (fp32_t)(NVRAM0[EM_LASER_GP_POSWIDTH] + NVRAM0[EM_LASER_GP_NEGWIDTH]) * (fp32_t)(NVRAM0[EM_LASER_GP_TIMES]) + NVRAM0[EM_LASER_GP_GROUP_OFF];
+			averagePower = dutyCycle * (fp32_t)(NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1]) / 10.0F;
+			sprintf(dispBuf, "%4.2f", averagePower);
+			SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_AVERAGE_POWER, dispBuf);		
 			
 			break;
 		}
-		case LASER_MODE_SIGNAL:{
-			sprintf(dispBuf, "%4.1f", ((fp32_t)(NVRAM0[EM_LASER_POWER_CH0]) / 10));
-			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_AVERAGE_POWER, dispBuf);
-			break;
-		}		
-		default:break;
-	}
-}
-void updateFrequencyDisplay(int16_t mode){//更新频率显示
-	uint8_t dispBuf[16];
-	switch(mode){
-		case LASER_MODE_CW:{
-			sprintf(dispBuf, "N/A");
-			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);
-			break;
-		}
-		case LASER_MODE_SP:{
-			sprintf(dispBuf, "N/A");
-			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);
-			break;
-		}
-		case LASER_MODE_MP:{
-			break;
-		}
-		case LASER_MODE_GP:{
-			sprintf(dispBuf, "N/A");
-			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);
-			break;
-		}
 		case LASER_MODE_DERMA:{
-			break;
-		}
-		case LASER_MODE_SIGNAL:{
-			sprintf(dispBuf, "N/A");
-			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);
-			break;
-		}		
-		default:break;
-	}
-}
-void updateDutyCycle(int16_t mode){//更新占空比显示
-	uint8_t dispBuf[16];
-	
-	switch(mode){
-		case LASER_MODE_CW:{
-			sprintf(dispBuf, "N/A");
-			SetTextValue(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
-			break;
-		}
-		case LASER_MODE_SP:{
-			sprintf(dispBuf, "N/A");
-			SetTextValue(GDDC_PAGE_STANDBY_SP, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
-			break;
-		}
-		case LASER_MODE_MP:{
-			break;
-		}
-		case LASER_MODE_GP:{
-			sprintf(dispBuf, "N/A");
-			SetTextValue(GDDC_PAGE_STANDBY_MP, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
-			break;
-		}
-		case LASER_MODE_DERMA:{
-			sprintf(dispBuf, "N/A");
-			SetTextValue(GDDC_PAGE_STANDBY_DERMA, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
+			freq = 1000.0F / (fp32_t)(NVRAM0[EM_LASER_DERMA_POSWIDTH] + NVRAM0[EM_LASER_DERMA_NEGWIDTH]);
+			sprintf(dispBuf, "%4.2f", freq);
+			SetTextValue(LASER_MODE_DERMA, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);
+			
+			dutyCycle = (fp32_t)NVRAM0[EM_LASER_DERMA_POSWIDTH] / (fp32_t)(NVRAM0[EM_LASER_DERMA_POSWIDTH] + NVRAM0[EM_LASER_DERMA_NEGWIDTH]);
+			sprintf(dispBuf, "%4.2f", dutyCycle * 100.0F);
+			SetTextValue(LASER_MODE_DERMA, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
+			
+			averagePower = dutyCycle * (fp32_t)(NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1]) / 10.0F;
+			sprintf(dispBuf, "%4.2f", averagePower);
+			SetTextValue(LASER_MODE_DERMA, GDDC_PAGE_STANDBY_AVERAGE_POWER, dispBuf);
 			break;
 		}
 		case LASER_MODE_SIGNAL:{
 			sprintf(dispBuf, "N/A");
 			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_DUTYCYCLE, dispBuf);
+			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_FREQUENCY, dispBuf);
+			averagePower = (fp32_t)((NVRAM0[EM_LASER_POWER_CH0] + NVRAM0[EM_LASER_POWER_CH1]) / 10.0F);
+			sprintf(dispBuf, "%4.2f", averagePower);
+			SetTextValue(GDDC_PAGE_STANDBY_SIGNAL, GDDC_PAGE_STANDBY_AVERAGE_POWER, dispBuf);
 			break;
 		}		
 		default:break;
-	}	
+	}
 }
 void updateStandbyDisplay(void){//更新方案显示
 	uint8_t dispBuf[16];
@@ -1401,6 +1375,7 @@ void updatePosWidthDisplay(int16_t mode){//更新正脉宽显示
 		}
 		default:break;
 	}
+	updateExtralDisplay(mode);
 }
 void updateNegWidthDisplay(int16_t mode){//更新负脉宽显示
 	uint8_t dispBuf[16];
@@ -1439,6 +1414,11 @@ void updateNegWidthDisplay(int16_t mode){//更新负脉宽显示
 		}
 		default:break;
 	}
+	updateExtralDisplay(mode);
+}
+void updateTimesDisplay(void){//更新Times显示
+	SetTextInt32(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES ,NVRAM0[EM_LASER_GP_TIMES], 1, 0);
+	updateExtralDisplay(GDDC_PAGE_STANDBY_GP);
 }
 void updateGroupOffDisplay(void){//更新GroupOff显示
 	uint8_t dispBuf[16];
@@ -1448,7 +1428,8 @@ void updateGroupOffDisplay(void){//更新GroupOff显示
 	else{
 		sprintf(dispBuf, "%d S", (NVRAM0[EM_LASER_GP_GROUP_OFF] / 1000));
 	}
-	SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_GROUP_OFF, dispBuf);		
+	SetTextValue(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_GROUP_OFF, dispBuf);
+	updateExtralDisplay(GDDC_PAGE_STANDBY_GP);
 }
 void standbyKeyEnable(uint8_t ena){//设置Standby使能
 	SetControlEnable(GDDC_PAGE_STANDBY_CW, GDDC_PAGE_STANDBY_KEY_STANDBY, ena);
@@ -1489,6 +1470,11 @@ void dcHmiLoopInit(void){//初始化模块
 	SET(Y_FAN1);
 	SET(R_RFID_PASS);
 	RES(R_DRIVE_TEMP_HIGH);//屏蔽驱动器过热报警
+#if CONFIG_USING_DUAL_WAVE == 0
+	NVRAM0[EM_LASER_POWER_CH1] = 0;
+	NVRAM0[EM_LASER_POWER_CH2] = 0;
+	NVRAM0[EM_LASER_POWER_CH3] = 0;
+#endif
 }
 static void temperatureLoop(void){//温度轮询顺序
 	int16_t temp;
@@ -1594,6 +1580,11 @@ void dcHmiLoop(void){//HMI轮训程序
 		SET(Y_LED_POWERON);//电源灯常亮
 #if CONFIG_USING_BACKGROUND_APP == 1
 		loadScheme();//从掉电存储寄存器中恢复方案参数
+#endif
+#if CONFIG_USING_DUAL_WAVE == 0
+	NVRAM0[EM_LASER_POWER_CH1] = 0;
+	NVRAM0[EM_LASER_POWER_CH2] = 0;
+	NVRAM0[EM_LASER_POWER_CH3] = 0;
 #endif		
 		NVRAM0[EM_DC_DEFAULT_PASSCODE0] = CONFIG_HMI_DEFAULT_PASSSWORD0;
 		NVRAM0[EM_DC_DEFAULT_PASSCODE1] = CONFIG_HMI_DEFAULT_PASSSWORD1;
@@ -1814,7 +1805,7 @@ void dcHmiLoop(void){//HMI轮训程序
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							if(NVRAM0[EM_LASER_GP_TIMES] < CONFIG_MAX_LASER_TIMES){
 								NVRAM0[EM_LASER_GP_TIMES] += 1;
-								SetTextInt32(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES, NVRAM0[EM_LASER_GP_TIMES], 1, 0);	
+								updateTimesDisplay();	
 							}
 						}
 					}
@@ -1825,7 +1816,7 @@ void dcHmiLoop(void){//HMI轮训程序
 						if(LDP(SPCOIL_PS100MS) || LDN(SPCOIL_PS100MS)){
 							if(NVRAM0[EM_LASER_GP_TIMES] > CONFIG_MIN_LASER_TIMES){
 								NVRAM0[EM_LASER_GP_TIMES] -= 1;
-								SetTextInt32(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES, NVRAM0[EM_LASER_GP_TIMES], 1, 0);	
+								updateTimesDisplay();	
 							}
 						}
 					}

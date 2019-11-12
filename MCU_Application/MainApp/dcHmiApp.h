@@ -63,6 +63,7 @@ void standbyTouchEnable(int8_t enable);
 void updatePowerDisplay(int16_t ch, int16_t mode);
 void updatePosWidthDisplay(int16_t mode);
 void updateNegWidthDisplay(int16_t mode);
+void updateTimesDisplay(void);
 void updateGroupOffDisplay(void);
 void updateOptionDisplay(void);
 /*****************************************************************************/
@@ -81,8 +82,7 @@ void standbyKeyValue(uint8_t value);//设置Standby键值
 void standbyKeyEnable(uint8_t ena);
 /*****************************************************************************/
 void updateEnergyDensity(void);
-void updateAveragePowerDisplay(int16_t mode);
-void updateDutyCycle(int16_t mode);
+void updateExtralDisplay(int16_t mode);//更新额外显示
 void standbyDebugInfoVisiable(int8_t enable);
 void optionKeyEnable(uint8_t enable);
 #endif

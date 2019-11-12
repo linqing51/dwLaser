@@ -784,7 +784,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 					}
 					break;
 				}
-				case GDDC_PAGE_STANDBY_SP_KEY_POSWIDTH_DEC:{
+ 				case GDDC_PAGE_STANDBY_SP_KEY_POSWIDTH_DEC:{
 					if(state){//DOWN
 						SET(R_STANDBY_KEY_POSWIDTH_DEC_DOWN);	
 						NVRAM0[EM_LASER_SP_POSWIDTH] = pulseWidthDec(NVRAM0[EM_LASER_SP_POSWIDTH]);
@@ -1264,7 +1264,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						else{
 							NVRAM0[EM_LASER_GP_TIMES] = CONFIG_MAX_LASER_TIMES;
 						}
-						SetTextInt32(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES ,NVRAM0[EM_LASER_GP_TIMES], 1, 0);
+						updateTimesDisplay();
 					}
 					else{
 						RES(R_STANDBY_KEY_TIMES_ADD_DOWN);
@@ -1281,7 +1281,7 @@ void NotifyButton(uint16_t screen_id, uint16_t control_id, uint8_t state){
 						else{
 							NVRAM0[EM_LASER_GP_TIMES]  = CONFIG_MIN_LASER_TIMES;
 						}
-						SetTextInt32(GDDC_PAGE_STANDBY_GP, GDDC_PAGE_STANDBY_GP_TEXTDISPLAY_TIMES ,NVRAM0[EM_LASER_GP_TIMES], 1, 0);
+						updateTimesDisplay();
 					}
 					else{
 						RES(R_STANDBY_KEY_TIMES_DEC_DOWN);
