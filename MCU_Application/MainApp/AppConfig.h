@@ -11,8 +11,8 @@
 #define CONFIG_USING_SINGLE_WAVE								1//单波长
 #define CONFIG_USING_DUAL_WAVE									0//双波长
 #define CONFIG_HMI_SCHEME_NUM									32//方案数
-#define CONFIG_HMI_DEFAULT_PASSSWORD0							0x3433//默认密码
-#define CONFIG_HMI_DEFAULT_PASSSWORD1							0x3231//默认密码
+#define CONFIG_HMI_DEFAULT_PASSSWORD0							0x3235//默认密码
+#define CONFIG_HMI_DEFAULT_PASSSWORD1							0x3830//默认密码
 #define CONFIG_SCHEME_NAME_SIZE									22//12*2
 //故障码
 #define ERROR_CODE_EPROM										0x0001//EPRON 错误
