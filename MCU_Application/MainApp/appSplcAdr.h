@@ -210,14 +210,13 @@
 #define DM_DC_OLD_PASSCODE2										(DM_START + 6)//屏旧密码0-1
 #define DM_DC_OLD_PASSCODE3										(DM_START + 7)//屏旧密码2-3
 /*****************************************************************************/
-#define X_FOOTSWITCH_NC											(X_START * 16 + 0)//XIN0 脚踏常闭
-#define X_ESTOP													(X_START * 16 + 1)//XIN1 紧急停止开关
+
+#define X_FOOTSWITCH_NC											(X_START * 16 + 1)//XIN0 脚踏常闭
+#define X_ESTOP													(X_START * 16 + 0)//XIN1 紧急停止开关
 #define X_FOOTSWITCH_NO											(X_START * 16 + 2)//XIN2 脚踏常开
-#define X_INTERLOCK												(X_START * 16 + 3)//XIN3 安全连锁
-//#define X_LDR_FAULT0											(X_START * 16 + 4)//XIN4 驱动器故障0
-//#define X_LDR_FAULT1											(X_START * 16 + 5)//XIN5 驱动器故障1
+#define X_INTERLOCK												(X_START * 16 + 3)//XIN0 安全连锁
+
 #define X_FIBER_PROBE											(X_START * 16 + 7)//XIN6 光纤探测0
-//#define X_FBD1												(X_START * 16 + 7)//XIN7 光纤探测1
 /*****************************************************************************/
 #define Y_LED_POWERON											(Y_START * 16 + 0)//YOUT0 电源灯
 #define Y_LED_EMIT												(Y_START * 16 + 1)//YOUT1 激光指示灯

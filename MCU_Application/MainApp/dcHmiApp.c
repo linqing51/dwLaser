@@ -1567,6 +1567,12 @@ void dcHmiLoop(void){//HMI轮训程序
 		temperatureLoop();
 		faultLoop();
 	}
+	if(LaserFlag_Emiting){
+		SET(Y_LED_EMIT);
+	}
+	else{
+		RES(Y_LED_EMIT);
+	}
 	if(LD(R_DCHMI_RESET_DONE) && LD(R_DCHMI_RESTORE_DONE)){//HMI复位完成后处理串口指令
 		hmiCmdSize = queue_find_cmd(hmiCmdBuffer, CMD_MAX_SIZE);//从缓冲区中获取一条指令         
         if(hmiCmdSize > 0){//接收到指令及判断是否为开机提示                                                            

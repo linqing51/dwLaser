@@ -236,7 +236,6 @@ static void laserStart(void){//按通道选择打开激光
 static void laserStop(void){//按通道选择关闭激光
 	LASER_CH0_MODPIN = false;
 	LASER_CH1_MODPIN = false;//翻转输出	
-	setLedEmit(false);
 	LaserFlag_Emiting = false;	
 }
 void laserTimerIsr(void) interrupt INTERRUPT_TIMER3{//TIMER3 中断 激光发射	
