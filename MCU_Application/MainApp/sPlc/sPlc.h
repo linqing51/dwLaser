@@ -175,9 +175,7 @@ extern void disableWatchDog(void);//关闭看门狗(未锁定)
 /*****************************************************************************/
 void nvramUpdata(void);
 /*****************************************************************************/
-void chipDacInit(void);
 void chipAdcInit(void);
 void sPlcInit(void);
-void refreshDac(void);
 /*****************************************************************************/
 #endif

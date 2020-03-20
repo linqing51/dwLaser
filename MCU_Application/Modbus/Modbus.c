@@ -31,21 +31,21 @@ typedef struct{
 	uint16_t dataLen;
 }modbusRxTxData_t;
 /**********************Slave Transmit and Receive Variables********************/
-idata uint8_t ModbusSlaveAddress = 1;
+uint8_t ModbusSlaveAddress = 1;
 xdata modbusRxTxData_t Tx_Data;
-idata uint32_t Tx_Current = 0;
-idata uint32_t Tx_CRC16 = 0xFFFF;
-idata MODBUS_RXTX_STATE Tx_State = RXTX_IDLE;
+uint32_t Tx_Current = 0;
+uint32_t Tx_CRC16 = 0xFFFF;
+MODBUS_RXTX_STATE Tx_State = RXTX_IDLE;
 xdata uint8_t Tx_Buf[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];
-idata uint32_t Tx_Buf_Size = 0;
+uint32_t Tx_Buf_Size = 0;
 /*****************************************************************************/
 xdata modbusRxTxData_t Rx_Data;
-idata uint32_t Rx_CRC16 = 0xFFFF;
-idata MODBUS_RXTX_STATE Rx_State = RXTX_IDLE;
-idata uint8_t Rx_Data_Available = false;
+uint32_t Rx_CRC16 = 0xFFFF;
+MODBUS_RXTX_STATE Rx_State = RXTX_IDLE;
+uint8_t Rx_Data_Available = false;
 /*****************************************************************************/
-idata volatile uint16_t modbusTimerValue = 0;
-idata volatile uint8_t modbusReceiveCounter = 0;// Collected data number
+volatile uint16_t modbusTimerValue = 0;
+volatile uint8_t modbusReceiveCounter = 0;// Collected data number
 xdata volatile uint8_t modbusReceiveBuffer[CONFIG_MB_RTU_SLAVE_BUFFER_SIZE];// Buffer to collect data from hardware
 /*****************************************************************************/
 void modbusCrc16(const uint8_t Data, uint32_t* CRC){

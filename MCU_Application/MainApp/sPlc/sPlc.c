@@ -10,13 +10,6 @@ uint8_t getGlobalInterrupt(void){
 static void updataNvram(void){//更新NVRAM->EPROM
 	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
-static void clearNvram(void){//清除NVRAM数据	
-	idata uint8_t oldEA;
-	oldEA = EA;//关闭中断
-	EA = 0;
-	memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
-	EA = oldEA;//恢复中断
-}
 /*****************************************************************************/
 static void pcaInit(void){//硬件PCA初始化
 }

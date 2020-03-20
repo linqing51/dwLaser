@@ -4,9 +4,7 @@
 #define DEBUG_LED_ON						0
 #define DEBUG_LED_OFF						1
 #define CONFIG_SYSCLK                       (22118400L)
-#ifdef C8051F020
 #define SAR_CLK      						1500000L//ADC0时钟 <2.5MHz
-#endif
 #define CONFIG_DEBUG                        0//调试功能
 /*****************************************************************************/
 #define CONFIG_UART0_BAUDRATE				115200//串口波特率
@@ -78,21 +76,13 @@
 /*****************************************************************************/
 #include "InitDeviceF020.h"
 #include "delay.h"
-#include "i2c0.h"
-#include "eprom.h"
 #include "dac8568_0.h"
 #include "dac8568_1.h"
 #include "dac8568_2.h"
 #include "dac8568_3.h"
-#if CONFIG_SPLC_USING_UART1 == 1
 #include "sPlcUart.h"
-#endif
-#if CONFIG_SPLC_USING_CADC == 1
 #include "sPlcChipAdc.h"
-#endif
-#if CONFIG_SPLC_USING_DAC == 1
 #include "sPlcDac.h"
-#endif
 /*****************************************************************************/
 #include "Modbus.h"
 #include "ModbusPort.h"
@@ -101,7 +91,6 @@
 #include "sPlcTimer.h"
 #include "sPlcFun.h"
 #include "sPlcLed.h"
-#include "sPlcIo.h"
 #include "sPlcWatchDog.h"
 /*****************************************************************************/
 #endif

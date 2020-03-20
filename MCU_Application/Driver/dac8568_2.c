@@ -72,18 +72,6 @@ void dac8568_2_Init(void){//DAC8568初始化
 	tmp = 0x05000000;//Clear all DAC outputs to zero scale (defaultmode)
 	spi2Write(tmp);
 }
-void dac8568_2_Update(uint8_t ch){//更新UPDATA寄存器
-	uint32_t tmp = 0;
-	tmp |= (uint32_t)ch & 0x000000FF;
-	tmp |= 0x18000000;
-	spi2Write(tmp);
-}
-void dac8568_2_WriteInputRegister(uint8_t ch, uint16_t dat){//写入输入寄存器
-	uint32_t tmp = 0;
-	tmp |= (uint32_t)((uint32_t)ch << 20);
-	tmp |= (uint32_t)((uint32_t)dat << 4);
-	spi2Write(tmp);
-}
 void dac8568_2_WriteDacRegister(uint8_t ch, uint16_t dat){//写入输入寄存器并更新输出
 	uint32_t tmp;
 	ch &= 0x0F;
@@ -92,13 +80,8 @@ void dac8568_2_WriteDacRegister(uint8_t ch, uint16_t dat){//写入输入寄存器并更新
 	tmp |= (uint32_t)((uint32_t)dat << 4);
 	spi2Write(tmp);
 }
-void dac8568_2_Clear(void){//清除所有寄存器
-	setCLR2(false);
-	delayUs(1);
-	setCLR2(true);
-}
-void dac8568_2_Reset(void){//复位	
-	uint32_t tmp;
-	tmp = 0x07000000;//Software Reset
-	spi2Write(tmp);
-}
+//void dac8568_2_Reset(void){//复位	
+//	uint32_t tmp;
+//	tmp = 0x07000000;//Software Reset
+//	spi2Write(tmp);
+//}

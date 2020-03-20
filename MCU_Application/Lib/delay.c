@@ -12,12 +12,4 @@ void delayUs(uint8_t us) reentrant
         us --;
 	}
 }
-void delayMs(uint8_t ms) reentrant
-{//∫¡√Î—” ±
-	while(ms--)
-	{
-		delayUs(100);
-	}
-}
-
 
