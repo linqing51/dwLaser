@@ -1,7 +1,5 @@
 #include "sPlcUart.h"
 /*****************************************************************************/
-void USSTP(uint16_t port){//串口强制停止发送
-}
 void USEND(uint16_t port, uint16_t sendBufAdr, uint16_t length){//串口启动发送
 	if(port == 0){
 	}
@@ -13,9 +11,6 @@ void USEND(uint16_t port, uint16_t sendBufAdr, uint16_t length){//串口启动发送
 		RES(SPCOIL_UART1_SEND_DONE);
 		SCON1 |= 0x02;//开始发送			
 	}
-}
-void URSTP(uint16_t port){//串口强制停止接收
-	
 }
 void URECV(uint16_t port, uint16_t recvBufAdr, uint16_t length){//串口接收
 	if(port == 0){

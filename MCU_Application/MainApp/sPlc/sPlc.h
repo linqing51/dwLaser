@@ -201,18 +201,6 @@ extern void feedWatchDog(void) reentrant;//喂狗
 extern void enableWatchDog(void);//使能看门狗
 extern void disableWatchDog(void);//关闭看门狗(未锁定)
 /*****************************************************************************/
-void assertCoilAddress(uint16_t adr) reentrant;
-void assertRegisterAddress(uint16_t adr) reentrant;
-/*****************************************************************************/
-void nvramUpdata(void);
-void clearDM(void);
-void clearEM(void);
-void clearR(void);
-void clearT(void);
-void clearTD(void);
-void clearC(void);
-void nvramLoad(void);
-void nvramSave(void);
 void nvramUpdata(void);
 /*****************************************************************************/
 void chipDacInit(void);

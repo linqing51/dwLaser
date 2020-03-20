@@ -10,127 +10,6 @@ idata volatile uint8_t Timer0_L, Timer0_H;
 uint8_t getGlobalInterrupt(void){
 	return EA;
 }
-void assertCoilAddress(uint16_t adr) reentrant{//检查线圈地址
-#if CONFIG_SPLC_ASSERT == 1
-	if(adr > (SPCOIL_END * 16))
-		while(1);
-#endif
-}
-void assertRegisterAddress(uint16_t adr) reentrant{//检查寄存器地址
-#if CONFIG_SPLC_ASSERT == 1
-	if(adr >= SPCOIL_END)
-		while(1);
-#endif
-}
-static void clearDM(void){//清除DM寄存器
-	uint16_t i;
-	for(i = 0;i <= DM_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-}
-static void clearMR(void){//清除MR寄存器
-	uint16_t i;
-	for(i = MR_START;i <= MR_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-}
-static void clearEM(void){//清除EM寄存器
-	uint16_t i;
-	for(i = EM_START;i <= EM_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-}
-static void clearR(void){//清除R寄存器
-	uint16_t i;
-	for(i = R_START;i <= R_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-}
-static void clearT(void){//清除T寄存器
-	uint16_t i;
-	for(i = T_1MS_START;i <= T_1MS_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-	for(i = T_10MS_START;i <= T_10MS_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-	for(i = T_100MS_START;i <= T_100MS_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-}
-static void clearTD(void){//清除TD寄存器
-	uint16_t i;
-	for(i = TD_1MS_START;i <= TD_1MS_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-	for(i = TD_10MS_START;i <= TD_10MS_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-	for(i = TD_100MS_START;i <= TD_100MS_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-}
-static void clearC(void){//清除C寄存器
-	uint16_t i;
-	for(i = C_START;i <= C_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-}
-static void clearX(void){//清除X寄存器
-	uint16_t i;
-	for(i = X_START;i <= X_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-}
-static void clearY(void){//清除Y寄存器
-	uint16_t i;
-	for(i = Y_START;i <= Y_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-}
-static void clearSPREG(void){//清除特殊寄存器
-	uint16_t i;
-	for(i = SPREG_START;i <= SPREG_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-}
-static void clearSPCOIL(){//清除特特殊线圈
-	uint16_t i;
-	for(i = SPCOIL_START;i <= SPCOIL_END;i ++){
-		NVRAM0[i] = 0x0;
-		NVRAM1[i] = 0x0;
-	}
-}
-static void loadNvram(void){//从EPROM中载入NVRAM
-	memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM0
-	memset(NVRAM1, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM1
-#if CONFIG_SPLC_USING_WDT == 1
-	if ((RSTSRC & 0x02) == 0x00){
-		if(RSTSRC == 0x08){//检测WDT看门狗 看门狗复位后锁定
-			SET(SPCOIL_WATCHDOG);
-			setLedError(DEBUG_LED_ON);
-			setLedRun(DEBUG_LED_ON);
-			setLedDac(DEBUG_LED_OFF);
-			setLedEprom(DEBUG_LED_OFF);
-			delayMs(100);
-		}
-	}
-#endif
-}
 static void updataNvram(void){//更新NVRAM->EPROM
 	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
@@ -152,7 +31,6 @@ void sPlcInit(void){//软逻辑初始化
 			setLedError(DEBUG_LED_ON);
 			setLedRun(DEBUG_LED_ON);
 			setLedDac(DEBUG_LED_OFF);
-			setLedEprom(DEBUG_LED_OFF);
 			while(1);
 		}
 	}
@@ -160,13 +38,11 @@ void sPlcInit(void){//软逻辑初始化
 	setLedError(DEBUG_LED_OFF);
 	setLedRun(DEBUG_LED_OFF);
 	setLedDac(DEBUG_LED_OFF);
-	setLedEprom(DEBUG_LED_OFF);
 	initWatchDog();//看门狗使能
 	disableWatchDog();//屏蔽看门狗
 #if CONFIG_SPLC_USING_UART1 == 1
 	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化
-#endif	
-	loadNvram();//上电恢复NVRAM
+#endif
 #if CONFIG_SPLC_USING_CADC == 1
 	initChipAdc();//初始化ADC模块
 #endif

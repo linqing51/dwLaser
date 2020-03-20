@@ -7,9 +7,6 @@
 //TIMER3 ->NO FUNCTION
 //TIMER4 ->UART1 Buadrate
 /*****************************************************************************/
-#define DM_TOTAL_TIME_L					(DM_START + 0)
-#define DM_TOTAL_TIME_H					(DM_START + 1)
-/*****************************************************************************/
 void sPlcBoxLedRefresh(void){//刷新灯状态
 //0x81,00,01,......,84///控制绿色灯的亮灭.AA为亮，55为灭。
 //0x81,00,02,......,84///控制红色灯的亮灭.AA为亮，55为灭。
@@ -77,11 +74,6 @@ void main(void){
 		else{
 			T100MS(0, true, 1);
 		}
-		
-//		if(LDP(SPCOIL_PS1000MS)){
-//			p32 = (uint32_t*)(&NVRAM0[DM_TOTAL_TIME_L]);
-//			*p32 = *p32 + 1;
-//		}
 		sPlcProcessEnd();
 	}
 }
