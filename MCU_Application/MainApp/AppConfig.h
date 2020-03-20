@@ -19,39 +19,17 @@
 #define CONFIG_UART1_STOPBIT				1
 #define CONFIG_UART1_DATABIT				8
 /*****************************************************************************/
-#define CONFIG_I2C0_FREQ 					4 
-#define CONFIG_I2C_WAITACT_TIME				250
-/*****************************************************************************/
-#define CONFIG_EPROM_DEBUG					0
-#define CONFIG_EPROM_SIZE 					CONFIG_AT24C64_SIZE
-#define	CONFIG_AT24C02_SIZE 				256
-#define	CONFIG_AT24C04_SIZE  				512
-#define	CONFIG_AT24C08_SIZE 				1024
-#define	CONFIG_AT24C16_SIZE 				2048
-#define	CONFIG_AT24C32_SIZE 				4096
-#define	CONFIG_AT24C64_SIZE					8192
-#define	CONFIG_AT24C128_SIZE 				16384
-#define	CONFIG_AT24C256_SIZE 				32768
-#define CONFIG_EPROM_ADDRESS				0x50
-#define CONFIG_EPROM_FRAM					0//铁电存储体无写入等待
-#define CONFIG_EPROM_PAGEWRITE				0//页写入
-/*****************************************************************************/
 //SPLC设置
 #define CONFIG_SPLC_ASSERT					1//检查地址范围
-#define CONFIG_SPLC_DEV						0x0A01//设备号
-#define CONFIG_SPLC_CLEAR_CODE				0xA58E
 #define CONFIG_SOFTPLC_HWTIME				1000L//1mS
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期 1mS * N
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_CLEAR_NVRAM		0//启用清除NVRAM功能
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT				1//看门狗启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_INPUT			1//输入IO刷新启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_IO_OUTPUT			1//输出IO刷新启用
-/*****************************************************************************/
-#define CONFIG_SPLC_USING_EPROM				0//EPROM掉电存储启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_UART1				1//UART1串口启用
 #if CONFIG_SPLC_USING_UART1 == 1
