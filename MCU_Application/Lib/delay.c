@@ -2,7 +2,7 @@
 /*****************************************************************************/
 
 /*****************************************************************************/
-void delayUs(uint8_t data us) reentrant
+void delayUs(uint8_t us) reentrant
 {//Œ¢√Î—” ±
 	while(us)
 	{
@@ -12,7 +12,7 @@ void delayUs(uint8_t data us) reentrant
         us --;
 	}
 }
-void delayMs(uint8_t data ms) reentrant
+void delayMs(uint8_t ms) reentrant
 {//∫¡√Î—” ±
 	while(ms--)
 	{

@@ -22,7 +22,7 @@ void initModbusSerial(int32_t baudrate)
 	RI0 = 0;//清除接收完成
 }
 void initModbusTimer(void){//初始化MODBUS计时器 1mS TIMER1
-	xdata uint16_t temp;
+	uint16_t temp;
 	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / CONFIG_MB_RTU_SLAVE_TIMER));
 	Timer1_L = (uint8_t)(temp & 0xFF);
 	Timer1_H = (uint8_t)((temp >> 8) & 0xFF);

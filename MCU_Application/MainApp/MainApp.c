@@ -12,7 +12,7 @@ void sPlcBoxLedRefresh(void){//刷新灯状态
 //0x81,00,02,......,84///控制红色灯的亮灭.AA为亮，55为灭。
 //0x81,00,06,84//灯全灭
 //0x81,00,09,xx,yy,zz,84//控制灯通道xx的灯的亮灭，zz=0时红绿灯都灭，zz=01,yy=00时红亮绿灭，zz=01,yy=01时红灭绿亮	
-	idata uint8_t i;
+	uint8_t i;
 	for(i = EM_DAC_0;i < EM_DAC_25;i ++){
 		if((uint16_t)(NVRAM0[i]) > 0){
 			SET(R_START * 16 + i - EM_DAC_0);

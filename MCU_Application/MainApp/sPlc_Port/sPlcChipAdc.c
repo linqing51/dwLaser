@@ -42,7 +42,7 @@ static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
 static void initAdcData(adcTempDat_t *s);
 /*****************************************************************************/
 static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
-	idata uint8_t i;
+	uint8_t i;
 	for(i = 0;i < CONFIG_SPLC_ADC_FILTER_TAP; i++){
 		s->dat[i] = 0x0;
 	}
@@ -50,7 +50,7 @@ static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
 	s->wIndex = 0;
 }
 void initChipAdc(void){//ADC模块初始化
-	idata uint8_t i;
+	uint8_t i;
 	//CHIP0
 	ADCMUX_0_3_OE1 = true;
 	ADCMUX_0_3_OE2 = true;
@@ -89,11 +89,8 @@ void initChipAdc(void){//ADC模块初始化
 	}
 }
 void chipAdcProcess(void){//循环采集ADC
-	idata uint16_t result = 0;
+	uint16_t result = 0;
 	float ftmp;
-#ifdef C8051F020
-	//while(!AD0INT);
-#endif
 	result = (ADC0 & 0x0FFF);
 	refreshAdcData(&adcTempDat[adcSelect], result);
 	if(adcSelect >= 0 && adcSelect <= 31){//LD显示值
@@ -1856,10 +1853,9 @@ void chipAdcProcess(void){//循环采集ADC
 	AD0BUSY = 1;//AD0BUSY写入1
 }
 void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值 
-	idata uint8_t i;
-	idata uint16_t temp;
-	idata uint32_t sum;
-	idata uint16_t datMax, datMin;
+	uint8_t i;
+	uint16_t temp;
+	uint32_t sum;
 	s->dat[s->wIndex] = dat;
 	s->wIndex ++;
 	if(s->wIndex >= CONFIG_SPLC_ADC_FILTER_TAP){

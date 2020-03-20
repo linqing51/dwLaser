@@ -2,10 +2,7 @@
 /*****************************************************************************/
 xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
-idata volatile uint8_t TimerCounter_1mS = 0;
-idata volatile uint8_t TimerCounter_10mS = 0;
-idata volatile uint8_t TimerCounter_100mS = 0;
-idata volatile uint8_t Timer0_L, Timer0_H;
+uint8_t Timer0_L, Timer0_H;
 /******************************************************************************/
 uint8_t getGlobalInterrupt(void){
 	return EA;
@@ -65,8 +62,8 @@ void sPlcProcessStart(void){//sPLC轮询起始
 #if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1
 	modbusPorcess();//处理MODBUS
 #endif
-#if CONFIG_SPLC_USING_IO_INPUT == 1
-	inputRefresh();//读取X口输入
+#if CONFIG_SPLC_USING_CADC == 1
+	chipAdcProcess();//ADC扫描
 #endif
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();
@@ -75,9 +72,6 @@ void sPlcProcessStart(void){//sPLC轮询起始
 void sPlcProcessEnd(void){//sPLC轮询结束
 #if CONFIG_SPLC_USING_WDT == 1
 	feedWatchDog();//喂狗
-#endif
-#if CONFIG_SPLC_USING_IO_OUTPUT == 1
-	outputRefresh();//更新Y口输出
 #endif
 #if CONFIG_SPLC_USING_DAC
 	refreshDac();//更新DAC输出

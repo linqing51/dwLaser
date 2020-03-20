@@ -3,53 +3,32 @@
 /*****************************************************************************/
 #include "appConfig.h"
 /*****************************************************************************/
-//线圈 保持 8 * 16 = 128BIT
-#define MR_START						0
-#define MR_END   						3
 //线圈寄存器 非保持 8 * 16 = 128BIT
-#define R_START							4
-#define R_END							11
-//数据寄存器 保持 8
-#define DM_START						12
-#define DM_END							19
-//数据寄存器 非保持 140个字
-#define EM_START						20
-#define EM_END							159
+#define R_START							0
+#define R_END							7
+//数据寄存器 非保持 1个字
+#define EM_START						8
+#define EM_END							126
 //延时线圈
-//1MS 1 * 16 = 16BIT
-#define T_1MS_START						160
-#define T_1MS_END						160
-//10MS 1 * 16 = 16BIT
-#define T_10MS_START					161
-#define T_10MS_END						161
 //100MS 1 * 16 = 16BIT
-#define T_100MS_START					162
-#define T_100MS_END						162
+#define T_100MS_START					127
+#define T_100MS_END						127
 //延时计时器 
-//1MS 16
-#define TD_1MS_START					163
-#define TD_1MS_END						178
-//10MS 16
-#define TD_10MS_START					179
-#define TD_10MS_END						194
 //100MS 16
-#define TD_100MS_START					195
-#define TD_100MS_END					210
-//计数器 1
-#define C_START							211
-#define C_END							211
+#define TD_100MS_START					128
+#define TD_100MS_END					143
 //输入位寄存器 1 * 16 = 16个
-#define X_START							212
-#define X_END							212		
+#define X_START							144
+#define X_END							144		
 //输出位寄存器 1 * 16 = 16个
-#define Y_START							213
-#define Y_END							213
+#define Y_START							145
+#define Y_END							145
 //特殊寄存器 24个字
-#define SPREG_START						214
-#define SPREG_END						237
+#define SPREG_START						146
+#define SPREG_END						169
 //特殊线圈	4 * 16 = 64个
-#define SPCOIL_START					238
-#define SPCOIL_END						241
+#define SPCOIL_START					170
+#define SPCOIL_END						173
 /*****************************************************************************/
 #define EM_ADC_0						(EM_START + 0)//ADC0->MLD0
 #define EM_ADC_1						(EM_START + 1)//ADC1->MLD1
@@ -152,8 +131,6 @@
 /*****************************************************************************/
 #define SPCOIL_ON						(SPCOIL_START * 16 + 0)//长通线圈
 #define SPCOIL_START_UP					(SPCOIL_START * 16 + 1)//初次上电
-#define SPCOIL_PS1MS					(SPCOIL_START * 16 + 2)//1mS间隔 50%占空比脉冲
-#define SPCOIL_PS10MS					(SPCOIL_START * 16 + 3)//10mS
 #define SPCOIL_PS100MS					(SPCOIL_START * 16 + 4)//100mS	
 #define SPCOIL_PS1000MS					(SPCOIL_START * 16 + 5)//1000mS	
 #define SPCOIL_WATCHDOG					(SPCOIL_START * 16 + 15)//看门狗溢出
@@ -183,14 +160,9 @@
 #define SPREG_UART1_RECV_LENGTH			(SPREG_START + 14)//UART1 接收数据长度
 #define SPREG_UART1_RECV_NUM			(SPREG_START + 15)//UART1 已经接收数据长度
 /*****************************************************************************/
-#define SPREG_CLEAR_NVRAM0				(SPREG_END)//清除NVRAM后重新启动
-/*****************************************************************************/
 extern xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 extern xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
-extern idata volatile uint8_t TimerCounter_1mS;
-extern idata volatile uint8_t TimerCounter_10mS;
-extern idata volatile uint8_t TimerCounter_100mS;
-extern idata volatile uint8_t Timer0_L, Timer0_H;
+extern uint8_t Timer0_L, Timer0_H;
 /*****************************************************************************/
 void sPlcInit(void);//软逻辑初始化
 extern void timer0Init(void);

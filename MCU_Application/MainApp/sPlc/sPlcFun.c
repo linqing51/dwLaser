@@ -1,6 +1,5 @@
 #include "sPlcFun.h"
 /*****************************************************************************/
-/*****************************************************************************/
 //软逻辑指令
 void REBOOT(void) reentrant{//软件复位
 	RSTSRC |= 1 << 4;//强制复位
@@ -43,34 +42,6 @@ uint8_t LDN(uint16_t A) reentrant{//脉冲下降沿
 		return true;
 	else
 		return false;
-}
-void T1MS(uint8_t A, uint8_t start, uint16_t value) reentrant{//1MS延时器
-	if(start){
-		if(NVRAM0[(TD_1MS_START + A)] >= value){
-			NVRAM0[(T_1MS_START + (A / 16))] |= 1 << (A % 16);
-		}
-		else{
-			NVRAM0[(T_1MS_START + (A / 16))] &= ~(1 << (A % 16));
-		}		
-	}
-	else{
-		NVRAM0[(T_1MS_START + (A / 16))] &= ~(1 << (A % 16));
-		NVRAM0[(TD_1MS_START + A)] = 0x0;
-	}	
-}
-void T10MS(uint8_t A, uint8_t start, uint16_t value) reentrant{//10MS延时器
-	if(start){
-		if(NVRAM0[(TD_10MS_START + A)] >= value){
-			NVRAM0[(T_10MS_START + (A / 16))] |= 1 << (A % 16);
-		}
-		else{
-			NVRAM0[(T_10MS_START + (A / 16))] &= ~(1 << (A % 16));
-		}
-	}
-	else{
-		NVRAM0[(T_10MS_START + (A / 16))] &= ~(1 << (A % 16));
-		NVRAM0[(TD_10MS_START + A)] = 0x0;
-	}	
 }
 void T100MS(uint8_t A, uint8_t start, uint16_t value) reentrant{//100MS延时器
 	if(start){

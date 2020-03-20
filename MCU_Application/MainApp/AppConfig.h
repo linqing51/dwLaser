@@ -21,15 +21,10 @@
 /*****************************************************************************/
 //SPLC设置
 #define CONFIG_SPLC_ASSERT					1//检查地址范围
-#define CONFIG_SOFTPLC_HWTIME				1000L//1mS
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期 1mS * N
 /*****************************************************************************/
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT				1//看门狗启用
-/*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_INPUT			1//输入IO刷新启用
-/*****************************************************************************/
-#define CONFIG_SPLC_USING_IO_OUTPUT			1//输出IO刷新启用
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_UART1				1//UART1串口启用
 #if CONFIG_SPLC_USING_UART1 == 1
@@ -51,8 +46,6 @@
 #define CONFIG_MB_RTU_SLAVE_ADDRESS			0x01//从设备地址
 #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE		256//发送接收缓冲区
 #define CONFIG_MB_RTU_SLAVE_TIMEOUT			100//接收通讯超时 10mS
-#define CONFIG_MB_RTU_SLAVE_IO_DELAY		1//RX TX切换延时
-/*****************************************************************************/
 /*****************************************************************************/
 #define DISABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 0;
 #define ENABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 1;
