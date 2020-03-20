@@ -5,7 +5,7 @@
 #define DEBUG_LED_OFF						1
 #define CONFIG_SYSCLK                       (22118400L)
 #ifdef C8051F020
-#define SAR_CLK      						2000000L//ADC0时钟 <2.5MHz
+#define SAR_CLK      						1500000L//ADC0时钟 <2.5MHz
 #endif
 #define CONFIG_DEBUG                        0//调试功能
 /*****************************************************************************/

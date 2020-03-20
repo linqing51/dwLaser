@@ -37,7 +37,7 @@ sbit ADCMUX_24_27_OE1 = P0^6;
 sbit ADCMUX_24_27_OE2 = P0^4;
 /*****************************************************************************/
 static xdata adcTempDat_t volatile adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
-static uint8_t volatile idata adcSelect;//ADC通道选择
+static uint8_t adcSelect;//ADC通道选择
 static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
 static void initAdcData(adcTempDat_t *s);
 /*****************************************************************************/
@@ -72,17 +72,12 @@ void initChipAdc(void){//ADC模块初始化
 	//CHIP6
 	ADCMUX_24_27_OE1 = true;
 	ADCMUX_24_27_OE2 = true;
-#ifdef C8051F020
 	ADC0CN = 0x0;//软件触发
-	ADC0CN |= (1 << 6);//AD0TM = 1 启用跟踪
 	ADC0CN |= (1 << 7);//AD0EN = 1 
 	ADC0CF = 0x0;
 	ADC0CF |= (CONFIG_SYSCLK / SAR_CLK) << 3;     // ADC conversion clock = 2.5MHz
 	AMX0CF = 0x00;                      // AIN inputs are single-ended (default)
 	AMX0SL = 0x00;                      // Select AIN0.1 pin as ADC mux input
-	AD0INT = 1;
-	AD0BUSY = 1;//AD0BUSY写入1
-#endif
 	adcSelect = 0;
 	for(i = 0;i <= CONFIG_SPLC_ADC_CHANNLE;i ++){
 		initAdcData(&adcTempDat[i]);
@@ -91,6 +86,9 @@ void initChipAdc(void){//ADC模块初始化
 void chipAdcProcess(void){//循环采集ADC
 	uint16_t result = 0;
 	float ftmp;
+	AD0INT = 0;
+	AD0BUSY = 1;
+	while(!AD0INT)//查询ADC标志
 	result = (ADC0 & 0x0FFF);
 	refreshAdcData(&adcTempDat[adcSelect], result);
 	if(adcSelect >= 0 && adcSelect <= 31){//LD显示值
@@ -1849,8 +1847,6 @@ void chipAdcProcess(void){//循环采集ADC
 			break;
 		}
 	}
-	AD0INT = 0;
-	AD0BUSY = 1;//AD0BUSY写入1
 }
 void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值 
 	uint8_t i;
