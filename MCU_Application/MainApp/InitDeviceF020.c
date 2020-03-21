@@ -59,8 +59,23 @@ void Port_IO_Init()
     // P3.5  -  Unassigned,  Push-Pull,  Digital
     // P3.6  -  Unassigned,  Push-Pull,  Digital
     // P3.7  -  Unassigned,  Push-Pull,  Digital
-
-    P0MDOUT   = 0xF1;
+	//配置交叉开关前设置IO状态避免DAC复位或错误
+	P6 |= (uint8_t)(1 << 3);//DAC CLR0 = 1
+	P5 |= (uint8_t)(1 << 6);//DAC CLR1 = 1
+	P5 |= (uint8_t)(1 << 1);//DAC CLR2 = 1
+	P4 |= (uint8_t)(1 << 2);//DAC CLR3 = 1
+	
+	P6 |= (uint8_t)(1 << 0);//DAC NSS0 = 1
+    P5 |= (uint8_t)(1 << 3);//DAC NSS1 = 1
+	P4 |= (uint8_t)(1 << 6);//DAC NSS2 = 1
+	P4 |= (uint8_t)(1 << 3);//DAC NSS3 = 1
+	
+	P5 &= ~(uint8_t)(1 << 7);//DAC LDAC0 = 0
+	P5 &= ~(uint8_t)(1 << 2);//DAC LDAC1 = 0
+	P4 &= ~(uint8_t)(1 << 5);//DAC LDAC2 = 0
+	P4 &= ~(uint8_t)(1 << 4);//DAC LDAC3 = 0
+	
+	P0MDOUT   = 0xF1;
     P1MDOUT   = 0xFF;
     P2MDOUT   = 0xFF;
     P3MDOUT   = 0xFF;
