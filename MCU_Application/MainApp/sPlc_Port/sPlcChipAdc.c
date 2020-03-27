@@ -88,7 +88,7 @@ void chipAdcProcess(void){//循环采集ADC
 	float ftmp;
 	AD0INT = 0;
 	AD0BUSY = 1;
-	while(!AD0INT)//查询ADC标志
+	while(AD0INT == 0);//查询ADC标志
 	result = (ADC0 & 0x0FFF);
 	refreshAdcData(&adcTempDat[adcSelect], result);
 	if(adcSelect >= 0 && adcSelect <= 31){//LD显示值

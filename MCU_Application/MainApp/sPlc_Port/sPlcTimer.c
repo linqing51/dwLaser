@@ -1,8 +1,8 @@
 #include "sPlcTimer.h"
 /*****************************************************************************/
 void timer0Init(void){//硬件sTimer计时器初始化 100mS
-	Timer0_L = 0xFF;
-	Timer0_H = 0xFF;
+	Timer0_L = 0x0;
+	Timer0_H = 0x0;
 	TH0 = Timer0_H;// Init T0 High register
 	TL0 = Timer0_L;// Init T0 Low register
 	CKCON &= ~(1 << 3);//SYSCLK / 12	
@@ -12,6 +12,7 @@ void timer0Init(void){//硬件sTimer计时器初始化 100mS
 	TR0 = 1;// T0 ON
 }
 static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 100mS
+	uint16_t i;
 	TF0 = 0;
 	TR0 = 0;
 	TH0 = Timer0_H;
@@ -23,5 +24,9 @@ static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 10
 	else{
 		SET(SPCOIL_PS100MS);
 	}
-	setLedRun(LD(SPCOIL_PS100MS));
+	for(i = TD_100MS_START;i < TD_100MS_END;i ++){
+		if(NVRAM0[i] < SHRT_MAX){
+			NVRAM0[i] ++;
+		}
+	}
 }

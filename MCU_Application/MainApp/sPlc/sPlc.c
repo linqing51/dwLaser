@@ -4,16 +4,13 @@ xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
 uint8_t Timer0_L, Timer0_H;
 /******************************************************************************/
-uint8_t getGlobalInterrupt(void){
-	return EA;
-}
 static void updataNvram(void){//更新NVRAM->EPROM
 	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
 static void clearNvram(void){//初始化NVRAM
-	memset()
+	memset((uint8_t*)NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
+	memset((uint8_t*)NVRAM1, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
 }
-memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
 /*****************************************************************************/
 void sPlcInit(void){//软逻辑初始化
 #if CONFIG_SPLC_USING_WDT == 1
@@ -24,9 +21,7 @@ void sPlcInit(void){//软逻辑初始化
 	setLedError(DEBUG_LED_OFF);
 	setLedRun(DEBUG_LED_OFF);
 	setLedDac(DEBUG_LED_OFF);	
-#if CONFIG_SPLC_USING_UART1 == 1
 	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化
-#endif
 #if CONFIG_SPLC_USING_CADC == 1
 	initChipAdc();//初始化ADC模块
 #endif

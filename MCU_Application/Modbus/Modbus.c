@@ -72,12 +72,10 @@ uint8_t SendMessage(void){//This function start to sending messages
     return true;
 }
 void HandleModbusError(char ErrorCode){// Initialise the output buffer. The first byte in the buffer says how many registers we have read
-    setLedError(DEBUG_LED_ON);
 	Tx_Data.function = ErrorCode | 0x80;
     Tx_Data.address = ModbusSlaveAddress;
     Tx_Data.dataLen = 0; 
 	SendMessage();
-	setLedError(DEBUG_LED_OFF);
 }
 
 void HandleModbusReadCoils(void){//Modbus function 01 - ¶ÁÈ¡ÏßÈ¦×´Ì¬
@@ -112,6 +110,7 @@ void HandleModbusReadCoils(void){//Modbus function 01 - ¶ÁÈ¡ÏßÈ¦×´Ì¬
 	}
 }
 void HandleModbusReadInputCoil(void){//Modbus function 02 - ¶ÁÈ¡ÊäÈëÏßÈ¦×´Ì¬
+	HandleModbusError(ERROR_CODE_01);
 }
 void HandleModbusReadHoldingRegisters(void){//Modbus function 03 - Read holding registers
     uint16_t startAddress, numberOfRegisters, i, currentData;
@@ -170,20 +169,20 @@ void HandleModbusWriteSingleRegister(void){//Modbus function 06 - Write single r
     // The message contains the requested start address and number of registers
     address = ((uint16_t) (Rx_Data.dataBuf[0]) << 8) + (uint16_t)(Rx_Data.dataBuf[1]);
     value = ((uint16_t) (Rx_Data.dataBuf[2]) << 8) + (uint16_t)(Rx_Data.dataBuf[3]);
-    // Initialise the output buffer. The first byte in the buffer says how many registers we have read
-    Tx_Data.function = MODBUS_WRITE_SINGLE_REGISTER;
-    Tx_Data.address = ModbusSlaveAddress;
-    Tx_Data.dataLen = 4;
     if(address >= CONFIG_NVRAM_SIZE){
-        HandleModbusError(ERROR_CODE_03);
+		HandleModbusError(ERROR_CODE_02);
 	}
-    else{
+	else{
+		// Initialise the output buffer. The first byte in the buffer says how many registers we have read
+		Tx_Data.function = MODBUS_WRITE_SINGLE_REGISTER;
+		Tx_Data.address = ModbusSlaveAddress;
+		Tx_Data.dataLen = 4;
 		NVRAM0[address] = (int16_t)value;
         for (i = 0; i < 4; ++i){
             Tx_Data.dataBuf[i] = Rx_Data.dataBuf[i];
 		}
-    }
-    SendMessage();
+		SendMessage();
+    }   
 }
 void HandleModbusWriteMultipleCoils(void){//Modbus function 15 - Write multiple coils
 	uint16_t startAddress, numberOfCoil, byteCount, tempAddr, i, j;
@@ -237,7 +236,7 @@ void HandleModbusWriteMultipleRegisters(void){//Modbus function 16 - Write multi
     byteCount = Rx_Data.dataBuf[4];
     // If it is bigger than RegisterNumber return error to Modbus Master
     if((startAddress+numberOfRegisters) > CONFIG_NVRAM_SIZE){
-        HandleModbusError(ERROR_CODE_03);
+        HandleModbusError(ERROR_CODE_02);
 	}
     else{
         // Initialise the output buffer. The first byte in the buffer says how many outputs we have set
@@ -263,7 +262,7 @@ uint8_t RxDataAvailable(void){//RxDataAvailable
 }
 uint8_t CheckRxTimeout(void){//CheckRxTimeout
     // A return value of true indicates there is a timeout    
-    if (modbusTimerValue >= CONFIG_MB_RTU_SLAVE_BUFFER_SIZE){
+    if(modbusTimerValue >= CONFIG_MB_RTU_SLAVE_TIMEOUT){
         modbusTimerValue = 0;
         modbusReceiveCounter = 0;
         return true;

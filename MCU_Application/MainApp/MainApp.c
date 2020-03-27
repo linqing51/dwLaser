@@ -69,10 +69,10 @@ void main(void){
 		}
 		if(LD(T_100MS_START * 16U + 0)){//每100mS执行一次BOX盒子刷新
 			sPlcBoxLedRefresh();
-			T100MS(0, false, 1);
+			T100MS(0, false, 6);
 		}
 		else{
-			T100MS(0, true, 1);
+			T100MS(0, true, 6);
 		}
 		sPlcProcessEnd();
 	}

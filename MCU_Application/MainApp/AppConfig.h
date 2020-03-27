@@ -22,14 +22,11 @@
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期 1mS * N
 /*****************************************************************************/
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_WDT				1//看门狗启用
+#define CONFIG_SPLC_USING_WDT				0//看门狗启用
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_UART1				1//UART1串口启用
-#if CONFIG_SPLC_USING_UART1 == 1
 #define SPLC_UART1							1
-#endif
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_CADC				1//使能ADC模块
+#define CONFIG_SPLC_USING_CADC				0//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			14//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
@@ -39,10 +36,10 @@
 #define CONFIG_SPLC_USING_DAC				1//是能DAC模块
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_MB_RTU_SLAVE		1//是能MODBUS RTU从站
-#define CONFIG_MB_RTU_SLAVE_TIMER			1000L//1000uS
+#define CONFIG_MB_RTU_SLAVE_TIMER			10000L//1000uS
 #define CONFIG_MB_RTU_SLAVE_ADDRESS			0x01//从设备地址
 #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE		256//发送接收缓冲区
-#define CONFIG_MB_RTU_SLAVE_TIMEOUT			100//接收通讯超时 10mS
+#define CONFIG_MB_RTU_SLAVE_TIMEOUT			2//接收通讯超时 10mS
 /*****************************************************************************/
 #define DISABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 0;
 #define ENABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 1;
