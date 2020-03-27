@@ -10,26 +10,20 @@ uint8_t getGlobalInterrupt(void){
 static void updataNvram(void){//更新NVRAM->EPROM
 	memcpy((uint8_t*)NVRAM1, (uint8_t*)NVRAM0, (CONFIG_NVRAM_SIZE * 2));
 }
-/*****************************************************************************/
-static void pcaInit(void){//硬件PCA初始化
+static void clearNvram(void){//初始化NVRAM
+	memset()
 }
+memset(NVRAM0, 0x0, (CONFIG_NVRAM_SIZE * 2));//初始化NVRAM
+/*****************************************************************************/
 void sPlcInit(void){//软逻辑初始化
 #if CONFIG_SPLC_USING_WDT == 1
-	if ((RSTSRC & 0x02) == 0x00){
-		if(RSTSRC == 0x08)
-		{//检测WDT看门狗 看门狗复位后锁定
-			setLedError(DEBUG_LED_ON);
-			setLedRun(DEBUG_LED_ON);
-			setLedDac(DEBUG_LED_OFF);
-			while(1);
-		}
-	}
+	lockWatchDog();//锁定看门狗
+#else
+	disableWatchDog();//屏蔽看门狗
 #endif
 	setLedError(DEBUG_LED_OFF);
 	setLedRun(DEBUG_LED_OFF);
-	setLedDac(DEBUG_LED_OFF);
-	initWatchDog();//看门狗使能
-	disableWatchDog();//屏蔽看门狗
+	setLedDac(DEBUG_LED_OFF);	
 #if CONFIG_SPLC_USING_UART1 == 1
 	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化
 #endif
@@ -43,9 +37,6 @@ void sPlcInit(void){//软逻辑初始化
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
 #endif
 	timer0Init();//初始化硬件计时器模块
-	SET(SPCOIL_ON);
-	setLedError(DEBUG_LED_OFF);
-	SET(SPCOIL_ON);
 	SET(SPCOIL_START_UP);
 }
 void sPlcProcessStart(void){//sPLC轮询起始
@@ -58,9 +49,6 @@ void sPlcProcessStart(void){//sPLC轮询起始
 #if CONFIG_SPLC_USING_CADC == 1
 	chipAdcProcess();//ADC扫描
 #endif
-#if CONFIG_SPLC_USING_WDT == 1
-	feedWatchDog();
-#endif
 }
 void sPlcProcessEnd(void){//sPLC轮询结束
 #if CONFIG_SPLC_USING_WDT == 1
@@ -70,8 +58,5 @@ void sPlcProcessEnd(void){//sPLC轮询结束
 	refreshDac();//更新DAC输出
 #endif
 	updataNvram();//更新NVRAM
-#if CONFIG_SPLC_USING_WDT == 1
-	feedWatchDog();//喂狗
-#endif
 	RES(SPCOIL_START_UP);
 }

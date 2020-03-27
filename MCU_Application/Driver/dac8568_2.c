@@ -60,11 +60,37 @@ static void spi2Write(uint32_t dat){//DAC8568 SPI写入
 	setSYNC2(true);
 }
 void dac8568_2_Init(void){//DAC8568初始化
-	uint32_t tmp = 0;
+	uint32_t tmp;
 	setCLR2(true);
 	setLDAC2(false);
-	tmp = 0x08000001;////Write Sequence for Enabling Internal Reference (Static Mode)
-	spi2Write(tmp);
+	if((RSTSRC & 0x02)){//上电复位
+		tmp = 0x07000000;//Software Reset
+		spi2Write(tmp);
+		tmp = 0x08000001;////Write Sequence for Enabling Internal Reference (Static Mode)
+		spi2Write(tmp);
+		tmp = 0x05000000;//Clear all DAC outputs to zero scale (defaultmode)
+		spi2Write(tmp);
+	}
+	else if(RSTSRC & 0x01){//硬件引脚复位
+		tmp = 0x07000000;//Software Reset
+		spi2Write(tmp);
+		tmp = 0x08000001;////Write Sequence for Enabling Internal Reference (Static Mode)
+		spi2Write(tmp);
+		tmp = 0x05000000;//Clear all DAC outputs to zero scale (defaultmode)
+		spi2Write(tmp);
+	}
+	else if(RSTSRC & 0x04){//时钟丢失检测器标志
+	}
+	else if(RSTSRC == 0x08){//看门狗复位 
+	}
+	else if(RSTSRC == 0x10){//软件强制复位和标志
+		tmp = 0x07000000;//Software Reset
+		spi2Write(tmp);
+		tmp = 0x08000001;////Write Sequence for Enabling Internal Reference (Static Mode)
+		spi2Write(tmp);
+		tmp = 0x05000000;//Clear all DAC outputs to zero scale (defaultmode)
+		spi2Write(tmp);
+	}
 }
 void dac8568_2_WriteDacRegister(uint8_t ch, uint16_t dat){//写入输入寄存器并更新输出
 	uint32_t tmp;

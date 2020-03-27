@@ -10,6 +10,7 @@ static void Reset_Sources_Init()
 {
     WDTCN     = 0xDE;
     WDTCN     = 0xAD;
+	//RSTSRC    = 0x02;//Ê¹ÄÜMONEN
 }
 
 static void DAC_Init()

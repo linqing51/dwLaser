@@ -36,7 +36,7 @@ sbit ADCMUX_24_27_S1 = P0^7;
 sbit ADCMUX_24_27_OE1 = P0^6;
 sbit ADCMUX_24_27_OE2 = P0^4;
 /*****************************************************************************/
-static xdata adcTempDat_t volatile adcTempDat[CONFIG_SPLC_ADC_CHANNLE];
+static xdata adcTempDat_t volatile adcTempDat[60];
 static uint8_t adcSelect;//ADC通道选择
 static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
 static void initAdcData(adcTempDat_t *s);
@@ -75,11 +75,11 @@ void initChipAdc(void){//ADC模块初始化
 	ADC0CN = 0x0;//软件触发
 	ADC0CN |= (1 << 7);//AD0EN = 1 
 	ADC0CF = 0x0;
-	ADC0CF |= (CONFIG_SYSCLK / SAR_CLK) << 3;     // ADC conversion clock = 2.5MHz
-	AMX0CF = 0x00;                      // AIN inputs are single-ended (default)
-	AMX0SL = 0x00;                      // Select AIN0.1 pin as ADC mux input
+	ADC0CF |= (CONFIG_SYSCLK / SAR_CLK) << 3;// ADC conversion clock = 2.5MHz
+	AMX0CF = 0x00;// AIN inputs are single-ended (default)
+	AMX0SL = 0x00;// Select AIN0.1 pin as ADC mux input
 	adcSelect = 0;
-	for(i = 0;i <= CONFIG_SPLC_ADC_CHANNLE;i ++){
+	for(i = 0;i <= 59;i ++){
 		initAdcData(&adcTempDat[i]);
 	}
 }
@@ -95,10 +95,10 @@ void chipAdcProcess(void){//循环采集ADC
 		ftmp = (float)(adcTempDat[adcSelect].out) *  CONFIG_SPLC_ADC_INTERNAL_VREF / 4096.0 / 19.78788 / 0.1;
 		NVRAM0[EM_ADC_0 + adcSelect] = (int16_t)ftmp;
 	}
-	else{//PD显示值
+	else if(adcSelect >=32 && adcSelect <= 59){ //PD显示值
 		NVRAM0[EM_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
 	}
-	if(adcSelect < (CONFIG_SPLC_ADC_CHANNLE - 1)){
+	if(adcSelect < 59){
 		adcSelect ++;
 	}
 	else{
@@ -131,7 +131,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_0_3_OE1 = false;
 			ADCMUX_0_3_OE2 = true;
 			break;
@@ -162,7 +161,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_0_3_OE1 = false;
 			ADCMUX_0_3_OE2 = true;
 			break;
@@ -193,7 +191,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = false;
 			break;
@@ -224,7 +221,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = false;
 			break;
@@ -255,7 +251,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUC_4_7_OE1 = false;
 			ADCMUC_4_7_OE2 = true;
 			break;
@@ -286,7 +281,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUC_4_7_OE1 = false;
 			ADCMUC_4_7_OE2 = true;
 			break;
@@ -317,7 +311,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = false;
 			break;
@@ -348,7 +341,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = false;
 			break;
@@ -379,7 +371,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_8_11_OE1 = false;
 			ADCMUX_8_11_OE2 = true;
 			break;
@@ -410,7 +401,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_8_11_OE1 = false;
 			ADCMUX_8_11_OE2 = true;
 			break;
@@ -441,7 +431,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = false;
 			break;
@@ -472,7 +461,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = false;
 			break;
@@ -503,7 +491,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_12_15_OE1 = false;
 			ADCMUX_12_15_OE2 = true;
 			break;
@@ -534,7 +521,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_12_15_OE1 = false;
 			ADCMUX_12_15_OE2 = true;
 			break;
@@ -565,7 +551,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_12_15_OE1 = true;
 			ADCMUX_12_15_OE2 = false;
 			break;
@@ -596,7 +581,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_12_15_OE1 = true;
 			ADCMUX_12_15_OE2 = false;
 			break;
@@ -627,7 +611,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_16_19_OE1 = false;
 			ADCMUX_16_19_OE2 = true;
 			break;
@@ -658,7 +641,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_16_19_OE1 = false;
 			ADCMUX_16_19_OE2 = true;
 			break;
@@ -689,7 +671,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_16_19_OE1 = true;
 			ADCMUX_16_19_OE2 = false;
 			break;
@@ -720,7 +701,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_16_19_OE1 = true;
 			ADCMUX_16_19_OE2 = false;
 			break;
@@ -751,7 +731,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_20_23_OE1 = false;
 			ADCMUX_20_23_OE2 = true;
 			break;
@@ -784,7 +763,6 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = false;
 			ADCMUX_24_27_S0 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_24_27_OE1 = false;
 			ADCMUX_24_27_OE2 = true;
 			break;
@@ -815,7 +793,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;	
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_20_23_OE1 = true;
 			ADCMUX_20_23_OE2 = false;
 			break;
@@ -846,7 +823,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_20_23_OE1 = 1;
 			ADCMUX_20_23_OE2 = 0;
 			break;
@@ -877,7 +853,6 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = false;
 			ADCMUX_24_27_S0 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_24_27_OE1 = false;
 			ADCMUX_24_27_OE2 = true;
 			break;
@@ -908,7 +883,6 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = true;
 			ADCMUX_24_27_S0 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_24_27_OE1 = false;
 			ADCMUX_24_27_OE2 = true;
 			break;
@@ -939,7 +913,6 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = false;
 			ADCMUX_24_27_S0 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = false;
 			break;
@@ -970,7 +943,6 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = true;
 			ADCMUX_24_27_S0 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = false;
 			break;
@@ -1001,7 +973,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_0_3_OE1 = false;
 			ADCMUX_0_3_OE2 = true;
 			break;
@@ -1032,7 +1003,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_0_3_OE1 = false;
 			ADCMUX_0_3_OE2 = true;
 			break;
@@ -1063,7 +1033,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = false;
 			break;
@@ -1094,7 +1063,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_0_3_OE1 = true;
 			ADCMUX_0_3_OE2 = false;
 			break;
@@ -1125,7 +1093,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUC_4_7_OE1 = false;
 			ADCMUC_4_7_OE2 = true;
 			break;
@@ -1156,7 +1123,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUC_4_7_OE1 = false;
 			ADCMUC_4_7_OE2 = true;
 			break;
@@ -1187,7 +1153,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = false;
 			break;
@@ -1218,7 +1183,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUC_4_7_OE1 = true;
 			ADCMUC_4_7_OE2 = false;
 			break;
@@ -1249,7 +1213,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_8_11_OE1 = false;
 			ADCMUX_8_11_OE2 = true;
 			break;
@@ -1280,7 +1243,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_8_11_OE1 = false;
 			ADCMUX_8_11_OE2 = true;
 			break;
@@ -1311,7 +1273,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = false;
 			break;
@@ -1342,7 +1303,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_8_11_OE1 = true;
 			ADCMUX_8_11_OE2 = false;
 			break;
@@ -1373,7 +1333,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_12_15_OE1 = false;
 			ADCMUX_12_15_OE2 = true;
 			break;
@@ -1404,7 +1363,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_12_15_OE1 = false;
 			ADCMUX_12_15_OE2 = true;
 			break;
@@ -1435,7 +1393,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_12_15_OE1 = true;
 			ADCMUX_12_15_OE2 = false;
 			break;
@@ -1466,7 +1423,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_12_15_OE1 = true;
 			ADCMUX_12_15_OE2 = false;
 			break;
@@ -1497,7 +1453,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_16_19_OE1 = false;
 			ADCMUX_16_19_OE2 = true;
 			break;
@@ -1528,7 +1483,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_16_19_OE1 = false;
 			ADCMUX_16_19_OE2 = true;
 			break;
@@ -1559,7 +1513,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_16_19_OE1 = true;
 			ADCMUX_16_19_OE2 = false;
 			break;
@@ -1590,7 +1543,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_16_19_OE1 = true;
 			ADCMUX_16_19_OE2 = false;
 			break;
@@ -1621,7 +1573,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_20_23_OE1 = false;
 			ADCMUX_20_23_OE2 = true;
 			break;
@@ -1652,7 +1603,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_20_23_OE1 = false;
 			ADCMUX_20_23_OE2 = true;
 			break;
@@ -1683,7 +1633,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_20_23_OE1 = true;
 			ADCMUX_20_23_OE2 = false;
 			break;
@@ -1714,7 +1663,6 @@ void chipAdcProcess(void){//循环采集ADC
 			//CHIP6
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_20_23_OE1 = true;
 			ADCMUX_20_23_OE2 = false;
 			break;
@@ -1745,7 +1693,6 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = false;
 			ADCMUX_24_27_S0 = false;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_24_27_OE1 = false;
 			ADCMUX_24_27_OE2 = true;	
 			break;
@@ -1776,7 +1723,6 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_20_23_S1 = true;
 			ADCMUX_20_23_S0 = false;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_24_27_OE1 = false;
 			ADCMUX_24_27_OE2 = true;	
 			break;
@@ -1807,7 +1753,6 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = false;
 			ADCMUX_24_27_S0 = false;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = false;
 			break;
@@ -1838,7 +1783,6 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_24_27_S1 = true;
 			ADCMUX_24_27_S0 = false;
-			_nop_();_nop_();_nop_();_nop_();_nop_();
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = false;
 			break;

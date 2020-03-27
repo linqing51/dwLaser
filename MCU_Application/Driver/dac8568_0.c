@@ -64,7 +64,34 @@ void dac8568_0_Init(void){//DAC8568初始化
 	uint32_t tmp;
 	setCLR0(true);
 	setLDAC0(false);
-	tmp = 0x08000001;////Write Sequence for Enabling Internal Reference (Static Mode)
+	if((RSTSRC & 0x02)){//上电复位
+		tmp = 0x07000000;//Software Reset
+		spi0Write(tmp);
+		tmp = 0x08000001;////Write Sequence for Enabling Internal Reference (Static Mode)
+		spi0Write(tmp);
+		tmp = 0x05000000;//Clear all DAC outputs to zero scale (defaultmode)
+		spi0Write(tmp);
+	}
+	else if(RSTSRC & 0x01){//硬件引脚复位
+		tmp = 0x07000000;//Software Reset
+		spi0Write(tmp);
+		tmp = 0x08000001;////Write Sequence for Enabling Internal Reference (Static Mode)
+		spi0Write(tmp);
+		tmp = 0x05000000;//Clear all DAC outputs to zero scale (defaultmode)
+		spi0Write(tmp);
+	}
+	else if(RSTSRC & 0x04){//时钟丢失检测器标志
+	}
+	else if(RSTSRC == 0x08){//看门狗复位 
+	}
+	else if(RSTSRC == 0x10){//软件强制复位和标志
+		tmp = 0x07000000;//Software Reset
+		spi0Write(tmp);
+		tmp = 0x08000001;////Write Sequence for Enabling Internal Reference (Static Mode)
+		spi0Write(tmp);
+		tmp = 0x05000000;//Clear all DAC outputs to zero scale (defaultmode)
+		spi0Write(tmp);
+	}
 }
 void dac8568_0_WriteDacRegister(uint8_t ch, uint16_t dat){//写入输入寄存器并更新输出
 	uint32_t tmp;
