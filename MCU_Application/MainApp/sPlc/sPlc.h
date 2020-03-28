@@ -6,29 +6,29 @@
 //线圈寄存器 非保持 8 * 16 = 128BIT
 #define R_START							0
 #define R_END							7
-//数据寄存器 非保持 1个字
+//数据寄存器 非保持 160 
 #define EM_START						8
-#define EM_END							126
+#define EM_END							167
 //延时线圈
 //100MS 1 * 16 = 16BIT
-#define T_100MS_START					127
-#define T_100MS_END						127
+#define T_100MS_START					168
+#define T_100MS_END						168
 //延时计时器 
 //100MS 16
-#define TD_100MS_START					128
-#define TD_100MS_END					143
+#define TD_100MS_START					169
+#define TD_100MS_END					184
 //输入位寄存器 1 * 16 = 16个
-#define X_START							144
-#define X_END							144		
+#define X_START							185
+#define X_END							185		
 //输出位寄存器 1 * 16 = 16个
-#define Y_START							145
-#define Y_END							145
+#define Y_START							186
+#define Y_END							186
 //特殊寄存器 24个字
-#define SPREG_START						146
-#define SPREG_END						169
+#define SPREG_START						187
+#define SPREG_END						210
 //特殊线圈	4 * 16 = 64个
-#define SPCOIL_START					170
-#define SPCOIL_END						173
+#define SPCOIL_START					211
+#define SPCOIL_END						214
 /*****************************************************************************/
 #define EM_ADC_0						(EM_START + 0)//ADC0->MLD0
 #define EM_ADC_1						(EM_START + 1)//ADC1->MLD1
@@ -94,6 +94,7 @@
 #define EM_ADC_61						(EM_START + 61)//ADC50->MPD29
 #define EM_ADC_62						(EM_START + 62)//ADC50->MPD30
 #define EM_ADC_63						(EM_START + 63)//ADC50->MPD31
+
 #define EM_DAC_0						(EM_START + 64)//DAC0
 #define EM_DAC_1						(EM_START + 65)//DAC1
 #define EM_DAC_2						(EM_START + 66)//DAC2
@@ -119,13 +120,10 @@
 #define EM_DAC_22						(EM_START + 86)//DAC22
 #define EM_DAC_23						(EM_START + 87)//DAC23
 #define EM_DAC_24						(EM_START + 88)//DAC24
-#define EM_DAC_25						(EM_START + 89)//DAC25
-#define EM_DAC_26						(EM_START + 90)//DAC26
-#define EM_DAC_27						(EM_START + 91)//DAC27
-#define EM_DAC_28						(EM_START + 92)//DAC28
-#define EM_DAC_29						(EM_START + 93)//DAC29
-#define EM_DAC_30						(EM_START + 94)//DAC30
-#define EM_DAC_31						(EM_START + 95)//DAC31
+#define EM_DAC_25						(EM_START + 89)//DAC24
+#define EM_DAC_26						(EM_START + 90)//DAC24
+#define EM_DAC_27						(EM_START + 91)//DAC24
+
 /*****************************************************************************/
 #define CONFIG_NVRAM_SIZE 				(SPCOIL_END + 1)
 /*****************************************************************************/

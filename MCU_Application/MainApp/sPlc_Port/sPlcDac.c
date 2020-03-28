@@ -127,18 +127,6 @@ void refreshDac(void){//Ë¢ÐÂDAC
 	if(NVRAM0[EM_DAC_27] != NVRAM1[EM_DAC_27]){//CH27
 		dac8568_3_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_27]);
 	}
-	if(NVRAM0[EM_DAC_28] != NVRAM1[EM_DAC_28]){//CH28
-		dac8568_3_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_28]);
-	}
-	if(NVRAM0[EM_DAC_29] != NVRAM1[EM_DAC_29]){//CH29
-		dac8568_3_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_29]);
-	}
-	if(NVRAM0[EM_DAC_30] != NVRAM1[EM_DAC_30]){//CH30
-		dac8568_3_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_31]);
-	}
-	if(NVRAM0[EM_DAC_31] != NVRAM1[EM_DAC_31]){//CH31
-		dac8568_3_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_31]);
-	}
 }
 void initChipDac(void){//³õÊ¼»¯DAC
 	dac8568_0_Init();

@@ -3,9 +3,10 @@
 /*****************************************************************************/
 #include "appConfig.h"
 /*****************************************************************************/
-uint8_t getGlobalInterrupt(void);
 void setLedRun(uint8_t st);
+void setLedDebug(uint8_t st);
 uint8_t getLedRun(void);
+uint8_t getLedDebug(void);
 void setLedDac(uint8_t st);
 uint8_t getLedDac(void);
 void setLedError(uint8_t st);

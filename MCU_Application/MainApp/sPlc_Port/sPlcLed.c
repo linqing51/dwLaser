@@ -1,6 +1,6 @@
 #include "sPlcLed.h"
 /*****************************************************************************/
-void setLedRun(uint8_t idata st){//SETLED RUN P7_0
+void setLedRun(uint8_t st){//SETLED RUN P7_0
 	if(st){
 		P7 |= (uint8_t)(1 << 0);
 	}
@@ -11,7 +11,18 @@ void setLedRun(uint8_t idata st){//SETLED RUN P7_0
 uint8_t getLedRun(void){//GET LED RUN P7_0
 	return (uint8_t)((P7 >> 0) & 0x01);
 }
-void setLedDac(uint8_t idata st){//SET LED DAC P7_2
+void setLedDebug(uint8_t st){//SETLED DEBUG P7_1
+	if(st){
+		P7 |= (uint8_t)(1 << 1);
+	}
+	else{
+		P7 &= ~(uint8_t)(1 << 1);
+	}
+}
+uint8_t getLedDebug(void){//GET LED DEBUG
+	return (uint8_t)((P7 >> 3) & 0x01);
+}
+void setLedDac(uint8_t st){//SET LED DAC P7_2
 	if(st){
 		P7 |= (uint8_t)(1 << 2);
 	}
@@ -22,7 +33,7 @@ void setLedDac(uint8_t idata st){//SET LED DAC P7_2
 uint8_t getLedDac(void){//GET LED DAC P7_2
 	return (uint8_t)((P7 >> 2) & 0x01);
 }
-void setLedError(uint8_t idata st){//SET LED ERROR P7_3
+void setLedError(uint8_t st){//SET LED ERROR P7_3
 	if(st){
 		P7 |= (uint8_t)(1 << 3);
 	}

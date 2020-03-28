@@ -18,9 +18,25 @@ void sPlcInit(void){//软逻辑初始化
 #else
 	disableWatchDog();//屏蔽看门狗
 #endif
-	setLedError(DEBUG_LED_OFF);
-	setLedRun(DEBUG_LED_OFF);
-	setLedDac(DEBUG_LED_OFF);	
+	setLedRun(LED_OFF);
+	setLedDebug(LED_OFF);
+	setLedDac(LED_OFF);
+	setLedError(LED_OFF);
+	if((RSTSRC & 0x02)){//上电复位
+		setLedRun(LED_ON);
+	}
+	else if(RSTSRC & 0x01){//硬件引脚复位
+		setLedDebug(LED_ON);
+	}
+	else if(RSTSRC & 0x04){//时钟丢失检测器标志
+		setLedDac(LED_ON);
+	}
+	else if(RSTSRC & 0x08){//看门狗复位 
+		setLedError(LED_ON);
+	}
+	else if(RSTSRC & 0x10){//软件强制复位和标志
+	}
+	clearNvram();
 	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化
 #if CONFIG_SPLC_USING_CADC == 1
 	initChipAdc();//初始化ADC模块

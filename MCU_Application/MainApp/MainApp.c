@@ -68,7 +68,7 @@ void main(void){
 			RES(R_BOX_RED_SENDED);
 		}
 		if(LD(T_100MS_START * 16U + 0)){//每100mS执行一次BOX盒子刷新
-			sPlcBoxLedRefresh();
+			//sPlcBoxLedRefresh();
 			T100MS(0, false, 6);
 		}
 		else{

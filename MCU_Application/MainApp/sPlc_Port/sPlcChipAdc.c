@@ -85,15 +85,13 @@ void initChipAdc(void){//ADC模块初始化
 }
 void chipAdcProcess(void){//循环采集ADC
 	uint16_t result = 0;
-	float ftmp;
 	AD0INT = 0;
 	AD0BUSY = 1;
 	while(AD0INT == 0);//查询ADC标志
 	result = (ADC0 & 0x0FFF);
 	refreshAdcData(&adcTempDat[adcSelect], result);
 	if(adcSelect >= 0 && adcSelect <= 31){//LD显示值
-		ftmp = (float)(adcTempDat[adcSelect].out) *  CONFIG_SPLC_ADC_INTERNAL_VREF / 4096.0 / 19.78788 / 0.1;
-		NVRAM0[EM_ADC_0 + adcSelect] = (int16_t)ftmp;
+		NVRAM0[EM_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
 	}
 	else if(adcSelect >=32 && adcSelect <= 59){ //PD显示值
 		NVRAM0[EM_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;

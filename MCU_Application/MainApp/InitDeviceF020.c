@@ -6,25 +6,20 @@
 
 // Peripheral specific initialization functions,
 // Called from the Init_Device() function
-static void Reset_Sources_Init()
-{
+static void Reset_Sources_Init(){
     WDTCN     = 0xDE;
     WDTCN     = 0xAD;
-	//RSTSRC    = 0x02;//Ê¹ÄÜMONEN
 }
 
-static void DAC_Init()
-{
+static void DAC_Init(){
     DAC0CN    = 0x80;
 }
 
-static void Voltage_Reference_Init()
-{
+static void Voltage_Reference_Init(){
     REF0CN    = 0x07;
 }
 
-void Port_IO_Init()
-{
+void Port_IO_Init(){
     // P0.0  -  TX0 (UART0), Push-Pull,  Digital
     // P0.1  -  RX0 (UART0), Open-Drain, Digital
     // P0.2  -  TX1 (UART1), Open-Drain, Digital
@@ -85,8 +80,7 @@ void Port_IO_Init()
     XBR2      = 0x44;
 }
 
-static void Oscillator_Init()
-{
+static void Oscillator_Init(){
     int i = 0;
     OSCXCN    = 0x67;
     for (i = 0; i < 3000; i++);  // Wait 1ms for initialization
@@ -94,14 +88,12 @@ static void Oscillator_Init()
     OSCICN    = 0x0F;
 }
 
-static void Interrupts_Init()
-{
+static void Interrupts_Init(){
 }
 
 // Initialization function for device,
 // Call Init_Device() from your main program
-void initDeviceF020(void)
-{
+void initDeviceF020(void){
     Reset_Sources_Init();
     DAC_Init();
     Voltage_Reference_Init();

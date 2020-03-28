@@ -1,8 +1,8 @@
 #ifndef __APPCONFIG_H__
 #define __APPCONFIG_H__
 /*****************************************************************************/
-#define DEBUG_LED_ON						0
-#define DEBUG_LED_OFF						1
+#define LED_ON						0
+#define LED_OFF						1
 #define CONFIG_SYSCLK                       (22118400L)
 #define SAR_CLK      						1500000L//ADC0时钟 <2.5MHz
 /*****************************************************************************/
@@ -25,7 +25,7 @@
 /*****************************************************************************/
 #define SPLC_UART1							1
 /*****************************************************************************/
-#define CONFIG_SPLC_USING_CADC				0//使能ADC模块
+#define CONFIG_SPLC_USING_CADC				1//使能ADC模块
 #define CONFIG_SPLC_ADC_FILTER_TAP			14//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
@@ -38,7 +38,7 @@
 #define CONFIG_MB_RTU_SLAVE_TIMER			10000L//10mS
 #define CONFIG_MB_RTU_SLAVE_ADDRESS			0x01//从设备地址
 #define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE		270//发送接收缓冲区
-#define CONFIG_MB_RTU_SLAVE_TIMEOUT			100//接收通讯超时 1000mS
+#define CONFIG_MB_RTU_SLAVE_TIMEOUT			1000//接收通讯超时 1000mS
 /*****************************************************************************/
 #define DISABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 0;
 #define ENABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 1;
