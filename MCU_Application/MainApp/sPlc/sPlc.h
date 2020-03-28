@@ -30,6 +30,84 @@
 #define SPCOIL_START					211
 #define SPCOIL_END						214
 /*****************************************************************************/
+#define BOX_GLED_0						(R_START + 0)//指示盒子绿灯0
+#define BOX_GLED_1						(R_START + 1)//指示盒子绿灯1
+#define BOX_GLED_2						(R_START + 2)//指示盒子绿灯2
+#define BOX_GLED_3						(R_START + 3)//指示盒子绿灯3
+#define BOX_GLED_4						(R_START + 4)//指示盒子绿灯4
+#define BOX_GLED_5						(R_START + 5)//指示盒子绿灯5
+#define BOX_GLED_6						(R_START + 6)//指示盒子绿灯6
+#define BOX_GLED_7						(R_START + 7)//指示盒子绿灯7
+#define BOX_GLED_8						(R_START + 8)//指示盒子绿灯8
+#define BOX_GLED_9						(R_START + 9)//指示盒子绿灯9
+#define BOX_GLED_10						(R_START + 10)//指示盒子绿灯10
+#define BOX_GLED_11						(R_START + 11)//指示盒子绿灯11
+#define BOX_GLED_12						(R_START + 12)//指示盒子绿灯12
+#define BOX_GLED_13						(R_START + 13)//指示盒子绿灯13
+#define BOX_GLED_14						(R_START + 14)//指示盒子绿灯14
+#define BOX_GLED_15						(R_START + 15)//指示盒子绿灯15
+#define BOX_GLED_16						(R_START + 16)//指示盒子绿灯16
+#define BOX_GLED_17						(R_START + 17)//指示盒子绿灯17
+#define BOX_GLED_18						(R_START + 18)//指示盒子绿灯18
+#define BOX_GLED_19						(R_START + 19)//指示盒子绿灯19
+#define BOX_GLED_20						(R_START + 20)//指示盒子绿灯20
+#define BOX_GLED_21						(R_START + 21)//指示盒子绿灯21
+#define BOX_GLED_22						(R_START + 22)//指示盒子绿灯22
+#define BOX_GLED_23						(R_START + 23)//指示盒子绿灯23
+#define BOX_GLED_24						(R_START + 24)//指示盒子绿灯24
+
+#define BOX_RLED_0						(R_START + 32)//指示盒子红灯0
+#define BOX_RLED_1						(R_START + 33)//指示盒子红灯1
+#define BOX_RLED_2						(R_START + 34)//指示盒子红灯2
+#define BOX_RLED_3						(R_START + 35)//指示盒子红灯3
+#define BOX_RLED_4						(R_START + 36)//指示盒子红灯4
+#define BOX_RLED_5						(R_START + 37)//指示盒子红灯5
+#define BOX_RLED_6						(R_START + 38)//指示盒子红灯6
+#define BOX_RLED_7						(R_START + 39)//指示盒子红灯7
+#define BOX_RLED_8						(R_START + 40)//指示盒子红灯8
+#define BOX_RLED_9						(R_START + 41)//指示盒子红灯9
+#define BOX_RLED_10						(R_START + 42)//指示盒子红灯10
+#define BOX_RLED_11						(R_START + 43)//指示盒子红灯11
+#define BOX_RLED_12						(R_START + 44)//指示盒子红灯12
+#define BOX_RLED_13						(R_START + 45)//指示盒子红灯13
+#define BOX_RLED_14						(R_START + 46)//指示盒子红灯14
+#define BOX_RLED_15						(R_START + 47)//指示盒子红灯15
+#define BOX_RLED_16						(R_START + 48)//指示盒子红灯16
+#define BOX_RLED_17						(R_START + 49)//指示盒子红灯17
+#define BOX_RLED_18						(R_START + 50)//指示盒子红灯18
+#define BOX_RLED_19						(R_START + 51)//指示盒子红灯19
+#define BOX_RLED_20						(R_START + 52)//指示盒子红灯20
+#define BOX_RLED_21						(R_START + 53)//指示盒子红灯21
+#define BOX_RLED_22						(R_START + 54)//指示盒子红灯22
+#define BOX_RLED_23						(R_START + 55)//指示盒子红灯23
+#define BOX_RLED_24						(R_START + 56)//指示盒子红灯24
+
+#define PLC_ALARM_0						(R_START + 64)
+#define PLC_ALARM_1						(R_START + 65)
+#define PLC_ALARM_2						(R_START + 66)
+#define PLC_ALARM_3						(R_START + 67)
+#define PLC_ALARM_4						(R_START + 68)
+#define PLC_ALARM_5						(R_START + 69)
+#define PLC_ALARM_6						(R_START + 70)
+#define PLC_ALARM_7						(R_START + 71)
+#define PLC_ALARM_8						(R_START + 72)
+#define PLC_ALARM_9						(R_START + 73)
+#define PLC_ALARM_10					(R_START + 74)
+#define PLC_ALARM_11					(R_START + 75)
+#define PLC_ALARM_12					(R_START + 76)
+#define PLC_ALARM_13					(R_START + 77)
+#define PLC_ALARM_14					(R_START + 78)
+#define PLC_ALARM_15					(R_START + 79)
+#define PLC_ALARM_16					(R_START + 80)
+#define PLC_ALARM_17					(R_START + 81)
+#define PLC_ALARM_18					(R_START + 82)
+#define PLC_ALARM_19					(R_START + 83)
+#define PLC_ALARM_20					(R_START + 84)
+#define PLC_ALARM_21					(R_START + 85)
+#define PLC_ALARM_22					(R_START + 86)
+#define PLC_ALARM_23					(R_START + 87)
+#define PLC_ALARM_24					(R_START + 88)
+
 #define EM_ADC_0						(EM_START + 0)//ADC0->MLD0
 #define EM_ADC_1						(EM_START + 1)//ADC1->MLD1
 #define EM_ADC_2						(EM_START + 2)//ADC2->MLD2
@@ -129,9 +207,10 @@
 /*****************************************************************************/
 #define SPCOIL_ON						(SPCOIL_START * 16 + 0)//长通线圈
 #define SPCOIL_START_UP					(SPCOIL_START * 16 + 1)//初次上电
-#define SPCOIL_PS100MS					(SPCOIL_START * 16 + 4)//100mS	
-#define SPCOIL_PS1000MS					(SPCOIL_START * 16 + 5)//1000mS	
-#define SPCOIL_WATCHDOG					(SPCOIL_START * 16 + 15)//看门狗溢出
+#define SPCOIL_DELAY_DAC_INIT			(SPCOIL_START * 16 + 2)//DAC延时初始化
+#define SPCOIL_DELAY_DAC_RUN			(SPCOIL_START * 16 + 3)//DAC延时运行
+#define SPCOIL_PS100MS					(SPCOIL_START * 16 + 4)//100mS		
+
 #define SPCOIL_UART0_SEND_BUSY			(SPCOIL_START * 16 + 16)//UART1发送忙
 #define SPCOIL_UART0_RECV_BUSY			(SPCOIL_START * 16 + 17)//UART1接收忙
 #define SPCOIL_UART0_SEND_DONE			(SPCOIL_START * 16 + 18)//发送完成
@@ -160,7 +239,7 @@
 /*****************************************************************************/
 extern xdata int16_t volatile NVRAM0[CONFIG_NVRAM_SIZE];//掉电保持寄存器 当前
 extern xdata int16_t volatile NVRAM1[CONFIG_NVRAM_SIZE];//掉电保持寄存器 上一次
-extern uint8_t Timer0_L, Timer0_H;
+extern uint8_t Timer0_L, Timer0_H, DelayCounter;
 /*****************************************************************************/
 void sPlcInit(void);//软逻辑初始化
 extern void timer0Init(void);

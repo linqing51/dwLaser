@@ -1,6 +1,7 @@
 #include "sPlcTimer.h"
-/*****************************************************************************/
+/*****************************************************************************/ 
 void timer0Init(void){//硬件sTimer计时器初始化 100mS
+	DelayCounter = 0;
 	Timer0_L = 0x0;
 	Timer0_H = 0x0;
 	TH0 = Timer0_H;// Init T0 High register
@@ -18,6 +19,12 @@ static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 10
 	TH0 = Timer0_H;
 	TL0 = Timer0_L;
 	TR0 = 1;
+	if(DelayCounter < 0xFF){
+		DelayCounter ++;
+		if(DelayCounter >= 80){
+			SET(SPCOIL_DELAY_DAC_INIT);
+		}
+	}
 	if(LD(SPCOIL_PS100MS)){//ON
 		RES(SPCOIL_PS100MS);
 	}

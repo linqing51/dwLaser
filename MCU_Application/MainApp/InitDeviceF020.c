@@ -83,9 +83,18 @@ void Port_IO_Init(){
 static void Oscillator_Init(){
     int i = 0;
     OSCXCN    = 0x67;
-    for (i = 0; i < 3000; i++);  // Wait 1ms for initialization
+    for (i = 0; i < 3000; i++){// Wait 1ms for initialization
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+		_nop_();
+	}
     while ((OSCXCN & 0x80) == 0);
     OSCICN    = 0x0F;
+	OSCICN |= 0x80;
 }
 
 static void Interrupts_Init(){
