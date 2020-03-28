@@ -25,7 +25,6 @@ void URECV(uint16_t port, uint16_t recvBufAdr, uint16_t length){//串口接收
 	}
 }
 void Uart1Isr() interrupt INTERRUPT_UART1{//UART1中断
-	DISABLE_INTERRUPT;
 	if(SCON1 & 0x02){//TI1 == 1  
 		SCON1 &= 0xFD;//TI1 = 0
 		if(NVRAM0[SPREG_UART1_SEND_NUM] < NVRAM0[SPREG_UART1_SEND_LENGTH]){//
@@ -49,7 +48,6 @@ void Uart1Isr() interrupt INTERRUPT_UART1{//UART1中断
 			RES(SPCOIL_UART1_RECV_BUSY);
 		}
 	}   
-	ENABLE_INTERRUPT;
 }
 
 void initUart1(uint32_t baudrate){//指示盒串口初始化

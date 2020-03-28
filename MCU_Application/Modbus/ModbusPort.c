@@ -36,7 +36,7 @@ void initModbusTimer(void){//初始化MODBUS计时器 10mS TIMER1
 	ET1 = 1; //开中断T1
 }
 static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
-	ES0 = 0;
+	//ES0 = 0;
 	TI0 = 0;
 	SBUF0 = *dt;
 	while( !TI0 ){
@@ -45,7 +45,7 @@ static void modbusSerialSendbyte(uint8_t *dt){//串口发送一个字节
 #endif
 	}
 	TI0 = 0;
-	ES0 = 1;
+	//ES0 = 1;
 }
 void modBusUartInitialise(uint32_t baudrate){// UART Initialize for Microconrollers, yes you can use another phsycal layer!
     initModbusSerial(baudrate);

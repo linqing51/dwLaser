@@ -42,7 +42,7 @@ void sPlcBoxLedRefresh(void){//ˢ�µ�״̬
 		NVRAM0[BOX_SEND_BFADDR + 0] = BOX_CMD_STX;
 		NVRAM0[BOX_SEND_BFADDR + 1] = 0x00;
 		NVRAM0[BOX_SEND_BFADDR + 2] = 0x02;
-		for(i = 3;i < 28;i ++){
+		for(i = 3;i < 28;i ++){ 
 			if(LD(R_START * 16 + 32 + i -3)){
 				NVRAM0[BOX_SEND_BFADDR + i] = 0xAA;
 			}

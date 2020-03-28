@@ -5,9 +5,8 @@
 #define DEBUG_LED_OFF						1
 #define CONFIG_SYSCLK                       (22118400L)
 #define SAR_CLK      						1500000L//ADC0时钟 <2.5MHz
-#define CONFIG_DEBUG                        0//调试功能
 /*****************************************************************************/
-#define CONFIG_UART0_BAUDRATE				115200//串口波特率
+#define CONFIG_UART0_BAUDRATE				57600//串口波特率
 #define CONFIG_UART0_PARITY					NONE
 #define CONFIG_UART0_STOPBIT				1
 #define CONFIG_UART0_DATABIT				8
@@ -36,10 +35,10 @@
 #define CONFIG_SPLC_USING_DAC				1//是能DAC模块
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_MB_RTU_SLAVE		1//是能MODBUS RTU从站
-#define CONFIG_MB_RTU_SLAVE_TIMER			10000L//1000uS
+#define CONFIG_MB_RTU_SLAVE_TIMER			10000L//10mS
 #define CONFIG_MB_RTU_SLAVE_ADDRESS			0x01//从设备地址
-#define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE		256//发送接收缓冲区
-#define CONFIG_MB_RTU_SLAVE_TIMEOUT			2//接收通讯超时 10mS
+#define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE		270//发送接收缓冲区
+#define CONFIG_MB_RTU_SLAVE_TIMEOUT			100//接收通讯超时 1000mS
 /*****************************************************************************/
 #define DISABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 0;
 #define ENABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 1;
