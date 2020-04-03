@@ -249,7 +249,8 @@ void HandleModbusWriteMultipleRegisters(void){//Modbus function 16 - Write multi
         Tx_Data.dataBuf[3] = Rx_Data.dataBuf[3];
         // Output data buffer is exact copy of input buffer
         for (i = 0;i < numberOfRegisters;i ++){
-            value = (uint16_t)((Rx_Data.dataBuf[5 + 2 * i] << 8) & 0xFF00) + (uint16_t)((Rx_Data.dataBuf[6 + 2 * i]) & 0x00FF);
+			value = ((uint16_t) (Rx_Data.dataBuf[2 * i + 5]) << 8) + (uint16_t)(Rx_Data.dataBuf[2 * i + 6]);
+			//value = (uint16_t)((Rx_Data.dataBuf[5 + 2 * i] << 8) & 0xFF00) + (uint16_t)((Rx_Data.dataBuf[6 + 2 * i]) & 0x00FF);
             NVRAM0[startAddress + i] = (int16_t)value;
         }
         SendMessage();
