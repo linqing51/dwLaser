@@ -38,13 +38,69 @@ void selfTestDac(void){//自测DAC软件
 	dac8568_3_WriteDacRegister(0x6, 40000);
 	dac8568_3_WriteDacRegister(0x7, 40000);
 }
+void forceRefreshDac(void){//强制刷新DAC
+	//CH0
+	dac8568_0_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_0]);
+	DAC0 = (uint16_t)NVRAM0[EM_DAC_0];
+	//CH1
+	dac8568_0_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_1]);
+	DAC1 = (uint16_t)NVRAM0[EM_DAC_1];
+	//CH2
+	dac8568_0_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_2]);
+	//CH3
+	dac8568_0_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_3]);
+	//CH4
+	dac8568_0_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_4]);
+	//CH5
+	dac8568_0_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_5]);
+	//CH6
+	dac8568_0_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_6]);
+	//CH7
+	dac8568_0_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_7]);
+	//CH8
+	dac8568_1_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_8]);
+	//CH9
+	dac8568_1_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_9]);
+	//CH10
+	dac8568_1_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_10]);
+	//CH11
+	dac8568_1_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_11]);
+	//CH12
+	dac8568_1_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_12]);
+	//CH13
+	dac8568_1_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_13]);
+	//CH14
+	dac8568_1_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_14]);
+	//CH15
+	dac8568_1_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_15]);
+	//CH16
+	dac8568_2_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_16]);
+	//CH17
+	dac8568_2_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_17]);
+	//CH18
+	dac8568_2_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_18]);
+	//CH19
+	dac8568_2_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_19]);
+	//CH20
+	dac8568_2_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_20]);
+	//CH21
+	dac8568_2_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_21]);
+	//CH22
+	dac8568_2_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_22]);
+	//CH23
+	dac8568_2_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_23]);
+	//CH24
+	dac8568_3_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_24]);
+}
 void refreshDac(void){//刷新DAC
 	//LD板0
 	if(NVRAM0[EM_DAC_0] != NVRAM1[EM_DAC_0]){//CH0
 		dac8568_0_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_0]);
+		DAC0 = (uint16_t)NVRAM0[EM_DAC_0];
 	}
 	if(NVRAM0[EM_DAC_1] != NVRAM1[EM_DAC_1]){//CH1
 		dac8568_0_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_1]);
+		DAC1 = (uint16_t)NVRAM0[EM_DAC_1];
 	}
 	if(NVRAM0[EM_DAC_2] != NVRAM1[EM_DAC_2]){//CH2
 		dac8568_0_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_2]);
@@ -118,21 +174,15 @@ void refreshDac(void){//刷新DAC
 	if(NVRAM0[EM_DAC_24] != NVRAM1[EM_DAC_24]){//CH24
 		dac8568_3_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_24]);
 	}
-	if(NVRAM0[EM_DAC_25] != NVRAM1[EM_DAC_25]){//CH25
-		dac8568_3_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_26]);
-	}
-	if(NVRAM0[EM_DAC_26] != NVRAM1[EM_DAC_26]){//CH26
-		dac8568_3_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_26]);
-	}
-	if(NVRAM0[EM_DAC_27] != NVRAM1[EM_DAC_27]){//CH27
-		dac8568_3_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_27]);
-	}
 }
 void initChipDac(void){//初始化DAC
 	dac8568_0_Init();
 	dac8568_1_Init();
 	dac8568_2_Init();
 	dac8568_3_Init();
+	DAC0 = 0x0;
+    DAC1 = 0x0;
+	forceRefreshDac();
 }
 
 

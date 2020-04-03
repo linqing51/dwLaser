@@ -33,6 +33,7 @@
 #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DAC				1//是能DAC模块
+#define CONFIG_SPLC_DAC_DELAY_INIT_TIME		60//DAC延时初始化
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_MB_RTU_SLAVE		1//是能MODBUS RTU从站
 #define CONFIG_MB_RTU_SLAVE_TIMER			10000L//10mS

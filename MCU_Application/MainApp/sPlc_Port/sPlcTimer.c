@@ -21,7 +21,7 @@ static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 10
 	TR0 = 1;
 	if(DelayCounter < 0xFF){
 		DelayCounter ++;
-		if(DelayCounter >= 80){
+		if(DelayCounter >= CONFIG_SPLC_DAC_DELAY_INIT_TIME){
 			SET(SPCOIL_DELAY_DAC_INIT);
 		}
 	}

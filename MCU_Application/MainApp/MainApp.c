@@ -80,6 +80,12 @@ void main(void){
 		}
 		if(LD(T_100MS_START * 16U + 0)){//每100mS执行一次BOX盒子刷新
 			sPlcBoxLedRefresh();
+			if(getLedRun()){
+				setLedRun(LED_OFF);
+			}
+			else{
+				setLedRun(LED_ON);
+			}
 			T100MS(0, false, 6);
 		}
 		else{

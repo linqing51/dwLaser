@@ -12,7 +12,8 @@ static void Reset_Sources_Init(){
 }
 
 static void DAC_Init(){
-    DAC0CN    = 0x80;
+	DAC0CN    = 0x84;
+    DAC1CN    = 0x84;
 }
 
 static void Voltage_Reference_Init(){
@@ -84,12 +85,6 @@ static void Oscillator_Init(){
     int i = 0;
     OSCXCN    = 0x67;
     for (i = 0; i < 3000; i++){// Wait 1ms for initialization
-		_nop_();
-		_nop_();
-		_nop_();
-		_nop_();
-		_nop_();
-		_nop_();
 		_nop_();
 	}
     while ((OSCXCN & 0x80) == 0);
