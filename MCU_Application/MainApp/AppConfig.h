@@ -38,7 +38,7 @@
 #define CONFIG_SPLC_USING_MB_RTU_SLAVE		1//是能MODBUS RTU从站
 #define CONFIG_MB_RTU_SLAVE_TIMER			10000L//10mS
 #define CONFIG_MB_RTU_SLAVE_ADDRESS			0x01//从设备地址
-#define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE		270//发送接收缓冲区
+#define CONFIG_MB_RTU_SLAVE_BUFFER_SIZE		280//发送接收缓冲区
 #define CONFIG_MB_RTU_SLAVE_TIMEOUT			1000//接收通讯超时 1000mS
 /*****************************************************************************/
 #define DISABLE_MODBUS_SERIAL_INTERRUPT		ES0 = 0;

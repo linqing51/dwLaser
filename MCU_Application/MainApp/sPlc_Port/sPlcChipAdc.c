@@ -36,7 +36,7 @@ sbit ADCMUX_24_27_S1 = P0^7;
 sbit ADCMUX_24_27_OE1 = P0^6;
 sbit ADCMUX_24_27_OE2 = P0^4;
 /*****************************************************************************/
-static xdata adcTempDat_t volatile adcTempDat[60];
+static xdata adcTempDat_t adcTempDat[50];
 static uint8_t adcSelect;//ADC通道选择
 static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
 static void initAdcData(adcTempDat_t *s);
@@ -79,9 +79,10 @@ void initChipAdc(void){//ADC模块初始化
 	AMX0CF = 0x00;// AIN inputs are single-ended (default)
 	AMX0SL = 0x00;// Select AIN0.1 pin as ADC mux input
 	adcSelect = 0;
-	for(i = 0;i <= 59;i ++){
+	for(i = 0;i < 50;i ++){
 		initAdcData(&adcTempDat[i]);
 	}
+	adcSelect = 0;
 }
 void chipAdcProcess(void){//循环采集ADC
 	uint16_t result = 0;
@@ -90,16 +91,9 @@ void chipAdcProcess(void){//循环采集ADC
 	while(AD0INT == 0);//查询ADC标志
 	result = (ADC0 & 0x0FFF);
 	refreshAdcData(&adcTempDat[adcSelect], result);
-	if(adcSelect >= 0 && adcSelect <= 31){//LD显示值
-		NVRAM0[EM_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
-	}
-	else if(adcSelect >=32 && adcSelect <= 59){ //PD显示值
-		NVRAM0[EM_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
-	}
-	if(adcSelect < 59){
-		adcSelect ++;
-	}
-	else{
+	NVRAM0[EM_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
+	adcSelect ++;
+	if(adcSelect >= 50){
 		adcSelect = 0;
 	}
 	switch(adcSelect){
@@ -855,97 +849,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_24_27_OE2 = true;
 			break;
 		}
-		case 25:{//MLD25
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_24_27_S1 = true;
-			ADCMUX_24_27_S0 = true;
-			ADCMUX_24_27_OE1 = false;
-			ADCMUX_24_27_OE2 = true;
-			break;
-		}
-		case 26:{//MLD26
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_24_27_S1 = false;
-			ADCMUX_24_27_S0 = true;
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = false;
-			break;
-		}
-		case 27:{//MLD27
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_24_27_S1 = true;
-			ADCMUX_24_27_S0 = true;
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = false;
-			break;
-		}
-		case 32:{//MPD0
+		case 25:{//MPD0
 			//ADC MUX
 			AMX0SL = 0x00;
 			//CHIP0
@@ -975,7 +879,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_0_3_OE2 = true;
 			break;
 		}
-		case 33:{//MPD1
+		case 26:{//MPD1
 			//ADC MUX
 			AMX0SL = 0x00;
 			//CHIP0
@@ -1005,7 +909,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_0_3_OE2 = true;
 			break;
 		}
-		case 34:{//MPD2
+		case 27:{//MPD2
 			//ADC MUX
 			AMX0SL = 0x00;
 			//CHIP0
@@ -1035,7 +939,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_0_3_OE2 = false;
 			break;
 		}
-		case 35:{//MPD3
+		case 28:{//MPD3
 			//ADC MUX
 			AMX0SL = 0x00;
 			//CHIP0
@@ -1065,7 +969,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_0_3_OE2 = false;
 			break;
 		}
-		case 36:{//MPD4
+		case 29:{//MPD4
 			//ADC MUX
 			AMX0SL = 0x01;
 			//CHIP0
@@ -1095,7 +999,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUC_4_7_OE2 = true;
 			break;
 		}
-		case 37:{//MPD5
+		case 30:{//MPD5
 			//ADC MUX
 			AMX0SL = 0x01;
 			//CHIP0
@@ -1125,7 +1029,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUC_4_7_OE2 = true;
 			break;
 		}
-		case 38:{//MPD6
+		case 31:{//MPD6
 			//ADC MUX
 			AMX0SL = 0x01;
 			//CHIP0
@@ -1155,7 +1059,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUC_4_7_OE2 = false;
 			break;
 		}
-		case 39:{//MPD7
+		case 32:{//MPD7
 			//ADC MUX
 			AMX0SL = 0x01;
 			//CHIP0
@@ -1185,7 +1089,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUC_4_7_OE2 = false;
 			break;
 		}
-		case 40:{//MPD8
+		case 33:{//MPD8
 			//ADC MUX
 			AMX0SL = 0x02;
 			//CHIP0
@@ -1215,7 +1119,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_8_11_OE2 = true;
 			break;
 		}
-		case 41:{//MPD9
+		case 34:{//MPD9
 			//ADC MUX
 			AMX0SL = 0x02;
 			//CHIP0
@@ -1245,7 +1149,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_8_11_OE2 = true;
 			break;
 		}
-		case 42:{//MPD10
+		case 35:{//MPD10
 			//ADC MUX
 			AMX0SL = 0x02;
 			//CHIP0
@@ -1275,7 +1179,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_8_11_OE2 = false;
 			break;
 		}
-		case 43:{//MPD11
+		case 36:{//MPD11
 			//ADC MUX
 			AMX0SL = 0x02;
 			//CHIP0
@@ -1305,7 +1209,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_8_11_OE2 = false;
 			break;
 		}
-		case 44:{//MPD12
+		case 37:{//MPD12
 			//ADC MUX
 			AMX0SL = 0x03;
 			//CHIP0
@@ -1335,7 +1239,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_12_15_OE2 = true;
 			break;
 		}
-		case 45:{//MPD13
+		case 38:{//MPD13
 			//ADC MUX
 			AMX0SL = 0x03;
 			//CHIP0
@@ -1365,7 +1269,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_12_15_OE2 = true;
 			break;
 		}
-		case 46:{//MPD14
+		case 39:{//MPD14
 			//ADC MUX
 			AMX0SL = 0x03;
 			//CHIP0
@@ -1395,7 +1299,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_12_15_OE2 = false;
 			break;
 		}
-		case 47:{//MPD15
+		case 40:{//MPD15
 			//ADC MUX
 			AMX0SL = 0x03;
 			//CHIP0
@@ -1425,7 +1329,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_12_15_OE2 = false;
 			break;
 		}
-		case 48:{//MPD16
+		case 41:{//MPD16
 			//ADC MUX
 			AMX0SL = 0x04;
 			//CHIP0
@@ -1455,7 +1359,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_16_19_OE2 = true;
 			break;
 		}
-		case 49:{//MPD17
+		case 42:{//MPD17
 			//ADC MUX
 			AMX0SL = 0x04;
 			//CHIP0
@@ -1485,7 +1389,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_16_19_OE2 = true;
 			break;
 		}
-		case 50:{//MPD18
+		case 43:{//MPD18
 			//ADC MUX
 			AMX0SL = 0x04;
 			//CHIP0
@@ -1515,7 +1419,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_16_19_OE2 = false;
 			break;
 		}
-		case 51:{//MPD19
+		case 44:{//MPD19
 			//ADC MUX
 			AMX0SL = 0x04;
 			//CHIP0
@@ -1545,7 +1449,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_16_19_OE2 = false;
 			break;
 		}
-		case 52:{//MPD20
+		case 45:{//MPD20
 			//ADC MUX
 			AMX0SL = 0x05;
 			//CHIP0
@@ -1575,7 +1479,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_20_23_OE2 = true;
 			break;
 		}
-		case 53:{//MPD21
+		case 46:{//MPD21
 			//ADC MUX
 			AMX0SL = 0x05;
 			//CHIP0
@@ -1605,7 +1509,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_20_23_OE2 = true;
 			break;
 		}
-		case 54:{//MPD22
+		case 47:{//MPD22
 			//ADC MUX
 			AMX0SL = 0x05;
 			//CHIP0
@@ -1635,7 +1539,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_20_23_OE2 = false;
 			break;
 		}
-		case 55:{//MPD23
+		case 48:{//MPD23
 			//ADC MUX
 			AMX0SL = 0x05;
 			//CHIP0
@@ -1665,7 +1569,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_20_23_OE2 = false;
 			break;
 		}
-		case 56:{//MPD24
+		case 49:{//MPD24
 			//ADC MUX
 			AMX0SL = 0x06;
 			//CHIP0
@@ -1693,96 +1597,6 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_24_27_S0 = false;
 			ADCMUX_24_27_OE1 = false;
 			ADCMUX_24_27_OE2 = true;	
-			break;
-		}
-		case 57:{//MPD25
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_20_23_S1 = true;
-			ADCMUX_20_23_S0 = false;
-			ADCMUX_24_27_OE1 = false;
-			ADCMUX_24_27_OE2 = true;	
-			break;
-		}
-		case 58:{//MPD26
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_24_27_S1 = false;
-			ADCMUX_24_27_S0 = false;
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = false;
-			break;
-		}
-		case 59:{//MPD27
-			//ADC MUX
-			AMX0SL = 0x06;
-			//CHIP0
-			ADCMUX_0_3_OE1 = true;
-			ADCMUX_0_3_OE2 = true;
-			//CHIP1
-			ADCMUC_4_7_OE1 = true;
-			ADCMUC_4_7_OE2 = true;
-			//CHIP2
-			ADCMUX_8_11_OE1 = true;
-			ADCMUX_8_11_OE2 = true;
-			//CHIP3
-			ADCMUX_12_15_OE1 = true;
-			ADCMUX_12_15_OE2 = true;
-			//CHIP4
-			ADCMUX_16_19_OE1 = true;
-			ADCMUX_16_19_OE2 = true;
-			//CHIP5
-			ADCMUX_20_23_OE1 = true;
-			ADCMUX_20_23_OE2 = true;
-			//CHIP6
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = true;
-			ADCMUX_24_27_S1 = true;
-			ADCMUX_24_27_S0 = false;
-			ADCMUX_24_27_OE1 = true;
-			ADCMUX_24_27_OE2 = false;
 			break;
 		}
 		default:{
