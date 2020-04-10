@@ -3,7 +3,8 @@
 /*****************************************************************************/
 #include "appConfig.h"
 /*****************************************************************************/
-void initChipDac(void);
+void initOffChipDac(void);
+void initOffChipDacNoReset(void);
 void selfTestDac(void);
 void refreshDac(void);
 void forceRefreshDac(void);

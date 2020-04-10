@@ -62,12 +62,29 @@ static void spi3Write(uint32_t dat){//DAC8568 SPI写入
 void dac8568_3_Init(void){//DAC8568初始化
 	uint32_t tmp;
 	setCLR3(true);
-	setLDAC3(false);
+	setLDAC3(true);
 	tmp = 0x07000000;//Software Reset
 	spi3Write(tmp);
 	tmp = 0x08000001;//Write Sequence for Enabling Internal Reference (Static Mode)
 	spi3Write(tmp);
-	tmp = 0x05000000;//Clear all DAC outputs to zero scale (defaultmode)
+	//覆盖LDAC引脚
+	tmp = 0x0600000F;
+	spi3Write(tmp);
+	//覆盖CLR引脚
+	tmp = 0x05000003;
+	spi3Write(tmp);
+}
+void dac8568_3_InitNoReset(void){//DAC8568初始化
+	uint32_t tmp;
+	setCLR3(true);
+	setLDAC3(true);
+	tmp = 0x08000001;//Write Sequence for Enabling Internal Reference (Static Mode)
+	spi3Write(tmp);
+	//覆盖LDAC引脚
+	tmp = 0x0600000F;
+	spi3Write(tmp);
+	//覆盖CLR引脚
+	tmp = 0x05000003;
 	spi3Write(tmp);
 }
 void dac8568_3_WriteDacRegister(uint8_t ch, uint16_t dat){//写入输入寄存器并更新输出

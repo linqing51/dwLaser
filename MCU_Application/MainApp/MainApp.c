@@ -72,12 +72,11 @@ void main(void){
 			RES(R_BOX_RED_SENDED);
 		}
 		if(LD(SPCOIL_DELAY_DAC_INIT)){
-			#if CONFIG_SPLC_USING_DAC == 1
-			initChipDac();//初始化DAC模块
-			#endif
 			RES(SPCOIL_DELAY_DAC_INIT);
 			SET(SPCOIL_DELAY_DAC_RUN);
-			setLedDac(LED_ON);
+			//强制刷新DAC
+			initOffChipDacNoReset();
+			forceRefreshDac();
 		}
 		if(LD(T_100MS_START * 16U + 0)){//每100mS执行一次BOX盒子刷新
 			sPlcBoxLedRefresh();

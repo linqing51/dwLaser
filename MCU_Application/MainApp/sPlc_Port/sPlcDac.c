@@ -282,14 +282,17 @@ void forceSetDac(uint8_t channel){
 		default:break;
 	}
 }
-void initChipDac(void){//初始化DAC
+void initOffChipDac(void){//初始化DAC
 	dac8568_0_Init();
 	dac8568_1_Init();
 	dac8568_2_Init();
 	dac8568_3_Init();
-	DAC0 = 0x0;
-    DAC1 = 0x0;
-	forceRefreshDac();
+}
+void initOffChipDacNoReset(void){
+	dac8568_0_InitNoReset();
+	dac8568_1_InitNoReset();
+	dac8568_2_InitNoReset();
+	dac8568_3_InitNoReset();
 }
 
 

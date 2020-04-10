@@ -1,8 +1,8 @@
 #ifndef __APPCONFIG_H__
 #define __APPCONFIG_H__
 /*****************************************************************************/
-#define LED_ON						0
-#define LED_OFF						1
+#define LED_ON								0
+#define LED_OFF								1
 #define CONFIG_SYSCLK                       (22118400L)
 #define SAR_CLK      						1500000L//ADC0 ±÷” <2.5MHz
 /*****************************************************************************/
