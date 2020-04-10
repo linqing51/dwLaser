@@ -175,6 +175,113 @@ void refreshDac(void){//Ë¢ÐÂDAC
 		dac8568_3_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_24]);
 	}
 }
+void forceSetDac(uint8_t channel){
+	switch(channel){
+		case 0:{
+			dac8568_0_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_0]);
+			DAC0 = (uint16_t)NVRAM0[EM_DAC_0];
+			break;
+		}
+		case 1:{
+			dac8568_0_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_1]);
+			DAC1 = (uint16_t)NVRAM0[EM_DAC_1];
+			break;
+		}
+		case 2:{
+			dac8568_0_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_2]);
+			break;
+		}
+		case 3:{
+			dac8568_0_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_3]);
+			break;
+		}
+		case 4:{
+			dac8568_0_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_4]);
+			break;
+		}
+		case 5:{
+			dac8568_0_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_5]);
+			break;
+		}
+		case 6:{			
+			dac8568_0_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_6]);
+			break;
+		}
+		case 7:{
+			dac8568_0_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_7]);
+			break;
+		}
+		case 8:{
+			dac8568_1_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_8]);
+			break;
+		}
+		case 9:{
+			dac8568_1_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_9]);
+			break;
+		}
+		case 10:{
+			dac8568_1_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_10]);
+			break;
+		}
+		case 11:{
+			dac8568_1_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_11]);
+			break;
+		}
+		case 12:{
+			dac8568_1_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_12]);
+			break;
+		}
+		case 13:{
+			dac8568_1_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_13]);
+			break;
+		}
+		case 14:{
+			dac8568_1_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_14]);
+			break;
+		}
+		case 15:{		
+			dac8568_1_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_15]);
+			break;
+		}
+		case 16:{
+			dac8568_2_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_16]);
+			break;
+		}
+		case 17:{	
+			dac8568_2_WriteDacRegister(0x5, (uint16_t)NVRAM0[EM_DAC_17]);
+			break;
+		}
+		case 18:{
+			dac8568_2_WriteDacRegister(0x3, (uint16_t)NVRAM0[EM_DAC_18]);
+			break;
+		}
+		case 19:{
+			dac8568_2_WriteDacRegister(0x1, (uint16_t)NVRAM0[EM_DAC_19]);
+			break;
+		}
+		case 20:{
+			dac8568_2_WriteDacRegister(0x6, (uint16_t)NVRAM0[EM_DAC_20]);
+			break;
+		}
+		case 21:{
+			dac8568_2_WriteDacRegister(0x4, (uint16_t)NVRAM0[EM_DAC_21]);
+			break;
+		}
+		case 22:{
+			dac8568_2_WriteDacRegister(0x2, (uint16_t)NVRAM0[EM_DAC_22]);
+			break;
+		}
+		case 23:{
+			dac8568_2_WriteDacRegister(0x0, (uint16_t)NVRAM0[EM_DAC_23]);
+			break;
+		}
+		case 24:{
+			dac8568_3_WriteDacRegister(0x7, (uint16_t)NVRAM0[EM_DAC_24]);
+			break;
+		}
+		default:break;
+	}
+}
 void initChipDac(void){//³õÊ¼»¯DAC
 	dac8568_0_Init();
 	dac8568_1_Init();

@@ -59,6 +59,7 @@ void sPlcBoxLedRefresh(void){//刷新灯状态
 		USEND(SPLC_UART1, BOX_SEND_BFADDR, BOX_SEND_LENGTH);//启动发送				
 	}
 }
+
 void main(void){
 	initDeviceF020();
 	sPlcInit();//初始化软逻辑
