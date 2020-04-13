@@ -43,14 +43,11 @@ void sPlcBoxLedRefresh(void){//Ë¢ÐÂµÆ×´Ì¬
 		NVRAM0[BOX_SEND_BFADDR + 1] = 0x00;
 		NVRAM0[BOX_SEND_BFADDR + 2] = 0x02;
 		for(i = 0;i < 25;i ++){ 
-			if((NVRAM0[(EM_ADC_0 + i)] < 50) || (NVRAM0[(EM_ADC_0 + i)] > 4000) ||
-			   (NVRAM0[(EM_ADC_32 + i)] <50) || (NVRAM0[(EM_ADC_32 + i)] > 4000) || LD(PLC_ALARM_0 + i)){
+			if(LD(PLC_ALARM_0 + i)){
 				NVRAM0[(BOX_SEND_BFADDR + i + 3)] = 0xAA;//ºìµÆÁÁ
-				SET(BOX_RLED_0 + i);
 			}
 			else{
 				NVRAM0[(BOX_SEND_BFADDR + i + 3)] = 0x55;//ºìµÆÃð
-				RES(BOX_RLED_0 + i);
 			}			
 		}
 		NVRAM0[(BOX_SEND_BFADDR + BOX_SEND_LENGTH - 1)] = 0x84;
