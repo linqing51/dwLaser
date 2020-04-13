@@ -30,21 +30,16 @@ void sPlcInit(void){//软逻辑初始化
 #endif
 	}	
 	else if(RSTSRC & 0x01){//硬件引脚复位
-		clearNvram();
-#if CONFIG_SPLC_USING_DAC == 1
-		initOffChipDac();//初始化DAC模块
-		setLedDac(LED_ON);
-#endif		
+		//initOffChipDac();//初始化DAC模块
+		clearNvram();		
 	}	
 	else if(RSTSRC & 0x08){//看门狗复位 
+		//initOffChipDac();//初始化DAC模块
 		setLedError(LED_ON);
 	}
 	else if(RSTSRC & 0x10){//软件强制复位和标志
+		//initOffChipDac();//初始化DAC模块
 		clearNvram();
-#if CONFIG_SPLC_USING_DAC == 1
-		initOffChipDac();//初始化DAC模块
-		setLedDac(LED_ON);
-#endif
 	}
 	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化
 #if CONFIG_SPLC_USING_CADC == 1

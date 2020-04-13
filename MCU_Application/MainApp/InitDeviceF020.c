@@ -74,7 +74,6 @@ static void Oscillator_Init(){
 	}
     while ((OSCXCN & 0x80) == 0);
     OSCICN  = 0x0F;
-	OSCICN |= 0x80;//Ê¹ÄÜÊ±ÖÓ¶ªÊ§¼ì²âÆ÷
 }
 
 static void Interrupts_Init(){
