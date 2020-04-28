@@ -4,42 +4,26 @@
 /*****************************************************************************/
 static void setSYNC0(uint8_t dat){//P6_0
 	if(dat){
-		P6 |= (uint8_t)(1 << 0);
+		P5 |= (uint8_t)(1 << 1);
 	}
 	else{
-		P6 &= ~(uint8_t)(1 << 0);
+		P5 &= ~(uint8_t)(1 << 1);
 	}
 }
 static void setCLK0(uint8_t dat){//P6_1
 	if(dat){
-		P6 |= (uint8_t)(1 << 1);
+		P5 |= (uint8_t)(1 << 2);
 	}
 	else{
-		P6 &= ~(uint8_t)(1 << 1);
+		P5 &= ~(uint8_t)(1 << 2);
 	}
 }
 static void setDIN0(uint8_t dat){//P6_2
 	if(dat){
-		P6 |= (uint8_t)(1 << 2);
+		P5 |= (uint8_t)(1 << 3);
 	}
 	else{
-		P6 &= ~(uint8_t)(1 << 2);
-	}
-}
-static void setCLR0(uint8_t dat){//P6_3
-	if(dat){
-		P6 |= (uint8_t)(1 << 3);
-	}
-	else{
-		P6 &= ~(uint8_t)(1 << 3);
-	}
-}
-static void setLDAC0(uint8_t dat){//P5_7
-	if(dat){
-		P5 |= (uint8_t)(1 << 7);
-	}
-	else{
-		P5 &= ~(uint8_t)(1 << 7);
+		P5 &= ~(uint8_t)(1 << 3);
 	}
 }
 static void spi0Write(uint32_t dat){//DAC8568 SPI写入
@@ -63,8 +47,8 @@ static void spi0Write(uint32_t dat){//DAC8568 SPI写入
 
 void dac8568_0_Init(void){//DAC8568初始化
 	uint32_t tmp;
-	setCLR0(true);
-	setLDAC0(true);
+	//setCLR0(true);
+	//setLDAC0(true);
 	tmp = 0x07000000;//Software Reset
 	spi0Write(tmp);
 	tmp = 0x08000001;//Write Sequence for Enabling Internal Reference (Static Mode)
@@ -78,8 +62,8 @@ void dac8568_0_Init(void){//DAC8568初始化
 }
 void dac8568_0_InitNoReset(void){//DAC8568 无复位初始化
 	uint32_t tmp;
-	setCLR0(true);
-	setLDAC0(true);
+	//setCLR0(true);
+	//setLDAC0(true);
 	tmp = 0x08000001;//Write Sequence for Enabling Internal Reference (Static Mode)
 	spi0Write(tmp);
 	//覆盖LDAC引脚

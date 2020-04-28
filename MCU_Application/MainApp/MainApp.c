@@ -61,6 +61,7 @@ void main(void){
 	initDeviceF020();
 	sPlcInit();//初始化软逻辑
 	initModbus(CONFIG_MB_RTU_SLAVE_ADDRESS, CONFIG_UART0_BAUDRATE);
+	feedExtWtd();//外部看门狗喂狗
 	ENABLE_INTERRUPT;
 	while(1){
 		sPlcProcessStart();

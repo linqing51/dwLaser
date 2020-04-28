@@ -36,4 +36,5 @@ static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 10
 			NVRAM0[i] ++;
 		}
 	}
+	feedExtWtd();//外部看门狗喂狗
 }

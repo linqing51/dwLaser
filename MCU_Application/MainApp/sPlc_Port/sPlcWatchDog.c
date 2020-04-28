@@ -12,3 +12,11 @@ void disableWatchDog(void){//关闭看门狗(未锁定)
 	WDTCN = 0xDE;
     WDTCN = 0xAD;
 }
+ void feedExtWtd(void){//外部看门狗喂狗
+	if(P5 &  0x10){
+		P5 &= ~(uint8_t)(1 << 4);
+	}
+	else{
+		P5 |= (uint8_t)(1 << 4);
+	}
+}

@@ -20,13 +20,13 @@ void sPlcInit(void){//软逻辑初始化
 #endif
 	setLedRun(LED_ON);
 	setLedDebug(LED_OFF);
-	setLedDac(LED_OFF);
-	setLedError(LED_OFF);
+	//setLedDac(LED_OFF);
+	//setLedError(LED_OFF);
 	if((RSTSRC & 0x02)){//上电复位
 		clearNvram();
 #if CONFIG_SPLC_USING_DAC == 1
 		initOffChipDac();//初始化DAC模块
-		setLedDac(LED_ON);
+		//setLedDac(LED_ON);
 #endif
 	}	
 	else if(RSTSRC & 0x01){//硬件引脚复位
@@ -35,7 +35,7 @@ void sPlcInit(void){//软逻辑初始化
 	}	
 	else if(RSTSRC & 0x08){//看门狗复位 
 		//initOffChipDac();//初始化DAC模块
-		setLedError(LED_ON);
+		//setLedError(LED_ON);
 	}
 	else if(RSTSRC & 0x10){//软件强制复位和标志
 		//initOffChipDac();//初始化DAC模块

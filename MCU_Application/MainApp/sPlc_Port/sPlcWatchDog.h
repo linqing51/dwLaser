@@ -4,4 +4,5 @@
 /*****************************************************************************/
 void lockWatchDog(void);
 void disableWatchDog(void);
+void feedExtWtd(void);
 #endif
