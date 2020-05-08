@@ -11,12 +11,12 @@
 #define EM_END							167
 //延时线圈
 //100MS 1 * 16 = 16BIT
-#define T_100MS_START					168
-#define T_100MS_END						168
+#define T_10MS_START					168
+#define T_10MS_END						168
 //延时计时器 
 //100MS 16
-#define TD_100MS_START					169
-#define TD_100MS_END					184
+#define TD_10MS_START					169
+#define TD_10MS_END					184
 //输入位寄存器 1 * 16 = 16个
 #define X_START							185
 #define X_END							185		
@@ -192,7 +192,7 @@
 #define SPCOIL_START_UP					(SPCOIL_START * 16 + 1)//初次上电
 #define SPCOIL_DELAY_DAC_INIT			(SPCOIL_START * 16 + 2)//DAC延时初始化
 #define SPCOIL_DELAY_DAC_RUN			(SPCOIL_START * 16 + 3)//DAC延时运行
-#define SPCOIL_PS100MS					(SPCOIL_START * 16 + 4)//100mS		
+#define SPCOIL_PS10MS					(SPCOIL_START * 16 + 4)//10mS		
 #define SPCOIL_UART0_SEND_BUSY			(SPCOIL_START * 16 + 16)//UART1发送忙
 #define SPCOIL_UART0_RECV_BUSY			(SPCOIL_START * 16 + 17)//UART1接收忙
 #define SPCOIL_UART0_SEND_DONE			(SPCOIL_START * 16 + 18)//发送完成

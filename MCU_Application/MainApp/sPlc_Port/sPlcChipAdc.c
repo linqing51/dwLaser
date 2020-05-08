@@ -36,21 +36,9 @@ sbit ADCMUX_24_27_S1 = P0^6;
 sbit ADCMUX_24_27_OE1 = P0^7;
 sbit ADCMUX_24_27_OE2 = P0^4;
 /*****************************************************************************/
-static xdata adcTempDat_t adcTempDat[50];
 static uint8_t adcSelect;//ADC通道选择
-static void refreshAdcData(adcTempDat_t *s , uint16_t dat);
-static void initAdcData(adcTempDat_t *s);
 /*****************************************************************************/
-static void initAdcData(adcTempDat_t *s){//初始化ADC滤波器
-	uint8_t i;
-	for(i = 0;i < CONFIG_SPLC_ADC_FILTER_TAP; i++){
-		s->dat[i] = 0x0;
-	}
-	s->out = 0;
-	s->wIndex = 0;
-}
 void initChipAdc(void){//ADC模块初始化
-	uint8_t i;
 	//CHIP0
 	ADCMUX_0_3_OE1 = true;
 	ADCMUX_0_3_OE2 = true;
@@ -79,10 +67,6 @@ void initChipAdc(void){//ADC模块初始化
 	AMX0CF = 0x00;// AIN inputs are single-ended (default)
 	AMX0SL = 0x00;// Select AIN0.1 pin as ADC mux input
 	adcSelect = 0;
-	for(i = 0;i < 50;i ++){
-		initAdcData(&adcTempDat[i]);
-	}
-	adcSelect = 0;
 }
 void chipAdcProcess(void){//循环采集ADC
 	uint16_t result = 0;
@@ -90,8 +74,7 @@ void chipAdcProcess(void){//循环采集ADC
 	AD0BUSY = 1;
 	while(AD0INT == 0);//查询ADC标志
 	result = (ADC0 & 0x0FFF);
-	refreshAdcData(&adcTempDat[adcSelect], result);
-	NVRAM0[EM_ADC_0 + adcSelect] = adcTempDat[adcSelect].out;
+	NVRAM0[EM_ADC_0 + adcSelect] = result;
 	adcSelect ++;
 	if(adcSelect >= 50){
 		adcSelect = 0;
@@ -124,6 +107,7 @@ void chipAdcProcess(void){//循环采集ADC
 			ADCMUX_24_27_OE1 = true;
 			ADCMUX_24_27_OE2 = true;
 			ADCMUX_0_3_OE1 = false;
+			
 			ADCMUX_0_3_OE2 = true;
 			break;
 		}
@@ -1603,21 +1587,4 @@ void chipAdcProcess(void){//循环采集ADC
 			break;
 		}
 	}
-}
-void refreshAdcData(adcTempDat_t *s , uint16_t dat){//更新ADC采集值 
-	uint8_t i;
-	uint16_t temp;
-	uint32_t sum;
-	s->dat[s->wIndex] = dat;
-	s->wIndex ++;
-	if(s->wIndex >= CONFIG_SPLC_ADC_FILTER_TAP){
-		s->wIndex = 0;
-	}
-	//计算总和
-	sum = 0;
-	for(i = 0;i < CONFIG_SPLC_ADC_FILTER_TAP;i ++){
-		sum += s->dat[i];
-	}
-	temp = (uint16_t)(sum / (uint32_t)CONFIG_SPLC_ADC_FILTER_TAP);
-	s->out = temp;
 }

@@ -3,5 +3,5 @@
 /*****************************************************************************/
 #include "appConfig.h"
 
-
+extern uint8_t adcProcessCounter;
 #endif

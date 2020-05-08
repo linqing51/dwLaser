@@ -20,6 +20,7 @@
 #define CONFIG_SPLC_ASSERT					1//检查地址范围
 #define CONFIG_INPUT_FILTER_TIME			3//输入数字滤波扫描周期 1mS * N
 /*****************************************************************************/
+#define CONFIG_SOFTPLC_HWTIME				10L//10mS
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_WDT				1//看门狗启用
 /*****************************************************************************/
@@ -29,7 +30,7 @@
 #define CONFIG_SPLC_ADC_FILTER_TAP			12//ADC位移滤波次数
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_GAIN    3330L// Temp Sensor Gain in (uV / degC)
 #define CONFIG_SPLC_ADC_TEMP_SENSOR_OFFSET  856L// Temp Sensor Offset in mV
-#define CONFIG_SPLC_ADC_INTERNAL_VREF     	2400L// ADC Voltage Reference (mV)
+#define CONFIG_SPLC_ADC_INTERNAL_VREF     	2500L// ADC Voltage Reference (mV)
 #define CONFIG_SPLC_ADC_AMBIENT             25L// Ambient temp in deg C
 /*****************************************************************************/
 #define CONFIG_SPLC_USING_DAC				1//是能DAC模块

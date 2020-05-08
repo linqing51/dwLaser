@@ -43,18 +43,18 @@ uint8_t LDN(uint16_t A) reentrant{//Âö³åÏÂ½µÑØ
 	else
 		return false;
 }
-void T100MS(uint8_t A, uint8_t start, uint16_t value) reentrant{//100MSÑÓÊ±Æ÷
+void T10MS(uint8_t A, uint8_t start, uint16_t value) reentrant{//10MSÑÓÊ±Æ÷
 	if(start){
-		if(NVRAM0[(TD_100MS_START + A)] >= value){
-			NVRAM0[(T_100MS_START + (A / 16))] |= 1 << (A % 16);
+		if(NVRAM0[(TD_10MS_START + A)] >= value){
+			NVRAM0[(T_10MS_START + (A / 16))] |= 1 << (A % 16);
 		}
 		else{
-			NVRAM0[(T_100MS_START + (A / 16))] &= ~(1 << (A % 16));
+			NVRAM0[(T_10MS_START + (A / 16))] &= ~(1 << (A % 16));
 		}	
 	}
 	else{
-		NVRAM0[(T_100MS_START + (A / 16))] &= ~(1 << (A % 16));
-		NVRAM0[(TD_100MS_START + A)] = 0x0;
+		NVRAM0[(T_10MS_START + (A / 16))] &= ~(1 << (A % 16));
+		NVRAM0[(TD_10MS_START + A)] = 0x0;
 	}
 }
 /*****************************************************************************/

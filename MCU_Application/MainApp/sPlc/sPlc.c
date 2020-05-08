@@ -43,6 +43,7 @@ void sPlcInit(void){//软逻辑初始化
 	}
 	initUart1(CONFIG_UART1_BAUDRATE);//UART1初始化
 #if CONFIG_SPLC_USING_CADC == 1
+	adcProcessCounter = 0;
 	initChipAdc();//初始化ADC模块
 #endif
 #if CONFIG_SPLC_USING_MB_RTU_SLAVE == 1
@@ -59,7 +60,10 @@ void sPlcProcessStart(void){//sPLC轮询起始
 	modbusPorcess();//处理MODBUS
 #endif
 #if CONFIG_SPLC_USING_CADC == 1
-	chipAdcProcess();//ADC扫描
+	if(adcProcessCounter > 1){
+		adcProcessCounter = 0;
+		chipAdcProcess();//ADC扫描
+	}
 #endif
 }
 void sPlcProcessEnd(void){//sPLC轮询结束

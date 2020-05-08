@@ -76,7 +76,7 @@ void main(void){
 			initOffChipDacNoReset();
 			forceRefreshDac();
 		}
-		if(LD(T_100MS_START * 16U + 0)){//每100mS执行一次BOX盒子刷新
+		if(LD(T_10MS_START * 16U + 0)){//每100mS执行一次BOX盒子刷新
 			sPlcBoxLedRefresh();
 			if(getLedRun()){
 				setLedRun(LED_OFF);
@@ -84,10 +84,10 @@ void main(void){
 			else{
 				setLedRun(LED_ON);
 			}
-			T100MS(0, false, 6);
+			T10MS(0, false, 10);
 		}
 		else{
-			T100MS(0, true, 6);
+			T10MS(0, true, 10);
 		}
 		sPlcProcessEnd();
 	}

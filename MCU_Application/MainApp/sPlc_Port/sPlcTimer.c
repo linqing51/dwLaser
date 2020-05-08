@@ -1,9 +1,12 @@
 #include "sPlcTimer.h"
-/*****************************************************************************/ 
+/*****************************************************************************/
+uint8_t adcProcessCounter;
 void timer0Init(void){//硬件sTimer计时器初始化 100mS
+	uint16_t temp;
 	DelayCounter = 0;
-	Timer0_L = 0x0;
-	Timer0_H = 0x0;
+	temp = (uint16_t)(65536 - (CONFIG_SYSCLK / 12 / 1000 * CONFIG_SOFTPLC_HWTIME));
+	Timer0_L = temp & 0xFF;
+	Timer0_H = (temp >> 8) & 0xFF;
 	TH0 = Timer0_H;// Init T0 High register
 	TL0 = Timer0_L;// Init T0 Low register
 	CKCON &= ~(1 << 3);//SYSCLK / 12	
@@ -25,16 +28,19 @@ static void timer0Isr(void) interrupt INTERRUPT_TIMER0{//硬件sTimer计时器中断 10
 			SET(SPCOIL_DELAY_DAC_INIT);
 		}
 	}
-	if(LD(SPCOIL_PS100MS)){//ON
-		RES(SPCOIL_PS100MS);
+	if(LD(SPCOIL_PS10MS)){//ON
+		RES(SPCOIL_PS10MS);
 	}
 	else{
-		SET(SPCOIL_PS100MS);
+		SET(SPCOIL_PS10MS);
 	}
-	for(i = TD_100MS_START;i < TD_100MS_END;i ++){
+	for(i = TD_10MS_START;i < TD_10MS_END;i ++){
 		if(NVRAM0[i] < SHRT_MAX){
 			NVRAM0[i] ++;
 		}
 	}
 	feedExtWtd();//外部看门狗喂狗
+	if(adcProcessCounter < 255){
+		adcProcessCounter ++;
+	}
 }
