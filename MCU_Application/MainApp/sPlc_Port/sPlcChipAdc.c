@@ -1,39 +1,39 @@
 #include "sPlcChipAdc.h"
 /*****************************************************************************/
 //ADC MUX3253 CH0-CH3
-sbit ADCMUX_0_3_S0 = P1^4;
-sbit ADCMUX_0_3_S1 = P1^7;
-sbit ADCMUX_0_3_OE1 = P1^6;
-sbit ADCMUX_0_3_OE2 = P1^5;
+sbit ADCMUX_0_3_S0 = P1^5;
+sbit ADCMUX_0_3_S1 = P1^6;
+sbit ADCMUX_0_3_OE1 = P1^7;
+sbit ADCMUX_0_3_OE2 = P1^4;
 //ADC MUX3253 CH4-CH7
-sbit ADCMUX_4_7_S0 = P1^2;
-sbit ADCMUX_4_7_S1 = P1^1;
-sbit ADCMUC_4_7_OE1 = P1^0;
-sbit ADCMUC_4_7_OE2 = P1^3;
+sbit ADCMUX_4_7_S0 = P1^1;
+sbit ADCMUX_4_7_S1 = P1^2;
+sbit ADCMUC_4_7_OE1 = P1^3;
+sbit ADCMUC_4_7_OE2 = P1^0;
 //ADC MUX3253 CH8-CH11
-sbit ADCMUX_8_11_S0 = P2^4;
+sbit ADCMUX_8_11_S0 = P2^5;
 sbit ADCMUX_8_11_S1 = P2^6;
 sbit ADCMUX_8_11_OE1 = P2^7;
-sbit ADCMUX_8_11_OE2 = P2^5;
+sbit ADCMUX_8_11_OE2 = P2^4;
 //ADC MUX3253 CH12-CH15
-sbit ADCMUX_12_15_S0 = P2^0;
+sbit ADCMUX_12_15_S0 = P2^1;
 sbit ADCMUX_12_15_S1 = P2^2;
 sbit ADCMUX_12_15_OE1 = P2^3;
-sbit ADCMUX_12_15_OE2 = P2^1;
+sbit ADCMUX_12_15_OE2 = P2^0;
 //ADC MUX3253 CH16-CH19
 sbit ADCMUX_16_19_S0 = P3^5;
-sbit ADCMUX_16_19_S1 = P3^7;
-sbit ADCMUX_16_19_OE1 = P3^6;
+sbit ADCMUX_16_19_S1 = P3^6;
+sbit ADCMUX_16_19_OE1 = P3^7;
 sbit ADCMUX_16_19_OE2 = P3^4;
 //ADC MUX3253 CH20-CH23
 sbit ADCMUX_20_23_S0 = P3^1;
-sbit ADCMUX_20_23_S1 = P3^3;
-sbit ADCMUX_20_23_OE1 = P3^2;
+sbit ADCMUX_20_23_S1 = P3^2;
+sbit ADCMUX_20_23_OE1 = P3^3;
 sbit ADCMUX_20_23_OE2 = P3^0;
 //ADC MUX3253 CH24-CH27
 sbit ADCMUX_24_27_S0 = P0^5;
-sbit ADCMUX_24_27_S1 = P0^7;
-sbit ADCMUX_24_27_OE1 = P0^6;
+sbit ADCMUX_24_27_S1 = P0^6;
+sbit ADCMUX_24_27_OE1 = P0^7;
 sbit ADCMUX_24_27_OE2 = P0^4;
 /*****************************************************************************/
 static xdata adcTempDat_t adcTempDat[50];
